@@ -1,0 +1,55 @@
+{% extends "common/base.html" %}
+
+
+{% block title %}Comic sets{% endblock %}
+
+
+{% block content %}
+
+<h2>Comic sets</h2>
+
+<p>A comic set is a personal selection of comics. Anyone can create a new set,
+and anyone can modify any existing set, just like a wiki.</p>
+
+<div class="info floatleft">
+    <h3>
+        <img src="{{ MEDIA_URL }}icons/add.png" alt="" />
+        Getting started
+    </h3>
+
+    <p>To get started with your own personal comic set, enter a name for it
+    below, e.g. your username or nickname. If the name is taken, choose another
+    name. To get to your comic set later, enter the name again, or go directly
+    to the URL of your comic set.</p>
+
+    <form action="{% url set-new %}" method="post" id="new_set">
+        <p class="buttons">
+            {{ form.name }}
+            <button type="submit" class="positive">
+                Go
+                <img src="{{ MEDIA_URL }}icons/arrow_right.png" alt="" />
+            </button>
+        </p>
+    </form>
+</div>
+
+{% if recent_sets %}
+<div class="info floatleft">
+    <h3>
+        <img src="{{ MEDIA_URL }}icons/arrow_redo.png" alt="" />
+        Recently visited
+    </h3>
+
+    <ul>
+        {% for set in recent_sets %}
+        <li>
+            <a href="{{ set.get_absolute_url }}">{{ set.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+<hr class="clear" />
+
+{% endblock %}

@@ -1,0 +1,110 @@
+# Django settings for comics project.
+
+# ADMINS, MANAGERS, DATABASE_*, SECRET_KEY, INTERNAL_IPS, and
+# COMICS_LOG_FILENAME are imported from a file which is not in stored in a VCS
+from settings_local import *
+
+# Local time zone for this installation. All choices can be found here:
+# http://www.postgresql.org/docs/current/static/datetime-keywords.html#DATETIME-TIMEZONE-SET-TABLE
+TIME_ZONE = 'Europe/Oslo'
+
+# Language code for this installation. All choices can be found here:
+# http://www.w3.org/TR/REC-html40/struct/dirlang.html#langcodes
+# http://blogs.law.harvard.edu/tech/stories/storyReader$15
+LANGUAGE_CODE = 'en-us'
+
+# If you set this to False, Django will make some optimizations so as not
+# to load the internationalization machinery.
+USE_I18N = False
+
+SITE_ID = 1
+
+# Absolute path to the directory that holds media.
+# Example: "/home/media/media.lawrence.com/"
+MEDIA_ROOT = '/var/www/jodal-no/media/comics/'
+
+# URL that handles the media served from MEDIA_ROOT.
+# Example: "http://media.lawrence.com"
+MEDIA_URL = 'http://media.jodal.no/comics/'
+
+# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
+# trailing slash.
+# Examples: "http://foo.com/media/", "/media/".
+ADMIN_MEDIA_PREFIX = MEDIA_URL + 'admin/'
+
+# List of callables that know how to import templates from various sources.
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.load_template_source',
+    'django.template.loaders.app_directories.load_template_source',
+)
+
+MIDDLEWARE_CLASSES = (
+#    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.gzip.GZipMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.http.ConditionalGetMiddleware',
+    'comics.sets.middleware.SetMiddleware',
+#    'django.middleware.cache.FetchFromCacheMiddleware',
+)
+
+ROOT_URLCONF = 'comics.urls'
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.auth',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'comics.common.context_processors.all_comics',
+)
+
+INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.admindocs',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.humanize',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'comics.common',
+    'comics.crawler',
+    'comics.feedback',
+    'comics.sets',
+    'comics.utils',
+)
+
+# Caching
+CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
+CACHE_MIDDLEWARE_SECONDS = 300
+CACHE_MIDDLEWARE_KEY_PREFIX = 'comics'
+CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+
+# Formats
+DATE_FORMAT = 'D j M Y'
+TIME_FORMAT = 'H:i'
+
+
+### Additional non-Django settings used by comics
+
+# Name of the site, used in e.g. feeds
+COMICS_SITE_TITLE = 'Daily Comics'
+
+# Location of the comic strip images
+COMICS_MEDIA_URL = MEDIA_URL
+
+# Number of comics to show in the top list
+COMICS_MAX_IN_TOP_LIST = 10
+
+# Maximum number of days to show in one page
+COMICS_MAX_DAYS_IN_PAGE = 31
+
+# Maximum number of days to show in a feed
+COMICS_MAX_DAYS_IN_FEED = 30
+
+# SHA256 of blacklisted comic strips
+COMICS_STRIP_BLACKLIST = (
+    # Dagbladet.no
+    '61c66a1c84408df5b855004dd799d5e59f4af99f4c6fe8bf4aabf8963cab7cb5',
+    # Cyanide and Happiness
+    '6dec8be9787fc8b103746886033ccad7348bc4eec44c12994ba83596f3cbcd32',
+)

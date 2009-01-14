@@ -1,0 +1,120 @@
+{% extends "common/base.html" %}
+{% load humanize %}
+
+
+{% block title %}{{ page.title|safe }}{% endblock %}
+
+
+{% block extra_head %}
+    {{ block.super }}
+    {% ifequal page.view_type 'comic' %}
+        {% if comics.0.0 %}
+            <link rel="alternate" type="application/atom+xml"
+                href="{{ comics.0.0.get_feed_url }}"
+                title="Comic feed: {{ comics.0.0.name }}" />
+        {% endif %}
+    {% endifequal %}
+    {% ifequal page.view_type 'set' %}
+        {% if set %}
+            <link rel="alternate" type="application/atom+xml"
+                href="{{ set.get_feed_url }}"
+                title="Comic set feed: {{ set.name }}" />
+        {% endif %}
+    {% endifequal %}
+    {% if page.first_url %}
+        <link rel="start" href="{{ page.first_url }}" />
+        <link rel="first" href="{{ page.first_url }}" />
+    {% endif %}
+    {% if page.prev_url %}
+        <link rel="prev" href="{{ page.prev_url }}" />
+    {% endif %}
+    {% if page.next_url %}
+        <link rel="next" href="{{ page.next_url }}" />
+    {% endif %}
+    {% if page.last_url %}
+        <link rel="last" href="{{ page.last_url }}" />
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+{% block comic_top_menu %}
+    {% with 1 as top_menu %}
+        {% include "common/strip-menu.html" %}
+    {% endwith %}
+{% endblock %}
+
+<h2>{{ page.title|safe }}</h2>
+
+
+{% ifequal page.view_type 'set' %}
+    {% if set %}
+    <p class="buttons">
+        <a href="{% url set-edit set.name %}">
+            <img src="{{ MEDIA_URL }}icons/pencil.png"
+                alt="Edit comic set: {{ set.name }}"
+                title="Edit comic set: {{ set.name }}" />
+            Edit comic set</a>
+    </p>
+    {% endif %}
+{% endifequal %}
+
+
+<div id="strips">
+
+{% if comics %}
+    {% for comic, strips in comics %}
+        {% if strips %}
+            {% for strip in strips %}
+
+<div class="strip">
+    <h3 id="strip{{ strip.counter }}" class="striptitle">
+        <a href="{{ strip.get_absolute_url }}">
+        {{ strip.comic.name }}
+        <span class="strippub">published {{ strip.pub_date|naturalday }}</span>
+        {% if strip.title %}&ldquo;{{ strip.title|safe }}&rdquo;{% endif %}</a>
+    </h3>
+
+    <p><a href="{{ strip.get_absolute_url }}">
+    <img src="{{ strip.get_image_url }}" alt="{{ strip }}"{% if strip.text %} title="{{ strip.text|safe|escape }}"{% endif %} class="stripimg" />
+    </a></p>
+
+    {% if strip.text %}
+    <p class="striptext">{{ strip.text|safe }}</p>
+    {% endif %}
+
+    <p class="stripmeta">
+        Credits: {{ strip.comic.rights }}.
+        Retrieved at {{ strip.fetched|time }}, {{ strip.fetched|date }}
+        from {{ strip.comic.url|urlize }}.
+    </p>
+</div>
+
+            {% endfor %}
+        {% else %}
+
+<div class="strip">
+    <h3 class="striptitle">
+        <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
+    </h3>
+
+    <p>No strip found. See <a href="{% url comic-latest comic.slug %}">the latest strip</a>.</p>
+</div>
+
+        {% endif %}
+    {% endfor %}
+{% else %}
+<p>No comics found.
+{% if set %}<a href="{% url set-edit set.name %}">Edit set</a> to add comics.{% endif %}</p>
+{% endif %}
+
+</div>
+
+{% block comic_bottom_menu %}
+    {% with 0 as top_menu %}
+        {% include "common/strip-menu.html" %}
+    {% endwith %}
+{% endblock %}
+
+{% endblock %}

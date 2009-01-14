@@ -1,0 +1,21 @@
+{% extends "feedback/base.html" %}
+
+
+{% block content %}
+
+<h2>Feedback</h2>
+
+<p>Send us suggestions, bug reports, or just say hi. Remember to sign with you
+mail address if you want a reply.</p>
+
+<form action="" method="post" id="feedback">
+    <p>{{ feedback_form.message }}</p>
+
+    <p class="buttons">
+        <button type="submit" class="positive">
+            <img src="{{ MEDIA_URL }}icons/accept.png" alt="" />
+            Send feedback</button>
+    </p>
+</form>
+
+{% endblock %}

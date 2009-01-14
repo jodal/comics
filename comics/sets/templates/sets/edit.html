@@ -1,0 +1,49 @@
+{% extends "common/base.html" %}
+
+
+{% block title %}Edit set "{{ set.name }}"{% endblock %}
+
+
+{% block content %}
+
+<h2>Edit comic set &ldquo;{{ set.name }}&rdquo;</h2>
+
+<p class="buttons">
+    <a href="{{ set.get_absolute_url }}">
+        <img src="{{ MEDIA_URL }}icons/zoom.png"
+            alt="Set: {{ set.name }}"
+            title="Set: {{ set.name }}" />
+        View comic set</a>
+</p>
+
+<form action="{% url set-edit set.name %}" method="post" id="edit_set">
+
+{% if all_comics %}
+    {{ form.comics }}
+{% else %}
+    <p class="warning">No comics found.</p>
+{% endif %}
+
+<div class="info">
+    <p class="title">
+        {{ form.add_new_comics }}
+        {{ form.add_new_comics.label }}
+    </p>
+
+    <p>If you check this, all new comics added to the site will automatically
+    be added to your comic set. You may of course later remove them using this
+    page.</p>
+</div>
+
+<div class="buttons">
+<button type="submit" class="positive">
+    <img src="{{ MEDIA_URL }}icons/accept.png" alt="" />
+    Save changes</button>
+<a href="{{ set.get_absolute_url }}" class="negative">
+    <img src="{{ MEDIA_URL }}icons/cancel.png" alt="" />
+    Cancel</a>
+</div>
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "common/base.html" %}
+
+
+{% block title %}About{% endblock %}
+
+
+{% block content %}
+
+<h2>About</h2>
+
+<p>Daily Comics (or comics for short) is web based aggregator for web comics.
+It was originally developed as a custom web application hosted at
+<a href="http://comics.jodal.no/">comics.jodal.no</a>.</p>
+
+<div class="info floatright">
+
+<h3>
+    <img src="{{ MEDIA_URL }}icons/lightbulb.png" alt="" />
+    Tips: Keyboard Navigation
+</h3>
+
+<p>If you got JavaScript enabled in your browser, you may navigate the comics
+using the keyboard. Press the <em>h</em>, <em>j</em>, <em>k</em>, and
+<em>l</em> keys to go to the previous page, the comic strip below, the comic
+strip above, and the next page, respectively. This feature was contributed by
+<a href="http://www.adamcik.no/">Thomas Adamcik</a>.</p>
+
+</div>
+
+<h3>
+    <img src="{{ MEDIA_URL }}icons/package.png" alt="" />
+    Development
+</h3>
+
+<p>Daily Comics is maintained by
+<a href="http://www.jodal.no/">Stein Magnus Jodal</a>,
+with comments and input from numerous users. The software is freely available
+under the GPLv2 license. You can get the source from
+<a href="http://code.jodal.no/bzr/comics/">http://code.jodal.no/bzr/comics/</a>
+using the version control system <a href="http://bazaar-vcs.org/">Bazaar</a>,
+or <a href="http://code.jodal.no/bzrweb/comics/comics/">browse</a> the source
+online. Feature requests, bug reports and patches are warmly received, read and
+replied to at <a href="mailto:comics@jodal.no">comics@jodal.no</a> and the
+<a href="{% url feedback %}">feedback</a> page.</p>
+
+<h3>
+    <img src="{{ MEDIA_URL }}icons/layout.png" alt="" />
+    Colophon
+</h3>
+
+<p>Daily Comics makes use of
+the <a href="http://www.python.org/">Python</a> programming language,
+the <a href="http://www.djangoproject.com/">Django</a> web framework,
+<a href="http://developer.yahoo.com/yui/">Yahoo! UI Library</a> for style
+sheets, and icons from
+<a href="http://www.famfamfam.com/lab/icons/silk/">FamFamFam</a>.
+<a href="http://www.google.com/analytics/">Google Analytics</a> are used to
+gather anonymous information on how the site is used, which is helpful when
+improving the site even further.
+All output should adhere to the
+<a href="http://validator.w3.org/check/referer">XHTML</a>,
+<a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>, and
+<a href="http://validator.w3.org/feed/">Atom</a> web standards, and comply with
+<a href="http://www.contentquality.com/mynewtester/cynthia.exe?Url1=http://comics.jodal.no/">
+Section 508</a>.</p>
+
+{% endblock %}

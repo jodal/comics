@@ -1,0 +1,8 @@
+# Run the comics plugins as the postgres user (Debian/Ubuntu specific)
+[comics_*]
+user postgres
+env.SITE_NAME Daily Comics
+env.DB_NAME comics
+env.COMIC_TBL comics_comic
+env.STRIP_TBL comics_strip
+env.SET_TBL comics_set

@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# SITE_NAME, DB_NAME and STRIP_TBL are assumed to be defined by the environment.
+#
+if [ "$1" = "config" ]; then
+	echo graph_title "$SITE_NAME - Number of strips"
+	echo graph_category comics
+	echo graph_vlabel
+	echo strips.label Strips
+	exit 0
+fi
+STRIPS=`psql $DB_NAME -qt -c "SELECT COUNT(*) FROM $STRIP_TBL"`
+echo strips.value $STRIPS
+

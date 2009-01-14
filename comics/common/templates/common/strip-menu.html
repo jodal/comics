@@ -1,0 +1,79 @@
+<div class="menu buttons{% if top_menu %} topmenu{% else %} bottommenu{% endif %}">
+
+<div class="navigation">
+<ul>
+    <li>
+{% if page.first_url %}
+    <a href="{{ page.first_url }}"{% if top_menu %} id="first"{% endif %}>
+{% else %}
+    <a class="inactive">
+{% endif %}
+        <img src="{{ MEDIA_URL }}icons/resultset_first.png" alt="" />
+        First</a></li>
+
+    <li>
+{% if page.prev_url %}
+    <a href="{{ page.prev_url }}"{% if top_menu %} id="prev"{% endif %}>
+{% else %}
+    <a class="inactive">
+{% endif %}
+        <img src="{{ MEDIA_URL }}icons/resultset_previous.png" alt="" />
+        Previous</a></li>
+
+    <li>
+{% if page.next_url %}
+    <a href="{{ page.next_url }}"{% if top_menu %} id="next"{% endif %}>
+{% else %}
+    <a class="inactive">
+{% endif %}
+        Next
+        <img src="{{ MEDIA_URL }}icons/resultset_next.png" alt="" /></a></li>
+
+    <li>
+{% if page.last_url %}
+    <a href="{{ page.last_url }}"{% if top_menu %} id="last"{% endif %}>
+{% else %}
+    <a class="inactive">
+{% endif %}
+        Last
+        <img src="{{ MEDIA_URL }}icons/resultset_last.png" alt="" /></a></li>
+</ul>
+</div>
+
+<div class="timeframe">
+<ul>
+{% for time_frame in page.time_frames %}
+    <li>
+    {% if time_frame.url %}
+        <a href="{{ time_frame.url }}">
+    {% else %}
+        <a class="inactive">
+    {% endif %}
+        <img src="{{ MEDIA_URL }}icons/{{ time_frame.icon }}.png" alt="" />
+        {{ time_frame.title }}</a></li>
+{% endfor %}
+{% ifequal page.view_type 'comic' %}
+    {% if comics.0.0 %}
+    <li>
+        <a href="{{ comics.0.0.get_feed_url }}"
+            title="Comic feed: {{ comics.0.0.name }}">
+            <img src="{{ MEDIA_URL }}icons/feed.png"
+                alt="Comic feed: {{ comics.0.0.name }}" />
+            Comic feed</a></li>
+    {% endif %}
+{% endifequal %}
+{% ifequal page.view_type 'set' %}
+    {% if set %}
+    <li>
+        <a href="{{ set.get_feed_url }}"
+            title="Comic set feed: {{ set.name }}">
+            <img src="{{ MEDIA_URL }}icons/feed.png"
+                alt="Comic set feed: {{ set.name }}" />
+            Comic set feed</a></li>
+    {% endif %}
+{% endifequal %}
+</ul>
+</div>
+
+<hr class="clear" />
+</div>

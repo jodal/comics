@@ -1,0 +1,40 @@
+{% extends "common/base.html" %}
+
+
+{% block title %}List of comics{% endblock %}
+
+
+{% block content %}
+
+<h2>List of comics</h2>
+
+{% if comics %}
+<table>
+    <tr>
+        <th>Comic</th>
+        <th>Language</th>
+        <th class="alignright">Archive size</th>
+        <th class="alignright"># sets</th>
+        <th>Website</th>
+    </tr>
+    {% for comic in comics %}
+    <tr>
+        <td>
+            <a href="{{ comic.get_feed_url }}"><img src="{{ MEDIA_URL }}icons/feed.png" width="16" height="16" alt="Comic feed: {{ comic.name }}" title="Comic feed: {{ comic.name }}" /></a>
+            <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
+        </td>
+        <td>{{ comic.get_language_display }}</td>
+        {% with comic.strip_set.count as strip_count %}
+	<td class="alignright">{{ strip_count }} strip{{ strip_count|pluralize }}</td>
+        {% endwith %}
+        <td class="alignright">{{ comic.number_of_sets }}
+            set{{ comic.number_of_sets|pluralize }}</td>
+        <td>{{ comic.url|urlize }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No comics found.</p>
+{% endif %}
+
+{% endblock %}
