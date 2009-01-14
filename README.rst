@@ -26,8 +26,8 @@ and input from numerous users.
 License
 -------
 
-comics is licensed under the GNU General Public Licence version 2. See
-docs/COPYING for the full license.
+comics is licensed under the GNU General Public Licence version 2. See COPYING
+for the full license.
 
 
 Dependencies
