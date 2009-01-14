@@ -1,4 +1,6 @@
+*.log
+*.pyc
+*.swp
 comics/settings_local.py
 debug_toolbar
-*.log
 media/admin
