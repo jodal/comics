@@ -33,8 +33,6 @@
 <ul>
     <li><a href="{% url top-latest %}">Home</a></li>
     <li><a href="{% url set-new %}">Comic sets</a></li>
-    <li><a href="{% url feedback %}">Feedback</a></li>
-    <li><a href="{% url about %}">About</a></li>
 </ul>
 {% endblock %}
         </div>
@@ -66,14 +64,14 @@
 
 <div id="ft">
     <div class="content">
-    Valid <a href="http://validator.w3.org/check/referer" title="Valid XHTML 1.1">XHTML</a>,
-    <a href="http://jigsaw.w3.org/css-validator/check/referer" title="Valid CSS">CSS</a>,
-    <a href="http://www.contentquality.com/mynewtester/cynthia.exe?Url1=http://comics.jodal.no/" title="Section 508 compliant">508</a>, and
-    <a href="http://validator.w3.org/feed/" title="Valid Atom 1.0">Atom</a>.
-    Powered by <a href="http://www.python.org/">Python</a> and
-    <a href="http://www.djangoproject.com/">Django</a>.
-    Get the <a href="http://code.jodal.no/bzrweb/comics/comics/">source</a>.
-    Contact the <a href="mailto:comics@jodal.no">webmaster</a>.
+{% block footer %}
+
+<ul>
+    <li><a href="{% url about %}">About</a></li>
+    <li><a href="{% url feedback %}">Feedback</a></li>
+</ul>
+
+{% endblock %}
     </div>
 </div>
 

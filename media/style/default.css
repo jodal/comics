@@ -212,6 +212,16 @@ hr.clear {
 #ft a:hover {
 	text-decoration: underline;
 }
+#ft ul {
+	font-size: 100%;
+	margin: 0;
+}
+#ft ul li {
+	display: inline;
+	list-style-type: none;
+	margin: 0;
+	padding-right: 1em;
+}
 
 /* Timeframe and navigation menu */
 .menu {
