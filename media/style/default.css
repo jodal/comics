@@ -143,25 +143,6 @@ hr.clear {
 	text-decoration: underline;
 }
 #hd #sitemenu ul {
-}
-#hd a {
-	background: transparent;
-	color: white;
-	text-decoration: none;
-}
-#hd #title {
-	float: left;
-}
-#hd h1 a:hover {
-	text-decoration: none;
-}
-#hd #sitemenu {
-	float: right;
-}
-#hd #sitemenu a:hover {
-	text-decoration: underline;
-}
-#hd #sitemenu ul {
 	margin: 0;
 }
 #hd #sitemenu ul li {
