@@ -5,10 +5,10 @@ MANAGE = PYTHONPATH=. comics/manage.py
 all: clean reload
 
 clean:
-	find . -iname \*.pyc -delete
+	find comics/ -iname \*.pyc -delete
 
 reload:
-	find apache -iname \*.wsgi -exec touch {} \;
+	find apache/ -iname \*.wsgi -exec touch {} \;
 
 shell:
 	$(MANAGE) shell --settings=comics.settings_dev
