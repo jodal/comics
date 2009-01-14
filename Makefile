@@ -11,10 +11,10 @@ reload:
 	find apache -iname \*.wsgi -exec touch {} \;
 
 shell:
-	$(MANAGE) shell --settings=comics.settings.dev
+	$(MANAGE) shell --settings=comics.settings_dev
 
 test:
-	$(MANAGE) test --settings=comics.settings.test
+	$(MANAGE) test --settings=comics.settings_testing
 
 coverage:
-	$(MANAGE) test --settings=comics.settings.coverage
+	$(MANAGE) test --settings=comics.settings_coverage
