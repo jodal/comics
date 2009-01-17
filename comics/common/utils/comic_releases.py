@@ -47,7 +47,7 @@ def get_releases_from_interval(comics, start_date, end_date):
                 cr = cr.filter(pub_date=start_date)
             else:
                 cr = cr.filter(pub_date__gte=start_date, pub_date__lte=end_date)
-            cr = cr.order_by('pub_date', 'strip__fetched')
+            cr = cr.order_by('pub_date')
             releases += cr
         except ObjectDoesNotExist:
             continue
