@@ -27,7 +27,7 @@ def get_latest_releases(comics):
     for comic in comics:
         try:
             releases.append(
-                comic.release_set.select_related().latest())
+                comic.release_set.select_related(depth=1).latest())
         except ObjectDoesNotExist:
             continue
     return releases
@@ -42,7 +42,7 @@ def get_releases_from_interval(comics, start_date, end_date):
     releases = []
     for comic in comics:
         try:
-            releases += comic.release_set.select_related().filter(
+            releases += comic.release_set.select_related(depth=1).filter(
                     pub_date__gte=start_date, pub_date__lte=end_date
                 ).order_by('pub_date', 'strip__fetched')
         except ObjectDoesNotExist:

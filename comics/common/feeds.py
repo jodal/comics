@@ -28,7 +28,7 @@ class ComicFeed(Feed):
     def items(self, obj):
         from_date = datetime.date.today() \
             - datetime.timedelta(settings.COMICS_MAX_DAYS_IN_FEED)
-        return obj.release_set.select_related().filter(
+        return obj.release_set.select_related(depth=1).filter(
             pub_date__gte=from_date).order_by('-pub_date')
 
     def item_pubdate(self, item):
