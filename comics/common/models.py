@@ -128,3 +128,6 @@ class Strip(models.Model):
 
     def get_image_url(self):
         return '%s%s' % (settings.COMICS_MEDIA_URL, self.filename)
+
+    def get_first_release(self):
+        return self.releases.order_by('pub_date')[0]
