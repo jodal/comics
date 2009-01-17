@@ -1,0 +1,20 @@
+<p><a href="{{ release.get_absolute_url }}">
+<img src="{{ release.strip.get_image_url }}" alt="{{ release }}"{% if release.strip.text %} title="{{ release.strip.text|safe|escape }}"{% endif %} class="stripimg" />
+</a></p>
+
+{% if release.strip.text %}
+<p class="striptext">{{ release.strip.text|safe }}</p>
+{% endif %}
+
+<p class="stripmeta">
+    Credits: {{ release.comic.rights }}.
+    {% with release.strip.get_first_release as first_release %}
+        {% ifnotequal release first_release %}
+            <a href="{{ first_release.get_absolute_url }}">
+            First released {{ first_release.pub_date|date }}</a>.
+        {% endifnotequal %}
+    {% endwith %}
+    Retrieved at {{ release.strip.fetched|time }},
+        {{ release.strip.fetched|date }}
+    from {{ release.comic.url|urlize }}.
+</p>
