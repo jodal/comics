@@ -23,6 +23,8 @@ ALTER TABLE "comics_release" ADD CONSTRAINT "strip_id_refs_id_211be2b6bc8157fe"
 -- Add indexes to release table
 CREATE INDEX "comics_release_comic_id" ON "comics_release" ("comic_id");
 CREATE INDEX "comics_release_strip_id" ON "comics_release" ("strip_id");
+CREATE INDEX "comics_release_comic_id_pub_date_strip_id"
+	ON "comics_release" ("comic_id", "pub_date", "strip_id");
 
 -- Set correct owner of release table
 ALTER TABLE "comics_release" OWNER TO "comics";
