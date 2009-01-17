@@ -1,106 +1,188 @@
 [
   {
+    "pk": 77246, 
+    "model": "common.release", 
+    "fields": {
+      "comic": 16, 
+      "pub_date": "2006-05-29"
+    }
+  }, 
+  {
+    "pk": 80315, 
+    "model": "common.release", 
+    "fields": {
+      "comic": 17, 
+      "pub_date": "2006-05-29"
+    }
+  }, 
+  {
+    "pk": 80743, 
+    "model": "common.release", 
+    "fields": {
+      "comic": 18, 
+      "pub_date": "2006-05-29"
+    }
+  }, 
+  {
+    "pk": 80316, 
+    "model": "common.release", 
+    "fields": {
+      "comic": 17, 
+      "pub_date": "2006-05-30"
+    }
+  }, 
+  {
+    "pk": 80744, 
+    "model": "common.release", 
+    "fields": {
+      "comic": 18, 
+      "pub_date": "2006-05-30"
+    }
+  }, 
+
+  {
+    "pk": 80745, 
+    "model": "common.release", 
+    "fields": {
+      "comic": 18, 
+      "pub_date": "2006-05-31"
+    }
+  }, 
+  {
+    "pk": 80318, 
+    "model": "common.release", 
+    "fields": {
+      "comic": 17, 
+      "pub_date": "2006-06-01"
+    }
+  }, 
+  {
+    "pk": 80746, 
+    "model": "common.release", 
+    "fields": {
+      "comic": 18, 
+      "pub_date": "2006-06-01"
+    }
+  }, 
+
+  {
     "pk": 27007, 
     "model": "common.strip", 
     "fields": {
+      "releases": [
+        77246
+      ], 
       "fetched": "2007-07-30 20:52:51", 
       "title": "", 
       "checksum": "59b44d44e40b2f1a84f3b1f0dc3559d6ef082c7e0f51853f62daf8aacffe0b9e", 
       "filename": "sinfest/2006/2006-05-29.gif", 
       "text": "", 
-      "comic": 16, 
-      "pub_date": "2006-05-29"
+      "comic": 16
     }
   }, 
   {
     "pk": 30076, 
     "model": "common.strip", 
     "fields": {
+      "releases": [
+        80315
+      ], 
       "fetched": "2007-07-30 20:54:13", 
       "title": "", 
       "checksum": "8bdef7c26dab950e34debb373c129f14b3eed0fd0a842ef7bd9f2ab996581a30", 
       "filename": "userfriendly/2006/2006-05-29.gif", 
       "text": "", 
-      "comic": 17, 
-      "pub_date": "2006-05-29"
+      "comic": 17
     }
   }, 
   {
     "pk": 30504, 
     "model": "common.strip", 
     "fields": {
+      "releases": [
+        80743
+      ], 
       "fetched": "2007-07-30 20:54:28", 
       "title": "", 
       "checksum": "f0fe7b43114786cf72649551290761a01b27cd85d9f1a97da7f58c2b505d4cf3", 
       "filename": "xkcd/2006/2006-05-29.jpg", 
       "text": "", 
-      "comic": 18, 
-      "pub_date": "2006-05-29"
+      "comic": 18
     }
   }, 
   {
     "pk": 30077, 
     "model": "common.strip", 
     "fields": {
+      "releases": [
+        80316
+      ], 
       "fetched": "2007-07-30 20:54:13", 
       "title": "", 
       "checksum": "b05743e59260bcfac6c11a54af8c21bb0c3052646f08da7652cee1d020a3b7df", 
       "filename": "userfriendly/2006/2006-05-30.gif", 
       "text": "", 
-      "comic": 17, 
-      "pub_date": "2006-05-30"
+      "comic": 17
     }
   }, 
   {
     "pk": 30505, 
     "model": "common.strip", 
     "fields": {
+      "releases": [
+        80744
+      ], 
       "fetched": "2007-07-30 20:54:28", 
       "title": "", 
       "checksum": "1621d92c8299c4d4343a93edaffd564a0c2ae90c33a49a9d2b84e734aaf4856f", 
       "filename": "xkcd/2006/2006-05-30.jpg", 
       "text": "", 
-      "comic": 18, 
-      "pub_date": "2006-05-30"
+      "comic": 18
     }
   }, 
   {
     "pk": 30506, 
     "model": "common.strip", 
     "fields": {
+      "releases": [
+        80745
+      ], 
       "fetched": "2007-07-30 20:54:28", 
       "title": "", 
       "checksum": "43e08e61e11638abefdcfcf85f4c73c747ec07f4b5d562a20226e2ceccc523f1", 
       "filename": "xkcd/2006/2006-05-31.jpg", 
       "text": "", 
-      "comic": 18, 
-      "pub_date": "2006-05-31"
+      "comic": 18
     }
   }, 
   {
     "pk": 30079, 
     "model": "common.strip", 
     "fields": {
+      "releases": [
+        80318
+      ], 
       "fetched": "2007-07-30 20:54:13", 
       "title": "", 
       "checksum": "c2745a76fe889758b814e1bec7091d4f35b39fbd9eaf84bf125f1cfc062ea105", 
       "filename": "userfriendly/2006/2006-06-01.gif", 
       "text": "", 
-      "comic": 17, 
-      "pub_date": "2006-06-01"
+      "comic": 17
     }
   }, 
   {
     "pk": 30507, 
     "model": "common.strip", 
     "fields": {
+      "releases": [
+        80746
+      ], 
       "fetched": "2007-07-30 20:54:28", 
       "title": "", 
       "checksum": "60204bcdf32c763beec1913a8b635df6a35ffd8c5dcf042ffda8f0a1a32e6ce6", 
       "filename": "xkcd/2006/2006-06-01.jpg", 
       "text": "", 
-      "comic": 18, 
-      "pub_date": "2006-06-01"
+      "comic": 18
     }
   }
 ]
