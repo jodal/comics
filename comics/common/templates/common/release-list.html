@@ -41,7 +41,7 @@
 
 {% block comic_top_menu %}
     {% with 1 as top_menu %}
-        {% include "common/strip-menu.html" %}
+        {% include "common/release-menu.html" %}
     {% endwith %}
 {% endblock %}
 
@@ -64,30 +64,31 @@
 <div id="strips">
 
 {% if comics %}
-    {% for comic, strips in comics %}
-        {% if strips %}
-            {% for strip in strips %}
+    {% for comic, releases in comics %}
+        {% if releases %}
+            {% for release in releases %}
 
 <div class="strip">
-    <h3 id="strip{{ strip.counter }}" class="striptitle">
-        <a href="{{ strip.get_absolute_url }}">
-        {{ strip.comic.name }}
-        <span class="strippub">published {{ strip.pub_date|naturalday }}</span>
-        {% if strip.title %}&ldquo;{{ strip.title|safe }}&rdquo;{% endif %}</a>
+    <h3 id="strip{{ release.counter }}" class="striptitle">
+        <a href="{{ release.get_absolute_url }}">
+        {{ release.comic.name }}
+        <span class="strippub">published {{ release.pub_date|naturalday }}</span>
+        {% if release.strip.title %}&ldquo;{{ release.strip.title|safe }}&rdquo;{% endif %}</a>
     </h3>
 
-    <p><a href="{{ strip.get_absolute_url }}">
-    <img src="{{ strip.get_image_url }}" alt="{{ strip }}"{% if strip.text %} title="{{ strip.text|safe|escape }}"{% endif %} class="stripimg" />
+    <p><a href="{{ release.get_absolute_url }}">
+    <img src="{{ release.strip.get_image_url }}" alt="{{ release }}"{% if release.strip.text %} title="{{ release.strip.text|safe|escape }}"{% endif %} class="stripimg" />
     </a></p>
 
-    {% if strip.text %}
-    <p class="striptext">{{ strip.text|safe }}</p>
+    {% if release.strip.text %}
+    <p class="striptext">{{ release.strip.text|safe }}</p>
     {% endif %}
 
     <p class="stripmeta">
-        Credits: {{ strip.comic.rights }}.
-        Retrieved at {{ strip.fetched|time }}, {{ strip.fetched|date }}
-        from {{ strip.comic.url|urlize }}.
+        Credits: {{ release.comic.rights }}.
+        Retrieved at {{ release.strip.fetched|time }},
+            {{ release.strip.fetched|date }}
+        from {{ release.comic.url|urlize }}.
     </p>
 </div>
 
@@ -113,7 +114,7 @@
 
 {% block comic_bottom_menu %}
     {% with 0 as top_menu %}
-        {% include "common/strip-menu.html" %}
+        {% include "common/release-menu.html" %}
     {% endwith %}
 {% endblock %}
 

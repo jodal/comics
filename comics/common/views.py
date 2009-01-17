@@ -27,7 +27,7 @@ def generic_show(request, queryset, page, latest=False, extra_context=None):
     }
     if extra_context is not None:
         kwargs.update(extra_context)
-    return render_to_response('common/strip-list.html', kwargs,
+    return render_to_response('common/release-list.html', kwargs,
         context_instance=RequestContext(request))
 
 
@@ -50,7 +50,7 @@ def top_show(request, year=None, month=None, day=None, days=1):
     return generic_show(request, queryset, page)
 
 def top_latest(request):
-    """Show latest strip for each comic"""
+    """Show latest release for each comic"""
 
     queryset = Comic.objects.all().order_by(
         '-number_of_sets', 'name')[:settings.COMICS_MAX_IN_TOP_LIST]
@@ -96,7 +96,7 @@ def comic_show(request, comic, year=None, month=None, day=None, days=1):
     return generic_show(request, queryset, page)
 
 def comic_latest(request, comic):
-    """Show latest strip from comic"""
+    """Show latest release from comic"""
 
     comic = get_object_or_404(Comic, slug=comic)
     queryset = [comic]
