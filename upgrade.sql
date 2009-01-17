@@ -38,3 +38,7 @@ INSERT INTO "comics_strip_releases" ("strip_id", "release_id")
 
 -- Drop pub_date column from strip
 ALTER TABLE "comics_strip" DROP COLUMN "pub_date";
+
+-- Set correct owner of new tables
+ALTER TABLE "comics_release" OWNER TO "comics";
+ALTER TABLE "comics_strip_releases" OWNER TO "comics";
