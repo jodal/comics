@@ -4,18 +4,25 @@ from comics.crawler.crawlers import BaseComicCrawler
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
-        self.web_url = 'http://www.aftenposten.no/tegneserier/'
+        self.feed_url = 'http://www.aftenposten.no/eksport/rss-1_0/?seksjon=tegneserier&utvalg=siste'
+        self.parse_feed()
+
+        for entry in self.feed.entries:
+            if (entry.title == 'Dagens Wulffmorgenthaler' and
+               self.timestamp_to_date(entry.updated_parsed) == self.pub_date):
+               self.web_url = entry.link
+               break
+
+        if self.web_url is None:
+            return
+
         self.parse_web_page()
 
         strip_pattern = re.compile(
-            r'.*/_[Ww]t_\w+_(\d{6})_\w{3}_\d{6}z.jpg$')
+            r'.*/_(Escenic-)*[Ww]t_\w+_\d{2}_\d{6}x.jpg$')
         for image in self.web_page.imgs:
             if 'src' in image:
                 matches = strip_pattern.match(image['src'])
                 if matches is not None:
-                    pub_date_string = matches.groups()[0]
-                    pub_date = self.string_to_date(pub_date_string, '%y%m%d')
-                    if pub_date == self.pub_date:
-                        self.url = self.join_web_url(image['src'])
-                        self.url = self.url.replace('z.jpg', 'x.jpg')
-                        return
+                    self.url = self.join_web_url(image['src'])
+                    return

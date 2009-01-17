@@ -1100,7 +1100,7 @@
       "slug": "wulffmorgenthalerap", 
       "history_capable_date": null, 
       "language": "no", 
-      "history_capable_days": 31, 
+      "history_capable_days": 10, 
       "start_date": "2001-01-01"
     }
   }, 
