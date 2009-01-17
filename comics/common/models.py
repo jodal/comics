@@ -88,6 +88,7 @@ class Release(models.Model):
     # Required fields
     comic = models.ForeignKey(Comic)
     pub_date = models.DateField(verbose_name='publication date')
+    strip = models.ForeignKey('Strip', related_name='releases')
 
     class Meta:
         db_table = 'comics_release'
@@ -108,7 +109,6 @@ class Release(models.Model):
 class Strip(models.Model):
     # Required fields
     comic = models.ForeignKey(Comic)
-    releases = models.ManyToManyField(Release)
     fetched = models.DateTimeField(auto_now_add=True)
     filename = models.CharField(max_length=100)
     checksum = models.CharField(max_length=64, db_index=True)
