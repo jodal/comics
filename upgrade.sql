@@ -1,5 +1,9 @@
 -- *** Database changes needed by the multi-release branch ***
 
+-- Add has_reruns column to comic table
+ALTER TABLE "comics_comic"
+	ADD COLUMN "has_reruns" boolean NOT NULL DEFAULT false;
+
 -- Create release table
 CREATE TABLE "comics_release" (
     "id" serial NOT NULL PRIMARY KEY,

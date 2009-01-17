@@ -31,6 +31,8 @@ class Comic(models.Model):
         help_text='Date of oldest release available for crawling')
     history_capable_days = models.PositiveIntegerField(blank=True, null=True,
         help_text='Number of days a release is available for crawling')
+    has_reruns = models.BooleanField(default=False,
+        help_text='Check to add reruns as new releases')
     schedule = models.CharField(max_length=20, blank=True,
         help_text='On what weekdays the comic is published')
     time_zone = models.IntegerField(blank=True, null=True,

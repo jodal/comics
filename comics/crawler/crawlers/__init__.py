@@ -10,7 +10,7 @@ import urlparse
 from django.conf import settings
 from django.db import transaction
 
-from comics.common.models import Strip
+from comics.common.models import Release, Strip
 from comics.crawler.exceptions import *
 from comics.crawler.utils.webparser import WebParser
 from comics.utils.hash import sha256sum
@@ -83,8 +83,8 @@ class BaseComicCrawler(object):
                 self.comic.history_capable())
 
         # XXX: With the following check, we do not support
-        # multiple strips per date
-        if Strip.objects.filter(comic=self.comic,
+        # multiple releases per comic per date
+        if Release.objects.filter(comic=self.comic,
             pub_date=self.pub_date).count():
             raise StripAlreadyExists('%s/%s' % (self.comic.slug, self.pub_date))
 
@@ -165,9 +165,12 @@ class BaseComicCrawler(object):
         if self.checksum in settings.COMICS_STRIP_BLACKLIST:
             raise CrawlerError('Strip blacklisted')
         try:
-            Strip.objects.get(comic=self.comic, checksum=self.checksum)
+            strip = Strip.objects.get(comic=self.comic, checksum=self.checksum)
             os.remove(tmpfilename)
-            raise StripAlreadyExists('Checksum collision')
+            if self.comic.has_reruns:
+                return self.add_new_release(strip)
+            else:
+                raise StripAlreadyExists('Checksum collision')
         except Strip.DoesNotExist:
             pass
 
@@ -216,6 +219,18 @@ class BaseComicCrawler(object):
             raise e
         else:
             transaction.commit()
+
+    def add_new_release(self, strip):
+        release = Release(
+            comic=self.comic, pub_date=self.pub_date, strip=strip)
+        try:
+            release.save()
+        except Exception, e:
+            transaction.rollback()
+            raise e
+        else:
+            transaction.commit()
+
 
 class BaseComicsComComicCrawler(BaseComicCrawler):
     """Base comic crawler for all comics hosted at comics.com"""
