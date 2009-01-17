@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template.context import RequestContext
 
 from comics.common.models import Comic
-from comics.common.utils.comic_strips import get_comic_strips_struct
+from comics.common.utils.comic_releases import get_comic_releases_struct
 from comics.common.utils.navigation import get_navigation
 
 # Generic views
@@ -15,7 +15,7 @@ from comics.common.utils.navigation import get_navigation
 def generic_show(request, queryset, page, latest=False, extra_context=None):
     """Generic view for showing comics"""
 
-    comics = get_comic_strips_struct(
+    comics = get_comic_releases_struct(
         queryset,
         latest=latest,
         start_date=page.get('start_date', None),

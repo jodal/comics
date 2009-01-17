@@ -7,7 +7,7 @@ COVERAGE_MODULES = (
     'comics.common.feeds',
     'comics.common.models',
     'comics.common.templatetags.versioned_media',
-    'comics.common.utils.comic_strips',
+    'comics.common.utils.comic_releases',
     'comics.common.utils.navigation',
     'comics.common.utils.time_frames',
     'comics.common.views',
