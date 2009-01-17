@@ -28,9 +28,9 @@ class Comic(models.Model):
     end_date = models.DateField(blank=True, null=True,
         help_text='Last published at, if comic has been cancelled')
     history_capable_date = models.DateField(blank=True, null=True,
-        help_text='Date of oldest strip available in online archives')
+        help_text='Date of oldest release available for crawling')
     history_capable_days = models.PositiveIntegerField(blank=True, null=True,
-        help_text='Number of days a strip is available in online archives')
+        help_text='Number of days a release is available for crawling')
     schedule = models.CharField(max_length=20, blank=True,
         help_text='On what weekdays the comic is published')
     time_zone = models.IntegerField(blank=True, null=True,
@@ -84,18 +84,13 @@ class Comic(models.Model):
         return dt.datetime.now() - dt.timedelta(hours=hour_diff)
 
 
-class Strip(models.Model):
+class Release(models.Model):
     # Required fields
     comic = models.ForeignKey(Comic)
-    pub_date = models.DateField(db_index=True, verbose_name='publication date')
-    fetched = models.DateTimeField(auto_now_add=True)
-    filename = models.CharField(max_length=100)
-    checksum = models.CharField(max_length=64, db_index=True)
-    title = models.CharField(max_length=100, blank=True)
-    text = models.TextField(blank=True)
+    pub_date = models.DateField(verbose_name='publication date')
 
     class Meta:
-        db_table = 'comics_strip'
+        db_table = 'comics_release'
         get_latest_by = 'pub_date'
 
     def __unicode__(self):
@@ -108,6 +103,26 @@ class Strip(models.Model):
             'month': self.pub_date.month,
             'day': self.pub_date.day,
         })
+
+
+class Strip(models.Model):
+    # Required fields
+    comic = models.ForeignKey(Comic)
+    releases = models.ManyToManyField(Release)
+    fetched = models.DateTimeField(auto_now_add=True)
+    filename = models.CharField(max_length=100)
+    checksum = models.CharField(max_length=64, db_index=True)
+
+    # Optional fields
+    title = models.CharField(max_length=100, blank=True)
+    text = models.TextField(blank=True)
+
+    class Meta:
+        db_table = 'comics_strip'
+        get_latest_by = 'pub_date'
+
+    def __unicode__(self):
+        return u'%s strip %s' % (self.comic, self.checksum)
 
     def get_image_url(self):
         return '%s%s' % (settings.COMICS_MEDIA_URL, self.filename)
