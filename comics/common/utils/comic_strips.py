@@ -27,7 +27,7 @@ def get_latest_strips(comics):
     for comic in comics:
         try:
             strips.append(
-                comic.strip_set.select_related().latest('pub_date'))
+                comic.strip_set.select_related().latest())
         except ObjectDoesNotExist:
             continue
     return strips
