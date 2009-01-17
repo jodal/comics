@@ -97,7 +97,6 @@ class Strip(models.Model):
     class Meta:
         db_table = 'comics_strip'
         get_latest_by = 'pub_date'
-        ordering = ['pub_date']
 
     def __unicode__(self):
         return u'%s published %s' % (self.comic, self.pub_date)
