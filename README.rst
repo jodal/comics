@@ -72,7 +72,7 @@ To import comics from an old disk archive:
 
     ./manage.py importcomics
 
-Add ``--help'' to get further instructions.
+Add `--help` to get further instructions.
 
 
 
@@ -89,8 +89,9 @@ A mostly unordered list of things to fix. Patches accepted.
   classes instead of long complicated functions.
 
 New features:
-- Support multiple strips per comic per day. Some places were this is not
-  supported, it is commented in the source.
+- Support multiple strips per comic per day, which at least includes:
+  - Some places were this is not supported, it is commented in the source.
+  - Change naming scheme for image files, i.e. from date to checksum.
 - Replace "Top 10" default views with a stream of the most recently fetched
   comics. Consider not having alternative time frame views, but using regular
   pagination.
