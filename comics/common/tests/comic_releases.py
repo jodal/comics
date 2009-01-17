@@ -53,11 +53,11 @@ class ComicReleasesTestCase(TestCase):
 
         self.assertTrue(len(result) > 0)
         self.assertEquals(self.num_comics, len(result))
-        for comic, release in result:
+        for comic, releases in result:
             if comic.slug in ('sinfest', 'userfriendly', 'xkcd'):
-                self.assertTrue(len(release) > 0)
+                self.assertTrue(len(releases) > 0)
             else:
-                self.assertTrue(release is None)
+                self.assertEquals(0, len(releases))
 
     def test_get_comic_releases_struct_latest(self):
         result = cr.get_comic_releases_struct(self.comics, latest=True)

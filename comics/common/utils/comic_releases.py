@@ -70,5 +70,5 @@ def map_releases_to_comics(comics, releases):
             mapping[release.comic.slug].append(release)
     result = []
     for comic in comics:
-        result.append((comic, mapping.get(comic.slug, None)))
+        result.append((comic, mapping.get(comic.slug, [])))
     return result
