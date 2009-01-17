@@ -208,12 +208,12 @@ class BaseComicCrawler(object):
             strip.title = self.title
         if self.text is not None:
             strip.text = self.text
-        release = Release(
-            comics=self.comic, pub_date=self.pub_date, strip=strip)
 
         # Save to database
         try:
             strip.save()
+            release = Release(
+                comic=self.comic, pub_date=self.pub_date, strip=strip)
             release.save()
         except Exception, e:
             transaction.rollback()
