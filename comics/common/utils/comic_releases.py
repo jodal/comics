@@ -42,9 +42,13 @@ def get_releases_from_interval(comics, start_date, end_date):
     releases = []
     for comic in comics:
         try:
-            releases += comic.release_set.select_related(depth=1).filter(
-                    pub_date__gte=start_date, pub_date__lte=end_date
-                ).order_by('pub_date', 'strip__fetched')
+            cr = comic.release_set.select_related(depth=1)
+            if start_date == end_date:
+                cr = cr.filter(pub_date=start_date)
+            else:
+                cr = cr.filter(pub_date__gte=start_date, pub_date__lte=end_date)
+            cr = cr.order_by('pub_date', 'strip__fetched')
+            releases += cr
         except ObjectDoesNotExist:
             continue
     return releases
