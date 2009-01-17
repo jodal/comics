@@ -1,6 +1,0 @@
-{% load humanize %}
-<a href="{{ release.get_absolute_url }}">
-{{ release.comic.name }}
-<span class="strippub">published {{ release.pub_date|naturalday }}</span>
-{% if release.strip.title %}&ldquo;{{ release.strip.title|safe }}&rdquo;{% endif %}</a>
-

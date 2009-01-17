@@ -1,0 +1,8 @@
+{% load humanize %}
+{% spaceless %}
+    {% with obj as release %}
+        {{ release.comic.name }}
+        published {{ release.pub_date|naturalday }}
+        {% if release.strip.title %}&ldquo;{{ release.strip.title|safe }}&rdquo;{% endif %}
+    {% endwith %}
+{% endspaceless %}

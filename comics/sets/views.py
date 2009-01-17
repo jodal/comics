@@ -87,7 +87,7 @@ def set_show(request, set, year=None, month=None, day=None, days=1):
 
 @never_cache
 def set_latest(request, set):
-    """Show latest strips from set"""
+    """Show latest releases from set"""
 
     set = get_object_or_404(Set, name=set)
     queryset = set.comics.all()

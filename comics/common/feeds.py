@@ -9,8 +9,8 @@ from comics.common.models import Comic
 class ComicFeed(Feed):
     feed_type = Atom1Feed
     item_author_name = settings.COMICS_SITE_TITLE
-    title_template = 'feeds/strip_title.html'
-    description_template = 'feeds/strip_description.html'
+    title_template = 'feeds/release-title.html'
+    description_template = 'feeds/release-content.html'
 
     def get_object(self, bits):
         if len(bits) != 1:
@@ -28,11 +28,11 @@ class ComicFeed(Feed):
     def items(self, obj):
         from_date = datetime.date.today() \
             - datetime.timedelta(settings.COMICS_MAX_DAYS_IN_FEED)
-        return obj.strip_set.select_related().filter(pub_date__gte=from_date
-            ).order_by('-pub_date')
+        return obj.release_set.select_related().filter(
+            pub_date__gte=from_date).order_by('-pub_date')
 
     def item_pubdate(self, item):
-        return item.fetched
+        return item.strip.fetched
 
     def item_copyright(self, item):
         return item.comic.rights

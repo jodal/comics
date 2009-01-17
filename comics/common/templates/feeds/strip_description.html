@@ -1,9 +1,0 @@
-{% spaceless %}
-<div class="strip">
-    <p><img src="{{ obj.get_image_url }}" alt="{{ obj }}" class="stripimg" /></p>
-
-    {% if obj.text %}
-        <p class="striptext">{{ obj.text|safe }}</p>
-    {% endif %}
-</div>
-{% endspaceless %}

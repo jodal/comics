@@ -4,14 +4,14 @@ from django.conf import settings
 from django.contrib.syndication.feeds import Feed, FeedDoesNotExist
 from django.utils.feedgenerator import Atom1Feed
 
-from comics.common.models import Strip
+from comics.common.models import Release
 from comics.sets.models import Set
 
 class SetFeed(Feed):
     feed_type = Atom1Feed
     item_author_name = settings.COMICS_SITE_TITLE
-    title_template = 'feeds/strip_title.html'
-    description_template = 'feeds/strip_description.html'
+    title_template = 'feeds/release-title.html'
+    description_template = 'feeds/release-content.html'
 
     def get_object(self, bits):
         if len(bits) != 1:
@@ -29,11 +29,11 @@ class SetFeed(Feed):
     def items(self, obj):
         from_date = datetime.date.today() \
             - datetime.timedelta(settings.COMICS_MAX_DAYS_IN_FEED)
-        return Strip.objects.select_related().filter(comic__set=obj,
-            pub_date__gte=from_date).order_by('-pub_date', '-fetched')
+        return Release.objects.select_related().filter(comic__set=obj,
+            pub_date__gte=from_date).order_by('-pub_date')
 
     def item_pubdate(self, item):
-        return item.fetched
+        return item.strip.fetched
 
     def item_copyright(self, item):
         return item.comic.rights
