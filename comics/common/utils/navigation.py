@@ -5,10 +5,10 @@ import datetime as dt
 from urllib import unquote
 
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.http import Http404
 
-from comics.common.models import Strip
 from comics.common.utils.time_frames import time_frames
 
 def get_navigation(request, view_type, instance=None,
@@ -51,28 +51,28 @@ def navigation_days(request, view_type, instance=None,
     last_date = None
     if view_type == 'comic' and instance is not None:
         try:
-            first_date = instance.strip_set.order_by('pub_date'
+            first_date = instance.release_set.order_by('pub_date'
                 ).values('pub_date')[0]['pub_date']
-            last_date = instance.strip_set.values('pub_date'
+            last_date = instance.release_set.values('pub_date'
                 ).latest()['pub_date']
-        except (IndexError, Strip.DoesNotExist):
-            # The comic has no strips
+        except (IndexError, ObjectDoesNotExist):
+            # The comic has no releases
             pass
 
     # Prev/next dates
     if view_type == 'comic' and instance is not None and days == 1:
         # When browsing a single comic, skip days without comics
         try:
-            prev_date = instance.strip_set.filter(pub_date__lt=start_date
+            prev_date = instance.release_set.filter(pub_date__lt=start_date
                 ).values('pub_date').latest()['pub_date']
-        except Strip.DoesNotExist:
-            # At first strip
+        except ObjectDoesNotExist:
+            # At first release
             prev_date = start_date
         try:
-            next_date = instance.strip_set.filter(pub_date__gt=start_date
+            next_date = instance.release_set.filter(pub_date__gt=start_date
                 ).values('pub_date').order_by('pub_date')[0]['pub_date']
         except IndexError:
-            # At latest strip; next is in the future
+            # At latest release; next is in the future
             next_date = today + one_day
     else:
         # For all other views
@@ -213,16 +213,17 @@ def navigation_month(request, view_type, instance=None, year=None, month=None):
     last_month = None
     if view_type == 'comic' and instance is not None:
         try:
-            first_strip = instance.strip_set.order_by('pub_date')[0]
-            first_month = dt.date(first_strip.pub_date.year,
-                first_strip.pub_date.month, 1)
-            last_strip = instance.strip_set.latest()
-            last_month_num_days = calendar.monthrange(last_strip.pub_date.year,
-                last_strip.pub_date.month)[1]
-            last_month = dt.date(last_strip.pub_date.year,
-                last_strip.pub_date.month, last_month_num_days)
-        except (IndexError, Strip.DoesNotExist):
-            # Comic has no strips
+            first_release = instance.release_set.order_by('pub_date')[0]
+            first_month = dt.date(first_release.pub_date.year,
+                first_release.pub_date.month, 1)
+            last_release = instance.release_set.latest()
+            last_month_num_days = calendar.monthrange(
+                last_release.pub_date.year,
+                last_release.pub_date.month)[1]
+            last_month = dt.date(last_release.pub_date.year,
+                last_release.pub_date.month, last_month_num_days)
+        except (IndexError, ObjectDoesNotExist):
+            # Comic has no releases
             pass
 
     # Prev/next dates
