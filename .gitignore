@@ -3,4 +3,5 @@
 *.swp
 comics/settings_local.py
 debug_toolbar
+django
 media/admin
