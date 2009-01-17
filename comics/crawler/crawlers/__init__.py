@@ -201,19 +201,20 @@ class BaseComicCrawler(object):
             os.remove(tmpfilename)
             raise e
 
-        # Create strip object
-        strip = Strip(comic=self.comic,
-                      pub_date=self.pub_date,
-                      filename=self.filename,
-                      checksum=self.checksum)
+        # Create strip and release object
+        strip = Strip(
+            comic=self.comic, filename=self.filename, checksum=self.checksum)
         if self.title is not None:
             strip.title = self.title
         if self.text is not None:
             strip.text = self.text
+        release = Release(
+            comics=self.comic, pub_date=self.pub_date, strip=strip)
 
         # Save to database
         try:
             strip.save()
+            release.save()
         except Exception, e:
             transaction.rollback()
             raise e
