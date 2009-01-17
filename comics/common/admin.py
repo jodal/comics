@@ -8,10 +8,15 @@ class ComicAdmin(admin.ModelAdmin):
         'slug': ('name',)
     }
 
-class StripAdmin(admin.ModelAdmin):
-    list_display = ('comic', 'pub_date', 'title', 'fetched')
-    list_filter = ['comic', 'pub_date', 'fetched']
+class ReleaseAdmin(admin.ModelAdmin):
+    list_display = ('comic', 'pub_date')
+    list_filter = ['comic', 'pub_date']
     date_hierarchy = 'pub_date'
 
+class StripAdmin(admin.ModelAdmin):
+    list_display = ('comic', 'title', 'fetched')
+    list_filter = ['comic', 'fetched']
+
 admin.site.register(models.Comic, ComicAdmin)
+admin.site.register(models.Release, ReleaseAdmin)
 admin.site.register(models.Strip, StripAdmin)
