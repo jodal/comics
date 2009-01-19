@@ -7,8 +7,7 @@ class ComicCrawler(BaseComicCrawler):
 
         # TODO: Fetch line of text which sometimes are associated with a strip.
 
-        self.feed_url = 'http://www.macguff.fr/goomi/unspeakable/rss.xml'
-        self.parse_feed()
+        self.parse_feed('http://www.macguff.fr/goomi/unspeakable/rss.xml')
 
         for entry in self.feed['entries']:
             if (entry['updated_parsed'] is not None and

@@ -2,8 +2,7 @@ from comics.crawler.crawlers import BaseComicCrawler
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
-        self.feed_url = 'http://www.giantitp.com/comics/oots.rss'
-        self.parse_feed()
+        self.parse_feed('http://www.giantitp.com/comics/oots.rss')
 
         if len(self.feed.entries):
             entry = self.feed.entries[0]

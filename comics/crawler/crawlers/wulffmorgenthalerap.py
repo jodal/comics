@@ -4,8 +4,9 @@ from comics.crawler.crawlers import BaseComicCrawler
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
-        self.feed_url = 'http://www.aftenposten.no/eksport/rss-1_0/?seksjon=tegneserier&utvalg=siste'
-        self.parse_feed()
+        self.parse_feed(
+            'http://www.aftenposten.no/eksport/rss-1_0/'
+            '?seksjon=tegneserier&utvalg=siste')
 
         for entry in self.feed.entries:
             if (entry.title == 'Dagens Wulffmorgenthaler' and

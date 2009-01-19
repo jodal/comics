@@ -2,8 +2,7 @@ from comics.crawler.crawlers import BaseComicCrawler
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
-        self.feed_url = 'http://www.bunny-comic.com/rss/bunny.xml'
-        self.parse_feed()
+        self.parse_feed('http://www.bunny-comic.com/rss/bunny.xml')
 
         for entry in self.feed['entries']:
             title = entry['title']

@@ -2,8 +2,7 @@ from comics.crawler.crawlers import BaseComicCrawler
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
-        self.feed_url = 'http://pbfcomics.com/feed/feed.xml'
-        self.parse_feed()
+        self.parse_feed('http://pbfcomics.com/feed/feed.xml')
 
         for entry in self.feed['entries']:
             if entry['summary'] == 'Comic':

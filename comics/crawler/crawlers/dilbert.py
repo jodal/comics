@@ -2,8 +2,8 @@ from comics.crawler.crawlers import BaseComicCrawler
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
-        self.feed_url = 'http://feeds.feedburner.com/DilbertDailyStrip?format=xml'
-        self.parse_feed()
+        self.parse_feed(
+            'http://feeds.feedburner.com/DilbertDailyStrip?format=xml')
 
         for entry in self.feed['entries']:
             if self.timestamp_to_date(entry['updated_parsed']) == self.pub_date:

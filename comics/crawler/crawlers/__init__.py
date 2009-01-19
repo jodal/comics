@@ -36,8 +36,6 @@ class BaseComicCrawler(object):
         self.pub_date = None
         # Strip website URL (optional)
         self.web_url = None
-        # Strip feed URL (optional)
-        self.feed_url = None
         # Strip URL (the result of get_url())
         self.url = None
         # Strip title (optional)
@@ -112,9 +110,9 @@ class BaseComicCrawler(object):
             if self.text and type(self.text) != unicode:
                 self.text = unicode(self.text, self.web_page.charset)
 
-    def parse_feed(self):
+    def parse_feed(self, feed_url):
         if self.feed is None:
-            self.feed = feedparser.parse(self.feed_url)
+            self.feed = feedparser.parse(feed_url)
 
     def parse_web_page(self):
         if self.web_page is None:

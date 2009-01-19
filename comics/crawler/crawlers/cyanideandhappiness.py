@@ -4,8 +4,7 @@ from comics.crawler.crawlers import BaseComicCrawler
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
-        self.feed_url = 'http://feeds.feedburner.com/Explosm'
-        self.parse_feed()
+        self.parse_feed('http://feeds.feedburner.com/Explosm')
 
         for entry in self.feed['entries']:
             if entry['title'] == self.pub_date.strftime('%m.%d.%Y'):

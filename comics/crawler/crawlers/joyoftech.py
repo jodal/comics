@@ -4,8 +4,7 @@ from comics.crawler.crawlers import BaseComicCrawler
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
-        self.feed_url = 'http://www.joyoftech.com/joyoftech/jotblog/atom.xml'
-        self.parse_feed()
+        self.parse_feed('http://www.joyoftech.com/joyoftech/jotblog/atom.xml')
 
         for entry in self.feed['entries']:
             if (re.match('^JoT[ #]*\d.*', entry['title'])
