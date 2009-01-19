@@ -110,6 +110,9 @@ class BaseComicCrawler(object):
             if self.text and type(self.text) != unicode:
                 self.text = unicode(self.text, self.web_page.charset)
 
+
+    ### For use by subclasses in their _get_url() implementations
+
     def parse_feed(self, feed_url):
         if self.feed is None:
             self.feed = feedparser.parse(feed_url)
