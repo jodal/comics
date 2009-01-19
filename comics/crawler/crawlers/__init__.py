@@ -177,14 +177,14 @@ class BaseComicCrawler(object):
             os.remove(temp_path)
             raise StripNotAnImage('%s/%s' % (self.comic.slug, self.pub_date))
 
-        return (tmpfilename, http_response)
+        return (temp_path, http_response)
 
-    def _get_strip_by_checksum(self, checksum):
+    def _get_strip_by_checksum(self, strip_checksum):
         """Get existing strip based on checksum"""
 
         self._check_if_blacklisted(strip_checksum)
         try:
-            return Strip.objects.get(comic=self.comic, checksum=checksum)
+            return Strip.objects.get(comic=self.comic, checksum=strip_checksum)
         except Strip.DoesNotExist:
             return None
 
