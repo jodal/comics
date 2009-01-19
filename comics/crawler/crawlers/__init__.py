@@ -31,7 +31,7 @@ class BaseComicCrawler(object):
     def reset(self):
         """Resets crawler state"""
 
-        ### Populated by get_url()
+        ### Populated during strip URL retrieval
         # Publication date
         self.pub_date = None
         # Strip website URL (optional)
@@ -45,13 +45,8 @@ class BaseComicCrawler(object):
         # Strip text (optional)
         self.text = None
 
-        ### Populated by save_strip()
-        # Strip relative filepath
-        self.filename = None
-        # Strip checksum
-        self.checksum = None
-        # The remote server response for debugging purposes
-        self.response = None
+
+    ### URL/title/text retrieval
 
     def get_url(self, pub_date=None):
         """Get URL of strip from pub_date, or the latest strip"""
@@ -142,89 +137,110 @@ class BaseComicCrawler(object):
         p = re.compile(r'<[^<]*?>')
         return p.sub('', data)
 
-    @transaction.commit_manually
-    def save_strip(self):
+
+    ### Strip image retrieval
+
+    def get_strip(self):
         """Download, sanitize and save strip"""
 
-        # Download strip to temporary location
-        tmpfilename = '%s/%s-%s.comics' % (
+        assert self.pub_date is not None
+        assert self.url is not None
+
+        (temp_path, http_response) = self._download_strip_image()
+        strip_checksum = sha256sum(temp_path)
+        original_strip = self._get_strip_by_checksum(strip_checksum)
+
+        if original_strip is not None:
+            os.remove(temp_path)
+            if self.comic.has_reruns:
+                self._save_rerun_release(original_strip)
+            else:
+                raise StripAlreadyExists('Checksum collision')
+        else:
+            (absolute_path, relative_path) = self._get_image_path(http_response)
+            self._archive_strip_image(temp_path, absolute_path)
+            self._save_new_release(relative_path, strip_checksum)
+
+    def _download_strip_image(self):
+        """Download strip image to temporary location"""
+
+        temp_path = '%s/%s-%s.comics' % (
             '/var/tmp',
             self.comic.slug,
             self.pub_date.strftime('%Y-%m-%d'),
         )
-        (tmpfilename, self.response) = urllib.urlretrieve(self.url, tmpfilename)
+        (temp_path, http_response) = urllib.urlretrieve(self.url, temp_path)
         urllib.urlcleanup()
 
-        # Check if image based on mimetype
-        if not self.response.getmaintype() == 'image':
-            os.remove(tmpfilename)
+        if not http_response.getmaintype() == 'image':
+            os.remove(temp_path)
             raise StripNotAnImage('%s/%s' % (self.comic.slug, self.pub_date))
 
-        # Check if strip already exists based on checksum
-        self.checksum = sha256sum(tmpfilename)
-        if self.checksum in settings.COMICS_STRIP_BLACKLIST:
-            raise CrawlerError('Strip blacklisted')
-        try:
-            strip = Strip.objects.get(comic=self.comic, checksum=self.checksum)
-            os.remove(tmpfilename)
-            if self.comic.has_reruns:
-                return self.add_new_release(strip)
-            else:
-                raise StripAlreadyExists('Checksum collision')
-        except Strip.DoesNotExist:
-            pass
+        return (tmpfilename, http_response)
 
+    def _get_strip_by_checksum(self, checksum):
+        """Get existing strip based on checksum"""
+
+        self._check_if_blacklisted(strip_checksum)
+        try:
+            return Strip.objects.get(comic=self.comic, checksum=checksum)
+        except Strip.DoesNotExist:
+            return None
+
+    def _check_if_blacklisted(self, strip_checksum):
+        if strip_checksum in settings.COMICS_STRIP_BLACKLIST:
+            raise CrawlerError('Strip blacklisted')
+
+    def _get_image_path(self, http_response):
         # Detect file extension based on mimetype
-        fileext = mimetypes.guess_extension(self.response.gettype())
+        fileext = mimetypes.guess_extension(http_response.gettype())
         if fileext == '.jpe':
             fileext = '.jpg'
 
         # Construct final filename and path
-        self.filename = '%(slug)s/%(year)d/%(date)s%(ext)s' % {
+        relative_path = '%(slug)s/%(year)d/%(date)s%(ext)s' % {
             'slug': self.comic.slug,
             'year': self.pub_date.year,
             'date': self.pub_date.strftime('%Y-%m-%d'),
             'ext': fileext,
         }
-        fullpath = '%s%s' % (settings.MEDIA_ROOT, self.filename)
-        (justpath, justfilename) = os.path.split(fullpath)
+        absolute_path = '%s%s' % (settings.MEDIA_ROOT, relative_path)
 
         # Create missing archive directories
+        (justpath, justfilename) = os.path.split(absolute_path)
         if not os.path.isdir(justpath):
             os.makedirs(justpath, 0755)
 
-        # Move strip file to archive
+        return (absolute_path, relative_path)
+
+    def _archive_strip_image(self, temp_path, archive_path):
+        """Move strip file to archive"""
+
         try:
-            os.rename(tmpfilename, fullpath)
+            os.rename(temp_path, archive_path)
         except Exception, e:
-            # Cleanup and re-raise error
-            os.remove(tmpfilename)
+            os.remove(temp_path)
             raise e
 
-        # Create strip and release object
+    def _save_new_release(self, relative_path, strip_checksum):
         strip = Strip(
-            comic=self.comic, filename=self.filename, checksum=self.checksum)
+            comic=self.comic, filename=relative_path, checksum=strip_checksum)
         if self.title is not None:
             strip.title = self.title
         if self.text is not None:
             strip.text = self.text
+        self._save_strip_and_release(strip, new_release=True)
 
-        # Save to database
+    def _save_rerun_release(self, strip):
+        self._save_strip_and_release(strip, new_release=False)
+
+    @transaction.commit_manually
+    def _save_strip_and_release(self, strip, new_release=True):
         try:
-            strip.save()
+            if new_release:
+                strip.save()
             release = Release(
                 comic=self.comic, pub_date=self.pub_date, strip=strip)
-            release.save()
-        except Exception, e:
-            transaction.rollback()
-            raise e
-        else:
-            transaction.commit()
-
-    def add_new_release(self, strip):
-        release = Release(
-            comic=self.comic, pub_date=self.pub_date, strip=strip)
-        try:
             release.save()
         except Exception, e:
             transaction.rollback()

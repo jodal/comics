@@ -79,7 +79,7 @@ class SuperCrawler(object):
         logger.debug('Strip URL: %s', comic_crawler.url)
         logger.debug('Strip title: %s', comic_crawler.title)
         logger.debug('Strip text: %s', comic_crawler.text)
-        comic_crawler.save_strip()
+        comic_crawler.get_strip()
         logger.info('Strip saved (%s/%s)', comic_crawler.comic.slug, pub_date)
 
     def _update_strip_titles(self, comic_crawler):
