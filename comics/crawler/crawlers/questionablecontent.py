@@ -5,10 +5,11 @@ class ComicCrawler(BaseComicCrawler):
         self.feed_url = 'http://www.questionablecontent.net/QCRSS.xml'
         self.parse_feed()
 
-        for entry in self.feed['entries']:
-            if self.timestamp_to_date(entry['updated_parsed']) == self.pub_date:
-                self.title = entry['title']
-                pieces = entry['summary'].split('"')
+        for entry in self.feed.entries:
+            if ('updated_parsed' in entry and
+                self.timestamp_to_date(entry.updated_parsed) == self.pub_date):
+                self.title = entry.title
+                pieces = entry.summary.split('"')
                 for i, piece in enumerate(pieces):
                     if piece.count('src='):
                         self.url = pieces[i + 1]
