@@ -175,10 +175,10 @@
     "fields": {
       "name": "Ctrl+Alt+Del", 
       "end_date": null, 
-      "schedule": "Mo,We,Fr,Sa", 
+      "schedule": "Mo,We,Fr", 
       "url": "http://www.ctrlaltdel-online.com/", 
       "rights": "Tim Buckley", 
-      "time_zone": null, 
+      "time_zone": -5, 
       "slug": "ctrlaltdel", 
       "history_capable_date": "2002-10-23", 
       "language": "en", 
@@ -1170,6 +1170,23 @@
       "language": "en", 
       "history_capable_days": 10, 
       "start_date": "2002-09-05"
+    }
+  },
+  {
+    "pk": 72, 
+    "model": "common.comic", 
+    "fields": {
+      "name": "Ctrl+Alt+Del Sillies", 
+      "end_date": null, 
+      "schedule": "Mo,Tue,We,Th,Fr,Sa,Su", 
+      "url": "http://www.ctrlaltdel-online.com/", 
+      "rights": "Tim Buckley", 
+      "time_zone": -5, 
+      "slug": "ctrlaltdelsillies", 
+      "history_capable_date": "2008-06-27", 
+      "language": "en", 
+      "history_capable_days": null, 
+      "start_date": "2008-06-27"
     }
   }
 ]
