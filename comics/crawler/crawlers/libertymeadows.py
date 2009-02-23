@@ -12,7 +12,7 @@ class ComicCrawler(BaseComicCrawler):
                 match = re.match(r'.*/(\d+).html', entry['link'])
                 if match is not None:
                     strip_serial = match.groups()[0]
-                    self.url = 'http://www.creators.com/comics/%(comic)s/%(strip)s_image.jpg' % {
+                    self.url = 'http://www.creators.com/comics/%(comic)s/%(strip)s_image.gif' % {
                         'comic': creators_com_comic_serial,
                         'strip': strip_serial,
                     }
