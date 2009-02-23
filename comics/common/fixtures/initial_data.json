@@ -1188,5 +1188,22 @@
       "history_capable_days": null, 
       "start_date": "2008-06-27"
     }
+  },
+  {
+    "pk": 73, 
+    "model": "common.comic", 
+    "fields": {
+      "name": "EON", 
+      "end_date": null, 
+      "schedule": "We", 
+      "url": "http://www.nettavisen.no/tegneserie/striper/", 
+      "rights": "Lars Lauvik", 
+      "time_zone": 1, 
+      "slug": "eon", 
+      "history_capable_date": "2008-11-19", 
+      "language": "no", 
+      "history_capable_days": null, 
+      "start_date": "2008-11-19"
+    }
   }
 ]
