@@ -1205,5 +1205,22 @@
       "history_capable_days": null, 
       "start_date": "2008-11-19"
     }
+  },
+  {
+    "pk": 74, 
+    "model": "common.comic", 
+    "fields": {
+      "name": "Dueling Analogs", 
+      "end_date": null, 
+      "schedule": "Mo,Th", 
+      "url": "http://www.duelinganalogs.com/", 
+      "rights": "Steve Napierski", 
+      "time_zone": -7, 
+      "slug": "duelinganalogs", 
+      "history_capable_date": null, 
+      "language": "en", 
+      "history_capable_days": 35, 
+      "start_date": "2005-11-17"
+    }
   }
 ]
