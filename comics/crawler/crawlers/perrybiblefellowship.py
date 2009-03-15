@@ -4,12 +4,12 @@ class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
         self.parse_feed('http://pbfcomics.com/feed/feed.xml')
 
-        for entry in self.feed['entries']:
-            if entry['summary'] == 'Comic':
+        for entry in self.feed.entries:
+            if entry.summary == 'Comic':
                 # The feed contains no dates, so we just fetch the first comic
                 # entry we find
-                self.title = entry['title']
-                self.web_url = entry['link']
+                self.title = entry.title
+                self.web_url = entry.link
                 break
 
         if self.web_url is None:

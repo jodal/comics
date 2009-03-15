@@ -4,11 +4,11 @@ class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
         self.parse_feed('http://www.gucomics.com/rss.xml')
 
-        for entry in self.feed['entries']:
-            if (self.timestamp_to_date(entry['updated_parsed']) == self.pub_date
-                and entry['title'].startswith('Comic:')):
-                self.title = entry['description']
-                self.web_url = entry['link']
+        for entry in self.feed.entries:
+            if (self.timestamp_to_date(entry.updated_parsed) == self.pub_date
+                and entry.title.startswith('Comic:')):
+                self.title = entry.description
+                self.web_url = entry.link
                 break
 
         if self.web_url is None:

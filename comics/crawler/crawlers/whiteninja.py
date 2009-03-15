@@ -4,13 +4,10 @@ class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
         self.parse_feed('http://www.whiteninjacomics.com/rss/z-latest.xml')
 
-        for entry in self.feed['entries']:
-            if ('updated_parsed' in entry and
-                entry['updated_parsed'] is not None
-                and self.timestamp_to_date(entry['updated_parsed'])
-                    == self.pub_date):
-                self.title = entry['title'].split(' - ')[0]
-                self.web_url = entry['link']
+        for entry in self.feed.entries:
+            if self.timestamp_to_date(entry.updated_parsed) == self.pub_date:
+                self.title = entry.title.split(' - ')[0]
+                self.web_url = entry.link
                 break
 
         if self.web_url is None:
