@@ -3,7 +3,13 @@
 class ComicsError(Exception):
     """Base class for all comic exceptions"""
 
-    pass
+    # Work around "message" being deprecated in Python 2.6
+    _message = None
+    def _get_message(self):
+        return self._message
+    def _set_message(self, message):
+        self._message = message
+    message = property(_get_message, _set_message)
 
 
 class StripAlreadyExists(ComicsError):
