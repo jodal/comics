@@ -5,7 +5,7 @@ class ComicCrawler(BaseComicCrawler):
         self.parse_feed('http://www.megatokyo.com/rss/megatokyo.xml')
 
         for entry in self.feed.entries:
-            if (self.timestamp_to_date(entry['updated_parsed']) == self.pub_date
+            if (self.timestamp_to_date(entry.updated_parsed) == self.pub_date
                 and entry.title.startswith('Comic ')):
                 self.title = entry.title.split('"')[1]
                 self.web_url = entry.link
