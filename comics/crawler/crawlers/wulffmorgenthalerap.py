@@ -8,9 +8,11 @@ class ComicCrawler(BaseComicCrawler):
             'http://www.aftenposten.no/eksport/rss-1_0/'
             '?seksjon=tegneserier&utvalg=siste')
 
+        # XXX: All entries in the feed got the same date, so we just check the
+        # first one, and let the later checksumming of the strip image take
+        # care of duplicates.
         for entry in self.feed.entries:
-            if (entry.title == 'Dagens Wulffmorgenthaler' and
-               self.timestamp_to_date(entry.updated_parsed) == self.pub_date):
+            if entry.title == 'Dagens Wulffmorgenthaler':
                self.web_url = entry.link
                break
 
@@ -20,7 +22,7 @@ class ComicCrawler(BaseComicCrawler):
         self.parse_web_page()
 
         strip_pattern = re.compile(
-            r'.*/_(Escenic-)*[Ww]t_\w+_\d{2}_\d{6}x.jpg$')
+            r'.*/_(Escenic-)*[Ww]t_\w+_\d{1,2}_\d{6,7}x.jpg$')
         for image in self.web_page.imgs:
             if 'src' in image:
                 matches = strip_pattern.match(image['src'])
