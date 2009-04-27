@@ -923,7 +923,7 @@
     "fields": {
       "name": "The PC Weenies", 
       "end_date": null, 
-      "schedule": "Mo,We,Fr", 
+      "schedule": "Tu,Th", 
       "url": "http://www.pcweenies.net/", 
       "rights": "Krishna M. Sadasivam", 
       "time_zone": -8, 
