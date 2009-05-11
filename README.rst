@@ -37,9 +37,9 @@ The deps are listed as Debian/Ubuntu package names:
 
 - python (>=2.5, at least hashlib is new in 2.5)
 - python-django (>=1.0), and the following sub-dependencies
-	- python-psycopg or python-psycopg2
-	- postgresql-X.Y (developed with 8.3)
-	- cmemcache (from source, or alternatively python-memcache)
+    - python-psycopg or python-psycopg2
+    - postgresql-X.Y (developed with 8.3)
+    - cmemcache (from source, or alternatively python-memcache)
 - python-feedparser
 - python-beautifulsoup (Future dep. I want to replace SGMLParser with it.)
 
@@ -89,9 +89,10 @@ A mostly unordered list of things to fix. Patches accepted.
   classes instead of long complicated functions.
 
 New features:
+
 - Support multiple strips per comic per day, which at least includes:
-  - Some places were this is not supported, it is commented in the source.
-  - Change naming scheme for image files, i.e. from date to checksum.
+    - Some places were this is not supported, it is commented in the source.
+    - Change naming scheme for image files, i.e. from date to checksum.
 - Replace "Top 10" default views with a stream of the most recently fetched
   comics. Consider not having alternative time frame views, but using regular
   pagination.
