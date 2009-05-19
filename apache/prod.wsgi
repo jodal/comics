@@ -1,5 +1,5 @@
 import os, sys
-path = '/home/jodal/projects/comics-prod'
+path = '/home/jodal/production/comics'
 if path not in sys.path:
 	sys.path.append(path)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'comics.settings'
