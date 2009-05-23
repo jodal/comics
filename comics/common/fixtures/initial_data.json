@@ -1222,5 +1222,22 @@
       "history_capable_days": 35, 
       "start_date": "2005-11-17"
     }
+  },
+  {
+    "pk": 75, 
+    "model": "common.comic", 
+    "fields": {
+      "name": "Business Guys on Business Trips", 
+      "end_date": null, 
+      "schedule": "Mo", 
+      "url": "http://www.businessguysonbusinesstrips.com/", 
+      "rights": "Unknown", 
+      "time_zone": -7, 
+      "slug": "bgobt", 
+      "history_capable_date": null, 
+      "language": "en", 
+      "history_capable_days": 100, 
+      "start_date": "2007-07-12"
+    }
   }
 ]
