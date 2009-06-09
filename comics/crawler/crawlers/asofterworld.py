@@ -6,7 +6,7 @@ class ComicCrawler(BaseComicCrawler):
 
         for entry in self.feed.entries:
             if (self.timestamp_to_date(entry.updated_parsed) == self.pub_date
-                and entry.link == 'http://www.asofterworld.com'):
+                and entry.link != 'http://www.asofterworld.com'):
                 self.title = entry.title
                 pieces = entry.summary.split('"')
                 for i, piece in enumerate(pieces):
