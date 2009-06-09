@@ -1,5 +1,6 @@
 import datetime as dt
 import time
+import os
 
 from django.conf import settings
 from django.db import models
@@ -128,6 +129,10 @@ class Strip(models.Model):
     class Meta:
         db_table = 'comics_strip'
         get_latest_by = 'pub_date'
+
+    def delete(self, *args, **kwargs):
+        super(Strip, self).delete(*args, **kwargs)
+        os.remove('%s%s' % (settings.MEDIA_ROOT, self.filename))
 
     def __unicode__(self):
         return u'%s strip %s' % (self.comic, self.checksum)
