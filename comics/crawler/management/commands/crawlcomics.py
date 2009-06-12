@@ -7,7 +7,7 @@ from django.core.management.base import BaseCommand
 from comics.crawler.supercrawler import SuperCrawler
 
 DATE_TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
-FILE_LOG_FORMAT = '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
+FILE_LOG_FORMAT = '%(asctime)s [%(process)d] %(name)-12s %(levelname)-8s %(message)s'
 CONSOLE_LOG_FORMAT = '%(levelname)-8s %(message)s'
 
 class Command(BaseCommand):
