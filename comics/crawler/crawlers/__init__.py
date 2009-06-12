@@ -1,10 +1,11 @@
+from __future__ import with_statement
 import datetime as dt
 import feedparser
 import mimetypes
 import os
 import re
 import time
-import urllib
+import urllib2
 import urlparse
 
 from django.conf import settings
@@ -170,14 +171,24 @@ class BaseComicCrawler(object):
             self.comic.slug,
             self.pub_date.strftime('%Y-%m-%d'),
         )
-        (temp_path, http_response) = urllib.urlretrieve(self.url, temp_path)
-        urllib.urlcleanup()
+
+        request = urllib2.Request(self.url, None, self._get_headers())
+        input_file = urllib2.urlopen(request)
+        http_response = input_file.info()
 
         if not http_response.getmaintype() == 'image':
-            os.remove(temp_path)
+            input_file.close()
             raise StripNotAnImage('%s/%s' % (self.comic.slug, self.pub_date))
 
+        with open(temp_path, 'wb') as temp_file:
+            temp_file.write(input_file.read())
+
+        input_file.close()
+
         return (temp_path, http_response)
+
+    def _get_headers(self, request):
+        return {}
 
     def _get_strip_by_checksum(self, strip_checksum):
         """Get existing strip based on checksum"""
