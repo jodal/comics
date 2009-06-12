@@ -1239,5 +1239,22 @@
       "history_capable_days": 100, 
       "start_date": "2007-07-12"
     }
+  },
+  {
+    "pk": 77, 
+    "model": "common.comic", 
+    "fields": {
+      "name": "Boy on a Stick and Slither", 
+      "end_date": null, 
+      "schedule": "Mo,We,Fr", 
+      "url": "http://www.boasas.com/", 
+      "rights": "Steven L. Cloud", 
+      "time_zone": -5, 
+      "slug": "boasas", 
+      "history_capable_date": null, 
+      "language": "en", 
+      "history_capable_days": 14, 
+      "start_date": "1998-01-01"
+    }
   }
 ]
