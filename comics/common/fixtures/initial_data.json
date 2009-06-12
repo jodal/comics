@@ -1256,5 +1256,22 @@
       "history_capable_days": 14, 
       "start_date": "1998-01-01"
     }
+  },
+  {
+    "pk": 78, 
+    "model": "common.comic", 
+    "fields": {
+      "name": "Brinkerhoff", 
+      "end_date": null, 
+      "schedule": "Mo,Tu,We,Th,Fr", 
+      "url": "http://www.brinkcomic.com/", 
+      "rights": "Gabe Strine", 
+      "time_zone": -5, 
+      "slug": "brinkerhoff", 
+      "history_capable_date": "2006-01-02", 
+      "language": "en", 
+      "history_capable_days": null, 
+      "start_date": "2006-01-02"
+    }
   }
 ]
