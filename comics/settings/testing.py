@@ -1,5 +1,3 @@
-from comics.settings.base import *
-from comics.settings.local import *
 from comics.settings.dev import *
 
 # Remove cache middleware when running tests, as these cause problems in

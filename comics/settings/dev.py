@@ -1,5 +1,8 @@
 from comics.settings.base import *
-from comics.settings.local import *
+try:
+    from comics.settings.local import *
+except ImportError:
+    pass
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

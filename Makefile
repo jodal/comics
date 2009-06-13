@@ -1,5 +1,3 @@
-MANAGE = PYTHONPATH=. comics/manage.py
-
 .PHONY: all clean reload shell test coverage
 
 all: clean reload
@@ -11,10 +9,10 @@ reload:
 	find apache/ -iname \*.wsgi -exec touch {} \;
 
 shell:
-	$(MANAGE) shell --settings=comics.settings.dev
+	comics/manage.py shell --settings=comics.settings.dev
 
 test:
-	$(MANAGE) test --settings=comics.settings.testing
+	comics/manage.py test --settings=comics.settings.testing
 
 coverage:
-	$(MANAGE) test --settings=comics.settings.coverage
+	comics/manage.py test --settings=comics.settings.coverage
