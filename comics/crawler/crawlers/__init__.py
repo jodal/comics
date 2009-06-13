@@ -188,7 +188,7 @@ class BaseComicCrawler(object):
 
         return (temp_path, http_response)
 
-    def _get_headers(self, request):
+    def _get_headers(self):
         return {}
 
     def _get_strip_by_checksum(self, strip_checksum):
