@@ -1,11 +1,21 @@
 Daily Comics (aka comics)
 =========================
 
-What is comics?
----------------
+Daily Comics is a web based aggregator for web comics. It was originally
+developed as a custom web application hosted at http://comics.jodal.no/, but
+the source code has later been released for others to change and use.
 
-A Django application and library for aggregating web comics. Originally
-developed for running http://comics.jodal.no/.
+Daily Comics is maintained by Stein Magnus Jodal, with comments and input from
+numerous users. The software is freely available under the GPLv2 license. You
+can get the source using the version control system git and the command
+
+    git clone git://github.com/jodal/comics.git
+
+or you can browse the source online at http://github.com/jodal/comics.
+
+Feature requests, bug reports and patches are warmly received, read and replied
+to at comics@jodal.no or through the feedback page at
+http://comics.jodal.no/feedback/.
 
 
 Is it legal?
@@ -16,36 +26,23 @@ Anyway nobody is making any money here, and the intention is having fun
 developing software and reading comics.
 
 
-Credits
--------
-
-comics was created by Stein Magnus Jodal (stein.magnus@jodal.no), with comments
-and input from numerous users.
-
-
-License
--------
-
-comics is licensed under the GNU General Public Licence version 2. See COPYING
-for the full license.
-
-
 Dependencies
 ------------
 
-The deps are listed as Debian/Ubuntu package names:
+The dependencies are listed as Debian/Ubuntu package names.
 
 - python (>=2.5, at least hashlib is new in 2.5)
-- python-django (>=1.0), and the following sub-dependencies
-    - python-psycopg or python-psycopg2
-    - postgresql-X.Y (developed with 8.3)
-    - cmemcache (from source, or alternatively python-memcache)
+- python-django (>=1.0)
 - python-feedparser
 - python-beautifulsoup (Future dep. I want to replace SGMLParser with it.)
 
+Optional dependencies if you want to use a real database and/or memcache:
 
-Additional dependencies for development
----------------------------------------
+- python-psycopg2
+- postgresql-X.Y (developed with 8.3)
+- cmemcache (from source, or alternatively python-memcache)
+
+Additional dependencies which are handy for development:
 
 - python-pmock (for mocking in unit tests)
 - python-coverage (for checking test coverage)
@@ -53,27 +50,36 @@ Additional dependencies for development
   http://code.google.com/p/django-debug-toolbar/)
 
 
+Installation
+------------
+
+To get comics up and running from a clean checkout is as easy as:
+
+    git clone git://github.com/jodal/comics.git
+    cd comics/comics/
+    python manage.py syncdb
+    python manage.py crawlcomics
+    python manage.py runserver
+
+Then point your browser to http://localhost:8000/ to start reading comics.
+
+
 Usage
 -----
 
 To run unit tests:
 
-    ./manage.py test --settings=comics.settings_testing
+    python manage.py test --settings=comics.settings.testing
 
 To run unit tests with statement coverage:
 
-    ./manage.py test --settings=comics.settings_coverage
+    python manage.py test --settings=comics.settings.coverage
 
 To fetch new comic strips:
 
-    ./manage.py crawlcomics
-
-To import comics from an old disk archive:
-
-    ./manage.py importcomics
+    python manage.py crawlcomics
 
 Add `--help` to get further instructions.
-
 
 
 TODO
