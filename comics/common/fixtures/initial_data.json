@@ -1290,5 +1290,22 @@
       "history_capable_days": null, 
       "start_date": "2006-01-02"
     }
+  },
+  {
+    "pk": 79, 
+    "model": "common.comic", 
+    "fields": {
+      "name": "AmazingSuperPowers", 
+      "end_date": null, 
+      "schedule": "Mo,Th", 
+      "url": "http://www.amazingsuperpowers.com/", 
+      "rights": "Wes & Tony", 
+      "time_zone": null, 
+      "slug": "amazingsuperpowers", 
+      "history_capable_date": null, 
+      "language": "en", 
+      "history_capable_days": 21, 
+      "start_date": "2007-09-24"
+    }
   }
 ]
