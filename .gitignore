@@ -1,7 +1,7 @@
 *.log
 *.pyc
 *.swp
-comics/settings_local.py
+comics/settings/local.py
 debug_toolbar
 django
 media/admin

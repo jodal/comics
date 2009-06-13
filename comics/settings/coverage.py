@@ -1,4 +1,7 @@
-from settings_testing import *
+from comics.settings.base import *
+from comics.settings.local import *
+from comics.settings.dev import *
+from comics.settings.testing import *
 
 # Test runner with code coverage
 TEST_RUNNER = 'comics.utils.test_runner.test_runner_with_coverage'

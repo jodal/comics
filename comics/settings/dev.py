@@ -1,5 +1,5 @@
-# Django settings for comics project.
-from settings import *
+from comics.settings.base import *
+from comics.settings.local import *
 
 # Debugging
 DEBUG = True
