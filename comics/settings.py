@@ -1,9 +1,5 @@
 # Django settings for comics project.
 
-# ADMINS, MANAGERS, DATABASE_*, SECRET_KEY, INTERNAL_IPS, and
-# COMICS_LOG_FILENAME are imported from a file which is not in stored in a VCS
-from settings_local import *
-
 # Local time zone for this installation. All choices can be found here:
 # http://www.postgresql.org/docs/current/static/datetime-keywords.html#DATETIME-TIMEZONE-SET-TABLE
 TIME_ZONE = 'Europe/Oslo'
@@ -109,3 +105,7 @@ COMICS_STRIP_BLACKLIST = (
     '6dec8be9787fc8b103746886033ccad7348bc4eec44c12994ba83596f3cbcd32',
     '181e7d11ebd3224a910d9eba2995349da5d483f3ae9643a2efe4f7dd3d9f668d',
 )
+
+# ADMINS, MANAGERS, DATABASE_*, SECRET_KEY, INTERNAL_IPS, and
+# COMICS_LOG_FILENAME are imported from a file which is not in stored in a VCS
+from settings_local import *
