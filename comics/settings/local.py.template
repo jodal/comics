@@ -1,22 +1,6 @@
 # Local settings -- do NOT commit to a VCS
 
-#ADMINS = (
-#    ('Comics Webmaster', 'comics@example.com'),
-#)
-#MANAGERS = ADMINS
-
-# Database settings
-#DATABASE_ENGINE = ''           # 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
-#DATABASE_NAME = ''             # Or path to database file if using sqlite3.
-#DATABASE_USER = ''             # Not used with sqlite3.
-#DATABASE_PASSWORD = ''         # Not used with sqlite3.
-#DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-#DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
-
 # Make this unique, and don't share it with anybody.
 #SECRET_KEY = ''
 
-# Internal IP addresses
-#INTERNAL_IPS = ('127.0.0.1',)
-
-#COMICS_LOG_FILENAME = '/path/to/crawler.log'
+# You can override any settings here, like database settings.

@@ -30,9 +30,14 @@ urlpatterns = patterns('',
     (r'^admin/(.*)', admin.site.root),
 )
 
-if settings.DEBUG:
-    # Let Django host media if doing local development on runserver
+# Let Django host media if doing local development on runserver
+if not settings.ADMIN_MEDIA_PREFIX.startswith('http'):
     urlpatterns += patterns('',
-        (r'^media/comics/(?P<path>.*)$', 'django.views.static.serve',
-            {'document_root': '../media'}),
+        (r'^media/admin/(?P<path>.*)$', 'django.views.static.serve',
+            {'document_root': settings.ADMIN_MEDIA_ROOT}),
+    )
+if not settings.MEDIA_URL.startswith('http'):
+    urlpatterns += patterns('',
+        (r'^media/(?P<path>.*)$', 'django.views.static.serve',
+            {'document_root': settings.MEDIA_ROOT}),
     )

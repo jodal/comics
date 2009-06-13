@@ -1,5 +1,16 @@
 # Django settings for comics project.
 
+import os
+import django
+
+PROJECT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../')
+DJANGO_DIR = os.path.dirname(os.path.abspath(django.__file__))
+
+SECRET_KEY = 'This key should really be overriden in comics/settings/local.py'
+
+DATABASE_ENGINE = 'sqlite3'
+DATABASE_NAME = os.path.join(PROJECT_DIR, '../db.sqlite3')
+
 # Local time zone for this installation. All choices can be found here:
 # http://www.postgresql.org/docs/current/static/datetime-keywords.html#DATETIME-TIMEZONE-SET-TABLE
 TIME_ZONE = 'Europe/Oslo'
@@ -17,32 +28,30 @@ SITE_ID = 1
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = '/var/www/jodal-no/media/comics/'
+MEDIA_ROOT = os.path.join(PROJECT_DIR, '../media/')
 
 # URL that handles the media served from MEDIA_ROOT.
 # Example: "http://media.lawrence.com"
-MEDIA_URL = 'http://media.jodal.no/comics/'
+MEDIA_URL = '/media/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = MEDIA_URL + 'admin/'
+ADMIN_MEDIA_ROOT = os.path.join(DJANGO_DIR, 'django/contrib/admin/media/')
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
 )
 
 MIDDLEWARE_CLASSES = (
-#    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.gzip.GZipMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
     'comics.sets.middleware.SetMiddleware',
-#    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 ROOT_URLCONF = 'comics.urls'
@@ -70,7 +79,7 @@ INSTALLED_APPS = (
 )
 
 # Caching
-CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
+CACHE_BACKEND = 'locmem:///'
 CACHE_MIDDLEWARE_SECONDS = 300
 CACHE_MIDDLEWARE_KEY_PREFIX = 'comics'
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
@@ -105,3 +114,6 @@ COMICS_STRIP_BLACKLIST = (
     '6dec8be9787fc8b103746886033ccad7348bc4eec44c12994ba83596f3cbcd32',
     '181e7d11ebd3224a910d9eba2995349da5d483f3ae9643a2efe4f7dd3d9f668d',
 )
+
+# Crawler log file
+COMICS_LOG_FILENAME = os.path.join(PROJECT_DIR, '../crawler.log')
