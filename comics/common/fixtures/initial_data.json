@@ -1241,6 +1241,23 @@
     }
   },
   {
+    "pk": 76, 
+    "model": "common.comic", 
+    "fields": {
+      "name": "Three Panel Soul", 
+      "end_date": null, 
+      "schedule": "", 
+      "url": "http://www.threepanelsoul.com/", 
+      "rights": "Ian McConville & Matt Boyd", 
+      "time_zone": -5, 
+      "slug": "threepanelsoul", 
+      "history_capable_date": null, 
+      "language": "en", 
+      "history_capable_days": 180, 
+      "start_date": "2006-11-05"
+    }
+  },
+  {
     "pk": 77, 
     "model": "common.comic", 
     "fields": {
