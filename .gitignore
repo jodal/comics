@@ -1,4 +1,5 @@
 *.log
+*.log.*
 *.pyc
 *.swp
 comics/settings/local.py
