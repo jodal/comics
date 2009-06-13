@@ -6,6 +6,8 @@ from django.conf import settings
 from django.db import models
 from django.core.urlresolvers import reverse
 
+from comics.common.managers import ComicManager
+
 class Comic(models.Model):
     LANGUAGES = (
         ('en', 'English'),
@@ -45,6 +47,8 @@ class Comic(models.Model):
     # Automatically populated fields (i.e. for denormalization)
     number_of_sets = models.PositiveIntegerField(default=0,
         help_text='Number of sets the comic is in (automatically updated)')
+
+    objects = ComicManager()
 
     class Meta:
         db_table = 'comics_comic'
