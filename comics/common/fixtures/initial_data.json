@@ -1307,5 +1307,22 @@
       "history_capable_days": 21, 
       "start_date": "2007-09-24"
     }
+  },
+  {
+    "pk": 80, 
+    "model": "common.comic", 
+    "fields": {
+      "name": "pictures for sad children", 
+      "end_date": null, 
+      "schedule": "", 
+      "url": "http://picturesforsadchildren.com/", 
+      "rights": "John Campbell", 
+      "time_zone": -6, 
+      "slug": "picturesforsadchildren", 
+      "history_capable_date": null, 
+      "language": "en", 
+      "history_capable_days": 40, 
+      "start_date": "2007-01-01"
+    }
   }
 ]
