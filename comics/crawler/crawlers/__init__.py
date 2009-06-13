@@ -4,6 +4,7 @@ import feedparser
 import mimetypes
 import os
 import re
+import shutil
 import time
 import urllib2
 import urlparse
@@ -229,7 +230,7 @@ class BaseComicCrawler(object):
         """Move strip file to archive"""
 
         try:
-            os.rename(temp_path, archive_path)
+            shutil.move(temp_path, archive_path)
         except Exception, e:
             os.remove(temp_path)
             raise e
