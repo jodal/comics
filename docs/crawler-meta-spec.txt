@@ -1,0 +1,33 @@
+Crawler meta data
+=================
+
+Created 2009-06-13
+
+Goal
+----
+
+Remove the need for patching common/fixtures/initial_data.json when adding new
+comic crawlers.
+
+Plan
+----
+
+1. Add a data structure in each crawler module containing the information
+   previously added as fixtures.
+2. Add a management command 'synccrawlers' which reads the new data structures
+   and adds new Comic instances to the database.
+   - Let the user specify which crawlers to add with '-c comicslug'.
+3. Add data structure to all existing crawlers.
+3. Remove common/fixtures/initial_data.json.
+
+Pros
+----
+
+- Everything needed for adding a new comic in one file.
+- Automatic creation of a new Comic instance when adding a crawler.
+- No adding of Comic instances before the matching crawler is in place.
+
+Cons
+----
+
+- Nothing?
