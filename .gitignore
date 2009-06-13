@@ -1,6 +1,7 @@
 *.log
 *.log.*
 *.pyc
+*.sqlite3
 *.swp
 comics/settings/local.py
 debug_toolbar
