@@ -75,8 +75,7 @@ def top_year(request, year):
 def comic_list(request):
     """List all available comics"""
 
-    kwargs = {'comics': Comic.objects.all()}
-    return render_to_response('common/comic-list.html', kwargs,
+    return render_to_response('common/comic-list.html',
         context_instance=RequestContext(request))
 
 def comic_show(request, comic, year=None, month=None, day=None, days=1):

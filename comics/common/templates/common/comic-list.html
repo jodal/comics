@@ -8,7 +8,7 @@
 
 <h2>List of comics</h2>
 
-{% if comics %}
+{% if all_comics %}
 <table>
     <tr>
         <th>Comic</th>
@@ -17,7 +17,7 @@
         <th class="alignright"># sets</th>
         <th>Website</th>
     </tr>
-    {% for comic in comics %}
+    {% for comic in all_comics %}
     <tr>
         <td>
             <a href="{{ comic.get_feed_url }}"><img src="{{ MEDIA_URL }}icons/feed.png" width="16" height="16" alt="Comic feed: {{ comic.name }}" title="Comic feed: {{ comic.name }}" /></a>
