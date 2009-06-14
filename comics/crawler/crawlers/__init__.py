@@ -12,10 +12,54 @@ import urlparse
 from django.conf import settings
 from django.db import transaction
 
-from comics.common.models import Release, Strip
+from comics.common.models import Comic, Release, Strip
 from comics.crawler.exceptions import *
 from comics.crawler.utils.webparser import WebParser
 from comics.utils.hash import sha256sum
+
+class BaseComicMeta(object):
+    # Required values
+    name = None
+    lanuage = None
+    url = None
+
+    # Default values
+    start_date = None
+    end_date = None
+    history_capable_date = None
+    history_capable_days = None
+    has_reruns = False
+    schedule = None
+    time_zone = None
+    rights = None
+
+    @property
+    def _get_slug(self):
+        return self.__module__.split('.')[-1]
+
+    def create_comic(self):
+        comic = Comic(
+            name=self.name,
+            slug=self.slug,
+            language=self.language,
+            url=self.url)
+        if self.start_date:
+            comic.start_date = dt.date(self.start_date)
+        if self.end_date:
+            comic.end_date = dt.date(self.end_date)
+        if self.history_capable_date:
+            comic.history_capable_date = dt.date(self.history_capable_date)
+        if self.history_capable_days:
+            comic.history_capable_days = self.history_capable_days
+        if self.has_reruns:
+            comic.has_reruns = self.has_reruns
+        if self.schedule:
+            comic.schedule = self.schedule
+        if self.time_zone:
+            comic.time_zone = self.time_zone
+        if self.rights:
+            comic.rights = self.rights
+        comic.save()
 
 class BaseComicCrawler(object):
     def __init__(self, comic):
