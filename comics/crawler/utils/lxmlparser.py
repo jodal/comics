@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 from lxml.html import parse, fromstring
 
 class LxmlParser(object):
@@ -26,11 +28,13 @@ class LxmlParser(object):
 
     def select(self, selector):
         elements = self.root.cssselect(selector)
+
         if len(elements) == 0:
             raise DoesNotExist('Noting matched the selector: %s' % selector)
         elif len(elements) > 1:
             raise MultipleElementsReturned('Selector matched %d elements: %s' %
                 (len(elements), selector))
+
         return elements[0]
 
 class DoesNotExist(Exception):
