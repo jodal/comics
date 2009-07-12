@@ -17,6 +17,8 @@ class StripAdmin(admin.ModelAdmin):
     list_display = ('comic', 'title', 'fetched')
     list_filter = ['comic', 'fetched']
 
+    date_hierarchy = 'fetched'
+
 admin.site.register(models.Comic, ComicAdmin)
 admin.site.register(models.Release, ReleaseAdmin)
 admin.site.register(models.Strip, StripAdmin)
