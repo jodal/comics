@@ -1,90 +1,70 @@
 """Imports existing comic strips from disk"""
 
 import datetime as dt
-import optparse
+import logging
+import os
 
-def get_option_group(parser):
-    """Create an optparse option group for the module"""
+from django.conf import settings
 
-    option_group = optparse.OptionGroup(parser, 'Disk Import')
-    option_group.add_option('-I', '--import',
-        action='store_const', const='disk_import', dest='action',
-        help='Import comic strips from disk')
-    option_group.add_option('-i', '--icomic',
-        action='append', dest='comics', metavar='COMIC',
-        help='Comic to import, repeat for multiple [default: all]')
-    return option_group
+from comics.common.models import Comic, Release, Strip
+from comics.utils.hash import sha256sum
+
+logger = logging.getLogger('comics.utils.disk_import')
 
 def do_disk_import(options):
-    """Execute a disk import of comics from one or more comics"""
+    for comic in _get_comics(options):
+        logger.info('>>> %s', comic)
+        for year in _get_years(comic):
+            logger.info('%s from %s...', comic, year)
+            for strip_name in _get_strip_names(comic, year):
+                _try_import_strip(comic, year, strip_name)
 
-    import os
-    import sys
-
-    from django.conf import settings
-
-    from comics.common.models import Comic, Strip
-    from comics.utils.hash import sha256sum
-
-    verbose = False
-    if options.get('verbose', 1) == 2:
-        verbose = True
-
+def _get_comics(options):
     if options.get('comics', None) is None or len(options['comics']) == 0:
         comics = Comic.objects.all()
     else:
         comics = []
         for comic_slug in options['comics']:
             comics.append(Comic.objects.get(slug=comic_slug))
-
     if len(comics) == 0:
-        print 'No comics found in database'
+        logger.error('No comics found in database')
+    return comics
 
-    for comic in comics:
-        print '>>> %s' % comic
+def _get_years(comic):
+    return sorted(os.listdir('%s%s' % (settings.MEDIA_ROOT, comic.slug)))
 
-        years = os.listdir(settings.MEDIA_ROOT + comic.slug)
-        years.sort()
+def _get_strip_names(comic, year):
+    return sorted(os.listdir('%s%s/%s' % (
+        settings.MEDIA_ROOT, comic.slug, year)))
 
-        for year in years:
-            print 'Import %s from %s ' % (comic, year),
+def _try_import_strip(comic, year, strip_name):
+    try:
+        logger.debug('Checking %s', strip_name)
+        filename = _get_filename(comic, year, strip_name)
+        checksum = _get_checksum(filename)
+        Strip.objects.get(comic=comic, checksum=checksum)
+        logger.debug('Strip with same checksum exists; skipping.')
+    except Strip.DoesNotExist:
+        _import_strip(comic, filename, checksum, _get_pub_date(strip_name))
 
-            strips = os.listdir(settings.MEDIA_ROOT
-                                + comic.slug
-                                + '/'
-                                + year)
-            strips.sort()
+def _get_filename(comic, year, strip_name):
+    return '%s/%s/%s' % (comic.slug, year, strip_name)
 
-            for stripname in strips:
-                filename = '%s/%s/%s' % (comic.slug, year, stripname)
-                checksum = sha256sum(settings.MEDIA_ROOT + filename)
+def _get_checksum(filename):
+    return sha256sum('%s%s' % (settings.MEDIA_ROOT, filename))
 
-                if verbose:
-                    print 'Importing %s:' % (stripname),
+def _get_pub_date(strip_name):
+    return dt.datetime.strptime(strip_name.split('.')[0], '%Y-%m-%d').date()
 
-                try:
-                    Strip.objects.get(comic=comic, checksum=checksum)
-                    if verbose:
-                        print 'Strip with same checksum exists; skipping.'
-                    else:
-                        sys.stdout.write('.')
-                        sys.stdout.flush()
-                    continue
-                except Strip.DoesNotExist:
-                    pass
-
-                pub_date = dt.datetime.strptime(
-                    stripname.split('.')[0], '%Y-%m-%d').date()
-                strip = Strip(comic=comic,
-                              pub_date=pub_date,
-                              filename=filename,
-                              checksum=checksum)
-                strip.save()
-
-                if verbose:
-                    print '%s saved' % strip
-                else:
-                    sys.stdout.write('N')
-                    sys.stdout.flush()
-            print ' OK'
-        print '%s complete' % comic
+def _import_strip(comic, filename, checksum, pub_date):
+    strip = Strip(
+        comic=comic,
+        filename=filename,
+        checksum=checksum)
+    strip.save()
+    release = Release(
+        comic=comic,
+        pub_date=pub_date,
+        strip=strip)
+    release.save()
+    logger.info('%s imported', release)
