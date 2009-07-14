@@ -2,7 +2,6 @@
 
 import datetime as dt
 import logging
-import optparse
 
 from comics.crawler.exceptions import ComicsError, StripAlreadyExists
 
