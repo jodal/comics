@@ -14,7 +14,7 @@ Plan
 
 1. Add a ComicMeta class in each crawler module containing the information
    previously added as fixtures.
-2. Add a management command 'synccrawlers' which reads the ComicMeta classes
+2. Add a management command 'loadcomicmeta' which reads the ComicMeta classes
    and adds new Comic instances to the database.
    - Let the user specify which crawlers to add with '-c comicslug'.
 3. Add ComicMeta to all existing crawlers.
