@@ -147,7 +147,7 @@ class SuperCrawlerTestCase(django.test.TestCase):
         self.comic_crawler_mock.expects(
             pmock.once()).get_url(pmock.eq(pub_date))
         self.comic_crawler_mock.expects(
-            pmock.once()).save_strip().after('get_url')
+            pmock.once()).get_strip().after('get_url')
 
         self.super_crawler._crawl_one_comic_one_date(
             self.comic_crawler_mock, pub_date)
