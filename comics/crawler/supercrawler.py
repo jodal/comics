@@ -3,10 +3,12 @@
 import datetime as dt
 import logging
 import optparse
+import socket
 
 from comics.crawler.exceptions import ComicsError, StripAlreadyExists
 
 logger = logging.getLogger('comics.crawler')
+socket.setdefaulttimeout(10)
 
 class SuperCrawler(object):
     CRAWLER_PACKAGE = 'comics.crawler.crawlers'
