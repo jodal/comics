@@ -3,7 +3,7 @@ import logging
 
 from comics.common.models import Comic
 from comics.crawler.exceptions import ComicsMetaError
-from comics.crawler.utils import get_comic_module
+from comics.crawler.utils import get_comic_module_names, get_comic_module
 
 logger = logging.getLogger('comics.crawler.meta')
 
@@ -22,10 +22,10 @@ class ComicMetaLoader(object):
     def _get_comic_slugs(self, options):
         comic_slugs = options.get('comic_slugs', None)
         if comic_slugs is None or len(comic_slugs) == 0:
-            logger.error('Loading all comics is not implemented yet, '
-                'use "-c COMIC".')
-            return [] # TODO Add all comic slugs
+            logger.debug('Load targets: all comics')
+            return get_comic_module_names()
         else:
+            logger.debug('Load targets: %s', comic_slugs)
             return comic_slugs
 
     def _try_load_comic_meta(self, comic_slug):
@@ -38,7 +38,7 @@ class ComicMetaLoader(object):
             logger.exception(error)
 
     def _get_comic_meta(self, comic_slug):
-        logger.debug('Importing comic module')
+        logger.debug('Importing comic module for %s', comic_slug)
         comic_module = get_comic_module(comic_slug)
         if not hasattr(comic_module, 'ComicMeta'):
             raise ComicsMetaError('%s does not have a ComicMeta class' %
