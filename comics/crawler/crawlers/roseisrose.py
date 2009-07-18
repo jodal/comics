@@ -1,4 +1,4 @@
-from comics.crawler.crawlers import BaseComicsComComicCrawler
+from comics.crawler.base import BaseComicsComComicCrawler
 from comics.crawler.meta import BaseComicMeta
 
 class ComicMeta(BaseComicMeta):
