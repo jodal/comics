@@ -1,8 +1,7 @@
 import datetime as dt
 import pmock
-import unittest
 
-import django.test
+from django.test import TestCase
 
 from comics.common.models import Comic
 from comics.crawler import supercrawler
@@ -10,7 +9,9 @@ from comics.crawler.exceptions import ComicsError
 
 supercrawler.today = lambda: dt.date(2008, 2, 29)
 
-class SuperCrawlerConfigTestCase(unittest.TestCase):
+class SuperCrawlerConfigTestCase(TestCase):
+    fixtures = ['test_comics.json']
+
     def setUp(self):
         self.cc = supercrawler.SuperCrawlerConfig()
 
@@ -82,7 +83,9 @@ class SuperCrawlerConfigTestCase(unittest.TestCase):
         self.cc.set_comics_to_crawl([])
         self.assertEquals(all_count, len(self.cc.comics))
 
-class SuperCrawlerTestCase(django.test.TestCase):
+class SuperCrawlerTestCase(TestCase):
+    fixtures = ['test_comics.json']
+
     def setUp(self):
         config = supercrawler.SuperCrawlerConfig()
         config.set_comics_to_crawl(None)
@@ -180,16 +183,13 @@ class SuperCrawlerTestCase(django.test.TestCase):
 
         self.assertEquals(dt.date(2008, 2, 29), result)
 
-    def test_import_by_name(self):
-        pass # TODO
-
     def test_get_comic_crawler(self):
         pass # TODO
 
     def test_crawl_one_comic(self):
         pass # TODO
 
-    def test_try_crawl_on_comic(self):
+    def test_try_crawl_one_comic(self):
         pass # TODO
 
     def test_start(self):

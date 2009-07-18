@@ -6,7 +6,7 @@ from comics.common.models import Comic, Release
 from comics.common.utils import comic_releases as cr
 
 class ComicReleasesTestCase(TestCase):
-    fixtures = ['test_releases.json']
+    fixtures = ['test_comics.json', 'test_releases.json']
 
     def setUp(self):
         self.comics = Comic.objects.all()
