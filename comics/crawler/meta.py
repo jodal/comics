@@ -2,6 +2,7 @@ import datetime as dt
 import logging
 
 from comics.common.models import Comic
+from comics.crawler.exceptions import ComicsMetaError
 from comics.crawler.utils import get_comic_module
 
 logger = logging.getLogger('comics.crawler.meta')
@@ -29,15 +30,23 @@ class ComicMetaLoader(object):
 
     def _try_load_comic_meta(self, comic_slug):
         try:
-            self._load_comic_meta(comic_slug)
+            comic_meta = self._get_comic_meta(comic_slug)
+            self._load_comic_meta(comic_meta)
+        except ComicsMetaError, error:
+            logger.error(error)
         except Exception, error:
             logger.exception(error)
 
-    def _load_comic_meta(self, comic_slug):
+    def _get_comic_meta(self, comic_slug):
         logger.debug('Importing comic module')
         comic_module = get_comic_module(comic_slug)
-        comic_meta = comic_module.ComicMeta()
-        logger.debug('Loading comic into database')
+        if not hasattr(comic_module, 'ComicMeta'):
+            raise ComicsMetaError('%s does not have a ComicMeta class' %
+                comic_module.__name__)
+        return comic_module.ComicMeta()
+
+    def _load_comic_meta(self, comic_meta):
+        logger.debug('Syncing comic meta data with database')
         comic_meta.create_comic()
 
 class BaseComicMeta(object):
