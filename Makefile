@@ -6,7 +6,7 @@ clean:
 	find comics/ -iname \*.pyc -delete
 
 reload:
-	find apache/ -iname \*.wsgi -exec touch {} \;
+	find wsgi/ -iname \*.wsgi -exec touch {} \;
 
 shell:
 	comics/manage.py shell --settings=comics.settings.dev
