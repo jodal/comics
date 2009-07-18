@@ -20,7 +20,7 @@ from comics.utils.hash import sha256sum
 class BaseComicMeta(object):
     # Required values
     name = None
-    lanuage = None
+    language = None
     url = None
 
     # Default values
@@ -34,7 +34,7 @@ class BaseComicMeta(object):
     rights = None
 
     @property
-    def _get_slug(self):
+    def slug(self):
         return self.__module__.split('.')[-1]
 
     def create_comic(self):
@@ -44,11 +44,12 @@ class BaseComicMeta(object):
             language=self.language,
             url=self.url)
         if self.start_date:
-            comic.start_date = dt.date(self.start_date)
+            comic.start_date = self._get_date(self.start_date)
         if self.end_date:
-            comic.end_date = dt.date(self.end_date)
+            comic.end_date = self._get_date(self.end_date)
         if self.history_capable_date:
-            comic.history_capable_date = dt.date(self.history_capable_date)
+            comic.history_capable_date = self._get_date(
+                self.history_capable_date)
         if self.history_capable_days:
             comic.history_capable_days = self.history_capable_days
         if self.has_reruns:
@@ -60,6 +61,9 @@ class BaseComicMeta(object):
         if self.rights:
             comic.rights = self.rights
         comic.save()
+
+    def _get_date(self, date):
+        return dt.datetime.strptime(date, '%Y-%m-%d').date()
 
 class BaseComicCrawler(object):
     def __init__(self, comic):
