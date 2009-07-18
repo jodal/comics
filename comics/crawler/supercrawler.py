@@ -2,6 +2,7 @@
 
 import datetime as dt
 import logging
+import socket
 
 from django.conf import settings
 
@@ -9,6 +10,7 @@ from comics.crawler.exceptions import ComicsError, StripAlreadyExists
 from comics.crawler.utils import get_comic_module
 
 logger = logging.getLogger('comics.crawler')
+socket.setdefaulttimeout(10)
 
 class SuperCrawler(object):
     def __init__(self, config=None, optparse_options=None):
