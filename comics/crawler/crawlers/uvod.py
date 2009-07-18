@@ -1,4 +1,13 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'The Unspeakable Vault (of Doom)'
+    language = 'en'
+    url = 'http://www.macguff.fr/goomi/unspeakable/'
+    history_capable_days = 180
+    time_zone = 1
+    rights = 'Francois Launet'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

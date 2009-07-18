@@ -1,4 +1,15 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'Piled Higher and Deeper'
+    language = 'en'
+    url = 'http://www.phdcomics.com/'
+    start_date = '1997-10-27'
+    history_capable_date = '1997-10-27'
+    schedule = 'Mo,We,Fr'
+    time_zone = -8
+    rights = 'Jorge Cham'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

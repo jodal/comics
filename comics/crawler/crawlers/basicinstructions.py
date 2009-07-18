@@ -1,4 +1,15 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'Basic Instructions'
+    language = 'en'
+    url = 'http://www.basicinstructions.net/'
+    start_date = '2006-07-01'
+    history_capable_days = 100
+    schedule = 'We,Su'
+    time_zone = -7
+    rights = 'Scott Meyer'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

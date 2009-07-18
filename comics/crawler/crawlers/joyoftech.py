@@ -1,6 +1,17 @@
 import re
 
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'The Joy of Tech'
+    language = 'en'
+    url = 'http://www.geekculture.com/joyoftech/'
+    start_date = '2000-08-14'
+    history_capable_days = 30
+    schedule = 'Mo,We,Fr'
+    time_zone = -5
+    rights = 'Geek Culture'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

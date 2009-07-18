@@ -1,4 +1,14 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'Penny Arcade'
+    language = 'en'
+    url = 'http://www.penny-arcade.com/'
+    start_date = '1998-11-18'
+    history_capable_date = '1998-11-18'
+    schedule = 'Mo,We,Fr'
+    rights = 'Mike Krahulik & Jerry Holkins'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

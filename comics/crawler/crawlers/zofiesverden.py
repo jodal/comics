@@ -1,4 +1,15 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'Zofies verden'
+    language = 'no'
+    url = 'http://www.zofiesverden.no/'
+    start_date = '2006-05-02'
+    history_capable_days = 14
+    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
+    time_zone = 1
+    rights = 'Grethe Nestor & Norunn Blichfeldt Schjerven'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

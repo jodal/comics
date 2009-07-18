@@ -1,4 +1,14 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'Business Guys on Business Trips'
+    language = 'en'
+    url = 'http://www.businessguysonbusinesstrips.com/'
+    start_date = '2007-07-12'
+    history_capable_days = 100
+    schedule = 'Mo'
+    time_zone = -7
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

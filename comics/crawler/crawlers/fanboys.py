@@ -1,4 +1,14 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'F@NB0Y$'
+    language = 'en'
+    url = 'http://fanboys-online.com/'
+    start_date = '2006-04-19'
+    history_capable_days = 50
+    time_zone = -5
+    rights = 'Scott Dewitt'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

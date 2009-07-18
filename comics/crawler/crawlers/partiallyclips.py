@@ -1,4 +1,15 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'PartiallyClips'
+    language = 'en'
+    url = 'http://www.partiallyclips.com/'
+    start_date = '2002-01-01'
+    history_capable_days = 10
+    schedule = 'Tu'
+    time_zone = -5
+    rights = 'Robert T. Balder'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

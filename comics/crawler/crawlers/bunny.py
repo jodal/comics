@@ -1,4 +1,15 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'Bunny'
+    language = 'en'
+    url = 'http://bunny-comic.com/'
+    start_date = '2004-08-22'
+    history_capable_days = 14
+    schedule = 'Mo,Tu,We,Th,Fr'
+    time_zone = -8
+    rights = 'H. Davies, CC BY-NC-SA'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

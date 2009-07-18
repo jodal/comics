@@ -1,4 +1,15 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'Boy on a Stick and Slither'
+    language = 'en'
+    url = 'http://www.boasas.com/'
+    start_date = '1998-01-01'
+    history_capable_days = 14
+    schedule = 'Mo,We,Fr'
+    time_zone = -5
+    rights = 'Steven L. Cloud'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

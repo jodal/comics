@@ -1,4 +1,14 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'Three Panel Soul'
+    language = 'en'
+    url = 'http://www.threepanelsoul.com/'
+    start_date = '2006-11-05'
+    history_capable_days = 180
+    time_zone = -5
+    rights = 'Ian McConville & Matt Boyd'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

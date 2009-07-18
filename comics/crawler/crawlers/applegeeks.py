@@ -1,4 +1,15 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'AppleGeeks'
+    language = 'en'
+    url = 'http://www.applegeeks.com/'
+    start_date = '2003-01-01'
+    history_capable_days = 30
+    schedule = 'Mo,Th'
+    time_zone = -5
+    rights = 'Mohammad Haque & Ananth Panagariya'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

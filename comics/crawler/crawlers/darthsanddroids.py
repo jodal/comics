@@ -1,4 +1,14 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'Darths & Droids'
+    language = 'en'
+    url = 'http://darthsanddroids.net/'
+    start_date = '2007-09-14'
+    history_capable_days = 14
+    time_zone = -8
+    rights = 'The Comic Irregulars'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

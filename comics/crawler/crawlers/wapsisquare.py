@@ -1,6 +1,16 @@
 import re
 
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'Wapsi Square'
+    language = 'en'
+    url = 'http://www.wapsisquare.com/'
+    start_date = '2001-09-09'
+    history_capable_date = '2001-09-09'
+    schedule = 'Mo,Tu,We,Th,Fr'
+    rights = 'Paul Taylor'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

@@ -1,4 +1,15 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'Brinkerhoff'
+    language = 'en'
+    url = 'http://www.brinkcomic.com/'
+    start_date = '2006-01-02'
+    history_capable_date = '2006-01-02'
+    schedule = 'Mo,Tu,We,Th,Fr'
+    time_zone = -5
+    rights = 'Gabe Strine'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

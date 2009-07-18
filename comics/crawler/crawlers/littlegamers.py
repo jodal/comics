@@ -1,4 +1,15 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'Little Gamers'
+    language = 'en'
+    url = 'http://www.little-gamers.com/'
+    start_date = '2000-12-01'
+    history_capable_date = '2000-12-01'
+    schedule = 'Mo,Tu,We,Th,Fr'
+    time_zone = 1
+    rights = 'Christian Fundin & Pontus Madsen'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

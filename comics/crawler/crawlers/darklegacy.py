@@ -1,4 +1,15 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'Dark Legacy'
+    language = 'en'
+    url = 'http://www.darklegacycomics.com/'
+    start_date = '2006-01-01'
+    history_capable_date = '2006-12-09'
+    schedule = 'Su'
+    time_zone = -6
+    rights = 'Arad Kedar'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

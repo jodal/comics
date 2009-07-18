@@ -1,4 +1,15 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'FoxTrot'
+    language = 'en'
+    url = 'http://www.foxtrot.com/'
+    start_date = '1988-04-10'
+    history_capable_date = '2006-12-27'
+    schedule = 'Su'
+    time_zone = -5
+    rights = 'Bill Amend'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

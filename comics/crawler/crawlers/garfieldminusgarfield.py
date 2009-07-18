@@ -1,4 +1,14 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'Garfield minus Garfield'
+    language = 'en'
+    url = 'http://garfieldminusgarfield.tumblr.com/'
+    history_capable_days = 30
+    schedule = 'Mo,Tu,We,Th,Fr'
+    time_zone = -4
+    rights = 'Travors'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

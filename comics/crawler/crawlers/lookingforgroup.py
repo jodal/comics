@@ -1,4 +1,15 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'Looking For Group'
+    language = 'en'
+    url = 'http://lfgcomic.com/'
+    start_date = '2006-11-06'
+    history_capable_date = '2006-11-06'
+    schedule = 'Mo,Th'
+    time_zone = -5
+    rights = 'Ryan Sohmer & Lar deSouza'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

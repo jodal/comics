@@ -1,4 +1,14 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'AmazingSuperPowers'
+    language = 'en'
+    url = 'http://www.amazingsuperpowers.com/'
+    start_date = '2007-09-24'
+    history_capable_days = 21
+    schedule = 'Mo,Th'
+    rights = 'Wes & Tony'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

@@ -1,4 +1,15 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'MegaTokyo'
+    language = 'en'
+    url = 'http://www.megatokyo.com/'
+    start_date = '2000-08-14'
+    history_capable_days = 30
+    schedule = 'Mo,We,Fr'
+    time_zone = -5
+    rights = 'Fred Gallagher & Rodney Caston'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

@@ -1,4 +1,15 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'Saturday Morning Breakfast Cereal'
+    language = 'en'
+    url = 'http://www.smbc-comics.com/'
+    start_date = '2002-09-05'
+    history_capable_days = 10
+    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
+    time_zone = -8
+    rights = 'Zach Weiner'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):

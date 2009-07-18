@@ -1,4 +1,15 @@
 from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
+
+class ComicMeta(BaseComicMeta):
+    name = 'A Softer World'
+    language = 'en'
+    url = 'http://www.asofterworld.com/'
+    start_date = '2003-02-07'
+    history_capable_date = '2003-02-07'
+    schedule = 'Mo,We,Fr'
+    time_zone = -8
+    rights = 'Joey Comeau, Emily Horne'
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
