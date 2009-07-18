@@ -9,7 +9,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.http import Http404
 
-from comics.common.utils.time_frames import time_frames
+from comics.core.utils.time_frames import time_frames
 
 def get_navigation(request, view_type, instance=None,
     year=None, month=None, day=None, days=7, latest=False):

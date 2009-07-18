@@ -1,4 +1,4 @@
-{% extends "common/base.html" %}
+{% extends "core/base.html" %}
 {% load humanize %}
 
 
@@ -41,7 +41,7 @@
 
 {% block comic_top_menu %}
     {% with 1 as top_menu %}
-        {% include "common/release-menu.html" %}
+        {% include "core/release-menu.html" %}
     {% endwith %}
 {% endblock %}
 
@@ -77,7 +77,7 @@
         </a>
     </h3>
 
-    {% include "common/release-content.html" %}
+    {% include "core/release-content.html" %}
 </div>
 
             {% endfor %}
@@ -102,7 +102,7 @@
 
 {% block comic_bottom_menu %}
     {% with 0 as top_menu %}
-        {% include "common/release-menu.html" %}
+        {% include "core/release-menu.html" %}
     {% endwith %}
 {% endblock %}
 

@@ -1,7 +1,7 @@
 [
   {
     "pk": 27007, 
-    "model": "common.strip", 
+    "model": "core.strip", 
     "fields": {
       "fetched": "2007-07-30 20:52:51", 
       "title": "", 
@@ -13,7 +13,7 @@
   }, 
   {
     "pk": 30076, 
-    "model": "common.strip", 
+    "model": "core.strip", 
     "fields": {
       "fetched": "2007-07-30 20:54:13", 
       "title": "", 
@@ -25,7 +25,7 @@
   }, 
   {
     "pk": 30504, 
-    "model": "common.strip", 
+    "model": "core.strip", 
     "fields": {
       "fetched": "2007-07-30 20:54:28", 
       "title": "", 
@@ -37,7 +37,7 @@
   }, 
   {
     "pk": 30077, 
-    "model": "common.strip", 
+    "model": "core.strip", 
     "fields": {
       "fetched": "2007-07-30 20:54:13", 
       "title": "", 
@@ -49,7 +49,7 @@
   }, 
   {
     "pk": 30505, 
-    "model": "common.strip", 
+    "model": "core.strip", 
     "fields": {
       "fetched": "2007-07-30 20:54:28", 
       "title": "", 
@@ -61,7 +61,7 @@
   }, 
   {
     "pk": 30506, 
-    "model": "common.strip", 
+    "model": "core.strip", 
     "fields": {
       "fetched": "2007-07-30 20:54:28", 
       "title": "", 
@@ -73,7 +73,7 @@
   }, 
   {
     "pk": 30079, 
-    "model": "common.strip", 
+    "model": "core.strip", 
     "fields": {
       "fetched": "2007-07-30 20:54:13", 
       "title": "", 
@@ -85,7 +85,7 @@
   }, 
   {
     "pk": 30507, 
-    "model": "common.strip", 
+    "model": "core.strip", 
     "fields": {
       "fetched": "2007-07-30 20:54:28", 
       "title": "", 
@@ -97,7 +97,7 @@
   },
   {
     "pk": 77246, 
-    "model": "common.release", 
+    "model": "core.release", 
     "fields": {
       "comic": 16, 
       "pub_date": "2006-05-29", 
@@ -106,7 +106,7 @@
   }, 
   {
     "pk": 80315, 
-    "model": "common.release", 
+    "model": "core.release", 
     "fields": {
       "comic": 17, 
       "pub_date": "2006-05-29", 
@@ -115,7 +115,7 @@
   }, 
   {
     "pk": 80743, 
-    "model": "common.release", 
+    "model": "core.release", 
     "fields": {
       "comic": 18, 
       "pub_date": "2006-05-29", 
@@ -124,7 +124,7 @@
   }, 
   {
     "pk": 80316, 
-    "model": "common.release", 
+    "model": "core.release", 
     "fields": {
       "comic": 17, 
       "pub_date": "2006-05-30", 
@@ -133,7 +133,7 @@
   }, 
   {
     "pk": 80744, 
-    "model": "common.release", 
+    "model": "core.release", 
     "fields": {
       "comic": 18, 
       "pub_date": "2006-05-30", 
@@ -142,7 +142,7 @@
   }, 
   {
     "pk": 80745, 
-    "model": "common.release", 
+    "model": "core.release", 
     "fields": {
       "comic": 18, 
       "pub_date": "2006-05-31", 
@@ -151,7 +151,7 @@
   }, 
   {
     "pk": 80318, 
-    "model": "common.release", 
+    "model": "core.release", 
     "fields": {
       "comic": 17, 
       "pub_date": "2006-06-01", 
@@ -160,7 +160,7 @@
   }, 
   {
     "pk": 80746, 
-    "model": "common.release", 
+    "model": "core.release", 
     "fields": {
       "comic": 18, 
       "pub_date": "2006-06-01", 

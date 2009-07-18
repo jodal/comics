@@ -8,9 +8,9 @@ from django.template.context import RequestContext
 from django.template.defaultfilters import slugify
 from django.views.decorators.cache import never_cache
 
-from comics.common.models import Comic
-from comics.common.utils.navigation import get_navigation
-from comics.common.views import generic_show
+from comics.core.models import Comic
+from comics.core.utils.navigation import get_navigation
+from comics.core.views import generic_show
 from comics.sets.models import Set
 from comics.sets.forms import NewSetForm, EditSetForm
 

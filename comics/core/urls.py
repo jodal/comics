@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 
-from comics.common import views
+from comics.core import views
 
 urlpatterns = patterns('',
     # View top comics

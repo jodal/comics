@@ -98,7 +98,7 @@ class ComicCrawlerRunnerConfig(object):
             options.get('to_date', None))
 
     def set_comics_to_crawl(self, comic_slugs):
-        from comics.common.models import Comic
+        from comics.core.models import Comic
         if comic_slugs is None or len(comic_slugs) == 0:
             logger.debug('Crawl targets: all comics')
             self.comics = Comic.objects.all()
@@ -110,7 +110,7 @@ class ComicCrawlerRunnerConfig(object):
             self.comics = comics
 
     def _get_comic_by_slug(self, comic_slug):
-        from comics.common.models import Comic
+        from comics.core.models import Comic
         try:
             comic = Comic.objects.get(slug=comic_slug)
         except Comic.DoesNotExist:

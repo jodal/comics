@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from comics.common import models
+from comics.core import models
 
 class ComicAdmin(admin.ModelAdmin):
     list_display = ('name', 'language', 'slug', 'url', 'time_zone', 'rights')

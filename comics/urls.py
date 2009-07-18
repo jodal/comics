@@ -3,7 +3,7 @@ from django.conf.urls.defaults import *
 from django.contrib import admin
 admin.autodiscover()
 
-from comics.common.feeds import ComicFeed
+from comics.core.feeds import ComicFeed
 from comics.sets.feeds import SetFeed
 
 feeds = {
@@ -12,8 +12,8 @@ feeds = {
 }
 
 urlpatterns = patterns('',
-    # Comic common app
-    (r'^', include('comics.common.urls')),
+    # Comic core
+    (r'^', include('comics.core.urls')),
 
     # Comic sets
     (r'^s/', include('comics.sets.urls')),

@@ -12,7 +12,7 @@ import urlparse
 from django.conf import settings
 from django.db import transaction
 
-from comics.common.models import Comic, Release, Strip
+from comics.core.models import Comic, Release, Strip
 from comics.crawler.exceptions import *
 from comics.crawler.utils.webparser import WebParser
 from comics.utils.hash import sha256sum

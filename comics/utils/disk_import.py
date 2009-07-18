@@ -6,7 +6,7 @@ import os
 
 from django.conf import settings
 
-from comics.common.models import Comic, Release, Strip
+from comics.core.models import Comic, Release, Strip
 from comics.utils.hash import sha256sum
 
 logger = logging.getLogger('comics.utils.disk_import')

@@ -3,7 +3,7 @@ import datetime
 from django import forms
 from django.template.defaultfilters import slugify
 
-from comics.common.models import Comic
+from comics.core.models import Comic
 from comics.sets.models import Set
 
 class NewSetForm(forms.ModelForm):

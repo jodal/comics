@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib.syndication.feeds import Feed, FeedDoesNotExist
 from django.utils.feedgenerator import Atom1Feed
 
-from comics.common.models import Comic
+from comics.core.models import Comic
 
 class ComicFeed(Feed):
     feed_type = Atom1Feed

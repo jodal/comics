@@ -4,7 +4,7 @@ from django.db import models
 from django.db.models import signals
 from django.core.urlresolvers import reverse
 
-from comics.common.models import Comic
+from comics.core.models import Comic
 
 class Set(models.Model):
     name = models.SlugField(max_length=100, unique=True,

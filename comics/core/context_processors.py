@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from comics.common.models import Comic
+from comics.core.models import Comic
 
 def all_comics(request):
     """Add an all_comics queryset to the template context"""

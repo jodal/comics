@@ -60,7 +60,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.auth',
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
-    'comics.common.context_processors.all_comics',
+    'comics.core.context_processors.all_comics',
 )
 
 INSTALLED_APPS = (
@@ -71,7 +71,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'comics.common',
+    'comics.core',
     'comics.crawler',
     'comics.feedback',
     'comics.sets',

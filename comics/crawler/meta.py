@@ -1,7 +1,7 @@
 import datetime as dt
 import logging
 
-from comics.common.models import Comic
+from comics.core.models import Comic
 from comics.crawler.exceptions import ComicsMetaError
 from comics.crawler.utils import get_comic_module_names, get_comic_module
 

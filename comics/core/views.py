@@ -6,9 +6,9 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.context import RequestContext
 
-from comics.common.models import Comic
-from comics.common.utils.comic_releases import get_comic_releases_struct
-from comics.common.utils.navigation import get_navigation
+from comics.core.models import Comic
+from comics.core.utils.comic_releases import get_comic_releases_struct
+from comics.core.utils.navigation import get_navigation
 
 # Generic views
 
@@ -27,7 +27,7 @@ def generic_show(request, queryset, page, latest=False, extra_context=None):
     }
     if extra_context is not None:
         kwargs.update(extra_context)
-    return render_to_response('common/release-list.html', kwargs,
+    return render_to_response('core/release-list.html', kwargs,
         context_instance=RequestContext(request))
 
 
@@ -75,7 +75,7 @@ def top_year(request, year):
 def comic_list(request):
     """List all available comics"""
 
-    return render_to_response('common/comic-list.html',
+    return render_to_response('core/comic-list.html',
         context_instance=RequestContext(request))
 
 def comic_show(request, comic, year=None, month=None, day=None, days=1):
@@ -119,7 +119,7 @@ def comic_year(request, comic, year):
 ### Other views ###
 
 def about(request):
-    return render_to_response('common/about.html',
+    return render_to_response('core/about.html',
         context_instance=RequestContext(request))
 
 def robots(request):

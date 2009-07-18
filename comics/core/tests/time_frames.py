@@ -1,7 +1,7 @@
 import datetime as dt
 from unittest import TestCase
 
-from comics.common.utils import time_frames as tf
+from comics.core.utils import time_frames as tf
 
 class TimeFramesTestCase(TestCase):
     def setUp(self):

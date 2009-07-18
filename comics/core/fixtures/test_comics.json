@@ -1,7 +1,7 @@
 [
   {
     "pk": 16, 
-    "model": "common.comic", 
+    "model": "core.comic", 
     "fields": {
       "name": "Sinfest", 
       "end_date": null, 
@@ -19,7 +19,7 @@
   }, 
   {
     "pk": 17, 
-    "model": "common.comic", 
+    "model": "core.comic", 
     "fields": {
       "name": "User Friendly", 
       "end_date": null, 
@@ -37,7 +37,7 @@
   }, 
   {
     "pk": 18, 
-    "model": "common.comic", 
+    "model": "core.comic", 
     "fields": {
       "name": "xkcd", 
       "end_date": null, 

@@ -2,8 +2,8 @@ import datetime as dt
 
 from django.test import TestCase
 
-from comics.common.models import Comic, Release
-from comics.common.utils import comic_releases as cr
+from comics.core.models import Comic, Release
+from comics.core.utils import comic_releases as cr
 
 class ComicReleasesTestCase(TestCase):
     fixtures = ['test_comics.json', 'test_releases.json']

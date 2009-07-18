@@ -6,7 +6,7 @@ from django.conf import settings
 from django.db import models
 from django.core.urlresolvers import reverse
 
-from comics.common.managers import ComicManager
+from comics.core.managers import ComicManager
 
 class Comic(models.Model):
     LANGUAGES = (

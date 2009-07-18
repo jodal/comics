@@ -3,7 +3,7 @@ import pmock
 
 from django.test import TestCase
 
-from comics.common.models import Comic
+from comics.core.models import Comic
 from comics.crawler.exceptions import ComicsError
 from comics.crawler import  runner
 
