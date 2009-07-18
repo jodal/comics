@@ -6,6 +6,7 @@ import logging
 from django.conf import settings
 
 from comics.crawler.exceptions import ComicsError, StripAlreadyExists
+from comics.crawler.utils import get_comic_module
 
 logger = logging.getLogger('comics.crawler')
 
@@ -41,17 +42,8 @@ class SuperCrawler(object):
         self._update_strip_titles(comic_crawler)
 
     def _get_comic_crawler(self, comic):
-        module_name = '%s.%s' % (settings.COMICS_CRAWLER_PACKAGE, comic.slug)
-        logger.debug('Importing %s', module_name)
-        module = self._import_by_name(module_name)
+        module = get_comic_module(comic.slug)
         return module.ComicCrawler(comic)
-
-    def _import_by_name(self, module_name):
-        module = __import__(module_name)
-        components = module_name.split('.')
-        for component in components[1:]:
-            module = getattr(module, component)
-        return module
 
     def _get_from_date(self, comic):
         if self.config.from_date < comic.history_capable():
