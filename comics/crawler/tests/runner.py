@@ -4,25 +4,25 @@ import pmock
 from django.test import TestCase
 
 from comics.common.models import Comic
-from comics.crawler import supercrawler
 from comics.crawler.exceptions import ComicsError
+from comics.crawler import  runner
 
-supercrawler.today = lambda: dt.date(2008, 2, 29)
+runner.today = lambda: dt.date(2008, 2, 29)
 
-class SuperCrawlerConfigTestCase(TestCase):
+class ComicCrawlerRunnerConfigTestCase(TestCase):
     fixtures = ['test_comics.json']
 
     def setUp(self):
-        self.cc = supercrawler.SuperCrawlerConfig()
+        self.cc = runner.ComicCrawlerRunnerConfig()
 
     def test_init(self):
         self.assertEquals(0, len(self.cc.comics))
-        self.assertEquals(supercrawler.today(), self.cc.from_date)
-        self.assertEquals(supercrawler.today(), self.cc.to_date)
+        self.assertEquals(runner.today(), self.cc.from_date)
+        self.assertEquals(runner.today(), self.cc.to_date)
 
     def test_init_invalid(self):
         self.assertRaises(AttributeError,
-            supercrawler.SuperCrawlerConfig, options=True)
+            runner.ComicCrawlerRunnerConfig, options=True)
 
     def test_set_from_date(self):
         from_date = dt.date(2008, 3, 11)
@@ -83,13 +83,13 @@ class SuperCrawlerConfigTestCase(TestCase):
         self.cc.set_comics_to_crawl([])
         self.assertEquals(all_count, len(self.cc.comics))
 
-class SuperCrawlerTestCase(TestCase):
+class ComicCrawlerRunnerTestCase(TestCase):
     fixtures = ['test_comics.json']
 
     def setUp(self):
-        config = supercrawler.SuperCrawlerConfig()
+        config = runner.ComicCrawlerRunnerConfig()
         config.set_comics_to_crawl(None)
-        self.super_crawler = supercrawler.SuperCrawler(config)
+        self.runner = runner.ComicCrawlerRunner(config)
 
         comic_crawler_mock = pmock.Mock()
         comic_crawler_mock.url = 'an URL'
@@ -100,8 +100,8 @@ class SuperCrawlerTestCase(TestCase):
         self.comic_crawler_mock = comic_crawler_mock
 
     def test_init(self):
-        self.assert_(isinstance(self.super_crawler.config,
-            supercrawler.SuperCrawlerConfig))
+        self.assert_(isinstance(self.runner.config,
+            runner.ComicCrawlerRunnerConfig))
 
     def test_init_optparse_config(self):
         optparse_options_mock = pmock.Mock()
@@ -111,25 +111,25 @@ class SuperCrawlerTestCase(TestCase):
         optparse_options_mock.stubs().method('get').will(
             pmock.return_value(None))
 
-        result = supercrawler.SuperCrawler(
+        result = runner.ComicCrawlerRunner(
             optparse_options=optparse_options_mock)
 
-        self.assertEquals(len(self.super_crawler.config.comics),
+        self.assertEquals(len(self.runner.config.comics),
             len(result.config.comics))
-        self.assertEquals(self.super_crawler.config.from_date,
+        self.assertEquals(self.runner.config.from_date,
             result.config.from_date)
-        self.assertEquals(self.super_crawler.config.to_date,
+        self.assertEquals(self.runner.config.to_date,
             result.config.to_date)
 
     def test_init_invalid_config(self):
-        self.assertRaises(AssertionError, supercrawler.SuperCrawler)
+        self.assertRaises(AssertionError, runner.ComicCrawlerRunner)
 
     def test_update_strip_titles_noop(self):
         expected = None
         self.comic_crawler_mock.expects(
             pmock.once()).update_titles().will(pmock.return_value(expected))
 
-        result = self.super_crawler._update_strip_titles(
+        result = self.runner._update_strip_titles(
             self.comic_crawler_mock)
 
         self.assertEquals(expected, result)
@@ -139,7 +139,7 @@ class SuperCrawlerTestCase(TestCase):
         self.comic_crawler_mock.expects(
             pmock.once()).update_titles().will(pmock.return_value(expected))
 
-        result = self.super_crawler._update_strip_titles(
+        result = self.runner._update_strip_titles(
             self.comic_crawler_mock)
 
         self.comic_crawler_mock.verify()
@@ -152,7 +152,7 @@ class SuperCrawlerTestCase(TestCase):
         self.comic_crawler_mock.expects(
             pmock.once()).get_strip().after('get_url')
 
-        self.super_crawler._crawl_one_comic_one_date(
+        self.runner._crawl_one_comic_one_date(
             self.comic_crawler_mock, pub_date)
 
         self.comic_crawler_mock.verify()
@@ -160,7 +160,7 @@ class SuperCrawlerTestCase(TestCase):
     def test_try_crawl_one_comic_one_date(self):
         pub_date = dt.date(2008, 3, 1)
 
-        self.super_crawler._try_crawl_one_comic_one_date(
+        self.runner._try_crawl_one_comic_one_date(
             self.comic_crawler_mock, pub_date)
 
         # TODO Mock _crawl_one_comic_one_date to throw exceptions which should
@@ -171,7 +171,7 @@ class SuperCrawlerTestCase(TestCase):
         expected = dt.date(2008, 3, 1)
         comic.history_capable = lambda: expected
 
-        result = self.super_crawler._get_from_date(comic)
+        result = self.runner._get_from_date(comic)
 
         self.assertEquals(expected, result)
 
@@ -179,7 +179,7 @@ class SuperCrawlerTestCase(TestCase):
         comic = Comic.objects.get(slug='xkcd')
         comic.history_capable = lambda: dt.date(2008, 1, 1)
 
-        result = self.super_crawler._get_from_date(comic)
+        result = self.runner._get_from_date(comic)
 
         self.assertEquals(dt.date(2008, 2, 29), result)
 

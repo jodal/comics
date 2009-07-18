@@ -12,12 +12,12 @@ from comics.crawler.utils import get_comic_module
 logger = logging.getLogger('comics.crawler')
 socket.setdefaulttimeout(10)
 
-class SuperCrawler(object):
+class ComicCrawlerRunner(object):
     def __init__(self, config=None, optparse_options=None):
         if config is None and optparse_options is not None:
-            self.config = SuperCrawlerConfig(optparse_options)
+            self.config = ComicCrawlerRunnerConfig(optparse_options)
         else:
-            assert isinstance(config, SuperCrawlerConfig)
+            assert isinstance(config, ComicCrawlerRunnerConfig)
             self.config = config
 
     def start(self):
@@ -81,7 +81,7 @@ class SuperCrawler(object):
             logger.info('%d title(s) updated', num_updated)
             return num_updated
 
-class SuperCrawlerConfig(object):
+class ComicCrawlerRunnerConfig(object):
     DATE_FORMAT = '%Y-%m-%d'
 
     def __init__(self, options=None):

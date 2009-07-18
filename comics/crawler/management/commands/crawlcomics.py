@@ -1,4 +1,4 @@
-from comics.crawler.supercrawler import SuperCrawler
+from comics.crawler.runner import ComicCrawlerRunner
 from comics.utils.commands import ComicsBaseCommand, make_option
 
 class Command(ComicsBaseCommand):
@@ -16,8 +16,8 @@ class Command(ComicsBaseCommand):
 
     def handle(self, *args, **options):
         super(Command, self).handle(*args, **options)
-        super_crawler = SuperCrawler(optparse_options=options)
+        runner = ComicCrawlerRunner(optparse_options=options)
         try:
-            super_crawler.start()
+            runner.start()
         except KeyboardInterrupt:
-            super_crawler.stop()
+            runner.stop()
