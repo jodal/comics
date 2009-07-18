@@ -10,17 +10,8 @@ FILE_LOG_FORMAT = '%(asctime)s [%(process)d] %(name)-12s %(levelname)-8s ' \
 CONSOLE_LOG_FORMAT = '%(levelname)-8s %(message)s'
 
 class ComicsBaseCommand(BaseCommand):
-    option_list = BaseCommand.option_list + (
-        make_option('-q', '--quiet',
-            action='store_const', const=0, dest='verbose',
-            help='Be quiet'),
-        make_option('-v', '--verbose',
-            action='store_const', const=2, dest='verbose',
-            help='Be verbose'),
-    )
-
     def handle(self, *args, **options):
-        self._setup_logging(options.get('verbose', 1))
+        self._setup_logging(int(options.get('verbosity', 1)))
 
     def _setup_logging(self, verbosity_level):
         self._setup_file_logging()
