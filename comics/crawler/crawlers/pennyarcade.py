@@ -1,5 +1,6 @@
 from comics.crawler.base import BaseComicCrawler
 from comics.crawler.meta import BaseComicMeta
+from comics.crawler.utils.lxmlparser import LxmlParser
 
 class ComicMeta(BaseComicMeta):
     name = 'Penny Arcade'
@@ -15,16 +16,8 @@ class ComicCrawler(BaseComicCrawler):
         self.web_url = 'http://www.penny-arcade.com/comic/%(date)s/' % {
             'date': self.pub_date.strftime('%Y/%m/%d'),
         }
-        self.parse_web_page()
 
-        for tag in self.web_page.tags:
-            if (tag['tag'] == 'div'
-                and 'class' in tag and tag['class'] == 'simpleheader'
-                and 'data' in tag):
-                self.title = tag['data']
-                break
+        page = LxmlParser(self.web_url)
 
-        for img in self.web_page.imgs:
-            if 'alt' in img and img['alt'] == self.title and 'src' in img:
-                self.url = self.join_web_url(img['src'])
-                return
+        self.title = page.text('div.simpleheader')
+        self.url = page.src('img[alt="%s"]' % self.title)
