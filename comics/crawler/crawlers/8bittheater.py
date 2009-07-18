@@ -1,4 +1,5 @@
-from comics.crawler.crawlers import BaseComicCrawler, BaseComicMeta
+from comics.crawler.crawlers import BaseComicCrawler
+from comics.crawler.meta import BaseComicMeta
 
 class ComicMeta(BaseComicMeta):
     name = '8-Bit Theater',

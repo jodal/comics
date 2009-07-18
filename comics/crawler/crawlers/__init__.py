@@ -14,7 +14,6 @@ from django.db import transaction
 
 from comics.common.models import Comic, Release, Strip
 from comics.crawler.exceptions import *
-from comics.crawler.meta import BaseComicMeta
 from comics.crawler.utils.webparser import WebParser
 from comics.utils.hash import sha256sum
 
