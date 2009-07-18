@@ -61,11 +61,17 @@ class BaseComicMeta(object):
         return self.__module__.split('.')[-1]
 
     def create_comic(self):
-        comic = Comic(
-            name=self.name,
-            slug=self.slug,
-            language=self.language,
-            url=self.url)
+        if Comic.objects.filter(slug=self.slug).count():
+            comic = Comic.objects.get(slug=self.slug)
+            comic.name = self.name
+            comic.language = self.language
+            comic.url = self.url
+        else:
+            comic = Comic(
+                name=self.name,
+                slug=self.slug,
+                language=self.language,
+                url=self.url)
         if self.start_date:
             comic.start_date = self._get_date(self.start_date)
         if self.end_date:
