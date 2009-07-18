@@ -1,7 +1,8 @@
 Crawler meta data
 =================
 
-Created 2009-06-13
+Created: 2009-06-13
+Completed: 2009-07-18
 
 Goal
 ----

@@ -34,7 +34,6 @@ The dependencies are listed as Debian/Ubuntu package names.
 - python (>=2.5, at least hashlib is new in 2.5)
 - python-django (>=1.0)
 - python-feedparser
-- python-beautifulsoup (Future dep. I want to replace SGMLParser with it.)
 
 Optional dependencies if you want to use a real database and/or memcache:
 
@@ -58,6 +57,7 @@ To get comics up and running from a clean checkout is as easy as:
     git clone git://github.com/jodal/comics.git
     cd comics/comics/
     python manage.py syncdb
+    python manage.py loadcomicmeta
     python manage.py crawlcomics
     python manage.py runserver
 
@@ -74,6 +74,10 @@ To run unit tests:
 To run unit tests with statement coverage:
 
     python manage.py test --settings=comics.settings.coverage
+
+To load meta data for new comic crawlers:
+
+    python manage.py loadcomicmeta
 
 To fetch new comic strips:
 
