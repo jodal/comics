@@ -3,13 +3,13 @@
 import datetime as dt
 import logging
 
+from django.conf import settings
+
 from comics.crawler.exceptions import ComicsError, StripAlreadyExists
 
 logger = logging.getLogger('comics.crawler')
 
 class SuperCrawler(object):
-    CRAWLER_PACKAGE = 'comics.crawler.crawlers'
-
     def __init__(self, config=None, optparse_options=None):
         if config is None and optparse_options is not None:
             self.config = SuperCrawlerConfig(optparse_options)
@@ -41,7 +41,7 @@ class SuperCrawler(object):
         self._update_strip_titles(comic_crawler)
 
     def _get_comic_crawler(self, comic):
-        module_name = '%s.%s' % (self.CRAWLER_PACKAGE, comic.slug)
+        module_name = '%s.%s' % (settings.COMICS_CRAWLER_PACKAGE, comic.slug)
         logger.debug('Importing %s', module_name)
         module = self._import_by_name(module_name)
         return module.ComicCrawler(comic)
