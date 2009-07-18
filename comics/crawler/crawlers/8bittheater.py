@@ -2,7 +2,7 @@ from comics.crawler.crawlers import BaseComicCrawler
 from comics.crawler.meta import BaseComicMeta
 
 class ComicMeta(BaseComicMeta):
-    name = '8-Bit Theater',
+    name = '8-Bit Theater'
     language = 'en'
     url = 'http://www.nuklearpower.com/'
     start_date = '2001-03-02'
