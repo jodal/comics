@@ -1,5 +1,6 @@
 from comics.crawler.base import BaseComicCrawler
 from comics.crawler.meta import BaseComicMeta
+from comics.crawler.utils.lxmlparser import LxmlParser
 
 class ComicMeta(BaseComicMeta):
     name = 'MegaTokyo'
@@ -25,10 +26,5 @@ class ComicCrawler(BaseComicCrawler):
         if self.web_url is None:
             return
 
-        self.parse_web_page()
-
-        for image in self.web_page.imgs:
-            if 'src' in image and image['src'].startswith('strips/'):
-                self.web_url = 'http://www.megatokyo.com/'
-                self.url = self.join_web_url(image['src'])
-                return
+        page = LxmlParser(self.web_url)
+        self.url = page.src('img[src^="http://megatokyo.com/strips/"]')
