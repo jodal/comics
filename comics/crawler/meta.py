@@ -61,9 +61,9 @@ class BaseComicMeta(object):
     history_capable_date = None
     history_capable_days = None
     has_reruns = False
-    schedule = None
+    schedule = ''
     time_zone = None
-    rights = None
+    rights = ''
 
     @property
     def slug(self):
