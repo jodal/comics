@@ -81,24 +81,17 @@ class BaseComicMeta(object):
                 slug=self.slug,
                 language=self.language,
                 url=self.url)
-        if self.start_date:
-            comic.start_date = self._get_date(self.start_date)
-        if self.end_date:
-            comic.end_date = self._get_date(self.end_date)
-        if self.history_capable_date:
-            comic.history_capable_date = self._get_date(
-                self.history_capable_date)
-        if self.history_capable_days:
-            comic.history_capable_days = self.history_capable_days
-        if self.has_reruns:
-            comic.has_reruns = self.has_reruns
-        if self.schedule:
-            comic.schedule = self.schedule
-        if self.time_zone:
-            comic.time_zone = self.time_zone
-        if self.rights:
-            comic.rights = self.rights
+        comic.start_date = self._get_date(self.start_date)
+        comic.end_date = self._get_date(self.end_date)
+        comic.history_capable_date = self._get_date(self.history_capable_date)
+        comic.history_capable_days = self.history_capable_days
+        comic.has_reruns = self.has_reruns
+        comic.schedule = self.schedule
+        comic.time_zone = self.time_zone
+        comic.rights = self.rights
         comic.save()
 
     def _get_date(self, date):
+        if date is None:
+            return None
         return dt.datetime.strptime(date, '%Y-%m-%d').date()
