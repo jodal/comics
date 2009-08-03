@@ -49,7 +49,7 @@ class ComicCrawlerRunner(object):
 
     def _get_from_date(self, comic):
         if self.config.from_date < comic.history_capable():
-            logger.warning('Adjusting from date to %s because of limited ' +
+            logger.info('Adjusting from date to %s because of limited ' +
                 'history capability', comic.history_capable())
             return comic.history_capable()
         else:
@@ -60,9 +60,9 @@ class ComicCrawlerRunner(object):
             logger.debug('Crawling %s for %s',
                 comic_crawler.comic.slug, pub_date)
             self._crawl_one_comic_one_date(comic_crawler, pub_date)
-        except StripAlreadyExists, error:
+        except ComicsError, error:
             logger.info(error)
-        except (ComicsError, IOError), error:
+        except IOError, error:
             logger.warning(error)
         except Exception, error:
             logger.exception(error)
