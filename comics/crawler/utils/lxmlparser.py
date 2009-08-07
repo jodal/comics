@@ -12,17 +12,37 @@ class LxmlParser(object):
         else:
             raise LxmlParserException()
 
-    def text(self, selector):
-        return self.select(selector).text_content()
+    def text(self, selector, default=None):
+        try:
+            return self.select(selector).text_content()
+        except LxmlParserException:
+            if default is not None:
+                return default
+            raise
 
-    def src(self, selector):
-        return self.select(selector).get('src')
+    def src(self, selector, default=None):
+        try:
+            return self.select(selector).get('src')
+        except LxmlParserException:
+            if default is not None:
+                return default
+            raise
 
-    def alt(self, selector):
-        return self.select(selector).get('alt')
+    def alt(self, selector, default=None):
+        try:
+            return self.select(selector).get('alt')
+        except LxmlParserException:
+            if default is not None:
+                return default
+            raise
 
-    def title(self, selector):
-        return self.select(selector).get('title')
+    def title(self, selector, default=None):
+        try:
+            return self.select(selector).get('title')
+        except LxmlParserException:
+            if default is not None:
+                return default
+            raise
 
     def remove(self, selector):
         for element in self.root.cssselect(selector):
