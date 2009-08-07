@@ -34,6 +34,7 @@ The dependencies are listed as Debian/Ubuntu package names.
 - python (>=2.5, at least hashlib is new in 2.5)
 - python-django (>=1.0)
 - python-feedparser
+- python-lxml
 
 Optional dependencies if you want to use a real database and/or memcache:
 
