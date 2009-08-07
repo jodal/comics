@@ -95,7 +95,7 @@ TIME_FORMAT = 'H:i'
 COMICS_SITE_TITLE = 'Daily Comics'
 
 # Location of the comic strip images
-COMICS_MEDIA_URL = MEDIA_URL
+COMICS_MEDIA_URL = '%sc/' % MEDIA_URL
 
 # Number of comics to show in the top list
 COMICS_MAX_IN_TOP_LIST = 10
