@@ -4,11 +4,13 @@ from lxml.html import parse, fromstring
 
 class LxmlParser(object):
     def __init__(self, url=None, string=None):
-        if url:
+        if url is not None:
             self.root = parse(url).getroot()
             self.root.make_links_absolute(url)
-        elif string:
+        elif string is not None:
             self.root = fromstring(string)
+        else:
+            raise LxmlParserException()
 
     def text(self, selector):
         return self.select(selector).text_content()
@@ -37,8 +39,11 @@ class LxmlParser(object):
 
         return elements[0]
 
-class DoesNotExist(Exception):
+class LxmlParserException(Exception):
     pass
 
-class MultipleElementsReturned(Exception):
+class DoesNotExist(LxmlParserException):
+    pass
+
+class MultipleElementsReturned(LxmlParserException):
     pass
