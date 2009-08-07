@@ -1,5 +1,6 @@
 from comics.crawler.base import BaseComicCrawler
 from comics.crawler.meta import BaseComicMeta
+from comics.crawler.utils.lxmlparser import LxmlParser
 
 class ComicMeta(BaseComicMeta):
     name = 'The Unspeakable Vault (of Doom)'
@@ -14,8 +15,6 @@ class ComicCrawler(BaseComicCrawler):
         # FIXME: The uvod feed often contains dates which feedparser fails
         # to parse, like '19 Sept 2008 00:00:00 -0800'
 
-        # TODO: Fetch line of text which sometimes are associated with a strip.
-
         self.parse_feed('http://www.macguff.fr/goomi/unspeakable/rss.xml')
 
         for entry in self.feed.entries:
@@ -29,10 +28,6 @@ class ComicCrawler(BaseComicCrawler):
         if self.web_url is None:
             return
 
-        self.parse_web_page()
-
-        for image in self.web_page.imgs:
-            if ('src' in image
-                and image['src'].startswith('WEBIMAGES/CARTOON/')):
-                self.url = self.join_web_url(image['src'])
-                return
+        page = LxmlParser(self.web_url)
+        self.url = page.src('img[src*="WEBIMAGES/CARTOON"]')
+        self.title = page.text('font[color="#40d265"]', default="")

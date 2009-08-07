@@ -1,12 +1,16 @@
+#encoding: utf-8
+
 from lxml.html import parse, fromstring
 
 class LxmlParser(object):
     def __init__(self, url=None, string=None):
-        if url:
+        if url is not None:
             self.root = parse(url).getroot()
             self.root.make_links_absolute(url)
-        elif string:
+        elif string is not None:
             self.root = fromstring(string)
+        else:
+            raise LxmlParserException()
 
     def text(self, selector):
         return self.select(selector).text_content()
@@ -26,15 +30,20 @@ class LxmlParser(object):
 
     def select(self, selector):
         elements = self.root.cssselect(selector)
+
         if len(elements) == 0:
             raise DoesNotExist('Noting matched the selector: %s' % selector)
         elif len(elements) > 1:
             raise MultipleElementsReturned('Selector matched %d elements: %s' %
                 (len(elements), selector))
+
         return elements[0]
 
-class DoesNotExist(Exception):
+class LxmlParserException(Exception):
     pass
 
-class MultipleElementsReturned(Exception):
+class DoesNotExist(LxmlParserException):
+    pass
+
+class MultipleElementsReturned(LxmlParserException):
     pass

@@ -1,5 +1,6 @@
 from comics.crawler.base import BaseComicCrawler
 from comics.crawler.meta import BaseComicMeta
+from comics.crawler.utils.lxmlparser import LxmlParser
 
 class ComicMeta(BaseComicMeta):
     name = 'Business Guys on Business Trips'
@@ -23,12 +24,6 @@ class ComicCrawler(BaseComicCrawler):
         if self.web_url is None:
             return
 
-        self.parse_web_page()
-
-        for image in self.web_page.imgs:
-            if ('src' in image
-                and image['src'].startswith(
-                    'http://businessguysonbusinesstrips.com/art/')
-                and not image['src'].endswith('/art/wgp_banner.jpg')):
-                self.url = self.join_web_url(image['src'])
-                return
+        page = LxmlParser(self.web_url)
+        page.remove('img[src$="/art/wgp_banner.jpg"]')
+        self.url = page.src('img[src^="http://businessguysonbusinesstrips.com/art/"]')

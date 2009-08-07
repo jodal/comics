@@ -6,6 +6,7 @@ class ComicMeta(BaseComicMeta):
     language = 'no'
     url = 'http://www.bt.no/tegneserier/dilbert/'
     start_date = '1989-04-16'
+    end_date = '2009-07-31'
     history_capable_date = '2005-10-28'
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = 1
