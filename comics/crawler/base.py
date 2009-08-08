@@ -217,7 +217,7 @@ class BaseComicCrawler(object):
             'date': self.pub_date.strftime('%Y-%m-%d'),
             'ext': fileext,
         }
-        absolute_path = '%s%s' % (settings.MEDIA_ROOT, relative_path)
+        absolute_path = '%s%s' % (settings.COMICS_MEDIA_ROOT, relative_path)
 
         # Create missing archive directories
         (justpath, justfilename) = os.path.split(absolute_path)
