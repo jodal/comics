@@ -227,13 +227,11 @@ class BaseComicCrawler(object):
         return (absolute_path, relative_path)
 
     def _archive_strip_image(self, temp_path, archive_path):
-        """Move strip file to archive"""
-
         try:
             shutil.move(temp_path, archive_path)
-        except Exception, e:
+        except Exception:
             os.remove(temp_path)
-            raise e
+            raise
 
     def _save_new_release(self, relative_path, strip_checksum):
         strip = Strip(
@@ -247,19 +245,13 @@ class BaseComicCrawler(object):
     def _save_rerun_release(self, strip):
         self._save_strip_and_release(strip, new_release=False)
 
-    @transaction.commit_manually
+    @transaction.commit_on_success
     def _save_strip_and_release(self, strip, new_release=True):
-        try:
-            if new_release:
-                strip.save()
-            release = Release(
-                comic=self.comic, pub_date=self.pub_date, strip=strip)
-            release.save()
-        except Exception, e:
-            transaction.rollback()
-            raise e
-        else:
-            transaction.commit()
+        if new_release:
+            strip.save()
+        release = Release(
+            comic=self.comic, pub_date=self.pub_date, strip=strip)
+        release.save()
 
 
 class BaseComicsComComicCrawler(BaseComicCrawler):
