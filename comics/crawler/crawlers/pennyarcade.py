@@ -20,5 +20,5 @@ class ComicCrawler(BaseComicCrawler):
         page = LxmlParser(self.web_url)
 
         # FIXME The decode() part should be handled by Base._get_url_post
-        self.title = page.text('div.simpleheader').decode('iso-8859-1')
+        self.title = page.text('h1').decode('iso-8859-1')
         self.url = page.src('img[alt="%s"]' % self.title)
