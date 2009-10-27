@@ -2,6 +2,8 @@
 
 from lxml.html import parse, fromstring
 
+from comics.crawler.exceptions import CrawlerError
+
 class LxmlParser(object):
     def __init__(self, url=None, string=None):
         if url is not None:
@@ -52,14 +54,14 @@ class LxmlParser(object):
         elements = self.root.cssselect(selector)
 
         if len(elements) == 0:
-            raise DoesNotExist('Noting matched the selector: %s' % selector)
+            raise DoesNotExist('Nothing matched the selector: %s' % selector)
         elif len(elements) > 1:
             raise MultipleElementsReturned('Selector matched %d elements: %s' %
                 (len(elements), selector))
 
         return elements[0]
 
-class LxmlParserException(Exception):
+class LxmlParserException(CrawlerError):
     pass
 
 class DoesNotExist(LxmlParserException):
