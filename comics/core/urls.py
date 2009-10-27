@@ -3,8 +3,8 @@ from django.conf.urls.defaults import *
 from comics.core import views
 
 YEAR = r'(?P<year>(19|20)\d{2})'
-MONTH = r'(?P<month>\d{1,2})'
-DAY = r'(?P<day>\d{1,2})'
+MONTH = r'(?P<month>(0*[1-9]|1[0-2]))'
+DAY = r'(?P<day>(0*[1-9]|[1-2]\d|3[0-1]))'
 DAYS = r'\+(?P<days>\d+)'
 COMIC = r'(?P<comic>[0-9a-z-_]+)'
 
