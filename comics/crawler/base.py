@@ -18,6 +18,8 @@ from comics.crawler.utils.webparser import WebParser
 from comics.utils.hash import sha256sum
 
 class BaseComicCrawler(object):
+    check_image_mime_type = True
+
     def __init__(self, comic):
         """Constructor"""
 
@@ -177,7 +179,8 @@ class BaseComicCrawler(object):
         input_file = urllib2.urlopen(request)
         http_response = input_file.info()
 
-        if not http_response.getmaintype() == 'image':
+        if (self.check_image_mime_type
+                and not http_response.getmaintype() == 'image'):
             input_file.close()
             raise StripNotAnImage('%s/%s' % (self.comic.slug, self.pub_date))
 
@@ -256,6 +259,8 @@ class BaseComicCrawler(object):
 
 class BaseComicsComComicCrawler(BaseComicCrawler):
     """Base comic crawler for all comics hosted at comics.com"""
+
+    check_image_mime_type = False
 
     def _get_url_helper(self, comics_com_title):
         self.web_url = 'http://comics.com/%(slug)s/%(date)s/' % {
