@@ -6,6 +6,7 @@ class ComicMeta(BaseComicMeta):
     language = 'no'
     url = 'http://www.start.no/tegneserier/lagunen/'
     start_date = '1991-05-13'
+    end_date = '2009-06-24' # No longer hosted at start.no
     history_capable_days = 30
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = 1
