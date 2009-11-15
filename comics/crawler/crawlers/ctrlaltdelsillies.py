@@ -13,6 +13,6 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
-        self.url = 'http://www.cad-comic.com/comics/Lite%(date)s.jpg' % {
+        self.url = 'http://www.ctrlaltdel-online.com/comics/Lite%(date)s.gif' % {
             'date': self.pub_date.strftime('%Y%m%d'),
         }
