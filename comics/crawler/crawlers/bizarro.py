@@ -6,6 +6,7 @@ class ComicMeta(BaseComicMeta):
     language = 'no'
     url = 'http://www.start.no/tegneserier/bizarro/'
     start_date = '1985-01-01'
+    end_date = '2009-06-24' # No longer hosted at start.no
     history_capable_days = 30
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = 1
