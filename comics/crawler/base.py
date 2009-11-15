@@ -258,7 +258,7 @@ class BaseComicsComComicCrawler(BaseComicCrawler):
     """Base comic crawler for all comics hosted at comics.com"""
 
     def _get_url_helper(self, comics_com_title):
-        self.web_url = 'http://www.comics.com/%(slug)s/%(date)s/' % {
+        self.web_url = 'http://comics.com/%(slug)s/%(date)s/' % {
             'slug': comics_com_title.lower().replace(' ', '_'),
             'date': self.pub_date.strftime('%Y-%m-%d'),
         }
