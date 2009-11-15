@@ -23,7 +23,9 @@ class ComicCrawler(BaseComicCrawler):
                     url = pieces[i + 1]
                     break
             image_name = url.replace('http://bunny-comic.com/strips/', '')
-            if self.pub_date == self.string_to_date(image_name[:6], '%d%m%y'):
+            if (image_name[:6].isdigit()
+                    and self.pub_date == self.string_to_date(
+                    image_name[:6], '%d%m%y')):
                 self.title = title
                 self.url = url
                 return
