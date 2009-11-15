@@ -116,6 +116,8 @@ COMICS_STRIP_BLACKLIST = (
     '181e7d11ebd3224a910d9eba2995349da5d483f3ae9643a2efe4f7dd3d9f668d',
     # Dilbert (bt.no)
     'cde5b71cfb91c05d0cd19f35e325fc1cc9f529dfbce5c6e2583a3aa73d240638',
+    # Least I Could Do
+    '38eca900236617b2c38768c5e5fa410544fea7a3b79cc1e9bd45043623124dbf',
 )
 
 # Comics log file
