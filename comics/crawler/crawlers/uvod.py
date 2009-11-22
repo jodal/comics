@@ -22,12 +22,8 @@ class ComicCrawler(BaseComicCrawler):
                 self.timestamp_to_date(entry.updated_parsed) == self.pub_date
                 and entry.title.startswith('Strip #')):
                 self.title = entry.summary
-                self.web_url = entry.link
-                break
-
-        if self.web_url is None:
-            return
-
-        page = LxmlParser(self.web_url)
-        self.url = page.src('img[src*="WEBIMAGES/CARTOON"]')
-        self.title = page.text('font[color="#40d265"]', default="")
+                pieces = entry.content[0].value.split('"')
+                for i, piece in enumerate(pieces):
+                    if piece.count('src='):
+                        self.url = pieces[i + 1]
+                        return
