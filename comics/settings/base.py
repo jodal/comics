@@ -109,6 +109,8 @@ COMICS_MAX_DAYS_IN_FEED = 30
 
 # SHA256 of blacklisted comic strips
 COMICS_STRIP_BLACKLIST = (
+    # Billy
+    'f8021551b772384d1f4309e0ee15c94cea9ec1e61ba0a7aade8036e40e3179fe',
     # Dagbladet.no
     '61c66a1c84408df5b855004dd799d5e59f4af99f4c6fe8bf4aabf8963cab7cb5',
     # Cyanide and Happiness
