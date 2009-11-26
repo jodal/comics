@@ -124,3 +124,7 @@ def about(request):
 
 def robots(request):
     return HttpResponse('User-Agent: *\nDisallow: /\n', mimetype='text/plain')
+
+def widgets(request):
+    return render_to_response('core/widgets.html',
+        context_instance=RequestContext(request))

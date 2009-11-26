@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.conf.urls.defaults import *
 
 from comics.core import views
@@ -40,3 +41,8 @@ urlpatterns = patterns('',
     # We do not like robots
     url(r'^robots.txt$', views.robots, name='robots'),
 )
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        url(r'^widgets/$', views.widgets, name='widgets'),
+    )
