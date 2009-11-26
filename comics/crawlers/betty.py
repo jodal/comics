@@ -2,7 +2,7 @@ from comics.crawler.base import BaseComicsComComicCrawler
 from comics.crawler.meta import BaseComicMeta
 
 class ComicMeta(BaseComicMeta):
-    name = 'Get Fuzzy'
+    name = 'Betty'
     language = 'en'
     url = 'http://comics.com/betty/'
     start_date = '1991-01-01'
