@@ -7,4 +7,4 @@ comics/settings/local.py
 debug_toolbar
 django
 media/admin
-media/c/*
+media/c
