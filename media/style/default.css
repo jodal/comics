@@ -141,7 +141,7 @@ hr.clear {
 }
 #hd #sitemenu {
     float: right;
-    margin-top: 2.5em;
+    margin-top: 2em;
 }
 #hd #sitemenu a:hover {
     text-decoration: underline;
