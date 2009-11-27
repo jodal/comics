@@ -1,12 +1,63 @@
 {% extends "core/base.html" %}
+{% load webdesign %}
+
+{% block title %}Widgets{% endblock %}
 
 {% block content %}
 
-<h1>Widgets</h1>
+<h2>Widgets</h2>
+
+<p>{% lorem 1 p %}
+
+<h3>A level 3 header</h3>
+
+<p>{% lorem 1 p %}
+
+<h3>Messages</h3>
 
 <p class="info">This is an info message.</p>
 <p class="success">This is a success message.</p>
 <p class="warning">This is a warning/notice message.</p>
 <p class="error">This is an error message.</p>
+
+<h3>Buttons</h3>
+
+<div class="buttons">
+    <a href="#">
+        <img src="{{ MEDIA_URL }}/icons/resultset_first.png" alt="" />
+        Standard link
+    </a>
+    <a href="#" class="positive">
+        <img src="{{ MEDIA_URL }}/icons/add.png" alt="" />
+        Positive
+    </a>
+    <a href="#" class="negative">
+        <img src="{{ MEDIA_URL }}/icons/delete.png" alt="" />
+        Negative
+    </a>
+    <a href="#" class="inactive">
+        <img src="{{ MEDIA_URL }}/icons/delete.png" alt="" />
+        Inactive
+    </a>
+</div>
+
+<div class="buttons">
+    <button>
+        <img src="{{ MEDIA_URL }}/icons/resultset_first.png" alt="" />
+        Standard button
+    </button>
+    <button class="positive">
+        <img src="{{ MEDIA_URL }}/icons/add.png" alt="" />
+        Positive
+    </button>
+    <button class="negative">
+        <img src="{{ MEDIA_URL }}/icons/delete.png" alt="" />
+        Negative
+    </button>
+    <button class="inactive">
+        <img src="{{ MEDIA_URL }}/icons/delete.png" alt="" />
+        Inactive
+    </button>
+</div>
 
 {% endblock %}

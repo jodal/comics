@@ -71,6 +71,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'django.contrib.webdesign',
     'comics.core',
     'comics.crawler',
     'comics.feedback',
