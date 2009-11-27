@@ -36,7 +36,9 @@
 {% block menu %}
 <ul>
     <li><a href="{% url top-latest %}">Home</a></li>
-    <li><a href="{% url set-new %}">Comic sets</a></li>
+    <li><a href="{% url set-new %}">Sets</a></li>
+    <li><a href="{% url feedback %}">Feedback</a></li>
+    <li><a href="{% url about %}">About</a></li>
 </ul>
 {% endblock %}
         </div>
@@ -80,12 +82,6 @@
 <div id="ft">
     <div class="content">
 {% block footer %}
-
-<ul>
-    <li><a href="{% url about %}">About</a></li>
-    <li><a href="{% url feedback %}">Feedback</a></li>
-</ul>
-
 {% endblock %}
     </div>
 </div>
