@@ -141,6 +141,7 @@ hr.clear {
 }
 #hd #sitemenu {
     float: right;
+    margin-top: 2.5em;
 }
 #hd #sitemenu a:hover {
     text-decoration: underline;
@@ -152,7 +153,16 @@ hr.clear {
     display: inline;
     list-style-type: none;
     margin: 0;
-    padding-left: 1em;
+    padding-left: 0.5em;
+}
+#hd #sitemenu a {
+    background: #3465a4;
+    border: 1px solid #4475b4;
+    padding: 0.5em 1em;
+}
+#hd #sitemenu a:hover {
+    background: #4475b4;
+    text-decoration: none;
 }
 
 /* Body area */
