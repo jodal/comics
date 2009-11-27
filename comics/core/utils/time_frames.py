@@ -42,7 +42,7 @@ def latest_time_frame(view_type, slug):
     return {
         'title': 'Latest',
         'url': unquote(reverse(view_name, kwargs=kwargs)),
-        'icon': 'lightning',
+        'icon': 'star',
     }
 
 def a_day_time_frame(view_type, slug, start_date):
@@ -57,7 +57,7 @@ def a_day_time_frame(view_type, slug, start_date):
         kwargs['month'] = start_date.month
         kwargs['day'] = start_date.day
     return {
-        'title': 'A day',
+        'title': 'Day',
         'url': unquote(reverse(view_name, kwargs=kwargs)),
         'icon': 'calendar_view_day',
     }
@@ -74,7 +74,7 @@ def a_week_time_frame(view_type, slug, start_date):
         kwargs['month'] = start_date.month
         kwargs['day'] = start_date.day
     return {
-        'title': 'A week',
+        'title': 'Week',
         'url': unquote(reverse(view_name, kwargs=kwargs)),
         'icon': 'calendar_view_week',
     }
@@ -90,7 +90,7 @@ def this_month_time_frame(view_type, slug, start_date):
     if slug:
         kwargs[view_type] = slug
     return {
-        'title': 'This month',
+        'title': 'Month',
         'url': unquote(reverse(view_name, kwargs=kwargs)),
         'icon': 'calendar_view_month',
     }
@@ -109,9 +109,9 @@ def new_since_last_visit_time_frame(set_slug, last_visit):
         days_since_last_visit = (today() - last_visit).days
         kwargs = {'set': set_slug, 'days': days_since_last_visit}
         return {
-            'title': 'New since last visit',
+            'title': 'New',
             'url': unquote(reverse(view_name, kwargs=kwargs)),
-            'icon': 'user',
+            'icon': 'calendar_add',
         }
 
 def time_frame_ends_in_future(start_date, days):
