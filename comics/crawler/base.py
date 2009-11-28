@@ -14,6 +14,7 @@ from django.db import transaction
 
 from comics.core.models import Comic, Release, Strip
 from comics.crawler.exceptions import *
+from comics.crawler.utils.lxmlparser import LxmlParser
 from comics.crawler.utils.webparser import WebParser
 from comics.utils.hash import sha256sum
 
@@ -267,11 +268,6 @@ class BaseComicsComComicCrawler(BaseComicCrawler):
             'slug': comics_com_title.lower().replace(' ', '_'),
             'date': self.pub_date.strftime('%Y-%m-%d'),
         }
-
-        self.parse_web_page()
-
-        for img in self.web_page.imgs:
-            if ('src' in img and 'alt' in img
-                and img['alt'].startswith(comics_com_title)):
-                self.url = self.join_web_url(img['src'])
-                return
+        page = LxmlParser(self.web_url)
+        self.url = page.src('a.STR_StripImage img[alt^="%s"]' %
+            comics_com_title)
