@@ -5,6 +5,7 @@ TEST_RUNNER = 'comics.utils.test_runner.test_runner_with_coverage'
 COVERAGE_MODULES = (
     'comics.aggregator.command',
     'comics.aggregator.crawler',
+    'comics.aggregator.downloader',
     'comics.aggregator.exceptions',
     'comics.aggregator.lxmlparser',
     'comics.aggregator.management.commands.getcomics',
