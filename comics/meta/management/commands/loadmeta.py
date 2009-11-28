@@ -1,4 +1,4 @@
-from comics.crawler.meta import ComicMetaLoader
+from comics.meta.command import ComicMetaLoader
 from comics.utils.commands import ComicsBaseCommand, make_option
 
 class Command(ComicsBaseCommand):

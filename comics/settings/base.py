@@ -75,6 +75,7 @@ INSTALLED_APPS = (
     'comics.core',
     'comics.crawler',
     'comics.feedback',
+    'comics.meta',
     'comics.sets',
     'comics.utils',
 )

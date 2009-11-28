@@ -58,7 +58,7 @@ To get comics up and running from a clean checkout is as easy as:
     git clone git://github.com/jodal/comics.git
     cd comics/comics/
     python manage.py syncdb
-    python manage.py loadcomicmeta
+    python manage.py loadmeta
     python manage.py crawlcomics
     python manage.py runserver
 
@@ -76,9 +76,9 @@ To run unit tests with statement coverage:
 
     python manage.py test --settings=comics.settings.coverage
 
-To load meta data for new comic crawlers:
+To load meta data for new or existing comics:
 
-    python manage.py loadcomicmeta
+    python manage.py loadmeta
 
 To fetch new comic strips:
 

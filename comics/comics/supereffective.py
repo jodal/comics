@@ -1,7 +1,7 @@
 import datetime as dt
 
 from comics.crawler.base import BaseComicCrawler
-from comics.crawler.meta import BaseComicMeta
+from comics.meta.base import BaseComicMeta
 
 class ComicMeta(BaseComicMeta):
     name = 'Super Effective'

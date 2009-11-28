@@ -1,5 +1,5 @@
 from comics.crawler.base import BaseComicsComComicCrawler
-from comics.crawler.meta import BaseComicMeta
+from comics.meta.base import BaseComicMeta
 
 class ComicMeta(BaseComicMeta):
     name = 'Betty'
