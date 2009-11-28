@@ -11,7 +11,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Greg Dean'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         page_url = 'http://www.reallifecomics.com/archive/%(date)s.html' % {
             'date': self.pub_date.strftime('%y%m%d'),
         }

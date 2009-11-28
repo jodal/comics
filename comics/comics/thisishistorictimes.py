@@ -11,7 +11,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Terrence Nowicki, Jr.'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://thisishistorictimes.com/feed/')
         for entry in self.feed.entries:
             if self.timestamp_to_date(entry.updated_parsed) == self.pub_date:

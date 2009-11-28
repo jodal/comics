@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Steven L. Cloud'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://www.boasas.com/boasas_rss.xml')
 
         for entry in self.feed.entries:

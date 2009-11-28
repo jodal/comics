@@ -12,5 +12,5 @@ class ComicMeta(BaseComicMeta):
     rights = 'Stephan Pastis'
 
 class ComicCrawler(BaseComicsComComicCrawler):
-    def _get_url(self):
-        self._get_url_helper('Pearls Before Swine')
+    def crawl(self):
+        self.crawl_helper('Pearls Before Swine')

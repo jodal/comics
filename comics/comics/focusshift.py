@@ -14,7 +14,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Thom Holwerda'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://osnews.com/files/comics.xml')
 
         for entry in self.feed.entries:

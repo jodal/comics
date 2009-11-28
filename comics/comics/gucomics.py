@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Woody Hearn'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://www.gucomics.com/rss.xml')
         for entry in self.feed.entries:
             if (self.timestamp_to_date(entry.updated_parsed) == self.pub_date

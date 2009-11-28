@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Lise Myhre'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.url = 'http://images.bt.no/gfx/cartoons/nemi/%(date)s.gif' % {
             'date': self.pub_date.strftime('%d%m%y'),
         }

@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Steve Napierski'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed(
             'http://feeds2.feedburner.com/DuelingAnalogs?format=xml')
 

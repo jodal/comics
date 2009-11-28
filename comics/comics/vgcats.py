@@ -13,7 +13,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Scott Ramsoomair'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         # FIXME: Seems like they are using gif images now and then
 
         if self.pub_date < dt.date(2003, 5, 1):

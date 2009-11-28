@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Mikael Wulff & Anders Morgenthaler'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://feeds.feedburner.com/wulffmorgenthaler')
 
         for entry in self.feed.entries:

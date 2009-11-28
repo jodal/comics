@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Arad Kedar'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://www.darklegacycomics.com/feed.xml')
 
         for entry in self.feed.entries:

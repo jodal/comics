@@ -12,5 +12,5 @@ class ComicMeta(BaseComicMeta):
     rights = 'Pat Brady'
 
 class ComicCrawler(BaseComicsComComicCrawler):
-    def _get_url(self):
-        self._get_url_helper('Rose Is Rose')
+    def crawl(self):
+        self.crawl_helper('Rose Is Rose')

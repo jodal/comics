@@ -20,12 +20,12 @@ class BaseComicCrawler(object):
     def get_strip_metadata(self, pub_date=None):
         """Get URL of strip from pub_date, or the latest strip"""
 
+        self.pub_date = self._get_date_to_crawl(pub_date)
         self.url = None
         self.title = None
         self.text = None
-        self.pub_date = self._get_date_to_crawl(pub_date)
 
-        self._get_url()
+        self.crawl()
 
         self._check_strip_url()
         if self.feed:
@@ -76,12 +76,12 @@ class BaseComicCrawler(object):
             if self.text and type(self.text) != unicode:
                 self.text = unicode(self.text, self.feed.encoding)
 
-    def _get_url(self):
+    def crawl(self):
         """Must be overridden by classes inheriting from this one"""
 
         raise NotImplementedError
 
-    ### Helpers for the _get_url() implementations
+    ### Helpers for the crawl() implementations
 
     def parse_feed(self, feed_url):
         if self.feed is None:
@@ -110,7 +110,7 @@ class BaseComicsComComicCrawler(BaseComicCrawler):
 
     check_image_mime_type = False
 
-    def _get_url_helper(self, comics_com_title):
+    def crawl_helper(self, comics_com_title):
         page_url = 'http://comics.com/%(slug)s/%(date)s/' % {
             'slug': comics_com_title.lower().replace(' ', '_'),
             'date': self.pub_date.strftime('%Y-%m-%d'),

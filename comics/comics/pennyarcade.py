@@ -11,12 +11,12 @@ class ComicMeta(BaseComicMeta):
     rights = 'Mike Krahulik & Jerry Holkins'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         page_url = 'http://www.penny-arcade.com/comic/%(date)s/' % {
             'date': self.pub_date.strftime('%Y/%m/%d'),
         }
         page = self.parse_page(page_url)
 
-        # FIXME The decode() part should be handled by Base._get_url_post
+        # FIXME The decode() part should be handled by BaseComicCrawler
         self.title = page.text('h1').decode('iso-8859-1')
         self.url = page.src('img[alt="%s"]' % self.title)

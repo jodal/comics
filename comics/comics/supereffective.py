@@ -13,7 +13,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Scott Ramsoomair'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.url = 'http://www.vgcats.com/super/images/%(date)s.gif' % {
             'date': self.pub_date.strftime('%y%m%d'),
         }

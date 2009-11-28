@@ -10,7 +10,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Francois Launet'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         # FIXME: The uvod feed often contains dates which feedparser fails
         # to parse, like '19 Sept 2008 00:00:00 -0800'
 

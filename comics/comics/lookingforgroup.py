@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Ryan Sohmer & Lar deSouza'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed(
             'http://feeds.feedburner.com/LookingForGroup?format=xml')
 

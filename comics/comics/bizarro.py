@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Dan Piraro'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://underholdning.no.msn.com/rss/bizarro.aspx')
 
         for entry in self.feed.entries:

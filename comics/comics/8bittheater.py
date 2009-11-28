@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Brian Clevinger'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         page_url = 'http://www.nuklearpower.com/%(year)s/%(month)d/%(day)s/episode/' % {
             'year': self.pub_date.year,
             'month': self.pub_date.month,

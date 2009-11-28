@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Jorge Cham'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://www.phdcomics.com/gradfeed_justcomics.php')
 
         for entry in self.feed.entries:

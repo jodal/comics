@@ -11,7 +11,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Aaron Johnson'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://www.whattheduck.net/strip/rss.xml')
 
         for entry in self.feed.entries:

@@ -11,7 +11,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Scott Adams'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed(
             'http://feeds.feedburner.com/DilbertDailyStrip?format=xml')
 

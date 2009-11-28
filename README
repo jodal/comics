@@ -92,7 +92,6 @@ TODO
 
 A mostly unordered list of things to fix. Patches accepted.
 
-- Change the name of BaseComicCrawler._get_url() into something more fitting.
 - Consider wrapping the feedparser object in our own feedparser:
   - which provides all entries for a given date.
   - whose entries got methods for:

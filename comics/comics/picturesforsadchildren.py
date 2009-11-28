@@ -11,7 +11,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'John Campbell'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://www.rsspect.com/rss/pfsc.xml')
 
         for entry in self.feed.entries:

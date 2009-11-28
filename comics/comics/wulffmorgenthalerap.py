@@ -12,6 +12,6 @@ class ComicMeta(BaseComicMeta):
     rights = 'Mikael Wulff & Anders Morgenthaler'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         page = self.parse_page('http://www.aftenposten.no/tegneserier/')
         self.url = page.src('img#theCartoon')

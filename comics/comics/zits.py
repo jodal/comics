@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Jerry Scott and Jim Borgman'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://www.arcamax.com/zits/channelfeed')
         for entry in self.feed.entries:
             if entry.title.endswith(self.pub_date.strftime('%-1m/%-1d/%Y')):

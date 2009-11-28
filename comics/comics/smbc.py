@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Zach Weiner'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://www.smbc-comics.com/rss.php')
 
         for entry in self.feed.entries:

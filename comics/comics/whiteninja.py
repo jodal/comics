@@ -11,7 +11,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Scott Bevan & Kent Earle'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://www.whiteninjacomics.com/rss/z-latest.xml')
         for entry in self.feed.entries:
             if (entry.updated_parsed and

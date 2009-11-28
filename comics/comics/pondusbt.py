@@ -14,7 +14,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Frode Øverli'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.url = 'http://images.bt.no/gfx/cartoons/pondus/%(date)s.gif' % {
             'date': self.pub_date.strftime('%d%m%y'),
         }

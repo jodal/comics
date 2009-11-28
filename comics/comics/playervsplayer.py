@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Scott R. Kurtz'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://feedproxy.google.com/pvponline')
 
         for entry in self.feed.entries:

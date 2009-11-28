@@ -11,7 +11,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Tatsuya Ishida'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.url = 'http://www.sinfest.net/comikaze/comics/%(date)s.gif' % {
             'date': self.pub_date.strftime('%Y-%m-%d'),
         }

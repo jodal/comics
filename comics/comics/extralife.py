@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Scott Johnson'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.url = 'http://www.myextralife.com/strips/%(date)s.jpg' % {
             'date': self.pub_date.strftime('%m-%d-%Y'),
         }

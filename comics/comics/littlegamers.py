@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Christian Fundin & Pontus Madsen'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://www.little-gamers.com/category/comic/feed')
 
         for entry in self.feed.entries:

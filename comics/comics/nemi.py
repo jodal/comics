@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Lise Myhre'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.url = 'http://www.dagbladet.no/tegneserie/nemiarkiv/serve.php?%(date)s' % {
             'date': self.date_to_epoch(self.pub_date),
         }

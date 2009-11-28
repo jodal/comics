@@ -15,7 +15,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Frank Cho'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         creators_com_comic_serial = '13'
         self.parse_feed('http://www.creators.com/comics/liberty-meadows.rss')
 

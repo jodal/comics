@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Mort Walker'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.url = 'http://cserver.it-content.com/retriever.php?id=104&date=%(date)s' % {
             'date': self.pub_date.strftime('%Y%m%d'),
         }

@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Tim Buckley'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.url = 'http://www.ctrlaltdel-online.com/comics/Lite%(date)s.gif' % {
             'date': self.pub_date.strftime('%Y%m%d'),
         }

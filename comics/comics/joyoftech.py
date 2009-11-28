@@ -14,7 +14,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Geek Culture'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://www.joyoftech.com/joyoftech/jotblog/atom.xml')
         for entry in self.feed.entries:
             if (re.match('^JoT[ #]*\d.*', entry.title)

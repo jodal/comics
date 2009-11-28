@@ -11,7 +11,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Adrian "Adis" Ramos'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         page_url = 'http://www.countyoursheep.com/d/%(date)s.html' % {
             'date': self.pub_date.strftime('%Y%m%d'),
         }

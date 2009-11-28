@@ -11,7 +11,7 @@ class ComicMeta(BaseComicMeta):
     rights = '"Lord KC Green"'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         page_url = 'http://www.gunshowcomic.com/d/%(date)s.html' % {
             'date': self.pub_date.strftime('%Y%m%d'),
         }

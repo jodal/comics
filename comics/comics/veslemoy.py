@@ -14,7 +14,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Vantina Nina Andreassen'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.url = 'http://pub.tv2.no/nettavisen/tegneserie/pondus/veslemoy/%(date)s.jpg' % {
             'date': self.pub_date.strftime('%d%m%y'),
         }

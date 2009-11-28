@@ -12,5 +12,5 @@ class ComicMeta(BaseComicMeta):
     rights = 'Scott Adams'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         pass # XXX Comic no longer published

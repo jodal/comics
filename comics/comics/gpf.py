@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Jeffrey T. Darlington'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         page_url = 'http://www.gpf-comics.com/archive.php?d=%(date)s' % {
             'date': self.pub_date.strftime('%Y%m%d'),
         }

@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Krishna M. Sadasivam'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://pcweenies.com/feed/')
 
         for entry in self.feed.entries:

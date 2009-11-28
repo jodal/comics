@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Randall Munroe, CC BY-NC 2.5'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://www.xkcd.com/rss.xml')
 
         for entry in self.feed.entries:

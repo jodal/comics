@@ -11,7 +11,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Wes & Tony'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://www.amazingsuperpowers.com/category/comics/feed/')
 
         for entry in self.feed.entries:

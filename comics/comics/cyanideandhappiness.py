@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Kris Wilson, Rob DenBleyker, Matt Melvin, & Dave McElfatrick '
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://feeds.feedburner.com/Explosm')
         for entry in self.feed.entries:
             if entry.title == self.pub_date.strftime('%m.%d.%Y'):

@@ -11,5 +11,5 @@ class ComicMeta(BaseComicMeta):
     rights = 'Nicholas Gurewitch'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         pass # XXX Comic no longer published

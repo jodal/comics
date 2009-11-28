@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Kate Beaton'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://www.rsspect.com/rss/vagrant.xml')
 
         for entry in self.feed.entries:

@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Yuko Ota & Ananth Panagariya'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://www.johnnywander.com/feed')
 
         for entry in self.feed.entries:

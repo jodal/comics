@@ -11,7 +11,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'J.D. "Illiad" Frazer'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         page_url = 'http://ars.userfriendly.org/cartoons/?id=%(date)s' % {
             'date': self.pub_date.strftime('%Y%m%d'),
         }

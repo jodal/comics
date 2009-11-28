@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Rich Morris'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.url = 'http://yafgc.shipsinker.com/istrip_files/strips/%(date)s.jpg' % {
             'date': self.pub_date.strftime('%Y%m%d'),
         }

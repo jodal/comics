@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Ryan Sohmer & Lar deSouza'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.url = 'http://archive.leasticoulddo.com/strips/%(date)s.gif' % {
             'date': self.pub_date.strftime('%Y%m%d'),
         }

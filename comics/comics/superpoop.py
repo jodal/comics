@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Drew'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://www.superpoop.com/rss/rss.php')
 
         for entry in self.feed.entries:

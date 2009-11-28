@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Joey Comeau, Emily Horne'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://www.rsspect.com/rss/asw.xml')
 
         for entry in self.feed.entries:

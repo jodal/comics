@@ -12,6 +12,6 @@ class ComicMeta(BaseComicMeta):
     rights = 'Ben Bourbon'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         page = self.parse_page('http://www.thedevilbear.com/')
         self.url = page.src('#cg_img img')

@@ -12,5 +12,5 @@ class ComicMeta(BaseComicMeta):
     rights = 'Darby Conley'
 
 class ComicCrawler(BaseComicsComComicCrawler):
-    def _get_url(self):
-        self._get_url_helper('Get Fuzzy')
+    def crawl(self):
+        self.crawl_helper('Get Fuzzy')

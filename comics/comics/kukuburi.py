@@ -14,7 +14,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Ramón Pérez'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://feeds2.feedburner.com/Kukuburi')
 
         for entry in self.feed.entries:

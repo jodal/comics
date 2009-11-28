@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Ramón Pérez & Rob Coughler'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.url = 'http://www.butternutsquash.net/comics/%(date)s.jpg' % {
             'date': self.pub_date.strftime('%Y-%m-%d'),
         }

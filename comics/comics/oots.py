@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Rich Burlew'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://www.giantitp.com/comics/oots.rss')
         if len(self.feed.entries):
             entry = self.feed.entries[0]

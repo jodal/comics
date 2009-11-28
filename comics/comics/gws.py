@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Danielle Corsetto'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         page = self.parse_page('http://www.daniellecorsetto.com/gws.html')
         self.url = page.src(
             'img[src^="http://www.daniellecorsetto.com/images/gws/GWS"]')

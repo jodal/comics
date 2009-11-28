@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Robert T. Balder'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://www.partiallyclips.com/includes/rss.xml')
 
         for entry in self.feed.entries:

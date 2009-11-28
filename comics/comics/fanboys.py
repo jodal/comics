@@ -11,7 +11,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Scott Dewitt'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://fanboys-online.com/rss/comic.xml')
 
         for entry in self.feed.entries:

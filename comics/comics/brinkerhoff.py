@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Gabe Strine'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.url = 'http://www.brinkcomic.com/comics/%(date)s.gif' % {
             'date': self.pub_date.strftime('%Y%m%d'),
         }

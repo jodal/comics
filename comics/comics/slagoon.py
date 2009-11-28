@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Jim Toomey'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.url = 'http://www.slagoon.com/dailies/SL%(date)s.gif' % {
             'date': self.pub_date.strftime('%y%m%d'),
         }

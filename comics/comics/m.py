@@ -13,7 +13,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Mads Eriksen'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.url = 'http://g2.start.no/tegneserier/striper/m/mstriper/m%(date)s.gif' % {
             'date': self.pub_date.strftime('%Y%m%d'),
         }

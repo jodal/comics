@@ -11,7 +11,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Travors'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.parse_feed('http://garfieldminusgarfield.tumblr.com/rss')
 
         for entry in self.feed.entries:

@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Grethe Nestor & Norunn Blichfeldt Schjerven'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.url = 'http://www.dagbladet.no/tegneserie/zofiesverdenarkiv/serve.php?%(date)s' % {
             'date': self.date_to_epoch(self.pub_date),
         }

@@ -12,7 +12,7 @@ class ComicMeta(BaseComicMeta):
     rights = 'Lars Lauvik'
 
 class ComicCrawler(BaseComicCrawler):
-    def _get_url(self):
+    def crawl(self):
         self.url = 'http://pub.tv2.no/nettavisen/tegneserie/pondus/eon/%(date)s.gif' % {
             'date': self.pub_date.strftime('%d%m%y'),
         }
