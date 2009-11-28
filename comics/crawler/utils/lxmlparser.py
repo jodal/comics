@@ -1,5 +1,3 @@
-#encoding: utf-8
-
 from lxml.html import parse, fromstring
 
 from comics.crawler.exceptions import CrawlerError
