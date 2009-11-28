@@ -1,4 +1,4 @@
-from comics.crawler.runner import ComicCrawlerRunner
+from comics.aggregator.command import ComicCrawlerRunner
 from comics.utils.commands import ComicsBaseCommand, make_option
 
 class Command(ComicsBaseCommand):

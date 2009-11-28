@@ -82,7 +82,7 @@ To load meta data for new or existing comics:
 
 To fetch new comic strips:
 
-    python manage.py crawlcomics
+    python manage.py getcomics
 
 Add `--help` to get further instructions.
 
@@ -92,7 +92,7 @@ TODO
 
 A mostly unordered list of things to fix. Patches accepted.
 
-- comics.crawler:
+- comics.aggregator.command:
   - Use comic week schedule to crawl less often on non-schedule days.
   - Use comics time zone to crawl the correct current date.
 - comics.core.utils.navigation: Unit test and refactor to a tree of OO

@@ -3,26 +3,26 @@ import pmock
 
 from django.test import TestCase
 
+from comics.aggregator import command
+from comics.aggregator.exceptions import ComicsError
 from comics.core.models import Comic
-from comics.crawler.exceptions import ComicsError
-from comics.crawler import  runner
 
-runner.today = lambda: dt.date(2008, 2, 29)
+command.today = lambda: dt.date(2008, 2, 29)
 
 class ComicCrawlerRunnerConfigTestCase(TestCase):
     fixtures = ['test_comics.json']
 
     def setUp(self):
-        self.cc = runner.ComicCrawlerRunnerConfig()
+        self.cc = command.ComicCrawlerRunnerConfig()
 
     def test_init(self):
         self.assertEquals(0, len(self.cc.comics))
-        self.assertEquals(runner.today(), self.cc.from_date)
-        self.assertEquals(runner.today(), self.cc.to_date)
+        self.assertEquals(command.today(), self.cc.from_date)
+        self.assertEquals(command.today(), self.cc.to_date)
 
     def test_init_invalid(self):
         self.assertRaises(AttributeError,
-            runner.ComicCrawlerRunnerConfig, options=True)
+            command.ComicCrawlerRunnerConfig, options=True)
 
     def test_set_from_date(self):
         from_date = dt.date(2008, 3, 11)
@@ -87,9 +87,9 @@ class ComicCrawlerRunnerTestCase(TestCase):
     fixtures = ['test_comics.json']
 
     def setUp(self):
-        config = runner.ComicCrawlerRunnerConfig()
+        config = command.ComicCrawlerRunnerConfig()
         config.set_comics_to_crawl(None)
-        self.runner = runner.ComicCrawlerRunner(config)
+        self.runner = command.ComicCrawlerRunner(config)
 
         comic_crawler_mock = pmock.Mock()
         comic_crawler_mock.url = 'an URL'
@@ -101,7 +101,7 @@ class ComicCrawlerRunnerTestCase(TestCase):
 
     def test_init(self):
         self.assert_(isinstance(self.runner.config,
-            runner.ComicCrawlerRunnerConfig))
+            command.ComicCrawlerRunnerConfig))
 
     def test_init_optparse_config(self):
         optparse_options_mock = pmock.Mock()
@@ -111,7 +111,7 @@ class ComicCrawlerRunnerTestCase(TestCase):
         optparse_options_mock.stubs().method('get').will(
             pmock.return_value(None))
 
-        result = runner.ComicCrawlerRunner(
+        result = command.ComicCrawlerRunner(
             optparse_options=optparse_options_mock)
 
         self.assertEquals(len(self.runner.config.comics),
@@ -122,7 +122,7 @@ class ComicCrawlerRunnerTestCase(TestCase):
             result.config.to_date)
 
     def test_init_invalid_config(self):
-        self.assertRaises(AssertionError, runner.ComicCrawlerRunner)
+        self.assertRaises(AssertionError, command.ComicCrawlerRunner)
 
     def test_update_strip_titles_noop(self):
         expected = None

@@ -11,9 +11,9 @@ import urllib2
 from django.conf import settings
 from django.db import transaction
 
+from comics.aggregator.exceptions import *
+from comics.aggregator.lxmlparser import LxmlParser
 from comics.core.models import Comic, Release, Strip
-from comics.crawler.exceptions import *
-from comics.crawler.lxmlparser import LxmlParser
 from comics.utils.hash import sha256sum
 
 class BaseComicCrawler(object):

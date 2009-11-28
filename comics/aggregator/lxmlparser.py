@@ -1,6 +1,6 @@
 from lxml.html import parse, fromstring
 
-from comics.crawler.exceptions import CrawlerError
+from comics.aggregator.exceptions import CrawlerError
 
 class LxmlParser(object):
     def __init__(self, url=None, string=None):

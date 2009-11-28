@@ -1,4 +1,4 @@
-"""Crawler which fetches comic strips from the web"""
+"""Aggregator which fetches comic strips from the web"""
 
 import datetime as dt
 import logging
@@ -6,10 +6,11 @@ import socket
 
 from django.conf import settings
 
+from comics.aggregator.exceptions import StripAlreadyExists
+from comics.core.exceptions import ComicsError
 from comics.comics import get_comic_module
-from comics.crawler.exceptions import ComicsError, StripAlreadyExists
 
-logger = logging.getLogger('comics.crawler')
+logger = logging.getLogger('comics.aggregator.command')
 socket.setdefaulttimeout(10)
 
 class ComicCrawlerRunner(object):
