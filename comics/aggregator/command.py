@@ -6,6 +6,7 @@ import socket
 
 from django.conf import settings
 
+from comics.aggregator.downloader import ComicDownloader
 from comics.aggregator.exceptions import StripAlreadyExists
 from comics.core.exceptions import ComicsError
 from comics.comics import get_comic_module
@@ -13,36 +14,38 @@ from comics.comics import get_comic_module
 logger = logging.getLogger('comics.aggregator.command')
 socket.setdefaulttimeout(10)
 
-class ComicCrawlerRunner(object):
+class ComicAggregator(object):
     def __init__(self, config=None, optparse_options=None):
         if config is None and optparse_options is not None:
-            self.config = ComicCrawlerRunnerConfig(optparse_options)
+            self.config = ComicAggregatorConfig(optparse_options)
         else:
-            assert isinstance(config, ComicCrawlerRunnerConfig)
+            assert isinstance(config, ComicAggregatorConfig)
             self.config = config
 
     def start(self):
         for comic in self.config.comics:
-            self._try_crawl_one_comic(comic)
+            self._try_aggregate_one_comic(comic)
 
     def stop(self):
         pass
 
-    def _try_crawl_one_comic(self, comic):
+    def _try_aggregate_one_comic(self, comic):
         try:
-            self._crawl_one_comic(comic)
+            self._aggregate_one_comic(comic)
         except Exception, error:
             logger.exception(error)
 
-    def _crawl_one_comic(self, comic):
-        comic_crawler = self._get_comic_crawler(comic)
+    def _aggregate_one_comic(self, comic):
+        crawler = self._get_comic_crawler(comic)
         pub_date = self._get_from_date(comic)
         logger.info('Crawling %s from %s to %s'
             % (comic.slug, pub_date, self.config.to_date))
         while pub_date <= self.config.to_date:
-            self._try_crawl_one_comic_one_date(comic_crawler, pub_date)
+            strip_metadata = self._try_crawl_one_comic_one_date(
+                crawler, pub_date)
+            if strip_metadata:
+                self._try_download_strip(strip_metadata)
             pub_date += dt.timedelta(days=1)
-        self._update_strip_titles(comic_crawler)
 
     def _get_comic_crawler(self, comic):
         module = get_comic_module(comic.slug)
@@ -56,11 +59,10 @@ class ComicCrawlerRunner(object):
         else:
             return self.config.from_date
 
-    def _try_crawl_one_comic_one_date(self, comic_crawler, pub_date):
+    def _try_crawl_one_comic_one_date(self, crawler, pub_date):
         try:
-            logger.debug('Crawling %s for %s',
-                comic_crawler.comic.slug, pub_date)
-            self._crawl_one_comic_one_date(comic_crawler, pub_date)
+            logger.debug('Crawling %s for %s', crawler.comic.slug, pub_date)
+            return self._crawl_one_comic_one_date(crawler, pub_date)
         except ComicsError, error:
             logger.info(error)
         except IOError, error:
@@ -68,21 +70,37 @@ class ComicCrawlerRunner(object):
         except Exception, error:
             logger.exception(error)
 
-    def _crawl_one_comic_one_date(self, comic_crawler, pub_date):
-        comic_crawler.get_url(pub_date)
-        logger.debug('Strip URL: %s', comic_crawler.url)
-        logger.debug('Strip title: %s', comic_crawler.title)
-        logger.debug('Strip text: %s', comic_crawler.text)
-        comic_crawler.get_strip()
-        logger.info('Strip saved (%s/%s)', comic_crawler.comic.slug, pub_date)
+    def _crawl_one_comic_one_date(self, crawler, pub_date):
+        strip_metadata = crawler.get_strip_metadata(pub_date)
+        logger.debug('Strip date: %s', strip_metadata['pub_date'])
+        logger.debug('Strip URL: %s', strip_metadata['url'])
+        logger.debug('Strip title: %s', strip_metadata['title'])
+        logger.debug('Strip text: %s', strip_metadata['text'])
+        return strip_metadata
 
-    def _update_strip_titles(self, comic_crawler):
-        if hasattr(comic_crawler, 'update_titles'):
-            num_updated = comic_crawler.update_titles()
-            logger.info('%d title(s) updated', num_updated)
-            return num_updated
+    def _try_download_strip(self, strip_metadata):
+        try:
+            logger.debug('Downloading %s for %s',
+                strip_metadata['comic'].slug, strip_metadata['pub_date'])
+            downloader = self._get_comic_downloader()
+            return self._download_strip(downloader, strip_metadata)
+        except ComicsError, error:
+            logger.info(error)
+        except IOError, error:
+            logger.warning(error)
+        except Exception, error:
+            logger.exception(error)
 
-class ComicCrawlerRunnerConfig(object):
+    def _get_comic_downloader(self):
+        return ComicDownloader()
+
+    def _download_strip(self, downloader, strip_metadata):
+        downloader.download_strip(strip_metadata)
+        logger.info('Strip saved (%s/%s)',
+            strip_metadata['comic'].slug, strip_metadata['pub_date'])
+
+
+class ComicAggregatorConfig(object):
     DATE_FORMAT = '%Y-%m-%d'
 
     def __init__(self, options=None):
