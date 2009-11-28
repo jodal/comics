@@ -18,7 +18,7 @@ COVERAGE_MODULES = (
     'comics.crawler.meta',
     'comics.crawler.runner',
     'comics.crawler.utils',
-    'comics.crawler.utils.webparser',
+    'comics.crawler.utils.lxmlparser',
     'comics.feedback.forms',
     'comics.feedback.views',
     'comics.sets.feeds',

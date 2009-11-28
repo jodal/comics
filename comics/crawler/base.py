@@ -7,7 +7,6 @@ import re
 import shutil
 import time
 import urllib2
-import urlparse
 
 from django.conf import settings
 from django.db import transaction
@@ -15,7 +14,6 @@ from django.db import transaction
 from comics.core.models import Comic, Release, Strip
 from comics.crawler.exceptions import *
 from comics.crawler.utils.lxmlparser import LxmlParser
-from comics.crawler.utils.webparser import WebParser
 from comics.utils.hash import sha256sum
 
 class BaseComicCrawler(object):
@@ -29,7 +27,6 @@ class BaseComicCrawler(object):
 
         # Parsers for reuse through several calls to get_url()
         self.feed = None
-        self.web_page = None
 
         self.reset()
 
@@ -106,29 +103,12 @@ class BaseComicCrawler(object):
             if self.text and type(self.text) != unicode:
                 self.text = unicode(self.text, self.feed.encoding)
 
-        # Web: Reencode title and text to UTF-8
-        if (self.web_page is not None
-            and self.web_page.charset
-            and self.web_page.charset != 'utf-8'):
-            if self.title and type(self.title) != unicode:
-                self.title = unicode(self.title, self.web_page.charset)
-            if self.text and type(self.text) != unicode:
-                self.text = unicode(self.text, self.web_page.charset)
-
 
     ### For use by subclasses in their _get_url() implementations
 
     def parse_feed(self, feed_url):
         if self.feed is None:
             self.feed = feedparser.parse(feed_url)
-
-    def parse_web_page(self):
-        if self.web_page is None:
-            self.web_page = WebParser()
-        self.web_page.parse_url(self.web_url)
-
-    def join_web_url(self, relative_part):
-        return urlparse.urljoin(self.web_url, relative_part)
 
     def timestamp_to_date(self, timestamp):
         return dt.date(*timestamp[:3])
