@@ -92,6 +92,14 @@ TODO
 
 A mostly unordered list of things to fix. Patches accepted.
 
+- Split comics.aggregator.crawler into a crawler getting strings from the net
+  and a downloader that downloads the strip image.
+- Change the name of BaseComicCrawler._get_url() into something more fitting.
+- Consider wrapping the feedparser object in our own feedparser:
+  - which provides all entries for a given date.
+  - whose entries got methods for:
+    - extracting URLs from i.e. the summary field using lxml.
+    - stripping out HTML from the summary field.
 - comics.aggregator.command:
   - Use comic week schedule to crawl less often on non-schedule days.
   - Use comics time zone to crawl the correct current date.
