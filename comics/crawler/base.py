@@ -13,7 +13,7 @@ from django.db import transaction
 
 from comics.core.models import Comic, Release, Strip
 from comics.crawler.exceptions import *
-from comics.crawler.utils.lxmlparser import LxmlParser
+from comics.crawler.lxmlparser import LxmlParser
 from comics.utils.hash import sha256sum
 
 class BaseComicCrawler(object):
