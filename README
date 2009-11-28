@@ -95,7 +95,7 @@ A mostly unordered list of things to fix. Patches accepted.
 - comics.crawler:
   - Use comic week schedule to crawl less often on non-schedule days.
   - Use comics time zone to crawl the correct current date.
-- comics.common.utils.navigation: Unit test and refactor to a tree of OO
+- comics.core.utils.navigation: Unit test and refactor to a tree of OO
   classes instead of long complicated functions.
 
 New features:
