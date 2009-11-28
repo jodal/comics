@@ -1,9 +1,9 @@
 import datetime as dt
 import logging
 
+from comics.comics import get_comic_module_names, get_comic_module
 from comics.core.models import Comic
 from comics.crawler.exceptions import ComicsMetaError
-from comics.crawlers import get_comic_module_names, get_comic_module
 
 logger = logging.getLogger('comics.crawler.meta')
 

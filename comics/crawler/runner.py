@@ -6,8 +6,8 @@ import socket
 
 from django.conf import settings
 
+from comics.comics import get_comic_module
 from comics.crawler.exceptions import ComicsError, StripAlreadyExists
-from comics.crawlers import get_comic_module
 
 logger = logging.getLogger('comics.crawler')
 socket.setdefaulttimeout(10)
