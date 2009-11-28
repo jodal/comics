@@ -14,7 +14,7 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
-        self.web_url = 'http://www.daniellecorsetto.com/gws.html'
-        page = LxmlParser(self.web_url)
+        page_url = 'http://www.daniellecorsetto.com/gws.html'
+        page = LxmlParser(page_url)
         self.url = page.src(
             'img[src^="http://www.daniellecorsetto.com/images/gws/GWS"]')

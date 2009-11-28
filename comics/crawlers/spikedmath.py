@@ -15,16 +15,8 @@ class ComicMeta(BaseComicMeta):
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
         self.parse_feed('http://feeds.feedburner.com/SpikedMath')
-
         for entry in self.feed.entries:
             if self.timestamp_to_date(entry.updated_parsed) == self.pub_date:
                 self.title = entry.title
-                self.web_url = entry.link
-                if self.title and self.web_url:
-                    break
-
-        if not self.web_url:
-            return
-
-        page = LxmlParser(self.web_url)
-        self.url = page.src('div.asset-body img')
+                page = LxmlParser(entry.link)
+                self.url = page.src('div.asset-body img')

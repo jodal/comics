@@ -13,8 +13,8 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
-        self.web_url = 'http://ars.userfriendly.org/cartoons/?id=%(date)s' % {
+        page_url = 'http://ars.userfriendly.org/cartoons/?id=%(date)s' % {
             'date': self.pub_date.strftime('%Y%m%d'),
         }
-        page = LxmlParser(self.web_url)
+        page = LxmlParser(page_url)
         self.url = page.src('img[alt^="Strip for"]')

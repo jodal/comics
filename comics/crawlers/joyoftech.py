@@ -17,16 +17,9 @@ class ComicMeta(BaseComicMeta):
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
         self.parse_feed('http://www.joyoftech.com/joyoftech/jotblog/atom.xml')
-
         for entry in self.feed.entries:
             if (re.match('^JoT[ #]*\d.*', entry.title)
-                and self.timestamp_to_date(entry.updated_parsed)
+                    and self.timestamp_to_date(entry.updated_parsed)
                     == self.pub_date):
-                self.web_url = entry.link
-                break
-
-        if self.web_url is None:
-            return
-
-        page = LxmlParser(self.web_url)
-        self.url = page.src('img[alt="The Joy of Tech comic"]')
+                page = LxmlParser(entry.link)
+                self.url = page.src('img[alt="The Joy of Tech comic"]')

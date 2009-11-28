@@ -13,8 +13,8 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
-        self.web_url = 'http://www.gunshowcomic.com/d/%(date)s.html' % {
+        page_url = 'http://www.gunshowcomic.com/d/%(date)s.html' % {
             'date': self.pub_date.strftime('%Y%m%d'),
         }
-        page = LxmlParser(self.web_url)
+        page = LxmlParser(page_url)
         self.url = page.src('img[src^="http://www.gunshowcomic.com/comics/"]')

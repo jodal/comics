@@ -36,8 +36,6 @@ class BaseComicCrawler(object):
         ### Populated during strip URL retrieval
         # Publication date
         self.pub_date = None
-        # Strip website URL (optional)
-        self.web_url = None
         # Strip URL (the result of get_url())
         self.url = None
         # Strip title (optional)
@@ -244,10 +242,10 @@ class BaseComicsComComicCrawler(BaseComicCrawler):
     check_image_mime_type = False
 
     def _get_url_helper(self, comics_com_title):
-        self.web_url = 'http://comics.com/%(slug)s/%(date)s/' % {
+        page_url = 'http://comics.com/%(slug)s/%(date)s/' % {
             'slug': comics_com_title.lower().replace(' ', '_'),
             'date': self.pub_date.strftime('%Y-%m-%d'),
         }
-        page = LxmlParser(self.web_url)
+        page = LxmlParser(page_url)
         self.url = page.src('a.STR_StripImage img[alt^="%s"]' %
             comics_com_title)

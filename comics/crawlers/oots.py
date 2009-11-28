@@ -15,16 +15,8 @@ class ComicMeta(BaseComicMeta):
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
         self.parse_feed('http://www.giantitp.com/comics/oots.rss')
-
         if len(self.feed.entries):
             entry = self.feed.entries[0]
-            if 'title' in entry:
-                self.title = entry.title
-            if 'link' in entry:
-                self.web_url = entry.link
-
-        if self.web_url is None:
-            return
-
-        page = LxmlParser(self.web_url)
-        self.url = page.src('img[src*="/comics/images/"]')
+            self.title = entry.title
+            page = LxmlParser(entry.link)
+            self.url = page.src('img[src*="/comics/images/"]')

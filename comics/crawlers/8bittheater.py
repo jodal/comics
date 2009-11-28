@@ -14,10 +14,10 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
-        self.web_url = 'http://www.nuklearpower.com/%(year)s/%(month)d/%(day)s/episode/' % {
+        page_url = 'http://www.nuklearpower.com/%(year)s/%(month)d/%(day)s/episode/' % {
             'year': self.pub_date.year, 'month': self.pub_date.month, 'day': self.pub_date.day
         }
 
-        page = LxmlParser(self.web_url)
+        page = LxmlParser(page_url)
         self.url = page.src('img[src^="http://www.nuklearpower.com/comics/"]')
         self.title = page.alt('img[src^="http://www.nuklearpower.com/comics/"]')

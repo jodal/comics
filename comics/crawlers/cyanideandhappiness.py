@@ -17,14 +17,8 @@ class ComicMeta(BaseComicMeta):
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
         self.parse_feed('http://feeds.feedburner.com/Explosm')
-
         for entry in self.feed.entries:
             if entry.title == self.pub_date.strftime('%m.%d.%Y'):
-                self.web_url = entry.link
-                break
-
-        if self.web_url is None:
-            return
-
-        page = LxmlParser(self.web_url)
-        self.url = page.src('img[alt="Cyanide and Happiness, a daily webcomic"]')
+                page = LxmlParser(entry.link)
+                self.url = page.src(
+                    'img[alt="Cyanide and Happiness, a daily webcomic"]')
