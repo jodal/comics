@@ -127,6 +127,3 @@ COMICS_STRIP_BLACKLIST = (
 
 # Comics log file
 COMICS_LOG_FILENAME = os.path.join(PROJECT_DIR, '../comics.log')
-
-# Python package containing the crawlers
-COMICS_CRAWLER_PACKAGE = 'comics.crawlers'

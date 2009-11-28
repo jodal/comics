@@ -13,7 +13,6 @@ COVERAGE_MODULES = (
     'comics.core.utils.time_frames',
     'comics.core.views',
     'comics.crawler.base',
-    'comics.crawler.importer',
     'comics.crawler.lxmlparser',
     'comics.crawler.management.commands.crawlcomics',
     'comics.crawler.management.commands.loadcomicmeta',
