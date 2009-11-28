@@ -6,7 +6,6 @@ class ComicMeta(BaseComicMeta):
     language = 'no'
     url = 'http://www.start.no/tegneserier/lagunen/'
     start_date = '1991-05-13'
-    end_date = '2009-06-24' # No longer hosted at start.no
     history_capable_days = 30
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = 1
@@ -14,6 +13,4 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
-        self.url = 'http://g2.start.no/tegneserier/striper/lagunen/lag-striper/lag%(date)s.gif' % {
-            'date': self.pub_date.strftime('%Y%m%d'),
-        }
+        pass # XXX Comic no longer published
