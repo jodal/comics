@@ -1,6 +1,5 @@
 from comics.crawler.base import BaseComicCrawler
 from comics.crawler.meta import BaseComicMeta
-from comics.crawler.utils.lxmlparser import LxmlParser
 
 class ComicMeta(BaseComicMeta):
     name = 'Real Life'
@@ -16,5 +15,5 @@ class ComicCrawler(BaseComicCrawler):
         page_url = 'http://www.reallifecomics.com/archive/%(date)s.html' % {
             'date': self.pub_date.strftime('%y%m%d'),
         }
-        page = LxmlParser(page_url)
+        page = self.parse_page(page_url)
         self.url = page.src('img[alt^="strip for"]')

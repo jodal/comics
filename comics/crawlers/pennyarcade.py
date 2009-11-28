@@ -1,6 +1,5 @@
 from comics.crawler.base import BaseComicCrawler
 from comics.crawler.meta import BaseComicMeta
-from comics.crawler.utils.lxmlparser import LxmlParser
 
 class ComicMeta(BaseComicMeta):
     name = 'Penny Arcade'
@@ -16,7 +15,7 @@ class ComicCrawler(BaseComicCrawler):
         page_url = 'http://www.penny-arcade.com/comic/%(date)s/' % {
             'date': self.pub_date.strftime('%Y/%m/%d'),
         }
-        page = LxmlParser(page_url)
+        page = self.parse_page(page_url)
 
         # FIXME The decode() part should be handled by Base._get_url_post
         self.title = page.text('h1').decode('iso-8859-1')

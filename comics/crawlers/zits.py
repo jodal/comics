@@ -1,4 +1,3 @@
-from comics.crawler.utils.lxmlparser import LxmlParser
 from comics.crawler.base import BaseComicCrawler
 from comics.crawler.meta import BaseComicMeta
 
@@ -17,5 +16,5 @@ class ComicCrawler(BaseComicCrawler):
         self.parse_feed('http://www.arcamax.com/zits/channelfeed')
         for entry in self.feed.entries:
             if entry.title.endswith(self.pub_date.strftime('%-1m/%-1d/%Y')):
-                page = LxmlParser(entry.link)
+                page = self.parse_page(entry.link)
                 self.url = page.src('p.m0 img')

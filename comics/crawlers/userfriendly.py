@@ -1,6 +1,5 @@
 from comics.crawler.base import BaseComicCrawler
 from comics.crawler.meta import BaseComicMeta
-from comics.crawler.utils.lxmlparser import LxmlParser
 
 class ComicMeta(BaseComicMeta):
     name = 'User Friendly'
@@ -16,5 +15,5 @@ class ComicCrawler(BaseComicCrawler):
         page_url = 'http://ars.userfriendly.org/cartoons/?id=%(date)s' % {
             'date': self.pub_date.strftime('%Y%m%d'),
         }
-        page = LxmlParser(page_url)
+        page = self.parse_page(page_url)
         self.url = page.src('img[alt^="Strip for"]')

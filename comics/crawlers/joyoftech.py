@@ -2,7 +2,6 @@ import re
 
 from comics.crawler.base import BaseComicCrawler
 from comics.crawler.meta import BaseComicMeta
-from comics.crawler.utils.lxmlparser import LxmlParser
 
 class ComicMeta(BaseComicMeta):
     name = 'The Joy of Tech'
@@ -21,5 +20,5 @@ class ComicCrawler(BaseComicCrawler):
             if (re.match('^JoT[ #]*\d.*', entry.title)
                     and self.timestamp_to_date(entry.updated_parsed)
                     == self.pub_date):
-                page = LxmlParser(entry.link)
+                page = self.parse_page(entry.link)
                 self.url = page.src('img[alt="The Joy of Tech comic"]')

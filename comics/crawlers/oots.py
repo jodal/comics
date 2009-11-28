@@ -1,6 +1,5 @@
 from comics.crawler.base import BaseComicCrawler
 from comics.crawler.meta import BaseComicMeta
-from comics.crawler.utils.lxmlparser import LxmlParser
 
 class ComicMeta(BaseComicMeta):
     name = 'The Order of the Stick'
@@ -18,5 +17,5 @@ class ComicCrawler(BaseComicCrawler):
         if len(self.feed.entries):
             entry = self.feed.entries[0]
             self.title = entry.title
-            page = LxmlParser(entry.link)
+            page = self.parse_page(entry.link)
             self.url = page.src('img[src*="/comics/images/"]')

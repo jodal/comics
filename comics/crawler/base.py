@@ -108,6 +108,9 @@ class BaseComicCrawler(object):
         if self.feed is None:
             self.feed = feedparser.parse(feed_url)
 
+    def parse_page(self, page_url):
+        return LxmlParser(page_url)
+
     def timestamp_to_date(self, timestamp):
         return dt.date(*timestamp[:3])
 
@@ -246,6 +249,6 @@ class BaseComicsComComicCrawler(BaseComicCrawler):
             'slug': comics_com_title.lower().replace(' ', '_'),
             'date': self.pub_date.strftime('%Y-%m-%d'),
         }
-        page = LxmlParser(page_url)
+        page = self.parse_page(page_url)
         self.url = page.src('a.STR_StripImage img[alt^="%s"]' %
             comics_com_title)

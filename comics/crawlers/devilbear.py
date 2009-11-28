@@ -1,6 +1,5 @@
 from comics.crawler.base import BaseComicCrawler
 from comics.crawler.meta import BaseComicMeta
-from comics.crawler.utils.lxmlparser import LxmlParser
 
 class ComicMeta(BaseComicMeta):
     name = 'The Devil Bear'
@@ -14,5 +13,5 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
-        page = LxmlParser('http://www.thedevilbear.com/')
+        page = self.parse_page('http://www.thedevilbear.com/')
         self.url = page.src('#cg_img img')

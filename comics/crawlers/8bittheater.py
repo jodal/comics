@@ -1,6 +1,5 @@
 from comics.crawler.base import BaseComicCrawler
 from comics.crawler.meta import BaseComicMeta
-from comics.crawler.utils.lxmlparser import LxmlParser
 
 class ComicMeta(BaseComicMeta):
     name = '8-Bit Theater'
@@ -15,9 +14,10 @@ class ComicMeta(BaseComicMeta):
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
         page_url = 'http://www.nuklearpower.com/%(year)s/%(month)d/%(day)s/episode/' % {
-            'year': self.pub_date.year, 'month': self.pub_date.month, 'day': self.pub_date.day
+            'year': self.pub_date.year,
+            'month': self.pub_date.month,
+            'day': self.pub_date.day
         }
-
-        page = LxmlParser(page_url)
+        page = self.parse_page(page_url)
         self.url = page.src('img[src^="http://www.nuklearpower.com/comics/"]')
         self.title = page.alt('img[src^="http://www.nuklearpower.com/comics/"]')

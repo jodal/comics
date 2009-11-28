@@ -1,6 +1,5 @@
 from comics.crawler.base import BaseComicCrawler
 from comics.crawler.meta import BaseComicMeta
-from comics.crawler.utils.lxmlparser import LxmlParser
 
 class ComicMeta(BaseComicMeta):
     name = 'Girls With Slingshots'
@@ -14,7 +13,6 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def _get_url(self):
-        page_url = 'http://www.daniellecorsetto.com/gws.html'
-        page = LxmlParser(page_url)
+        page = self.parse_page('http://www.daniellecorsetto.com/gws.html')
         self.url = page.src(
             'img[src^="http://www.daniellecorsetto.com/images/gws/GWS"]')

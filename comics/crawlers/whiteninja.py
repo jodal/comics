@@ -1,6 +1,5 @@
 from comics.crawler.base import BaseComicCrawler
 from comics.crawler.meta import BaseComicMeta
-from comics.crawler.utils.lxmlparser import LxmlParser
 
 class ComicMeta(BaseComicMeta):
     name = 'White Ninja'
@@ -19,6 +18,6 @@ class ComicCrawler(BaseComicCrawler):
                     self.timestamp_to_date(entry.updated_parsed)
                     == self.pub_date):
                 self.title = entry.title.split(' - ')[0]
-                page = LxmlParser(entry.link)
+                page = self.parse_page(entry.link)
                 page.remove('img[src*="/images/comics/t-"]')
                 self.url = page.src('img[src*="/images/comics/"]')

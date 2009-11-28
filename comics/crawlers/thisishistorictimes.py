@@ -1,6 +1,5 @@
 from comics.crawler.base import BaseComicCrawler
 from comics.crawler.meta import BaseComicMeta
-from comics.crawler.utils.lxmlparser import LxmlParser
 
 class ComicMeta(BaseComicMeta):
     name = 'This is Historic Times'
@@ -17,5 +16,5 @@ class ComicCrawler(BaseComicCrawler):
         for entry in self.feed.entries:
             if self.timestamp_to_date(entry.updated_parsed) == self.pub_date:
                 self.title = entry.title
-                page = LxmlParser(entry.link)
+                page = self.parse_page(entry.link)
                 self.url = page.src('img[src*="/wp-content/uploads/"]')

@@ -1,6 +1,5 @@
 from comics.crawler.base import BaseComicCrawler
 from comics.crawler.meta import BaseComicMeta
-from comics.crawler.utils.lxmlparser import LxmlParser
 
 class ComicMeta(BaseComicMeta):
     name = 'GU Comics'
@@ -19,7 +18,7 @@ class ComicCrawler(BaseComicCrawler):
             if (self.timestamp_to_date(entry.updated_parsed) == self.pub_date
                 and entry.title.startswith('Comic:')):
                 self.title = entry.description
-                page = LxmlParser(entry.link)
+                page = self.parse_page(entry.link)
                 self.url = page.src(
                     'img[src^="http://www.gucomics.com/comics/"]'
                     '[alt^="Comic for:"]')
