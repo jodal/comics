@@ -15,6 +15,6 @@ class ComicCrawler(BaseComicCrawler):
     def crawl(self):
         feed = self.parse_feed('http://www.xkcd.com/rss.xml')
         for entry in feed.for_date(self.pub_date):
-            self.url = entry.summary.src('img')
+            self.url = entry.summary.src('img[src*="/comics/"]')
             self.title = entry.title
-            self.text = entry.summary.alt('img')
+            self.text = entry.summary.alt('img[src*="/comics/"]')
