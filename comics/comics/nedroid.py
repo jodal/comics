@@ -15,7 +15,7 @@ class ComicCrawler(BaseComicCrawler):
     def crawl(self):
         feed = self.parse_feed('http://nedroid.com/feed/')
         for entry in feed.for_date(self.pub_date):
-            if entry.has_tag('Comic'):
+            if 'Comic' in entry.tags:
                 self.title = entry.title
                 self.url = entry.summary.src('img')
                 self.text = entry.summary.title('img')

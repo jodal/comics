@@ -31,8 +31,8 @@ class Entry(object):
     def html(self, string):
         return LxmlParser(string=string)
 
-    def has_tag(self, tag):
-        if ('tags' in self.raw_entry and
-                len(filter(lambda t: t.term == tag, self.raw_entry.tags))):
-            return True
-        return False
+    @property
+    def tags(self):
+        if not 'tags' in self.raw_entry:
+            return []
+        return [tag.term for tag in self.raw_entry.tags]
