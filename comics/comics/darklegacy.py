@@ -14,6 +14,6 @@ class ComicMeta(BaseComicMeta):
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
         feed = self.parse_feed('http://www.darklegacycomics.com/feed.xml')
-        for entry in feed.for_day(self.pub_date):
+        for entry in feed.for_date(self.pub_date):
             self.title = entry.title
             self.url = entry.link.replace('.html', '.jpg')

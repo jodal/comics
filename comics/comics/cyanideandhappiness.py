@@ -14,7 +14,7 @@ class ComicMeta(BaseComicMeta):
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
         feed = self.parse_feed('http://feeds.feedburner.com/Explosm')
-        for entry in feed.for_day(self.pub_date):
+        for entry in feed.for_date(self.pub_date):
             page = self.parse_page(entry.link)
             self.url = page.src(
                 'img[alt="Cyanide and Happiness, a daily webcomic"]')

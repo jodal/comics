@@ -14,7 +14,7 @@ class ComicCrawler(BaseComicCrawler):
     def crawl(self):
         feed = self.parse_feed(
             'http://www.whiteninjacomics.com/rss/z-latest.xml')
-        for entry in feed.for_day(self.pub_date):
+        for entry in feed.for_date(self.pub_date):
             self.title = entry.title.split(' - ')[0]
             page = self.parse_page(entry.link)
             page.remove('img[src*="/images/comics/t-"]')

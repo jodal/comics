@@ -13,7 +13,7 @@ class ComicMeta(BaseComicMeta):
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
         feed = self.parse_feed('http://www.rsspect.com/rss/threeps.xml')
-        for entry in feed.for_day(self.pub_date):
+        for entry in feed.for_date(self.pub_date):
             self.url = entry.summary.src('img')
             self.title = entry.title
             self.text = entry.summary.alt('img')

@@ -17,7 +17,7 @@ class ComicCrawler(BaseComicCrawler):
     def crawl(self):
         feed = self.parse_feed(
             'http://www.joyoftech.com/joyoftech/jotblog/atom.xml')
-        for entry in feed.for_day(self.pub_date):
+        for entry in feed.for_date(self.pub_date):
             page = self.parse_page(entry.link)
             self.url = page.src('img[alt="The Joy of Tech comic"]')
             self.title = entry.title

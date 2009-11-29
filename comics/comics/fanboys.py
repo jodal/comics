@@ -13,7 +13,7 @@ class ComicMeta(BaseComicMeta):
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
         feed = self.parse_feed('http://fanboys-online.com/rss/comic.xml')
-        for entry in feed.for_day(self.pub_date):
+        for entry in feed.for_date(self.pub_date):
             if entry.title.startswith('Comic:'):
                 self.title = entry.title.replace('Comic: ', '')
                 self.url = 'http://fanboys-online.com/comics/%(date)s.jpg' % {

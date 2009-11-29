@@ -14,7 +14,7 @@ class ComicMeta(BaseComicMeta):
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
         feed = self.parse_feed('http://feeds.feedburner.com/SpikedMath')
-        for entry in feed.for_day(self.pub_date):
+        for entry in feed.for_date(self.pub_date):
             self.title = entry.title
             page = self.parse_page(entry.link)
             self.url = page.src('div.asset-body img')

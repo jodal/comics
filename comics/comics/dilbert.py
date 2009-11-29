@@ -13,5 +13,5 @@ class ComicMeta(BaseComicMeta):
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
         feed = self.parse_feed('http://feeds.feedburner.com/DilbertDailyStrip')
-        for entry in feed.for_day(self.pub_date):
+        for entry in feed.for_date(self.pub_date):
             self.url = entry.summary.src('img[src*="dilbert.com"]')

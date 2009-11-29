@@ -13,7 +13,7 @@ class ComicMeta(BaseComicMeta):
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
         feed = self.parse_feed('http://www.whattheduck.net/strip/rss.xml')
-        for entry in feed.for_day(self.pub_date):
+        for entry in feed.for_date(self.pub_date):
             if (entry.enclosures[0].type.startswith('image')
                     and entry.title.startswith('WTD')):
                 self.url = entry.enclosures[0].href

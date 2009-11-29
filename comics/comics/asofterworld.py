@@ -14,7 +14,7 @@ class ComicMeta(BaseComicMeta):
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
         feed = self.parse_feed('http://www.rsspect.com/rss/asw.xml')
-        for entry in feed.for_day(self.pub_date):
+        for entry in feed.for_date(self.pub_date):
             if entry.link != 'http://www.asofterworld.com':
                 self.url = entry.summary.src('img[src*="/clean/"]')
                 self.title = entry.title

@@ -13,7 +13,7 @@ class ComicCrawler(BaseComicCrawler):
     def crawl(self):
         feed = self.parse_feed(
             'http://www.macguff.fr/goomi/unspeakable/rss.xml')
-        for entry in feed.for_day(self.pub_date):
+        for entry in feed.for_date(self.pub_date):
             if entry.title.startswith('Strip #'):
                 self.url = entry.content0.src('img')
                 self.title = entry.summary.text('')

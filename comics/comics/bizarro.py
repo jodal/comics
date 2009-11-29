@@ -15,5 +15,5 @@ class ComicCrawler(BaseComicCrawler):
     def crawl(self):
         feed = self.parse_feed(
             'http://underholdning.no.msn.com/rss/bizarro.aspx')
-        for entry in feed.for_day(self.pub_date):
+        for entry in feed.for_date(self.pub_date):
             self.url = entry.enclosures[0].href

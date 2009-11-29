@@ -14,7 +14,7 @@ class ComicMeta(BaseComicMeta):
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
         feed = self.parse_feed('http://www.megatokyo.com/rss/megatokyo.xml')
-        for entry in feed.for_day(self.pub_date):
+        for entry in feed.for_date(self.pub_date):
             if entry.title.startswith('Comic ['):
                 self.title = entry.title.split('"')[1]
                 page = self.parse_page(entry.link)

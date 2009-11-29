@@ -10,7 +10,7 @@ class FeedParser(object):
     def __init__(self, url):
         self.raw_feed = feedparser.parse(url)
 
-    def for_day(self, date):
+    def for_date(self, date):
         return [Entry(e) for e in self.raw_feed.entries
             if e.updated_parsed and dt.date(*e.updated_parsed[:3]) == date]
 

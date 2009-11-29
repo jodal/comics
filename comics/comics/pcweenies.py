@@ -14,7 +14,7 @@ class ComicMeta(BaseComicMeta):
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
         feed = self.parse_feed('http://www.pcweenies.com/feed/')
-        for entry in feed.for_day(self.pub_date):
+        for entry in feed.for_date(self.pub_date):
             if entry.has_tag('Comic'):
                 self.title = entry.title
                 self.url = entry.content0.src(u'img')

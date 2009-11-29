@@ -13,6 +13,6 @@ class ComicMeta(BaseComicMeta):
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
         feed = self.parse_feed('http://www.rsspect.com/rss/pfsc.xml')
-        for entry in feed.for_day(self.pub_date):
+        for entry in feed.for_date(self.pub_date):
             self.url = entry.summary.src('img[src*="/comics/"]')
             self.title = entry.title

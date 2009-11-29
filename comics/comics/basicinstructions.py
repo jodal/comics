@@ -14,6 +14,6 @@ class ComicMeta(BaseComicMeta):
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
         feed = self.parse_feed('http://www.basicinstructions.net/atom.xml')
-        for entry in feed.for_day(self.pub_date):
+        for entry in feed.for_date(self.pub_date):
             self.url = entry.content0.src('img[src*="/comics/"]', False)
             self.title = entry.title
