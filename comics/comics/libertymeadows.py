@@ -1,5 +1,3 @@
-import re
-
 from comics.aggregator.crawler import BaseComicCrawler
 from comics.meta.base import BaseComicMeta
 
@@ -16,16 +14,8 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
-        creators_com_comic_serial = '13'
-        self.parse_feed('http://www.creators.com/comics/liberty-meadows.rss')
-
-        for entry in self.feed.entries:
-            if self.timestamp_to_date(entry.updated_parsed) == self.pub_date:
-                match = re.match(r'.*/(\d+).html', entry.link)
-                if match is not None:
-                    strip_serial = match.groups()[0]
-                    self.url = 'http://www.creators.com/comics/%(comic)s/%(strip)s_image.gif' % {
-                        'comic': creators_com_comic_serial,
-                        'strip': strip_serial,
-                    }
-                    return
+        feed = self.parse_feed(
+            'http://www.creators.com/comics/liberty-meadows.rss')
+        for entry in feed.for_day(self.pub_date):
+            page = self.parse_page(entry.link)
+            self.url = page.src('img[src*="_thumb"]').replace('thumb', 'image')

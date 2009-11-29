@@ -12,12 +12,10 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
-        self.parse_feed('http://www.whiteninjacomics.com/rss/z-latest.xml')
-        for entry in self.feed.entries:
-            if (entry.updated_parsed and
-                    self.timestamp_to_date(entry.updated_parsed)
-                    == self.pub_date):
-                self.title = entry.title.split(' - ')[0]
-                page = self.parse_page(entry.link)
-                page.remove('img[src*="/images/comics/t-"]')
-                self.url = page.src('img[src*="/images/comics/"]')
+        feed = self.parse_feed(
+            'http://www.whiteninjacomics.com/rss/z-latest.xml')
+        for entry in feed.for_day(self.pub_date):
+            self.title = entry.title.split(' - ')[0]
+            page = self.parse_page(entry.link)
+            page.remove('img[src*="/images/comics/t-"]')
+            self.url = page.src('img[src*="/images/comics/"]')

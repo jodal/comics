@@ -13,16 +13,7 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
-        self.parse_feed(
-            'http://feeds.feedburner.com/LookingForGroup?format=xml')
-
-        for entry in self.feed.entries:
-            if (self.timestamp_to_date(entry.updated_parsed) == self.pub_date
-                and entry.title.startswith('Looking For Group:')):
-                self.title = entry.title.replace(
-                    'Looking For Group:', '').strip()
-                pieces = entry.summary.split('"')
-                for i, piece in enumerate(pieces):
-                    if piece.count('src='):
-                        self.url = pieces[i + 1]
-                        return
+        feed = self.parse_feed('http://feeds.feedburner.com/LookingForGroup')
+        for entry in feed.for_day(self.pub_date):
+            self.url = entry.summary.src('img[src*="lfgcomic.com"]')
+            self.title = entry.title.replace('Looking For Group:', '').strip()

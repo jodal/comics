@@ -11,18 +11,9 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
-        # FIXME: The uvod feed often contains dates which feedparser fails
-        # to parse, like '19 Sept 2008 00:00:00 -0800'
-
-        self.parse_feed('http://www.macguff.fr/goomi/unspeakable/rss.xml')
-
-        for entry in self.feed.entries:
-            if (entry.updated_parsed is not None and
-                self.timestamp_to_date(entry.updated_parsed) == self.pub_date
-                and entry.title.startswith('Strip #')):
-                self.title = entry.summary
-                pieces = entry.content[0].value.split('"')
-                for i, piece in enumerate(pieces):
-                    if piece.count('src='):
-                        self.url = pieces[i + 1]
-                        return
+        feed = self.parse_feed(
+            'http://www.macguff.fr/goomi/unspeakable/rss.xml')
+        for entry in feed.for_day(self.pub_date):
+            if entry.title.startswith('Strip #'):
+                self.url = entry.content0.src('img')
+                self.title = entry.summary.text('')

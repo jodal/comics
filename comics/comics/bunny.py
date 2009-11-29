@@ -13,19 +13,13 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
-        self.parse_feed('http://www.bunny-comic.com/rss/bunny.xml')
-
-        for entry in self.feed.entries:
-            title = entry.title
-            pieces = entry.summary.split('"')
-            for i, piece in enumerate(pieces):
-                if piece.count('src='):
-                    url = pieces[i + 1]
-                    break
-            image_name = url.replace('http://bunny-comic.com/strips/', '')
+        feed = self.parse_feed('http://www.bunny-comic.com/rss/bunny.xml')
+        for entry in feed.all():
+            image_name = entry.summary.src('img[src*="/strips/"]').replace(
+                'http://bunny-comic.com/strips/', '')
             if (image_name[:6].isdigit()
                     and self.pub_date == self.string_to_date(
                     image_name[:6], '%d%m%y')):
-                self.title = title
-                self.url = url
-                return
+                self.url = entry.summary.src('img[src*="/strips/"]')
+                self.title = entry.title
+                self.text = entry.summary.alt('img[src*="/strips/"]')

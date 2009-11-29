@@ -12,9 +12,8 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
-        self.parse_feed('http://thisishistorictimes.com/feed/')
-        for entry in self.feed.entries:
-            if self.timestamp_to_date(entry.updated_parsed) == self.pub_date:
-                self.title = entry.title
-                page = self.parse_page(entry.link)
-                self.url = page.src('img[src*="/wp-content/uploads/"]')
+        feed = self.parse_feed('http://thisishistorictimes.com/feed/')
+        for entry in feed.for_day(self.pub_date):
+            self.title = entry.title
+            page = self.parse_page(entry.link)
+            self.url = page.src('img[src*="/wp-content/uploads/"]')

@@ -13,10 +13,9 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
-        self.parse_feed('http://www.megatokyo.com/rss/megatokyo.xml')
-        for entry in self.feed.entries:
-            if (self.timestamp_to_date(entry.updated_parsed) == self.pub_date
-                and entry.title.startswith('Comic [')):
+        feed = self.parse_feed('http://www.megatokyo.com/rss/megatokyo.xml')
+        for entry in feed.for_day(self.pub_date):
+            if entry.title.startswith('Comic ['):
                 self.title = entry.title.split('"')[1]
                 page = self.parse_page(entry.link)
-                self.url = page.src('img[src^="http://megatokyo.com/strips/"]')
+                self.url = page.src('img[src*="/strips/"]')

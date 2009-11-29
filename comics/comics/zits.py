@@ -13,8 +13,8 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
-        self.parse_feed('http://www.arcamax.com/zits/channelfeed')
-        for entry in self.feed.entries:
+        feed = self.parse_feed('http://www.arcamax.com/zits/channelfeed')
+        for entry in feed.all():
             if entry.title.endswith(self.pub_date.strftime('%-1m/%-1d/%Y')):
                 page = self.parse_page(entry.link)
                 self.url = page.src('p.m0 img')

@@ -13,12 +13,7 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
-        self.parse_feed('http://www.applegeeks.com/rss/?cat=comic')
-
-        for entry in self.feed.entries:
-            if self.timestamp_to_date(entry.updated_parsed) == self.pub_date:
-                pieces = entry.summary.split('"')
-                for i, piece in enumerate(pieces):
-                    if piece.count('src='):
-                        self.url = pieces[i + 1].replace('thumb.gif', '.jpg')
-                        return
+        feed = self.parse_feed('http://www.applegeeks.com/rss/?cat=comic')
+        for entry in feed.for_day(self.pub_date):
+            self.url = entry.summary.src('img').replace('thumb.gif', '.jpg')
+            self.title = entry.title

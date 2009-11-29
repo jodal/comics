@@ -13,14 +13,7 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
-        self.parse_feed('http://www.basicinstructions.net/atom.xml')
-
-        for entry in self.feed.entries:
-            if (self.timestamp_to_date(entry.updated_parsed) == self.pub_date
-                and entry.title.startswith('How to')):
-                self.title = entry.title
-                pieces = entry.summary.split('"')
-                for i, piece in enumerate(pieces):
-                    if piece.count('src='):
-                        self.url = pieces[i + 1]
-                        break
+        feed = self.parse_feed('http://www.basicinstructions.net/atom.xml')
+        for entry in feed.for_day(self.pub_date):
+            self.url = entry.content0.src('img[src*="/comics/"]', False)
+            self.title = entry.title

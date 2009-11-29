@@ -13,16 +13,9 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
-        self.parse_feed('http://nedroid.com/feed/atom/')
-
-        for entry in self.feed.entries:
-            if self.timestamp_to_date(entry.updated_parsed) == self.pub_date:
+        feed = self.parse_feed('http://nedroid.com/feed/')
+        for entry in feed.for_day(self.pub_date):
+            if entry.has_tag('Comic'):
                 self.title = entry.title
-                pieces = entry.summary.split('"')
-                for i, piece in enumerate(pieces):
-                    if piece.count('src='):
-                        self.url = pieces[i + 1]
-                    if piece.count('title='):
-                        self.text = pieces[i + 1]
-                    if self.url and self.text:
-                        return
+                self.url = entry.summary.src('img')
+                self.text = entry.summary.title('img')

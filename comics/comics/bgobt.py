@@ -12,11 +12,11 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
-        self.parse_feed('http://businessguysonbusinesstrips.com/?feed=atom')
-        for entry in self.feed.entries:
-            if self.timestamp_to_date(entry.published_parsed) == self.pub_date:
-                self.title = entry.title
-                page = self.parse_page(entry.link)
-                page.remove('img[src$="/art/wgp_banner.jpg"]')
-                self.url = page.src(
-                    'img[src^="http://businessguysonbusinesstrips.com/art/"]')
+        feed = self.parse_feed(
+            'http://businessguysonbusinesstrips.com/?feed=atom')
+        for entry in feed.for_day(self.pub_date):
+            self.title = entry.title
+            page = self.parse_page(entry.link)
+            page.remove('img[src$="/art/wgp_banner.jpg"]')
+            self.url = page.src(
+                'img[src^="http://businessguysonbusinesstrips.com/art/"]')
