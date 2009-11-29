@@ -92,11 +92,6 @@ TODO
 
 A mostly unordered list of things to fix. Patches accepted.
 
-- Consider wrapping the feedparser object in our own feedparser:
-  - which provides all entries for a given date.
-  - whose entries got methods for:
-    - extracting URLs from i.e. the summary field using lxml.
-    - stripping out HTML from the summary field.
 - comics.aggregator.command:
   - Use comic week schedule to crawl less often on non-schedule days.
   - Use comics time zone to crawl the correct current date.
