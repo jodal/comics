@@ -1,5 +1,4 @@
 import datetime as dt
-import re
 import time
 
 from comics.aggregator.exceptions import *
@@ -16,7 +15,6 @@ class BaseComicCrawler(object):
 
     # Feed object which is reused when crawling multiple dates
     feed = None
-    feed_new = None
 
     def __init__(self, comic):
         self.comic = comic
@@ -73,11 +71,12 @@ class BaseComicCrawler(object):
     def _decode_feed_data(self):
         """Decode titles and text retrieved from a feed"""
 
-        if self.feed.encoding and self.feed.encoding != 'utf-8':
+        if (self.feed.raw_feed.encoding
+                and self.feed.raw_feed.encoding != 'utf-8'):
             if self.title and type(self.title) != unicode:
-                self.title = unicode(self.title, self.feed.encoding)
+                self.title = unicode(self.title, self.feed.raw_feed.encoding)
             if self.text and type(self.text) != unicode:
-                self.text = unicode(self.text, self.feed.encoding)
+                self.text = unicode(self.text, self.feed.raw_feed.encoding)
 
     def crawl(self):
         """Must be overridden by classes inheriting from this one"""
@@ -87,29 +86,18 @@ class BaseComicCrawler(object):
     ### Helpers for the crawl() implementations
 
     def parse_feed(self, feed_url):
-        # Cache feed object as it can be reused for multiple dates
-        if self.feed_new is None:
-            self.feed_new = FeedParser(feed_url)
-        # XXX Temporary backwards compatability
         if self.feed is None:
-            self.feed = self.feed_new.raw_feed
-        return self.feed_new
+            self.feed = FeedParser(feed_url)
+        return self.feed
 
     def parse_page(self, page_url):
         return LxmlParser(page_url)
-
-    def timestamp_to_date(self, timestamp):
-        return dt.date(*timestamp[:3])
 
     def string_to_date(self, *args, **kwargs):
         return dt.datetime.strptime(*args, **kwargs).date()
 
     def date_to_epoch(self, date):
         return int(time.mktime(date.timetuple()))
-
-    def remove_html_tags(self, data):
-        p = re.compile(r'<[^<]*?>')
-        return p.sub('', data)
 
 
 class BaseComicsComComicCrawler(BaseComicCrawler):
