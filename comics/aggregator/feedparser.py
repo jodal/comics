@@ -32,9 +32,7 @@ class Entry(object):
         return LxmlParser(string=string)
 
     def has_tag(self, tag):
-        def matches_tag(item):
-            return item.term == tag
         if ('tags' in self.raw_entry and
-                len(filter(matches_tag, self.raw_entry['tags']))):
+                len(filter(lambda t: t.term == tag, self.raw_entry.tags))):
             return True
         return False
