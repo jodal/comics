@@ -8,6 +8,8 @@ class LxmlParser(object):
             self.root = parse(url).getroot()
             self.root.make_links_absolute(url)
         elif string is not None:
+            if len(string) == 0:
+                string = '<xml />'
             self.root = fromstring(string)
         else:
             raise LxmlParserException()

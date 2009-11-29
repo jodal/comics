@@ -1,18 +1,22 @@
 import datetime as dt
-import feedparser
 import re
 import time
 
 from comics.aggregator.exceptions import *
+from comics.aggregator.feedparser import FeedParser
 from comics.aggregator.lxmlparser import LxmlParser
 from comics.core.models import Release, Strip
 
 class BaseComicCrawler(object):
+    # Whether to allow multiple releases per day
+    multiple_releases_per_day = False
+
     # Whether to check the mime type of the strip image when downloading
     check_image_mime_type = True
 
     # Feed object which is reused when crawling multiple dates
     feed = None
+    feed_new = None
 
     def __init__(self, comic):
         self.comic = comic
@@ -53,11 +57,10 @@ class BaseComicCrawler(object):
                 'Not history capable, less than %s' %
                 self.comic.history_capable())
 
-        # XXX: With the following check, we do not support
-        # multiple releases per comic per date
-        if Release.objects.filter(comic=self.comic,
-                pub_date=pub_date).count():
-            raise StripAlreadyExists('%s/%s' % (self.comic.slug, pub_date))
+        if not self.multiple_releases_per_day:
+            if Release.objects.filter(comic=self.comic,
+                    pub_date=pub_date).count():
+                raise StripAlreadyExists('%s/%s' % (self.comic.slug, pub_date))
 
         return pub_date
 
@@ -84,9 +87,13 @@ class BaseComicCrawler(object):
     ### Helpers for the crawl() implementations
 
     def parse_feed(self, feed_url):
+        # Cache feed object as it can be reused for multiple dates
+        if self.feed_new is None:
+            self.feed_new = FeedParser(feed_url)
+        # XXX Temporary backwards compatability
         if self.feed is None:
-            self.feed = feedparser.parse(feed_url)
-        return self.feed
+            self.feed = self.feed_new.raw_feed
+        return self.feed_new
 
     def parse_page(self, page_url):
         return LxmlParser(page_url)
