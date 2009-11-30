@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 from django.conf import settings
 from django.conf.urls.defaults import *
 from django.contrib import admin
@@ -26,16 +28,13 @@ urlpatterns = patterns('',
         {'feed_dict': feeds}, name='feeds'),
 
     # Django admin
+    (r'^admin/media/(?P<path>.*)$', 'django.views.static.serve',
+        {'document_root': settings.ADMIN_MEDIA_ROOT}),
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/(.*)', admin.site.root),
 )
 
 # Let Django host media if doing local development on runserver
-if not settings.ADMIN_MEDIA_PREFIX.startswith('http'):
-    urlpatterns += patterns('',
-        (r'^media/admin/(?P<path>.*)$', 'django.views.static.serve',
-            {'document_root': settings.ADMIN_MEDIA_ROOT}),
-    )
 if not settings.MEDIA_URL.startswith('http'):
     urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve',

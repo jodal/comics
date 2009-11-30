@@ -37,8 +37,8 @@ MEDIA_URL = '/media/'
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = MEDIA_URL + 'admin/'
-ADMIN_MEDIA_ROOT = os.path.join(DJANGO_DIR, 'django/contrib/admin/media/')
+ADMIN_MEDIA_PREFIX = '/admin/media/'
+ADMIN_MEDIA_ROOT = os.path.join(DJANGO_DIR, 'contrib/admin/media/')
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -71,9 +71,11 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'django.contrib.webdesign',
+    'comics.aggregator',
     'comics.core',
-    'comics.crawler',
     'comics.feedback',
+    'comics.meta',
     'comics.sets',
     'comics.utils',
 )
@@ -95,7 +97,8 @@ TIME_FORMAT = 'H:i'
 COMICS_SITE_TITLE = 'Daily Comics'
 
 # Location of the comic strip images
-COMICS_MEDIA_URL = MEDIA_URL
+COMICS_MEDIA_ROOT = '%sc/' % MEDIA_ROOT
+COMICS_MEDIA_URL = '%sc/' % MEDIA_URL
 
 # Number of comics to show in the top list
 COMICS_MAX_IN_TOP_LIST = 10
@@ -108,15 +111,20 @@ COMICS_MAX_DAYS_IN_FEED = 30
 
 # SHA256 of blacklisted comic strips
 COMICS_STRIP_BLACKLIST = (
+    # Billy
+    'f8021551b772384d1f4309e0ee15c94cea9ec1e61ba0a7aade8036e40e3179fe',
+    # Bizarro
+    'dd040144f802bab9b96892cc2e1be26b226e7b43b275aa49dbcc9c4a254d6782',
     # Dagbladet.no
     '61c66a1c84408df5b855004dd799d5e59f4af99f4c6fe8bf4aabf8963cab7cb5',
     # Cyanide and Happiness
     '6dec8be9787fc8b103746886033ccad7348bc4eec44c12994ba83596f3cbcd32',
     '181e7d11ebd3224a910d9eba2995349da5d483f3ae9643a2efe4f7dd3d9f668d',
+    # Dilbert (bt.no)
+    'cde5b71cfb91c05d0cd19f35e325fc1cc9f529dfbce5c6e2583a3aa73d240638',
+    # Least I Could Do
+    '38eca900236617b2c38768c5e5fa410544fea7a3b79cc1e9bd45043623124dbf',
 )
 
 # Comics log file
 COMICS_LOG_FILENAME = os.path.join(PROJECT_DIR, '../comics.log')
-
-# Python package containing the crawlers
-COMICS_CRAWLER_PACKAGE = 'comics.crawler.crawlers'

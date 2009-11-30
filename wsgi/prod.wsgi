@@ -1,7 +1,8 @@
-import os, sys
-path = '/home/jodal/production/comics'
-if path not in sys.path:
-	sys.path.append(path)
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.dirname(os.path.abspath(__file__)) + '/../'))
+
 os.environ['DJANGO_SETTINGS_MODULE'] = 'comics.settings'
 
 import django.core.handlers.wsgi

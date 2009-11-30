@@ -136,7 +136,7 @@ class Strip(models.Model):
 
     def delete(self, *args, **kwargs):
         super(Strip, self).delete(*args, **kwargs)
-        os.remove('%s%s' % (settings.MEDIA_ROOT, self.filename))
+        os.remove('%s%s' % (settings.COMICS_MEDIA_ROOT, self.filename))
 
     def __unicode__(self):
         return u'%s strip %s' % (self.comic, self.checksum)

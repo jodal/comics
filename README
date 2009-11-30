@@ -34,6 +34,7 @@ The dependencies are listed as Debian/Ubuntu package names.
 - python (>=2.5, at least hashlib is new in 2.5)
 - python-django (>=1.0)
 - python-feedparser
+- python-lxml
 
 Optional dependencies if you want to use a real database and/or memcache:
 
@@ -57,8 +58,8 @@ To get comics up and running from a clean checkout is as easy as:
     git clone git://github.com/jodal/comics.git
     cd comics/comics/
     python manage.py syncdb
-    python manage.py loadcomicmeta
-    python manage.py crawlcomics
+    python manage.py loadmeta
+    python manage.py getcomics
     python manage.py runserver
 
 Then point your browser to http://localhost:8000/ to start reading comics.
@@ -75,13 +76,13 @@ To run unit tests with statement coverage:
 
     python manage.py test --settings=comics.settings.coverage
 
-To load meta data for new comic crawlers:
+To load meta data for new or existing comics:
 
-    python manage.py loadcomicmeta
+    python manage.py loadmeta
 
 To fetch new comic strips:
 
-    python manage.py crawlcomics
+    python manage.py getcomics
 
 Add `--help` to get further instructions.
 
@@ -91,11 +92,10 @@ TODO
 
 A mostly unordered list of things to fix. Patches accepted.
 
-- comics.crawler.crawlers.*:
+- comics.aggregator.command:
   - Use comic week schedule to crawl less often on non-schedule days.
   - Use comics time zone to crawl the correct current date.
-- comics.crawler.utils.webparser: Replace with BeautifulSoup.
-- comics.common.utils.navigation: Unit test and refactor to a tree of OO
+- comics.core.utils.navigation: Unit test and refactor to a tree of OO
   classes instead of long complicated functions.
 
 New features:
