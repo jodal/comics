@@ -12,7 +12,7 @@ class LxmlParser(object):
                 string = '<xml />'
             self.root = fromstring(string)
         else:
-            raise LxmlParserException()
+            raise LxmlParserException('Parser need URL or string to operate on')
 
     def text(self, selector, default=None):
         try:
