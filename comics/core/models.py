@@ -127,7 +127,7 @@ class Strip(models.Model):
     checksum = models.CharField(max_length=64, db_index=True)
 
     # Optional fields
-    title = models.CharField(max_length=100, blank=True)
+    title = models.CharField(max_length=255, blank=True)
     text = models.TextField(blank=True)
 
     class Meta:

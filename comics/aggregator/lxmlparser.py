@@ -12,12 +12,13 @@ class LxmlParser(object):
                 string = '<xml />'
             self.root = fromstring(string)
         else:
-            raise LxmlParserException()
+            raise LxmlParserException(
+                'Parser needs URL or string to operate on')
 
     def text(self, selector, default=None):
         try:
             return self.select(selector).text_content()
-        except LxmlParserException:
+        except DoesNotExist:
             if default is not None:
                 return default
             raise
@@ -25,7 +26,7 @@ class LxmlParser(object):
     def src(self, selector, default=None):
         try:
             return self.select(selector).get('src')
-        except LxmlParserException:
+        except DoesNotExist:
             if default is not None:
                 return default
             raise
@@ -33,7 +34,7 @@ class LxmlParser(object):
     def alt(self, selector, default=None):
         try:
             return self.select(selector).get('alt')
-        except LxmlParserException:
+        except DoesNotExist:
             if default is not None:
                 return default
             raise
@@ -41,7 +42,7 @@ class LxmlParser(object):
     def title(self, selector, default=None):
         try:
             return self.select(selector).get('title')
-        except LxmlParserException:
+        except DoesNotExist:
             if default is not None:
                 return default
             raise
