@@ -15,7 +15,7 @@ class ComicMeta(BaseComicMeta):
 
 class ComicCrawler(BaseComicCrawler):
     def crawl(self):
-        self.url = 'http://static.vg.no/gfx/mortenm/output/%(year)s/%(month)s/%(year)-%(month)s-%(day).jpg' % {
+        self.url = 'http://static.vg.no/gfx/mortenm/output/%(year)s/%(month)s/%(year)s-%(month)s-%(day)s.jpg' % {
             'year': self.pub_date.strftime("%Y"),
             'month': self.pub_date.strftime("%m"),
             'day': self.pub_date.strftime("%d"),
