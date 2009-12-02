@@ -11,8 +11,6 @@ class MetaBase(object):
     # Default values
     start_date = None
     end_date = None
-    history_capable_date = None
-    history_capable_days = None
     rights = ''
 
     @property
@@ -33,8 +31,6 @@ class MetaBase(object):
                 url=self.url)
         comic.start_date = self._get_date(self.start_date)
         comic.end_date = self._get_date(self.end_date)
-        comic.history_capable_date = self._get_date(self.history_capable_date)
-        comic.history_capable_days = self.history_capable_days
         comic.rights = self.rights
         comic.save()
 

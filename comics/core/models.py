@@ -1,5 +1,4 @@
 import datetime as dt
-import time
 import os
 
 from django.conf import settings
@@ -30,10 +29,6 @@ class Comic(models.Model):
         help_text='First published at')
     end_date = models.DateField(blank=True, null=True,
         help_text='Last published at, if comic has been cancelled')
-    history_capable_date = models.DateField(blank=True, null=True,
-        help_text='Date of oldest release available for crawling')
-    history_capable_days = models.PositiveIntegerField(blank=True, null=True,
-        help_text='Number of days a release is available for crawling')
     rights = models.CharField(max_length=100, blank=True,
         help_text='Author, copyright, and/or licensing information')
 
@@ -59,14 +54,6 @@ class Comic(models.Model):
         return reverse('feeds', kwargs={
             'url': 'c/%s' % self.slug,
         })
-
-    def history_capable(self):
-        if self.history_capable_date is not None:
-            return self.history_capable_date
-        elif self.history_capable_days is not None:
-            return (dt.date.today() - dt.timedelta(self.history_capable_days))
-        else:
-            return dt.date.today()
 
 
 class Release(models.Model):

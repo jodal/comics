@@ -165,19 +165,21 @@ class ComicAggregatorTestCase(TestCase):
         pass # TODO
 
     def test_get_from_date_from_history_capable(self):
-        comic = Comic.objects.get(slug='xkcd')
+        self.crawler_mock.comic = Comic.objects.get(slug='xkcd')
         expected = dt.date(2008, 3, 1)
-        comic.history_capable = lambda: expected
+        self.crawler_mock.stubs().method('history_capable').will(
+            pmock.return_value(expected))
 
-        result = self.aggregator._get_from_date(comic)
+        result = self.aggregator._get_from_date(self.crawler_mock)
 
         self.assertEquals(expected, result)
 
     def test_get_from_date_from_from_date(self):
-        comic = Comic.objects.get(slug='xkcd')
-        comic.history_capable = lambda: dt.date(2008, 1, 1)
+        self.crawler_mock.comic = Comic.objects.get(slug='xkcd')
+        self.crawler_mock.stubs().method('history_capable').will(
+            pmock.return_value(dt.date(2008, 1, 1)))
 
-        result = self.aggregator._get_from_date(comic)
+        result = self.aggregator._get_from_date(self.crawler_mock)
 
         self.assertEquals(dt.date(2008, 2, 29), result)
 

@@ -32,6 +32,10 @@ class CrawlerResult(object):
 
 class CrawlerBase(object):
     ### Crawler settings
+    # Date of oldest release available for crawling
+    history_capable_date = None
+    # Number of days a release is available for crawling
+    history_capable_days = None
     # On what weekdays the comic is published (example: "Mo,We,Fr")
     schedule = None
     # In approximately what time zone (in whole hours relative to UTC, without
@@ -70,14 +74,8 @@ class CrawlerBase(object):
         if pub_date is None:
             pub_date = dt.date.today()
 
-        if not self.comic.history_capable() and pub_date != dt.date.today():
-            raise NotHistoryCapable
-
-        if (self.comic.history_capable() and
-                pub_date < self.comic.history_capable()):
-            raise OutsideHistoryCapabilityRange(
-                'Not history capable, less than %s' %
-                self.comic.history_capable())
+        if pub_date < self.history_capable():
+            raise NotHistoryCapable(self.history_capable())
 
         if not self.multiple_releases_per_day:
             if Release.objects.filter(comic=self.comic,
@@ -85,6 +83,14 @@ class CrawlerBase(object):
                 raise StripAlreadyExists('%s/%s' % (self.comic.slug, pub_date))
 
         return pub_date
+
+    def history_capable(self):
+        if self.history_capable_date is not None:
+            return self.history_capable_date
+        elif self.history_capable_days is not None:
+            return (dt.date.today() - dt.timedelta(self.history_capable_days))
+        else:
+            return dt.date.today()
 
     def _decode_feed_data(self, result):
         """Decode titles and text retrieved from a feed"""
