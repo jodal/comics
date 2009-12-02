@@ -13,7 +13,6 @@ class MetaBase(object):
     end_date = None
     history_capable_date = None
     history_capable_days = None
-    has_reruns = False
     rights = ''
 
     @property
@@ -36,7 +35,6 @@ class MetaBase(object):
         comic.end_date = self._get_date(self.end_date)
         comic.history_capable_date = self._get_date(self.history_capable_date)
         comic.history_capable_days = self.history_capable_days
-        comic.has_reruns = self.has_reruns
         comic.rights = self.rights
         comic.save()
 

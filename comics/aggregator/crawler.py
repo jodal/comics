@@ -18,8 +18,9 @@ class CrawlerResult(object):
         self.pub_date = pub_date
         self._check_strip_url()
 
-    def set_download_settings(self, check_image_mime_type):
+    def set_download_settings(self, check_image_mime_type, has_rerun_releases):
         self.check_image_mime_type = check_image_mime_type
+        self.has_rerun_releases = has_rerun_releases
 
     def _check_strip_url(self):
         if not self.url:
@@ -40,6 +41,8 @@ class CrawlerBase(object):
     multiple_releases_per_day = False
 
     ### Downloader settings
+    # Whether the comic reruns old strips as new releases
+    has_rerun_releases = False
     # Whether to check the mime type of the strip image when downloading
     check_image_mime_type = True
 
@@ -57,7 +60,8 @@ class CrawlerBase(object):
         if result is not None:
             result.validate(self.comic, pub_date)
             result.set_download_settings(
-                check_image_mime_type=self.check_image_mime_type)
+                check_image_mime_type=self.check_image_mime_type,
+                has_rerun_releases=self.has_rerun_releases)
             if self.feed:
                 result = self._decode_feed_data(result)
             return result

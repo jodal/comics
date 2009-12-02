@@ -22,7 +22,7 @@ class Downloader(object):
 
         if original_strip is not None:
             os.remove(temp_path)
-            if strip_metadata.comic.has_reruns:
+            if strip_metadata.has_rerun_releases:
                 self._save_rerun_release(strip_metadata.comic,
                     strip_metadata.pub_date, original_strip)
             else:

@@ -7,12 +7,13 @@ class Meta(MetaBase):
     url = 'http://www.madseriksen.no/'
     start_date = '2003-02-10'
     history_capable_date = '2005-01-31'
-    has_reruns = True
     schedule = 'Mo,Tu,We,Th,Fr,Sa'
     time_zone = 1
     rights = 'Mads Eriksen'
 
 class Crawler(CrawlerBase):
+    has_rerun_releases = True
+
     def crawl(self, pub_date):
         url = 'http://g2.start.no/tegneserier/striper/m/mstriper/m%(date)s.gif' % {
             'date': pub_date.strftime('%Y%m%d'),

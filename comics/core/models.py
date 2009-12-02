@@ -34,8 +34,6 @@ class Comic(models.Model):
         help_text='Date of oldest release available for crawling')
     history_capable_days = models.PositiveIntegerField(blank=True, null=True,
         help_text='Number of days a release is available for crawling')
-    has_reruns = models.BooleanField(default=False,
-        help_text='Check to add reruns as new releases')
     rights = models.CharField(max_length=100, blank=True,
         help_text='Author, copyright, and/or licensing information')
 
