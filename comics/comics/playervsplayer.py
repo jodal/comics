@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Player vs Player'
     language = 'en'
     url = 'http://www.pvponline.com/'
@@ -11,9 +11,10 @@ class ComicMeta(BaseComicMeta):
     time_zone = -6
     rights = 'Scott R. Kurtz'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/Pvponline')
-        for entry in feed.for_date(self.pub_date):
-            self.url = entry.content0.src('img[src*="/comics/"]')
-            self.title = entry.title
+        for entry in feed.for_date(pub_date):
+            url = entry.content0.src('img[src*="/comics/"]')
+            title = entry.title
+            return CrawlerResult(url, title)

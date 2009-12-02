@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Brinkerhoff'
     language = 'en'
     url = 'http://www.brinkcomic.com/'
@@ -11,15 +11,14 @@ class ComicMeta(BaseComicMeta):
     time_zone = -5
     rights = 'Gabe Strine'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        self.url = 'http://www.brinkcomic.com/comics/%(date)s.gif' % {
-            'date': self.pub_date.strftime('%Y%m%d'),
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
+        url = 'http://www.brinkcomic.com/comics/%(date)s.gif' % {
+            'date': pub_date.strftime('%Y%m%d'),
         }
-
-    def _get_headers(self):
-        return {
+        headers = {
             'Referer': 'http://www.brinkcomic.com/d/%(date)s/' % {
-                'date': self.pub_date.strftime('%Y%m%d'),
+                'date': pub_date.strftime('%Y%m%d'),
             }
         }
+        return CrawlerResult(url, headers=headers)

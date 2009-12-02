@@ -1,9 +1,9 @@
 # encoding: utf-8
 
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Veslemøy'
     language = 'no'
     url = 'http://www.side2.no/tegneserie/veslemoy/'
@@ -13,8 +13,9 @@ class ComicMeta(BaseComicMeta):
     time_zone = 1
     rights = 'Vantina Nina Andreassen'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        self.url = 'http://pub.tv2.no/nettavisen/tegneserie/pondus/veslemoy/%(date)s.jpg' % {
-            'date': self.pub_date.strftime('%d%m%y'),
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
+        url = 'http://pub.tv2.no/nettavisen/tegneserie/pondus/veslemoy/%(date)s.jpg' % {
+            'date': pub_date.strftime('%d%m%y'),
         }
+        return CrawlerResult(url)

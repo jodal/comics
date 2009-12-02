@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Saturday Morning Breakfast Cereal'
     language = 'en'
     url = 'http://www.smbc-comics.com/'
@@ -11,8 +11,9 @@ class ComicMeta(BaseComicMeta):
     time_zone = -8
     rights = 'Zach Weiner'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://www.smbc-comics.com/rss.php')
-        for entry in feed.for_date(self.pub_date):
-            self.url = entry.summary.src('img')
+        for entry in feed.for_date(pub_date):
+            url = entry.summary.src('img')
+            return CrawlerResult(url)

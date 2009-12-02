@@ -1,9 +1,7 @@
-# encoding: utf-8
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
-
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Morten M (vg.no)'
     language = 'no'
     url = 'http://www.vg.no/spesial/mortenm/'
@@ -13,10 +11,13 @@ class ComicMeta(BaseComicMeta):
     time_zone = 1
     rights = 'Morten M. Kristiansen'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        self.url = 'http://static.vg.no/gfx/mortenm/output/%(year)s/%(month)s/%(year)s-%(month)s-%(day)s.jpg' % {
-            'year': self.pub_date.strftime("%Y"),
-            'month': self.pub_date.strftime("%m"),
-            'day': self.pub_date.strftime("%d"),
-        }
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
+        url = ('http://static.vg.no/gfx/mortenm/output/'
+            '%(year)s/%(month)s/%(year)s-%(month)s-%(day)s.jpg' % {
+                'year': pub_date.strftime("%Y"),
+                'month': pub_date.strftime("%m"),
+                'day': pub_date.strftime("%d"),
+            }
+        )
+        return CrawlerResult(url)

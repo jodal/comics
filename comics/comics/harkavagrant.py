@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Hark, A Vagrant!'
     language = 'en'
     url = 'http://www.harkavagrant.com/'
@@ -11,9 +11,10 @@ class ComicMeta(BaseComicMeta):
     time_zone = -8
     rights = 'Kate Beaton'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://www.rsspect.com/rss/vagrant.xml')
-        for entry in feed.for_date(self.pub_date):
-            self.url = entry.summary.src('img[src*="/history/"]')
-            self.title = entry.summary.title('img[src*="/history/"]')
+        for entry in feed.for_date(pub_date):
+            url = entry.summary.src('img[src*="/history/"]')
+            title = entry.summary.title('img[src*="/history/"]')
+            return CrawlerResult(url, title)

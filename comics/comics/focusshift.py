@@ -1,9 +1,7 @@
-import re
+from comics.aggregator.crawler import CrawlerBase
+from comics.meta.base import MetaBase
 
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
-
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Focus Shift'
     language = 'en'
     url = 'http://www.osnews.com/comics/'
@@ -13,6 +11,6 @@ class ComicMeta(BaseComicMeta):
     time_zone = 1
     rights = 'Thom Holwerda'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        pass # XXX Comic no longer published
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
+        pass # Comic no longer published

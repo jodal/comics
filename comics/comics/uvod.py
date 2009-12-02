@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'The Unspeakable Vault (of Doom)'
     language = 'en'
     url = 'http://www.macguff.fr/goomi/unspeakable/'
@@ -9,11 +9,12 @@ class ComicMeta(BaseComicMeta):
     time_zone = 1
     rights = 'Francois Launet'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         feed = self.parse_feed(
             'http://www.macguff.fr/goomi/unspeakable/rss.xml')
-        for entry in feed.for_date(self.pub_date):
+        for entry in feed.for_date(pub_date):
             if entry.title.startswith('Strip #'):
-                self.url = entry.content0.src('img')
-                self.title = entry.summary.text('')
+                url = entry.content0.src('img')
+                title = entry.summary.text('')
+                return CrawlerResult(url, title)

@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'PartiallyClips'
     language = 'en'
     url = 'http://www.partiallyclips.com/'
@@ -11,9 +11,10 @@ class ComicMeta(BaseComicMeta):
     time_zone = -5
     rights = 'Robert T. Balder'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://www.partiallyclips.com/includes/rss.xml')
-        for entry in feed.for_date(self.pub_date):
-            self.url = entry.summary.src('img')
-            self.title = entry.title.split(' - ')[0]
+        for entry in feed.for_date(pub_date):
+            url = entry.summary.src('img')
+            title = entry.title.split(' - ')[0]
+            return CrawlerResult(url, title)

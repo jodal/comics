@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Cyanide and Happiness'
     language = 'en'
     url = 'http://www.explosm.net/comics/'
@@ -11,10 +11,11 @@ class ComicMeta(BaseComicMeta):
     time_zone = -8
     rights = 'Kris Wilson, Rob DenBleyker, Matt Melvin, & Dave McElfatrick '
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/Explosm')
-        for entry in feed.for_date(self.pub_date):
+        for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
-            self.url = page.src(
+            url = page.src(
                 'img[alt="Cyanide and Happiness, a daily webcomic"]')
+            return CrawlerResult(url)

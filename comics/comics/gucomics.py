@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'GU Comics'
     language = 'en'
     url = 'http://www.gucomics.com/'
@@ -11,13 +11,14 @@ class ComicMeta(BaseComicMeta):
     time_zone = -8
     rights = 'Woody Hearn'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://www.gucomics.com/rss.xml')
-        for entry in feed.for_date(self.pub_date):
+        for entry in feed.for_date(pub_date):
             if entry.title.startswith('Comic:'):
-                self.title = entry.summary.text('')
                 page = self.parse_page(entry.link)
-                self.url = page.src(
+                url = page.src(
                     'img[src^="http://www.gucomics.com/comics/"]'
                     '[alt^="Comic for:"]')
+                title = entry.summary.text('')
+                return CrawlerResult(url, title)

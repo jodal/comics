@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicsComComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import ComicsComCrawlerBase
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Pearls Before Swine'
     language = 'en'
     url = 'http://comics.com/pearls_before_swine/'
@@ -11,6 +11,6 @@ class ComicMeta(BaseComicMeta):
     time_zone = -5
     rights = 'Stephan Pastis'
 
-class ComicCrawler(BaseComicsComComicCrawler):
-    def crawl(self):
-        self.crawl_helper('Pearls Before Swine')
+class Crawler(ComicsComCrawlerBase):
+    def crawl(self, pub_date):
+        return self.crawl_helper('Pearls Before Swine', pub_date)

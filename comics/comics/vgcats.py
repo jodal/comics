@@ -1,9 +1,9 @@
 import datetime as dt
 
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'VG Cats'
     language = 'en'
     url = 'http://www.vgcats.com/'
@@ -12,16 +12,15 @@ class ComicMeta(BaseComicMeta):
     time_zone = -5
     rights = 'Scott Ramsoomair'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         # FIXME: Seems like they are using gif images now and then
-
-        if self.pub_date < dt.date(2003, 5, 1):
+        if pub_date < dt.date(2003, 5, 1):
             ext = 'gif'
         else:
             ext = 'jpg'
-
-        self.url = 'http://www.vgcats.com/comics/images/%(date)s.%(ext)s' % {
-            'date': self.pub_date.strftime('%y%m%d'),
+        url = 'http://www.vgcats.com/comics/images/%(date)s.%(ext)s' % {
+            'date': pub_date.strftime('%y%m%d'),
             'ext': ext,
         }
+        return CrawlerResult(url)

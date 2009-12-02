@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicsComComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import ComicsComCrawlerBase
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Get Fuzzy'
     language = 'en'
     url = 'http://comics.com/get_fuzzy/'
@@ -11,6 +11,6 @@ class ComicMeta(BaseComicMeta):
     time_zone = -5
     rights = 'Darby Conley'
 
-class ComicCrawler(BaseComicsComComicCrawler):
-    def crawl(self):
-        self.crawl_helper('Get Fuzzy')
+class Crawler(ComicsComCrawlerBase):
+    def crawl(self, pub_date):
+        return self.crawl_helper('Get Fuzzy', pub_date)

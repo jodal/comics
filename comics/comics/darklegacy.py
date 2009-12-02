@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Dark Legacy'
     language = 'en'
     url = 'http://www.darklegacycomics.com/'
@@ -11,9 +11,10 @@ class ComicMeta(BaseComicMeta):
     time_zone = -6
     rights = 'Arad Kedar'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://www.darklegacycomics.com/feed.xml')
-        for entry in feed.for_date(self.pub_date):
-            self.title = entry.title
-            self.url = entry.link.replace('.html', '.jpg')
+        for entry in feed.for_date(pub_date):
+            title = entry.title
+            url = entry.link.replace('.html', '.jpg')
+            return CrawlerResult(url)

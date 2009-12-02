@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'General Protection Fault'
     language = 'en'
     url = 'http://www.gpf-comics.com/'
@@ -11,10 +11,11 @@ class ComicMeta(BaseComicMeta):
     time_zone = -5
     rights = 'Jeffrey T. Darlington'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         page_url = 'http://www.gpf-comics.com/archive.php?d=%(date)s' % {
-            'date': self.pub_date.strftime('%Y%m%d'),
+            'date': pub_date.strftime('%Y%m%d'),
         }
         page = self.parse_page(page_url)
-        self.url = page.src('img[alt^="[Comic for"]')
+        url = page.src('img[alt^="[Comic for"]')
+        return CrawlerResult(url)

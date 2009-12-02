@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicsComComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import ComicsComCrawlerBase
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Peanuts'
     language = 'en'
     url = 'http://comics.com/peanuts/'
@@ -11,6 +11,6 @@ class ComicMeta(BaseComicMeta):
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     rights = 'Charles M. Schulz'
 
-class ComicCrawler(BaseComicsComComicCrawler):
-    def crawl(self):
-        self.crawl_helper('Peanuts')
+class Crawler(ComicsComCrawlerBase):
+    def crawl(self, pub_date):
+        return self.crawl_helper('Peanuts', pub_date)

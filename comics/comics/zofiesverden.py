@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Zofies verden'
     language = 'no'
     url = 'http://www.zofiesverden.no/'
@@ -11,8 +11,9 @@ class ComicMeta(BaseComicMeta):
     time_zone = 1
     rights = 'Grethe Nestor & Norunn Blichfeldt Schjerven'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        self.url = 'http://www.dagbladet.no/tegneserie/zofiesverdenarkiv/serve.php?%(date)s' % {
-            'date': self.date_to_epoch(self.pub_date),
-        }
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
+        url = ('http://www.dagbladet.no/'
+            'tegneserie/zofiesverdenarkiv/serve.php?%s'
+            % self.date_to_epoch(pub_date))
+        return CrawlerResult(url)

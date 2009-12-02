@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicsComComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import ComicsComCrawlerBase
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Rose Is Rose'
     language = 'en'
     url = 'http://comics.com/rose_is_rose/'
@@ -11,6 +11,6 @@ class ComicMeta(BaseComicMeta):
     time_zone = -5
     rights = 'Pat Brady'
 
-class ComicCrawler(BaseComicsComComicCrawler):
-    def crawl(self):
-        self.crawl_helper('Rose Is Rose')
+class Crawler(ComicsComCrawlerBase):
+    def crawl(self, pub_date):
+        return self.crawl_helper('Rose Is Rose', pub_date)

@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Something Positive'
     language = 'en'
     url = 'http://www.somethingpositive.net/'
@@ -10,8 +10,9 @@ class ComicMeta(BaseComicMeta):
     schedule = 'Mo,Tu,We,Th,Fr'
     rights = 'R. K. Milholland'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        self.url = 'http://www.somethingpositive.net/arch/sp%(date)s.gif' % {
-            'date': self.pub_date.strftime('%m%d%Y'),
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
+        url = 'http://www.somethingpositive.net/arch/sp%(date)s.gif' % {
+            'date': pub_date.strftime('%m%d%Y'),
         }
+        return CrawlerResult(url)

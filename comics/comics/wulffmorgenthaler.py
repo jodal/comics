@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Wulffmorgenthaler'
     language = 'en'
     url = 'http://www.wulffmorgenthaler.com/'
@@ -11,9 +11,10 @@ class ComicMeta(BaseComicMeta):
     time_zone = 1
     rights = 'Mikael Wulff & Anders Morgenthaler'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/wulffmorgenthaler')
-        for entry in feed.for_date(self.pub_date):
-            self.url = entry.summary.src(
+        for entry in feed.for_date(pub_date):
+            url = entry.summary.src(
                 'img[src^="http://www.wulffmorgenthaler.com/"]')
+            return CrawlerResult(url)

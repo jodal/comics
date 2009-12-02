@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'AppleGeeks'
     language = 'en'
     url = 'http://www.applegeeks.com/'
@@ -11,9 +11,10 @@ class ComicMeta(BaseComicMeta):
     time_zone = -5
     rights = 'Mohammad Haque & Ananth Panagariya'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://www.applegeeks.com/rss/?cat=comic')
-        for entry in feed.for_date(self.pub_date):
-            self.url = entry.summary.src('img').replace('thumb.gif', '.jpg')
-            self.title = entry.title
+        for entry in feed.for_date(pub_date):
+            url = entry.summary.src('img').replace('thumb.gif', '.jpg')
+            title = entry.title
+            return CrawlerResult(url, title)

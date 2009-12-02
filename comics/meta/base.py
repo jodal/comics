@@ -2,7 +2,7 @@ import datetime as dt
 
 from comics.core.models import Comic
 
-class BaseComicMeta(object):
+class MetaBase(object):
     # Required values
     name = None
     language = None

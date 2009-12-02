@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Business Guys on Business Trips'
     language = 'en'
     url = 'http://www.businessguysonbusinesstrips.com/'
@@ -10,13 +10,14 @@ class ComicMeta(BaseComicMeta):
     schedule = 'Mo'
     time_zone = -7
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         feed = self.parse_feed(
             'http://businessguysonbusinesstrips.com/?feed=atom')
-        for entry in feed.for_date(self.pub_date):
-            self.title = entry.title
+        for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
             page.remove('img[src$="/art/wgp_banner.jpg"]')
-            self.url = page.src(
+            url = page.src(
                 'img[src^="http://businessguysonbusinesstrips.com/art/"]')
+            title = entry.title
+            return CrawlerResult(url, title)

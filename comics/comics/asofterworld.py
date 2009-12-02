@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'A Softer World'
     language = 'en'
     url = 'http://www.asofterworld.com/'
@@ -11,11 +11,12 @@ class ComicMeta(BaseComicMeta):
     time_zone = -8
     rights = 'Joey Comeau, Emily Horne'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://www.rsspect.com/rss/asw.xml')
-        for entry in feed.for_date(self.pub_date):
+        for entry in feed.for_date(pub_date):
             if entry.link != 'http://www.asofterworld.com':
-                self.url = entry.summary.src('img[src*="/clean/"]')
-                self.title = entry.title
-                self.text = entry.summary.title('img[src*="/clean/"]')
+                url = entry.summary.src('img[src*="/clean/"]')
+                title = entry.title
+                text = entry.summary.title('img[src*="/clean/"]')
+                return CrawlerResult(url, title, text)

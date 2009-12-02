@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = '8-Bit Theater'
     language = 'en'
     url = 'http://www.nuklearpower.com/'
@@ -11,13 +11,14 @@ class ComicMeta(BaseComicMeta):
     time_zone = -6
     rights = 'Brian Clevinger'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         page_url = 'http://www.nuklearpower.com/%(year)s/%(month)d/%(day)s/episode/' % {
-            'year': self.pub_date.year,
-            'month': self.pub_date.month,
-            'day': self.pub_date.day
+            'year': pub_date.year,
+            'month': pub_date.month,
+            'day': pub_date.day
         }
         page = self.parse_page(page_url)
-        self.url = page.src('img[src^="http://www.nuklearpower.com/comics/"]')
-        self.title = page.alt('img[src^="http://www.nuklearpower.com/comics/"]')
+        url = page.src('img[src^="http://www.nuklearpower.com/comics/"]')
+        title = page.alt('img[src^="http://www.nuklearpower.com/comics/"]')
+        return CrawlerResult(url, title)

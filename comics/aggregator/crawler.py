@@ -6,7 +6,14 @@ from comics.aggregator.feedparser import FeedParser
 from comics.aggregator.lxmlparser import LxmlParser
 from comics.core.models import Release, Strip
 
-class BaseComicCrawler(object):
+class CrawlerResult(object):
+    def __init__(self, url, title=None, text=None, headers=None):
+        self.url = url
+        self.title = title
+        self.text = text
+        self.headers = headers
+
+class CrawlerBase(object):
     # Whether to allow multiple releases per day
     multiple_releases_per_day = False
 
@@ -23,24 +30,22 @@ class BaseComicCrawler(object):
         """Get URL of strip from pub_date, or the latest strip"""
 
         self.pub_date = self._get_date_to_crawl(pub_date)
-        self.url = None
-        self.title = None
-        self.text = None
+        result = self.crawl(self.pub_date)
+        if result:
+            self._check_strip_url(result)
+            if self.feed:
+                self._decode_feed_data(result)
 
-        self.crawl()
-
-        self._check_strip_url()
-        if self.feed:
-            self._decode_feed_data()
-
-        return {
-            'comic': self.comic,
-            'check_image_mime_type': self.check_image_mime_type,
-            'pub_date': self.pub_date,
-            'url': self.url,
-            'title': self.title,
-            'text': self.text,
-        }
+            # TODO Make sure additional HTTP headers are transfered to the
+            # downloader
+            return {
+                'comic': self.comic,
+                'check_image_mime_type': self.check_image_mime_type,
+                'pub_date': pub_date,
+                'url': result.url,
+                'title': result.title,
+                'text': result.text,
+            }
 
     def _get_date_to_crawl(self, pub_date):
         if pub_date is None:
@@ -62,24 +67,37 @@ class BaseComicCrawler(object):
 
         return pub_date
 
-    def _check_strip_url(self):
+    def _check_strip_url(self, result):
         """Validate strip URL found by the crawler"""
 
-        if not self.url:
+        if not result.url:
             raise StripURLNotFound('%s/%s' % (self.comic.slug, self.pub_date))
 
-    def _decode_feed_data(self):
+    def _decode_feed_data(self, result):
         """Decode titles and text retrieved from a feed"""
 
         if (self.feed.raw_feed.encoding
                 and self.feed.raw_feed.encoding != 'utf-8'):
-            if self.title and type(self.title) != unicode:
-                self.title = unicode(self.title, self.feed.raw_feed.encoding)
-            if self.text and type(self.text) != unicode:
-                self.text = unicode(self.text, self.feed.raw_feed.encoding)
+            if result.title and type(result.title) != unicode:
+                result.title = unicode(
+                    result.title, self.feed.raw_feed.encoding)
+            if result.text and type(result.text) != unicode:
+                result.text = unicode(result.text, self.feed.raw_feed.encoding)
+        return result
 
-    def crawl(self):
-        """Must be overridden by classes inheriting from this one"""
+    def crawl(self, pub_date):
+        """
+        Must be overridden by all crawlers
+
+        Input:
+            pub_date -- a datetime.date object for the date to crawl
+
+        Output:
+            on success: a CrawlResult object containing:
+                - at least a strip image URL
+                - optionally a strip title and/or a strip text
+            on failure: None
+        """
 
         raise NotImplementedError
 
@@ -100,16 +118,16 @@ class BaseComicCrawler(object):
         return int(time.mktime(date.timetuple()))
 
 
-class BaseComicsComComicCrawler(BaseComicCrawler):
+class ComicsComCrawlerBase(CrawlerBase):
     """Base comic crawler for all comics hosted at comics.com"""
 
     check_image_mime_type = False
 
-    def crawl_helper(self, comics_com_title):
+    def crawl_helper(self, comics_com_title, pub_date):
         page_url = 'http://comics.com/%(slug)s/%(date)s/' % {
             'slug': comics_com_title.lower().replace(' ', '_'),
-            'date': self.pub_date.strftime('%Y-%m-%d'),
+            'date': pub_date.strftime('%Y-%m-%d'),
         }
         page = self.parse_page(page_url)
-        self.url = page.src('a.STR_StripImage img[alt^="%s"]' %
-            comics_com_title)
+        url = page.src('a.STR_StripImage img[alt^="%s"]' % comics_com_title)
+        return CrawlerResult(url)

@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'What the Duck'
     language = 'en'
     url = 'http://www.whattheduck.net/'
@@ -10,11 +10,12 @@ class ComicMeta(BaseComicMeta):
     schedule = 'Mo,Tu,We,Th,Fr'
     rights = 'Aaron Johnson'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://www.whattheduck.net/strip/rss.xml')
-        for entry in feed.for_date(self.pub_date):
+        for entry in feed.for_date(pub_date):
             if (entry.enclosures[0].type.startswith('image')
                     and entry.title.startswith('WTD')):
-                self.url = entry.enclosures[0].href
-                self.title = entry.title
+                url = entry.enclosures[0].href
+                title = entry.title
+                return CrawlerResult(url, title)

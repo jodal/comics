@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Looking For Group'
     language = 'en'
     url = 'http://lfgcomic.com/'
@@ -11,9 +11,10 @@ class ComicMeta(BaseComicMeta):
     time_zone = -5
     rights = 'Ryan Sohmer & Lar deSouza'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/LookingForGroup')
-        for entry in feed.for_date(self.pub_date):
-            self.url = entry.summary.src('img[src*="lfgcomic.com"]')
-            self.title = entry.title.replace('Looking For Group:', '').strip()
+        for entry in feed.for_date(pub_date):
+            url = entry.summary.src('img[src*="lfgcomic.com"]')
+            title = entry.title.replace('Looking For Group:', '').strip()
+            return CrawlerResult(url, title)

@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Geek and Poke'
     language = 'en'
     url = 'http://www.geekandpoke.com/'
@@ -11,11 +11,11 @@ class ComicMeta(BaseComicMeta):
     time_zone = 1
     rights = 'Oliver Widder, CC BY-ND 2.0'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         feed = self.parse_feed(
             'http://geekandpoke.typepad.com/geekandpoke/atom.xml')
-        for entry in feed.for_date(self.pub_date):
-            self.url = entry.content0.src('img.asset-image')
-            self.title = entry.title
-            self.text = entry.content0.alt('img.asset-image')
+        for entry in feed.for_date(pub_date):
+            url = entry.content0.src('img.asset-image')
+            title = entry.title
+            return CrawlerResult(url, title)

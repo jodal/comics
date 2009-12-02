@@ -11,7 +11,7 @@ from comics.aggregator.exceptions import *
 from comics.core.models import Release, Strip
 from comics.utils.hash import sha256sum
 
-class ComicDownloader(object):
+class Downloader(object):
     def download_strip(self, strip_metadata):
         """Download, sanitize and save strip"""
 

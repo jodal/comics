@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Dilbert (bt.no)'
     language = 'no'
     url = 'http://www.bt.no/tegneserier/dilbert/'
@@ -11,6 +11,6 @@ class ComicMeta(BaseComicMeta):
     time_zone = 1
     rights = 'Scott Adams'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        pass # XXX Comic no longer published
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
+        pass # Comic no longer published

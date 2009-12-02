@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'This is Historic Times'
     language = 'en'
     url = 'http://www.thisishistorictimes.com/'
@@ -10,10 +10,11 @@ class ComicMeta(BaseComicMeta):
     time_zone = -8
     rights = 'Terrence Nowicki, Jr.'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://thisishistorictimes.com/feed/')
-        for entry in feed.for_date(self.pub_date):
-            self.title = entry.title
+        for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
-            self.url = page.src('img[src*="/wp-content/uploads/"]')
+            url = page.src('img[src*="/wp-content/uploads/"]')
+            title = entry.title
+            return CrawlerResult(url, title)

@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Nemi (bt.no)'
     language = 'no'
     url = 'http://www.bt.no/tegneserier/nemi/'
@@ -11,8 +11,9 @@ class ComicMeta(BaseComicMeta):
     time_zone = 1
     rights = 'Lise Myhre'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        self.url = 'http://images.bt.no/gfx/cartoons/nemi/%(date)s.gif' % {
-            'date': self.pub_date.strftime('%d%m%y'),
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
+        url = 'http://images.bt.no/gfx/cartoons/nemi/%(date)s.gif' % {
+            'date': pub_date.strftime('%d%m%y'),
         }
+        return CrawlerResult(url)

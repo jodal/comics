@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'White Ninja'
     language = 'en'
     url = 'http://www.whiteninjacomics.com/'
@@ -10,12 +10,13 @@ class ComicMeta(BaseComicMeta):
     time_zone = -6
     rights = 'Scott Bevan & Kent Earle'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         feed = self.parse_feed(
             'http://www.whiteninjacomics.com/rss/z-latest.xml')
-        for entry in feed.for_date(self.pub_date):
-            self.title = entry.title.split(' - ')[0]
+        for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
             page.remove('img[src*="/images/comics/t-"]')
-            self.url = page.src('img[src*="/images/comics/"]')
+            url = page.src('img[src*="/images/comics/"]')
+            title = entry.title.split(' - ')[0]
+            return CrawlerResult(url, title)

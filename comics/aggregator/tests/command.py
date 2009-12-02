@@ -9,11 +9,11 @@ from comics.core.models import Comic
 
 command.today = lambda: dt.date(2008, 2, 29)
 
-class ComicAggregatorConfigTestCase(TestCase):
+class AggregatorConfigTestCase(TestCase):
     fixtures = ['test_comics.json']
 
     def setUp(self):
-        self.cc = command.ComicAggregatorConfig()
+        self.cc = command.AggregatorConfig()
 
     def test_init(self):
         self.assertEquals(0, len(self.cc.comics))
@@ -22,7 +22,7 @@ class ComicAggregatorConfigTestCase(TestCase):
 
     def test_init_invalid(self):
         self.assertRaises(AttributeError,
-            command.ComicAggregatorConfig, options=True)
+            command.AggregatorConfig, options=True)
 
     def test_set_from_date(self):
         from_date = dt.date(2008, 3, 11)
@@ -87,18 +87,18 @@ class ComicAggregatorTestCase(TestCase):
     fixtures = ['test_comics.json']
 
     def setUp(self):
-        config = command.ComicAggregatorConfig()
+        config = command.AggregatorConfig()
         config.set_comics_to_crawl(None)
-        self.aggregator = command.ComicAggregator(config)
+        self.aggregator = command.Aggregator(config)
 
         self.comic = pmock.Mock()
         self.comic.slug = 'slug'
-        self.comic_crawler_mock = pmock.Mock()
-        self.comic_downloader_mock = pmock.Mock()
+        self.crawler_mock = pmock.Mock()
+        self.downloader_mock = pmock.Mock()
 
     def test_init(self):
         self.assert_(isinstance(self.aggregator.config,
-            command.ComicAggregatorConfig))
+            command.AggregatorConfig))
 
     def test_init_optparse_config(self):
         optparse_options_mock = pmock.Mock()
@@ -108,8 +108,7 @@ class ComicAggregatorTestCase(TestCase):
         optparse_options_mock.stubs().method('get').will(
             pmock.return_value(None))
 
-        result = command.ComicAggregator(
-            optparse_options=optparse_options_mock)
+        result = command.Aggregator(optparse_options=optparse_options_mock)
 
         self.assertEquals(len(self.aggregator.config.comics),
             len(result.config.comics))
@@ -119,7 +118,7 @@ class ComicAggregatorTestCase(TestCase):
             result.config.to_date)
 
     def test_init_invalid_config(self):
-        self.assertRaises(AssertionError, command.ComicAggregator)
+        self.assertRaises(AssertionError, command.Aggregator)
 
     def test_crawl_one_comic_one_date(self):
         pub_date = dt.date(2008, 3, 1)
@@ -129,20 +128,20 @@ class ComicAggregatorTestCase(TestCase):
             'title': None,
             'text': None,
         }
-        self.comic_crawler_mock.expects(
+        self.crawler_mock.expects(
             pmock.once()).get_strip_metadata(pmock.eq(pub_date)).will(
             pmock.return_value(strip_metadata))
 
         self.aggregator._crawl_one_comic_one_date(
-            self.comic_crawler_mock, pub_date)
+            self.crawler_mock, pub_date)
 
-        self.comic_crawler_mock.verify()
+        self.crawler_mock.verify()
 
     def test_try_crawl_one_comic_one_date(self):
         pub_date = dt.date(2008, 3, 1)
 
         self.aggregator._try_crawl_one_comic_one_date(
-            self.comic_crawler_mock, pub_date)
+            self.crawler_mock, pub_date)
 
         # TODO Mock _crawl_one_comic_one_date to throw exceptions which should
         # be excepted in _try_crawl_one_comic_one_date.
@@ -155,13 +154,12 @@ class ComicAggregatorTestCase(TestCase):
             'title': None,
             'text': None,
         }
-        self.comic_downloader_mock.expects(
+        self.downloader_mock.expects(
             pmock.once()).download_strip(pmock.eq(strip_metadata))
 
-        self.aggregator._download_strip(
-            self.comic_downloader_mock, strip_metadata)
+        self.aggregator._download_strip(self.downloader_mock, strip_metadata)
 
-        self.comic_downloader_mock.verify()
+        self.downloader_mock.verify()
 
     def test_try_download_strip(self):
         pass # TODO
@@ -183,10 +181,10 @@ class ComicAggregatorTestCase(TestCase):
 
         self.assertEquals(dt.date(2008, 2, 29), result)
 
-    def test_get_comic_crawler(self):
+    def test_get_crawler(self):
         pass # TODO
 
-    def test_get_comic_downloader(self):
+    def test_get_downloader(self):
         pass # TODO
 
     def test_aggregate_one_comic(self):

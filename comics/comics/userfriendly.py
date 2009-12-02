@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'User Friendly'
     language = 'en'
     url = 'http://www.userfriendly.org/'
@@ -10,10 +10,11 @@ class ComicMeta(BaseComicMeta):
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     rights = 'J.D. "Illiad" Frazer'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         page_url = 'http://ars.userfriendly.org/cartoons/?id=%(date)s' % {
-            'date': self.pub_date.strftime('%Y%m%d'),
+            'date': pub_date.strftime('%Y%m%d'),
         }
         page = self.parse_page(page_url)
-        self.url = page.src('img[alt^="Strip for"]')
+        url = page.src('img[alt^="Strip for"]')
+        return CrawlerResult(url)

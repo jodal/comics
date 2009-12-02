@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Nemi (db.no)'
     language = 'no'
     url = 'http://www.dagbladet.no/tegneserie/nemi/'
@@ -11,8 +11,9 @@ class ComicMeta(BaseComicMeta):
     time_zone = 1
     rights = 'Lise Myhre'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        self.url = 'http://www.dagbladet.no/tegneserie/nemiarkiv/serve.php?%(date)s' % {
-            'date': self.date_to_epoch(self.pub_date),
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
+        url = 'http://www.dagbladet.no/tegneserie/nemiarkiv/serve.php?%(date)s' % {
+            'date': self.date_to_epoch(pub_date),
         }
+        return CrawlerResult(url)

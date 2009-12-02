@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Calvin and Hobbes'
     language = 'en'
     url = 'http://www.calvinandhobbes.com/'
@@ -11,9 +11,10 @@ class ComicMeta(BaseComicMeta):
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     rights = 'Bill Watterson'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        self.url = 'http://images.ucomics.com/comics/ch/%(year)s/ch%(date)s.gif' % {
-            'year': self.pub_date.strftime('%Y'),
-            'date': self.pub_date.strftime('%y%m%d'),
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
+        url = 'http://images.ucomics.com/comics/ch/%(year)s/ch%(date)s.gif' % {
+            'year': pub_date.strftime('%Y'),
+            'date': pub_date.strftime('%y%m%d'),
         }
+        return CrawlerResult(url)

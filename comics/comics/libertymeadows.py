@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Liberty Meadows'
     language = 'en'
     url = 'http://www.creators.com/comics/liberty-meadows.html'
@@ -12,10 +12,11 @@ class ComicMeta(BaseComicMeta):
     time_zone = -8
     rights = 'Frank Cho'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         feed = self.parse_feed(
             'http://www.creators.com/comics/liberty-meadows.rss')
-        for entry in feed.for_date(self.pub_date):
+        for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
-            self.url = page.src('img[src*="_thumb"]').replace('thumb', 'image')
+            url = page.src('img[src*="_thumb"]').replace('thumb', 'image')
+            return CrawlerResult(url)

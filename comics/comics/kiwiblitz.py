@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Kiwiblitz'
     language = 'en'
     url = 'http://www.kiwiblitz.com/'
@@ -11,9 +11,10 @@ class ComicMeta(BaseComicMeta):
     time_zone = -8
     rights = 'Mary Cagle'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://www.kiwiblitz.com/?feed=rss2')
-        for entry in feed.for_date(self.pub_date):
-            self.url = entry.summary.src('img[src*="/comics/"]')
-            self.title = entry.summary.alt('img[src*="/comics/"]')
+        for entry in feed.for_date(pub_date):
+            url = entry.summary.src('img[src*="/comics/"]')
+            title = entry.summary.alt('img[src*="/comics/"]')
+            return CrawlerResult(url, title)

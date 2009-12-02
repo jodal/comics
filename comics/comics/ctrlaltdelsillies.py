@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Ctrl+Alt+Del Sillies'
     language = 'en'
     url = 'http://www.ctrlaltdel-online.com/'
@@ -11,8 +11,9 @@ class ComicMeta(BaseComicMeta):
     time_zone = -5
     rights = 'Tim Buckley'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        self.url = 'http://www.ctrlaltdel-online.com/comics/Lite%(date)s.gif' % {
-            'date': self.pub_date.strftime('%Y%m%d'),
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
+        url = 'http://www.ctrlaltdel-online.com/comics/Lite%(date)s.gif' % {
+            'date': pub_date.strftime('%Y%m%d'),
         }
+        return CrawlerResult(url)

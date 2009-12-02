@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Penny Arcade'
     language = 'en'
     url = 'http://www.penny-arcade.com/'
@@ -10,13 +10,13 @@ class ComicMeta(BaseComicMeta):
     schedule = 'Mo,We,Fr'
     rights = 'Mike Krahulik & Jerry Holkins'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         page_url = 'http://www.penny-arcade.com/comic/%(date)s/' % {
-            'date': self.pub_date.strftime('%Y/%m/%d'),
+            'date': pub_date.strftime('%Y/%m/%d'),
         }
         page = self.parse_page(page_url)
-
-        # FIXME The decode() part should be handled by BaseComicCrawler
-        self.title = page.text('h1').decode('iso-8859-1')
-        self.url = page.src('img[alt="%s"]' % self.title)
+        # FIXME The decode() part should be handled by CrawlerBase
+        title = page.text('h1').decode('iso-8859-1')
+        url = page.src('img[alt="%s"]' % title)
+        return CrawlerResult(url, title)

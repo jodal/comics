@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Real Life'
     language = 'en'
     url = 'http://www.reallifecomics.com/'
@@ -10,10 +10,11 @@ class ComicMeta(BaseComicMeta):
     schedule = 'Mo,Tu,We,Th,Fr'
     rights = 'Greg Dean'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
         page_url = 'http://www.reallifecomics.com/archive/%(date)s.html' % {
-            'date': self.pub_date.strftime('%y%m%d'),
+            'date': pub_date.strftime('%y%m%d'),
         }
         page = self.parse_page(page_url)
-        self.url = page.src('img[alt^="strip for"]')
+        url = page.src('img[alt^="strip for"]')
+        return CrawlerResult(url)

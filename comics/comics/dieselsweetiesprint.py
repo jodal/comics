@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Diesel Sweeties (print)'
     language = 'en'
     url = 'http://www.dieselsweeties.com/'
@@ -11,9 +11,9 @@ class ComicMeta(BaseComicMeta):
     time_zone = -5
     rights = 'Richard Stevens'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        self.url = 'http://www.dieselsweeties.com/print/strips/ds%(date)s.png' \
-        % {
-            'date': self.pub_date.strftime('%Y%m%d'),
+class Crawler(CrawlerBase):
+    def crawl(self, pub_date):
+        url = 'http://www.dieselsweeties.com/print/strips/ds%(date)s.png' % {
+            'date': pub_date.strftime('%Y%m%d'),
         }
+        return CrawlerResult(url)
