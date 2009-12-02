@@ -11,12 +11,30 @@ class CrawlerResult(object):
         self.url = url
         self.title = title
         self.text = text
-        self.headers = headers
+        self.request_headers = headers or {}
+
+    def validate(self, comic, pub_date):
+        self.comic = comic
+        self.pub_date = pub_date
+        self._check_strip_url()
+
+    def set_download_settings(self, check_image_mime_type):
+        self.check_image_mime_type = check_image_mime_type
+
+    def _check_strip_url(self):
+        if not self.url:
+            raise StripURLNotFound(self.identifier)
+
+    @property
+    def identifier(self):
+       return u'%s/%s' % (self.comic.slug, self.pub_date)
 
 class CrawlerBase(object):
+    ### Crawler settings
     # Whether to allow multiple releases per day
     multiple_releases_per_day = False
 
+    ### Downloader settings
     # Whether to check the mime type of the strip image when downloading
     check_image_mime_type = True
 
@@ -29,23 +47,15 @@ class CrawlerBase(object):
     def get_strip_metadata(self, pub_date=None):
         """Get URL of strip from pub_date, or the latest strip"""
 
-        self.pub_date = self._get_date_to_crawl(pub_date)
-        result = self.crawl(self.pub_date)
-        if result:
-            self._check_strip_url(result)
+        pub_date = self._get_date_to_crawl(pub_date)
+        result = self.crawl(pub_date)
+        if result is not None:
+            result.validate(self.comic, pub_date)
+            result.set_download_settings(
+                check_image_mime_type=self.check_image_mime_type)
             if self.feed:
-                self._decode_feed_data(result)
-
-            # TODO Make sure additional HTTP headers are transfered to the
-            # downloader
-            return {
-                'comic': self.comic,
-                'check_image_mime_type': self.check_image_mime_type,
-                'pub_date': pub_date,
-                'url': result.url,
-                'title': result.title,
-                'text': result.text,
-            }
+                result = self._decode_feed_data(result)
+            return result
 
     def _get_date_to_crawl(self, pub_date):
         if pub_date is None:
@@ -66,12 +76,6 @@ class CrawlerBase(object):
                 raise StripAlreadyExists('%s/%s' % (self.comic.slug, pub_date))
 
         return pub_date
-
-    def _check_strip_url(self, result):
-        """Validate strip URL found by the crawler"""
-
-        if not result.url:
-            raise StripURLNotFound('%s/%s' % (self.comic.slug, self.pub_date))
 
     def _decode_feed_data(self, result):
         """Decode titles and text retrieved from a feed"""

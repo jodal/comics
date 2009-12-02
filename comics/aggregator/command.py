@@ -73,16 +73,15 @@ class Aggregator(object):
     def _crawl_one_comic_one_date(self, crawler, pub_date):
         strip_metadata = crawler.get_strip_metadata(pub_date)
         if strip_metadata:
-            logger.debug('Strip date: %s', strip_metadata['pub_date'])
-            logger.debug('Strip URL: %s', strip_metadata['url'])
-            logger.debug('Strip title: %s', strip_metadata['title'])
-            logger.debug('Strip text: %s', strip_metadata['text'])
+            logger.debug('Strip: %s', strip_metadata.identifier)
+            logger.debug('Strip URL: %s', strip_metadata.url)
+            logger.debug('Strip title: %s', strip_metadata.title)
+            logger.debug('Strip text: %s', strip_metadata.text)
         return strip_metadata
 
     def _try_download_strip(self, strip_metadata):
         try:
-            logger.debug('Downloading %s for %s',
-                strip_metadata['comic'].slug, strip_metadata['pub_date'])
+            logger.debug('Downloading %s', strip_metadata.identifier)
             downloader = self._get_downloader()
             return self._download_strip(downloader, strip_metadata)
         except ComicsError, error:
@@ -97,8 +96,7 @@ class Aggregator(object):
 
     def _download_strip(self, downloader, strip_metadata):
         downloader.download_strip(strip_metadata)
-        logger.info('Strip saved (%s/%s)',
-            strip_metadata['comic'].slug, strip_metadata['pub_date'])
+        logger.info('Strip saved (%s)', strip_metadata.identifier)
 
 
 class AggregatorConfig(object):
