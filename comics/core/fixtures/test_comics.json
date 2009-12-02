@@ -5,7 +5,6 @@
     "fields": {
       "name": "Sinfest", 
       "end_date": null, 
-      "schedule": "Mo,Tu,We,Th,Fr,Sa,Su", 
       "url": "http://www.sinfest.net/", 
       "rights": "Tatsuya Ishida", 
       "has_reruns": false, 
@@ -22,7 +21,6 @@
     "fields": {
       "name": "User Friendly", 
       "end_date": null, 
-      "schedule": "Mo,Tu,We,Th,Fr,Sa,Su", 
       "url": "http://www.userfriendly.org/", 
       "rights": "J.D. \"Illiad\" Frazer", 
       "has_reruns": false, 
@@ -39,7 +37,6 @@
     "fields": {
       "name": "xkcd", 
       "end_date": null, 
-      "schedule": "Mo,We,Fr", 
       "url": "http://www.xkcd.com/", 
       "rights": "Randall Munroe, CC BY-NC 2.5", 
       "has_reruns": false, 

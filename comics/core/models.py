@@ -36,8 +36,6 @@ class Comic(models.Model):
         help_text='Number of days a release is available for crawling')
     has_reruns = models.BooleanField(default=False,
         help_text='Check to add reruns as new releases')
-    schedule = models.CharField(max_length=20, blank=True,
-        help_text='On what weekdays the comic is published')
     rights = models.CharField(max_length=100, blank=True,
         help_text='Author, copyright, and/or licensing information')
 
@@ -71,14 +69,6 @@ class Comic(models.Model):
             return (dt.date.today() - dt.timedelta(self.history_capable_days))
         else:
             return dt.date.today()
-
-    def schedule_as_isoweekday(self):
-        weekday_mapping = {'Mo': 1, 'Tu': 2, 'We': 3,
-            'Th': 4, 'Fr': 5, 'Sa': 6, 'Su': 7}
-        iso_schedule = []
-        for weekday in self.schedule.split(','):
-            iso_schedule.append(weekday_mapping[weekday])
-        return iso_schedule
 
 
 class Release(models.Model):

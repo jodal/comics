@@ -31,6 +31,8 @@ class CrawlerResult(object):
 
 class CrawlerBase(object):
     ### Crawler settings
+    # On what weekdays the comic is published (example: "Mo,We,Fr")
+    schedule = None
     # In approximately what time zone (in whole hours relative to UTC, without
     # regard to DST) the comic is published
     time_zone = None
@@ -91,6 +93,14 @@ class CrawlerBase(object):
             if result.text and type(result.text) != unicode:
                 result.text = unicode(result.text, self.feed.raw_feed.encoding)
         return result
+
+    def schedule_as_isoweekday(self):
+        weekday_mapping = {'Mo': 1, 'Tu': 2, 'We': 3,
+            'Th': 4, 'Fr': 5, 'Sa': 6, 'Su': 7}
+        iso_schedule = []
+        for weekday in self.schedule.split(','):
+            iso_schedule.append(weekday_mapping[weekday])
+        return iso_schedule
 
     def datetime_in_time_zone(self):
         if self.time_zone is None:
