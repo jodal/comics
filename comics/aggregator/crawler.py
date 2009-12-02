@@ -74,8 +74,8 @@ class CrawlerBase(object):
         if pub_date is None:
             pub_date = dt.date.today()
 
-        if pub_date < self.history_capable():
-            raise NotHistoryCapable(self.history_capable())
+        if pub_date < self.history_capable:
+            raise NotHistoryCapable(self.history_capable)
 
         if not self.multiple_releases_per_day:
             if Release.objects.filter(comic=self.comic,
@@ -84,6 +84,7 @@ class CrawlerBase(object):
 
         return pub_date
 
+    @property
     def history_capable(self):
         if self.history_capable_date is not None:
             return dt.datetime.strptime(

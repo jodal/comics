@@ -161,8 +161,7 @@ class ComicAggregatorTestCase(TestCase):
     def test_get_from_date_from_history_capable(self):
         self.crawler_mock.comic = Comic.objects.get(slug='xkcd')
         expected = dt.date(2008, 3, 1)
-        self.crawler_mock.stubs().method('history_capable').will(
-            pmock.return_value(expected))
+        self.crawler_mock.history_capable = expected
 
         result = self.aggregator._get_from_date(self.crawler_mock)
 
@@ -170,8 +169,7 @@ class ComicAggregatorTestCase(TestCase):
 
     def test_get_from_date_from_from_date(self):
         self.crawler_mock.comic = Comic.objects.get(slug='xkcd')
-        self.crawler_mock.stubs().method('history_capable').will(
-            pmock.return_value(dt.date(2008, 1, 1)))
+        self.crawler_mock.history_capable = dt.date(2008, 1, 1)
 
         result = self.aggregator._get_from_date(self.crawler_mock)
 

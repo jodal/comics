@@ -52,10 +52,10 @@ class Aggregator(object):
         return module.Crawler(comic)
 
     def _get_from_date(self, crawler):
-        if self.config.from_date < crawler.history_capable():
+        if self.config.from_date < crawler.history_capable:
             logger.info('Adjusting from date to %s because of limited ' +
-                'history capability', crawler.history_capable())
-            return crawler.history_capable()
+                'history capability', crawler.history_capable)
+            return crawler.history_capable
         else:
             return self.config.from_date
 
