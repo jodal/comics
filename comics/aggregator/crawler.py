@@ -86,7 +86,8 @@ class CrawlerBase(object):
 
     def history_capable(self):
         if self.history_capable_date is not None:
-            return self.history_capable_date
+            return dt.datetime.strptime(
+                self.history_capable_date, '%Y-%m-%d').date()
         elif self.history_capable_days is not None:
             return (dt.date.today() - dt.timedelta(self.history_capable_days))
         else:
