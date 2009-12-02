@@ -15,7 +15,6 @@ class MetaBase(object):
     history_capable_days = None
     has_reruns = False
     schedule = ''
-    time_zone = None
     rights = ''
 
     @property
@@ -40,7 +39,6 @@ class MetaBase(object):
         comic.history_capable_days = self.history_capable_days
         comic.has_reruns = self.has_reruns
         comic.schedule = self.schedule
-        comic.time_zone = self.time_zone
         comic.rights = self.rights
         comic.save()
 

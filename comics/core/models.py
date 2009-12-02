@@ -38,9 +38,6 @@ class Comic(models.Model):
         help_text='Check to add reruns as new releases')
     schedule = models.CharField(max_length=20, blank=True,
         help_text='On what weekdays the comic is published')
-    time_zone = models.IntegerField(blank=True, null=True,
-        help_text='In what approximate time zone, in whole hours, '
-            + 'relative to UTC, the comic is published')
     rights = models.CharField(max_length=100, blank=True,
         help_text='Author, copyright, and/or licensing information')
 
@@ -82,13 +79,6 @@ class Comic(models.Model):
         for weekday in self.schedule.split(','):
             iso_schedule.append(weekday_mapping[weekday])
         return iso_schedule
-
-    def datetime_in_time_zone(self):
-        if self.time_zone is None:
-            return None
-        local_time_zone = - time.timezone // 3600
-        hour_diff = local_time_zone - self.time_zone
-        return dt.datetime.now() - dt.timedelta(hours=hour_diff)
 
 
 class Release(models.Model):

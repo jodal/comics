@@ -31,6 +31,9 @@ class CrawlerResult(object):
 
 class CrawlerBase(object):
     ### Crawler settings
+    # In approximately what time zone (in whole hours relative to UTC, without
+    # regard to DST) the comic is published
+    time_zone = None
     # Whether to allow multiple releases per day
     multiple_releases_per_day = False
 
@@ -88,6 +91,13 @@ class CrawlerBase(object):
             if result.text and type(result.text) != unicode:
                 result.text = unicode(result.text, self.feed.raw_feed.encoding)
         return result
+
+    def datetime_in_time_zone(self):
+        if self.time_zone is None:
+            return None
+        local_time_zone = - time.timezone // 3600
+        hour_diff = local_time_zone - self.time_zone
+        return dt.datetime.now() - dt.timedelta(hours=hour_diff)
 
     def crawl(self, pub_date):
         """
