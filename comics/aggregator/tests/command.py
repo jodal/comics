@@ -4,6 +4,7 @@ import pmock
 from django.test import TestCase
 
 from comics.aggregator import command
+from comics.aggregator.crawler import CrawlerResult
 from comics.aggregator.exceptions import ComicsError
 from comics.core.models import Comic
 
@@ -122,12 +123,9 @@ class ComicAggregatorTestCase(TestCase):
 
     def test_crawl_one_comic_one_date(self):
         pub_date = dt.date(2008, 3, 1)
-        strip_metadata = {
-            'pub_date': pub_date,
-            'url': 'a url',
-            'title': None,
-            'text': None,
-        }
+        strip_metadata = CrawlerResult('a url')
+        strip_metadata.comic = self.comic
+        strip_metadata.pub_date = pub_date
         self.crawler_mock.expects(
             pmock.once()).get_strip_metadata(pmock.eq(pub_date)).will(
             pmock.return_value(strip_metadata))
@@ -147,13 +145,9 @@ class ComicAggregatorTestCase(TestCase):
         # be excepted in _try_crawl_one_comic_one_date.
 
     def test_download_strip(self):
-        strip_metadata = {
-            'comic': self.comic,
-            'pub_date': dt.date(2008, 3, 1),
-            'url': 'a url',
-            'title': None,
-            'text': None,
-        }
+        strip_metadata = CrawlerResult('a url')
+        strip_metadata.comic = self.comic
+        strip_metadata.pub_date = dt.date(2008, 3, 1)
         self.downloader_mock.expects(
             pmock.once()).download_strip(pmock.eq(strip_metadata))
 
