@@ -6,15 +6,15 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.penny-arcade.com/'
     start_date = '1998-11-18'
-    history_capable_date = '1998-11-18'
-    schedule = 'Mo,We,Fr'
     rights = 'Mike Krahulik & Jerry Holkins'
 
 class Crawler(CrawlerBase):
+    history_capable_date = '1998-11-18'
+    schedule = 'Mo,We,Fr'
+
     def crawl(self, pub_date):
-        page_url = 'http://www.penny-arcade.com/comic/%(date)s/' % {
-            'date': pub_date.strftime('%Y/%m/%d'),
-        }
+        page_url = 'http://www.penny-arcade.com/comic/%s/' % (
+            pub_date.strftime('%Y/%m/%d'),)
         page = self.parse_page(page_url)
         # FIXME The decode() part should be handled by CrawlerBase
         title = page.text('h1').decode('iso-8859-1')

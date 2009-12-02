@@ -6,12 +6,13 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.pvponline.com/'
     start_date = '1998-05-04'
-    history_capable_days = 10
-    schedule = 'Mo,Tu,We,Th,Fr'
-    time_zone = -6
     rights = 'Scott R. Kurtz'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 10
+    schedule = 'Mo,Tu,We,Th,Fr'
+    time_zone = -6
+
     def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/Pvponline')
         for entry in feed.for_date(pub_date):

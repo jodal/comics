@@ -6,12 +6,13 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.basicinstructions.net/'
     start_date = '2006-07-01'
-    history_capable_days = 100
-    schedule = 'We,Su'
-    time_zone = -7
     rights = 'Scott Meyer'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 100
+    schedule = 'We,Su'
+    time_zone = -7
+
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.basicinstructions.net/atom.xml')
         for entry in feed.for_date(pub_date):

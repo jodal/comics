@@ -6,11 +6,12 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.dilbert.com/'
     start_date = '1989-04-06'
-    history_capable_days = 32
-    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     rights = 'Scott Adams'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 32
+    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
+
     def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/DilbertDailyStrip')
         for entry in feed.for_date(pub_date):

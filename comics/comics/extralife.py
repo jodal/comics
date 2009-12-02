@@ -6,14 +6,14 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.myextralife.com/'
     start_date = '2001-06-17'
-    history_capable_date = '2001-06-17'
-    schedule = 'Mo,We,Fr'
-    time_zone = -7
     rights = 'Scott Johnson'
 
 class Crawler(CrawlerBase):
+    history_capable_date = '2001-06-17'
+    schedule = 'Mo,We,Fr'
+    time_zone = -7
+
     def crawl(self, pub_date):
-        url = 'http://www.myextralife.com/strips/%(date)s.jpg' % {
-            'date': pub_date.strftime('%m-%d-%Y'),
-        }
+        url = 'http://www.myextralife.com/strips/%s.jpg' % (
+            pub_date.strftime('%m-%d-%Y'),)
         return CrawlerResult(url)

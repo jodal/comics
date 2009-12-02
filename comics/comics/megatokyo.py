@@ -6,12 +6,13 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.megatokyo.com/'
     start_date = '2000-08-14'
-    history_capable_days = 30
-    schedule = 'Mo,We,Fr'
-    time_zone = -5
     rights = 'Fred Gallagher & Rodney Caston'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 30
+    schedule = 'Mo,We,Fr'
+    time_zone = -5
+
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.megatokyo.com/rss/megatokyo.xml')
         for entry in feed.for_date(pub_date):

@@ -6,11 +6,12 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.whiteninjacomics.com/'
     start_date = '2002-01-01'
-    history_capable_days = 60
-    time_zone = -6
     rights = 'Scott Bevan & Kent Earle'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 60
+    time_zone = -6
+
     def crawl(self, pub_date):
         feed = self.parse_feed(
             'http://www.whiteninjacomics.com/rss/z-latest.xml')

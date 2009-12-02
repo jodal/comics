@@ -1,5 +1,3 @@
-import re
-
 from comics.aggregator.crawler import CrawlerBase, CrawlerResult
 from comics.meta.base import MetaBase
 
@@ -8,12 +6,13 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.geekculture.com/joyoftech/'
     start_date = '2000-08-14'
-    history_capable_days = 30
-    schedule = 'Mo,We,Fr'
-    time_zone = -5
     rights = 'Geek Culture'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 30
+    schedule = 'Mo,We,Fr'
+    time_zone = -5
+
     def crawl(self, pub_date):
         feed = self.parse_feed(
             'http://www.joyoftech.com/joyoftech/jotblog/atom.xml')

@@ -6,11 +6,12 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.threepanelsoul.com/'
     start_date = '2006-11-05'
-    history_capable_days = 180
-    time_zone = -5
     rights = 'Ian McConville & Matt Boyd'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 180
+    time_zone = -5
+
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.rsspect.com/rss/threeps.xml')
         for entry in feed.for_date(pub_date):

@@ -6,12 +6,13 @@ class Meta(MetaBase):
     language = 'no'
     url = 'http://underholdning.no.msn.com/tegneserier/bizarro/'
     start_date = '1985-01-01'
-    history_capable_days = 12
-    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
-    time_zone = 1
     rights = 'Dan Piraro'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 12
+    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
+    time_zone = 1
+
     def crawl(self, pub_date):
         feed = self.parse_feed(
             'http://underholdning.no.msn.com/rss/bizarro.aspx')

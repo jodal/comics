@@ -6,12 +6,13 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.gucomics.com/'
     start_date = '2000-07-10'
-    history_capable_date = '2000-07-10'
-    schedule = 'Mo,Tu,We,Th,Fr'
-    time_zone = -8
     rights = 'Woody Hearn'
 
 class Crawler(CrawlerBase):
+    history_capable_date = '2000-07-10'
+    schedule = 'Mo,Tu,We,Th,Fr'
+    time_zone = -8
+
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.gucomics.com/rss.xml')
         for entry in feed.for_date(pub_date):

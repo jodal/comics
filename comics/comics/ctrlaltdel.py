@@ -6,14 +6,14 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.ctrlaltdel-online.com/'
     start_date = '2002-10-23'
-    history_capable_date = '2002-10-23'
-    schedule = 'Mo,We,Fr'
-    time_zone = -5
     rights = 'Tim Buckley'
 
 class Crawler(CrawlerBase):
+    history_capable_date = '2002-10-23'
+    schedule = 'Mo,We,Fr'
+    time_zone = -5
+
     def crawl(self, pub_date):
-        url = 'http://www.cad-comic.com/comics/%(date)s.jpg' % {
-            'date': pub_date.strftime('%Y%m%d'),
-        }
+        url = 'http://www.cad-comic.com/comics/%s.jpg' % (
+            pub_date.strftime('%Y%m%d'),)
         return CrawlerResult(url)

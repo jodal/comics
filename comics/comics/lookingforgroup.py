@@ -6,12 +6,13 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://lfgcomic.com/'
     start_date = '2006-11-06'
-    history_capable_date = '2006-11-06'
-    schedule = 'Mo,Th'
-    time_zone = -5
     rights = 'Ryan Sohmer & Lar deSouza'
 
 class Crawler(CrawlerBase):
+    history_capable_date = '2006-11-06'
+    schedule = 'Mo,Th'
+    time_zone = -5
+
     def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/LookingForGroup')
         for entry in feed.for_date(pub_date):

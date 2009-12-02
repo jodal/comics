@@ -6,12 +6,13 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.xkcd.com/'
     start_date = '2005-05-29'
-    history_capable_days = 10
-    schedule = 'Mo,We,Fr'
-    time_zone = -5
     rights = 'Randall Munroe, CC BY-NC 2.5'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 10
+    schedule = 'Mo,We,Fr'
+    time_zone = -5
+
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.xkcd.com/rss.xml')
         for entry in feed.for_date(pub_date):

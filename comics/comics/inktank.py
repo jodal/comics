@@ -6,12 +6,13 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.inktank.com/'
     start_date = '2008-04-01'
-    history_capable_days = 32
-    schedule = 'Mo,We,Fr'
-    time_zone = -8
     rights = 'Barry T. Smith'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 32
+    schedule = 'Mo,We,Fr'
+    time_zone = -8
+
     def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/inktank/HstZ')
         for entry in feed.for_date(pub_date):

@@ -6,19 +6,18 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.brinkcomic.com/'
     start_date = '2006-01-02'
-    history_capable_date = '2006-01-02'
-    schedule = 'Mo,Tu,We,Th,Fr'
-    time_zone = -5
     rights = 'Gabe Strine'
 
 class Crawler(CrawlerBase):
+    history_capable_date = '2006-01-02'
+    schedule = 'Mo,Tu,We,Th,Fr'
+    time_zone = -5
+
     def crawl(self, pub_date):
-        url = 'http://www.brinkcomic.com/comics/%(date)s.gif' % {
-            'date': pub_date.strftime('%Y%m%d'),
-        }
+        url = 'http://www.brinkcomic.com/comics/%s.gif' % (
+            pub_date.strftime('%Y%m%d'),)
         headers = {
-            'Referer': 'http://www.brinkcomic.com/d/%(date)s/' % {
-                'date': pub_date.strftime('%Y%m%d'),
-            }
+            'Referer': 'http://www.brinkcomic.com/d/%s/' % (
+                pub_date.strftime('%Y%m%d'),)
         }
         return CrawlerResult(url, headers=headers)

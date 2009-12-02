@@ -6,12 +6,13 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.harkavagrant.com/'
     start_date = '2008-05-01'
-    history_capable_days = 120
-    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
-    time_zone = -8
     rights = 'Kate Beaton'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 120
+    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
+    time_zone = -8
+
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.rsspect.com/rss/vagrant.xml')
         for entry in feed.for_date(pub_date):

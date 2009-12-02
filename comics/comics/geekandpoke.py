@@ -6,12 +6,13 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.geekandpoke.com/'
     start_date = '2006-08-22'
-    history_capable_days = 32
-    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
-    time_zone = 1
     rights = 'Oliver Widder, CC BY-ND 2.0'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 32
+    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
+    time_zone = 1
+
     def crawl(self, pub_date):
         feed = self.parse_feed(
             'http://geekandpoke.typepad.com/geekandpoke/atom.xml')

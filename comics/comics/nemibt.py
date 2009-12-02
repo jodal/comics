@@ -6,14 +6,14 @@ class Meta(MetaBase):
     language = 'no'
     url = 'http://www.bt.no/tegneserier/nemi/'
     start_date = '1997-01-01'
-    history_capable_days = 162
-    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
-    time_zone = 1
     rights = 'Lise Myhre'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 162
+    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
+    time_zone = 1
+
     def crawl(self, pub_date):
-        url = 'http://images.bt.no/gfx/cartoons/nemi/%(date)s.gif' % {
-            'date': pub_date.strftime('%d%m%y'),
-        }
+        url = 'http://images.bt.no/gfx/cartoons/nemi/%s.gif' % (
+            pub_date.strftime('%d%m%y'),)
         return CrawlerResult(url)

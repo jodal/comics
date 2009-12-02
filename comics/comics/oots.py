@@ -6,12 +6,13 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.giantitp.com/'
     start_date = '2003-09-30'
-    history_capable_days = 1
-    schedule = 'Mo,We,Fr'
-    time_zone = -5
     rights = 'Rich Burlew'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 1
+    schedule = 'Mo,We,Fr'
+    time_zone = -5
+
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.giantitp.com/comics/oots.rss')
         if len(feed.all()):

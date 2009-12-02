@@ -6,11 +6,12 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://darthsanddroids.net/'
     start_date = '2007-09-14'
-    history_capable_days = 14
-    time_zone = -8
     rights = 'The Comic Irregulars'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 14
+    time_zone = -8
+
     def crawl(self, pub_date):
         feed = self.parse_feed('http://darthsanddroids.net/rss.xml')
         for entry in feed.for_date(pub_date):

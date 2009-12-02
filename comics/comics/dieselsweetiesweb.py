@@ -6,12 +6,13 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.dieselsweeties.com/'
     start_date = '2000-01-01'
-    history_capable_date = '2000-01-01'
-    schedule = 'Mo,Tu,We,Th,Fr'
-    time_zone = -5
     rights = 'Richard Stevens'
 
 class Crawler(CrawlerBase):
+    history_capable_date = '2000-01-01'
+    schedule = 'Mo,Tu,We,Th,Fr'
+    time_zone = -5
+
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.dieselsweeties.com/ds-unifeed.xml')
         for entry in feed.for_date(pub_date):

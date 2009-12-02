@@ -5,11 +5,12 @@ class Meta(MetaBase):
     name = 'The Unspeakable Vault (of Doom)'
     language = 'en'
     url = 'http://www.macguff.fr/goomi/unspeakable/'
-    history_capable_days = 180
-    time_zone = 1
     rights = 'Francois Launet'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 180
+    time_zone = 1
+
     def crawl(self, pub_date):
         feed = self.parse_feed(
             'http://www.macguff.fr/goomi/unspeakable/rss.xml')

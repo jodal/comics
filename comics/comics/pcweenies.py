@@ -6,12 +6,13 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.pcweenies.com/'
     start_date = '1998-10-21'
-    history_capable_days = 10
-    schedule = 'Mo,We,Fr'
-    time_zone = -8
     rights = 'Krishna M. Sadasivam'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 10
+    schedule = 'Mo,We,Fr'
+    time_zone = -8
+
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.pcweenies.com/feed/')
         for entry in feed.for_date(pub_date):

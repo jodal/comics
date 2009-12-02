@@ -6,11 +6,12 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://comics.com/pearls_before_swine/'
     start_date = '2001-12-30'
-    history_capable_date = '2002-01-06'
-    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
-    time_zone = -5
     rights = 'Stephan Pastis'
 
 class Crawler(ComicsComCrawlerBase):
+    history_capable_date = '2002-01-06'
+    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
+    time_zone = -5
+
     def crawl(self, pub_date):
         return self.crawl_helper('Pearls Before Swine', pub_date)

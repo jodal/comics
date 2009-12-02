@@ -6,11 +6,13 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.businessguysonbusinesstrips.com/'
     start_date = '2007-07-12'
+    rights = '"Managing Director"'
+
+class Crawler(CrawlerBase):
     history_capable_days = 100
     schedule = 'Mo'
     time_zone = -7
 
-class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed(
             'http://businessguysonbusinesstrips.com/?feed=atom')

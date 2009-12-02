@@ -6,12 +6,13 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.phdcomics.com/'
     start_date = '1997-10-27'
-    history_capable_date = '1997-10-27'
-    schedule = 'Mo,We,Fr'
-    time_zone = -8
     rights = 'Jorge Cham'
 
 class Crawler(CrawlerBase):
+    history_capable_date = '1997-10-27'
+    schedule = 'Mo,We,Fr'
+    time_zone = -8
+
     def crawl(self, pub_date):
         feed = self.parse_feed(
             'http://www.phdcomics.com/gradfeed_justcomics.php')

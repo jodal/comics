@@ -6,14 +6,14 @@ class Meta(MetaBase):
     language = 'no'
     url = 'http://www.nettavisen.no/tegneserie/striper/'
     start_date = '2008-11-19'
-    history_capable_date = '2008-11-19'
-    schedule = 'We'
-    time_zone = 1
     rights = 'Lars Lauvik'
 
 class Crawler(CrawlerBase):
+    history_capable_date = '2008-11-19'
+    schedule = 'We'
+    time_zone = 1
+
     def crawl(self, pub_date):
-        url = 'http://pub.tv2.no/nettavisen/tegneserie/pondus/eon/%(date)s.gif' % {
-            'date': pub_date.strftime('%d%m%y'),
-        }
+        url = 'http://pub.tv2.no/nettavisen/tegneserie/pondus/eon/%s.gif' % (
+            pub_date.strftime('%d%m%y'),)
         return CrawlerResult(url)

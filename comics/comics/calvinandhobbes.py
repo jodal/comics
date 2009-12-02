@@ -7,14 +7,13 @@ class Meta(MetaBase):
     url = 'http://www.calvinandhobbes.com/'
     start_date = '1985-11-18'
     end_date = '1995-12-31'
-    history_capable_days = 31
-    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     rights = 'Bill Watterson'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 31
+    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
+
     def crawl(self, pub_date):
-        url = 'http://images.ucomics.com/comics/ch/%(year)s/ch%(date)s.gif' % {
-            'year': pub_date.strftime('%Y'),
-            'date': pub_date.strftime('%y%m%d'),
-        }
+        url = 'http://images.ucomics.com/comics/ch/%s.gif' % (
+            pub_date.strftime('%Y/ch%y%m%d'),)
         return CrawlerResult(url)

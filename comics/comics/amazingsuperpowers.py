@@ -6,11 +6,13 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.amazingsuperpowers.com/'
     start_date = '2007-09-24'
-    history_capable_days = 21
-    schedule = 'Mo,Th'
     rights = 'Wes & Tony'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 21
+    schedule = 'Mo,Th'
+    time_zone = -5
+
     def crawl(self, pub_date):
         feed = self.parse_feed(
             'http://www.amazingsuperpowers.com/category/comics/feed/')

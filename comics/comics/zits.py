@@ -6,12 +6,13 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.arcamax.com/zits'
     start_date = '1997-07-01'
-    history_capable_days = 14
-    schedule = 'Mo,Tu,We,Tu,Fr,Sa,Su'
-    time_zone = -5
     rights = 'Jerry Scott and Jim Borgman'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 14
+    schedule = 'Mo,Tu,We,Tu,Fr,Sa,Su'
+    time_zone = -5
+
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.arcamax.com/zits/channelfeed')
         for entry in feed.all():

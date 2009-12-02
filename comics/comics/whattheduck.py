@@ -6,11 +6,12 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.whattheduck.net/'
     start_date = '2006-07-01'
-    history_capable_days = 7
-    schedule = 'Mo,Tu,We,Th,Fr'
     rights = 'Aaron Johnson'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 7
+    schedule = 'Mo,Tu,We,Th,Fr'
+
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.whattheduck.net/strip/rss.xml')
         for entry in feed.for_date(pub_date):

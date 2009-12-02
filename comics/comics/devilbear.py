@@ -6,12 +6,13 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.thedevilbear.com/'
     start_date = '2009-01-01'
-    history_capable_days = 0
-    schedule = 'Mo'
-    time_zone = -8
     rights = 'Ben Bourbon'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 0
+    schedule = 'Mo'
+    time_zone = -8
+
     def crawl(self, pub_date):
         page = self.parse_page('http://www.thedevilbear.com/')
         url = page.src('#cg_img img')
