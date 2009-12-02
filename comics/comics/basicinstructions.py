@@ -16,6 +16,6 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.basicinstructions.net/atom.xml')
         for entry in feed.for_date(pub_date):
-            url = entry.content0.src('img[src*="/comics/"]', False)
+            url = entry.content0.src('img[src*="/comics/"]')
             title = entry.title
             return CrawlerResult(url, title)

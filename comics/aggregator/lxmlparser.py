@@ -19,33 +19,25 @@ class LxmlParser(object):
         try:
             return self.select(selector).text_content()
         except DoesNotExist:
-            if default is not None:
-                return default
-            raise
+            return default
 
     def src(self, selector, default=None):
         try:
             return self.select(selector).get('src')
         except DoesNotExist:
-            if default is not None:
-                return default
-            raise
+            return default
 
     def alt(self, selector, default=None):
         try:
             return self.select(selector).get('alt')
         except DoesNotExist:
-            if default is not None:
-                return default
-            raise
+            return default
 
     def title(self, selector, default=None):
         try:
             return self.select(selector).get('title')
         except DoesNotExist:
-            if default is not None:
-                return default
-            raise
+            return default
 
     def remove(self, selector):
         for element in self.root.cssselect(selector):
