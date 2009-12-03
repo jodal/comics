@@ -1,17 +1,19 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'The Devil Bear'
     language = 'en'
     url = 'http://www.thedevilbear.com/'
     start_date = '2009-01-01'
+    rights = 'Ben Bourbon'
+
+class Crawler(CrawlerBase):
     history_capable_days = 0
     schedule = 'Mo'
     time_zone = -8
-    rights = 'Ben Bourbon'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+    def crawl(self, pub_date):
         page = self.parse_page('http://www.thedevilbear.com/')
-        self.url = page.src('#cg_img img')
+        url = page.src('#cg_img img')
+        return CrawlerResult(url)

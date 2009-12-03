@@ -1,18 +1,19 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'EON'
     language = 'no'
     url = 'http://www.nettavisen.no/tegneserie/striper/'
     start_date = '2008-11-19'
+    rights = 'Lars Lauvik'
+
+class Crawler(CrawlerBase):
     history_capable_date = '2008-11-19'
     schedule = 'We'
     time_zone = 1
-    rights = 'Lars Lauvik'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        self.url = 'http://pub.tv2.no/nettavisen/tegneserie/pondus/eon/%(date)s.gif' % {
-            'date': self.pub_date.strftime('%d%m%y'),
-        }
+    def crawl(self, pub_date):
+        url = 'http://pub.tv2.no/nettavisen/tegneserie/pondus/eon/%s.gif' % (
+            pub_date.strftime('%d%m%y'),)
+        return CrawlerResult(url)

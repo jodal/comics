@@ -1,5 +1,4 @@
 import datetime as dt
-import time
 import os
 
 from django.conf import settings
@@ -30,17 +29,6 @@ class Comic(models.Model):
         help_text='First published at')
     end_date = models.DateField(blank=True, null=True,
         help_text='Last published at, if comic has been cancelled')
-    history_capable_date = models.DateField(blank=True, null=True,
-        help_text='Date of oldest release available for crawling')
-    history_capable_days = models.PositiveIntegerField(blank=True, null=True,
-        help_text='Number of days a release is available for crawling')
-    has_reruns = models.BooleanField(default=False,
-        help_text='Check to add reruns as new releases')
-    schedule = models.CharField(max_length=20, blank=True,
-        help_text='On what weekdays the comic is published')
-    time_zone = models.IntegerField(blank=True, null=True,
-        help_text='In what approximate time zone, in whole hours, '
-            + 'relative to UTC, the comic is published')
     rights = models.CharField(max_length=100, blank=True,
         help_text='Author, copyright, and/or licensing information')
 
@@ -66,29 +54,6 @@ class Comic(models.Model):
         return reverse('feeds', kwargs={
             'url': 'c/%s' % self.slug,
         })
-
-    def history_capable(self):
-        if self.history_capable_date is not None:
-            return self.history_capable_date
-        elif self.history_capable_days is not None:
-            return (dt.date.today() - dt.timedelta(self.history_capable_days))
-        else:
-            return dt.date.today()
-
-    def schedule_as_isoweekday(self):
-        weekday_mapping = {'Mo': 1, 'Tu': 2, 'We': 3,
-            'Th': 4, 'Fr': 5, 'Sa': 6, 'Su': 7}
-        iso_schedule = []
-        for weekday in self.schedule.split(','):
-            iso_schedule.append(weekday_mapping[weekday])
-        return iso_schedule
-
-    def datetime_in_time_zone(self):
-        if self.time_zone is None:
-            return None
-        local_time_zone = - time.timezone // 3600
-        hour_diff = local_time_zone - self.time_zone
-        return dt.datetime.now() - dt.timedelta(hours=hour_diff)
 
 
 class Release(models.Model):

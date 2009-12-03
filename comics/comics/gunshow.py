@@ -1,19 +1,20 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Gun Show'
     language = 'en'
     url = 'http://www.gunshowcomic.com/'
     start_date = '2008-09-04'
-    history_capable_date = '2008-09-04'
-    schedule = 'Mo,Tu,We,Th,Fr'
     rights = '"Lord KC Green"'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        page_url = 'http://www.gunshowcomic.com/d/%(date)s.html' % {
-            'date': self.pub_date.strftime('%Y%m%d'),
-        }
+class Crawler(CrawlerBase):
+    history_capable_date = '2008-09-04'
+    schedule = 'Mo,Tu,We,Th,Fr'
+
+    def crawl(self, pub_date):
+        page_url = 'http://www.gunshowcomic.com/d/%s.html' % (
+            pub_date.strftime('%Y%m%d'),)
         page = self.parse_page(page_url)
-        self.url = page.src('img[src^="http://www.gunshowcomic.com/comics/"]')
+        url = page.src('img[src^="http://www.gunshowcomic.com/comics/"]')
+        return CrawlerResult(url)

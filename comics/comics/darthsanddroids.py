@@ -1,19 +1,21 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Darths & Droids'
     language = 'en'
     url = 'http://darthsanddroids.net/'
     start_date = '2007-09-14'
-    history_capable_days = 14
-    time_zone = -8
     rights = 'The Comic Irregulars'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+class Crawler(CrawlerBase):
+    history_capable_days = 14
+    time_zone = -8
+
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://darthsanddroids.net/rss.xml')
-        for entry in feed.for_date(self.pub_date):
+        for entry in feed.for_date(pub_date):
             if entry.title.startswith('Episode'):
-                self.url = entry.summary.src('img')
-                self.title = entry.title
+                url = entry.summary.src('img')
+                title = entry.title
+                return CrawlerResult(url, title)

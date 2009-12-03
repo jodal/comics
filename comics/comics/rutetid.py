@@ -1,19 +1,20 @@
 # encoding: utf-8
 
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Rutetid'
     language = 'no'
     url = 'http://www.dagbladet.no/tegneserie/rutetid/'
+    rights = 'Frode Øverli'
+
+class Crawler(CrawlerBase):
     history_capable_days = 15
     schedule = 'Fr,Sa,Su'
     time_zone = 1
-    rights = 'Frode Øverli'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        self.url = 'http://www.dagbladet.no/tegneserie/rutetidarkiv/serve.php?%(date)s' % {
-            'date': self.date_to_epoch(self.pub_date),
-        }
+    def crawl(self, pub_date):
+        url = 'http://www.dagbladet.no/tegneserie/rutetidarkiv/serve.php?%s' % (
+            self.date_to_epoch(pub_date),)
+        return CrawlerResult(url)

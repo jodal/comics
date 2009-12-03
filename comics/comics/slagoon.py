@@ -1,18 +1,19 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = "Sherman's Lagoon"
     language = 'en'
     url = 'http://www.slagoon.com/'
     start_date = '1991-05-13'
+    rights = 'Jim Toomey'
+
+class Crawler(CrawlerBase):
     history_capable_days = 32
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = -5
-    rights = 'Jim Toomey'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        self.url = 'http://www.slagoon.com/dailies/SL%(date)s.gif' % {
-            'date': self.pub_date.strftime('%y%m%d'),
-        }
+    def crawl(self, pub_date):
+        url = 'http://www.slagoon.com/dailies/SL%s.gif' % (
+            pub_date.strftime('%y%m%d'),)
+        return CrawlerResult(url)

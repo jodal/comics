@@ -1,17 +1,19 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Garfield minus Garfield'
     language = 'en'
     url = 'http://garfieldminusgarfield.tumblr.com/'
+    rights = 'Travors'
+
+class Crawler(CrawlerBase):
     history_capable_days = 30
     schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = -4
-    rights = 'Travors'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://garfieldminusgarfield.tumblr.com/rss')
-        for entry in feed.for_date(self.pub_date):
-            self.url = entry.summary.src('img')
+        for entry in feed.for_date(pub_date):
+            url = entry.summary.src('img')
+            return CrawlerResult(url)

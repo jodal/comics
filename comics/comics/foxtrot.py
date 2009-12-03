@@ -1,19 +1,19 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'FoxTrot'
     language = 'en'
     url = 'http://www.foxtrot.com/'
     start_date = '1988-04-10'
+    rights = 'Bill Amend'
+
+class Crawler(CrawlerBase):
     history_capable_date = '2006-12-27'
     schedule = 'Su'
     time_zone = -5
-    rights = 'Bill Amend'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        self.url = 'http://images.ucomics.com/comics/ft/%(year)s/ft%(date)s.gif' % {
-            'year': self.pub_date.strftime('%Y'),
-            'date': self.pub_date.strftime('%y%m%d'),
-        }
+    def crawl(self, pub_date):
+        url = 'http://images.ucomics.com/comics/ft/%s.gif' % (
+            pub_date.strftime('%Y/ft%y%m%d'),)
+        return CrawlerResult(url)

@@ -2,7 +2,7 @@ import datetime as dt
 
 from comics.core.models import Comic
 
-class BaseComicMeta(object):
+class MetaBase(object):
     # Required values
     name = None
     language = None
@@ -11,11 +11,6 @@ class BaseComicMeta(object):
     # Default values
     start_date = None
     end_date = None
-    history_capable_date = None
-    history_capable_days = None
-    has_reruns = False
-    schedule = ''
-    time_zone = None
     rights = ''
 
     @property
@@ -36,11 +31,6 @@ class BaseComicMeta(object):
                 url=self.url)
         comic.start_date = self._get_date(self.start_date)
         comic.end_date = self._get_date(self.end_date)
-        comic.history_capable_date = self._get_date(self.history_capable_date)
-        comic.history_capable_days = self.history_capable_days
-        comic.has_reruns = self.has_reruns
-        comic.schedule = self.schedule
-        comic.time_zone = self.time_zone
         comic.rights = self.rights
         comic.save()
 

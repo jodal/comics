@@ -1,21 +1,23 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'MegaTokyo'
     language = 'en'
     url = 'http://www.megatokyo.com/'
     start_date = '2000-08-14'
+    rights = 'Fred Gallagher & Rodney Caston'
+
+class Crawler(CrawlerBase):
     history_capable_days = 30
     schedule = 'Mo,We,Fr'
     time_zone = -5
-    rights = 'Fred Gallagher & Rodney Caston'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://www.megatokyo.com/rss/megatokyo.xml')
-        for entry in feed.for_date(self.pub_date):
+        for entry in feed.for_date(pub_date):
             if entry.title.startswith('Comic ['):
-                self.title = entry.title.split('"')[1]
+                title = entry.title.split('"')[1]
                 page = self.parse_page(entry.link)
-                self.url = page.src('img[src*="/strips/"]')
+                url = page.src('img[src*="/strips/"]')
+                return CrawlerResult(url, title)

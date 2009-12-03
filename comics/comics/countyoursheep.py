@@ -1,19 +1,20 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Count Your Sheep'
     language = 'en'
     url = 'http://www.countyoursheep.com/'
     start_date = '2003-06-11'
-    history_capable_date = '2003-06-11'
-    schedule = 'Mo,Tu,We,Th,Fr'
     rights = 'Adrian "Adis" Ramos'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        page_url = 'http://www.countyoursheep.com/d/%(date)s.html' % {
-            'date': self.pub_date.strftime('%Y%m%d'),
-        }
+class Crawler(CrawlerBase):
+    history_capable_date = '2003-06-11'
+    schedule = 'Mo,Tu,We,Th,Fr'
+
+    def crawl(self, pub_date):
+        page_url = 'http://www.countyoursheep.com/d/%s.html' % (
+            pub_date.strftime('%Y%m%d'),)
         page = self.parse_page(page_url)
-        self.url = page.src('img[src^="http://www.countyoursheep.com/comics/"]')
+        url = page.src('img[src^="http://www.countyoursheep.com/comics/"]')
+        return CrawlerResult(url)

@@ -6,7 +6,7 @@ import socket
 
 from django.conf import settings
 
-from comics.aggregator.downloader import ComicDownloader
+from comics.aggregator.downloader import Downloader
 from comics.aggregator.exceptions import StripAlreadyExists
 from comics.core.exceptions import ComicsError
 from comics.comics import get_comic_module
@@ -14,12 +14,12 @@ from comics.comics import get_comic_module
 logger = logging.getLogger('comics.aggregator.command')
 socket.setdefaulttimeout(10)
 
-class ComicAggregator(object):
+class Aggregator(object):
     def __init__(self, config=None, optparse_options=None):
         if config is None and optparse_options is not None:
-            self.config = ComicAggregatorConfig(optparse_options)
+            self.config = AggregatorConfig(optparse_options)
         else:
-            assert isinstance(config, ComicAggregatorConfig)
+            assert isinstance(config, AggregatorConfig)
             self.config = config
 
     def start(self):
@@ -36,8 +36,8 @@ class ComicAggregator(object):
             logger.exception(error)
 
     def _aggregate_one_comic(self, comic):
-        crawler = self._get_comic_crawler(comic)
-        pub_date = self._get_from_date(comic)
+        crawler = self._get_crawler(comic)
+        pub_date = self._get_from_date(crawler)
         logger.info('Crawling %s from %s to %s'
             % (comic.slug, pub_date, self.config.to_date))
         while pub_date <= self.config.to_date:
@@ -47,15 +47,15 @@ class ComicAggregator(object):
                 self._try_download_strip(strip_metadata)
             pub_date += dt.timedelta(days=1)
 
-    def _get_comic_crawler(self, comic):
+    def _get_crawler(self, comic):
         module = get_comic_module(comic.slug)
-        return module.ComicCrawler(comic)
+        return module.Crawler(comic)
 
-    def _get_from_date(self, comic):
-        if self.config.from_date < comic.history_capable():
+    def _get_from_date(self, crawler):
+        if self.config.from_date < crawler.history_capable:
             logger.info('Adjusting from date to %s because of limited ' +
-                'history capability', comic.history_capable())
-            return comic.history_capable()
+                'history capability', crawler.history_capable)
+            return crawler.history_capable
         else:
             return self.config.from_date
 
@@ -72,17 +72,17 @@ class ComicAggregator(object):
 
     def _crawl_one_comic_one_date(self, crawler, pub_date):
         strip_metadata = crawler.get_strip_metadata(pub_date)
-        logger.debug('Strip date: %s', strip_metadata['pub_date'])
-        logger.debug('Strip URL: %s', strip_metadata['url'])
-        logger.debug('Strip title: %s', strip_metadata['title'])
-        logger.debug('Strip text: %s', strip_metadata['text'])
+        if strip_metadata:
+            logger.debug('Strip: %s', strip_metadata.identifier)
+            logger.debug('Strip URL: %s', strip_metadata.url)
+            logger.debug('Strip title: %s', strip_metadata.title)
+            logger.debug('Strip text: %s', strip_metadata.text)
         return strip_metadata
 
     def _try_download_strip(self, strip_metadata):
         try:
-            logger.debug('Downloading %s for %s',
-                strip_metadata['comic'].slug, strip_metadata['pub_date'])
-            downloader = self._get_comic_downloader()
+            logger.debug('Downloading %s', strip_metadata.identifier)
+            downloader = self._get_downloader()
             return self._download_strip(downloader, strip_metadata)
         except ComicsError, error:
             logger.info(error)
@@ -91,16 +91,15 @@ class ComicAggregator(object):
         except Exception, error:
             logger.exception(error)
 
-    def _get_comic_downloader(self):
-        return ComicDownloader()
+    def _get_downloader(self):
+        return Downloader()
 
     def _download_strip(self, downloader, strip_metadata):
         downloader.download_strip(strip_metadata)
-        logger.info('Strip saved (%s/%s)',
-            strip_metadata['comic'].slug, strip_metadata['pub_date'])
+        logger.info('Strip saved (%s)', strip_metadata.identifier)
 
 
-class ComicAggregatorConfig(object):
+class AggregatorConfig(object):
     DATE_FORMAT = '%Y-%m-%d'
 
     def __init__(self, options=None):

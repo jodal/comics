@@ -1,18 +1,19 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Rocky (db.no)'
     language = 'no'
     url = 'http://www.dagbladet.no/tegneserie/rocky/'
     start_date = '1998-01-01'
+    rights = 'Martin Kellerman'
+
+class Crawler(CrawlerBase):
     history_capable_days = 14
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = 1
-    rights = 'Martin Kellerman'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        self.url = 'http://www.dagbladet.no/tegneserie/rockyarkiv/serve.php?%(date)s' % {
-            'date': self.date_to_epoch(self.pub_date),
-        }
+    def crawl(self, pub_date):
+        url = 'http://www.dagbladet.no/tegneserie/rockyarkiv/serve.php?%s' % (
+            self.date_to_epoch(pub_date),)
+        return CrawlerResult(url)

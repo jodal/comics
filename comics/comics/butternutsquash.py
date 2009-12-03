@@ -1,18 +1,19 @@
 # encoding: utf-8
 
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Butternutsquash'
     language = 'en'
     url = 'http://www.butternutsquash.net/'
-    start_date = '2003-04-16'
-    history_capable_date = '2003-04-16'
     rights = 'Ramón Pérez & Rob Coughler'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        self.url = 'http://www.butternutsquash.net/comics/%(date)s.jpg' % {
-            'date': self.pub_date.strftime('%Y-%m-%d'),
-        }
+class Crawler(CrawlerBase):
+    start_date = '2003-04-16'
+    history_capable_date = '2003-04-16'
+
+    def crawl(self, pub_date):
+        url = 'http://www.butternutsquash.net/comics/%s.jpg' % (
+            pub_date.strftime('%Y-%m-%d'),)
+        return CrawlerResult(url)

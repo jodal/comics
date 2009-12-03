@@ -1,4 +1,4 @@
-from comics.aggregator.command import ComicAggregator
+from comics.aggregator.command import Aggregator
 from comics.utils.commands import ComicsBaseCommand, make_option
 
 class Command(ComicsBaseCommand):
@@ -16,7 +16,7 @@ class Command(ComicsBaseCommand):
 
     def handle(self, *args, **options):
         super(Command, self).handle(*args, **options)
-        aggregator = ComicAggregator(optparse_options=options)
+        aggregator = Aggregator(optparse_options=options)
         try:
             aggregator.start()
         except KeyboardInterrupt:

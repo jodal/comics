@@ -1,20 +1,22 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'The PC Weenies'
     language = 'en'
     url = 'http://www.pcweenies.com/'
     start_date = '1998-10-21'
+    rights = 'Krishna M. Sadasivam'
+
+class Crawler(CrawlerBase):
     history_capable_days = 10
     schedule = 'Mo,We,Fr'
     time_zone = -8
-    rights = 'Krishna M. Sadasivam'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://www.pcweenies.com/feed/')
-        for entry in feed.for_date(self.pub_date):
+        for entry in feed.for_date(pub_date):
             if 'Comic' in entry.tags:
-                self.title = entry.title
-                self.url = entry.content0.src(u'img')
+                title = entry.title
+                url = entry.content0.src(u'img')
+                return CrawlerResult(url, title)

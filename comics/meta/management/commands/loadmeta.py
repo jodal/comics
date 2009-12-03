@@ -1,4 +1,4 @@
-from comics.meta.command import ComicMetaLoader
+from comics.meta.command import MetaLoader
 from comics.utils.commands import ComicsBaseCommand, make_option
 
 class Command(ComicsBaseCommand):
@@ -10,8 +10,8 @@ class Command(ComicsBaseCommand):
 
     def handle(self, *args, **options):
         super(Command, self).handle(*args, **options)
-        comic_meta_loader = ComicMetaLoader(options)
+        meta_loader = MetaLoader(options)
         try:
-            comic_meta_loader.start()
+            meta_loader.start()
         except KeyboardInterrupt:
-            comic_meta_loader.stop()
+            meta_loader.stop()

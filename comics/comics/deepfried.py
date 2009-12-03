@@ -1,19 +1,21 @@
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Deep Fried'
     language = 'en'
     url = 'http://www.whatisdeepfried.com/'
     start_date = '2001-09-16'
+    rights = 'Jason Yungbluth'
+
+class Crawler(CrawlerBase):
     history_capable_days = 14
     schedule = 'Mo,Tu,We,Th,Fr,Sa'
     time_zone = -5
-    rights = 'Jason Yungbluth'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://www.whatisdeepfried.com/feed/')
-        for entry in feed.for_date(self.pub_date):
-            self.url = entry.summary.src('img')
-            self.title = entry.title
+        for entry in feed.for_date(pub_date):
+            url = entry.summary.src('img')
+            title = entry.title
+            return CrawlerResult(url, title)

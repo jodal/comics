@@ -1,11 +1,11 @@
 import logging
 
 from comics.comics import get_comic_module_names, get_comic_module
-from comics.meta.exceptions import ComicsMetaError
+from comics.meta.exceptions import MetaError
 
 logger = logging.getLogger('comics.meta.command')
 
-class ComicMetaLoader(object):
+class MetaLoader(object):
     def __init__(self, options):
         self.comic_slugs = self._get_comic_slugs(options)
 
@@ -28,21 +28,21 @@ class ComicMetaLoader(object):
 
     def _try_load_comic_meta(self, comic_slug):
         try:
-            comic_meta = self._get_comic_meta(comic_slug)
-            self._load_comic_meta(comic_meta)
-        except ComicsMetaError, error:
+            meta = self._get_meta(comic_slug)
+            self._load_meta(meta)
+        except MetaError, error:
             logger.error(error)
         except Exception, error:
             logger.exception(error)
 
-    def _get_comic_meta(self, comic_slug):
+    def _get_meta(self, comic_slug):
         logger.debug('Importing comic module for %s', comic_slug)
         comic_module = get_comic_module(comic_slug)
-        if not hasattr(comic_module, 'ComicMeta'):
-            raise ComicsMetaError('%s does not have a ComicMeta class' %
+        if not hasattr(comic_module, 'Meta'):
+            raise MetaError('%s does not have a Meta class' %
                 comic_module.__name__)
-        return comic_module.ComicMeta()
+        return comic_module.Meta()
 
-    def _load_comic_meta(self, comic_meta):
+    def _load_meta(self, meta):
         logger.debug('Syncing comic meta data with database')
-        comic_meta.create_comic()
+        meta.create_comic()

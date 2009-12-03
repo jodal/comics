@@ -1,21 +1,23 @@
 # encoding: utf-8
 
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Kukuburi'
     language = 'en'
     url = 'http://www.kukuburi.com/'
     start_date = '2007-09-08'
+    rights = 'Ramón Pérez'
+
+class Crawler(CrawlerBase):
     history_capable_days = 60
     schedule = 'Tu,Th'
     time_zone = -8
-    rights = 'Ramón Pérez'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
+    def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds2.feedburner.com/Kukuburi')
-        for entry in feed.for_date(self.pub_date):
-            self.url = entry.summary.src('img[src*="/comics/"]')
-            self.title = entry.title
+        for entry in feed.for_date(pub_date):
+            url = entry.summary.src('img[src*="/comics/"]')
+            title = entry.title
+            return CrawlerResult(url, title)

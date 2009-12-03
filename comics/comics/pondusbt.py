@@ -1,20 +1,21 @@
 # encoding: utf-8
 
-from comics.aggregator.crawler import BaseComicCrawler
-from comics.meta.base import BaseComicMeta
+from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.meta.base import MetaBase
 
-class ComicMeta(BaseComicMeta):
+class Meta(MetaBase):
     name = 'Pondus (bt.no)'
     language = 'no'
     url = 'http://www.bt.no/tegneserier/?type=pondus'
     start_date = '1995-01-01'
+    rights = 'Frode Øverli'
+
+class Crawler(CrawlerBase):
     history_capable_days = 14
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = 1
-    rights = 'Frode Øverli'
 
-class ComicCrawler(BaseComicCrawler):
-    def crawl(self):
-        self.url = 'http://images.bt.no/gfx/cartoons/pondus/%(date)s.gif' % {
-            'date': self.pub_date.strftime('%d%m%y'),
-        }
+    def crawl(self, pub_date):
+        url = 'http://images.bt.no/gfx/cartoons/pondus/%s.gif' % (
+            pub_date.strftime('%d%m%y'),)
+        return CrawlerResult(url)
