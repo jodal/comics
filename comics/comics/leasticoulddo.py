@@ -14,6 +14,6 @@ class Crawler(CrawlerBase):
     time_zone = -5
 
     def crawl(self, pub_date):
-        url = 'http://archive.leasticoulddo.com/strips/%s.gif' % (
+        url = 'http://www.leasticoulddo.com/comics/%s.gif' % (
             pub_date.strftime('%Y%m%d'),)
         return CrawlerResult(url)
