@@ -11,7 +11,7 @@ PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
 ALLSPHINXOPTS   = -d _build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 
-.PHONY: help clean html dirhtml pickle json htmlhelp qthelp latex changes linkcheck doctest
+.PHONY: help clean html dirhtml pickle json htmlhelp qthelp latex changes linkcheck doctest public
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
@@ -86,3 +86,16 @@ doctest:
 	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) _build/doctest
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in _build/doctest/output.txt."
+
+public: clean html
+	rm -rf /tmp/comics-html && cp -r _build/html /tmp/comics-html
+	git stash save
+	cd .. && \
+	    git checkout gh-pages && \
+	    rm -r * && \
+	    cp -r /tmp/comics-html/* . && \
+	    mv _sources sources && \
+	    (find . -type f | xargs sed -i -e 's/_sources/sources/') && \
+	    mv _static static && \
+	    (find . -type f | xargs sed -i -e 's/_static/static/') && \
+	    git add *
