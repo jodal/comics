@@ -5,20 +5,13 @@ Contents
 --------
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 3
 
+    changes
     installation
-    usage
-    contributing
-    todo
+    crawlers
+    deployment
+    development
 
-
-Change specifications
----------------------
-
-.. toctree::
-   :maxdepth: 2
-   :glob:
-
-   specs/*
-
+- :ref:`genindex`
+- :ref:`search`
