@@ -125,3 +125,20 @@ settings. A full ``local.py`` may look like this::
 Of course, you should change most, if not all, of these settings for your own
 installation. If your are not running a *memcached* server, remove the part on
 caching from your ``local.py``.
+
+
+Example cronjob
+===============
+
+To get new comics, you should run ``getcomics`` regularily. One way is to use ``cron`` e.g. by placing the following in ``/etc/cron.d/comics``:
+
+.. code-block:: sh
+
+    MAILTO=comics@example.com
+    PYTHONPATH=/path/to/comics
+    1 * * * * comics-user /path/to/comics/comics/manage.py getcomics -v0
+
+By setting ``MAILTO`` any exceptions raised by the comic crawlers will be sent
+by mail to the given mail address. ``1 * * * *`` specifies that the command
+should be run 1 minute past every hour.
+
