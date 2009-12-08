@@ -13,3 +13,9 @@ try:
     INSTALLED_APPS += ('debug_toolbar',)
 except ImportError:
     pass
+
+try:
+    import django_extensions
+    INSTALLED_APPS += ('django_extensions',)
+except ImportError:
+    pass

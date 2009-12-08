@@ -44,8 +44,8 @@ Additional dependencies which are handy for development:
 - python-pmock (for mocking in unit tests)
 - python-coverage (for checking test coverage)
 - python-sphinx (for generating HTML documentation)
-- `django-debug-toolbar <http://github.com/robhudson/django-debug-toolbar>`_
-  (for debugging)
+- python-django-debug-toolbar (for debugging)
+- python-django-extensions (for generating the data model diagram)
 
 
 Get *comics*
