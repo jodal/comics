@@ -248,8 +248,8 @@ returns to find the strip image URL::
 Entry fields with ``LxmlParser``
 --------------------------------
 
-The *comics* feed parser is really a combination of *`feedparser
-<http://www.feedparser.org/>`_* and ``LxmlParser``. It can do anything
+The *comics* feed parser is really a combination of `feedparser
+<http://www.feedparser.org/>`_ and ``LxmlParser``. It can do anything
 *feedparser* can do, and in addition you can use the ``LxmlParser`` methods on
 feed fields which contains HTML:
 
@@ -330,24 +330,63 @@ http://css.maxdesign.com.au/selectutorial/.
 Testing your new crawler
 ========================
 
-**TODO**
+When the first version of you crawler is complete, it's time to test it.
+
+The file name is important, as it is used as the comic's slug. This means that
+it must be unique within the *comics* installation, and that it is used in the
+URLs *comics* will serve the comic strips at. For this example, we call the
+crawler file ``foo.py``. The file must be placed in the
+``comics/comics/comics/`` directory, and will be available in Python as
+``comics.comics.foo``.
 
 
 Loading ``Meta`` for your new comic
 -----------------------------------
 
-**TODO**
+For *comics* to know about your new crawler, you need to load the comic meta
+data into *comics*'s database. To do so, we run the ``loadmeta`` command::
 
-::
+    python manage.py loadmeta -c foo
 
-    python manage.py loadmeta -c newcomic
+If you do any changes to the ``Meta`` class of any crawler, you must rerun
+``loadmeta`` to update the database representation of the comic.
 
 
 Running the crawler
 -------------------
 
-**TODO**
+When ``loadmeta`` has created a ``Comic`` instance for the new crawler, you may
+use your new crawler to fetch the comic's strip for the current date by
+running::
 
-::
+    python manage.py getcomics -c foo
 
-    python manage.py getcomics -c newcomic
+If you want to get comics strips for more than the current day, you may specify a date range to crawl, like::
+
+    python manage.py getcomics -c foo -f 2009-01-01 -t 2009-03-31
+
+The date range will automatically be adjusted to the crawlers *history
+capability*. You may also get comics for a date range without a specific end.
+In which case, the current date will be used instead::
+
+    python manage.py getcomics -c foo -f 2009-01-01
+
+If your new crawler is not working properly, you may add ``-v2`` to the command
+to turn on full debug output::
+
+    python manage.py getcomics -c foo -v2
+
+For a full overview of ``getcomics`` options, run::
+
+    python manage.py getcomics --help
+
+
+Submitting your new crawler for inclusion in *comics*
+=====================================================
+
+When your crawler is working properly, you may submit it for inclusion in
+*comics*. You may either send the crawler to `comics@jodal.no
+<mailto:comics@jodal.no>`_, or, even better, fork *comics* at `GitHub
+<http://github.com/jodal/comics>`_, commit your new crawler to your own fork,
+and send me a *pull request* through GitHub.
+
