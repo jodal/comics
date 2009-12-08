@@ -95,9 +95,9 @@ public: clean html
 	    rm -r * && \
 	    cp -r /tmp/comics-html/* . && \
 	    mv _sources sources && \
-	    (find . -type f | xargs sed -i -e 's/_sources/sources/') && \
+	    (find . -type f | xargs sed -i -e 's/_sources/sources/g') && \
 	    mv _static static && \
-	    (find . -type f | xargs sed -i -e 's/_static/static/') && \
+	    (find . -type f | xargs sed -i -e 's/_static/static/g') && \
 	    mv _images images && \
-	    (find . -type f | xargs sed -i -e 's/_images/images/') && \
+	    (find . -type f | xargs sed -i -e 's/_images/images/g') && \
 	    git add *
