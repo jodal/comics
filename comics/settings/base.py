@@ -118,8 +118,9 @@ COMICS_STRIP_BLACKLIST = (
     # Dagbladet.no
     '61c66a1c84408df5b855004dd799d5e59f4af99f4c6fe8bf4aabf8963cab7cb5',
     # Cyanide and Happiness
-    '6dec8be9787fc8b103746886033ccad7348bc4eec44c12994ba83596f3cbcd32',
     '181e7d11ebd3224a910d9eba2995349da5d483f3ae9643a2efe4f7dd3d9f668d',
+    '6dec8be9787fc8b103746886033ccad7348bc4eec44c12994ba83596f3cbcd32',
+    'f56248bf5b94b324d495c3967e568337b6b15249d4dfe7f9d8afdca4cb54cd29',
     # Dilbert (bt.no)
     'cde5b71cfb91c05d0cd19f35e325fc1cc9f529dfbce5c6e2583a3aa73d240638',
     # Least I Could Do
