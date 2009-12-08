@@ -13,5 +13,9 @@ Contents
     deployment
     development
 
+
+Indices and tables
+------------------
+
 - :ref:`genindex`
 - :ref:`search`
