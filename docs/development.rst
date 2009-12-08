@@ -68,7 +68,8 @@ model named ``Set``.
 .. image:: _static/data_model.png
 
 The above data model diagram was generated using the Django app
-``django_extensions`` and the following command:
+`django_extensions <http://code.google.com/p/django-command-extensions/>`_ and
+the following command:
 
 .. code-block:: sh
 
