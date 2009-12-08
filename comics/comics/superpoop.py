@@ -16,6 +16,7 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.superpoop.com/rss/rss.php')
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src$=".jpg"]')
+            url = entry.summary.src('img[src*="/%s/"]' %
+                pub_date.strftime('%m%d%y'))
             title = entry.title
             return CrawlerResult(url, title)
