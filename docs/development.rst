@@ -71,8 +71,7 @@ the following command:
 
 .. code-block:: sh
 
-    PYTHONPATH=.. python manage.py graph_models \
-        --settings=comics.settings.dev \
+    python manage.py graph_models --settings=comics.settings.dev \
         --output=../docs/_static/data_model.png --group-models \
         core sets
 
