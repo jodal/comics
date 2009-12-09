@@ -57,7 +57,7 @@ class LxmlParser(object):
         content = handle.read()
         handle.close()
         content = content.replace('\x00', '')
-        root = fromstring(content)
+        root = self._parse_string(content)
         root.make_links_absolute(url)
         return root
 
