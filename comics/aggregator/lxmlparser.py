@@ -55,6 +55,7 @@ class LxmlParser(object):
     def _parse_url(self, url):
         handle = urllib2.urlopen(url)
         content = handle.read()
+        url = handle.geturl()
         handle.close()
         content = content.replace('\x00', '')
         root = self._parse_string(content)
