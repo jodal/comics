@@ -66,8 +66,6 @@ class CrawlerBase(object):
             result.set_download_settings(
                 check_image_mime_type=self.check_image_mime_type,
                 has_rerun_releases=self.has_rerun_releases)
-            if self.feed:
-                result = self._decode_feed_data(result)
             return result
 
     def _get_date_to_crawl(self, pub_date):
@@ -93,18 +91,6 @@ class CrawlerBase(object):
             return (dt.date.today() - dt.timedelta(self.history_capable_days))
         else:
             return dt.date.today()
-
-    def _decode_feed_data(self, result):
-        """Decode titles and text retrieved from a feed"""
-
-        if (self.feed.raw_feed.encoding
-                and self.feed.raw_feed.encoding != 'utf-8'):
-            if result.title and type(result.title) != unicode:
-                result.title = unicode(
-                    result.title, self.feed.raw_feed.encoding)
-            if result.text and type(result.text) != unicode:
-                result.text = unicode(result.text, self.feed.raw_feed.encoding)
-        return result
 
     def schedule_as_isoweekday(self):
         weekday_mapping = {'Mo': 1, 'Tu': 2, 'We': 3,

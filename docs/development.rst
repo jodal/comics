@@ -25,8 +25,6 @@ A mostly unordered list of things to fix. Patches accepted.
 Improvements
 ------------
 
-``comics.aggregator.crawler._decode_feed_data()``
-    Move feed string decoding to comics.aggregator.feedparser/lxmlparser.
 ``comics.aggregator.crawler._get_date_to_crawl()``
     Use comics time zone to crawl the correct current date.
 ``comics.aggregator.command``
