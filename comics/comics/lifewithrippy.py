@@ -6,7 +6,7 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.rhymes-with-witch.com/'
     start_date = '2006-08-09'
-    rights = 'r*k*milholland '
+    rights = 'r*k*milholland'
 
 class Crawler(CrawlerBase):
     history_capable_date = '2006-08-09'
