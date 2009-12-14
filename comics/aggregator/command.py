@@ -37,9 +37,9 @@ class Aggregator(object):
 
     def _aggregate_one_comic(self, comic):
         crawler = self._get_crawler(comic)
-        from_date = self._get_from_date(crawler)
-        to_date = self._get_to_date(crawler)
-        logger.info('Crawling %s from %s to %s'
+        from_date = self._get_valid_date(crawler, self.config.from_date)
+        to_date = self._get_valid_date(crawler, self.config.to_date)
+        logger.info('%s: Crawling from %s to %s'
             % (comic.slug, from_date, to_date))
         pub_date = from_date
         while pub_date <= to_date:
@@ -53,25 +53,21 @@ class Aggregator(object):
         module = get_comic_module(comic.slug)
         return module.Crawler(comic)
 
-    def _get_from_date(self, crawler):
-        if self.config.from_date is None:
+    def _get_valid_date(self, crawler, date):
+        if date is None:
             return crawler.current_date
-        elif self.config.from_date < crawler.history_capable:
-            logger.info('Adjusting from date to %s because of limited ' +
-                'history capability', crawler.history_capable)
+        elif date < crawler.history_capable:
+            logger.info('%s: Adjusting date from %s to %s because of ' +
+                'limited history capability',
+                crawler.comic.slug, date, crawler.history_capable)
             return crawler.history_capable
-        else:
-            return self.config.from_date
-
-    def _get_to_date(self, crawler):
-        if self.config.to_date is None:
-            return crawler.current_date
-        elif self.config.to_date > crawler.current_date:
-            logger.info("Adjusting to date to %s because the given date is " +
-                "in the future in the comic's time zone", crawler.current_date)
+        elif date > crawler.current_date:
+            logger.info('%s: Adjusting date from %s to %s because the given ' +
+                "date is in the future in the comic's time zone",
+                crawler.comic.slug, date, crawler.current_date)
             return crawler.current_date
         else:
-            return self.config.to_date
+            return date
 
     def _try_crawl_one_comic_one_date(self, crawler, pub_date):
         try:
