@@ -7,7 +7,8 @@ import urllib2
 from django.conf import settings
 from django.db import transaction
 
-from comics.aggregator.exceptions import *
+from comics.aggregator.exceptions import (FileNotAnImage, DownloaderHTTPError,
+    ImageAlreadyExists)
 from comics.core.models import Release, Strip
 from comics.utils.hash import sha256sum
 
@@ -26,8 +27,7 @@ class Downloader(object):
                 self._save_rerun_release(strip_metadata.comic,
                     strip_metadata.pub_date, original_strip)
             else:
-                raise StripAlreadyExists('%s, checksum collision' %
-                    strip_metadata.identifier)
+                raise ImageAlreadyExists(strip_metadata.identifier)
         else:
             (absolute_path, relative_path) = self._get_image_path(
                 strip_metadata, http_response)
@@ -38,28 +38,31 @@ class Downloader(object):
     def _download_strip_image(self, strip_metadata):
         """Download strip image to temporary location"""
 
-        temp_path = '%s/%s-%s.comics' % (
-            '/var/tmp',
-            strip_metadata.comic.slug,
-            strip_metadata.pub_date.strftime('%Y-%m-%d'),
-        )
+        try:
+            temp_path = '%s/%s-%s.comics' % (
+                '/var/tmp',
+                strip_metadata.comic.slug,
+                strip_metadata.pub_date.strftime('%Y-%m-%d'),
+            )
 
-        request = urllib2.Request(strip_metadata.url, None,
-            strip_metadata.request_headers)
-        input_file = urllib2.urlopen(request)
-        http_response = input_file.info()
+            request = urllib2.Request(strip_metadata.url, None,
+                strip_metadata.request_headers)
+            input_file = urllib2.urlopen(request)
+            http_response = input_file.info()
 
-        if (strip_metadata.check_image_mime_type
-                and not http_response.getmaintype() == 'image'):
+            if (strip_metadata.check_image_mime_type
+                    and not http_response.getmaintype() == 'image'):
+                input_file.close()
+                raise FileNotAnImage(strip_metadata.identifier)
+
+            with open(temp_path, 'wb') as temp_file:
+                temp_file.write(input_file.read())
+
             input_file.close()
-            raise StripNotAnImage(strip_metadata.identifier)
 
-        with open(temp_path, 'wb') as temp_file:
-            temp_file.write(input_file.read())
-
-        input_file.close()
-
-        return (temp_path, http_response)
+            return (temp_path, http_response)
+        except urllib2.HTTPError, error:
+            raise DownloaderHTTPError(strip_metadata.identifier, error)
 
     def _get_strip_by_checksum(self, comic, strip_checksum):
         """Get existing strip based on checksum"""

@@ -7,7 +7,6 @@ import socket
 from django.conf import settings
 
 from comics.aggregator.downloader import Downloader
-from comics.aggregator.exceptions import StripAlreadyExists
 from comics.core.exceptions import ComicsError
 from comics.comics import get_comic_module
 
@@ -24,16 +23,10 @@ class Aggregator(object):
 
     def start(self):
         for comic in self.config.comics:
-            self._try_aggregate_one_comic(comic)
+            self._try(self._aggregate_one_comic, comic)
 
     def stop(self):
         pass
-
-    def _try_aggregate_one_comic(self, comic):
-        try:
-            self._aggregate_one_comic(comic)
-        except Exception, error:
-            logger.exception(error)
 
     def _aggregate_one_comic(self, comic):
         crawler = self._get_crawler(comic)
@@ -43,11 +36,38 @@ class Aggregator(object):
             % (comic.slug, from_date, to_date))
         pub_date = from_date
         while pub_date <= to_date:
-            strip_metadata = self._try_crawl_one_comic_one_date(
+            strip_metadata = self._try(self._crawl_one_comic_one_date,
                 crawler, pub_date)
             if strip_metadata:
-                self._try_download_strip(strip_metadata)
+                self._try(self._download_strip, strip_metadata)
             pub_date += dt.timedelta(days=1)
+
+    def _crawl_one_comic_one_date(self, crawler, pub_date):
+        logger.debug('Crawling %s for %s', crawler.comic.slug, pub_date)
+        strip_metadata = crawler.get_strip_metadata(pub_date)
+        if strip_metadata:
+            logger.debug('Strip: %s', strip_metadata.identifier)
+            logger.debug('Strip URL: %s', strip_metadata.url)
+            logger.debug('Strip title: %s', strip_metadata.title)
+            logger.debug('Strip text: %s', strip_metadata.text)
+        return strip_metadata
+
+    def _download_strip(self, strip_metadata):
+        logger.debug('Downloading %s', strip_metadata.identifier)
+        downloader = self._get_downloader()
+        downloader.download_strip(strip_metadata)
+        logger.info('%s: Strip saved', strip_metadata.identifier)
+
+    def _get_downloader(self):
+        return Downloader()
+
+    def _try(self, func, *args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except ComicsError, error:
+            logger.info(error)
+        except Exception, error:
+            logger.exception(error)
 
     def _get_crawler(self, comic):
         module = get_comic_module(comic.slug)
@@ -68,45 +88,6 @@ class Aggregator(object):
             return crawler.current_date
         else:
             return date
-
-    def _try_crawl_one_comic_one_date(self, crawler, pub_date):
-        try:
-            logger.debug('Crawling %s for %s', crawler.comic.slug, pub_date)
-            return self._crawl_one_comic_one_date(crawler, pub_date)
-        except ComicsError, error:
-            logger.info(error)
-        except IOError, error:
-            logger.warning(error)
-        except Exception, error:
-            logger.exception(error)
-
-    def _crawl_one_comic_one_date(self, crawler, pub_date):
-        strip_metadata = crawler.get_strip_metadata(pub_date)
-        if strip_metadata:
-            logger.debug('Strip: %s', strip_metadata.identifier)
-            logger.debug('Strip URL: %s', strip_metadata.url)
-            logger.debug('Strip title: %s', strip_metadata.title)
-            logger.debug('Strip text: %s', strip_metadata.text)
-        return strip_metadata
-
-    def _try_download_strip(self, strip_metadata):
-        try:
-            logger.debug('Downloading %s', strip_metadata.identifier)
-            downloader = self._get_downloader()
-            return self._download_strip(downloader, strip_metadata)
-        except ComicsError, error:
-            logger.info(error)
-        except IOError, error:
-            logger.warning(error)
-        except Exception, error:
-            logger.exception(error)
-
-    def _get_downloader(self):
-        return Downloader()
-
-    def _download_strip(self, downloader, strip_metadata):
-        downloader.download_strip(strip_metadata)
-        logger.info('Strip saved (%s)', strip_metadata.identifier)
 
 
 class AggregatorConfig(object):
@@ -165,13 +146,10 @@ class AggregatorConfig(object):
         logger.debug('To date: %s', self.to_date)
 
     def _validate_dates(self):
-        if self.from_date > self.to_date:
+        if self.from_date and self.to_date and self.from_date > self.to_date:
             error_msg = 'From date (%s) after to date (%s)' % (
                 self.from_date, self.to_date)
             logger.error(error_msg)
             raise ComicsError(error_msg)
         else:
             return True
-
-# For testability
-today = dt.date.today

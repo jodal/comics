@@ -8,8 +8,6 @@ from comics.aggregator.crawler import CrawlerResult
 from comics.aggregator.exceptions import ComicsError
 from comics.core.models import Comic
 
-command.today = lambda: dt.date(2008, 2, 29)
-
 class AggregatorConfigTestCase(TestCase):
     fixtures = ['test_comics.json']
 
@@ -18,8 +16,8 @@ class AggregatorConfigTestCase(TestCase):
 
     def test_init(self):
         self.assertEquals(0, len(self.cc.comics))
-        self.assertEquals(command.today(), self.cc.from_date)
-        self.assertEquals(command.today(), self.cc.to_date)
+        self.assertEquals(None, self.cc.from_date)
+        self.assertEquals(None, self.cc.to_date)
 
     def test_init_invalid(self):
         self.assertRaises(AttributeError,
@@ -95,6 +93,7 @@ class ComicAggregatorTestCase(TestCase):
         self.comic = pmock.Mock()
         self.comic.slug = 'slug'
         self.crawler_mock = pmock.Mock()
+        self.crawler_mock.comic = self.comic
         self.downloader_mock = pmock.Mock()
 
     def test_init(self):
@@ -135,45 +134,39 @@ class ComicAggregatorTestCase(TestCase):
 
         self.crawler_mock.verify()
 
-    def test_try_crawl_one_comic_one_date(self):
-        pub_date = dt.date(2008, 3, 1)
-
-        self.aggregator._try_crawl_one_comic_one_date(
-            self.crawler_mock, pub_date)
-
-        # TODO Mock _crawl_one_comic_one_date to throw exceptions which should
-        # be excepted in _try_crawl_one_comic_one_date.
-
     def test_download_strip(self):
         strip_metadata = CrawlerResult('a url')
         strip_metadata.comic = self.comic
         strip_metadata.pub_date = dt.date(2008, 3, 1)
         self.downloader_mock.expects(
             pmock.once()).download_strip(pmock.eq(strip_metadata))
+        self.aggregator._get_downloader = lambda: self.downloader_mock
 
-        self.aggregator._download_strip(self.downloader_mock, strip_metadata)
+        self.aggregator._download_strip(strip_metadata)
 
         self.downloader_mock.verify()
 
-    def test_try_download_strip(self):
-        pass # TODO
-
-    def test_get_from_date_from_history_capable(self):
-        self.crawler_mock.comic = Comic.objects.get(slug='xkcd')
+    def test_get_valid_date_from_history_capable(self):
         expected = dt.date(2008, 3, 1)
+        self.crawler_mock.comic = Comic.objects.get(slug='xkcd')
         self.crawler_mock.history_capable = expected
+        self.crawler_mock.current_date = dt.date(2008, 4, 1)
 
-        result = self.aggregator._get_from_date(self.crawler_mock)
+        result = self.aggregator._get_valid_date(
+            self.crawler_mock, dt.date(2008, 2, 1))
 
         self.assertEquals(expected, result)
 
-    def test_get_from_date_from_from_date(self):
+    def test_get_valid_date_from_config(self):
+        expected = dt.date(2008, 3, 1)
         self.crawler_mock.comic = Comic.objects.get(slug='xkcd')
         self.crawler_mock.history_capable = dt.date(2008, 1, 1)
+        self.crawler_mock.current_date = dt.date(2008, 4, 1)
 
-        result = self.aggregator._get_from_date(self.crawler_mock)
+        result = self.aggregator._get_valid_date(
+            self.crawler_mock, expected)
 
-        self.assertEquals(dt.date(2008, 2, 29), result)
+        self.assertEquals(expected, result)
 
     def test_get_crawler(self):
         pass # TODO
@@ -184,11 +177,6 @@ class ComicAggregatorTestCase(TestCase):
     def test_aggregate_one_comic(self):
         pass # TODO
 
-    def test_try_aggregate_one_comic(self):
-        pass # TODO
-
     def test_start(self):
         pass # TODO
 
-    def test_stop(self):
-        pass # TODO
