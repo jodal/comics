@@ -1,6 +1,8 @@
 import datetime as dt
 import time
 
+from django.conf import settings
+
 from comics.aggregator.exceptions import *
 from comics.aggregator.feedparser import FeedParser
 from comics.aggregator.lxmlparser import LxmlParser
@@ -70,7 +72,7 @@ class CrawlerBase(object):
 
     def _get_date_to_crawl(self, pub_date):
         if pub_date is None:
-            pub_date = dt.date.today()
+            pub_date = self.current_date
 
         if pub_date < self.history_capable:
             raise NotHistoryCapable(self.history_capable)
@@ -81,6 +83,15 @@ class CrawlerBase(object):
                 raise StripAlreadyExists('%s/%s' % (self.comic.slug, pub_date))
 
         return pub_date
+
+    @property
+    def current_date(self):
+        if self.time_zone is None:
+            self.time_zone = settings.COMICS_DEFAULT_TIME_ZONE
+        local_time_zone = - time.timezone // 3600
+        hour_diff = local_time_zone - self.time_zone
+        current_time = dt.datetime.now() - dt.timedelta(hours=hour_diff)
+        return current_time.date()
 
     @property
     def history_capable(self):
@@ -99,13 +110,6 @@ class CrawlerBase(object):
         for weekday in self.schedule.split(','):
             iso_schedule.append(weekday_mapping[weekday])
         return iso_schedule
-
-    def datetime_in_time_zone(self):
-        if self.time_zone is None:
-            return None
-        local_time_zone = - time.timezone // 3600
-        hour_diff = local_time_zone - self.time_zone
-        return dt.datetime.now() - dt.timedelta(hours=hour_diff)
 
     def crawl(self, pub_date):
         """
