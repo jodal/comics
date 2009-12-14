@@ -25,10 +25,11 @@ A mostly unordered list of things to fix. Patches accepted.
 Improvements
 ------------
 
-``comics.aggregator.crawler._get_date_to_crawl()``
-    Use comics time zone to crawl the correct current date.
 ``comics.aggregator.command``
     Use comic week schedule to crawl less often on non-schedule days.
+``comics.core.models``
+    Replace Strip.filename with an ImageField, and add fields for image height
+    and width.
 ``comics.core.utils.navigation``
     Unit test and refactor.
 

@@ -37,10 +37,12 @@ class Aggregator(object):
 
     def _aggregate_one_comic(self, comic):
         crawler = self._get_crawler(comic)
-        pub_date = self._get_from_date(crawler)
+        from_date = self._get_from_date(crawler)
+        to_date = self._get_to_date(crawler)
         logger.info('Crawling %s from %s to %s'
-            % (comic.slug, pub_date, self.config.to_date))
-        while pub_date <= self.config.to_date:
+            % (comic.slug, from_date, to_date))
+        pub_date = from_date
+        while pub_date <= to_date:
             strip_metadata = self._try_crawl_one_comic_one_date(
                 crawler, pub_date)
             if strip_metadata:
@@ -52,12 +54,24 @@ class Aggregator(object):
         return module.Crawler(comic)
 
     def _get_from_date(self, crawler):
-        if self.config.from_date < crawler.history_capable:
+        if self.config.from_date is None:
+            return crawler.current_date
+        elif self.config.from_date < crawler.history_capable:
             logger.info('Adjusting from date to %s because of limited ' +
                 'history capability', crawler.history_capable)
             return crawler.history_capable
         else:
             return self.config.from_date
+
+    def _get_to_date(self, crawler):
+        if self.config.to_date is None:
+            return crawler.current_date
+        elif self.config.to_date > crawler.current_date:
+            logger.info("Adjusting to date to %s because the given date is " +
+                "in the future in the comic's time zone", crawler.current_date)
+            return crawler.current_date
+        else:
+            return self.config.to_date
 
     def _try_crawl_one_comic_one_date(self, crawler, pub_date):
         try:
@@ -104,8 +118,8 @@ class AggregatorConfig(object):
 
     def __init__(self, options=None):
         self.comics = []
-        self.from_date = today()
-        self.to_date = today()
+        self.from_date = None
+        self.to_date = None
         if options is not None:
             self.setup(options)
 
