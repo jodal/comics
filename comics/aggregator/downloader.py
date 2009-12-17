@@ -8,7 +8,7 @@ from django.conf import settings
 from django.db import transaction
 
 from comics.aggregator.exceptions import (FileNotAnImage, DownloaderHTTPError,
-    ImageAlreadyExists)
+    ImageAlreadyExists, ImageIsBlacklisted)
 from comics.core.models import Release, Strip
 from comics.utils.hash import sha256sum
 
@@ -18,7 +18,8 @@ class Downloader(object):
 
         (temp_path, http_response) = self._download_strip_image(strip_metadata)
         strip_checksum = sha256sum(temp_path)
-        original_strip = self._get_strip_by_checksum(strip_metadata.comic,
+        self._check_if_blacklisted(strip_metadata, strip_checksum)
+        original_strip = self._get_strip_by_checksum(strip_metadata,
             strip_checksum)
 
         if original_strip is not None:
@@ -64,18 +65,16 @@ class Downloader(object):
         except urllib2.HTTPError, error:
             raise DownloaderHTTPError(strip_metadata.identifier, error)
 
-    def _get_strip_by_checksum(self, comic, strip_checksum):
-        """Get existing strip based on checksum"""
+    def _check_if_blacklisted(self, strip_metadata, strip_checksum):
+        if strip_checksum in settings.COMICS_STRIP_BLACKLIST:
+            raise ImageIsBlacklisted(strip_metadata.identifier)
 
-        self._check_if_blacklisted(strip_checksum)
+    def _get_strip_by_checksum(self, strip_metadata, strip_checksum):
         try:
-            return Strip.objects.get(comic=comic, checksum=strip_checksum)
+            return Strip.objects.get(comic=strip_metadata.comic,
+                checksum=strip_checksum)
         except Strip.DoesNotExist:
             return None
-
-    def _check_if_blacklisted(self, strip_checksum):
-        if strip_checksum in settings.COMICS_STRIP_BLACKLIST:
-            raise CrawlerError('Strip blacklisted')
 
     def _get_image_path(self, strip_metadata, http_response):
         # Detect file extension based on mimetype

@@ -71,3 +71,9 @@ class ImageAlreadyExists(DownloaderError):
 
     def __str__(self):
         return '%s: Image already exists' % self.identifier
+
+class ImageIsBlacklisted(DownloaderError):
+    """Exception raised when a blacklisted image has been downloaded"""
+
+    def __str__(self):
+        return '%s: Image is blacklisted' % self.identifier
