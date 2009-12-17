@@ -16,7 +16,7 @@ class CrawlerError(AggregatorError):
     """Base class for crawler exceptions"""
 
     def __str__(self):
-        return '%s: Generic crawler error (%s)' % (self.identifier, selv.value)
+        return '%s: Generic crawler error (%s)' % (self.identifier, self.value)
 
 class CrawlerHTTPError(CrawlerError):
     """Exception used to wrap urllib2.HTTPError from the crawler"""
