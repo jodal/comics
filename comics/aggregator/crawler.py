@@ -31,6 +31,28 @@ class CrawlerResult(object):
             raise ImageURLNotFound(self.identifier)
 
     @property
+    def title(self):
+        return self._title
+
+    @title.setter
+    def title(self, value):
+        try:
+            self._title = value and value.decode('utf-8')
+        except UnicodeDecodeError:
+            self._title = value and value.decode('iso-8859-1')
+
+    @property
+    def text(self):
+        return self._text
+
+    @text.setter
+    def text(self, value):
+        try:
+            self._text = value and value.decode('utf-8')
+        except UnicodeDecodeError:
+            self._text = value and value.decode('iso-8859-1')
+
+    @property
     def identifier(self):
        return u'%s/%s' % (self.comic.slug, self.pub_date)
 
