@@ -24,7 +24,7 @@ example will work without them.
 
 .. code-block:: apache
 
-    <VirtualHost \*:80>
+    <VirtualHost *:80>
         ServerName comics.example.com
         ErrorLog /var/log/apache2/comics.example.com-error.log
         CustomLog /var/log/apache2/comics.example.com-access.log combined
@@ -33,6 +33,7 @@ example will work without them.
         DocumentRoot /var/www/comics.example.com
 
         # Static media hosting
+        Alias /media/ /path/to/comics/media/
         <Location /media/>
             # Turn off directory indexes
             Options -Indexes

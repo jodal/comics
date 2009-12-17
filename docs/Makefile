@@ -92,6 +92,7 @@ public: clean html
 	git stash save
 	cd .. && \
 	    git checkout gh-pages && \
+	    git pull && \
 	    rm -r * && \
 	    cp -r /tmp/comics-html/* . && \
 	    mv _sources sources && \
