@@ -15,6 +15,8 @@ class Set(models.Model):
     last_modified = models.DateTimeField()
     last_loaded = models.DateTimeField()
     comics = models.ManyToManyField(Comic)
+    hide_empty_strips = models.BooleanField(default=False, null=False, blank=False,
+        help_text='Hide strips from view when they dont exists in the interval selected')
 
     class Meta:
         db_table = 'comics_set'
