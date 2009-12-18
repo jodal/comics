@@ -2,7 +2,6 @@ from __future__ import absolute_import
 
 import datetime as dt
 import feedparser
-from types import StringTypes
 
 from comics.aggregator.lxmlparser import LxmlParser
 

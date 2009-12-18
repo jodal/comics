@@ -1,7 +1,11 @@
 import datetime as dt
 import time
+import urllib2
 
-from comics.aggregator.exceptions import *
+from django.conf import settings
+
+from comics.aggregator.exceptions import (CrawlerHTTPError, ImageURLNotFound,
+    NotHistoryCapable, ReleaseAlreadyExists)
 from comics.aggregator.feedparser import FeedParser
 from comics.aggregator.lxmlparser import LxmlParser
 from comics.core.models import Release, Strip
@@ -24,7 +28,29 @@ class CrawlerResult(object):
 
     def _check_strip_url(self):
         if not self.url:
-            raise StripURLNotFound(self.identifier)
+            raise ImageURLNotFound(self.identifier)
+
+    @property
+    def title(self):
+        return self._title
+
+    @title.setter
+    def title(self, value):
+        try:
+            self._title = value and value.decode('utf-8')
+        except UnicodeDecodeError:
+            self._title = value and value.decode('iso-8859-1')
+
+    @property
+    def text(self):
+        return self._text
+
+    @text.setter
+    def text(self, value):
+        try:
+            self._text = value and value.decode('utf-8')
+        except UnicodeDecodeError:
+            self._text = value and value.decode('iso-8859-1')
 
     @property
     def identifier(self):
@@ -60,7 +86,13 @@ class CrawlerBase(object):
         """Get URL of strip from pub_date, or the latest strip"""
 
         pub_date = self._get_date_to_crawl(pub_date)
-        result = self.crawl(pub_date)
+
+        try:
+            result = self.crawl(pub_date)
+        except urllib2.HTTPError, error:
+            identifier = u'%s/%s' % (self.comic.slug, pub_date)
+            raise CrawlerHTTPError(identifier, error)
+
         if result is not None:
             result.validate(self.comic, pub_date)
             result.set_download_settings(
@@ -69,18 +101,28 @@ class CrawlerBase(object):
             return result
 
     def _get_date_to_crawl(self, pub_date):
+        identifier = u'%s/%s' % (self.comic.slug, pub_date)
+
         if pub_date is None:
-            pub_date = dt.date.today()
+            pub_date = self.current_date
 
         if pub_date < self.history_capable:
-            raise NotHistoryCapable(self.history_capable)
+            raise NotHistoryCapable(identifier, self.history_capable)
 
-        if not self.multiple_releases_per_day:
-            if Release.objects.filter(comic=self.comic,
-                    pub_date=pub_date).count():
-                raise StripAlreadyExists('%s/%s' % (self.comic.slug, pub_date))
+        if self.multiple_releases_per_day is False:
+            if self.comic.release_set.filter(pub_date=pub_date).count() > 0:
+                raise ReleaseAlreadyExists(identifier)
 
         return pub_date
+
+    @property
+    def current_date(self):
+        if self.time_zone is None:
+            self.time_zone = settings.COMICS_DEFAULT_TIME_ZONE
+        local_time_zone = - time.timezone // 3600
+        hour_diff = local_time_zone - self.time_zone
+        current_time = dt.datetime.now() - dt.timedelta(hours=hour_diff)
+        return current_time.date()
 
     @property
     def history_capable(self):
@@ -99,13 +141,6 @@ class CrawlerBase(object):
         for weekday in self.schedule.split(','):
             iso_schedule.append(weekday_mapping[weekday])
         return iso_schedule
-
-    def datetime_in_time_zone(self):
-        if self.time_zone is None:
-            return None
-        local_time_zone = - time.timezone // 3600
-        hour_diff = local_time_zone - self.time_zone
-        return dt.datetime.now() - dt.timedelta(hours=hour_diff)
 
     def crawl(self, pub_date):
         """

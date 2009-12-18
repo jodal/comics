@@ -81,7 +81,7 @@ INSTALLED_APPS = (
 )
 
 # Caching
-CACHE_BACKEND = 'locmem:///'
+CACHE_BACKEND = 'locmem:///?timeout=300&max_entries=1000'
 CACHE_MIDDLEWARE_SECONDS = 300
 CACHE_MIDDLEWARE_KEY_PREFIX = 'comics'
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
@@ -129,3 +129,7 @@ COMICS_STRIP_BLACKLIST = (
 
 # Comics log file
 COMICS_LOG_FILENAME = os.path.join(PROJECT_DIR, '../comics.log')
+
+# Time zone used for comic crawlers without a specified time zone
+# UTC=0, CET=1, EST=-5, PST=-8
+COMICS_DEFAULT_TIME_ZONE = 1

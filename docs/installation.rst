@@ -13,7 +13,7 @@ The absolute minimum requirements for getting *comics* up and running is:
 - `Python <http://www.python.org/>`_ >= 2.5
 - `Django <http://www.djangoproject.com/>`_ >= 1.0
 - `feedparser <http://www.feedparser.org/>`_
-- `lxml <http://codespeak.net/lxml/>`_
+- `lxml <http://codespeak.net/lxml/>`_ >= 2.0
 
 To install these on Debian-based Linux distributions, like Ubuntu, simply run::
 
