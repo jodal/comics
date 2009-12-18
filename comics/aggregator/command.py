@@ -3,6 +3,7 @@
 import datetime as dt
 import logging
 import socket
+import urllib2
 
 from django.conf import settings
 
@@ -36,6 +37,7 @@ class Aggregator(object):
             % (comic.slug, from_date, to_date))
         pub_date = from_date
         while pub_date <= to_date:
+            self.identifier = u'%s/%s' % (comic.slug, pub_date)
             strip_metadata = self._try(self._crawl_one_comic_one_date,
                 crawler, pub_date)
             if strip_metadata:
@@ -66,8 +68,10 @@ class Aggregator(object):
             return func(*args, **kwargs)
         except ComicsError, error:
             logger.info(error)
+        except urllib2.URLError, error:
+            logger.error(u'%s: %s', self.identifier, error)
         except Exception, error:
-            logger.exception(error)
+            logger.exception(u'%s: %s', self.identifier, error)
 
     def _get_crawler(self, comic):
         module = get_comic_module(comic.slug)
