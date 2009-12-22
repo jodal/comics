@@ -27,12 +27,12 @@ class EditSetForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple)
     add_new_comics = forms.BooleanField(
         label='Automatically add new comics to the set', required=False)
-    hide_empty_strips = forms.BooleanField(
-        label='Hide comic from set view if no strips for the interval exists', required=False)
+    hide_empty_comics = forms.BooleanField(
+        label='Hide comics without matching releases from view', required=False)
 
     class Meta:
         model = Set
-        fields = ('add_new_comics', 'comics',)
+        fields = ('comics', 'add_new_comics', 'hide_empty_comics')
 
     def save(self, commit=True):
         comics_set = super(EditSetForm, self).save(commit=False)

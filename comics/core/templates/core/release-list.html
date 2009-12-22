@@ -82,8 +82,10 @@
 
             {% endfor %}
         {% else %}
-            {% if set and set.hide_empty_strips %}
+            {% if set and set.hide_empty_comics %}
+
 <!-- No strip for {{ comic.name }} -->
+
             {% else %}
 
 <div class="strip">
@@ -94,7 +96,7 @@
     <p>No strip found. See <a href="{% url comic-latest comic.slug %}">the latest strip</a>.</p>
 </div>
 
-        {% endif %}
+            {% endif %}
         {% endif %}
     {% endfor %}
 {% else %}
