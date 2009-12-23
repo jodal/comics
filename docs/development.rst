@@ -15,6 +15,8 @@ at GitHub <http://github.com/jodal>`_, or send a mail to `comics@jodal.no
 <mailto:comics@jodal.no>`_. Patches accompanied by tests and documentation
 gives +5 karma and kudos.
 
+All contributions must be granted under the same license as *comics* itself.
+
 
 Todo list
 =========

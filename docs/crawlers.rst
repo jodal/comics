@@ -390,3 +390,4 @@ When your crawler is working properly, you may submit it for inclusion in
 <http://github.com/jodal/comics>`_, commit your new crawler to your own fork,
 and send me a *pull request* through GitHub.
 
+All contributions must be granted under the same license as *comics* itself.
