@@ -71,7 +71,7 @@ class LxmlParser(object):
         if isinstance(string, str):
             try:
                 string = string.decode('utf-8')
-            except: UnicodeDecodeError:
+            except UnicodeDecodeError:
                 string = string.decode('iso-8859-1')
         return string
 
