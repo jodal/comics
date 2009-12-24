@@ -24,6 +24,7 @@ class Aggregator(object):
 
     def start(self):
         for comic in self.config.comics:
+            self.identifier = comic.slug
             self._try(self._aggregate_one_comic, comic)
 
     def stop(self):
