@@ -15,25 +15,25 @@ class LxmlParser(object):
 
     def text(self, selector, default=None):
         try:
-            return self.select(selector).text_content()
+            return self._decode(self.select(selector).text_content())
         except DoesNotExist:
             return default
 
     def src(self, selector, default=None):
         try:
-            return self.select(selector).get('src')
+            return self._decode(self.select(selector).get('src'))
         except DoesNotExist:
             return default
 
     def alt(self, selector, default=None):
         try:
-            return self.select(selector).get('alt')
+            return self._decode(self.select(selector).get('alt'))
         except DoesNotExist:
             return default
 
     def title(self, selector, default=None):
         try:
-            return self.select(selector).get('title')
+            return self._decode(self.select(selector).get('title'))
         except DoesNotExist:
             return default
 
@@ -66,6 +66,14 @@ class LxmlParser(object):
         if len(string) == 0:
             string = '<xml />'
         return fromstring(string)
+
+    def _decode(self, string):
+        if isinstance(string, str):
+            try:
+                string = string.decode('utf-8')
+            except: UnicodeDecodeError:
+                string = string.decode('iso-8859-1')
+        return string
 
 class LxmlParserException(CrawlerError):
     pass
