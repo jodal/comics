@@ -1,4 +1,4 @@
-from dateutil.parser import parse
+import re
 
 from comics.aggregator.crawler import CrawlerBase, CrawlerResult
 from comics.meta.base import MetaBase
@@ -19,12 +19,13 @@ class Crawler(CrawlerBase):
         article_list.remove('.web-only')
 
         for block in article_list.root.cssselect('.article-list .block'):
-            date = block.cssselect('.date')[0]
+            date = block.cssselect('.date')[0].text_content()
+            regexp = pub_date.strftime('%b %d(st|nd|rd|th) %Y')
 
-            if pub_date != parse(date.text_content()).date():
+            if not re.match(regexp, date):
                 continue
 
-            anchor = blockdate.cssselect('h2 a')[0]
+            anchor = block.cssselect('h2 a')[0]
 
             if "KAL's cartoon" not in anchor.text_content():
                 continue
