@@ -13,7 +13,9 @@ class Crawler(CrawlerBase):
     schedule = 'Mo,We,Fr'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://feeds2.feedburner.com/TheChalkboardManifesto?format=atom')
+        feed = self.parse_feed(
+            'http://feeds2.feedburner.com/TheChalkboardManifesto')
+
         for entry in feed.all():
             title = entry.summary.text('h1')
 
