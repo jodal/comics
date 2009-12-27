@@ -1,0 +1,67 @@
+#!/bin/sh
+
+# Tricks from http://developer.yahoo.com/performance/rules.html#opt_images
+# ------------------------------------------------------------------------
+#
+# - Match palette size to number of colors in image (not supported yey)
+#   identify -verbose image.gif
+#
+# - Try converting GIF -> PNG
+#   convert image.gif image.png
+#
+# - Crush PNGs
+#   pngcrush image.png -rem alla -reduce -brute result.png
+#
+# - Crush JPEGs
+#   jpegtran -copy none -optimize -perfect src.jpg dest.jpg
+#
+
+size() {
+	du $1 | cut -f1
+}
+
+temp() {
+	echo `tempfile -p smush -s .$1`
+}
+
+compare() {
+	if [ `size $1` -gt `size $2` ]; then
+		echo $png_name
+	else
+		echo $1
+	fi
+}
+
+to_png() {
+	tmp=`temp png`
+	convert $1 $tmp > /dev/null
+	tmp=`png $tmp`
+	compare $1 $tmp
+}
+
+opt_png() {
+	tmp=`temp png`
+	pngcrush -rem alla -reduce -brute $1 $tmp> /dev/null
+	compare $1 $tmp
+}
+
+opt_jpeg() {
+	tmp=`temp jpg`
+	jpegtran -copy none -optimize -perfect -outfile $tmp $1 > /dev/null
+	compare $1 $tmp
+}
+
+case "$1" in
+	*.gif)
+		to_png  $1
+	;;
+	*.jpg)
+		opt_jpeg $1
+	;;
+	*.png)
+		opt_png $1
+	;;
+	*)
+		echo "Unknown file type or missing parameter."
+	;;
+esac
