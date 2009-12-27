@@ -4,7 +4,7 @@ from comics.meta.base import MetaBase
 class Meta(MetaBase):
     name = 'Ctrl+Alt+Del'
     language = 'en'
-    url = 'http://www.ctrlaltdel-online.com/'
+    url = 'http://www.cad-comic.com/cad/'
     start_date = '2002-10-23'
     rights = 'Tim Buckley'
 
@@ -14,6 +14,6 @@ class Crawler(CrawlerBase):
     time_zone = -5
 
     def crawl(self, pub_date):
-        url = 'http://www.cad-comic.com/comics/%s.jpg' % (
+        url = 'http://www.cad-comic.com/comics/cad/%s.jpg' % (
             pub_date.strftime('%Y%m%d'),)
         return CrawlerResult(url)

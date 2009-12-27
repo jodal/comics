@@ -16,7 +16,6 @@ class Crawler(CrawlerBase):
         page_url = 'http://www.penny-arcade.com/comic/%s/' % (
             pub_date.strftime('%Y/%m/%d'),)
         page = self.parse_page(page_url)
-        # FIXME The decode() part should be handled by CrawlerBase
-        title = page.text('h1').decode('iso-8859-1')
+        title = page.text('h1')
         url = page.src('img[alt="%s"]' % title)
         return CrawlerResult(url, title)

@@ -81,7 +81,7 @@ INSTALLED_APPS = (
 )
 
 # Caching
-CACHE_BACKEND = 'locmem:///'
+CACHE_BACKEND = 'locmem:///?timeout=300&max_entries=1000'
 CACHE_MIDDLEWARE_SECONDS = 300
 CACHE_MIDDLEWARE_KEY_PREFIX = 'comics'
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
@@ -118,8 +118,10 @@ COMICS_STRIP_BLACKLIST = (
     # Dagbladet.no
     '61c66a1c84408df5b855004dd799d5e59f4af99f4c6fe8bf4aabf8963cab7cb5',
     # Cyanide and Happiness
-    '6dec8be9787fc8b103746886033ccad7348bc4eec44c12994ba83596f3cbcd32',
+    '01237a79e2a283718059e4a180a01e8ffa9f9b36af7e0cad5650dd1a08665971',
     '181e7d11ebd3224a910d9eba2995349da5d483f3ae9643a2efe4f7dd3d9f668d',
+    '6dec8be9787fc8b103746886033ccad7348bc4eec44c12994ba83596f3cbcd32',
+    'f56248bf5b94b324d495c3967e568337b6b15249d4dfe7f9d8afdca4cb54cd29',
     # Dilbert (bt.no)
     'cde5b71cfb91c05d0cd19f35e325fc1cc9f529dfbce5c6e2583a3aa73d240638',
     # Least I Could Do
@@ -128,3 +130,7 @@ COMICS_STRIP_BLACKLIST = (
 
 # Comics log file
 COMICS_LOG_FILENAME = os.path.join(PROJECT_DIR, '../comics.log')
+
+# Time zone used for comic crawlers without a specified time zone
+# UTC=0, CET=1, EST=-5, PST=-8
+COMICS_DEFAULT_TIME_ZONE = 1

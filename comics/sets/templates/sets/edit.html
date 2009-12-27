@@ -35,6 +35,16 @@
     page.</p>
 </div>
 
+<div class="info">
+    <p class="title">
+        {{ form.hide_empty_comics }}
+        {{ form.hide_empty_comics.label }}
+    </p>
+
+    <p>If you check this, comics without releases in your selected time
+    interval will be hidden.</p>
+</div>
+
 <div class="buttons">
 <button type="submit" class="positive">
     <img src="{{ MEDIA_URL }}icons/accept.png" alt="" />

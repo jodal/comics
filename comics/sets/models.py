@@ -11,6 +11,8 @@ class Set(models.Model):
         help_text='The set identifier')
     add_new_comics = models.BooleanField(default=False,
         help_text='Automatically add new comics to the set')
+    hide_empty_comics = models.BooleanField(default=False,
+        help_text='Hide comics without matching releases from view')
     created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField()
     last_loaded = models.DateTimeField()

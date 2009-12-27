@@ -18,5 +18,5 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             if 'Comic' in entry.tags:
                 title = entry.title
-                url = entry.content0.src(u'img')
+                url = entry.content0.src(u'img[src*="/comics/"]')
                 return CrawlerResult(url, title)
