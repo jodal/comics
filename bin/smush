@@ -26,16 +26,16 @@ temp() {
 
 compare() {
 	if [ `size $1` -gt `size $2` ]; then
-		echo $png_name
+		echo $2
 	else
 		echo $1
 	fi
 }
 
-to_png() {
+opt_gif() {
 	tmp=`temp png`
 	convert $1 $tmp > /dev/null
-	tmp=`png $tmp`
+	tmp=`opt_png $tmp`
 	compare $1 $tmp
 }
 
@@ -53,7 +53,7 @@ opt_jpeg() {
 
 case "$1" in
 	*.gif)
-		to_png  $1
+		opt_gif $1
 	;;
 	*.jpg)
 		opt_jpeg $1
