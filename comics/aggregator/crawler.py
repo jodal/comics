@@ -57,6 +57,9 @@ class CrawlerBase(object):
     # Feed object which is reused when crawling multiple dates
     feed = None
 
+    # Page objects mapped against url for use when crawling multiple dates
+    pages = {}
+
     def __init__(self, comic):
         self.comic = comic
 
@@ -144,7 +147,9 @@ class CrawlerBase(object):
         return self.feed
 
     def parse_page(self, page_url):
-        return LxmlParser(page_url)
+        if page_url not in self.pages:
+            self.pages[page_url] = LxmlParser(page_url)
+        return self.pages[page_url]
 
     def string_to_date(self, *args, **kwargs):
         return dt.datetime.strptime(*args, **kwargs).date()
