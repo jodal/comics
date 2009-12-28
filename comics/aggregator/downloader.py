@@ -94,7 +94,7 @@ class Downloader(object):
         # Create missing archive directories
         (justpath, justfilename) = os.path.split(absolute_path)
         if not os.path.isdir(justpath):
-            os.makedirs(justpath, 0755)
+            os.makedirs(justpath, 0775)
 
         return (absolute_path, relative_path)
 
