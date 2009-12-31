@@ -1,7 +1,7 @@
 {% load humanize %}
 {% spaceless %}
     {% with obj as release %}
-        {{ release.comic.name }}
+        {{ release.comic.name|safe }}
         published {{ release.pub_date|naturalday }}
         {% if release.strip.title %}
             "{{ release.strip.title|safe }}"
