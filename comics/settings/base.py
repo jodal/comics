@@ -72,6 +72,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.webdesign',
+    'south',
     'comics.aggregator',
     'comics.core',
     'comics.feedback',

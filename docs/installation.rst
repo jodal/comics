@@ -12,17 +12,20 @@ The absolute minimum requirements for getting *comics* up and running is:
 
 - `Python <http://www.python.org/>`_ >= 2.5
 - `Django <http://www.djangoproject.com/>`_ >= 1.0
+- `South <http://south.aeracode.org/>`_ >= 0.5
 - `feedparser <http://www.feedparser.org/>`_
 - `lxml <http://codespeak.net/lxml/>`_ >= 2.0
 
 To install these on Debian-based Linux distributions, like Ubuntu, simply run::
 
-    sudo aptitude install python-django python-feedparser python-lxml
+    sudo aptitude install python-django python-django-south \
+        python-feedparser python-lxml
 
 If you are running Mac OS X with `MacPorts <http://www.macports.org/>`_
 installed, you can install the dependencies by running::
 
-    sudo ports install python26 py26-django py26-feedparser py26-lxml
+    sudo ports install python26 py26-django py26-south \
+        py26-feedparser py26-lxml
 
 
 Optional dependencies for real deployments
@@ -67,6 +70,11 @@ database and database schema, open a terminal, go to the ``comics/comics/``
 directory, and run::
 
     python manage.py syncdb
+
+Parts of the database is managed by the South database migrations tool. To
+create that part of the database, run::
+
+    python manage.py migrate
 
 Then we need to seed the database with information on what comics exist::
 
