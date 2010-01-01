@@ -63,7 +63,7 @@ Data model
 *comics*' data model is very simple. The ``core`` app consists of three models;
 ``Comic``, ``Release``, and ``Strip``. The ``sets`` app adds an additional
 model named ``Set``. Changes to the data model are managed using `South
-<http://south.aeracode.org/>_` database migrations. If you need to change
+<http://south.aeracode.org/>`_ database migrations. If you need to change
 the models, please provide the needed migrations.
 
 .. image:: _static/data_model.png
