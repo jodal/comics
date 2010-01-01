@@ -1,14 +1,18 @@
 import hashlib
 
-def sha256sum(filename):
+def sha256sum(filename=None, filehandle=None):
     """Returns sha256sum for file"""
 
-    f = file(filename, 'rb')
+    if filename is not None:
+        f = file(filename, 'rb')
+    else:
+        f = filehandle
     m = hashlib.sha256()
     while True:
         b = f.read(8096)
         if not b:
             break
         m.update(b)
-    f.close()
+    if filename is not None:
+        f.close()
     return m.hexdigest()
