@@ -2,10 +2,8 @@ from __future__ import with_statement
 import os
 import shutil
 
-from south.db import db
 from django.conf import settings
 from django.core.files import File
-from django.db import models
 from comics.core.models import *
 
 class Migration:

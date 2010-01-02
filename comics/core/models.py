@@ -1,4 +1,3 @@
-import datetime as dt
 import os
 
 from django.conf import settings

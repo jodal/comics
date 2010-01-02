@@ -1,5 +1,3 @@
-import datetime as dt
-
 from comics.aggregator.crawler import CrawlerBase, CrawlerResult
 from comics.meta.base import MetaBase
 

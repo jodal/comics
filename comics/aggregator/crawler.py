@@ -8,7 +8,6 @@ from comics.aggregator.exceptions import (CrawlerHTTPError, ImageURLNotFound,
     NotHistoryCapable, ReleaseAlreadyExists)
 from comics.aggregator.feedparser import FeedParser
 from comics.aggregator.lxmlparser import LxmlParser
-from comics.core.models import Release, Strip
 
 class CrawlerResult(object):
     def __init__(self, url, title=None, text=None, headers=None):

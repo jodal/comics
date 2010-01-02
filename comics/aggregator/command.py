@@ -5,8 +5,6 @@ import logging
 import socket
 import urllib2
 
-from django.conf import settings
-
 from comics.aggregator.downloader import Downloader
 from comics.core.exceptions import ComicsError
 from comics.comics import get_comic_module
