@@ -10,7 +10,9 @@ class Migration:
     no_dry_run = True
 
     def forwards(self, orm):
-        for strip in orm.Strip.objects.all():
+        total = orm.Strip.objects.count()
+        for i, strip in enumerate(orm.Strip.objects.all()):
+            print '%s %d/%d' % (strip.checksum, i + 1, total)
             filename = '%s.%s' % (strip.checksum, strip.filename.split('.')[-1])
             file_path = '%s/%s' % (settings.COMICS_MEDIA_ROOT, strip.filename)
             file_path = os.path.abspath(file_path)
@@ -19,7 +21,9 @@ class Migration:
                 strip.save()
 
     def backwards(self, orm):
-        for strip in orm.Strip.objects.all():
+        total = orm.Strip.objects.count()
+        for i, strip in enumerate(orm.Strip.objects.all()):
+            print '%s %d/%d' % (strip.checksum, i + 1, total)
             first_release = orm.Release.objects.filter(
                 strip=strip.pk).order_by('pub_date')[0]
             filename = '%(slug)s/%(year)s/%(date)s.%(ext)s' % {
