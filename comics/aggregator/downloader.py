@@ -1,10 +1,10 @@
 from __future__ import with_statement
 import mimetypes
-import os
-import shutil
+import tempfile
 import urllib2
 
 from django.conf import settings
+from django.core.files import File
 from django.db import transaction
 
 from comics.aggregator.exceptions import (FileNotAnImage, DownloaderHTTPError,
@@ -13,114 +13,76 @@ from comics.core.models import Release, Strip
 from comics.utils.hash import sha256sum
 
 class Downloader(object):
-    def download_strip(self, strip_metadata):
-        """Download, sanitize and save strip"""
-
-        (temp_path, http_response) = self._download_strip_image(strip_metadata)
-        strip_checksum = sha256sum(temp_path)
-        self._check_if_blacklisted(strip_metadata, strip_checksum)
-        original_strip = self._get_strip_by_checksum(strip_metadata,
-            strip_checksum)
-
-        if original_strip is not None:
-            os.remove(temp_path)
-            if strip_metadata.has_rerun_releases:
-                self._save_rerun_release(strip_metadata.comic,
-                    strip_metadata.pub_date, original_strip)
-            else:
-                raise ImageAlreadyExists(strip_metadata.identifier)
+    def download_strip(self, strip_meta):
+        (image, filename, checksum) = self._download_image(strip_meta)
+        original_strip = self._get_strip_by_checksum(strip_meta, checksum)
+        if original_strip is not None and strip_meta.has_rerun_releases:
+            self._save_rerun_release(strip_meta, original_strip)
+        elif original_strip is not None and not strip_meta.has_rerun_releases:
+            raise ImageAlreadyExists(strip_meta.identifier)
         else:
-            (absolute_path, relative_path) = self._get_image_path(
-                strip_metadata, http_response)
-            self._archive_strip_image(temp_path, absolute_path)
-            self._save_new_release(strip_metadata, relative_path,
-                strip_checksum)
+            self._save_new_release(strip_meta, image, filename, checksum)
 
-    def _download_strip_image(self, strip_metadata):
-        """Download strip image to temporary location"""
-
+    def _download_image(self, strip_meta):
         try:
-            temp_path = '%s/%s-%s.comics' % (
-                '/var/tmp',
-                strip_metadata.comic.slug,
-                strip_metadata.pub_date.strftime('%Y-%m-%d'),
-            )
-
-            request = urllib2.Request(strip_metadata.url, None,
-                strip_metadata.request_headers)
-            input_file = urllib2.urlopen(request)
-            http_response = input_file.info()
-
-            if (strip_metadata.check_image_mime_type
-                    and not http_response.getmaintype() == 'image'):
-                input_file.close()
-                raise FileNotAnImage(strip_metadata.identifier)
-
-            with open(temp_path, 'wb') as temp_file:
-                temp_file.write(input_file.read())
-
-            input_file.close()
-
-            return (temp_path, http_response)
+            request = urllib2.Request(strip_meta.url, None,
+                strip_meta.request_headers)
+            http_file = urllib2.urlopen(request)
+            self._check_image_mime_type(strip_meta, http_file)
+            image = self._get_temporary_file(http_file)
+            checksum = sha256sum(filehandle=image)
+            self._check_if_blacklisted(strip_meta, checksum)
+            filename = '%s%s' % (checksum, self._get_file_extension(http_file))
+            http_file.close()
+            return (File(image), filename, checksum)
         except urllib2.HTTPError, error:
-            raise DownloaderHTTPError(strip_metadata.identifier, error)
+            raise DownloaderHTTPError(strip_meta.identifier, error)
 
-    def _check_if_blacklisted(self, strip_metadata, strip_checksum):
-        if strip_checksum in settings.COMICS_STRIP_BLACKLIST:
-            raise ImageIsBlacklisted(strip_metadata.identifier)
+    def _check_image_mime_type(self, strip_meta, http_file):
+        if (strip_meta.check_image_mime_type
+                and not http_file.info().getmaintype() == 'image'):
+            raise FileNotAnImage(strip_meta.identifier)
 
-    def _get_strip_by_checksum(self, strip_metadata, strip_checksum):
+    def _get_temporary_file(self, source_file):
+        tmp = tempfile.NamedTemporaryFile(suffix='comics')
+        tmp.write(source_file.read())
+        return tmp
+
+    def _get_file_extension(self, http_file):
+        file_ext = mimetypes.guess_extension(http_file.info().gettype())
+        if file_ext == '.jpe':
+            file_ext = '.jpg'
+        return file_ext
+
+    def _check_if_blacklisted(self, strip_meta, checksum):
+        if checksum in settings.COMICS_STRIP_BLACKLIST:
+            raise ImageIsBlacklisted(strip_meta.identifier)
+
+    def _get_strip_by_checksum(self, strip_meta, checksum):
         try:
-            return Strip.objects.get(comic=strip_metadata.comic,
-                checksum=strip_checksum)
+            return Strip.objects.get(comic=strip_meta.comic,
+                checksum=checksum)
         except Strip.DoesNotExist:
             return None
 
-    def _get_image_path(self, strip_metadata, http_response):
-        # Detect file extension based on mimetype
-        fileext = mimetypes.guess_extension(http_response.gettype())
-        if fileext == '.jpe':
-            fileext = '.jpg'
+    def _save_new_release(self, strip_meta, image, filename, checksum):
+        strip = Strip(comic=strip_meta.comic, checksum=checksum)
+        strip.file.save(filename, image)
+        if strip_meta.title is not None:
+            strip.title = strip_meta.title
+        if strip_meta.text is not None:
+            strip.text = strip_meta.text
+        self._save_strip_and_release(strip_meta, strip, new_release=True)
 
-        # Construct final filename and path
-        relative_path = '%(slug)s/%(year)d/%(date)s%(ext)s' % {
-            'slug': strip_metadata.comic.slug,
-            'year': strip_metadata.pub_date.year,
-            'date': strip_metadata.pub_date.strftime('%Y-%m-%d'),
-            'ext': fileext,
-        }
-        absolute_path = '%s%s' % (settings.COMICS_MEDIA_ROOT, relative_path)
-
-        # Create missing archive directories
-        (justpath, justfilename) = os.path.split(absolute_path)
-        if not os.path.isdir(justpath):
-            os.makedirs(justpath, 0775)
-
-        return (absolute_path, relative_path)
-
-    def _archive_strip_image(self, temp_path, archive_path):
-        try:
-            shutil.move(temp_path, archive_path)
-        except Exception:
-            os.remove(temp_path)
-            raise
-
-    def _save_new_release(self, strip_metadata, relative_path, strip_checksum):
-        strip = Strip(comic=strip_metadata.comic, filename=relative_path,
-            checksum=strip_checksum)
-        if strip_metadata.title is not None:
-            strip.title = strip_metadata.title
-        if strip_metadata.text is not None:
-            strip.text = strip_metadata.text
-        self._save_strip_and_release(strip_metadata.comic,
-            strip_metadata.pub_date, strip, new_release=True)
-
-    def _save_rerun_release(self, comic, pub_date, strip):
-        self._save_strip_and_release(comic, pub_date, strip, new_release=False)
+    def _save_rerun_release(self, strip_meta, strip):
+        self._save_strip_and_release(strip_meta, strip, new_release=False)
 
     @transaction.commit_on_success
-    def _save_strip_and_release(self, comic, pub_date, strip, new_release=True):
+    def _save_strip_and_release(self, strip_meta, strip, new_release=True):
         if new_release:
             strip.save()
-        release = Release(comic=comic, pub_date=pub_date, strip=strip)
+        release = Release(
+            comic=strip_meta.comic,
+            pub_date=strip_meta.pub_date,
+            strip=strip)
         release.save()
