@@ -3,6 +3,7 @@ import os
 
 from django.conf import settings
 from django.db import models
+from django.core.files.storage import FileSystemStorage
 from django.core.urlresolvers import reverse
 
 from comics.core.managers import ComicManager
@@ -84,11 +85,23 @@ class Release(models.Model):
         })
 
 
+# Let all created dirs and files be writable by the group
+os.umask(0002)
+
+strip_storage = FileSystemStorage(
+    location=settings.COMICS_MEDIA_ROOT, base_url=settings.COMICS_MEDIA_URL)
+
+def strip_file_path(instance, filename):
+    return u'%s/%s/%s' % (instance.comic.slug, filename[0], filename)
+
 class Strip(models.Model):
     # Required fields
     comic = models.ForeignKey(Comic)
     fetched = models.DateTimeField(auto_now_add=True)
-    filename = models.CharField(max_length=100)
+    file = models.ImageField(storage=strip_storage, upload_to=strip_file_path,
+        height_field='height', width_field='width')
+    height = models.IntegerField()
+    width = models.IntegerField()
     checksum = models.CharField(max_length=64, db_index=True)
 
     # Optional fields
@@ -101,13 +114,10 @@ class Strip(models.Model):
 
     def delete(self, *args, **kwargs):
         super(Strip, self).delete(*args, **kwargs)
-        os.remove('%s%s' % (settings.COMICS_MEDIA_ROOT, self.filename))
+        os.remove(self.file.path)
 
     def __unicode__(self):
         return u'%s strip %s' % (self.comic, self.checksum)
-
-    def get_image_url(self):
-        return '%s%s' % (settings.COMICS_MEDIA_URL, self.filename)
 
     def get_first_release(self):
         return self.releases.order_by('pub_date')[0]
