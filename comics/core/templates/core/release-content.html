@@ -1,5 +1,12 @@
 <p><a href="{{ release.get_absolute_url }}">
-<img src="{{ release.strip.get_image_url }}" alt="{{ release }}"{% if release.strip.text %} title="{{ release.strip.text|safe|escape }}"{% endif %} class="stripimg" />
+    <img src="{{ release.strip.file.url }}"
+        height="{{ release.strip.height }}"
+        width="{{ release.strip.width }}"
+        alt="{{ release }}"
+        {% if release.strip.text %}
+            title="{{ release.strip.text|safe|escape }}"
+        {% endif %}
+        class="stripimg" />
 </a></p>
 
 {% if release.strip.text %}
