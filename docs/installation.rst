@@ -11,21 +11,28 @@ Minimum dependencies
 The absolute minimum requirements for getting *comics* up and running is:
 
 - `Python <http://www.python.org/>`_ >= 2.5
+- `PIL <http://www.pythonware.com/products/pil/>`_ >= 1.1
 - `Django <http://www.djangoproject.com/>`_ >= 1.0
-- `South <http://south.aeracode.org/>`_ >= 0.5
-- `feedparser <http://www.feedparser.org/>`_
+- `South <http://south.aeracode.org/>`_ >= 0.6
+- `feedparser <http://www.feedparser.org/>`_ >= 4.0
 - `lxml <http://codespeak.net/lxml/>`_ >= 2.0
 
-To install these on Debian-based Linux distributions, like Ubuntu, simply run::
+To install these on Ubuntu 9.10, run::
 
-    sudo aptitude install python-django python-django-south \
-        python-feedparser python-lxml
+    sudo aptitude install python-pip python-django python-feedparser \
+        python-lxml python-imaging
+    sudo pip install South
+
+To install these on Ubuntu 10.04, run::
+
+    sudo aptitude install python-django python-django-south python-feedparser \
+        python-lxml python-imaging
 
 If you are running Mac OS X with `MacPorts <http://www.macports.org/>`_
 installed, you can install the dependencies by running::
 
-    sudo ports install python26 py26-django py26-south \
-        py26-feedparser py26-lxml
+    sudo ports install python26 py26-django py26-south py26-feedparser \
+        py26-lxml py26-pil
 
 
 Optional dependencies for real deployments
