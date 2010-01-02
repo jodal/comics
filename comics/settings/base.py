@@ -112,6 +112,8 @@ COMICS_MAX_DAYS_IN_FEED = 30
 
 # SHA256 of blacklisted comic strips
 COMICS_STRIP_BLACKLIST = (
+    # Empty file
+    'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
     # Billy
     'f8021551b772384d1f4309e0ee15c94cea9ec1e61ba0a7aade8036e40e3179fe',
     # Bizarro
