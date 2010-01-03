@@ -21,25 +21,17 @@ All contributions must be granted under the same license as *comics* itself.
 Todo list
 =========
 
-A mostly unordered list of things to fix. Patches accepted.
+A loosely prioritized list of things to fix. Patches accepted.
 
-
-Improvements
-------------
-
+``multi-image``
+    Support multiple images per comic release, see :ref:`spec-multi-image`.
+``bin/smush``
+    Process images with ``bin/smush`` to reduce their size 10-20% (without
+    affecting their quality) and thus reducing page load time.
 ``comics.aggregator.command``
     Use comic week schedule to crawl less often on non-schedule days.
 ``comics.core.utils.navigation``
     Unit test and refactor.
-
-
-New features
-------------
-
-- Support multiple strips per comic per day, which requires:
-
-  - Change of naming scheme for image files from date to checksum.
-  - Support for returning multiple ``CrawlerResult`` from one ``crawl()``.
 
 
 Change specifications
