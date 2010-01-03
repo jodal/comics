@@ -1,7 +1,7 @@
 .. _spec-multi-image:
 
-Spec: Multiple images per comic release
-=======================================
+Spec-003: Multiple images per comic release
+===========================================
 
 *Spec created:*
     2009-12-14

@@ -1,5 +1,5 @@
-Spec: Multiple releases of a single comic strip
-===============================================
+Spec-001: Multiple releases of a single comic strip
+===================================================
 
 *Spec created:*
     2009-01-17

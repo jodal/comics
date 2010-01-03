@@ -1,5 +1,5 @@
-Spec: Crawler meta data in Python code
-======================================
+Spec-002: Crawler meta data in Python code
+==========================================
 
 *Spec created:*
     2009-06-13
