@@ -13,33 +13,27 @@ class LxmlParser(object):
             raise LxmlParserException(
                 'Parser needs URL or string to operate on')
 
+    def href(self, selector, default=None):
+        return self.get('href', selector, default)
+
+    def src(self, selector, default=None):
+        return self.get('src', selector, default)
+
+    def alt(self, selector, default=None):
+        return self.get('alt', selector, default)
+
+    def title(self, selector, default=None):
+        return self.get('title', selector, default)
+
+    def get(self, attr, selector, default=None):
+        try:
+            return self._decode(self.select(selector).get(attr))
+        except DoesNotExist:
+            return default
+
     def text(self, selector, default=None):
         try:
             return self._decode(self.select(selector).text_content())
-        except DoesNotExist:
-            return default
-
-    def href(self, selector, default=None):
-        try:
-            return self._decode(self.select(selector).get('href'))
-        except DoesNotExist:
-            return default
-
-    def src(self, selector, default=None):
-        try:
-            return self._decode(self.select(selector).get('src'))
-        except DoesNotExist:
-            return default
-
-    def alt(self, selector, default=None):
-        try:
-            return self._decode(self.select(selector).get('alt'))
-        except DoesNotExist:
-            return default
-
-    def title(self, selector, default=None):
-        try:
-            return self._decode(self.select(selector).get('title'))
         except DoesNotExist:
             return default
 
