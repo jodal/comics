@@ -73,14 +73,14 @@ class Downloader(object):
             strip.title = strip_meta.title
         if strip_meta.text is not None:
             strip.text = strip_meta.text
-        self._save_strip_and_release(strip_meta, strip)
+        self._save_strip_and_release(strip_meta, strip, new_release=True)
 
     def _save_rerun_release(self, strip_meta, strip):
-        self._save_strip_and_release(strip_meta, strip)
+        self._save_strip_and_release(strip_meta, strip, new_release=False)
 
     @transaction.commit_on_success
-    def _save_strip_and_release(self, strip_meta, strip):
-        if strip.pk is None:
+    def _save_strip_and_release(self, strip_meta, strip, new_release=True):
+        if new_release:
             strip.save()
         release = Release(
             comic=strip_meta.comic,
