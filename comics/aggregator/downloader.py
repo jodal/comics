@@ -46,6 +46,7 @@ class Downloader(object):
     def _get_temporary_file(self, source_file):
         tmp = tempfile.NamedTemporaryFile(suffix='comics')
         tmp.write(source_file.read())
+        tmp.seek(0)
         return tmp
 
     def _get_file_extension(self, http_file):

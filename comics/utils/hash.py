@@ -7,6 +7,7 @@ def sha256sum(filename=None, filehandle=None):
         f = file(filename, 'rb')
     else:
         f = filehandle
+        original_position = f.tell()
     m = hashlib.sha256()
     while True:
         b = f.read(8096)
@@ -15,4 +16,6 @@ def sha256sum(filename=None, filehandle=None):
         m.update(b)
     if filename is not None:
         f.close()
+    else:
+        f.seek(original_position)
     return m.hexdigest()
