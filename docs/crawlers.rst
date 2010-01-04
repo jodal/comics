@@ -97,8 +97,7 @@ Fields used for crawling
     Example: ``1`` for central Europe or ``-5`` for eastern U.S.
 
 ``Crawler.multiple_releases_per_day``
-    *Optional.* Default: ``False``. Whether to allow multiple strip releases
-    per a day.
+    *Optional.* Default: ``False``. Whether to allow multiple releases per day.
 
     Example: ``True`` or ``False``.
 
@@ -106,14 +105,14 @@ Fields used for downloading
 ---------------------------
 
 ``Crawler.has_rerun_releases``
-    *Optional.* Default: ``False``. Whether the comic reruns old strips as new
+    *Optional.* Default: ``False``. Whether the comic reruns old images as new
     releases.
 
     Example: ``True`` or ``False``.
 
 ``Crawler.check_image_mime_type``
-    *Optional.* Default: ``True``. Whether to check the mime type of the strip
-    image when downloading.
+    *Optional.* Default: ``True``. Whether to check the mime type of the image
+    when downloading.
 
     Example: ``True`` or ``False``.
 
@@ -139,8 +138,8 @@ Arguments and return values
 The ``crawl()`` method takes a single argument, ``pub_date``, which is a
 ``datetime.date`` object for the date the crawler is currently crawling. The
 goal of the method is to return a ``CrawlerResult`` object containing at least
-the URL of the strip image for ``pub_date`` and optionally a ``title`` and
-``text`` accompanying the image. ``CrawlerResult``'s signature is::
+the URL of the image for ``pub_date`` and optionally a ``title`` and ``text``
+accompanying the image. ``CrawlerResult``'s signature is::
 
     CrawlerResult(url, title=None, text=None)
 
@@ -155,8 +154,8 @@ This means that you must always supply an URL, and that you can supply a
     CrawlerResult(url, text=text)
     CrawlerResult(url, title=title, text=text)
 
-For some crawlers, this is all you need. If the strip image URL is predictable
-and based upon the ``pub_date`` in some way, just create the URL with the help
+For some crawlers, this is all you need. If the image URL is predictable and
+based upon the ``pub_date`` in some way, just create the URL with the help
 of `Python's strftime documentation
 <http://docs.python.org/library/datetime.html#strftime-behavior>`_, and return
 it wrapped in a ``CrawlerResult``::
@@ -185,7 +184,7 @@ extract content from HTML::
 
 This is a common pattern for crawlers. Another common patterns is to use a feed
 to find the web page URL for the given date, then parse that web page to find
-the strip image URL.
+the image URL.
 
 For a primer on CSS selectors, see :ref:`css-selectors`.
 
@@ -238,7 +237,7 @@ The ``feed`` object provides two methods which both returns feed elements:
     Returns all feed elements.
 
 Typically, a crawler uses ``for_date(date)`` and loops over all entries it
-returns to find the strip image URL::
+returns to find the image URL::
 
     for entry in feed.for_date(pub_date):
         # parsing comes here
@@ -334,10 +333,9 @@ When the first version of you crawler is complete, it's time to test it.
 
 The file name is important, as it is used as the comic's slug. This means that
 it must be unique within the *comics* installation, and that it is used in the
-URLs *comics* will serve the comic strips at. For this example, we call the
-crawler file ``foo.py``. The file must be placed in the
-``comics/comics/comics/`` directory, and will be available in Python as
-``comics.comics.foo``.
+URLs *comics* will serve the comic at. For this example, we call the crawler
+file ``foo.py``. The file must be placed in the ``comics/comics/comics/``
+directory, and will be available in Python as ``comics.comics.foo``.
 
 
 Loading ``Meta`` for your new comic
@@ -356,12 +354,13 @@ Running the crawler
 -------------------
 
 When ``loadmeta`` has created a ``Comic`` instance for the new crawler, you may
-use your new crawler to fetch the comic's strip for the current date by
+use your new crawler to fetch the comic's release for the current date by
 running::
 
     python manage.py getcomics -c foo
 
-If you want to get comics strips for more than the current day, you may specify a date range to crawl, like::
+If you want to get comics releases for more than the current day, you may
+specify a date range to crawl, like::
 
     python manage.py getcomics -c foo -f 2009-01-01 -t 2009-03-31
 

@@ -11,7 +11,7 @@ deployment documentation
 In the following examples we assume that we are deploying *comics* at
 http://comics.example.com/, using Apache, mod_wsgi, and PostgreSQL. The Django
 application and batch job is both running as the user ``comics-user``. The
-static media files, like comic strips, are served from
+static media files, like comic images, are served from
 http://comics.example.com/media/, but may also be served from a different host.
 
 Example Apache vhost

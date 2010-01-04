@@ -90,12 +90,12 @@ Then we need to seed the database with information on what comics exist::
 Optionally, you can add ``-c xkcd`` to only load the *XKCD* comic from
 ``comics/comics/comics/xkcd.py``.
 
-Next, we need to get hold of some comic strips, so we will crawl the web for
+Next, we need to get hold of some comic releases, so we will crawl the web for
 them::
 
     python manage.py getcomics
 
-Finally, to be able to browse the comic strips we have aggregated, start the
+Finally, to be able to browse the comic releases we have aggregated, start the
 Django development web server by running::
 
     python manage.py runserver
@@ -103,11 +103,11 @@ Django development web server by running::
 If you now point your web browser at http://localhost:8000/ you will be able to
 browse all available comics. If you provided a username and password at the
 ``syncdb`` step, you can log in at http://localhost:8000/admin/ to do simple
-administration tasks, like removing comics or strips.
+administration tasks, like removing comics or releases.
 
 All of these commands answers to the ``--help`` argument. I.e. ``getcomics``
 can crawl specific comics, and arbitrary ranges of dates instead of just
-getting the latest comic strips.
+getting the latest release.
 
 
 .. rubric:: Footnotes
