@@ -14,8 +14,8 @@ class ReleaseAdmin(admin.ModelAdmin):
     date_hierarchy = 'pub_date'
 
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('comic', 'title', 'fetched')
-    list_filter = ['comic', 'fetched']
+    list_display = ('file', 'height', 'width', 'fetched', 'title', 'text')
+    list_filter = ['fetched', 'comic']
 
     date_hierarchy = 'fetched'
 
