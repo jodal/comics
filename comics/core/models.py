@@ -60,13 +60,13 @@ class Release(models.Model):
     # XXX An index ranging over all three fields of this class is CRITICAL for
     # any performance. For PostreSQL use:
     #
-    #     CREATE INDEX "comics_release_comic_id_pub_date_strip_id"
-    #         ON "comics_release" ("comic_id", "pub_date", "strip_id");
+    #     CREATE INDEX "comics_release_comic_id_pub_date_image_id"
+    #         ON "comics_release" ("comic_id", "pub_date", "image_id");
 
     # Required fields
     comic = models.ForeignKey(Comic)
     pub_date = models.DateField(verbose_name='publication date')
-    strip = models.ForeignKey('Strip', related_name='releases')
+    image = models.ForeignKey('Image', related_name='releases')
 
     class Meta:
         db_table = 'comics_release'
@@ -87,17 +87,17 @@ class Release(models.Model):
 # Let all created dirs and files be writable by the group
 os.umask(0002)
 
-strip_storage = FileSystemStorage(
+image_storage = FileSystemStorage(
     location=settings.COMICS_MEDIA_ROOT, base_url=settings.COMICS_MEDIA_URL)
 
-def strip_file_path(instance, filename):
+def image_file_path(instance, filename):
     return u'%s/%s/%s' % (instance.comic.slug, filename[0], filename)
 
-class Strip(models.Model):
+class Image(models.Model):
     # Required fields
     comic = models.ForeignKey(Comic)
     fetched = models.DateTimeField(auto_now_add=True)
-    file = models.ImageField(storage=strip_storage, upload_to=strip_file_path,
+    file = models.ImageField(storage=image_storage, upload_to=image_file_path,
         height_field='height', width_field='width')
     height = models.IntegerField()
     width = models.IntegerField()
@@ -108,15 +108,15 @@ class Strip(models.Model):
     text = models.TextField(blank=True)
 
     class Meta:
-        db_table = 'comics_strip'
+        db_table = 'comics_image'
         get_latest_by = 'pub_date'
 
     def delete(self, *args, **kwargs):
-        super(Strip, self).delete(*args, **kwargs)
+        super(Image, self).delete(*args, **kwargs)
         os.remove(self.file.path)
 
     def __unicode__(self):
-        return u'%s strip %s' % (self.comic, self.checksum)
+        return u'%s image %s' % (self.comic, self.checksum)
 
     def get_first_release(self):
         return self.releases.order_by('pub_date')[0]
