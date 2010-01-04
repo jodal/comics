@@ -2,7 +2,7 @@ from comics.aggregator.crawler import CrawlerBase, CrawlerResult
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
-    name = 'Bizarro'
+    name = 'Bizarro (no)'
     language = 'no'
     url = 'http://underholdning.no.msn.com/tegneserier/bizarro/'
     start_date = '1985-01-01'
