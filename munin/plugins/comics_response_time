@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# SITE_NAME and SITE_URL are assumed to be defined by the environment.
+#
+
+if [ "$1" = "config" ]; then
+    echo graph_title "$SITE_NAME - Response time"
+    echo graph_category comics
+    echo graph_vlabel
+    echo time.label Response time
+    echo time.warning 10000
+    echo time.warning 20000
+    exit 0
+fi
+
+START=`date +%s%N`
+wget -q -O/dev/null $SITE_URL
+END=`date +%s%N`
+TIME=$(( (END - START) / 1000000 ))
+echo time.value $TIME

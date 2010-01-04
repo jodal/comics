@@ -2,7 +2,9 @@
 [comics_*]
 user postgres
 env.SITE_NAME Daily Comics
+env.SITE_URL http://comics.example.com/
 env.DB_NAME comics
 env.COMIC_TBL comics_comic
-env.STRIP_TBL comics_strip
+env.RELEASE_TBL comics_release
+env.IMAGE_TBL comics_image
 env.SET_TBL comics_set
