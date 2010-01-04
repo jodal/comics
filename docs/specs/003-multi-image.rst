@@ -21,7 +21,7 @@ Implementation plan
 
 1. [done, 2009-01-03] Change naming scheme for image files from date to
    checksum.
-2. Rename ``Strip`` to ``Image``.
+2. [done, 2009-01-04] Rename ``Strip`` to ``Image``.
 3. Replace the ``Release.strip`` foreign key with a many-to-many relation to
    ``Image``.
 4. Consider removing the foreign key ``Release.comic`` and instead infer it
