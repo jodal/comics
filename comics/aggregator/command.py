@@ -21,9 +21,14 @@ class Aggregator(object):
             self.config = config
 
     def start(self):
+        start_time = dt.datetime.now()
+
         for comic in self.config.comics:
             self.identifier = comic.slug
             self._try(self._aggregate_one_comic, comic)
+
+        ellapsed_time = dt.datetime.now() - start_time
+        logger.info('Crawling completed in %s', ellapsed_time)
 
     def stop(self):
         pass
