@@ -19,6 +19,12 @@ class LxmlParser(object):
         except DoesNotExist:
             return default
 
+    def href(self, selector, default=None):
+        try:
+            return self._decode(self.select(selector).get('href'))
+        except DoesNotExist:
+            return default
+
     def src(self, selector, default=None):
         try:
             return self._decode(self.select(selector).get('src'))
