@@ -9,7 +9,7 @@ if [ "$1" = "config" ]; then
     echo graph_vlabel
     echo time.label Response time
     echo time.warning 10000
-    echo time.warning 20000
+    echo time.critical 20000
     exit 0
 fi
 
