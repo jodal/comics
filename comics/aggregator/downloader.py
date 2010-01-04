@@ -13,7 +13,7 @@ from comics.core.models import Release, Image
 from comics.utils.hash import sha256sum
 
 class Downloader(object):
-    def download(self, release_meta):
+    def download_release(self, release_meta):
         (image, filename, checksum) = self._download_image(release_meta)
         original_image = self._get_image_by_checksum(release_meta, checksum)
         if original_image is not None and release_meta.has_rerun_releases:
