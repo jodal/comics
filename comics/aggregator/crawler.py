@@ -19,13 +19,13 @@ class CrawlerResult(object):
     def validate(self, comic, pub_date):
         self.comic = comic
         self.pub_date = pub_date
-        self._check_strip_url()
+        self._check_image_url()
 
     def set_download_settings(self, check_image_mime_type, has_rerun_releases):
         self.check_image_mime_type = check_image_mime_type
         self.has_rerun_releases = has_rerun_releases
 
-    def _check_strip_url(self):
+    def _check_image_url(self):
         if not self.url:
             raise ImageURLNotFound(self.identifier)
 
@@ -48,9 +48,9 @@ class CrawlerBase(object):
     multiple_releases_per_day = False
 
     ### Downloader settings
-    # Whether the comic reruns old strips as new releases
+    # Whether the comic reruns old images as new releases
     has_rerun_releases = False
-    # Whether to check the mime type of the strip image when downloading
+    # Whether to check the mime type of the image when downloading
     check_image_mime_type = True
 
     # Feed object which is reused when crawling multiple dates
@@ -62,8 +62,8 @@ class CrawlerBase(object):
     def __init__(self, comic):
         self.comic = comic
 
-    def get_strip_metadata(self, pub_date=None):
-        """Get URL of strip from pub_date, or the latest strip"""
+    def get_release_meta(self, pub_date=None):
+        """Get meta data for release at pub_date, or the latest release"""
 
         pub_date = self._get_date_to_crawl(pub_date)
 
@@ -131,8 +131,8 @@ class CrawlerBase(object):
 
         Output:
             on success: a CrawlResult object containing:
-                - at least a strip image URL
-                - optionally a strip title and/or a strip text
+                - at least an image URL
+                - optionally a title and/or a text
             on failure: None
         """
 

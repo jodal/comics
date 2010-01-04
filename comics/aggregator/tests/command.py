@@ -122,27 +122,27 @@ class ComicAggregatorTestCase(TestCase):
 
     def test_crawl_one_comic_one_date(self):
         pub_date = dt.date(2008, 3, 1)
-        strip_metadata = CrawlerResult('a url')
-        strip_metadata.comic = self.comic
-        strip_metadata.pub_date = pub_date
+        release_meta = CrawlerResult('a url')
+        release_meta.comic = self.comic
+        release_meta.pub_date = pub_date
         self.crawler_mock.expects(
-            pmock.once()).get_strip_metadata(pmock.eq(pub_date)).will(
-            pmock.return_value(strip_metadata))
+            pmock.once()).get_release_meta(pmock.eq(pub_date)).will(
+            pmock.return_value(release_meta))
 
         self.aggregator._crawl_one_comic_one_date(
             self.crawler_mock, pub_date)
 
         self.crawler_mock.verify()
 
-    def test_download_strip(self):
-        strip_metadata = CrawlerResult('a url')
-        strip_metadata.comic = self.comic
-        strip_metadata.pub_date = dt.date(2008, 3, 1)
+    def test_download_release(self):
+        release_meta = CrawlerResult('a url')
+        release_meta.comic = self.comic
+        release_meta.pub_date = dt.date(2008, 3, 1)
         self.downloader_mock.expects(
-            pmock.once()).download_strip(pmock.eq(strip_metadata))
+            pmock.once()).download_release(pmock.eq(release_meta))
         self.aggregator._get_downloader = lambda: self.downloader_mock
 
-        self.aggregator._download_strip(strip_metadata)
+        self.aggregator._download_image(release_meta)
 
         self.downloader_mock.verify()
 

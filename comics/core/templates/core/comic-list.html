@@ -13,7 +13,7 @@
     <tr>
         <th>Comic</th>
         <th>Language</th>
-        <th class="alignright">Archive size</th>
+        <th class="alignright"># releases</th>
         <th class="alignright"># sets</th>
         <th>Website</th>
     </tr>
@@ -24,8 +24,9 @@
             <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
         </td>
         <td>{{ comic.get_language_display }}</td>
-        {% with comic.strip_set.count as strip_count %}
-	<td class="alignright">{{ strip_count }} strip{{ strip_count|pluralize }}</td>
+        {% with comic.release_set.count as release_count %}
+	<td class="alignright">{{ release_count }}
+            release{{ release_count|pluralize }}</td>
         {% endwith %}
         <td class="alignright">{{ comic.number_of_sets }}
             set{{ comic.number_of_sets|pluralize }}</td>

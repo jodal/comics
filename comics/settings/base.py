@@ -97,7 +97,7 @@ TIME_FORMAT = 'H:i'
 # Name of the site, used in e.g. feeds
 COMICS_SITE_TITLE = 'Daily Comics'
 
-# Location of the comic strip images
+# Location of the comic images
 COMICS_MEDIA_ROOT = '%sc/' % MEDIA_ROOT
 COMICS_MEDIA_URL = '%sc/' % MEDIA_URL
 
@@ -110,8 +110,8 @@ COMICS_MAX_DAYS_IN_PAGE = 31
 # Maximum number of days to show in a feed
 COMICS_MAX_DAYS_IN_FEED = 30
 
-# SHA256 of blacklisted comic strips
-COMICS_STRIP_BLACKLIST = (
+# SHA256 of blacklisted images
+COMICS_IMAGE_BLACKLIST = (
     # Empty file
     'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
     # Billy

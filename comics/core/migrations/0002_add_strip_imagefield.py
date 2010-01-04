@@ -5,7 +5,7 @@ from comics.core.models import *
 class Migration:
     def forwards(self, orm):
         # Adding field 'Strip.file'
-        db.add_column('comics_strip', 'file', models.ImageField(height_field='height', upload_to=strip_file_path, width_field='width', storage=strip_storage, default=''), keep_default=False)
+        db.add_column('comics_strip', 'file', models.ImageField(height_field='height', upload_to=image_file_path, width_field='width', storage=image_storage, default=''), keep_default=False)
 
         # Adding field 'Strip.height'
         db.add_column('comics_strip', 'height', models.IntegerField(default=0), keep_default=False)
@@ -41,7 +41,7 @@ class Migration:
             'checksum': ('models.CharField', [], {'max_length': '64', 'db_index': 'True'}),
             'comic': ('models.ForeignKey', ['Comic'], {}),
             'fetched': ('models.DateTimeField', [], {'auto_now_add': 'True'}),
-            'file': ('models.ImageField', [], {'height_field': "'height'", 'upload_to': 'strip_file_path', 'width_field': "'width'", 'storage': 'strip_storage'}),
+            'file': ('models.ImageField', [], {'height_field': "'height'", 'upload_to': 'image_file_path', 'width_field': "'width'", 'storage': 'image_storage'}),
             'filename': ('models.CharField', [], {'max_length': '100'}),
             'height': ('models.IntegerField', [], {}),
             'id': ('models.AutoField', [], {'primary_key': 'True'}),

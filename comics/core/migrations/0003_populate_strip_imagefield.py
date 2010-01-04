@@ -60,7 +60,7 @@ class Migration:
             'checksum': ('models.CharField', [], {'max_length': '64', 'db_index': 'True'}),
             'comic': ('models.ForeignKey', ['Comic'], {}),
             'fetched': ('models.DateTimeField', [], {'auto_now_add': 'True'}),
-            'file': ('models.ImageField', [], {'height_field': "'height'", 'upload_to': 'strip_file_path', 'width_field': "'width'", 'storage': 'strip_storage'}),
+            'file': ('models.ImageField', [], {'height_field': "'height'", 'upload_to': 'image_file_path', 'width_field': "'width'", 'storage': 'image_storage'}),
             'filename': ('models.CharField', [], {'max_length': '100'}),
             'height': ('models.IntegerField', [], {}),
             'id': ('models.AutoField', [], {'primary_key': 'True'}),

@@ -13,7 +13,7 @@ class ReleaseAdmin(admin.ModelAdmin):
     list_filter = ['comic', 'pub_date']
     date_hierarchy = 'pub_date'
 
-class StripAdmin(admin.ModelAdmin):
+class ImageAdmin(admin.ModelAdmin):
     list_display = ('comic', 'title', 'fetched')
     list_filter = ['comic', 'fetched']
 
@@ -21,4 +21,4 @@ class StripAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Comic, ComicAdmin)
 admin.site.register(models.Release, ReleaseAdmin)
-admin.site.register(models.Strip, StripAdmin)
+admin.site.register(models.Image, ImageAdmin)

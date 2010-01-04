@@ -1,27 +1,27 @@
 <p><a href="{{ release.get_absolute_url }}">
-    <img src="{{ release.strip.file.url }}"
-        height="{{ release.strip.height }}"
-        width="{{ release.strip.width }}"
+    <img src="{{ release.image.file.url }}"
+        height="{{ release.image.height }}"
+        width="{{ release.image.width }}"
         alt="{{ release }}"
-        {% if release.strip.text %}
-            title="{{ release.strip.text|safe|escape }}"
+        {% if release.image.text %}
+            title="{{ release.image.text|safe|escape }}"
         {% endif %}
-        class="stripimg" />
+        class="releaseimage" />
 </a></p>
 
-{% if release.strip.text %}
-<p class="striptext">{{ release.strip.text|safe }}</p>
+{% if release.image.text %}
+<p class="releasetext">{{ release.image.text|safe }}</p>
 {% endif %}
 
-<p class="stripmeta">
+<p class="releasemeta">
     Credits: {{ release.comic.rights }}.
-    {% with release.strip.get_first_release as first_release %}
+    {% with release.image.get_first_release as first_release %}
         {% ifnotequal release first_release %}
             <a href="{{ first_release.get_absolute_url }}">
             First released {{ first_release.pub_date|date }}</a>.
         {% endifnotequal %}
     {% endwith %}
-    Retrieved at {{ release.strip.fetched|time }},
-        {{ release.strip.fetched|date }}
+    Retrieved at {{ release.image.fetched|time }},
+        {{ release.image.fetched|date }}
     from {{ release.comic.url }}.
 </p>

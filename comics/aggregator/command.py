@@ -1,4 +1,4 @@
-"""Aggregator which fetches comic strips from the web"""
+"""Aggregator which fetches comic releases from the web"""
 
 import datetime as dt
 import logging
@@ -42,27 +42,27 @@ class Aggregator(object):
         pub_date = from_date
         while pub_date <= to_date:
             self.identifier = u'%s/%s' % (comic.slug, pub_date)
-            strip_metadata = self._try(self._crawl_one_comic_one_date,
+            release_meta = self._try(self._crawl_one_comic_one_date,
                 crawler, pub_date)
-            if strip_metadata:
-                self._try(self._download_strip, strip_metadata)
+            if release_meta:
+                self._try(self._download_release, release_meta)
             pub_date += dt.timedelta(days=1)
 
     def _crawl_one_comic_one_date(self, crawler, pub_date):
         logger.debug('Crawling %s for %s', crawler.comic.slug, pub_date)
-        strip_metadata = crawler.get_strip_metadata(pub_date)
-        if strip_metadata:
-            logger.debug('Strip: %s', strip_metadata.identifier)
-            logger.debug('Strip URL: %s', strip_metadata.url)
-            logger.debug('Strip title: %s', strip_metadata.title)
-            logger.debug('Strip text: %s', strip_metadata.text)
-        return strip_metadata
+        release_meta = crawler.get_release_meta(pub_date)
+        if release_meta:
+            logger.debug('Release: %s', release_meta.identifier)
+            logger.debug('Image URL: %s', release_meta.url)
+            logger.debug('Image title: %s', release_meta.title)
+            logger.debug('Image text: %s', release_meta.text)
+        return release_meta
 
-    def _download_strip(self, strip_metadata):
-        logger.debug('Downloading %s', strip_metadata.identifier)
+    def _download_release(self, release_meta):
+        logger.debug('Downloading %s', release_meta.identifier)
         downloader = self._get_downloader()
-        downloader.download_strip(strip_metadata)
-        logger.info('%s: Strip saved', strip_metadata.identifier)
+        downloader.download_release(release_meta)
+        logger.info('%s: Release saved', release_meta.identifier)
 
     def _get_downloader(self):
         return Downloader()

@@ -1,6 +1,6 @@
 /* Contributed by Thomas Adamcik <thomas@adamcik.no> 2007-09-30 */
 
-var num_strips = null;
+var num_releases = null;
 var current;
 
 try {
@@ -16,8 +16,8 @@ try {
 
 
 function eventHandler(e) {
-	if (num_strips == null) {
-		num_strips = document.getElementById('strips').getElementsByTagName('div').length;
+	if (num_releases == null) {
+		num_releases = document.getElementById('releases').getElementsByTagName('div').length;
 	}
 
 	// Ensure that we have an event to work on in all browsers
@@ -41,18 +41,18 @@ function eventHandler(e) {
 			}
 			break;
 		case 74: // j
-			if (current < num_strips - 1) {
+			if (current < num_releases - 1) {
 				current += 1;
-				window.location = "#strip" + current;
+				window.location = "#release" + current;
 			}
 			break;
 		case 75: // k
 			if (current < 0) {
-				window.location = "#strip0";
+				window.location = "#release0";
 				current = 0;
 			} else if (current > 0) {
 				current -= 1;
-				window.location = "#strip" + current;
+				window.location = "#release" + current;
 			}
 			break;
 		case 76: // l
@@ -62,7 +62,7 @@ function eventHandler(e) {
 		// Debug key:
 		/*
 		case 73: // i
-			alert("Current: " + current + "\nNum strips: " + num_strips);
+			alert("Current: " + current + "\nNum releases: " + num_releases);
 			break;
 		*/
 		default:

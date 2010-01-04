@@ -256,40 +256,40 @@ hr.clear {
     float: right;
 }
 
-/* Comic strips */
-.strip {
+/* Comic releases */
+.release {
     margin: 1em 0 2em;
 }
-.strip h3 {
+.release h3 {
     margin: 0;
 }
-.strip h3 a {
+.release h3 a {
     background: transparent;
     color: black;
     text-decoration: none;
 }
-.strip h3 .strippub {
+.release h3 .releasepub {
     color: #666;
 }
-.strip img.stripimg {
+.release img.releaseimage {
     background: white;
     border: 2px solid #ddd;
     padding: 0.5em;
     -moz-box-shadow: 2px 2px 6px #ddd;
     -webkit-box-shadow: 2px 2px 6px #ddd;
 }
-.strip p {
+.release p {
     margin: 0.5em 0;
 }
-.strip p.striptext {
+.release p.releasetext {
     font-style: italic;
 }
-.strip p.stripmeta {
+.release p.releasemeta {
     background: transparent;
     color: #666;
     font-size: 93%;
 }
-.strip p.stripmeta a, .strip p.stripmeta a:hover {
+.release p.releasemeta a, .release p.releasemeta a:hover {
     background: transparent;
     color: #666;
     text-decoration: none;
