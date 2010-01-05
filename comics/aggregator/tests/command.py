@@ -142,7 +142,7 @@ class ComicAggregatorTestCase(TestCase):
             pmock.once()).download_release(pmock.eq(release_meta))
         self.aggregator._get_downloader = lambda: self.downloader_mock
 
-        self.aggregator._download_image(release_meta)
+        self.aggregator._download_release(release_meta)
 
         self.downloader_mock.verify()
 
