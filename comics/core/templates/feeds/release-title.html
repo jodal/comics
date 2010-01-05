@@ -2,6 +2,6 @@
 {% spaceless %}
     {% with obj as release %}
         {{ release.comic.name|safe }}
-        published {{ release.pub_date|naturalday }}
+        published {{ release.pub_date|date }}
     {% endwith %}
 {% endspaceless %}
