@@ -83,7 +83,6 @@ class Downloader(object):
         if new_release:
             image.save()
         release = Release(
-            comic=release_meta.comic,
-            pub_date=release_meta.pub_date,
-            image=image)
+            comic=release_meta.comic, pub_date=release_meta.pub_date)
         release.save()
+        release.images.add(image)
