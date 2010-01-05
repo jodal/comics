@@ -62,6 +62,9 @@ class Release(models.Model):
     pub_date = models.DateField(verbose_name='publication date')
     image = models.ForeignKey('Image', related_name='releases')
 
+    # Automatically populated fields
+    fetched = models.DateTimeField(auto_now_add=True)
+
     class Meta:
         db_table = 'comics_release'
         get_latest_by = 'pub_date'
@@ -90,16 +93,18 @@ def image_file_path(instance, filename):
 class Image(models.Model):
     # Required fields
     comic = models.ForeignKey(Comic)
-    fetched = models.DateTimeField(auto_now_add=True)
     file = models.ImageField(storage=image_storage, upload_to=image_file_path,
         height_field='height', width_field='width')
-    height = models.IntegerField()
-    width = models.IntegerField()
     checksum = models.CharField(max_length=64, db_index=True)
 
     # Optional fields
     title = models.CharField(max_length=255, blank=True)
     text = models.TextField(blank=True)
+
+    # Automatically populated fields
+    fetched = models.DateTimeField(auto_now_add=True)
+    height = models.IntegerField()
+    width = models.IntegerField()
 
     class Meta:
         db_table = 'comics_image'

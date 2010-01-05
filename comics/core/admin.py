@@ -9,14 +9,13 @@ class ComicAdmin(admin.ModelAdmin):
     }
 
 class ReleaseAdmin(admin.ModelAdmin):
-    list_display = ('comic', 'pub_date')
-    list_filter = ['comic', 'pub_date']
+    list_display = ('comic', 'pub_date', 'fetched')
+    list_filter = ['pub_date', 'fetched', 'comic']
     date_hierarchy = 'pub_date'
 
 class ImageAdmin(admin.ModelAdmin):
     list_display = ('file', 'height', 'width', 'fetched', 'title', 'text')
     list_filter = ['fetched', 'comic']
-
     date_hierarchy = 'fetched'
 
 admin.site.register(models.Comic, ComicAdmin)
