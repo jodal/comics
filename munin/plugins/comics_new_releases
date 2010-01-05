@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# SITE_NAME, DB_NAME, RELEASE_TBL, and IMAGE_TBL are assumed to be defined by
+# the environment.
+#
+
+if [ "$1" = "config" ]; then
+    echo graph_title "$SITE_NAME - New releases"
+    echo graph_category comics
+    echo graph_vlabel
+    echo releases_today.label Releases today
+    exit 0
+fi
+
+TODAY=`date -I`
+RELEASES_TODAY=`psql $DB_NAME -qt -c "SELECT COUNT(*) FROM $RELEASE_TBL WHERE pub_date = '$TODAY'"`
+echo releases_today.value $RELEASES_TODAY
