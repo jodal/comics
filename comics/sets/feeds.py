@@ -33,7 +33,7 @@ class SetFeed(Feed):
             pub_date__gte=from_date).order_by('-pub_date')
 
     def item_pubdate(self, item):
-        return item.image.fetched
+        return item.fetched
 
     def item_copyright(self, item):
         return item.comic.rights
