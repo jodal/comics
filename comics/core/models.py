@@ -60,7 +60,7 @@ class Release(models.Model):
     # Required fields
     comic = models.ForeignKey(Comic)
     pub_date = models.DateField(verbose_name='publication date')
-    image = models.ForeignKey('Image', related_name='releases')
+    images = models.ManyToManyField('Image', related_name='releases')
 
     # Automatically populated fields
     fetched = models.DateTimeField(auto_now_add=True)
@@ -79,6 +79,12 @@ class Release(models.Model):
             'month': self.pub_date.month,
             'day': self.pub_date.day,
         })
+
+    def get_images_first_release(self):
+        try:
+            return self.images.all()[0].get_first_release()
+        except IndexError:
+            pass
 
 
 # Let all created dirs and files be writable by the group
