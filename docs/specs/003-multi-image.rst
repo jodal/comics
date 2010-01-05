@@ -22,10 +22,9 @@ Implementation plan
 1. [done, 2009-01-03] Change naming scheme for image files from date to
    checksum.
 2. [done, 2009-01-04] Rename ``Strip`` to ``Image``.
-3. Replace the ``Release.strip`` foreign key with a many-to-many relation to
-   ``Image``.
-4. Consider removing the foreign key ``Release.comic`` and instead infer it
-   from the ``Image`` relation.
-5. Update aggregator to support multiple ``CrawlerResult`` from one
-   ``crawl()``.
-6. Update web view and feed view accordingly.
+3. [done, 2009-01-05] Replace the ``Release.image`` foreign key with a
+   many-to-many relation to ``Image``.
+4. [done, 2009-01-05] Update web view and feed view to support multiple images
+   per release.
+5. Update aggregator to support multiple images per release.
+6. Update docs on how to create crawlers.
