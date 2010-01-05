@@ -1,27 +1,36 @@
-<p><a href="{{ release.get_absolute_url }}">
-    <img src="{{ release.image.file.url }}"
-        height="{{ release.image.height }}"
-        width="{{ release.image.width }}"
-        alt="{{ release }}"
-        {% if release.image.text %}
-            title="{{ release.image.text|safe|escape }}"
-        {% endif %}
-        class="releaseimage" />
-</a></p>
+{% for image in release.images.all %}
 
-{% if release.image.text %}
-<p class="releasetext">{{ release.image.text|safe }}</p>
-{% endif %}
+    {% if image.title %}
+        <h4>&ldquo;{{ image.title|safe }}&rdquo;</h4>
+    {% endif %}
 
-<p class="releasemeta">
+    <p class="image"><a href="{{ release.get_absolute_url }}">
+        <img src="{{ image.file.url }}"
+            height="{{ image.height }}" width="{{ image.width }}"
+            alt="{{ release }}"
+            {% if image.text %}title="{{ image.text|safe|escape }}"{% endif %}
+        />
+    </a></p>
+
+    {% if image.text %}
+        <p class="image_text">{{ image.text|safe }}</p>
+    {% endif %}
+
+{% empty %}
+
+    <p>No matching images found.</p>
+
+{% endfor %}
+
+<p class="meta">
     Credits: {{ release.comic.rights }}.
-    {% with release.image.get_first_release as first_release %}
+    {% with release.get_images_first_release as first_release %}
         {% ifnotequal release first_release %}
             <a href="{{ first_release.get_absolute_url }}">
             First released {{ first_release.pub_date|date }}</a>.
         {% endifnotequal %}
     {% endwith %}
-    Retrieved at {{ release.image.fetched|time }},
-        {{ release.image.fetched|date }}
+    Retrieved at {{ release.fetched|time }}, {{ release.fetched|date }}
     from {{ release.comic.url }}.
 </p>
+

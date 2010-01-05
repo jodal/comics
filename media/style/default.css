@@ -32,6 +32,10 @@ h3 {
     font-weight: normal;
     margin: 1em 0 0.5em;
 }
+h4 {
+    font-size: 123.1%;
+    margin: 1em 0 0.5em;
+}
 
 /* Tables */
 table {
@@ -268,10 +272,10 @@ hr.clear {
     color: black;
     text-decoration: none;
 }
-.release h3 .releasepub {
+.release h3 .pub_date {
     color: #666;
 }
-.release img.releaseimage {
+.release .image img {
     background: white;
     border: 2px solid #ddd;
     padding: 0.5em;
@@ -281,15 +285,15 @@ hr.clear {
 .release p {
     margin: 0.5em 0;
 }
-.release p.releasetext {
+.release p.image_text {
     font-style: italic;
 }
-.release p.releasemeta {
+.release p.meta {
     background: transparent;
     color: #666;
     font-size: 93%;
 }
-.release p.releasemeta a, .release p.releasemeta a:hover {
+.release p.meta a, .release p.meta a:hover {
     background: transparent;
     color: #666;
     text-decoration: none;

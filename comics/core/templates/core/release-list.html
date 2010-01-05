@@ -63,51 +63,49 @@
 
 <div id="releases">
 
-{% if comics %}
-    {% for comic, releases in comics %}
-        {% if releases %}
-            {% for release in releases %}
+{% for comic, releases in comics %}
+    {% for release in releases %}
 
 <div class="release">
-    <h3 id="release{{ release.counter }}" class="releasetitle">
-        <a href="{{ release.get_absolute_url }}">
-        {{ release.comic.name }}
-        <span class="releasepub">published {{ release.pub_date|naturalday }}</span>
-        {% if release.image.title %}&ldquo;{{ release.image.title|safe }}&rdquo;{% endif %}
-        </a>
+
+    <h3 id="release{{ release.counter }}">
+        <a href="{{ release.get_absolute_url }}">{{ release.comic.name }}
+        <span class="pub_date">published {{ release.pub_date|naturalday }}
+        </span></a>
     </h3>
 
     {% include "core/release-content.html" %}
+
 </div>
 
-            {% endfor %}
-        {% else %}
-            {% if set and set.hide_empty_comics %}
+    {% empty %}
+        {% if set and set.hide_empty_comics %}
 
 <!-- No release for {{ comic.name }} -->
 
-            {% else %}
+        {% else %}
 
 <div class="release">
-    <h3 class="releasetitle">
-        <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
-    </h3>
 
-    <p>No release found. See
+    <h3><a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a></h3>
+
+    <p>No matching release found. See
     <a href="{% url comic-latest comic.slug %}">the latest release</a>.</p>
+
 </div>
 
-            {% endif %}
         {% endif %}
     {% endfor %}
-{% else %}
-    <p>
-        No comics found.
-        {% if set %}
-            <a href="{% url set-edit set.name %}">Edit set</a> to add comics.
-        {% endif %}
-    </p>
-{% endif %}
+{% empty %}
+
+<p>
+    No comics found.
+    {% if set %}
+        <a href="{% url set-edit set.name %}">Edit set</a> to add comics.
+    {% endif %}
+</p>
+
+{% endfor %}
 
 </div>
 

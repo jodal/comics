@@ -3,8 +3,5 @@
     {% with obj as release %}
         {{ release.comic.name|safe }}
         published {{ release.pub_date|naturalday }}
-        {% if release.image.title %}
-            "{{ release.image.title|safe }}"
-        {% endif %}
     {% endwith %}
 {% endspaceless %}
