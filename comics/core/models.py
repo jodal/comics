@@ -21,10 +21,10 @@ class Comic(models.Model):
         help_text='For file paths and URLs')
     language = models.CharField(max_length=2, choices=LANGUAGES,
         help_text='The language of the comic')
-    url = models.URLField(verbose_name='URL', blank=True,
-        help_text='URL to the official website')
 
     # Optional fields
+    url = models.URLField(verbose_name='URL', blank=True,
+        help_text='URL to the official website')
     start_date = models.DateField(blank=True, null=True,
         help_text='First published at')
     end_date = models.DateField(blank=True, null=True,
