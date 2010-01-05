@@ -3,6 +3,8 @@ from django.db import models
 from comics.core.models import *
 
 class Migration:
+    no_dry_run = True
+
     def forwards(self, orm):
         for release in orm.Release.objects.all():
             release.fetched = release.image.fetched
