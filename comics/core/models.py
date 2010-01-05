@@ -57,12 +57,6 @@ class Comic(models.Model):
 
 
 class Release(models.Model):
-    # XXX An index ranging over all three fields of this class is CRITICAL for
-    # any performance. For PostreSQL use:
-    #
-    #     CREATE INDEX "comics_release_comic_id_pub_date_image_id"
-    #         ON "comics_release" ("comic_id", "pub_date", "image_id");
-
     # Required fields
     comic = models.ForeignKey(Comic)
     pub_date = models.DateField(verbose_name='publication date')

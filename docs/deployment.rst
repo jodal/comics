@@ -143,3 +143,15 @@ By setting ``MAILTO`` any exceptions raised by the comic crawlers will be sent
 by mail to the given mail address. ``1 * * * *`` specifies that the command
 should be run 1 minute past every hour.
 
+
+Database performance tuning
+===========================
+
+To get a 3X speedup on page generation time you should add an additional index
+ranging over the three fields of the ``comics_release`` table. In PostgreSQL
+this may be achieved by running the following SQL command:
+
+.. code-block:: sql
+
+    CREATE INDEX "comics_release_comic_id_pub_date_image_id"
+        ON "comics_release" ("comic_id", "pub_date", "image_id");
