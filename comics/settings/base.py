@@ -60,6 +60,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.auth',
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
+    'comics.core.context_processors.site_settings',
     'comics.core.context_processors.all_comics',
 )
 
@@ -96,6 +97,7 @@ TIME_FORMAT = 'H:i'
 
 # Name of the site, used in e.g. feeds
 COMICS_SITE_TITLE = 'Daily Comics'
+COMICS_SITE_TAGLINE = 'your personal comics aggregator'
 
 # Location of the comic images
 COMICS_MEDIA_ROOT = '%sc/' % MEDIA_ROOT
