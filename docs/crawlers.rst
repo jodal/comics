@@ -192,22 +192,27 @@ For a primer on CSS selectors, see :ref:`css-selectors`.
 Available methods
 -----------------
 
-``text(selector, default=None)``
-    Returns the text contained by the element matching ``selector``.
-
-``src(selector, default=None)``
-    Returns the ``src`` attribute of the element matching ``selector``.
+``href(selector, default=None)``
+    Returns the ``href`` attribute of the element matching ``selector``.
 
     The web parser automatically expands relative URLs in the source, like
     ``/comics/2008-04-13.png`` to a full URL like
     ``http://www.example.com/2008-04-13.png``, so you do not need to think
     about that.
 
+``src(selector, default=None)``
+    Returns the ``src`` attribute of the element matching ``selector``.
+
+    URL expanding applies, just as for ``href()``.
+
 ``alt(selector, default=None)``
     Returns the ``alt`` attribute of the element matching ``selector``.
 
 ``title(selector, default=None)``
     Returns the ``title`` attribute of the element matching ``selector``.
+
+``text(selector, default=None)``
+    Returns the text contained by the element matching ``selector``.
 
 ``remove(selector)``
     Remove the elements matching ``selector`` from the parsed document.
