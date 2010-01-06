@@ -5,6 +5,8 @@ from comics.aggregator.exceptions import CrawlerError
 
 class LxmlParser(object):
     def __init__(self, url=None, string=None):
+        self._retrived_url = None
+
         if url is not None:
             self.root = self._parse_url(url)
         elif string is not None:
@@ -52,14 +54,17 @@ class LxmlParser(object):
 
         return elements[0]
 
+    def url(self):
+        return self._retrived_url
+
     def _parse_url(self, url):
         handle = urllib2.urlopen(url)
         content = handle.read()
-        url = handle.geturl()
+        self._retrived_url = handle.geturl()
         handle.close()
         content = content.replace('\x00', '')
         root = self._parse_string(content)
-        root.make_links_absolute(url)
+        root.make_links_absolute(self._retrived_url)
         return root
 
     def _parse_string(self, string):
