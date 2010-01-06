@@ -12,7 +12,7 @@ The absolute minimum requirements for getting *comics* up and running is:
 
 - `Python <http://www.python.org/>`_ >= 2.5
 - `PIL <http://www.pythonware.com/products/pil/>`_ >= 1.1
-- `Django <http://www.djangoproject.com/>`_ >= 1.0
+- `Django <http://www.djangoproject.com/>`_ >= 1.1
 - `South <http://south.aeracode.org/>`_ >= 0.6
 - `feedparser <http://www.feedparser.org/>`_ >= 4.0
 - `lxml <http://codespeak.net/lxml/>`_ >= 2.0
