@@ -209,6 +209,9 @@ Available methods
 ``title(selector, default=None)``
     Returns the ``title`` attribute of the element matching ``selector``.
 
+``href(selector, default=None)``
+    Returns the ``href`` attribute of the element matching ``selector``.
+
 ``remove(selector)``
     Remove the elements matching ``selector`` from the parsed document.
 
