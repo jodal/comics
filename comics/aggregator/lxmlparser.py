@@ -14,18 +14,18 @@ class LxmlParser(object):
                 'Parser needs URL or string to operate on')
 
     def href(self, selector, default=None):
-        return self.get('href', selector, default)
+        return self._get('href', selector, default)
 
     def src(self, selector, default=None):
-        return self.get('src', selector, default)
+        return self._get('src', selector, default)
 
     def alt(self, selector, default=None):
-        return self.get('alt', selector, default)
+        return self._get('alt', selector, default)
 
     def title(self, selector, default=None):
-        return self.get('title', selector, default)
+        return self._get('title', selector, default)
 
-    def get(self, attr, selector, default=None):
+    def _get(self, attr, selector, default=None):
         try:
             return self._decode(self.select(selector).get(attr))
         except DoesNotExist:
