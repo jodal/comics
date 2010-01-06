@@ -1,11 +1,19 @@
 comics
 ======
 
-*comics* is a web based aggregator for web comics. It was originally developed
-as a tailored web application for http://comics.jodal.no/, but the source code
-has later been generalized and released for others to change and use. *comics*
-is maintained by Stein Magnus Jodal, with comments and input from numerous
-users. The software is freely available under the GNU Affero GPL version 3.
+*comics* is a web comics aggregator. Out of the box it can crawl and archive
+more than a hundred comics every day. The comics are made available through an
+easy to use web interface were multiple users can create sets of their favorite
+comics. Alternatively, *comics* provides feeds of both single comics and sets
+of comics.
+
+Adding a new comic to your installation requires only the addition of a single
+Python file with some metadata and a few lines of code. To make crawler
+development easy, *comics* comes with both documentation and powerful APIs for
+crawling web sites and feeds.
+
+*comics* runs on Python and Django. It is licensed under the GNU Affero General
+Public License version 3.
 
 - `Source code <http://github.com/jodal/comics>`_
 - `Documentation <http://jodal.github.com/comics/>`_
