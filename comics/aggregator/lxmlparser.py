@@ -16,26 +16,20 @@ class LxmlParser(object):
                 'Parser needs URL or string to operate on')
 
     def href(self, selector, default=None):
-        return self.get('href', selector, default)
+        return self._get('href', selector, default)
 
     def src(self, selector, default=None):
-        return self.get('src', selector, default)
+        return self._get('src', selector, default)
 
     def alt(self, selector, default=None):
-        return self.get('alt', selector, default)
+        return self._get('alt', selector, default)
 
     def title(self, selector, default=None):
-        return self.get('title', selector, default)
-
-    def get(self, attr, selector, default=None):
-        try:
-            return self._decode(self.select(selector).get(attr))
-        except DoesNotExist:
-            return default
+        return self._get('title', selector, default)
 
     def text(self, selector, default=None):
         try:
-            return self._decode(self.select(selector).text_content())
+            return self._decode(self._select(selector).text_content())
         except DoesNotExist:
             return default
 
@@ -43,7 +37,16 @@ class LxmlParser(object):
         for element in self.root.cssselect(selector):
             element.drop_tree()
 
-    def select(self, selector):
+    def url(self):
+        return self._retrived_url
+
+    def _get(self, attr, selector, default=None):
+        try:
+            return self._decode(self._select(selector).get(attr))
+        except DoesNotExist:
+            return default
+
+    def _select(self, selector):
         elements = self.root.cssselect(selector)
 
         if len(elements) == 0:
@@ -53,9 +56,6 @@ class LxmlParser(object):
                 (len(elements), selector))
 
         return elements[0]
-
-    def url(self):
-        return self._retrived_url
 
     def _parse_url(self, url):
         handle = urllib2.urlopen(url)

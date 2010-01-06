@@ -215,9 +215,6 @@ Available methods
 ``remove(selector)``
     Remove the elements matching ``selector`` from the parsed document.
 
-``select(selector)``
-    Return the ``lxml`` elements for the elements matching ``selector``.
-
 
 The feed parser
 ===============
