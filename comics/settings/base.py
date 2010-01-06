@@ -139,3 +139,6 @@ COMICS_LOG_FILENAME = os.path.join(PROJECT_DIR, '../comics.log')
 # Time zone used for comic crawlers without a specified time zone
 # UTC=0, CET=1, EST=-5, PST=-8
 COMICS_DEFAULT_TIME_ZONE = 1
+
+# Google Analytics tracking code
+COMICS_GOOGLE_ANALYTICS_CODE = None

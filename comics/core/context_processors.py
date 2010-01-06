@@ -6,6 +6,7 @@ def site_settings(request):
     return {
         'site_title': settings.COMICS_SITE_TITLE,
         'site_tagline': settings.COMICS_SITE_TAGLINE,
+        'google_analytics_code': settings.COMICS_GOOGLE_ANALYTICS_CODE,
     }
 
 def all_comics(request):
