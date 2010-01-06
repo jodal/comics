@@ -34,6 +34,10 @@ installed, you can install the dependencies by running::
     sudo ports install python26 py26-django py26-south py26-feedparser \
         py26-lxml py26-pil
 
+If you would like to use `pip <http://pip.openplans.org/>`_ to install these
+dependencies, a ``requirements.txt`` file for pip is provided with the
+*comics* source code.
+
 
 Optional dependencies for real deployments
 ------------------------------------------
