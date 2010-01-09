@@ -12,6 +12,5 @@ if [ "$1" = "config" ]; then
     exit 0
 fi
 
-TODAY=`date -I`
-RELEASES_TODAY=`psql $DB_NAME -qt -c "SELECT COUNT(*) FROM $RELEASE_TBL WHERE pub_date = '$TODAY'"`
+RELEASES_TODAY=`psql $DB_NAME -qt -c "SELECT COUNT(*) FROM $RELEASE_TBL WHERE pub_date = current_date"`
 echo releases_today.value $RELEASES_TODAY
