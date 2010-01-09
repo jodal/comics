@@ -6,6 +6,7 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.dieselsweeties.com/'
     start_date = '2007-01-01'
+    end_date = '2008-08-14'
     rights = 'Richard Stevens'
 
 class Crawler(CrawlerBase):
@@ -14,6 +15,4 @@ class Crawler(CrawlerBase):
     time_zone = -5
 
     def crawl(self, pub_date):
-        url = 'http://www.dieselsweeties.com/print/strips/ds%s.png' % (
-            pub_date.strftime('%Y%m%d'),)
-        return CrawlerResult(url)
+        pass # Comic no longer published
