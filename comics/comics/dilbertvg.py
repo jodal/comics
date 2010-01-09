@@ -9,11 +9,10 @@ class Meta(MetaBase):
     rights = 'Scott Adams'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 1
+    history_capable_days = 0
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = 1
 
     def crawl(self, pub_date):
-        url = 'http://www.vg.no/grafikk/dilbert/dilbert-%s.gif' % (
-            pub_date.strftime('%Y-%m-%d'),)
+        url = 'http://static.vg.no/dilbert/dilbert.gif'
         return CrawlerResult(url)
