@@ -14,8 +14,9 @@ class Crawler(CrawlerBase):
     time_zone = -7
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://www.basicinstructions.net/atom.xml')
+        feed = self.parse_feed(
+            'http://basicinstructions.net/basic-instructions/rss.xml')
         for entry in feed.for_date(pub_date):
-            url = entry.content0.src('img[src*="/comics/"]')
+            url = entry.summary.src('img[src*="/storage/"]')
             title = entry.title
             return CrawlerResult(url, title)
