@@ -9,11 +9,5 @@ class Meta(MetaBase):
     rights = 'Lars Lauvik'
 
 class Crawler(CrawlerBase):
-    history_capable_date = '2008-11-19'
-    schedule = 'We'
-    time_zone = 1
-
     def crawl(self, pub_date):
-        url = 'http://pub.tv2.no/nettavisen/tegneserie/pondus/eon/%s.gif' % (
-            pub_date.strftime('%d%m%y'),)
-        return CrawlerResult(url)
+        pass # Comic no longer published
