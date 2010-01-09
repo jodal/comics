@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# SITE_NAME, DB_NAME, COMIC_TBL, and RELEASE_TBL are assumed to be defined by
+# the environment.
+#
+
+MAX=100
+
+if [ "$1" = "config" ]; then
+    echo graph_args --rigid --upper-limit $MAX
+    echo graph_title "$SITE_NAME - Days since release"
+    echo graph_category comics
+    echo graph_vlabel
+    LABELS=`psql $DB_NAME -qt -c "SELECT slug FROM $COMIC_TBL ORDER BY slug"`
+    for LABEL in $LABELS; do
+        echo $LABEL.label $LABEL
+        echo $LABEL.warning 30
+        echo $LABEL.critical 60
+    done
+    exit 0
+fi
+
+RESULTS=`psql $DB_NAME -qtA -c "SELECT c.slug, LEAST($MAX, current_date - max(r.pub_date)) AS days_since_last FROM comics_comic AS c JOIN comics_release AS r ON (c.id = r.comic_id) GROUP BY c.slug ORDER BY c.slug"`
+for ROW in $RESULTS; do
+    LABEL=${ROW%|*}
+    VALUE=${ROW#*|}
+    echo $LABEL.value $VALUE
+done
