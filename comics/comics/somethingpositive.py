@@ -13,6 +13,6 @@ class Crawler(CrawlerBase):
     schedule = 'Mo,Tu,We,Th,Fr'
 
     def crawl(self, pub_date):
-        url = 'http://www.somethingpositive.net/arch/sp%s.gif' % (
+        url = 'http://www.somethingpositive.net/sp%s.gif' % (
             pub_date.strftime('%m%d%Y'),)
         return CrawlerResult(url)
