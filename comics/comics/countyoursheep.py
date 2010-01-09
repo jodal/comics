@@ -16,5 +16,5 @@ class Crawler(CrawlerBase):
         page_url = 'http://www.countyoursheep.com/d/%s.html' % (
             pub_date.strftime('%Y%m%d'),)
         page = self.parse_page(page_url)
-        url = page.src('img[src^="http://www.countyoursheep.com/comics/"]')
+        url = page.src('img[src^="http://countyoursheep.keenspot.com/comics/"]')
         return CrawlerResult(url)
