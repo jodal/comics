@@ -9,19 +9,14 @@ class Meta(MetaBase):
     rights = 'H. Davies, CC BY-NC-SA'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 14
+    history_capable_days = 0
     schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = -8
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.bunny-comic.com/rss/bunny.xml')
         for entry in feed.all():
-            image_name = entry.summary.src('img[src*="/strips/"]').replace(
-                'http://bunny-comic.com/strips/', '')
-            if (image_name[:6].isdigit()
-                    and pub_date == self.string_to_date(
-                    image_name[:6], '%d%m%y')):
-                url = entry.summary.src('img[src*="/strips/"]')
-                title = entry.title
-                text = entry.summary.alt('img[src*="/strips/"]')
-                return CrawlerResult(url, title, text)
+            url = entry.summary.src('img[src*="/strips/"]')
+            title = entry.title
+            text = entry.summary.alt('img[src*="/strips/"]')
+            return CrawlerResult(url, title, text)
