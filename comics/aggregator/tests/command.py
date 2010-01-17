@@ -4,7 +4,7 @@ import pmock
 from django.test import TestCase
 
 from comics.aggregator import command
-from comics.aggregator.crawler import CrawlerResult
+from comics.aggregator.crawler import CrawlerRelease
 from comics.aggregator.exceptions import ComicsError
 from comics.core.models import Comic
 
@@ -89,6 +89,7 @@ class ComicAggregatorTestCase(TestCase):
         config = command.AggregatorConfig()
         config.set_comics_to_crawl(None)
         self.aggregator = command.Aggregator(config)
+        self.aggregator.identifier = 'slug'
 
         self.comic = pmock.Mock()
         self.comic.slug = 'slug'
@@ -122,12 +123,10 @@ class ComicAggregatorTestCase(TestCase):
 
     def test_crawl_one_comic_one_date(self):
         pub_date = dt.date(2008, 3, 1)
-        release_meta = CrawlerResult('a url')
-        release_meta.comic = self.comic
-        release_meta.pub_date = pub_date
+        crawler_release = CrawlerRelease(self.comic, pub_date)
         self.crawler_mock.expects(
-            pmock.once()).get_release_meta(pmock.eq(pub_date)).will(
-            pmock.return_value(release_meta))
+            pmock.once()).get_crawler_release(pmock.eq(pub_date)).will(
+            pmock.return_value(crawler_release))
 
         self.aggregator._crawl_one_comic_one_date(
             self.crawler_mock, pub_date)
@@ -135,14 +134,12 @@ class ComicAggregatorTestCase(TestCase):
         self.crawler_mock.verify()
 
     def test_download_release(self):
-        release_meta = CrawlerResult('a url')
-        release_meta.comic = self.comic
-        release_meta.pub_date = dt.date(2008, 3, 1)
+        crawler_release = CrawlerRelease(self.comic, dt.date(2008, 3, 1))
         self.downloader_mock.expects(
-            pmock.once()).download_release(pmock.eq(release_meta))
+            pmock.once()).download(pmock.eq(crawler_release))
         self.aggregator._get_downloader = lambda: self.downloader_mock
 
-        self.aggregator._download_release(release_meta)
+        self.aggregator._download_release(crawler_release)
 
         self.downloader_mock.verify()
 

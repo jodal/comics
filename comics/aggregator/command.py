@@ -5,7 +5,7 @@ import logging
 import socket
 import urllib2
 
-from comics.aggregator.downloader import Downloader
+from comics.aggregator.downloader import ReleaseDownloader
 from comics.core.exceptions import ComicsError
 from comics.comics import get_comic_module
 
@@ -34,11 +34,9 @@ class Aggregator(object):
 
     def start(self):
         start_time = dt.datetime.now()
-
         for comic in self.config.comics:
             self.identifier = comic.slug
             self._aggregate_one_comic(comic)
-
         ellapsed_time = dt.datetime.now() - start_time
         logger.info('Crawling completed in %s', ellapsed_time)
 
@@ -56,31 +54,32 @@ class Aggregator(object):
         pub_date = from_date
         while pub_date <= to_date:
             self.identifier = u'%s/%s' % (comic.slug, pub_date)
-            release_meta = self._crawl_one_comic_one_date(crawler, pub_date)
-            if release_meta:
-                self._download_release(release_meta)
+            crawler_release = self._crawl_one_comic_one_date(crawler, pub_date)
+            if crawler_release:
+                self._download_release(crawler_release)
             pub_date += dt.timedelta(days=1)
 
     @log_errors
     def _crawl_one_comic_one_date(self, crawler, pub_date):
         logger.debug('Crawling %s for %s', crawler.comic.slug, pub_date)
-        release_meta = crawler.get_release_meta(pub_date)
-        if release_meta:
-            logger.debug('Release: %s', release_meta.identifier)
-            logger.debug('Image URL: %s', release_meta.url)
-            logger.debug('Image title: %s', release_meta.title)
-            logger.debug('Image text: %s', release_meta.text)
-        return release_meta
+        crawler_release = crawler.get_crawler_release(pub_date)
+        if crawler_release:
+            logger.debug('Release: %s', crawler_release.identifier)
+            for image in crawler_release.images:
+                logger.debug('Image URL: %s', image.url)
+                logger.debug('Image title: %s', image.title)
+                logger.debug('Image text: %s', image.text)
+        return crawler_release
 
     @log_errors
-    def _download_release(self, release_meta):
-        logger.debug('Downloading %s', release_meta.identifier)
+    def _download_release(self, crawler_release):
+        logger.debug('Downloading %s', crawler_release.identifier)
         downloader = self._get_downloader()
-        downloader.download_release(release_meta)
-        logger.info('%s: Release saved', release_meta.identifier)
+        downloader.download(crawler_release)
+        logger.info('%s: Release saved', crawler_release.identifier)
 
     def _get_downloader(self):
-        return Downloader()
+        return ReleaseDownloader()
 
     def _get_crawler(self, comic):
         module = get_comic_module(comic.slug)
