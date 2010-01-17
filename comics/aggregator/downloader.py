@@ -1,4 +1,4 @@
-from __future__ import with_statement
+import hashlib
 import mimetypes
 import tempfile
 import urllib2
@@ -10,38 +10,100 @@ from django.db import transaction
 from comics.aggregator.exceptions import (FileNotAnImage, DownloaderHTTPError,
     ImageAlreadyExists, ImageIsBlacklisted)
 from comics.core.models import Release, Image
-from comics.utils.hash import sha256sum
 
-class Downloader(object):
-    def download_release(self, release_meta):
-        (image, filename, checksum) = self._download_image(release_meta)
-        original_image = self._get_image_by_checksum(release_meta, checksum)
-        if original_image is not None and release_meta.has_rerun_releases:
-            self._save_rerun_release(release_meta, original_image)
-        elif original_image is not None and not release_meta.has_rerun_releases:
-            raise ImageAlreadyExists(release_meta.identifier)
-        else:
-            self._save_new_release(release_meta, image, filename, checksum)
+class ReleaseDownloader(object):
+    def download(self, crawler_release):
+        images = self._download_images(crawler_release)
+        return self._create_new_release(
+            crawler_release.comic, crawler_release.pub_date, images)
 
-    def _download_image(self, release_meta):
+    def _download_images(self, crawler_release):
+        images = []
+        for crawler_image in crawler_release.images:
+            image_downloader = ImageDownloader(crawler_release)
+            image = image_downloader.download(crawler_image)
+            images.append(image)
+        return images
+
+    @transaction.commit_on_success
+    def _create_new_release(self, comic, pub_date, images):
+        release = Release(comic=comic, pub_date=pub_date)
+        release.save()
+        for image in images:
+            release.images.add(image)
+        return release
+
+
+class ImageDownloader(object):
+    def __init__(self, crawler_release):
+        self.comic = crawler_release.comic
+        self.pub_date = crawler_release.pub_date
+        self.has_reruns = crawler_release.has_rerun_releases
+        self.check_image_mime_type = crawler_release.check_image_mime_type
+        self.file = None
+        self.file_extension = None
+        self.file_checksum = None
+
+    def download(self, crawler_image):
+        self._download_image(crawler_image.url, crawler_image.request_headers)
+        self._check_if_blacklisted(self.file_checksum)
+        existing_image = self._get_existing_image(self.file_checksum)
+        if existing_image is not None:
+            return existing_image
+        return self._create_new_image(crawler_image.title, crawler_image.text)
+
+    @property
+    def identifier(self):
+        identifier = '%s/%s' % (self.comic.slug, self.pub_date)
+        if self.file_checksum:
+            identifier = '%s/%s' % (identifier, self.file_checksum[:6])
+        return identifier
+
+    @property
+    def file_name(self):
+        if self.file_checksum and self.file_extension:
+            return '%s%s' % (self.file_checksum, self.file_extension)
+
+    def _download_image(self, url, request_headers):
         try:
-            request = urllib2.Request(release_meta.url, None,
-                release_meta.request_headers)
+            request = urllib2.Request(url, None, request_headers)
             http_file = urllib2.urlopen(request)
-            self._check_image_mime_type(release_meta, http_file)
-            image = self._get_temporary_file(http_file)
-            checksum = sha256sum(filehandle=image)
-            self._check_if_blacklisted(release_meta, checksum)
-            filename = '%s%s' % (checksum, self._get_file_extension(http_file))
+            self._check_image_mime_type(http_file)
+            self.file = self._get_temporary_file(http_file)
+            self.file_extension = self._get_file_extension(http_file)
+            self.file_checksum = self._get_sha256sum(self.file)
             http_file.close()
-            return (File(image), filename, checksum)
         except urllib2.HTTPError, error:
-            raise DownloaderHTTPError(release_meta.identifier, error)
+            raise DownloaderHTTPError(self.identifier, error)
 
-    def _check_image_mime_type(self, release_meta, http_file):
-        if (release_meta.check_image_mime_type
+    def _check_if_blacklisted(self, checksum):
+        if checksum in settings.COMICS_IMAGE_BLACKLIST:
+            raise ImageIsBlacklisted(self.identifier)
+
+    def _get_existing_image(self, checksum):
+        try:
+            image = Image.objects.get(comic=self.comic, checksum=checksum)
+            if image is not None and not self.has_reruns:
+                raise ImageAlreadyExists(self.identifier)
+            return image
+        except Image.DoesNotExist:
+            return None
+
+    @transaction.commit_on_success
+    def _create_new_image(self, title, text):
+        image = Image(comic=self.comic, checksum=self.file_checksum)
+        image.file.save(self.file_name, File(self.file))
+        if title is not None:
+            image.title = title
+        if text is not None:
+            image.text = text
+        image.save()
+        return image
+
+    def _check_image_mime_type(self, http_file):
+        if (self.check_image_mime_type
                 and not http_file.info().getmaintype() == 'image'):
-            raise FileNotAnImage(release_meta.identifier)
+            raise FileNotAnImage(self.identifier)
 
     def _get_temporary_file(self, source_file):
         tmp = tempfile.NamedTemporaryFile(suffix='comics')
@@ -55,34 +117,13 @@ class Downloader(object):
             file_ext = '.jpg'
         return file_ext
 
-    def _check_if_blacklisted(self, release_meta, checksum):
-        if checksum in settings.COMICS_IMAGE_BLACKLIST:
-            raise ImageIsBlacklisted(release_meta.identifier)
-
-    def _get_image_by_checksum(self, release_meta, checksum):
-        try:
-            return Image.objects.get(comic=release_meta.comic,
-                checksum=checksum)
-        except Image.DoesNotExist:
-            return None
-
-    def _save_new_release(self, release_meta, image_file, filename, checksum):
-        image = Image(comic=release_meta.comic, checksum=checksum)
-        image.file.save(filename, image_file)
-        if release_meta.title is not None:
-            image.title = release_meta.title
-        if release_meta.text is not None:
-            image.text = release_meta.text
-        self._save_image_and_release(release_meta, image, new_release=True)
-
-    def _save_rerun_release(self, release_meta, image):
-        self._save_image_and_release(release_meta, image, new_release=False)
-
-    @transaction.commit_on_success
-    def _save_image_and_release(self, release_meta, image, new_release=True):
-        if new_release:
-            image.save()
-        release = Release(
-            comic=release_meta.comic, pub_date=release_meta.pub_date)
-        release.save()
-        release.images.add(image)
+    def _get_sha256sum(self, file_handle):
+        original_position = file_handle.tell()
+        hash = hashlib.sha256()
+        while True:
+            data = file_handle.read(8096)
+            if not data:
+                break
+            hash.update(data)
+        file_handle.seek(original_position)
+        return hash.hexdigest()
