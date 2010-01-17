@@ -86,6 +86,9 @@ class Release(models.Model):
         except IndexError:
             pass
 
+    def get_ordered_images(self):
+        return self.images.order_by('id')
+
 
 # Let all created dirs and files be writable by the group
 os.umask(0002)

@@ -1,4 +1,4 @@
-{% for image in release.images.all %}
+{% for image in release.get_ordered_images %}
 
     {% if image.title %}
         <h4>&ldquo;{{ image.title|safe }}&rdquo;</h4>
