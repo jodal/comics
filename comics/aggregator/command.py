@@ -12,6 +12,18 @@ from comics.comics import get_comic_module
 logger = logging.getLogger('comics.aggregator.command')
 socket.setdefaulttimeout(10)
 
+def log_errors(func):
+    def inner(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except ComicsError, error:
+            logger.info(error)
+        except urllib2.URLError, error:
+            logger.error(u'%s: %s', args[0].identifier, error)
+        except Exception, error:
+            logger.exception(u'%s: %s', args[0].identifier, error)
+    return inner
+
 class Aggregator(object):
     def __init__(self, config=None, optparse_options=None):
         if config is None and optparse_options is not None:
@@ -25,7 +37,7 @@ class Aggregator(object):
 
         for comic in self.config.comics:
             self.identifier = comic.slug
-            self._try(self._aggregate_one_comic, comic)
+            self._aggregate_one_comic(comic)
 
         ellapsed_time = dt.datetime.now() - start_time
         logger.info('Crawling completed in %s', ellapsed_time)
@@ -33,6 +45,7 @@ class Aggregator(object):
     def stop(self):
         pass
 
+    @log_errors
     def _aggregate_one_comic(self, comic):
         crawler = self._get_crawler(comic)
         from_date = self._get_valid_date(crawler, self.config.from_date)
@@ -43,12 +56,12 @@ class Aggregator(object):
         pub_date = from_date
         while pub_date <= to_date:
             self.identifier = u'%s/%s' % (comic.slug, pub_date)
-            release_meta = self._try(self._crawl_one_comic_one_date,
-                crawler, pub_date)
+            release_meta = self._crawl_one_comic_one_date(crawler, pub_date)
             if release_meta:
-                self._try(self._download_release, release_meta)
+                self._download_release(release_meta)
             pub_date += dt.timedelta(days=1)
 
+    @log_errors
     def _crawl_one_comic_one_date(self, crawler, pub_date):
         logger.debug('Crawling %s for %s', crawler.comic.slug, pub_date)
         release_meta = crawler.get_release_meta(pub_date)
@@ -59,6 +72,7 @@ class Aggregator(object):
             logger.debug('Image text: %s', release_meta.text)
         return release_meta
 
+    @log_errors
     def _download_release(self, release_meta):
         logger.debug('Downloading %s', release_meta.identifier)
         downloader = self._get_downloader()
@@ -67,16 +81,6 @@ class Aggregator(object):
 
     def _get_downloader(self):
         return Downloader()
-
-    def _try(self, func, *args, **kwargs):
-        try:
-            return func(*args, **kwargs)
-        except ComicsError, error:
-            logger.info(error)
-        except urllib2.URLError, error:
-            logger.error(u'%s: %s', self.identifier, error)
-        except Exception, error:
-            logger.exception(u'%s: %s', self.identifier, error)
 
     def _get_crawler(self, comic):
         module = get_comic_module(comic.slug)
