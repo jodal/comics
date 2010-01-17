@@ -9,18 +9,6 @@ from comics.aggregator.exceptions import (CrawlerHTTPError, ImageURLNotFound,
 from comics.aggregator.feedparser import FeedParser
 from comics.aggregator.lxmlparser import LxmlParser
 
-class CrawlerResult(object):
-    def __init__(self, url, title=None, text=None, headers=None):
-        self.url = url
-        self.title = title
-        self.text = text
-        self.request_headers = headers or {}
-
-    def validate(self, identifier):
-        if not self.url:
-            raise ImageURLNotFound(identifier)
-
-
 class CrawlerRelease(object):
     def __init__(self, comic, pub_date,
             check_image_mime_type=True, has_rerun_releases=False):
@@ -41,6 +29,18 @@ class CrawlerRelease(object):
     def add_image(self, image):
         image.validate(self.identifier)
         self._images.append(image)
+
+
+class CrawlerImage(object):
+    def __init__(self, url, title=None, text=None, headers=None):
+        self.url = url
+        self.title = title
+        self.text = text
+        self.request_headers = headers or {}
+
+    def validate(self, identifier):
+        if not self.url:
+            raise ImageURLNotFound(identifier)
 
 
 class CrawlerBase(object):
@@ -177,4 +177,4 @@ class ComicsComCrawlerBase(CrawlerBase):
         }
         page = self.parse_page(page_url)
         url = page.src('a.STR_StripImage img[alt^="%s"]' % comics_com_title)
-        return CrawlerResult(url)
+        return CrawlerImage(url)
