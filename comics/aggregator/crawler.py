@@ -91,7 +91,7 @@ class CrawlerBase(object):
         if results is None:
             return
 
-        if type(results) != list:
+        if not hasattr(results, '__iter__'):
             results = [results]
 
         for result in results:
