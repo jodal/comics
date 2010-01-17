@@ -23,8 +23,6 @@ Todo list
 
 A loosely prioritized list of things to fix. Patches accepted.
 
-``multi-image``
-    Support multiple images per comic release, see :ref:`spec-multi-image`.
 ``bin/smush``
     Process images with ``bin/smush`` to reduce their size 10-20% (without
     affecting their quality) and thus reducing page load time.
