@@ -37,8 +37,9 @@ class Aggregator(object):
         crawler = self._get_crawler(comic)
         from_date = self._get_valid_date(crawler, self.config.from_date)
         to_date = self._get_valid_date(crawler, self.config.to_date)
-        logger.info('%s: Crawling from %s to %s'
-            % (comic.slug, from_date, to_date))
+        if from_date != to_date:
+            logger.info('%s: Crawling from %s to %s',
+                comic.slug, from_date, to_date)
         pub_date = from_date
         while pub_date <= to_date:
             self.identifier = u'%s/%s' % (comic.slug, pub_date)
