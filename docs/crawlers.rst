@@ -169,6 +169,39 @@ Though, for most crawlers, some interaction with RSS or Atom feeds or web pages
 are needed. For this a web parser and a feed parser are provided.
 
 
+Returning multiple images for a single comic release
+----------------------------------------------------
+
+Some comics got releases with multiple images, and thus returning a single
+``CrawlerImage`` will not be enough for you. For situations like these,
+*comics* lets you return a list of ``CrawlerImage`` objects from ``crawl()``.
+The list should be ordered in the same way as the comic is meant to be read,
+with the first frame as the first element in the list. If the comic release got
+a ``title``, add it to the first ``CrawlerImage`` object, and let the ``title``
+field stay empty on the rest of the list elements. The same applies for the
+``text`` field, unless each image actually got a different ``title`` or
+``text`` string.
+
+The following is an example of a ``crawl()`` method which returns multiple
+images. It adds a ``title`` to the first list element, and different ``text``
+to all of the elements.
+
+::
+
+    def crawl(self, pub_date):
+        feed = self.parse_feed('http://feeds.feedburner.com/Pidjin')
+        for entry in feed.for_date(pub_date):
+            result = []
+            for i in range(1, 10):
+                url = entry.content0.src('img[src$="000%d.jpg"]' % i)
+                text = entry.content0.title('img[src$="000%d.jpg"]' % i)
+                if url and text:
+                    result.append(CrawlerImage(url, text=text))
+            if result:
+                result[0].title = entry.title
+            return result
+
+
 The web parser
 ==============
 

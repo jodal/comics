@@ -6,7 +6,7 @@ Spec-003: Multiple images per comic release
 *Spec created:*
     2009-12-14
 *Spec implemented:*
-    N/A
+    2010-01-17
 
 
 Goals
@@ -27,4 +27,4 @@ Implementation plan
 4. [done, 2010-01-05] Update web view and feed view to support multiple images
    per release.
 5. [done, 2010-01-17] Update aggregator to support multiple images per release.
-6. Update docs on how to create crawlers.
+6. [done, 2010-01-17] Update docs on how to create crawlers.
