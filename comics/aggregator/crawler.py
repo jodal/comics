@@ -16,12 +16,9 @@ class CrawlerResult(object):
         self.text = text
         self.request_headers = headers or {}
 
-    def validate(self):
-        self._check_image_url()
-
-    def _check_image_url(self):
+    def validate(self, identifier):
         if not self.url:
-            raise ImageURLNotFound(self.identifier)
+            raise ImageURLNotFound(identifier)
 
 
 class CrawlerRelease(object):
@@ -42,7 +39,7 @@ class CrawlerRelease(object):
         return self._images
 
     def add_image(self, image):
-        image.validate()
+        image.validate(self.identifier)
         self._images.append(image)
 
 
