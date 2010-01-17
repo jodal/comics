@@ -16,22 +16,35 @@ class CrawlerResult(object):
         self.text = text
         self.request_headers = headers or {}
 
-    def validate(self, comic, pub_date):
-        self.comic = comic
-        self.pub_date = pub_date
+    def validate(self):
         self._check_image_url()
-
-    def set_download_settings(self, check_image_mime_type, has_rerun_releases):
-        self.check_image_mime_type = check_image_mime_type
-        self.has_rerun_releases = has_rerun_releases
 
     def _check_image_url(self):
         if not self.url:
             raise ImageURLNotFound(self.identifier)
 
+
+class CrawlerRelease(object):
+    def __init__(self, comic, pub_date,
+            check_image_mime_type=True, has_rerun_releases=False):
+        self.comic = comic
+        self.pub_date = pub_date
+        self.check_image_mime_type = check_image_mime_type
+        self.has_rerun_releases = has_rerun_releases
+        self._images = []
+
     @property
     def identifier(self):
        return u'%s/%s' % (self.comic.slug, self.pub_date)
+
+    @property
+    def images(self):
+        return self._images
+
+    def add_image(self, image):
+        image.validate()
+        self._images.append(image)
+
 
 class CrawlerBase(object):
     ### Crawler settings
@@ -62,23 +75,29 @@ class CrawlerBase(object):
     def __init__(self, comic):
         self.comic = comic
 
-    def get_release_meta(self, pub_date=None):
+    def get_crawler_release(self, pub_date=None):
         """Get meta data for release at pub_date, or the latest release"""
 
         pub_date = self._get_date_to_crawl(pub_date)
+        release = CrawlerRelease(self.comic, pub_date,
+            check_image_mime_type=self.check_image_mime_type,
+            has_rerun_releases=self.has_rerun_releases)
 
         try:
-            result = self.crawl(pub_date)
+            results = self.crawl(pub_date)
         except urllib2.HTTPError, error:
-            identifier = u'%s/%s' % (self.comic.slug, pub_date)
-            raise CrawlerHTTPError(identifier, error)
+            raise CrawlerHTTPError(release.identifier, error)
 
-        if result is not None:
-            result.validate(self.comic, pub_date)
-            result.set_download_settings(
-                check_image_mime_type=self.check_image_mime_type,
-                has_rerun_releases=self.has_rerun_releases)
-            return result
+        if results is None:
+            return
+
+        if type(results) != list:
+            results = [results]
+
+        for result in results:
+            release.add_image(result)
+
+        return release
 
     def _get_date_to_crawl(self, pub_date):
         identifier = u'%s/%s' % (self.comic.slug, pub_date)
