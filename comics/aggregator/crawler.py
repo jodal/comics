@@ -114,14 +114,6 @@ class CrawlerBase(object):
         else:
             return dt.date.today()
 
-    def schedule_as_isoweekday(self):
-        weekday_mapping = {'Mo': 1, 'Tu': 2, 'We': 3,
-            'Th': 4, 'Fr': 5, 'Sa': 6, 'Su': 7}
-        iso_schedule = []
-        for weekday in self.schedule.split(','):
-            iso_schedule.append(weekday_mapping[weekday])
-        return iso_schedule
-
     def crawl(self, pub_date):
         """
         Must be overridden by all crawlers
