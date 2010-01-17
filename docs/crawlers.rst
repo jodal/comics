@@ -17,7 +17,7 @@ contains properties needed for crawling and the crawler implementation itself.
 
 .. code-block:: python
 
-    from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+    from comics.aggregator.crawler import CrawlerBase, CrawlerImage
     from comics.meta.base import MetaBase
 
     class Meta(MetaBase):
@@ -38,7 +38,7 @@ contains properties needed for crawling and the crawler implementation itself.
                 url = entry.summary.src('img[src*="/comics/"]')
                 title = entry.title
                 text = entry.summary.alt('img[src*="/comics/"]')
-                return CrawlerResult(url, title, text)
+                return CrawlerImage(url, title, text)
 
 
 The ``Meta`` class fields
@@ -129,7 +129,7 @@ let's look at *XKCD*'s ``crawl()`` method::
             url = entry.summary.src('img[src*="/comics/"]')
             title = entry.title
             text = entry.summary.alt('img[src*="/comics/"]')
-            return CrawlerResult(url, title, text)
+            return CrawlerImage(url, title, text)
 
 
 Arguments and return values
@@ -137,33 +137,33 @@ Arguments and return values
 
 The ``crawl()`` method takes a single argument, ``pub_date``, which is a
 ``datetime.date`` object for the date the crawler is currently crawling. The
-goal of the method is to return a ``CrawlerResult`` object containing at least
+goal of the method is to return a ``CrawlerImage`` object containing at least
 the URL of the image for ``pub_date`` and optionally a ``title`` and ``text``
-accompanying the image. ``CrawlerResult``'s signature is::
+accompanying the image. ``CrawlerImage``'s signature is::
 
-    CrawlerResult(url, title=None, text=None)
+    CrawlerImage(url, title=None, text=None)
 
 This means that you must always supply an URL, and that you can supply a
 ``text`` without a ``title``. The following are all valid ways to create a
-``CrawlerResult``::
+``CrawlerImage``::
 
-    CrawlerResult(url)
-    CrawlerResult(url, title)
-    CrawlerResult(url, title, text)
-    CrawlerResult(url, title=title)
-    CrawlerResult(url, text=text)
-    CrawlerResult(url, title=title, text=text)
+    CrawlerImage(url)
+    CrawlerImage(url, title)
+    CrawlerImage(url, title, text)
+    CrawlerImage(url, title=title)
+    CrawlerImage(url, text=text)
+    CrawlerImage(url, title=title, text=text)
 
 For some crawlers, this is all you need. If the image URL is predictable and
 based upon the ``pub_date`` in some way, just create the URL with the help
 of `Python's strftime documentation
 <http://docs.python.org/library/datetime.html#strftime-behavior>`_, and return
-it wrapped in a ``CrawlerResult``::
+it wrapped in a ``CrawlerImage``::
 
     def crawl(self, pub_date):
         url = 'http://www.example.com/comics/%s.png' % (
             pub_date.strftime('%Y-%m-%d'),)
-        return CrawlerResult(url)
+        return CrawlerImage(url)
 
 Though, for most crawlers, some interaction with RSS or Atom feeds or web pages
 are needed. For this a web parser and a feed parser are provided.
@@ -180,7 +180,7 @@ extract content from HTML::
             pub_date.strftime('%Y%m%d'),)
         page = self.parse_page(page_url)
         url = page.src('img[alt^="Strip for"]')
-        return CrawlerResult(url)
+        return CrawlerImage(url)
 
 This is a common pattern for crawlers. Another common patterns is to use a feed
 to find the web page URL for the given date, then parse that web page to find
@@ -241,7 +241,7 @@ returns to find the image URL::
 
     for entry in feed.for_date(pub_date):
         # parsing comes here
-        return CrawlerResult(url)
+        return CrawlerImage(url)
 
 
 Entry fields with ``LxmlParser``
