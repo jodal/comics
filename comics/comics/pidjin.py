@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
@@ -21,7 +21,7 @@ class Crawler(CrawlerBase):
                 url = entry.content0.src('img[src$="000%d.jpg"]' % i)
                 text = entry.content0.title('img[src$="000%d.jpg"]' % i)
                 if url and text:
-                    result.append(CrawlerResult(url, text=text))
+                    result.append(CrawlerImage(url, text=text))
             if result:
                 result[0].title = entry.title
             return result

@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
@@ -20,4 +20,4 @@ class Crawler(CrawlerBase):
             'Referer': 'http://www.brinkcomic.com/d/%s/' % (
                 pub_date.strftime('%Y%m%d'),)
         }
-        return CrawlerResult(url, headers=headers)
+        return CrawlerImage(url, headers=headers)

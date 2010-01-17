@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
@@ -17,4 +17,4 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         url = 'http://www.dagbladet.no/tegneserie/rutetidarkiv/serve.php?%s' % (
             self.date_to_epoch(pub_date),)
-        return CrawlerResult(url)
+        return CrawlerImage(url)

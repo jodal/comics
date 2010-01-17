@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
@@ -19,4 +19,4 @@ class Crawler(CrawlerBase):
                 title = entry.title.replace('Comic: ', '')
                 url = 'http://fanboys-online.com/comics/%s.jpg' % (
                     pub_date.strftime('%Y%m%d'),)
-                return CrawlerResult(url, title)
+                return CrawlerImage(url, title)

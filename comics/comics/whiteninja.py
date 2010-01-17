@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
@@ -20,4 +20,4 @@ class Crawler(CrawlerBase):
             page.remove('img[src*="/images/comics/t-"]')
             url = page.src('img[src*="/images/comics/"]')
             title = entry.title.split(' - ')[0]
-            return CrawlerResult(url, title)
+            return CrawlerImage(url, title)

@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
@@ -25,4 +25,4 @@ class Crawler(CrawlerBase):
         url = page.src('#ei_strip')
         title = page.text('#seriesselect option[selected]')
 
-        return CrawlerResult(url, title)
+        return CrawlerImage(url, title)

@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
@@ -19,4 +19,4 @@ class Crawler(CrawlerBase):
             if 'Comic' in entry.tags:
                 title = entry.title
                 url = entry.content0.src(u'img[src*="/comics/"]')
-                return CrawlerResult(url, title)
+                return CrawlerImage(url, title)

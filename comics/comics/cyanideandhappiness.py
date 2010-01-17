@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
@@ -19,4 +19,4 @@ class Crawler(CrawlerBase):
             page = self.parse_page(entry.link)
             url = page.src(
                 'img[alt="Cyanide and Happiness, a daily webcomic"]')
-            return CrawlerResult(url)
+            return CrawlerImage(url)

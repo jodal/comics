@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
@@ -28,4 +28,4 @@ class Crawler(CrawlerBase):
             title = entry.title
 
             # FIXME Store "Bizarro is brought to you today by ..."
-            return CrawlerResult(url, title)
+            return CrawlerImage(url, title)

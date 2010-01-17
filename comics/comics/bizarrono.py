@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
@@ -18,4 +18,4 @@ class Crawler(CrawlerBase):
             'http://underholdning.no.msn.com/rss/bizarro.aspx')
         for entry in feed.for_date(pub_date):
             url = entry.enclosures[0].href
-            return CrawlerResult(url)
+            return CrawlerImage(url)

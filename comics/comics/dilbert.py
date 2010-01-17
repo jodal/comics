@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
@@ -16,4 +16,4 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed('http://feeds.feedburner.com/DilbertDailyStrip')
         for entry in feed.for_date(pub_date):
             url = entry.summary.src('img[src*="dilbert.com"]')
-            return CrawlerResult(url)
+            return CrawlerImage(url)

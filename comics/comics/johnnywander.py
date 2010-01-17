@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
@@ -19,4 +19,4 @@ class Crawler(CrawlerBase):
             url = entry.summary.src('img')
             title = entry.title
             text = entry.summary.title('img')
-            return CrawlerResult(url, title, text)
+            return CrawlerImage(url, title, text)

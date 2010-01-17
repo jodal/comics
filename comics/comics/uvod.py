@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
@@ -18,4 +18,4 @@ class Crawler(CrawlerBase):
             if entry.title.startswith('Strip #'):
                 url = entry.content0.src('img')
                 title = entry.summary.text('')
-                return CrawlerResult(url, title)
+                return CrawlerImage(url, title)

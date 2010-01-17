@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
@@ -16,4 +16,4 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         url = 'http://yafgc.shipsinker.com/istrip_files/strips/%s.jpg' % (
             pub_date.strftime('%Y%m%d'),)
-        return CrawlerResult(url)
+        return CrawlerImage(url)

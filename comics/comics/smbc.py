@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
@@ -17,4 +17,4 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed('http://www.smbc-comics.com/rss.php')
         for entry in feed.for_date(pub_date):
             url = entry.summary.src('img')
-            return CrawlerResult(url)
+            return CrawlerImage(url)

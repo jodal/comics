@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
@@ -18,4 +18,4 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         url = 'http://pub.tv2.no/nettavisen/tegneserie/pondus/veslemoy/%s.jpg' % (
             pub_date.strftime('%d%m%y'),)
-        return CrawlerResult(url)
+        return CrawlerImage(url)

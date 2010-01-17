@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
@@ -16,4 +16,4 @@ class Crawler(CrawlerBase):
             pub_date.strftime('%m%d%Y'),)
         page = self.parse_page(page_url)
         url = page.src('div > img')
-        return CrawlerResult(url)
+        return CrawlerImage(url)

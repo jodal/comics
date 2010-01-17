@@ -1,6 +1,6 @@
 import re
 
-from comics.aggregator.crawler import CrawlerBase, CrawlerResult
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
@@ -37,4 +37,4 @@ class Crawler(CrawlerBase):
             else:
                 comments = None
 
-            return CrawlerResult(url, title, comments)
+            return CrawlerImage(url, title, comments)
