@@ -65,9 +65,11 @@ Additional dependencies which are handy for development:
 Get *comics*
 ============
 
-Get hold of a fresh version of *comics* by cloning the Git repository::
+You can get hold of *comics* in two ways:
 
-    git clone git://github.com/jodal/comics
+- Download the lastest release from http://github.com/jodal/comics/downloads.
+- Get the latest development version of *comics* by cloning the Git
+  repository, by running ``git clone git://github.com/jodal/comics``.
 
 
 Run *comics*
@@ -76,9 +78,16 @@ Run *comics*
 To get *comics* to a state useful for testing of new crawlers and personal
 usage, the following steps are all that is needed.
 
-A file-based SQLite database will be used by default [#sqlite]_. To create the
-database and database schema, open a terminal, go to the ``comics/comics/``
-directory, and run::
+
+Create database
+---------------
+
+A file-based SQLite database will be used, unless you have created a file
+``comics/comics/settings/local.py`` where you have configured another database,
+like PostgreSQL.
+
+To create the database and database schema, open a terminal, go to the
+``comics/comics/`` directory, and run::
 
     python manage.py syncdb
 
@@ -87,6 +96,10 @@ create that part of the database, run::
 
     python manage.py migrate
 
+
+Seed database
+-------------
+
 Then we need to seed the database with information on what comics exist::
 
     python manage.py loadmeta
@@ -94,10 +107,18 @@ Then we need to seed the database with information on what comics exist::
 Optionally, you can add ``-c xkcd`` to only load the *XKCD* comic from
 ``comics/comics/comics/xkcd.py``.
 
+
+Get some comics
+---------------
+
 Next, we need to get hold of some comic releases, so we will crawl the web for
 them::
 
     python manage.py getcomics
+
+
+Development web server
+----------------------
 
 Finally, to be able to browse the comic releases we have aggregated, start the
 Django development web server by running::
@@ -109,13 +130,11 @@ browse all available comics. If you provided a username and password at the
 ``syncdb`` step, you can log in at http://localhost:8000/admin/ to do simple
 administration tasks, like removing comics or releases.
 
+
+Final notes
+-----------
+
 All of these commands answers to the ``--help`` argument. I.e. ``getcomics``
 can crawl specific comics, and arbitrary ranges of dates instead of just
 getting the latest release.
-
-
-.. rubric:: Footnotes
-
-.. [#sqlite] Unless you have created a file ``comics/comics/settings/local.py``
-    where you have configured another database.
 
