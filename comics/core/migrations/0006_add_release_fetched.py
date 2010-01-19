@@ -8,6 +8,9 @@ class Migration:
     def forwards(self, orm):
         # Adding field 'Release.fetched'
         db.add_column('comics_release', 'fetched', models.DateTimeField(auto_now_add=True, default=dt.datetime.now), keep_default=False)
+        # Fix for South bug #316 in sqlite3 backend
+        if hasattr(db, '_populate_current_structure'):
+            db._populate_current_structure('comics_release', force=True)
 
     def backwards(self, orm):
         # Deleting field 'Release.fetched'

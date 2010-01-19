@@ -6,6 +6,14 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
+Unreleased
+==========
+
+Bugfixes:
+
+* Make core/0006 migration work on the sqlite3 backend.
+
+
 1.0.0.rc1 (2010-01-17)
 ======================
 
