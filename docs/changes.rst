@@ -6,8 +6,11 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
-Unreleased
-==========
+1.0.0.rc2 (2010-01-19)
+======================
+
+Second release candidate for 1.0.0. Again, I will bump to 1.0.0 in a week if no
+new issues arises.
 
 Bugfixes:
 
