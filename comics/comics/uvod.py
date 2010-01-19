@@ -13,9 +13,9 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         feed = self.parse_feed(
-            'http://www.macguff.fr/goomi/unspeakable/rss.xml')
+            'http://www.goominet.com/unspeakable-vault/'
+            '?type=103&ecorss[clear_cache]=1')
         for entry in feed.for_date(pub_date):
-            if entry.title.startswith('Strip #'):
-                url = entry.content0.src('img')
-                title = entry.summary.text('')
-                return CrawlerImage(url, title)
+            url = entry.summary.src('img')
+            title = entry.title
+            return CrawlerImage(url, title)

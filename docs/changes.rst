@@ -6,6 +6,14 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
+Unreleased
+==========
+
+Features:
+
+* Update ``uvod`` crawler to use new feed.
+
+
 1.0.0.rc2 (2010-01-19)
 ======================
 
