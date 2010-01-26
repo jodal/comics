@@ -6,8 +6,10 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
-Unreleased
-==========
+1.0.0 (2010-01-27)
+==================
+
+A week has gone, and here is the 1.0.0 final release. Enjoy :-)
 
 Features:
 
