@@ -87,8 +87,8 @@ doctest:
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in _build/doctest/output.txt."
 
-public: clean html
-	rm -rf /tmp/comics-html && cp -r _build/html /tmp/comics-html
+public: clean dirhtml
+	rm -rf /tmp/comics-html && cp -r _build/dirhtml /tmp/comics-html
 	git stash save
 	cd .. && \
 	    git checkout gh-pages && \
@@ -99,6 +99,6 @@ public: clean html
 	    (find . -type f | xargs sed -i -e 's/_sources/sources/g') && \
 	    mv _static static && \
 	    (find . -type f | xargs sed -i -e 's/_static/static/g') && \
-	    mv _images images && \
+	    if [ -d _images ]; then mv _images images; fi && \
 	    (find . -type f | xargs sed -i -e 's/_images/images/g') && \
 	    git add *
