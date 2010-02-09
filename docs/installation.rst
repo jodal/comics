@@ -19,8 +19,8 @@ The absolute minimum requirements for getting *comics* up and running is:
 
 To install these on Ubuntu 9.10, run::
 
-    sudo aptitude install python-pip python-django python-feedparser \
-        python-lxml python-imaging
+    sudo aptitude install python-setuptools python-pip python-django \
+        python-feedparser python-lxml python-imaging
     sudo pip install South
 
 To install these on Ubuntu 10.04, run::
