@@ -15,21 +15,31 @@ class LxmlParser(object):
             raise LxmlParserException(
                 'Parser needs URL or string to operate on')
 
-    def href(self, selector, default=None):
-        return self._get('href', selector, default)
+    def href(self, selector, default=None, allowmultiple=False):
+        return self._get('href', selector, default, allowmultiple)
 
-    def src(self, selector, default=None):
-        return self._get('src', selector, default)
+    def src(self, selector, default=None, allowmultiple=False):
+        return self._get('src', selector, default, allowmultiple)
 
-    def alt(self, selector, default=None):
-        return self._get('alt', selector, default)
+    def alt(self, selector, default=None, allowmultiple=False):
+        return self._get('alt', selector, default, allowmultiple)
 
-    def title(self, selector, default=None):
-        return self._get('title', selector, default)
+    def title(self, selector, default=None, allowmultiple=False):
+        return self._get('title', selector, default, allowmultiple)
 
-    def text(self, selector, default=None):
+    def value(self, selector, default=None, allowmultiple=False):
+        return self._get('value', selector, default, allowmultiple)
+
+    def text(self, selector, default=None, allowmultiple=False):
         try:
-            return self._decode(self._select(selector).text_content())
+            if allowmultiple == False:
+                return self._decode(self._select(selector).text_content())
+            else:
+                build_results = []
+                the_matches = self._select(selector, allowmultiple)
+                for the_match in the_matches:
+                    build_results.append(self._decode(the_match.text_content()))
+                return build_results
         except DoesNotExist:
             return default
 
@@ -40,20 +50,32 @@ class LxmlParser(object):
     def url(self):
         return self._retrived_url
 
-    def _get(self, attr, selector, default=None):
+    def _get(self, attr, selector, default=None, allowmultiple=False):
         try:
-            return self._decode(self._select(selector).get(attr))
+            if allowmultiple == False:
+                return self._decode(self._select(selector).get(attr))
+            else:
+                build_results = []
+                the_matches = self._select(selector, allowmultiple)
+                for the_match in the_matches:
+                    build_results.append(self._decode(the_match).get(attr))
+                return build_results
         except DoesNotExist:
             return default
 
-    def _select(self, selector):
+    def _select(self, selector, allowmultiple=False):
         elements = self.root.cssselect(selector)
 
         if len(elements) == 0:
             raise DoesNotExist('Nothing matched the selector: %s' % selector)
         elif len(elements) > 1:
-            raise MultipleElementsReturned('Selector matched %d elements: %s' %
-                (len(elements), selector))
+            # Don't return a multiple unless we allow it
+            if allowmultiple == False:
+                raise MultipleElementsReturned('Selector matched %d elements and allowmultiple is false: %s' %
+                    (len(elements), selector))
+            # ... otherwise, send back an array and assume upstream can handle it
+            else:
+                return elements
 
         return elements[0]
 
