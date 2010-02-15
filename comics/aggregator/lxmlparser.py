@@ -73,11 +73,11 @@ class LxmlParser(object):
             if allowmultiple == False:
                 raise MultipleElementsReturned('Selector matched %d elements and allowmultiple is false: %s' %
                     (len(elements), selector))
-            # ... otherwise, send back an array and assume upstream can handle it
-            else:
-                return elements
 
-        return elements[0]
+        if allowmultiple == False:
+            return elements[0]
+        else:
+            return elements
 
     def _parse_url(self, url):
         handle = urllib2.urlopen(url)
