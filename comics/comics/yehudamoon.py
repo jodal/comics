@@ -19,6 +19,13 @@ class Crawler(CrawlerBase):
         page_url = 'http://www.yehudamoon.com/index.php?date=%s' % pub_date.strftime( "%Y-%m-%d" )
         page = self.parse_page( page_url )
 
+        # It'll forward you to the most current day if it doesn't have
+        # pub_date. Check *explicitly* to make sure this day exists and bug out
+        # if not
+        current_day = page.value( 'select[id=ss_select] option[value*=%s]' % pub_date.strftime( "%Y-%m-%d" ) )
+        if current_day == None:
+            return CrawlerImage( None )
+
         url = page.src( 'div[id="ss_img_div"] img' )
         title_full = page.text( 'option[value*="%s"]' % pub_date.strftime( "%Y-%m-%d" ) )
         title = re.sub( '^.*- *', '', title_full )
