@@ -27,6 +27,10 @@ class Crawler(CrawlerBase):
             return CrawlerImage( None )
 
         url = page.src( 'div[id="ss_img_div"] img' )
-        title_full = page.text( 'option[value*="%s"]' % pub_date.strftime( "%Y-%m-%d" ) )
-        title = re.sub( '^.*- *', '', title_full )
+        # If we can't figure the title out, just don't store it
+        try:
+            title_full = page.text( 'option[value*="%s"]' % pub_date.strftime( "%Y-%m-%d" ) )
+            title = re.sub( '^.*- *', '', title_full )
+        except TypeError, e:
+            title = None
         return CrawlerImage(url, title=title)
