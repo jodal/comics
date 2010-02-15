@@ -22,6 +22,6 @@ class Crawler(CrawlerBase):
             title = entry.title
 
             # Construct the text as the "stuff under the image" on the page / feed.
-            text = "\n\n".join( [x.strip() for x in entry.html(entry.description).text( 'p', allowmultiple=True ) if len(x.strip()) > 0] )
+            text = "\n\n".join( [x.strip() for x in entry.html(entry.description).text( 'p', default=[], allowmultiple=True ) if len(x.strip()) > 0] )
 
             return CrawlerImage(url, title=title, text=text)
