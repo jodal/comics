@@ -225,10 +225,22 @@ For a primer on CSS selectors, see :ref:`css-selectors`.
 Available methods
 -----------------
 
-``text(selector, default=None)``
+The available methods only require a CSS selector, ``selector``, to match tags.
+In the event that the selector doesn't match any elements, ``default`` will be
+returned.
+
+If the ``selector`` matches multiple elements, one of two things will happen:
+
+1. If ``allowmultiple`` is ``False``, a ``MultipleElementsReturned`` exception
+   is raised.
+
+2. If ``allowmultiple`` is ``True``, a list of zero or more elements is
+   returned with all of the elements matching ``selector``.
+
+``text(selector, default=None, allowmultiple=False)``
     Returns the text contained by the element matching ``selector``.
 
-``src(selector, default=None)``
+``src(selector, default=None, allowmultiple=False)``
     Returns the ``src`` attribute of the element matching ``selector``.
 
     The web parser automatically expands relative URLs in the source, like
@@ -236,14 +248,17 @@ Available methods
     ``http://www.example.com/2008-04-13.png``, so you do not need to think
     about that.
 
-``alt(selector, default=None)``
+``alt(selector, default=None, allowmultiple=False)``
     Returns the ``alt`` attribute of the element matching ``selector``.
 
-``title(selector, default=None)``
+``title(selector, default=None, allowmultiple=False)``
     Returns the ``title`` attribute of the element matching ``selector``.
 
-``href(selector, default=None)``
+``href(selector, default=None, allowmultiple=False)``
     Returns the ``href`` attribute of the element matching ``selector``.
+
+``value(selector, default=None, allowmultiple=False)``
+    Returns the ``value`` attribute of the element matching ``selector``.
 
 ``remove(selector)``
     Remove the elements matching ``selector`` from the parsed document.
