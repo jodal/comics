@@ -14,6 +14,21 @@ application and batch job is both running as the user ``comics-user``. The
 static media files, like comic images, are served from
 http://comics.example.com/media/, but may also be served from a different host.
 
+
+Database
+========
+
+*comics* should theoretically work with any database supported by Django.
+Though, development is mostly done on SQLite 3 and PostgreSQL 8.x. For
+production use, PostgreSQL is the recommended choice.
+
+.. note::
+
+    If you are going to use SQLite in a deployment with Apache and so on, you
+    need to ensure that the user the web server will be running as has write
+    access to the *directory* the SQLite database file is located in.
+
+
 Example Apache vhost
 ====================
 
