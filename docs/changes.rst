@@ -12,6 +12,7 @@ Unreleased
 **Features**
 
 - New crawler: ``thedreamer``
+- New crawler: ``calamitiesofnature``
 
 
 1.0.0 (2010-01-27)
