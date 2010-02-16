@@ -15,7 +15,7 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/Pvponline')
-        url == None
+        url = None
         for entry in feed.for_date(pub_date):
             url = entry.content0.src('img[src*="/comics/"]')
             if url != None:
