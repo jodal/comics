@@ -75,7 +75,7 @@ This is the ``prod.wsgi`` file refered to in the Apache vhost above. The
 ``sys.path`` line assumes that the file is located in a directory inside the
 *comics* project, as the ``prod.wsgi`` shipped with *comics* is. If your WSGI
 file is located elsewhere, the ``sys.path`` line must be changed to point to
-whereever your *comics* project folder is located.
+wherever your *comics* project folder is located.
 
 .. literalinclude:: ../wsgi/prod.wsgi
     :language: python
@@ -131,7 +131,8 @@ caching from your ``local.py``.
 Example cronjob
 ===============
 
-To get new comics, you should run ``getcomics`` regularily. One way is to use ``cron`` e.g. by placing the following in ``/etc/cron.d/comics``:
+To get new comics, you should run ``getcomics`` regularly. One way is to use
+``cron`` e.g. by placing the following in ``/etc/cron.d/comics``:
 
 .. code-block:: sh
 
