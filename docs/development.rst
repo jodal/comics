@@ -17,6 +17,48 @@ gives +5 karma and kudos.
 
 All contributions must be granted under the same license as *comics* itself.
 
+Code style
+==========
+
+* Follow :pep:`8` unless otherwise noted.
+
+  `pep8.py`_ can be used to check your code against the guidelines, however
+  remember matching the surrounding code is also important.
+
+* Use four spaces for indentation, **never** tabs.
+
+* Use CamelCase with initial caps for class names.::
+
+      ClassNameWithCamelCase
+
+* Use underscore to split variable, function and method names for
+  readability. Don't use CamelCase.::
+
+      lower_case_with_underscores
+
+* Use the fact that empty strings, lists and tuples are False and
+  don't compare boolean values using ``==`` and ``!=``.
+
+* Follow whitespace rules as described in :pep:`8`, good examples::
+
+      spam(ham[1], {eggs: 2})
+      spam(1)
+      dict['key'] = list[index]
+
+* Limit lines to 80 characters and avoid trailing whitespace.
+
+  However note that wrapped lines should be *one* indentation level
+  in from level above, except for ``if``, ``for``, ``with``` and ``while``
+  lines which should have two levels of indentation::
+
+      if foo and bar ...
+              baz and foobar:
+          a = 1
+
+      from foobar import (foo, bar, ...
+          baz)
+
+.. _pep8.py: http://pypi.python.org/pypi/pep8/
 
 Todo list
 =========
@@ -79,4 +121,3 @@ To run unit tests::
 To run unit tests with statement coverage::
 
     python manage.py test --settings=comics.settings.coverage
-
