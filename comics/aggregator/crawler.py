@@ -194,8 +194,8 @@ class GoComicsComCrawlerBase(CrawlerBase):
 
     def crawl_helper(self, short_name, pub_date, url_name=None):
         if url_name == None:
-	    url_name=short_name
+            url_name=short_name
         page_url = 'http://www.gocomics.com/%s/%s' % (url_name.lower().replace( " ", "" ), pub_date.strftime( "%Y/%m/%d/" ))
-	page = self.parse_page( page_url )
-	url = page.src( 'img[alt="%s"]' % short_name )
+        page = self.parse_page( page_url )
+        url = page.src( 'img[alt="%s"]' % short_name )
         return CrawlerImage(url)

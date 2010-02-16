@@ -25,13 +25,13 @@ class Crawler(CrawlerBase):
         possible_ids = date_to_index_page.value( 'select[name="id"] option', allowmultiple=True )
         the_id = None
 
-	# (cheap conversion to a set to eliminate the duplicate IDs from different parts of the HTML to save time...)
+        # (cheap conversion to a set to eliminate the duplicate IDs from different parts of the HTML to save time...)
         for possible_id in set( possible_ids ):
-	    # We're going to get two results back.  One is the potential date, the other is the title.
-	    # I can't think of a good way to enforce that we get the real value first, then the title, so
-	    # we're just going to parse it again later.
+            # We're going to get two results back.  One is the potential date, the other is the title.
+            # I can't think of a good way to enforce that we get the real value first, then the title, so
+            # we're just going to parse it again later.
             possible_date_and_title = date_to_index_page.text( 'option[value=%s]' % possible_id, allowmultiple=True )
-	    for the_date in possible_date_and_title:
+            for the_date in possible_date_and_title:
                 # Make sure we strip off the leading '0' on %d: Joe doesn't
                 # include them.  We can't use a regex due to the speed
                 # penalty of ~500+ regex comparisons
@@ -47,14 +47,14 @@ class Crawler(CrawlerBase):
         right_page = self.parse_page( 'http://www.digitalpimponline.com/strips.php?title=movie&id=%s' % the_id )
 
         # ...and parse the url...
-	# (the URL has a leading ../, when it's in the base directory already.  Work around the glitch)
+        # (the URL has a leading ../, when it's in the base directory already.  Work around the glitch)
         url = right_page.src( 'img[class=strip]' ).replace( "../", "" )
         title = None
 
         # ... go through some rigamarole to get the title of the comic being reviewed...
-	# Basically, the selects for the date and movie title are identical in
-	# basically every way.  We have to therefore get the selected ones.
-	# One is the date.  One is the title.  Check for the date.
+        # Basically, the selects for the date and movie title are identical in
+        # basically every way.  We have to therefore get the selected ones.
+        # One is the date.  One is the title.  Check for the date.
         possible_titles = right_page.text( 'select[name="id"] option[selected]', allowmultiple=True )
         for possible_title in possible_titles:
             if pub_date.strftime( "%Y" ) in possible_title:

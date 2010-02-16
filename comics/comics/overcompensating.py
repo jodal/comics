@@ -17,11 +17,11 @@ class Crawler(CrawlerBase):
         img_locator = 'center > img[title]'
         page = self.parse_page('http://www.overcompensating.com/posts/%s.html' % pub_date.strftime( r"%Y%m%d" ) )
         url = page.src( img_locator )
-	
-	# Make sure that the date is in the src of the comic somewhere... they
-	# forward pages that aren't found to the current comic
-	if pub_date.strftime( r"%Y%m%d" ) not in url:
-	    return CrawlerImage( None )
+        
+        # Make sure that the date is in the src of the comic somewhere... they
+        # forward pages that aren't found to the current comic
+        if pub_date.strftime( r"%Y%m%d" ) not in url:
+            return CrawlerImage( None )
 
         text = page.title( img_locator ).replace( "COMIC MISSING: ", "" )
         return CrawlerImage(url, text=text)

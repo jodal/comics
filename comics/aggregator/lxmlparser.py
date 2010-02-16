@@ -82,9 +82,9 @@ class LxmlParser(object):
     def _parse_url(self, url, headers=None):
         if headers == None:
             handle = urllib2.urlopen(url)
-	else:
-	    req = urllib2.Request(url, headers=headers)
-	    handle = urllib2.urlopen(req)
+        else:
+            req = urllib2.Request(url, headers=headers)
+            handle = urllib2.urlopen(req)
         content = handle.read()
         self._retrived_url = handle.geturl()
         handle.close()
