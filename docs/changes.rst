@@ -6,14 +6,22 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
+Unreleased
+==========
+
+**Features**
+
+- New crawler: ``thedreamer``
+
+
 1.0.0 (2010-01-27)
 ==================
 
 A week has gone, and here is the 1.0.0 final release. Enjoy :-)
 
-Features:
+**Features**
 
-* Update ``uvod`` crawler to use new feed.
+- Update ``uvod`` crawler to use new feed.
 
 
 1.0.0.rc2 (2010-01-19)
@@ -22,9 +30,9 @@ Features:
 Second release candidate for 1.0.0. Again, I will bump to 1.0.0 in a week if no
 new issues arises.
 
-Bugfixes:
+**Bugfixes**
 
-* Make core/0006 migration work on the sqlite3 backend.
+- Make ``core/0006`` migration work on the sqlite3 backend.
 
 
 1.0.0.rc1 (2010-01-17)
