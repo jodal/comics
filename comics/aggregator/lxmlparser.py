@@ -4,11 +4,11 @@ import urllib2
 from comics.aggregator.exceptions import CrawlerError
 
 class LxmlParser(object):
-    def __init__(self, url=None, string=None):
+    def __init__(self, url=None, string=None, headers=None):
         self._retrived_url = None
 
         if url is not None:
-            self.root = self._parse_url(url)
+            self.root = self._parse_url(url, headers)
         elif string is not None:
             self.root = self._parse_string(string)
         else:
@@ -79,8 +79,12 @@ class LxmlParser(object):
         else:
             return elements
 
-    def _parse_url(self, url):
-        handle = urllib2.urlopen(url)
+    def _parse_url(self, url, headers=None):
+        if headers == None:
+            handle = urllib2.urlopen(url)
+	else:
+	    req = urllib2.Request(url, headers=headers)
+	    handle = urllib2.urlopen(req)
         content = handle.read()
         self._retrived_url = handle.geturl()
         handle.close()
