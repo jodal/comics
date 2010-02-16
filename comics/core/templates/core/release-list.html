@@ -90,7 +90,8 @@
     <h3><a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a></h3>
 
     <p>No matching release found. See
-    <a href="{% url comic-latest comic.slug %}">the latest release</a>.</p>
+    <a href="{% url comic-latest comic.slug %}">the latest release</a> or
+    the <a href="{{ comic.url }}">official site</a>.</p>
 
 </div>
 
