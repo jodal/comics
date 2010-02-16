@@ -31,6 +31,6 @@
         {% endifnotequal %}
     {% endwith %}
     Retrieved at {{ release.fetched|time }}, {{ release.fetched|date }}
-    from {{ release.comic.url }}.
+    from <a href="{{ release.comic.url }}">{{ release.comic.url }}</a>.
 </p>
 
