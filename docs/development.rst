@@ -60,6 +60,24 @@ Code style
 
 .. _pep8.py: http://pypi.python.org/pypi/pep8/
 
+Commit guidelines
+=================
+
+* Try to keep commits small and on topic.
+
+* Try to add one crawler per commit.
+
+* Merge feature branches with ``--no-ff`` to keep track of the merge.
+
+* When expanding API to accommodate new crawler features, commit API changes,
+  then new crawlers in a separate commit.
+
+* When changing existing API, commit API change and crawler changes in same
+  commit. If this commit looks too big you should be working in a feature
+  branch not a single commit.
+
+* Same policy applies for non-crawler changes.
+
 Todo list
 =========
 
