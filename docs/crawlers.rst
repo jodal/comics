@@ -116,6 +116,18 @@ Fields used for downloading
 
     Example: ``True`` or ``False``.
 
+``Crawler.headers``
+    *Optional.* Default: ``None``. Any HTTP headers to send with any URI
+    request for values.  Useful if you're pulling comics from a site that
+    checks either the ``Referer`` or ``User-Agent``.  If you can view the comic
+    using your browser but not when using your loader for identical URLs, try
+    setting the ``Referer`` to be ``http://www.thesite.com/`` or set the
+    ``User-Agent`` to be ``Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1;
+    Trident/4.0)``.
+
+    Example:
+    ``{'Referer' : 'http://www.gocomics.com/', 'Host: http://www.ucomics.com/'}``
+
 
 The ``Crawler.crawl()`` method
 ==============================
