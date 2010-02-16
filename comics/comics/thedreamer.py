@@ -10,7 +10,6 @@ class Meta(MetaBase):
 
 class Crawler(CrawlerBase):
     schedule = 'Fr'
-    multiple_releases_per_day = True
 
     def crawl(self, pub_date):
         page = self.parse_page('http://thedreamercomic.com/comic.php')
