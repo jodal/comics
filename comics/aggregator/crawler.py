@@ -64,7 +64,7 @@ class CrawlerBase(object):
     check_image_mime_type = True
     # Any HTTP headers to send when retrieving items from the site.
     # Headers should be in the form {Name : Value}
-    referer = None
+    headers = None
 
     # Feed object which is reused when crawling multiple dates
     feed = None
