@@ -61,6 +61,9 @@ Code style
       from foobar import (foo, bar, ...
           baz)
 
+- Take a look at :pep:`20` for a nice peek into a general mindset usefull for
+  Python coding.
+
 
 Commit guidelines
 -----------------
