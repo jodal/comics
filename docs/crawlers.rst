@@ -126,7 +126,7 @@ Fields used for downloading
     Trident/4.0)``.
 
     Example:
-    ``{'Referer' : 'http://www.gocomics.com/', 'Host: http://www.ucomics.com/'}``
+    ``{'Referer': 'http://www.example.com/', 'Host': http://www.example.com/'}``
 
 
 The ``Crawler.crawl()`` method
@@ -243,16 +243,16 @@ returned.
 
 If the ``selector`` matches multiple elements, one of two things will happen:
 
-1. If ``allowmultiple`` is ``False``, a ``MultipleElementsReturned`` exception
+1. If ``allow_multiple`` is ``False``, a ``MultipleElementsReturned`` exception
    is raised.
 
-2. If ``allowmultiple`` is ``True``, a list of zero or more elements is
+2. If ``allow_multiple`` is ``True``, a list of zero or more elements is
    returned with all of the elements matching ``selector``.
 
-``text(selector, default=None, allowmultiple=False)``
+``text(selector, default=None, allow_multiple=False)``
     Returns the text contained by the element matching ``selector``.
 
-``src(selector, default=None, allowmultiple=False)``
+``src(selector, default=None, allow_multiple=False)``
     Returns the ``src`` attribute of the element matching ``selector``.
 
     The web parser automatically expands relative URLs in the source, like
@@ -260,16 +260,16 @@ If the ``selector`` matches multiple elements, one of two things will happen:
     ``http://www.example.com/2008-04-13.png``, so you do not need to think
     about that.
 
-``alt(selector, default=None, allowmultiple=False)``
+``alt(selector, default=None, allow_multiple=False)``
     Returns the ``alt`` attribute of the element matching ``selector``.
 
-``title(selector, default=None, allowmultiple=False)``
+``title(selector, default=None, allow_multiple=False)``
     Returns the ``title`` attribute of the element matching ``selector``.
 
-``href(selector, default=None, allowmultiple=False)``
+``href(selector, default=None, allow_multiple=False)``
     Returns the ``href`` attribute of the element matching ``selector``.
 
-``value(selector, default=None, allowmultiple=False)``
+``value(selector, default=None, allow_multiple=False)``
     Returns the ``value`` attribute of the element matching ``selector``.
 
 ``remove(selector)``

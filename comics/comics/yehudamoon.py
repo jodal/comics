@@ -1,6 +1,7 @@
+import re
+
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
-import re
 
 class Meta(MetaBase):
     name = 'Yehuda Moon'
@@ -16,21 +17,25 @@ class Crawler(CrawlerBase):
     has_rerun_releases = False
 
     def crawl(self, pub_date):
-        page_url = 'http://www.yehudamoon.com/index.php?date=%s' % pub_date.strftime( "%Y-%m-%d" )
-        page = self.parse_page( page_url )
+        page_url = 'http://www.yehudamoon.com/index.php?date=%s' % \
+            pub_date.strftime("%Y-%m-%d")
+        page = self.parse_page(page_url)
 
         # It'll forward you to the most current day if it doesn't have
         # pub_date. Check *explicitly* to make sure this day exists and bug out
         # if not
-        current_day = page.value( 'select[id=ss_select] option[value*=%s]' % pub_date.strftime( "%Y-%m-%d" ) )
-        if current_day == None:
-            return CrawlerImage( None )
+        current_day = page.value('select[id=ss_select] option[value*=%s]' % 
+            pub_date.strftime("%Y-%m-%d"))
 
-        url = page.src( 'div[id="ss_img_div"] img' )
+        if current_day is None:
+            return
+
+        url = page.src('div[id="ss_img_div"] img')
         # If we can't figure the title out, just don't store it
         try:
-            title_full = page.text( 'option[value*="%s"]' % pub_date.strftime( "%Y-%m-%d" ) )
-            title = re.sub( '^.*- *', '', title_full )
+            title_full = page.text('option[value*="%s"]' %
+                pub_date.strftime("%Y-%m-%d"))
+            title = re.sub('^.*- *', '', title_full)
         except TypeError, e:
             title = None
         return CrawlerImage(url, title=title)

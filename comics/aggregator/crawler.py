@@ -186,16 +186,15 @@ class ComicsComCrawlerBase(CrawlerBase):
 class GoComicsComCrawlerBase(CrawlerBase):
     """Base comic crawler for all comics hosted at gocomics.com"""
 
-    check_image_mime_type = False
-
     # It doesn't want us getting comics because of a User-Agent check.
     # Look! I'm a nice, normal Internet Explorer machine!
     headers = {'User-Agent' : 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729'}
 
     def crawl_helper(self, short_name, pub_date, url_name=None):
-        if url_name == None:
+        if url_name is None:
             url_name=short_name
-        page_url = 'http://www.gocomics.com/%s/%s' % (url_name.lower().replace( " ", "" ), pub_date.strftime( "%Y/%m/%d/" ))
-        page = self.parse_page( page_url )
-        url = page.src( 'img[alt="%s"]' % short_name )
+        page_url = 'http://www.gocomics.com/%s/%s' % \
+            (url_name.lower().replace(" ", ""), pub_date.strftime("%Y/%m/%d/"))
+        page = self.parse_page(page_url)
+        url = page.src('img[alt="%s"]' % short_name)
         return CrawlerImage(url)

@@ -11,17 +11,15 @@ class Meta(MetaBase):
 class Crawler(CrawlerBase):
     history_capable_days = 28
     schedule = 'Mo,We,Fr'
-    time_zone = 0 
+    time_zone = -6
 
     def crawl(self, pub_date):
         feed_url = 'http://feeds.feedburner.com/hijinksensue'
-        feed = self.parse_feed( feed_url )
-        for entry in feed.for_date( pub_date ):
-            url=entry.content0.src( 'img[src*="/comics/%s"]' % pub_date.strftime( "%Y" ) )
-            title=entry.title
+        feed = self.parse_feed(feed_url)
+        for entry in feed.for_date(pub_date):
+            url = entry.content0.src('img[src*="/comics/%s"]' % 
+                pub_date.strftime("%Y"))
+            title = entry.title
             # Weed out the blog posts without images
-            if url != None:
+            if url is not None:
                 return CrawlerImage(url, title=title)
-
-        # Return an empty crawler image if we can't find anything
-        return CrawlerImage( None )

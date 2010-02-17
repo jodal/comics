@@ -17,9 +17,9 @@ class Crawler(CrawlerBase):
         page = self.parse_page('http://magpieluck.com/')
 
         # Make sure the date in the corner matches the date for the comic
-        test_date = page.text( 'div#date p' )
-        if test_date != pub_date.strftime( "%B %d, %Y" ).replace( " 0", " " ):
-            return CrawlerImage( None )
+        test_date = page.text('div#date p')
+        if test_date != pub_date.strftime("%B %d, %Y").replace(" 0", " "):
+            return
 
         url = page.src('div.comic img[title]')
         text = page.alt('div.comic img[title]')

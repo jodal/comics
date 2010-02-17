@@ -15,11 +15,12 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         feed_url = 'http://feeds.feedburner.com/wondermark'
-        feed = self.parse_feed( feed_url )
-        for entry in feed.for_date( pub_date ):
-            url=entry.content0.src( r'img[src*="/c/"]' )
+        feed = self.parse_feed(feed_url)
+        for entry in feed.for_date(pub_date):
+            url=entry.content0.src(r'img[src*="/c/"]')
             title=entry.title
-            text=entry.content0.alt( r'img[src*="/c/"]' )
-            # Some of these content blocks are blog posts, not just comics, and David overlaps them with posts.  Argh.
-            if url != None:
-                    return CrawlerImage(url, title=title, text=text)
+            text=entry.content0.alt(r'img[src*="/c/"]')
+            # Some of these content blocks are blog posts, not just comics, and
+            # David overlaps them with posts.  Argh.
+            if url is not None:
+                return CrawlerImage(url, title=title, text=text)

@@ -15,28 +15,28 @@ class LxmlParser(object):
             raise LxmlParserException(
                 'Parser needs URL or string to operate on')
 
-    def href(self, selector, default=None, allowmultiple=False):
-        return self._get('href', selector, default, allowmultiple)
+    def href(self, selector, default=None, allow_multiple=False):
+        return self._get('href', selector, default, allow_multiple)
 
-    def src(self, selector, default=None, allowmultiple=False):
-        return self._get('src', selector, default, allowmultiple)
+    def src(self, selector, default=None, allow_multiple=False):
+        return self._get('src', selector, default, allow_multiple)
 
-    def alt(self, selector, default=None, allowmultiple=False):
-        return self._get('alt', selector, default, allowmultiple)
+    def alt(self, selector, default=None, allow_multiple=False):
+        return self._get('alt', selector, default, allow_multiple)
 
-    def title(self, selector, default=None, allowmultiple=False):
-        return self._get('title', selector, default, allowmultiple)
+    def title(self, selector, default=None, allow_multiple=False):
+        return self._get('title', selector, default, allow_multiple)
 
-    def value(self, selector, default=None, allowmultiple=False):
-        return self._get('value', selector, default, allowmultiple)
+    def value(self, selector, default=None, allow_multiple=False):
+        return self._get('value', selector, default, allow_multiple)
 
-    def text(self, selector, default=None, allowmultiple=False):
+    def text(self, selector, default=None, allow_multiple=False):
         try:
-            if allowmultiple == False:
+            if allow_multiple == False:
                 return self._decode(self._select(selector).text_content())
             else:
                 build_results = []
-                the_matches = self._select(selector, allowmultiple)
+                the_matches = self._select(selector, allow_multiple)
                 for the_match in the_matches:
                     build_results.append(self._decode(the_match.text_content()))
                 return build_results
@@ -50,37 +50,37 @@ class LxmlParser(object):
     def url(self):
         return self._retrived_url
 
-    def _get(self, attr, selector, default=None, allowmultiple=False):
+    def _get(self, attr, selector, default=None, allow_multiple=False):
         try:
-            if allowmultiple == False:
+            if allow_multiple == False:
                 return self._decode(self._select(selector).get(attr))
             else:
                 build_results = []
-                the_matches = self._select(selector, allowmultiple)
+                the_matches = self._select(selector, allow_multiple)
                 for the_match in the_matches:
                     build_results.append(self._decode(the_match).get(attr))
                 return build_results
         except DoesNotExist:
             return default
 
-    def _select(self, selector, allowmultiple=False):
+    def _select(self, selector, allow_multiple=False):
         elements = self.root.cssselect(selector)
 
         if len(elements) == 0:
             raise DoesNotExist('Nothing matched the selector: %s' % selector)
         elif len(elements) > 1:
-            # Don't return a multiple unless we allow it
-            if allowmultiple == False:
-                raise MultipleElementsReturned('Selector matched %d elements and allowmultiple is false: %s' %
+            if allow_multiple == False:
+                raise MultipleElementsReturned(
+                    'Selector matched %d elements and allow_multiple is false: %s' %
                     (len(elements), selector))
 
-        if allowmultiple == False:
+        if allow_multiple == False:
             return elements[0]
         else:
             return elements
 
     def _parse_url(self, url, headers=None):
-        if headers == None:
+        if headers is None:
             handle = urllib2.urlopen(url)
         else:
             req = urllib2.Request(url, headers=headers)

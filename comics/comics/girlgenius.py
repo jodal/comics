@@ -12,7 +12,8 @@ class Crawler(CrawlerBase):
     history_capable_date = '2002-11-04'
     schedule = 'Mo,We,Fr'
     time_zone = -8
-    has_rerun_releases = False
 
     def crawl(self, pub_date):
-        return CrawlerImage("http://www.girlgeniusonline.com/ggmain/strips/ggmain%sb.jpg" % pub_date.strftime( '%Y%m%d' ))
+        url = ("http://www.girlgeniusonline.com/ggmain/strips/ggmain%sb.jpg" %
+            pub_date.strftime('%Y%m%d'))
+        return CrawlerImage(url)
