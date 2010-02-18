@@ -62,6 +62,9 @@ Code style
       from foobar import (foo, bar, ...
           baz)
 
+- For consistency, prefer ``'`` over ``"`` for strings, unless the string
+  contains ``'``.
+
 - Take a look at :pep:`20` for a nice peek into a general mindset useful for
   Python coding.
 
