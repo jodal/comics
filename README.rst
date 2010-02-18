@@ -18,3 +18,4 @@ Public License version 3.
 - `Source code <http://github.com/jodal/comics>`_
 - `Documentation <http://jodal.github.com/comics/>`_
 - Feedback? Requests? `Create an issue <http://github.com/jodal/comics/issues>`_
+- IRC: ``#dailycomics`` at `irc.freenode.net <http://freenode.net/>`_
