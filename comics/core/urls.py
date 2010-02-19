@@ -38,6 +38,9 @@ urlpatterns = patterns('',
     # About page
     url(r'^about/$', views.about, name='about'),
 
+    # Redirect
+    url(r'^redirect/%s/$' % (COMIC,), views.redirect, name='redirect'),
+
     # We do not like robots
     url(r'^robots.txt$', views.robots, name='robots'),
 )

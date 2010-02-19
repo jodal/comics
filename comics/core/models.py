@@ -51,6 +51,9 @@ class Comic(models.Model):
     def get_feed_url(self):
         return reverse('feeds', kwargs={'url': 'c/%s' % self.slug})
 
+    def get_redirect_url(self):
+        return reverse('redirect', kwargs={'comic': self.slug})
+
 
 class Release(models.Model):
     # Required fields
