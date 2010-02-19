@@ -17,5 +17,13 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed('http://www.questionablecontent.net/QCRSS.xml')
         for entry in feed.for_date(pub_date):
             url = entry.summary.src('img')
+            if url is None:
+                continue
             title = entry.title
-            return CrawlerImage(url, title)
+
+            # Construct the text as the "stuff under the image" on the page /
+            # feed.
+            text = "\n\n".join([x.strip() for x in entry.html(entry.description)
+                .text('p', default=[], allow_multiple=True) if x.strip()])
+
+            return CrawlerImage(url, title=title, text=text)

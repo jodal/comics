@@ -116,6 +116,18 @@ Fields used for downloading
 
     Example: ``True`` or ``False``.
 
+``Crawler.headers``
+    *Optional.* Default: ``None``. Any HTTP headers to send with any URI
+    request for values.  Useful if you're pulling comics from a site that
+    checks either the ``Referer`` or ``User-Agent``.  If you can view the comic
+    using your browser but not when using your loader for identical URLs, try
+    setting the ``Referer`` to be ``http://www.thesite.com/`` or set the
+    ``User-Agent`` to be ``Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1;
+    Trident/4.0)``.
+
+    Example:
+    ``{'Referer': 'http://www.example.com/', 'Host': http://www.example.com/'}``
+
 
 The ``Crawler.crawl()`` method
 ==============================
@@ -225,10 +237,22 @@ For a primer on CSS selectors, see :ref:`css-selectors`.
 Available methods
 -----------------
 
-``text(selector, default=None)``
+The available methods only require a CSS selector, ``selector``, to match tags.
+In the event that the selector doesn't match any elements, ``default`` will be
+returned.
+
+If the ``selector`` matches multiple elements, one of two things will happen:
+
+1. If ``allow_multiple`` is ``False``, a ``MultipleElementsReturned`` exception
+   is raised.
+
+2. If ``allow_multiple`` is ``True``, a list of zero or more elements is
+   returned with all of the elements matching ``selector``.
+
+``text(selector, default=None, allow_multiple=False)``
     Returns the text contained by the element matching ``selector``.
 
-``src(selector, default=None)``
+``src(selector, default=None, allow_multiple=False)``
     Returns the ``src`` attribute of the element matching ``selector``.
 
     The web parser automatically expands relative URLs in the source, like
@@ -236,14 +260,17 @@ Available methods
     ``http://www.example.com/2008-04-13.png``, so you do not need to think
     about that.
 
-``alt(selector, default=None)``
+``alt(selector, default=None, allow_multiple=False)``
     Returns the ``alt`` attribute of the element matching ``selector``.
 
-``title(selector, default=None)``
+``title(selector, default=None, allow_multiple=False)``
     Returns the ``title`` attribute of the element matching ``selector``.
 
-``href(selector, default=None)``
+``href(selector, default=None, allow_multiple=False)``
     Returns the ``href`` attribute of the element matching ``selector``.
+
+``value(selector, default=None, allow_multiple=False)``
+    Returns the ``value`` attribute of the element matching ``selector``.
 
 ``remove(selector)``
     Remove the elements matching ``selector`` from the parsed document.

@@ -13,7 +13,7 @@
     </a></p>
 
     {% if image.text %}
-        <p class="image_text">{{ image.text|safe }}</p>
+        <p class="image_text">{{ image.text|linebreaksbr|safe }}</p>
     {% endif %}
 
 {% empty %}
