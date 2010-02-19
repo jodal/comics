@@ -46,14 +46,10 @@ class Comic(models.Model):
         return u'%s [%s]' % (self.name, self.language)
 
     def get_absolute_url(self):
-        return reverse('comic-latest', kwargs={
-            'comic': self.slug,
-        })
+        return reverse('comic-latest', kwargs={'comic': self.slug})
 
     def get_feed_url(self):
-        return reverse('feeds', kwargs={
-            'url': 'c/%s' % self.slug,
-        })
+        return reverse('feeds', kwargs={'url': 'c/%s' % self.slug})
 
 
 class Release(models.Model):
