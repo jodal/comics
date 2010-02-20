@@ -62,9 +62,8 @@ class CrawlerBase(object):
     has_rerun_releases = False
     # Whether to check the mime type of the image when downloading
     check_image_mime_type = True
-    # Any HTTP headers to send when retrieving items from the site.
-    # Headers should be in the form {Name : Value}
-    headers = None
+    # Dictionary of HTTP headers to send when retrieving items from the site
+    headers = {}
 
     # Feed object which is reused when crawling multiple dates
     feed = None
