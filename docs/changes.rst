@@ -11,8 +11,31 @@ Unreleased
 
 **Features**
 
-- New crawler: ``thedreamer``
+- New crawler: ``babyblues``
 - New crawler: ``calamitiesofnature``
+- New crawler: ``charliehorse``
+- New crawler: ``fminus``
+- New crawler: ``forbetterorforworse``
+- New crawler: ``girlgenius``
+- New crawler: ``hijinksensue``
+- New crawler: ``joelovescrappymovies``
+- New crawler: ``magpieluck``
+- New crawler: ``nonsequitur``
+- New crawler: ``overcompensating``
+- New crawler: ``pluggers``
+- New crawler: ``tankmcnamara``
+- New crawler: ``theboondocks``
+- New crawler: ``thedreamer``
+- New crawler: ``wondermark``
+- New crawler: ``yehudamoon``
+- Add links to official sites via redirect page.
+- Add ``GoComicsComCrawlerBase`` for fast gocomics.com crawler creation.
+- Add ``headers`` argument to LxmlParser for HTTP requests it makes.
+
+**Bugfixes**
+
+- Update crawler ``playervsplayer`` to not miss comics on days with blog posts.
+- Update crawler ``questionablecontent`` to include text below image.
 
 
 1.0.0 (2010-01-27)
