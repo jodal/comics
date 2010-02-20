@@ -8,7 +8,7 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.yehudamoon.com/'
     start_date = '2008-01-22'
-    rights = '(c) 2010 Rick Smith'
+    rights = 'Rick Smith'
 
 class Crawler(CrawlerBase):
     history_capable_date = '2008-01-22'
