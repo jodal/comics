@@ -30,7 +30,7 @@
         {% endwith %}
         <td class="alignright">{{ comic.number_of_sets }}
             set{{ comic.number_of_sets|pluralize }}</td>
-        <td>{{ comic.url|urlize }}</td>
+        <td><a href="{{ comic.get_redirect_url }}">{{ comic.url }}</a></td>
     </tr>
     {% endfor %}
 </table>
