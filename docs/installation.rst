@@ -131,10 +131,10 @@ browse all available comics. If you provided a username and password at the
 administration tasks, like removing comics or releases.
 
 
-Final notes
------------
+More options
+------------
 
-All of these commands answers to the ``--help`` argument. I.e. ``getcomics``
-can crawl specific comics, and arbitrary ranges of dates instead of just
-getting the latest release.
-
+All of these commands got more options available. I.e. ``getcomics`` can crawl
+specific comics, and arbitrary ranges of dates instead of just getting the
+latest release. Add the ``--help`` argument to any of the commands to get a
+full listing.
