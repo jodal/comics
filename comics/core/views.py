@@ -122,7 +122,7 @@ def about(request):
     return render_to_response('core/about.html',
         context_instance=RequestContext(request))
 
-def redirect(self, comic):
+def redirect(request, comic):
     comic = get_object_or_404(Comic, slug=comic)
     if comic.url is None:
         raise Http404
