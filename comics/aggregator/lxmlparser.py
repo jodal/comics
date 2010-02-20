@@ -66,11 +66,10 @@ class LxmlParser(object):
 
         if len(elements) == 0:
             raise DoesNotExist('Nothing matched the selector: %s' % selector)
-        elif len(elements) > 1:
-            if allow_multiple == False:
-                raise MultipleElementsReturned(
-                    'Selector matched %d elements and allow_multiple is false: %s' %
-                    (len(elements), selector))
+        elif len(elements) > 1 and not allow_multiple:
+            raise MultipleElementsReturned(
+                'Selector matched %d elements and allow_multiple is false: %s' %
+                (len(elements), selector))
 
         if allow_multiple:
             return elements
