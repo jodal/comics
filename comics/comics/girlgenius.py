@@ -14,6 +14,6 @@ class Crawler(CrawlerBase):
     time_zone = -8
 
     def crawl(self, pub_date):
-        url = ("http://www.girlgeniusonline.com/ggmain/strips/ggmain%sb.jpg" %
-            pub_date.strftime('%Y%m%d'))
+        url = 'http://www.girlgeniusonline.com/ggmain/strips/ggmain%sb.jpg' % (
+            pub_date.strftime('%Y%m%d'),)
         return CrawlerImage(url)
