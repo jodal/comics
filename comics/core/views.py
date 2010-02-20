@@ -126,7 +126,8 @@ def redirect(request, comic):
     comic = get_object_or_404(Comic, slug=comic)
     if comic.url is None:
         raise Http404
-    return render_to_response('core/redirect.html', {'url': comic.url})
+    return render_to_response('core/redirect.html', {'url': comic.url},
+        context_instance=RequestContext(request))
 
 def robots(request):
     return HttpResponse('User-Agent: *\nDisallow: /\n', mimetype='text/plain')
