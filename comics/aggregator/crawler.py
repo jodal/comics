@@ -9,6 +9,11 @@ from comics.aggregator.exceptions import (CrawlerHTTPError, ImageURLNotFound,
 from comics.aggregator.feedparser import FeedParser
 from comics.aggregator.lxmlparser import LxmlParser
 
+# For testability
+now = dt.datetime.now
+today = dt.date.today
+timezone = time.timezone
+
 class CrawlerRelease(object):
     def __init__(self, comic, pub_date,
             check_image_mime_type=True, has_rerun_releases=False):
@@ -119,9 +124,9 @@ class CrawlerBase(object):
     def current_date(self):
         if self.time_zone is None:
             self.time_zone = settings.COMICS_DEFAULT_TIME_ZONE
-        local_time_zone = - time.timezone // 3600
+        local_time_zone = - timezone // 3600
         hour_diff = local_time_zone - self.time_zone
-        current_time = dt.datetime.now() - dt.timedelta(hours=hour_diff)
+        current_time = now() - dt.timedelta(hours=hour_diff)
         return current_time.date()
 
     @property
@@ -130,9 +135,9 @@ class CrawlerBase(object):
             return dt.datetime.strptime(
                 self.history_capable_date, '%Y-%m-%d').date()
         elif self.history_capable_days is not None:
-            return (dt.date.today() - dt.timedelta(self.history_capable_days))
+            return (today() - dt.timedelta(self.history_capable_days))
         else:
-            return dt.date.today()
+            return today()
 
     def crawl(self, pub_date):
         """
