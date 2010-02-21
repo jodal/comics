@@ -62,13 +62,15 @@ class CrawlerBase(object):
     has_rerun_releases = False
     # Whether to check the mime type of the image when downloading
     check_image_mime_type = True
+
+    ### Settings used for both crawling and downloading
     # Dictionary of HTTP headers to send when retrieving items from the site
     headers = {}
 
     # Feed object which is reused when crawling multiple dates
     feed = None
 
-    # Page objects mapped against url for use when crawling multiple dates
+    # Page objects mapped against URL for use when crawling multiple dates
     pages = {}
 
     def __init__(self, comic):
