@@ -29,8 +29,10 @@ Unreleased
 - New crawler: ``wondermark``
 - New crawler: ``yehudamoon``
 - Add links to official sites via redirect page.
-- Add ``GoComicsComCrawlerBase`` for fast gocomics.com crawler creation.
-- Add ``headers`` argument to LxmlParser for HTTP requests it makes.
+- Add :class:`comics.aggregator.crawler.GoComicsComCrawlerBase` for fast
+  gocomics.com crawler creation.
+- Add ``headers`` argument to :class:`comics.aggregator.lxmlparser.LxmlParser`
+  for HTTP requests it makes.
 
 **Bugfixes**
 

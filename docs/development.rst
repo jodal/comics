@@ -89,11 +89,13 @@ Commit guidelines
 Data model
 ==========
 
-*comics*' data model is very simple. The ``core`` app consists of three models;
-``Comic``, ``Release``, and ``Strip``. The ``sets`` app adds an additional
-model named ``Set``. Changes to the data model are managed using `South
-<http://south.aeracode.org/>`_ database migrations. If you need to change
-the models, please provide the needed migrations.
+*comics*' data model is very simple. The :mod:`comics.core` app consists of
+three models; :class:`Comic <comics.core.models.Comic>`, :class:`Release
+<comics.core.modes.Release>`, and :class:`Strip <comics.core.models.Strip>`.
+The :mod:`comics.sets` app adds an additional model named :class:`Set
+<comics.sets.models.Set>`. Changes to the data model are managed using `South
+<http://south.aeracode.org/>`_ database migrations. If you need to change the
+models, please provide the needed migrations.
 
 .. image:: _static/data_model.png
 
@@ -143,7 +145,7 @@ A loosely prioritized list of things to fix. Patches accepted.
 ``bin/smush``
     Process images with ``bin/smush`` to reduce their size 10-20% (without
     affecting their quality) and thus reducing page load time.
-``comics.aggregator.command``
+:mod:`comics.aggregator.command`
     Use comic week schedule to crawl less often on non-schedule days.
-``comics.core.utils.navigation``
+:mod:`comics.core.utils.navigation`
     Unit test and refactor.
