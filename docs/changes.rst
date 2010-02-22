@@ -33,11 +33,13 @@ Unreleased
   gocomics.com crawler creation.
 - Add ``headers`` argument to :class:`comics.aggregator.lxmlparser.LxmlParser`
   for HTTP requests it makes.
+- Add time since last release to release-list and comic-list.
 
 **Bugfixes**
 
 - Update crawler ``playervsplayer`` to not miss comics on days with blog posts.
 - Update crawler ``questionablecontent`` to include text below image.
+- Update crawler ``kalscartoon`` after target site change.
 
 
 1.0.0 (2010-01-27)
