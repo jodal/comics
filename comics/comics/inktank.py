@@ -9,7 +9,7 @@ class Meta(MetaBase):
     rights = 'Barry T. Smith'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 32
+    history_capable_days = 180
     schedule = 'Mo,We,Fr'
     time_zone = -8
 
