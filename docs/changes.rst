@@ -40,6 +40,7 @@ Unreleased
 - Update crawler ``playervsplayer`` to not miss comics on days with blog posts.
 - Update crawler ``questionablecontent`` to include text below image.
 - Update crawler ``kalscartoon`` after target site change.
+- Update crawler ``butternutsquash`` after target site change.
 
 
 1.0.0 (2010-01-27)

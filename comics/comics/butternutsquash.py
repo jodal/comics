@@ -14,6 +14,6 @@ class Crawler(CrawlerBase):
     history_capable_date = '2003-04-16'
 
     def crawl(self, pub_date):
-        url = 'http://www.butternutsquash.net/comics/%s.jpg' % (
-            pub_date.strftime('%Y-%m-%d'),)
+        url = ('http://www.butternutsquash.net/v3/comics/'
+            '%s-butternutsquash.jpg' % (pub_date.strftime('%Y-%m-%d'),))
         return CrawlerImage(url)
