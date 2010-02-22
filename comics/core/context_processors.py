@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.db.models import Max
 
 from comics.core.models import Comic
 
@@ -10,4 +11,6 @@ def site_settings(request):
     }
 
 def all_comics(request):
-    return {'all_comics': Comic.objects.sort_by_name()}
+    all_comics = Comic.objects.sort_by_name()
+    all_comics = all_comics.annotate(Max('release__fetched'))
+    return {'all_comics': all_comics}
