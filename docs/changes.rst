@@ -6,8 +6,11 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
-Unreleased
-==========
+1.0.1 (2010-02-23)
+==================
+
+This release features 17 new crawlers and three updated crawlers, most by
+*comic*'s new contributor Jim Wyllie. Let's get more of those!
 
 **Features**
 
@@ -32,8 +35,8 @@ Unreleased
 - Add :class:`comics.aggregator.crawler.GoComicsComCrawlerBase` for fast
   gocomics.com crawler creation.
 - Add ``headers`` argument to :class:`comics.aggregator.lxmlparser.LxmlParser`
-  for HTTP requests it makes.
-- Add time since last release to release-list and comic-list.
+  for adding HTTP headers to requests it makes.
+- Add time since last release to ``release-list`` and ``comic-list``.
 
 **Bugfixes**
 
