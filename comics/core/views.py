@@ -6,9 +6,10 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.context import RequestContext
 
-from comics.core.models import Comic
+from comics.core.models import Comic, Release
 from comics.core.utils.comic_releases import get_comic_releases_struct
 from comics.core.utils.navigation import get_navigation
+from comics.aggregator.utils import get_comic_schedule
 
 # Generic views
 
@@ -120,6 +121,39 @@ def comic_year(request, comic, year):
 
 def about(request):
     return render_to_response('core/about.html',
+        context_instance=RequestContext(request))
+
+def timeline(request, days=21):
+    timeline = {}
+    first = dt.date.today() + dt.timedelta(days=1)
+    last = dt.datetime.today() - dt.timedelta(days=days)
+
+    schedule_days = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
+    releases = Release.objects.filter(pub_date__gte=last)
+    releases = releases.select_related('comic__name')
+    releases = releases.order_by('comic__name').distinct()
+
+    for release in releases:
+        if release.comic not in timeline:
+            schedule = get_comic_schedule(release.comic)
+            timeline[release.comic] = []
+
+            for i in range(days+2):
+                day = first - dt.timedelta(days=i)
+                classes = set()
+                
+                if not schedule:
+                    classes.add('unscheduled')
+                elif int(day.strftime('%w')) in schedule:
+                    classes.add('scheduled')
+
+                timeline[release.comic].append((classes, day))
+
+        day = (first - release.pub_date).days
+        timeline[release.comic][day][0].add('fetched')
+        
+    return render_to_response('core/timeline.html',
+        {'timeline': timeline},
         context_instance=RequestContext(request))
 
 def redirect(request, comic):

@@ -311,6 +311,7 @@ hr.clear {
 .info h3, .success h3, .warning h3, .notice h3, .error h3 {
     margin: 0 0 0.5em 0;
 }
+
 .info {
     background: #eeeeec;
     border-color: #d3d7cf;
@@ -330,6 +331,35 @@ hr.clear {
     background: #cc4949;
     border-color: #ad3e3e;
     color: white;
+}
+
+/* Timeline states */
+#timeline {
+    width: auto;
+		font-size: 85%;
+}
+
+#timeline td {
+    border: 1px solid #d3d7cf;
+		width: 3em;
+		background: #fafafa;
+		text-align: center;
+}
+
+#timeline tr:hover th {
+    background: #fafafa;
+}
+
+#timeline .scheduled {
+    background: #fcc;
+}
+
+#timeline .fetched {
+    background: #fff7cc;
+}
+
+#timeline .fetched.scheduled {
+    background: #efc;
 }
 
 /* Emphasizing */

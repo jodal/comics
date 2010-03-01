@@ -1,0 +1,24 @@
+{% extends "core/base.html" %}
+
+
+{% block title %}Timeline{% endblock %}
+
+
+{% block content %}
+
+<h2>Timeline</h2>
+
+<table id="timeline">
+  {% for comic,days in timeline.items%}
+    <tr>
+      <th>{{ comic.name }}</th>
+      {% for classes,day in days %}
+        <td title="{{ day|date }}"{% if classes %} class="{{ classes|join:" " }}"{% endif %}>
+          {{ day|date:"D" }}
+        </td>
+      {% endfor %}
+    </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}
