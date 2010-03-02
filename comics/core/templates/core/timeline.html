@@ -6,15 +6,17 @@
 
 {% block content %}
 
-<h2>Timeline</h2>
-
 <table id="timeline">
   {% for comic,days in timeline.items%}
     <tr>
-      <th>{{ comic.name }}</th>
-      {% for classes,day in days %}
+      <th><a href="{{ comic.get_redirect_url }}">{{ comic.name }}</a></th>
+      {% for classes,day,release in days %}
         <td title="{{ day|date }}"{% if classes %} class="{{ classes|join:" " }}"{% endif %}>
-          {{ day|date:"D" }}
+          {% if release %}
+            <a href="{{ release.get_absolute_url }}">{{ day|date:"D" }}</a>
+          {% else %}
+            {{ day|date:"D" }}
+          {% endif %}
         </td>
       {% endfor %}
     </tr>

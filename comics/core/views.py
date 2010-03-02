@@ -147,10 +147,11 @@ def timeline(request, days=21):
                 elif int(day.strftime('%w')) in schedule:
                     classes.add('scheduled')
 
-                timeline[release.comic].append((classes, day))
+                timeline[release.comic].append([classes, day, None])
 
         day = (first - release.pub_date).days
         timeline[release.comic][day][0].add('fetched')
+        timeline[release.comic][day][2] = release
         
     return render_to_response('core/timeline.html',
         {'timeline': timeline},
