@@ -123,7 +123,7 @@ def about(request):
     return render_to_response('core/about.html',
         context_instance=RequestContext(request))
 
-def timeline(request, days=21):
+def status(request, days=21):
     timeline = {}
     first = dt.date.today() + dt.timedelta(days=1)
     last = dt.datetime.today() - dt.timedelta(days=days)
@@ -153,7 +153,7 @@ def timeline(request, days=21):
         timeline[release.comic][day][0].add('fetched')
         timeline[release.comic][day][2] = release
         
-    return render_to_response('core/timeline.html',
+    return render_to_response('core/status.html',
         {'timeline': timeline},
         context_instance=RequestContext(request))
 

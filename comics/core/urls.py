@@ -35,8 +35,8 @@ urlpatterns = patterns('',
     url(r'^c/%s/%s/%s/%s/%s/$' % (COMIC, YEAR, MONTH, DAY, DAYS),
         views.comic_show, name='comic-date-days'),
 
-    # Timeline page
-    url(r'^timeline/$', views.timeline, name='timeline'),
+    # Status page
+    url(r'^status/$', views.status, name='status'),
 
     # About page
     url(r'^about/$', views.about, name='about'),
