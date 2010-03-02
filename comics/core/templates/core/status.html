@@ -1,12 +1,12 @@
 {% extends "core/base.html" %}
 
 
-{% block title %}Timeline{% endblock %}
+{% block title %}Status{% endblock %}
 
 
 {% block content %}
 
-<table id="timeline">
+<table id="status">
   {% for comic,days in timeline.items%}
     <tr>
       <th><a href="{{ comic.get_redirect_url }}">{{ comic.name }}</a></th>

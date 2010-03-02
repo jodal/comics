@@ -333,32 +333,32 @@ hr.clear {
     color: white;
 }
 
-/* Timeline states */
-#timeline {
+/* Status states */
+#status {
     width: auto;
 		font-size: 85%;
 }
 
-#timeline td {
+#status td {
     border: 1px solid #d3d7cf;
 		width: 3em;
 		background: #fafafa;
 		text-align: center;
 }
 
-#timeline tr:hover th {
+#status tr:hover th {
     background: #fafafa;
 }
 
-#timeline .scheduled {
+#status .scheduled {
     background: #fcc;
 }
 
-#timeline .fetched {
+#status .fetched {
     background: #fff7cc;
 }
 
-#timeline .fetched.scheduled {
+#status .fetched.scheduled {
     background: #efc;
 }
 
