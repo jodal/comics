@@ -339,6 +339,10 @@ hr.clear {
 		font-size: 85%;
 }
 
+#status a {
+	text-decoration: none;
+}
+
 #status td {
     border: 1px solid #d3d7cf;
 		width: 3em;
