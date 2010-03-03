@@ -343,11 +343,14 @@ hr.clear {
     text-decoration: none;
 }
 
-#status td {
+#status td, #status_legend td {
     border: 1px solid #d3d7cf;
-    width: 3em;
     background: #fafafa;
     text-align: center;
+}
+
+#status td {
+    width: 3em;
 }
 
 #status tr:hover th {
