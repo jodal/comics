@@ -336,34 +336,38 @@ hr.clear {
 /* Status states */
 #status {
     width: auto;
-		font-size: 85%;
+    font-size: 85%;
 }
 
 #status a {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 #status td {
     border: 1px solid #d3d7cf;
-		width: 3em;
-		background: #fafafa;
-		text-align: center;
+    width: 3em;
+    background: #fafafa;
+    text-align: center;
 }
 
 #status tr:hover th {
     background: #fafafa;
 }
 
-#status .scheduled {
+#status .scheduled, #status_legend .scheduled {
     background: #fcc;
 }
 
-#status .fetched {
+#status .fetched, #status_legend .fetched {
     background: #fff7cc;
 }
 
-#status .fetched.scheduled {
+#status .fetched.scheduled, #status_legend .fetched.scheduled {
     background: #efc;
+}
+
+#status_legend {
+    width: auto;
 }
 
 /* Emphasizing */

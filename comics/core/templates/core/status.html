@@ -1,10 +1,12 @@
 {% extends "core/base.html" %}
 
 
-{% block title %}Status{% endblock %}
+{% block title %}Crawler status{% endblock %}
 
 
 {% block content %}
+
+<h2>Crawler status</h2>
 
 <table id="status">
   {% for comic, days in timeline.items %}
@@ -21,6 +23,17 @@
       {% endfor %}
     </tr>
   {% endfor %}
+</table>
+
+<h3>Legend</h3>
+
+<table id="status_legend">
+    <tr>
+        <td class="scheduled fetched">Scheduled and fetched</td>
+        <td class="fetched">Fetched</td>
+        <td class="scheduled">Scheduled</td>
+        <td>Neither</td>
+    </tr>
 </table>
 
 {% endblock %}
