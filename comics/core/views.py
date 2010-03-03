@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.context import RequestContext
+from django.utils.datastructures import SortedDict
 
 from comics.core.models import Comic, Release
 from comics.core.utils.comic_releases import get_comic_releases_struct
@@ -124,7 +125,7 @@ def about(request):
         context_instance=RequestContext(request))
 
 def status(request, days=21):
-    timeline = {}
+    timeline = SortedDict()
     first = dt.date.today() + dt.timedelta(days=1)
     last = dt.datetime.today() - dt.timedelta(days=days)
 
