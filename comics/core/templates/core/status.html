@@ -11,7 +11,7 @@
 <table id="status">
   {% for comic, days in timeline.items %}
     <tr>
-      <th><a href="{{ comic.get_redirect_url }}">{{ comic.name }}</a></th>
+      <th><a href="{{ comic.get_redirect_url }}">{{ comic.slug }}</a></th>
       {% for classes, day, release in days %}
         <td title="{{ day|date }}"{% if classes %} class="{{ classes|join:" " }}"{% endif %}>
           {% if release %}

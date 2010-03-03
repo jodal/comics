@@ -131,8 +131,8 @@ def status(request, days=21):
 
     schedule_days = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
     releases = Release.objects.filter(pub_date__gte=last)
-    releases = releases.select_related('comic__name')
-    releases = releases.order_by('comic__name').distinct()
+    releases = releases.select_related('comic__slug')
+    releases = releases.order_by('comic__slug').distinct()
 
     for release in releases:
         if release.comic not in timeline:
