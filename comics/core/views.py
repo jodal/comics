@@ -141,7 +141,7 @@ def status(request, days=21):
             for i in range(days+2):
                 day = first - dt.timedelta(days=i)
                 classes = set()
-                
+
                 if not schedule:
                     classes.add('unscheduled')
                 elif int(day.strftime('%w')) in schedule:
@@ -152,7 +152,7 @@ def status(request, days=21):
         day = (first - release.pub_date).days
         timeline[release.comic][day][0].add('fetched')
         timeline[release.comic][day][2] = release
-        
+
     return render_to_response('core/status.html',
         {'timeline': timeline},
         context_instance=RequestContext(request))

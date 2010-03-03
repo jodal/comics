@@ -7,10 +7,10 @@
 {% block content %}
 
 <table id="status">
-  {% for comic,days in timeline.items%}
+  {% for comic, days in timeline.items %}
     <tr>
       <th><a href="{{ comic.get_redirect_url }}">{{ comic.name }}</a></th>
-      {% for classes,day,release in days %}
+      {% for classes, day, release in days %}
         <td title="{{ day|date }}"{% if classes %} class="{{ classes|join:" " }}"{% endif %}>
           {% if release %}
             <a href="{{ release.get_absolute_url }}">{{ day|date:"D" }}</a>
