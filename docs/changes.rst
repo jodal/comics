@@ -6,6 +6,19 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
+Unreleased
+==========
+
+**Features**
+
+- Add status page which for each comic shows when releases are fetched compared
+  to the comic's release schedule.
+
+**Bugfixes**
+
+- Update crawler ``evilinc``.
+
+
 1.0.1 (2010-02-23)
 ==================
 
