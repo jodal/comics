@@ -126,7 +126,7 @@ def about(request):
 
 def status(request, days=21):
     timeline = SortedDict()
-    first = dt.date.today() + dt.timedelta(days=1)
+    first = dt.date.today()
     last = dt.datetime.today() - dt.timedelta(days=days)
 
     schedule_days = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
@@ -139,7 +139,7 @@ def status(request, days=21):
             schedule = get_comic_schedule(release.comic)
             timeline[release.comic] = []
 
-            for i in range(days+2):
+            for i in range(days+1):
                 day = first - dt.timedelta(days=i)
                 classes = set()
 
