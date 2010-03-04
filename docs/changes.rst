@@ -11,12 +11,14 @@ Unreleased
 
 **Features**
 
+- New crawler: ``petpeevy``
 - Add status page which for each comic shows when releases are fetched compared
   to the comic's release schedule.
 
 **Bugfixes**
 
 - Update crawler ``evilinc``.
+- Update crawler ``uvod`` to fetch comment too.
 
 
 1.0.1 (2010-02-23)
