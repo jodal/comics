@@ -16,5 +16,6 @@ class Crawler(CrawlerBase):
         page_url = 'http://www.gunshowcomic.com/d/%s.html' % (
             pub_date.strftime('%Y%m%d'),)
         page = self.parse_page(page_url)
-        url = page.src('img[src^="http://www.gunshowcomic.com/comics/"]')
-        return CrawlerImage(url)
+        urls = page.src('img[src^="http://www.gunshowcomic.com/comics/"]',
+            allow_multiple=True)
+        return [CrawlerImage(url) for url in urls]
