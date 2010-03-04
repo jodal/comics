@@ -129,7 +129,6 @@ def status(request, days=21):
     first = dt.date.today()
     last = dt.datetime.today() - dt.timedelta(days=days)
 
-    schedule_days = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
     releases = Release.objects.filter(pub_date__gte=last)
     releases = releases.select_related('comic__slug')
     releases = releases.order_by('comic__slug').distinct()
