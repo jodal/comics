@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.conf.urls.defaults import *
-from django.views.decorators.cache import cache_page
 
 from comics.core import views
 
@@ -37,7 +36,7 @@ urlpatterns = patterns('',
         views.comic_show, name='comic-date-days'),
 
     # Status page
-    url(r'^status/$', cache_page(views.status, 3600), name='status'),
+    url(r'^status/$', views.status, name='status'),
 
     # About page
     url(r'^about/$', views.about, name='about'),
