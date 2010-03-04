@@ -9,7 +9,7 @@
 <h2>Crawler status</h2>
 
 <table id="status">
-  {% for comic, days in timeline %}
+  {% for comic, days in timeline.items %}
     <tr>
       <th><a href="{{ comic.get_redirect_url }}">{{ comic.slug }}</a></th>
       {% for classes, day, release in days %}

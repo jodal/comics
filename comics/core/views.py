@@ -152,12 +152,9 @@ def status(request, days=21):
         day = (first - release.pub_date).days
         timeline[release.comic][day][0].add('fetched')
         timeline[release.comic][day][2] = release
-    keys = timeline.keys()
-    keys.sort()
-    sorted = [(key, timeline[key]) for key in keys]
 
     return render_to_response('core/status.html',
-        {'timeline': sorted},
+        {'timeline': timeline},
         context_instance=RequestContext(request))
 
 def redirect(request, comic):
