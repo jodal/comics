@@ -11,6 +11,7 @@ class Meta(MetaBase):
 class Crawler(CrawlerBase):
     history_capable_days = 60
     time_zone = -6
+    schedule = "Mo,We,Fr"
 
     def crawl(self, pub_date):
         feed = self.parse_feed(
