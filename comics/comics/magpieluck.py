@@ -9,18 +9,14 @@ class Meta(MetaBase):
     rights = 'Katie Sekelsky, CC BY-NC-SA 3.0'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 0
+    history_capable_days = 32
     schedule = 'Tu,Th'
     time_zone = -5
 
     def crawl(self, pub_date):
-        page = self.parse_page('http://magpieluck.com/')
-
-        # Make sure the date in the corner matches the date for the comic
-        test_date = page.text('div#date p')
-        if test_date != pub_date.strftime("%B %d, %Y").replace(" 0", " "):
-            return
-
-        url = page.src('div.comic img[title]')
-        text = page.alt('div.comic img[title]')
-        return CrawlerImage(url, text=text)
+        feed = self.parse_feed('http://feeds.feedburner.com/MagpieLuckComic')
+        for entry in feed.for_date(pub_date):
+            url = entry.content0.src('img[src*="/wp-content/"]')
+            title = entry.title.split('- ', 1)[1]
+            text = entry.content0.alt('img[src*="/wp-content/"]')
+            return CrawlerImage(url, title, text)

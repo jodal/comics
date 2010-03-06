@@ -31,7 +31,4 @@ COVERAGE_MODULES = (
     'comics.sets.models',
     'comics.sets.views',
     'comics.utils.commands',
-    'comics.utils.disk_import',
-    'comics.utils.hash',
-    'comics.utils.management.commands.importcomics',
 )

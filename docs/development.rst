@@ -2,7 +2,8 @@
 Development
 ***********
 
-*comics* development is coordinated through `GitHub <http://github.com/>`_.
+*comics* development is coordinated through `GitHub <http://github.com/>`_ and
+the IRC channel ``#dailycomics`` at ``irc.freenode.net``.
 
 
 How to contribute
@@ -13,45 +14,88 @@ fork `the comics project <http://github.com/jodal/comics>`_, and start hacking.
 To get your changes back into *comics*' mainline, send a pull request to `jodal
 at GitHub <http://github.com/jodal>`_, or send a mail to `comics@jodal.no
 <mailto:comics@jodal.no>`_. Patches accompanied by tests and documentation
-gives +5 karma and kudos.
+gives +5 karma and kudos. When hacking on *comics*, please follow the code
+style and commit guidelines below.
 
 All contributions must be granted under the same license as *comics* itself.
 
 
-Todo list
-=========
+Code style
+----------
 
-A loosely prioritized list of things to fix. Patches accepted.
+- Follow :pep:`8` unless otherwise noted. `pep8.py
+  <http://pypi.python.org/pypi/pep8/>`_ can be used to check your code against
+  the guidelines, however remember that matching the style of the surrounding
+  code is also important.
 
-``bin/smush``
-    Process images with ``bin/smush`` to reduce their size 10-20% (without
-    affecting their quality) and thus reducing page load time.
-``comics.aggregator.command``
-    Use comic week schedule to crawl less often on non-schedule days.
-``comics.core.utils.navigation``
-    Unit test and refactor.
+- Use four spaces for indentation, *never* tabs.
+
+- Use CamelCase with initial caps for class names::
+
+      ClassNameWithCamelCase
+
+- Use underscore to split variable, function and method names for
+  readability. Don't use CamelCase.
+
+  ::
+
+      lower_case_with_underscores
+
+- Use the fact that empty strings, lists and tuples are False and don't compare
+  boolean values using ``==`` and ``!=``.
+
+- Follow whitespace rules as described in :pep:`8`. Good examples::
+
+      spam(ham[1], {eggs: 2})
+      spam(1)
+      dict['key'] = list[index]
+
+- Limit lines to 80 characters and avoid trailing whitespace. However note that
+  wrapped lines should be *one* indentation level in from level above, except
+  for ``if``, ``for``, ``with``, and ``while`` lines which should have two
+  levels of indentation::
+
+      if (foo and bar ...
+              baz and foobar):
+          a = 1
+
+      from foobar import (foo, bar, ...
+          baz)
+
+- For consistency, prefer ``'`` over ``"`` for strings, unless the string
+  contains ``'``.
+
+- Take a look at :pep:`20` for a nice peek into a general mindset useful for
+  Python coding.
 
 
-Change specifications
-=====================
+Commit guidelines
+-----------------
 
-When planning or doing larger changes to *comics*, notes may be added to the
-documentation as a *change specification*.
+- Keep commits small and on topic, e.g. add one crawler per commit.
 
-.. toctree::
-    :glob:
+- Merge feature branches with ``--no-ff`` to keep track of the merge.
 
-    specs/*
+- When expanding API to accommodate new crawler features, commit API changes,
+  then new crawlers in a separate commit.
+
+- When changing existing API, commit API change and crawler changes in same
+  commit. If this commit looks too big you should be working in a feature
+  branch not a single commit.
+
+- Same policy applies for non-crawler changes.
 
 
 Data model
 ==========
 
-*comics*' data model is very simple. The ``core`` app consists of three models;
-``Comic``, ``Release``, and ``Strip``. The ``sets`` app adds an additional
-model named ``Set``. Changes to the data model are managed using `South
-<http://south.aeracode.org/>`_ database migrations. If you need to change
-the models, please provide the needed migrations.
+*comics*' data model is very simple. The :mod:`comics.core` app consists of
+three models; :class:`Comic <comics.core.models.Comic>`, :class:`Release
+<comics.core.modes.Release>`, and :class:`Strip <comics.core.models.Strip>`.
+The :mod:`comics.sets` app adds an additional model named :class:`Set
+<comics.sets.models.Set>`. Changes to the data model are managed using `South
+<http://south.aeracode.org/>`_ database migrations. If you need to change the
+models, please provide the needed migrations.
 
 .. image:: _static/data_model.png
 
@@ -80,3 +124,28 @@ To run unit tests with statement coverage::
 
     python manage.py test --settings=comics.settings.coverage
 
+
+Change specifications
+=====================
+
+When planning or doing larger changes to *comics*, notes may be added to the
+documentation as a *change specification*.
+
+.. toctree::
+    :glob:
+
+    specs/*
+
+
+To-do list
+==========
+
+A loosely prioritized list of things to fix. Patches accepted.
+
+``bin/smush``
+    Process images with ``bin/smush`` to reduce their size 10-20% (without
+    affecting their quality) and thus reducing page load time.
+:mod:`comics.aggregator.command`
+    Use comic week schedule to crawl less often on non-schedule days.
+:mod:`comics.core.utils.navigation`
+    Unit test and refactor.

@@ -36,14 +36,14 @@ class Crawler(CrawlerBase):
             # the other is the title.  I can't think of a good way to enforce
             # that we get the real value first, then the title, so we're just
             # going to parse it again later.
-            possible_date_and_title = date_to_index_page.text('option[value=%s]'
-                % possible_id, allow_multiple=True)
+            possible_date_and_title = date_to_index_page.text(
+                'option[value=%s]' % possible_id, allow_multiple=True)
             for the_date in possible_date_and_title:
                 # Make sure we strip off the leading '0' on %d: Joe doesn't
                 # include them.  We can't use a regex due to the speed
                 # penalty of ~500+ regex comparisons
-                    if the_date == pub_date.strftime(r"%B %d, %Y").replace(
-                            " 0", " ", 1):
+                    if the_date == pub_date.strftime('%B %d, %Y').replace(
+                            ' 0', ' ', 1):
                         the_id = possible_id
                         break
 
@@ -53,13 +53,13 @@ class Crawler(CrawlerBase):
 
         # We got an ID:  Now, pull that page...
         right_page = self.parse_page(
-            'http://www.digitalpimponline.com/strips.php?title=movie&id=%s' % 
+            'http://www.digitalpimponline.com/strips.php?title=movie&id=%s' %
             the_id)
 
         # ...and parse the url...
         # (the URL has a leading ../, when it's in the base directory already.
         # Work around the glitch)
-        url = right_page.src('img[class=strip]').replace("../", "")
+        url = right_page.src('img[class=strip]').replace('../', '')
         title = None
 
         # ... go through some rigamarole to get the title of the comic being
@@ -71,9 +71,9 @@ class Crawler(CrawlerBase):
             allow_multiple=True)
 
         for possible_title in possible_titles:
-            if pub_date.strftime("%Y") in possible_title:
+            if pub_date.strftime('%Y') in possible_title:
                 continue
             else:
                 title = possible_title
 
-        return CrawlerImage(url, title=title)
+        return CrawlerImage(url, title)

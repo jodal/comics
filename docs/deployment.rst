@@ -14,6 +14,21 @@ application and batch job is both running as the user ``comics-user``. The
 static media files, like comic images, are served from
 http://comics.example.com/media/, but may also be served from a different host.
 
+
+Database
+========
+
+*comics* should theoretically work with any database supported by Django.
+Though, development is mostly done on SQLite 3 and PostgreSQL 8.x. For
+production use, PostgreSQL is the recommended choice.
+
+.. note::
+
+    If you are going to use SQLite in a deployment with Apache and so on, you
+    need to ensure that the user the web server will be running as has write
+    access to the *directory* the SQLite database file is located in.
+
+
 Example Apache vhost
 ====================
 
@@ -75,7 +90,7 @@ This is the ``prod.wsgi`` file refered to in the Apache vhost above. The
 ``sys.path`` line assumes that the file is located in a directory inside the
 *comics* project, as the ``prod.wsgi`` shipped with *comics* is. If your WSGI
 file is located elsewhere, the ``sys.path`` line must be changed to point to
-whereever your *comics* project folder is located.
+wherever your *comics* project folder is located.
 
 .. literalinclude:: ../wsgi/prod.wsgi
     :language: python
@@ -131,7 +146,8 @@ caching from your ``local.py``.
 Example cronjob
 ===============
 
-To get new comics, you should run ``getcomics`` regularily. One way is to use ``cron`` e.g. by placing the following in ``/etc/cron.d/comics``:
+To get new comics, you should run ``getcomics`` regularly. One way is to use
+``cron`` e.g. by placing the following in ``/etc/cron.d/comics``:
 
 .. code-block:: sh
 

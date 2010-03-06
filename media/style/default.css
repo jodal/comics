@@ -311,6 +311,7 @@ hr.clear {
 .info h3, .success h3, .warning h3, .notice h3, .error h3 {
     margin: 0 0 0.5em 0;
 }
+
 .info {
     background: #eeeeec;
     border-color: #d3d7cf;
@@ -330,6 +331,46 @@ hr.clear {
     background: #cc4949;
     border-color: #ad3e3e;
     color: white;
+}
+
+/* Status states */
+#status {
+    width: auto;
+    font-size: 85%;
+}
+
+#status a {
+    text-decoration: none;
+}
+
+#status td, #status_legend td {
+    border: 1px solid #d3d7cf;
+    background: #fafafa;
+    text-align: center;
+}
+
+#status td {
+    width: 3em;
+}
+
+#status tr:hover th {
+    background: #fafafa;
+}
+
+#status .scheduled, #status_legend .scheduled {
+    background: #fcc;
+}
+
+#status .fetched, #status_legend .fetched {
+    background: #fff7cc;
+}
+
+#status .fetched.scheduled, #status_legend .fetched.scheduled {
+    background: #efc;
+}
+
+#status_legend {
+    width: auto;
 }
 
 /* Emphasizing */

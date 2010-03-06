@@ -16,6 +16,7 @@
         <th class="alignright"># releases</th>
         <th class="alignright"># sets</th>
         <th>Website</th>
+        <th>Last fetched</th>
     </tr>
     {% for comic in all_comics %}
     <tr>
@@ -24,13 +25,18 @@
             <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
         </td>
         <td>{{ comic.get_language_display }}</td>
-        {% with comic.release_set.count as release_count %}
-	<td class="alignright">{{ release_count }}
-            release{{ release_count|pluralize }}</td>
-        {% endwith %}
+	    <td class="alignright">{{ comic.release__count }}
+            release{{ comic.release__count|pluralize }}</td>
         <td class="alignright">{{ comic.number_of_sets }}
             set{{ comic.number_of_sets|pluralize }}</td>
-        <td>{{ comic.url|urlize }}</td>
+        <td><a href="{{ comic.get_redirect_url }}">{{ comic.url }}</a></td>
+        <td>
+            {% if comic.release__fetched__max %}
+                {{ comic.release__fetched__max|timesince }} ago
+            {% else %}
+                Never
+            {% endif %}
+        </td>
     </tr>
     {% endfor %}
 </table>

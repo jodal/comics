@@ -35,8 +35,14 @@ urlpatterns = patterns('',
     url(r'^c/%s/%s/%s/%s/%s/$' % (COMIC, YEAR, MONTH, DAY, DAYS),
         views.comic_show, name='comic-date-days'),
 
+    # Status page
+    url(r'^status/$', views.status, name='status'),
+
     # About page
     url(r'^about/$', views.about, name='about'),
+
+    # Redirect
+    url(r'^redirect/%s/$' % (COMIC,), views.redirect, name='redirect'),
 
     # We do not like robots
     url(r'^robots.txt$', views.robots, name='robots'),

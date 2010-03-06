@@ -32,5 +32,5 @@ class Crawler(CrawlerBase):
                 continue
 
             page = self.parse_page(anchor.get('href'))
-            url = page.src('.content-image-full img')
+            url = page.src('[class^="content-image"] img')
             return CrawlerImage(url)

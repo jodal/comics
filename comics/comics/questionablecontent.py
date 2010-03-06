@@ -20,10 +20,7 @@ class Crawler(CrawlerBase):
             if url is None:
                 continue
             title = entry.title
-
-            # Construct the text as the "stuff under the image" on the page /
-            # feed.
-            text = "\n\n".join([x.strip() for x in entry.html(entry.description)
-                .text('p', default=[], allow_multiple=True) if x.strip()])
-
-            return CrawlerImage(url, title=title, text=text)
+            paragraphs = [p.strip() for p in entry.html(entry.description)
+                .text('p', default=[], allow_multiple=True) if p.strip()]
+            text = '\n\n'.join(paragraphs)
+            return CrawlerImage(url, title, text)

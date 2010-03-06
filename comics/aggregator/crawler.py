@@ -9,6 +9,11 @@ from comics.aggregator.exceptions import (CrawlerHTTPError, ImageURLNotFound,
 from comics.aggregator.feedparser import FeedParser
 from comics.aggregator.lxmlparser import LxmlParser
 
+# For testability
+now = dt.datetime.now
+today = dt.date.today
+timezone = time.timezone
+
 class CrawlerRelease(object):
     def __init__(self, comic, pub_date,
             check_image_mime_type=True, has_rerun_releases=False):
@@ -62,14 +67,15 @@ class CrawlerBase(object):
     has_rerun_releases = False
     # Whether to check the mime type of the image when downloading
     check_image_mime_type = True
-    # Any HTTP headers to send when retrieving items from the site.
-    # Headers should be in the form {Name : Value}
-    headers = None
+
+    ### Settings used for both crawling and downloading
+    # Dictionary of HTTP headers to send when retrieving items from the site
+    headers = {}
 
     # Feed object which is reused when crawling multiple dates
     feed = None
 
-    # Page objects mapped against url for use when crawling multiple dates
+    # Page objects mapped against URL for use when crawling multiple dates
     pages = {}
 
     def __init__(self, comic):
@@ -118,9 +124,9 @@ class CrawlerBase(object):
     def current_date(self):
         if self.time_zone is None:
             self.time_zone = settings.COMICS_DEFAULT_TIME_ZONE
-        local_time_zone = - time.timezone // 3600
+        local_time_zone = - timezone // 3600
         hour_diff = local_time_zone - self.time_zone
-        current_time = dt.datetime.now() - dt.timedelta(hours=hour_diff)
+        current_time = now() - dt.timedelta(hours=hour_diff)
         return current_time.date()
 
     @property
@@ -129,9 +135,9 @@ class CrawlerBase(object):
             return dt.datetime.strptime(
                 self.history_capable_date, '%Y-%m-%d').date()
         elif self.history_capable_days is not None:
-            return (dt.date.today() - dt.timedelta(self.history_capable_days))
+            return (today() - dt.timedelta(self.history_capable_days))
         else:
-            return dt.date.today()
+            return today()
 
     def crawl(self, pub_date):
         """
@@ -188,13 +194,17 @@ class GoComicsComCrawlerBase(CrawlerBase):
 
     # It doesn't want us getting comics because of a User-Agent check.
     # Look! I'm a nice, normal Internet Explorer machine!
-    headers = {'User-Agent' : 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729'}
+    headers = {
+        'User-Agent': 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; '
+            'Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; '
+            '.NET CLR 3.0.4506.2152; .NET CLR 3.5.30729',
+    }
 
     def crawl_helper(self, short_name, pub_date, url_name=None):
         if url_name is None:
-            url_name=short_name
-        page_url = 'http://www.gocomics.com/%s/%s' % \
-            (url_name.lower().replace(" ", ""), pub_date.strftime("%Y/%m/%d/"))
+            url_name = short_name
+        page_url = 'http://www.gocomics.com/%s/%s' % (
+            url_name.lower().replace(' ', ''), pub_date.strftime('%Y/%m/%d/'))
         page = self.parse_page(page_url)
         url = page.src('img[alt="%s"]' % short_name)
         return CrawlerImage(url)

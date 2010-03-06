@@ -10,11 +10,11 @@ class Meta(MetaBase):
 
 class Crawler(CrawlerBase):
     history_capable_date = '2008-09-04'
-    schedule = 'Mo,Tu,We,Th,Fr'
 
     def crawl(self, pub_date):
         page_url = 'http://www.gunshowcomic.com/d/%s.html' % (
             pub_date.strftime('%Y%m%d'),)
         page = self.parse_page(page_url)
-        url = page.src('img[src^="http://www.gunshowcomic.com/comics/"]')
-        return CrawlerImage(url)
+        urls = page.src('img[src^="http://www.gunshowcomic.com/comics/"]',
+            allow_multiple=True)
+        return [CrawlerImage(url) for url in urls]

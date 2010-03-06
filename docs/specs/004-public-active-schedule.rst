@@ -1,0 +1,46 @@
+.. _spec-public-active-schedule:
+
+Spec-004: Add new database fields for public, active and schedule
+=================================================================
+
+*Spec created:*
+    2010-03-03
+*Spec implemented:*
+    N/A
+
+
+Goals
+-----
+
+- Add ``COMCIS_PUBLIC`` setting to indicate if the installations is public
+  or private. Default value should be should be ``True``. The proposed
+  ``public`` field handling needs to respect this setting.
+
+- Add ``public`` field that indicates if comic can be showed on public
+  installations. All comics should have default value ``True`` and info
+  loaded through ``loadmeta``. A design decision needs to be made with
+  respect to if public installs should crawl "private" comics.
+
+- Add ``active`` field that can be used to indicate that a comic is no longer
+  crawled. All comics should have default value ``True`` and info loaded
+  through ``loadmeta``. The status page should ignore inactive comics.
+
+- Add ``schedule`` field to track comics schedule. This information will thus
+  be moved from the crawler to the comic instance in the DB and loaded with
+  ``loadmeta``. Comics without a schedule should have ``None`` as schedule.
+  This change has been proposed in response to better use of the new status
+  page.
+
+
+Implementation plan
+-------------------
+
+1. Add new setting.
+2. Add new fields using south.
+3. Update base Meta object.
+4. Move schedule from crawler to meta.
+5. Update status page to use "new" schedule.
+6. Remove old ``get_comic_schedule`` from utils.
+7. Update crawler and/or view code to respect public flag.
+8. Update crawler and/or view code to respect active flag.
+9. Update docs if required.

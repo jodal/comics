@@ -91,7 +91,7 @@
 
     <p>No matching release found. See
     <a href="{% url comic-latest comic.slug %}">the latest release</a> or
-    the <a href="{{ comic.url }}">official site</a>.</p>
+    the <a href="{{ comic.get_redirect_url }}">official site</a>.</p>
 
 </div>
 

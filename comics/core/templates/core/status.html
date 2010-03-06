@@ -1,0 +1,39 @@
+{% extends "core/base.html" %}
+
+
+{% block title %}Crawler status{% endblock %}
+
+
+{% block content %}
+
+<h2>Crawler status</h2>
+
+<table id="status">
+  {% for comic, days in timeline.items %}
+    <tr>
+      <th><a href="{{ comic.get_redirect_url }}">{{ comic.slug }}</a></th>
+      {% for classes, day, release in days %}
+        <td title="{{ day|date }}"{% if classes %} class="{{ classes|join:" " }}"{% endif %}>
+          {% if release %}
+            <a href="{{ release.get_absolute_url }}">{{ day|date:"D" }}</a>
+          {% else %}
+            {{ day|date:"D" }}
+          {% endif %}
+        </td>
+      {% endfor %}
+    </tr>
+  {% endfor %}
+</table>
+
+<h3>Legend</h3>
+
+<table id="status_legend">
+    <tr>
+        <td class="scheduled fetched">Scheduled and fetched</td>
+        <td class="fetched">Fetched</td>
+        <td class="scheduled">Scheduled</td>
+        <td>Neither</td>
+    </tr>
+</table>
+
+{% endblock %}

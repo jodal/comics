@@ -5,10 +5,12 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.context import RequestContext
+from django.utils.datastructures import SortedDict
 
-from comics.core.models import Comic
+from comics.core.models import Comic, Release
 from comics.core.utils.comic_releases import get_comic_releases_struct
 from comics.core.utils.navigation import get_navigation
+from comics.aggregator.utils import get_comic_schedule
 
 # Generic views
 
@@ -120,6 +122,46 @@ def comic_year(request, comic, year):
 
 def about(request):
     return render_to_response('core/about.html',
+        context_instance=RequestContext(request))
+
+def status(request, days=21):
+    timeline = SortedDict()
+    first = dt.date.today() + dt.timedelta(days=1)
+    last = dt.datetime.today() - dt.timedelta(days=days)
+
+    releases = Release.objects.filter(pub_date__gte=last)
+    releases = releases.select_related('comic__slug')
+    releases = releases.order_by('comic__slug').distinct()
+
+    for release in releases:
+        if release.comic not in timeline:
+            schedule = get_comic_schedule(release.comic)
+            timeline[release.comic] = []
+
+            for i in range(days+2):
+                day = first - dt.timedelta(days=i)
+                classes = set()
+
+                if not schedule:
+                    classes.add('unscheduled')
+                elif int(day.strftime('%w')) in schedule:
+                    classes.add('scheduled')
+
+                timeline[release.comic].append([classes, day, None])
+
+        day = (first - release.pub_date).days
+        timeline[release.comic][day][0].add('fetched')
+        timeline[release.comic][day][2] = release
+
+    return render_to_response('core/status.html',
+        {'timeline': timeline},
+        context_instance=RequestContext(request))
+
+def redirect(request, comic):
+    comic = get_object_or_404(Comic, slug=comic)
+    if comic.url is None:
+        raise Http404
+    return render_to_response('core/redirect.html', {'url': comic.url},
         context_instance=RequestContext(request))
 
 def robots(request):

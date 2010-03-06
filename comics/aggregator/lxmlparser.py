@@ -32,14 +32,13 @@ class LxmlParser(object):
 
     def text(self, selector, default=None, allow_multiple=False):
         try:
-            if allow_multiple == False:
-                return self._decode(self._select(selector).text_content())
-            else:
+            if allow_multiple:
                 build_results = []
-                the_matches = self._select(selector, allow_multiple)
-                for the_match in the_matches:
-                    build_results.append(self._decode(the_match.text_content()))
+                for match in self._select(selector, allow_multiple):
+                    build_results.append(self._decode(match.text_content()))
                 return build_results
+            else:
+                return self._decode(self._select(selector).text_content())
         except DoesNotExist:
             return default
 
@@ -52,14 +51,13 @@ class LxmlParser(object):
 
     def _get(self, attr, selector, default=None, allow_multiple=False):
         try:
-            if allow_multiple == False:
-                return self._decode(self._select(selector).get(attr))
-            else:
+            if allow_multiple:
                 build_results = []
-                the_matches = self._select(selector, allow_multiple)
-                for the_match in the_matches:
-                    build_results.append(self._decode(the_match).get(attr))
+                for match in self._select(selector, allow_multiple):
+                    build_results.append(self._decode(match).get(attr))
                 return build_results
+            else:
+                return self._decode(self._select(selector).get(attr))
         except DoesNotExist:
             return default
 
@@ -68,23 +66,21 @@ class LxmlParser(object):
 
         if len(elements) == 0:
             raise DoesNotExist('Nothing matched the selector: %s' % selector)
-        elif len(elements) > 1:
-            if allow_multiple == False:
-                raise MultipleElementsReturned(
-                    'Selector matched %d elements and allow_multiple is false: %s' %
-                    (len(elements), selector))
+        elif len(elements) > 1 and not allow_multiple:
+            raise MultipleElementsReturned('Selector matched %d elements: %s' %
+                (len(elements), selector))
 
-        if allow_multiple == False:
-            return elements[0]
-        else:
+        if allow_multiple:
             return elements
+        else:
+            return elements[0]
 
     def _parse_url(self, url, headers=None):
         if headers is None:
             handle = urllib2.urlopen(url)
         else:
-            req = urllib2.Request(url, headers=headers)
-            handle = urllib2.urlopen(req)
+            request = urllib2.Request(url, headers=headers)
+            handle = urllib2.urlopen(request)
         content = handle.read()
         self._retrived_url = handle.geturl()
         handle.close()
