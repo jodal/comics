@@ -133,22 +133,22 @@ def status(request, days=21):
     releases = releases.select_related('comic__slug')
     releases = releases.order_by('comic__slug').distinct()
 
+    for comic in Comic.objects.all():
+        schedule = get_comic_schedule(comic)
+        timeline[comic] = []
+
+        for i in range(days+2):
+            day = first - dt.timedelta(days=i)
+            classes = set()
+
+            if not schedule:
+                classes.add('unscheduled')
+            elif int(day.strftime('%w')) in schedule:
+                classes.add('scheduled')
+
+            timeline[comic].append([classes, day, None])
+
     for release in releases:
-        if release.comic not in timeline:
-            schedule = get_comic_schedule(release.comic)
-            timeline[release.comic] = []
-
-            for i in range(days+2):
-                day = first - dt.timedelta(days=i)
-                classes = set()
-
-                if not schedule:
-                    classes.add('unscheduled')
-                elif int(day.strftime('%w')) in schedule:
-                    classes.add('scheduled')
-
-                timeline[release.comic].append([classes, day, None])
-
         day = (first - release.pub_date).days
         timeline[release.comic][day][0].add('fetched')
         timeline[release.comic][day][2] = release
