@@ -22,7 +22,11 @@ class Crawler(CrawlerBase):
 
         for block in article_list.root.cssselect('.article-list .block'):
             date = block.cssselect('.date')[0].text_content()
-            regexp = pub_date.strftime('%b %d(st|nd|rd|th) %Y')
+            month = pub_date.strftime('%b')
+            day = int(pub_date.strftime('%d'))
+            year = int(pub_date.strftime('%Y'))
+
+            regexp = '%s %d(st|nd|rd|th) %d' % (month, day, year)
 
             if not re.match(regexp, date):
                 continue
