@@ -12,7 +12,7 @@ Spec-004: Add new database fields for public, active and schedule
 Goals
 -----
 
-- Add ``COMCIS_PUBLIC`` setting to indicate if the installations is public
+- Add ``COMICS_PUBLIC`` setting to indicate if the installations is public
   or private. Default value should be should be ``True``. The proposed
   ``public`` field handling needs to respect this setting.
 
@@ -25,7 +25,7 @@ Goals
   crawled. All comics should have default value ``True`` and info loaded
   through ``loadmeta``. The status page should ignore inactive comics.
 
-- Add ``schedule`` field to track comics schedule. This information will thus
+- Add ``schedule`` field to track comic's schedule. This information will thus
   be moved from the crawler to the comic instance in the DB and loaded with
   ``loadmeta``. Comics without a schedule should have ``None`` as schedule.
   This change has been proposed in response to better use of the new status
