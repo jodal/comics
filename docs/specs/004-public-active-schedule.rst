@@ -16,6 +16,10 @@ Goals
   or private. Default value should be should be ``True``. The proposed
   ``public`` field handling needs to respect this setting.
 
+  Alternatively this setting can be avoided with ``loadmeta`` ignoring private
+  comics by default (ie. add --include-private or only load private ones when
+  explicitly specified).
+
 - Add ``public`` field to Comic model that indicates if comic can be showed on
   public installations. All comics should have default value ``True`` and info
   loaded through ``loadmeta``.
