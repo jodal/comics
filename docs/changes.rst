@@ -11,6 +11,7 @@ Unreleased
 
 **Features**
 
+- New crawler: ``atheistcartoons``
 - New crawler: ``petpeevy``
 - Add status page which for each comic shows when releases are fetched compared
   to the comic's release schedule.
