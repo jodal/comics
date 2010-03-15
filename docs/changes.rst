@@ -21,6 +21,7 @@ Unreleased
 - Update crawler ``evilinc`` to work again.
 - Update crawler ``uvod`` to fetch comment too.
 - Update crawler ``gunshow`` to fetch multiple images per release.
+- Update crawler ``questionablecontent`` to work again.
 
 
 1.0.1 (2010-02-23)
