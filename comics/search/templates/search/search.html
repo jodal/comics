@@ -4,19 +4,9 @@
     <h2>Search</h2>
 
     <form method="get" action=".">
-        <table>
-            {{ form.as_table }}
-            <tr>
-                <td>&nbsp;</td>
-                <td>
-                    <input type="submit" value="Search">
-                </td>
-            </tr>
-        </table>
+        </p>{{ form.q }} <input type="submit" value="Search"></p>
 
         {% if page.object_list %}
-            <h3>Results</h3>
-
             {% for result in page.object_list %}
                 {{ result.rendered|safe }}
             {% empty %}
