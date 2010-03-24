@@ -8,6 +8,7 @@ def site_settings(request):
         'site_title': settings.COMICS_SITE_TITLE,
         'site_tagline': settings.COMICS_SITE_TAGLINE,
         'google_analytics_code': settings.COMICS_GOOGLE_ANALYTICS_CODE,
+        'search_enabled': 'comics.search' in settings.INSTALLED_APPS,
     }
 
 def all_comics(request):
