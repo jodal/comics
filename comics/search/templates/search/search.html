@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <h2>Search</h2>
+
+    <form method="get" action=".">
+        </p>{{ form.q }} <input type="submit" value="Search"></p>
+
+        {% if page.object_list %}
+            {% for result in page.object_list %}
+                {{ result.rendered|safe }}
+            {% empty %}
+                <p>No results found.</p>
+            {% endfor %}
+        {% endif %}
+    </form>
+{% endblock %}
