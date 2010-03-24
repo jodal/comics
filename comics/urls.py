@@ -27,15 +27,18 @@ urlpatterns = patterns('',
     url(r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed',
         {'feed_dict': feeds}, name='feeds'),
 
-    # Search
-    (r'^search/', include('haystack.urls')),
-
     # Django admin
     (r'^admin/media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.ADMIN_MEDIA_ROOT}),
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/(.*)', admin.site.root),
 )
+
+# Comic search
+if 'comics.search' in settings.INSTALLED_APPS:
+    urlpatterns += patterns('',
+        (r'^search/', include('comics.search.urls')),
+    )
 
 # Let Django host media if doing local development on runserver
 if not settings.MEDIA_URL.startswith('http'):
