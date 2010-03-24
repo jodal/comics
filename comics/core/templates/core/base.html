@@ -36,8 +36,12 @@
         </div>
         <div id="sitemenu">
 {% block menu %}
+{% url search as search_url %}
 <ul>
     <li><a href="{% url top-latest %}">Home</a></li>
+    {% if search_url %}
+        <li><a href="{{ search_url }}">Search</a></li>
+    {% endif %}
     <li><a href="{% url set-new %}">Sets</a></li>
     <li><a href="{% url feedback %}">Feedback</a></li>
     <li><a href="{% url about %}">About</a></li>
