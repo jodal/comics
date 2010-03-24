@@ -10,6 +10,9 @@ class ImageIndex(indexes.SearchIndex):
     document = indexes.CharField(document=True, use_template=True)
     rendered = indexes.CharField(indexed=False)
 
+    def get_updated_field(self):
+        return 'fetched'
+
     def prepare_rendered(self, obj):
         template = get_template('search/results.html')
         context = Context({'release': obj.get_first_release()})
