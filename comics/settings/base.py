@@ -74,11 +74,13 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.webdesign',
     'south',
+    'haystack',
     'comics.aggregator',
     'comics.core',
     'comics.feedback',
     'comics.meta',
     'comics.sets',
+    'comics.search',
     'comics.utils',
 )
 
@@ -92,6 +94,9 @@ CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 DATE_FORMAT = 'D j M Y'
 TIME_FORMAT = 'H:i'
 
+HAYSTACK_SITECONF = 'comics.search.indexes'
+HAYSTACK_SEARCH_ENGINE = 'solr'
+HAYSTACK_SOLR_URL = 'http://127.0.0.1:8983/solr'
 
 ### Additional non-Django settings used by comics
 

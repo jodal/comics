@@ -27,6 +27,9 @@ urlpatterns = patterns('',
     url(r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed',
         {'feed_dict': feeds}, name='feeds'),
 
+    # Search
+    (r'^search/', include('haystack.urls')),
+
     # Django admin
     (r'^admin/media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.ADMIN_MEDIA_ROOT}),
