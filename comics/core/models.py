@@ -116,7 +116,6 @@ class Image(models.Model):
 
     class Meta:
         db_table = 'comics_image'
-        get_latest_by = 'pub_date'
 
     def delete(self, *args, **kwargs):
         super(Image, self).delete(*args, **kwargs)
