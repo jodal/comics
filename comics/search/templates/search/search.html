@@ -5,6 +5,7 @@
 
     <form method="get" action=".">
         <p>{{ form.q }} <input type="submit" value="Search"></p>
+        <p>(Note that search only works for comics with title or extra text set.)</p>
     </form>
 
     {% if page.object_list %}
