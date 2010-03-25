@@ -4,14 +4,18 @@
     <h2>Search</h2>
 
     <form method="get" action=".">
-        </p>{{ form.q }} <input type="submit" value="Search"></p>
-
-        {% if page.object_list %}
-            {% for result in page.object_list %}
-                {{ result.rendered|safe }}
-            {% empty %}
-                <p>No results found.</p>
-            {% endfor %}
-        {% endif %}
+        <p>{{ form.q }} <input type="submit" value="Search"></p>
+        <p>(Note that search only works for comics with title or extra text set.)</p>
     </form>
+
+    {% if page.object_list %}
+        {% include "search/pagination.html" %}
+        {% for result in page.object_list %}
+            {{ result.rendered|safe }}
+        {% endfor %}
+        {% include "search/pagination.html" %}
+    {% endif %}
+    {% if query and not page.object_list %}
+        <p>No results found.</p>
+    {% endif %}
 {% endblock %}
