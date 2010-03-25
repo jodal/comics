@@ -16,9 +16,11 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.questionablecontent.net/QCRSS.xml')
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img')
+            url = entry.summary.src('img[src*="questionablecontent"]')
+
             if url is None:
                 continue
+
             title = entry.title
             paragraphs = [p.strip() for p in entry.html(entry.description)
                 .text('p', default=[], allow_multiple=True) if p.strip()]
