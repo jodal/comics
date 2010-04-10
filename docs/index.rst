@@ -12,6 +12,7 @@ Contents
     crawlers
     deployment
     development
+    haystack
 
 
 Indices and tables
