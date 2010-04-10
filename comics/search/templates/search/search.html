@@ -1,21 +1,29 @@
-{% extends 'core/base.html' %}
+{% extends "core/base.html" %}
+
+
+{% block title %}Search{% endblock %}
+
 
 {% block content %}
-    <h2>Search</h2>
 
-    <form method="get" action=".">
-        <p>{{ form.q }} <input type="submit" value="Search"></p>
-        <p>(Note that search only works for comics with title or extra text set.)</p>
-    </form>
+<h2>Search</h2>
 
-    {% if page.object_list %}
-        {% include "search/pagination.html" %}
-        {% for result in page.object_list %}
-            {{ result.rendered|safe }}
-        {% endfor %}
-        {% include "search/pagination.html" %}
-    {% endif %}
-    {% if query and not page.object_list %}
-        <p>No results found.</p>
-    {% endif %}
+<p>Note that search only works for comics with title or extra text.</p>
+
+<form method="get" action=".">
+    <p>{{ form.q }} <input type="submit" value="Search"></p>
+</form>
+
+{% if page.object_list %}
+    {% include "search/pagination.html" %}
+    {% for result in page.object_list %}
+        {{ result.rendered|safe }}
+    {% endfor %}
+    {% include "search/pagination.html" %}
+{% endif %}
+
+{% if query and not page.object_list %}
+    <p>No results found.</p>
+{% endif %}
+
 {% endblock %}
