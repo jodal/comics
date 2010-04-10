@@ -17,6 +17,6 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed(
             'http://basicinstructions.net/basic-instructions/rss.xml')
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src*="/storage/"]')
+            url = entry.summary.src('img[src*="/storage/"][src*=".gif"]')
             title = entry.title
             return CrawlerImage(url, title)

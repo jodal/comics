@@ -24,6 +24,7 @@ Unreleased
 - Update crawler ``uvod`` to fetch comment too.
 - Update crawler ``gunshow`` to fetch multiple images per release.
 - Update crawler ``questionablecontent`` to work again.
+- Update crawler ``basicinstructions`` to ignore QR Code.
 
 
 1.0.1 (2010-02-23)
