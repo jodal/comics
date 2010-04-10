@@ -4,17 +4,17 @@ from comics.meta.base import MetaBase
 class Meta(MetaBase):
     name = 'PartiallyClips'
     language = 'en'
-    url = 'http://www.partiallyclips.com/'
+    url = 'http://partiallyclips.com/'
     start_date = '2002-01-01'
     rights = 'Robert T. Balder'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 10
-    schedule = 'Tu'
+    history_capable_days = 32
+    schedule = 'Tu,Fr'
     time_zone = -5
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://www.partiallyclips.com/includes/rss.xml')
+        feed = self.parse_feed('http://partiallyclips.com/feed/')
         for entry in feed.for_date(pub_date):
             url = entry.summary.src('img')
             title = entry.title.split(' - ')[0]

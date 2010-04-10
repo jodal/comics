@@ -25,6 +25,7 @@ Unreleased
 - Update crawler ``gunshow`` to fetch multiple images per release.
 - Update crawler ``questionablecontent`` to work again.
 - Update crawler ``basicinstructions`` to ignore QR Code.
+- Update crawler ``partiallyclips`` with new feed URL.
 
 
 1.0.1 (2010-02-23)
