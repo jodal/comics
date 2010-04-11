@@ -23,7 +23,8 @@ class Crawler(CrawlerBase):
 
             # We want direct link to image, not an HTML page.
             url = entry.summary.href('a:first-child')
-            url = url.replace('s1600-h', 's1600')
+            if url is not None:
+                url = url.replace('s1600-h', 's1600')
 
             title = entry.title
 

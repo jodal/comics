@@ -10,7 +10,6 @@ class Meta(MetaBase):
 
 class Crawler(CrawlerBase):
     history_capable_days = 10
-    schedule = 'Mo,We,Fr'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://abstrusegoose.com/feed/atom')

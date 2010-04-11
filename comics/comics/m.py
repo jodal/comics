@@ -10,7 +10,6 @@ class Meta(MetaBase):
 
 class Crawler(CrawlerBase):
     history_capable_date = '2005-01-31'
-    schedule = 'Mo,Tu,We,Th,Fr,Sa'
     time_zone = 1
     has_rerun_releases = True
 

@@ -12,8 +12,6 @@ class Meta(MetaBase):
 
 class Crawler(CrawlerBase):
     history_capable_date = '2005-04-04'
-    # It's updated quite irregularly, actually... ignore that schedule
-    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = -5
 
     # This crawler is pretty complicated because this dude does everything by
