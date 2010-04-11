@@ -27,6 +27,7 @@ Unreleased
 - Update crawler ``basicinstructions`` to ignore QR Code.
 - Update crawler ``partiallyclips`` with new feed URL.
 - Update crawler ``somethingpositive`` with new image URL.
+- Update crawler ``spikedmath`` to fetch multiple images per release.
 
 
 1.0.1 (2010-02-23)
