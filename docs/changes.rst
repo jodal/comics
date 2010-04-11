@@ -11,23 +11,23 @@ Unreleased
 
 **Features**
 
-- New crawler: ``atheistcartoons``
-- New crawler: ``petpeevy``
 - Add status page which for each comic shows when releases are fetched compared
   to the comic's release schedule. Contributed by Thomas Adamcik.
 - Add support for search in comic's title and text fields, using Haystack.
   Contributed by Thomas Adamcik.
 
-**Bugfixes**
+**Crawlers**
 
-- Update crawler ``evilinc`` to work again.
-- Update crawler ``uvod`` to fetch comment too.
-- Update crawler ``gunshow`` to fetch multiple images per release.
-- Update crawler ``questionablecontent`` to work again.
-- Update crawler ``basicinstructions`` to ignore QR Code.
-- Update crawler ``partiallyclips`` with new feed URL.
-- Update crawler ``somethingpositive`` with new image URL.
-- Update crawler ``spikedmath`` to fetch multiple images per release.
+- New crawler: ``atheistcartoons``
+- New crawler: ``petpeevy``
+- Update ``evilinc`` to work again.
+- Update ``uvod`` to fetch comment too.
+- Update ``gunshow`` to fetch multiple images per release.
+- Update ``questionablecontent`` to work again.
+- Update ``basicinstructions`` to ignore QR Code.
+- Update ``partiallyclips`` with new feed URL.
+- Update ``somethingpositive`` with new image URL.
+- Update ``spikedmath`` to fetch multiple images per release.
 
 
 1.0.1 (2010-02-23)
@@ -38,23 +38,6 @@ This release features 17 new crawlers and three updated crawlers, most by
 
 **Features**
 
-- New crawler: ``babyblues``
-- New crawler: ``calamitiesofnature``
-- New crawler: ``charliehorse``
-- New crawler: ``fminus``
-- New crawler: ``forbetterorforworse``
-- New crawler: ``girlgenius``
-- New crawler: ``hijinksensue``
-- New crawler: ``joelovescrappymovies``
-- New crawler: ``magpieluck``
-- New crawler: ``nonsequitur``
-- New crawler: ``overcompensating``
-- New crawler: ``pluggers``
-- New crawler: ``tankmcnamara``
-- New crawler: ``theboondocks``
-- New crawler: ``thedreamer``
-- New crawler: ``wondermark``
-- New crawler: ``yehudamoon``
 - Add links to official sites via redirect page.
 - Add :class:`comics.aggregator.crawler.GoComicsComCrawlerBase` for fast
   gocomics.com crawler creation.
@@ -62,12 +45,29 @@ This release features 17 new crawlers and three updated crawlers, most by
   for adding HTTP headers to requests it makes.
 - Add time since last release to ``release-list`` and ``comic-list``.
 
-**Bugfixes**
+**Crawlers**
 
-- Update crawler ``playervsplayer`` to not miss comics on days with blog posts.
-- Update crawler ``questionablecontent`` to include text below image.
-- Update crawler ``kalscartoon`` after target site change.
-- Update crawler ``butternutsquash`` after target site change.
+- New: ``babyblues``
+- New: ``calamitiesofnature``
+- New: ``charliehorse``
+- New: ``fminus``
+- New: ``forbetterorforworse``
+- New: ``girlgenius``
+- New: ``hijinksensue``
+- New: ``joelovescrappymovies``
+- New: ``magpieluck``
+- New: ``nonsequitur``
+- New: ``overcompensating``
+- New: ``pluggers``
+- New: ``tankmcnamara``
+- New: ``theboondocks``
+- New: ``thedreamer``
+- New: ``wondermark``
+- New: ``yehudamoon``
+- Update ``playervsplayer`` to not miss comics on days with blog posts.
+- Update ``questionablecontent`` to include text below image.
+- Update ``kalscartoon`` after target site change.
+- Update ``butternutsquash`` after target site change.
 
 
 1.0.0 (2010-01-27)
@@ -75,7 +75,7 @@ This release features 17 new crawlers and three updated crawlers, most by
 
 A week has gone, and here is the 1.0.0 final release. Enjoy :-)
 
-**Features**
+**Crawlers**
 
 - Update ``uvod`` crawler to use new feed.
 
