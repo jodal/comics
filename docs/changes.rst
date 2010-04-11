@@ -26,6 +26,7 @@ Unreleased
 - Update crawler ``questionablecontent`` to work again.
 - Update crawler ``basicinstructions`` to ignore QR Code.
 - Update crawler ``partiallyclips`` with new feed URL.
+- Update crawler ``somethingpositive`` with new image URL.
 
 
 1.0.1 (2010-02-23)
