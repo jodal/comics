@@ -6,8 +6,12 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
-Unreleased
-==========
+1.0.2 (2010-04-11)
+==================
+
+A minor release to get crawler updates out there. Two new cool but partly
+immature features are included, as they do not affect existing features or
+change database schema.
 
 **Features**
 
@@ -18,8 +22,8 @@ Unreleased
 
 **Crawlers**
 
-- New crawler: ``atheistcartoons``
-- New crawler: ``petpeevy``
+- New: ``atheistcartoons``
+- New: ``petpeevy``
 - Update ``evilinc`` to work again.
 - Update ``uvod`` to fetch comment too.
 - Update ``gunshow`` to fetch multiple images per release.
