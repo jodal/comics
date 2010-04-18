@@ -1,14 +1,11 @@
 # encoding: utf-8
 
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.comics.pondus import Meta as PondusMeta
 
-class Meta(MetaBase):
+class Meta(PondusMeta):
     name = 'Pondus (bt.no)'
-    language = 'no'
     url = 'http://www.bt.no/tegneserier/?type=pondus'
-    start_date = '1995-01-01'
-    rights = 'Frode Øverli'
 
 class Crawler(CrawlerBase):
     history_capable_days = 14
