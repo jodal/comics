@@ -1,12 +1,9 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.comics.rocky import Meta as RockyMeta
 
-class Meta(MetaBase):
+class Meta(RockyMeta):
     name = 'Rocky (bt.no)'
-    language = 'no'
     url = 'http://www.bt.no/tegneserier/rocky/'
-    start_date = '1998-01-01'
-    rights = 'Martin Kellerman'
 
 class Crawler(CrawlerBase):
     history_capable_days = 162

@@ -31,7 +31,10 @@
         {% endifnotequal %}
     {% endwith %}
     Retrieved at {{ release.fetched|time }}, {{ release.fetched|date }}
-    ({{ release.fetched|timesince}} ago) from
+    {% if show_time_since %}
+        ({{ release.fetched|timesince}} ago)
+    {% endif %}
+    from
     <a href="{{ release.comic.get_redirect_url }}">{{ release.comic.url }}</a>.
 </p>
 
