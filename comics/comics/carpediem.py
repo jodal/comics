@@ -2,7 +2,7 @@ from comics.aggregator.crawler import PondusNoCrawlerBase
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
-    name = 'Carpe Diem'
+    name = 'Carpe Diem (pondus.no)'
     language = 'no'
     url = 'http://pondus.no/#CartoonGallery'
     rights = 'Nikklas Eriksson'
