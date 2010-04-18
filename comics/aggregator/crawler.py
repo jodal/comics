@@ -208,3 +208,15 @@ class GoComicsComCrawlerBase(CrawlerBase):
         page = self.parse_page(page_url)
         url = page.src('img[alt="%s"]' % short_name)
         return CrawlerImage(url)
+
+
+class PondusNoCrawlerBase(CrawlerBase):
+    """Base comics crawling for all comics posted at pondus.no"""
+    time_zone = 1
+
+    def crawl_helper(self, url_name, pub_date):
+        page_url = 'http://pondus.no/INNHOLD/Striper/Dagens-stripe/%s/%s/' % (
+            url_name, pub_date.strftime('%Y-%m-%d'))
+        page = self.parse_page(page_url)
+        url = page.src('img.Strip')
+        return CrawlerImage(url)
