@@ -6,6 +6,14 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
+Unreleased
+==========
+
+**Crawlers**
+
+- Update ``lunch`` with new source site.
+
+
 1.0.2 (2010-04-11)
 ==================
 
