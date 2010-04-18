@@ -74,7 +74,9 @@
         </span></a>
     </h3>
 
-    {% include "core/release-content.html" %}
+    {% with 1 as show_time_since %}
+        {% include "core/release-content.html" %}
+    {% endwith %}
 
 </div>
 
