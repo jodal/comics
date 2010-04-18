@@ -11,6 +11,11 @@ Unreleased
 
 **Crawlers**
 
+- New: ``carpediem``
+- New: ``heltnils``
+- New: ``pondusno``
+- New: ``radiogaga``
+- Update ``eon`` with new source site.
 - Update ``lunch`` with new source site.
 
 
