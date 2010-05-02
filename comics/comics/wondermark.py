@@ -1,6 +1,6 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
-
+ 
 class Meta(MetaBase):
     name = 'Wondermark'
     language = 'en'
