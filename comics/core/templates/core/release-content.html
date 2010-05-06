@@ -24,12 +24,14 @@
 
 <p class="meta">
     Credits: {{ release.comic.rights }}.
+    {% comment %}
     {% with release.get_images_first_release as first_release %}
         {% ifnotequal release first_release %}
             <a href="{{ first_release.get_absolute_url }}">
             First released {{ first_release.pub_date|date }}</a>.
         {% endifnotequal %}
     {% endwith %}
+    {% endcomment %}
     Retrieved at {{ release.fetched|time }}, {{ release.fetched|date }}
     {% if show_time_since %}
         ({{ release.fetched|timesince}} ago)
