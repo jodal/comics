@@ -1,6 +1,9 @@
 """Utility functions for the view generic_show."""
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Max
+
+from comics.core.models import Release
 
 def get_comic_releases_struct(comics, latest=False,
                             start_date=None, end_date=None):
@@ -22,14 +25,10 @@ def get_comic_releases_struct(comics, latest=False,
 def get_latest_releases(comics):
     """Returns the latest release for each comic"""
 
-    releases = []
-    for comic in comics:
-        try:
-            releases.append(
-                comic.release_set.select_related(depth=1).latest())
-        except ObjectDoesNotExist:
-            continue
-    return releases
+    releases = Release.objects.filter(comic__in=comics)
+    releases = releases.values('comic_id').annotate(Max('pub_date'))
+    releases = releases.values_list('id', flat=True)
+    return Release.objects.filter(id__in=releases).select_related('comic')
 
 def get_releases_from_interval(comics, start_date, end_date):
     """
