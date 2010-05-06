@@ -6,6 +6,7 @@ from django.utils.feedgenerator import Atom1Feed
 
 from comics.core.models import Release
 from comics.sets.models import Set
+from comics.core.utils.comic_releases import add_images
 
 class SetFeed(Feed):
     feed_type = Atom1Feed
@@ -29,8 +30,10 @@ class SetFeed(Feed):
     def items(self, obj):
         from_date = datetime.date.today() \
             - datetime.timedelta(settings.COMICS_MAX_DAYS_IN_FEED)
-        return Release.objects.select_related(depth=1).filter(comic__set=obj,
+        releases = Release.objects.select_related(depth=1).filter(comic__set=obj,
             pub_date__gte=from_date).order_by('-pub_date')
+        add_images(releases)
+        return releases
 
     def item_pubdate(self, item):
         return item.fetched

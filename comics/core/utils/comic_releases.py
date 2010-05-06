@@ -19,6 +19,7 @@ def get_comic_releases_struct(comics, latest=False,
     else:
         releases = get_releases_from_interval(comics,
             start_date, end_date)
+    add_images(releases)
     comics = map_releases_to_comics(comics, releases)
     return comics
 
