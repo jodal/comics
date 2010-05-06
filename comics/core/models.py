@@ -143,4 +143,4 @@ class Image(models.Model):
         return u'%s image %s' % (self.comic, self.checksum)
 
     def get_first_release(self):
-        return self.releases.order_by('pub_date')[0]
+        return self.releases.select_related('comic').order_by('pub_date')[0]
