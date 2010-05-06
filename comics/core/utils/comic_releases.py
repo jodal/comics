@@ -3,7 +3,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Max
 
-from comics.core.models import Release
+from comics.core.models import Image, Release
 
 def get_comic_releases_struct(comics, latest=False,
                             start_date=None, end_date=None):
@@ -50,6 +50,23 @@ def get_releases_from_interval(comics, start_date, end_date):
         except ObjectDoesNotExist:
             continue
     return releases
+
+def add_images(releases):
+    """
+    Get all images for release set instead of being stuck with one query
+    per release.
+    """
+    images = Image.objects.filter(releases__in=releases).order_by('id')
+    images = images.extra(select={'release_id': 'release_id'})
+    mapping = {}
+    for image in images:
+        if image.release_id in mapping:
+            mapping[image.release_id].append(image)
+        else:
+            mapping[image.release_id] = [image]
+
+    for release in releases:
+        release.set_ordered_images(mapping[release.id])
 
 def map_releases_to_comics(comics, releases):
     """
