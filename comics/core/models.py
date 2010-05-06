@@ -95,16 +95,14 @@ class Release(models.Model):
         cache.set(key, first)
         return first
 
+    def set_ordered_images(self, images):
+        self._ordered_images = images
+
     def get_ordered_images(self):
-        key = 'release_images_ordered_images:%s' % self.id
-        images = cache.get(key)
+        if not getattr(self, '_ordered_images', []):
+            self._ordered_images = list(self.images.order_by('id'))
 
-        if images is not None:
-            return images
-
-        images = self.images.order_by('id')
-        cache.set(key, images)
-        return images
+        return self._ordered_images
 
 
 # Let all created dirs and files be writable by the group
