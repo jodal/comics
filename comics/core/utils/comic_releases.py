@@ -38,18 +38,11 @@ def get_releases_from_interval(comics, start_date, end_date):
 
     """
 
-    releases = []
-    for comic in comics:
-        try:
-            cr = comic.release_set.select_related(depth=1)
-            if start_date == end_date:
-                cr = cr.filter(pub_date=start_date)
-            else:
-                cr = cr.filter(pub_date__gte=start_date, pub_date__lte=end_date)
-            cr = cr.order_by('pub_date')
-            releases += cr
-        except ObjectDoesNotExist:
-            continue
+    releases = Release.objects.filter(comic__in=comics).select_related('comic')
+    if start_date == end_date:
+        releases = releases.filter(pub_date=start_date)
+    else:
+        releases = releases.filter(pub_date__gte=start_date, pub_date__lte=end_date)
     return releases
 
 def add_images(releases):
