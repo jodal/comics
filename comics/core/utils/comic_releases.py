@@ -16,7 +16,6 @@ def get_comic_releases_struct(comics, latest=False,
     else:
         releases = get_releases_from_interval(comics,
             start_date, end_date)
-    add_release_counter(releases)
     comics = map_releases_to_comics(comics, releases)
     return comics
 
@@ -52,12 +51,6 @@ def get_releases_from_interval(comics, start_date, end_date):
         except ObjectDoesNotExist:
             continue
     return releases
-
-def add_release_counter(releases):
-    """Add counter, which is used in navigation JavaScript, to releases"""
-
-    for counter, release in enumerate(releases):
-        release.counter = counter
 
 def map_releases_to_comics(comics, releases):
     """
