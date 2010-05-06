@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db import models
 from django.core.files.storage import FileSystemStorage
 from django.core.urlresolvers import reverse
+from django.core.cache import cache
 
 from comics.core.managers import ComicManager
 
@@ -80,13 +81,30 @@ class Release(models.Model):
         })
 
     def get_images_first_release(self):
+        key = 'release_images_first_release:%s' % self.id
+        first = cache.get(key)
+
+        if first is not None:
+            return first
+
         try:
-            return self.images.all()[0].get_first_release()
+            first = self.images.all()[0].get_first_release()
         except IndexError:
-            pass
+            return
+
+        cache.set(key, first)
+        return first
 
     def get_ordered_images(self):
-        return self.images.order_by('id')
+        key = 'release_images_ordered_images:%s' % self.id
+        images = cache.get(key)
+
+        if images is not None:
+            return images
+
+        images = self.images.order_by('id')
+        cache.set(key, images)
+        return images
 
 
 # Let all created dirs and files be writable by the group
