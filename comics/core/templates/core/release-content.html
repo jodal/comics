@@ -25,6 +25,7 @@
 <p class="meta">
     Credits: {{ release.comic.rights }}.
     {% comment %}
+    {# Commented out as it _really_ slows site down #}
     {% with release.get_images_first_release as first_release %}
         {% ifnotequal release first_release %}
             <a href="{{ first_release.get_absolute_url }}">
