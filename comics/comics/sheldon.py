@@ -14,9 +14,8 @@ class Crawler(CrawlerBase):
     time_zone = -5
 
     def crawl(self, pub_date):
-        filetype = 'gif'
-        if pub_date.weekday() in [5,6]: filetype = 'jpg'
-        url = 'http://www.sheldoncomics.com/strips/%s.%s' % (
-                pub_date.strftime('sd%y%m%d'), filetype)
-        title = 'strip for %s' % pub_date.strftime('%B / %d / %Y')
-        return CrawlerImage(url, title)
+        page_url = 'http://www.sheldoncomics.com/archive/%s.html' % (
+            pub_date.strftime('%y%m%d'),)
+        page = self.parse_page(page_url)
+        url = page.src('img[alt^="strip for"]')
+        return CrawlerImage(url)
