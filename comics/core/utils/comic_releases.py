@@ -60,7 +60,7 @@ def add_images(releases):
             mapping[image.release_id] = [image]
 
     for release in releases:
-        release.set_ordered_images(mapping[release.id])
+        release.set_ordered_images(mapping.get(release.id, []))
 
 def map_releases_to_comics(comics, releases):
     """
