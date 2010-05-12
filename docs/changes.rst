@@ -19,6 +19,7 @@ Unreleased
 - New: ``heltnils``
 - New: ``pondusno``
 - New: ``radiogaga``
+- New: ``sheldon``
 - Update ``eon`` with new source site.
 - Update ``lunch`` with new source site.
 
