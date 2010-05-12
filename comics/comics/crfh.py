@@ -13,8 +13,8 @@ class Crawler(CrawlerBase):
     time_zone = -5
 
     def crawl(self, pub_date):
-        page_url = 'http://www.crfh.net/d/%s.html' % \
-            pub_date.strftime('%Y%m%d')
+        page_url = 'http://www.crfh.net/d/%s.html' % (
+            pub_date.strftime('%Y%m%d'),)
         page = self.parse_page(page_url)
         url = page.src('img[src*="/%s/"]' % pub_date.strftime('%Y'))
         return CrawlerImage(url)

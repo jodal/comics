@@ -12,7 +12,10 @@ Unreleased
 **Crawlers**
 
 - New: ``apokalips``
+- New: ``boxerhockey``
 - New: ``carpediem``
+- New: ``crfh``
+- New: ``darylcagle``
 - New: ``heltnils``
 - New: ``pondusno``
 - New: ``radiogaga``
