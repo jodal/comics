@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.core.cache import cache
 from django.db.models import Count, Max
 
 from comics.core.models import Comic
@@ -12,13 +11,9 @@ def site_settings(request):
     }
 
 def all_comics(request):
-    all_comics = cache.get('all_comics')
-
-    if all_comics is None:
-        all_comics = Comic.objects.sort_by_name()
-        all_comics = all_comics.annotate(Max('release__fetched'))
-        all_comics = all_comics.annotate(Count('release'))
-        cache.set('all_comics', list(all_comics))
+    all_comics = Comic.objects.sort_by_name()
+    all_comics = all_comics.annotate(Max('release__fetched'))
+    all_comics = all_comics.annotate(Count('release'))
 
     return {'all_comics': all_comics}
 
