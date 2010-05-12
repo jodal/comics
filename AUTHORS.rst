@@ -8,3 +8,4 @@ Contributors to *comics* in the order of appearance:
 * Johannes Knutsen <johannes@knutseninfo.no>
 * Kristian Klette <klette@klette.us>
 * Jim Wyllie <jwyllie83@gmail.com>
+* Rune Hammersland <?>
