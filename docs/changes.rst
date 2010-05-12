@@ -11,10 +11,15 @@ Unreleased
 
 **Crawlers**
 
+- New: ``apokalips``
+- New: ``boxerhockey``
 - New: ``carpediem``
+- New: ``crfh``
+- New: ``darylcagle``
 - New: ``heltnils``
 - New: ``pondusno``
 - New: ``radiogaga``
+- New: ``sheldon``
 - Update ``eon`` with new source site.
 - Update ``lunch`` with new source site.
 
