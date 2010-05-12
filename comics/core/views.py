@@ -1,6 +1,7 @@
 import datetime as dt
 
 from django.conf import settings
+from django.core.cache import cache
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
@@ -45,8 +46,13 @@ def top_show(request, year=None, month=None, day=None, days=1):
     if not (1 <= days <= settings.COMICS_MAX_DAYS_IN_PAGE):
         raise Http404
 
-    queryset = Comic.objects.all().order_by(
-        '-number_of_sets', 'name')[:settings.COMICS_MAX_IN_TOP_LIST]
+    queryset = cache.get('core.top_show')
+
+    if queryset is None:
+        queryset = Comic.objects.all().order_by(
+            '-number_of_sets', 'name')[:settings.COMICS_MAX_IN_TOP_LIST]
+        cache.set('core.top_show', list(queryset))
+
     page = get_navigation(request, 'top',
         year=year, month=month, day=day, days=days)
     return generic_show(request, queryset, page)
