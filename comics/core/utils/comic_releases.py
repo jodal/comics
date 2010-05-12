@@ -29,7 +29,7 @@ def get_latest_releases(comics):
     release_ids = Release.objects.values('comic_id')
     release_ids = release_ids.annotate(Max('id'))
     release_ids = release_ids.values_list('id__max', flat=True)
-    return Release.objects.filter(id__in=release_ids)
+    return Release.objects.filter(id__in=release_ids).select_related('comic')
 
 def get_releases_from_interval(comics, start_date, end_date):
     """
