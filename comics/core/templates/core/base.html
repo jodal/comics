@@ -68,22 +68,22 @@
     </div>
 </div>
 
+{% cache 500 all_comics %}
 {% if all_comics %}
 <div id="cloud">
     <div class="content">
 {% block cloud %}
-{% cache 500 all_comics %}
     <h2><a href="{% url comic-list %}">All comics</a></h2>
     <ul>
     {% for comic in all_comics %}
         <li><a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a></li>
     {% endfor %}
     </ul>
-{% endcache %}
 {% endblock cloud %}
     </div>
 </div>
 {% endif %}
+{% endcache %}
 
 <div id="ft">
     <div class="content">
