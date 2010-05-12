@@ -1,6 +1,9 @@
 """Utility functions for the view generic_show."""
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Max
+
+from comics.core.models import Image, Release
 
 def get_comic_releases_struct(comics, latest=False,
                             start_date=None, end_date=None):
@@ -16,21 +19,17 @@ def get_comic_releases_struct(comics, latest=False,
     else:
         releases = get_releases_from_interval(comics,
             start_date, end_date)
-    add_release_counter(releases)
+    add_images(releases)
     comics = map_releases_to_comics(comics, releases)
     return comics
 
 def get_latest_releases(comics):
     """Returns the latest release for each comic"""
 
-    releases = []
-    for comic in comics:
-        try:
-            releases.append(
-                comic.release_set.select_related(depth=1).latest())
-        except ObjectDoesNotExist:
-            continue
-    return releases
+    release_ids = Release.objects.values('comic_id')
+    release_ids = release_ids.annotate(Max('id'))
+    release_ids = release_ids.values_list('id__max', flat=True)
+    return Release.objects.filter(id__in=release_ids).select_related('comic')
 
 def get_releases_from_interval(comics, start_date, end_date):
     """
@@ -39,25 +38,29 @@ def get_releases_from_interval(comics, start_date, end_date):
 
     """
 
-    releases = []
-    for comic in comics:
-        try:
-            cr = comic.release_set.select_related(depth=1)
-            if start_date == end_date:
-                cr = cr.filter(pub_date=start_date)
-            else:
-                cr = cr.filter(pub_date__gte=start_date, pub_date__lte=end_date)
-            cr = cr.order_by('pub_date')
-            releases += cr
-        except ObjectDoesNotExist:
-            continue
+    releases = Release.objects.filter(comic__in=comics).select_related('comic')
+    if start_date == end_date:
+        releases = releases.filter(pub_date=start_date)
+    else:
+        releases = releases.filter(pub_date__gte=start_date, pub_date__lte=end_date)
     return releases
 
-def add_release_counter(releases):
-    """Add counter, which is used in navigation JavaScript, to releases"""
+def add_images(releases):
+    """
+    Get all images for release set instead of being stuck with one query
+    per release.
+    """
+    images = Image.objects.filter(releases__in=releases).order_by('id')
+    images = images.extra(select={'release_id': 'release_id'})
+    mapping = {}
+    for image in images:
+        if image.release_id in mapping:
+            mapping[image.release_id].append(image)
+        else:
+            mapping[image.release_id] = [image]
 
-    for counter, release in enumerate(releases):
-        release.counter = counter
+    for release in releases:
+        release.set_ordered_images(mapping.get(release.id, []))
 
 def map_releases_to_comics(comics, releases):
     """
