@@ -11,6 +11,7 @@ Unreleased
 
 **Crawlers**
 
+- New: ``apokalips``
 - New: ``carpediem``
 - New: ``heltnils``
 - New: ``pondusno``
