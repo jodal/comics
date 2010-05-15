@@ -26,7 +26,8 @@ def get_comic_releases_struct(comics, latest=False,
 def get_latest_releases(comics):
     """Returns the latest release for each comic"""
 
-    release_ids = Release.objects.values('comic_id')
+    release_ids = Release.objects.filter(comic__in=comics)
+    release_ids = release_ids.values('comic_id')
     release_ids = release_ids.annotate(Max('id'))
     release_ids = release_ids.values_list('id__max', flat=True)
     return Release.objects.filter(id__in=release_ids).select_related('comic')
