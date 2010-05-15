@@ -19,6 +19,7 @@ def get_comic_releases_struct(comics, latest=False,
     else:
         releases = get_releases_from_interval(comics,
             start_date, end_date)
+    releases = releases.order_by('pub_date')
     add_images(releases)
     comics = map_releases_to_comics(comics, releases)
     return comics
@@ -26,6 +27,9 @@ def get_comic_releases_struct(comics, latest=False,
 def get_latest_releases(comics):
     """Returns the latest release for each comic"""
 
+    # Don't filter release ids by comics as query will no longer produce right
+    # result. map_releases_to_comics ensures that only right comics are
+    # included.
     release_ids = Release.objects.values('comic_id')
     release_ids = release_ids.annotate(Max('id'))
     release_ids = release_ids.values_list('id__max', flat=True)
