@@ -9,7 +9,8 @@ from django.template.context import RequestContext
 from django.utils.datastructures import SortedDict
 
 from comics.core.models import Comic, Release
-from comics.core.utils.comic_releases import get_comic_releases_struct
+from comics.core.utils.comic_releases import (get_comic_releases_struct,
+    get_top_comics)
 from comics.core.utils.navigation import get_navigation
 from comics.aggregator.utils import get_comic_schedule
 
@@ -46,13 +47,7 @@ def top_show(request, year=None, month=None, day=None, days=1):
     if not (1 <= days <= settings.COMICS_MAX_DAYS_IN_PAGE):
         raise Http404
 
-    queryset = cache.get('core.top_show')
-
-    if queryset is None:
-        queryset = Comic.objects.all().order_by(
-            '-number_of_sets', 'name')[:settings.COMICS_MAX_IN_TOP_LIST]
-        cache.set('core.top_show', list(queryset))
-
+    queryset = get_top_comics()
     page = get_navigation(request, 'top',
         year=year, month=month, day=day, days=days)
     return generic_show(request, queryset, page)
@@ -60,8 +55,7 @@ def top_show(request, year=None, month=None, day=None, days=1):
 def top_latest(request):
     """Show latest release for each comic"""
 
-    queryset = Comic.objects.all().order_by(
-        '-number_of_sets', 'name')[:settings.COMICS_MAX_IN_TOP_LIST]
+    queryset = get_top_comics()
     page = get_navigation(request, 'top', days=1, latest=True)
     return generic_show(request, queryset, page, latest=True)
 
