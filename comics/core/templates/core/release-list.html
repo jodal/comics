@@ -68,7 +68,7 @@
 
 <div class="release">
 
-    <h3 id="release{{ forloop.parentloop.counter0 }}">
+    <h3 id="release{{ release.counter }}">
         <a href="{{ release.get_absolute_url }}">{{ release.comic.name }}
         <span class="pub_date">published {{ release.pub_date|naturalday }}
         </span></a>

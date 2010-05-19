@@ -21,6 +21,7 @@ def get_comic_releases_struct(comics, latest=False,
             start_date, end_date)
     releases = releases.order_by('pub_date')
     add_images(releases)
+    add_release_counter(releases)
     comics = map_releases_to_comics(comics, releases)
     return comics
 
@@ -65,6 +66,12 @@ def add_images(releases):
 
     for release in releases:
         release.set_ordered_images(mapping.get(release.id, []))
+
+def add_release_counter(releases):
+    """Add counter, which is used in navigation JavaScript, to releases"""
+
+    for counter, release in enumerate(releases):
+        release.counter = counter
 
 def map_releases_to_comics(comics, releases):
     """
