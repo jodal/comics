@@ -1,25 +1,31 @@
 /* Contributed by Thomas Adamcik <thomas@adamcik.no> 2007-09-30 */
 
-var num_releases = null;
-var current;
+var index = -1;
 
 try {
-	current = window.location.toString().split('#')[1].substr(5);
+	releases[0];
+} catch (error) {
+	var releases = [];
+}
+
+try {
+	var current = window.location.toString().split('#')[1].split('-')[1];
 	if (parseInt(current) == NaN) {
 		current = -1;
 	} else {
 		current = parseInt(current);
 	}
+	for (var i=0; i<releases.length; i++) {
+		if (current == releases[i].split('-')[1]) {
+			index = i;
+			break;
+		}
+	}
 } catch (error) {
-	current = -1;
+	index = -1;
 }
 
-
 function eventHandler(e) {
-	if (num_releases == null) {
-		num_releases = document.getElementById('releases').getElementsByTagName('div').length;
-	}
-
 	// Ensure that we have an event to work on in all browsers
 	if (!e) {
 		var e = window.event;
@@ -41,30 +47,24 @@ function eventHandler(e) {
 			}
 			break;
 		case 74: // j
-			if (current < num_releases - 1) {
-				current += 1;
-				window.location = "#release" + current;
+			if (index < releases.length - 1) {
+				index += 1;
+				window.location = '#' + releases[index];
 			}
 			break;
 		case 75: // k
-			if (current < 0) {
-				window.location = "#release0";
-				current = 0;
-			} else if (current > 0) {
-				current -= 1;
-				window.location = "#release" + current;
+			if (index < 0) {
+				index = 0;
+				window.location = '#' + releases[index];
+			} else if (index > 0) {
+				index -= 1;
+				window.location = '#' + releases[index];
 			}
 			break;
 		case 76: // l
 			var next = document.getElementById('next');
 			if (next) window.location = next.getAttribute('href');
 			break;
-		// Debug key:
-		/*
-		case 73: // i
-			alert("Current: " + current + "\nNum releases: " + num_releases);
-			break;
-		*/
 		default:
 			handeled = false;
 			break;

@@ -68,7 +68,7 @@
 
 <div class="release">
 
-    <h3 id="release{{ release.counter }}">
+    <h3 id="release-{{ release.id }}">
         <a href="{{ release.get_absolute_url }}">{{ release.comic.name }}
         <span class="pub_date">published {{ release.pub_date|naturalday }}
         </span></a>
@@ -118,4 +118,13 @@
     {% endwith %}
 {% endblock %}
 
+{% endblock %}
+
+{% block extra_footer %}
+    <script type="text/javascript">
+        var releases = [{% for comic, releases in comics %}{% for release in releases %}
+            'release-{{ release.id }}'{% if not forloop.last or not forloop.parentloop.last%},{% endif %}{% endfor %}{% endfor %}
+        ];
+    </script>
+{{ block.super }}
 {% endblock %}
