@@ -1,9 +1,21 @@
 """Utility functions for the view generic_show."""
 
+from django.conf import settings
+from django.core.cache import cache
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Max
 
-from comics.core.models import Image, Release
+from comics.core.models import Comic, Image, Release
+
+def get_top_comics():
+    comics = cache.get('top_comics')
+
+    if comics is None:
+        comics = Comic.objects.all().order_by(
+            '-number_of_sets', 'name')[:settings.COMICS_MAX_IN_TOP_LIST]
+        cache.set('top_comics', list(comics ))
+
+    return comics
 
 def get_comic_releases_struct(comics, latest=False,
                             start_date=None, end_date=None):
