@@ -33,7 +33,6 @@ def get_comic_releases_struct(comics, latest=False,
             start_date, end_date)
     releases = releases.order_by('pub_date')
     add_images(releases)
-    add_release_counter(releases)
     comics = map_releases_to_comics(comics, releases)
     return comics
 
@@ -59,7 +58,8 @@ def get_releases_from_interval(comics, start_date, end_date):
     if start_date == end_date:
         releases = releases.filter(pub_date=start_date)
     else:
-        releases = releases.filter(pub_date__gte=start_date, pub_date__lte=end_date)
+        releases = releases.filter(
+            pub_date__gte=start_date, pub_date__lte=end_date)
     return releases
 
 def add_images(releases):
@@ -78,12 +78,6 @@ def add_images(releases):
 
     for release in releases:
         release.set_ordered_images(mapping.get(release.id, []))
-
-def add_release_counter(releases):
-    """Add counter, which is used in navigation JavaScript, to releases"""
-
-    for counter, release in enumerate(releases):
-        release.counter = counter
 
 def map_releases_to_comics(comics, releases):
     """
