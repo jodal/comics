@@ -20,6 +20,7 @@ Unreleased
 - New: ``pondusno``
 - New: ``radiogaga``
 - New: ``sheldon``
+- New: ``thegutters``
 - Update ``eon`` with new source site.
 - Update ``lunch`` with new source site.
 
