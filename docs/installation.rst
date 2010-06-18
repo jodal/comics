@@ -10,7 +10,7 @@ Minimum dependencies
 
 The absolute minimum requirements for getting *comics* up and running is:
 
-- `Python <http://www.python.org/>`_ >= 2.5
+- `Python <http://www.python.org/>`_ >= 2.6
 - `PIL <http://www.pythonware.com/products/pil/>`_ >= 1.1
 - `Django <http://www.djangoproject.com/>`_ >= 1.1
 - `South <http://south.aeracode.org/>`_ >= 0.6
