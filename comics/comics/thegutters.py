@@ -5,7 +5,7 @@ from comics.core.models import Release
 class Meta(MetaBase):
     name = 'The Gutters'
     language = 'en'
-    url = 'http://thedreamercomic.com/'
+    url = 'http://the-gutters.com/'
     rights = 'Blind Ferret Entertainment'
 
 class Crawler(CrawlerBase):
