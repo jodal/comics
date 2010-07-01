@@ -27,6 +27,9 @@ class Crawler(CrawlerBase):
             allow_multiple=True)
         the_id = None
 
+        if possible_ids is None:
+            return
+
         # (cheap conversion to a set to eliminate the duplicate IDs from
         # different parts of the HTML to save time...)
         for possible_id in set(possible_ids):
