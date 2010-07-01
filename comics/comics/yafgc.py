@@ -4,7 +4,7 @@ from comics.meta.base import MetaBase
 class Meta(MetaBase):
     name = 'Yet Another Fantasy Gamer Comic'
     language = 'en'
-    url = 'http://yafgc.shipsinker.com/'
+    url = 'http://www.yafgc.net/'
     start_date = '2006-05-29'
     rights = 'Rich Morris'
 
