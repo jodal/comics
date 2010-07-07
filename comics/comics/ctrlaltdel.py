@@ -14,6 +14,9 @@ class Crawler(CrawlerBase):
     time_zone = -5
 
     def crawl(self, pub_date):
-        url = 'http://www.cad-comic.com/comics/cad/%s.jpg' % (
-            pub_date.strftime('%Y%m%d'),)
+
+        entry = self.parse_page('http://www.cad-comic.com/cad/%s' %
+            pub_date.strftime('%Y%m%d'))
+
+        url = entry.src('img[src*="/comics/"]')
         return CrawlerImage(url)
