@@ -14,7 +14,6 @@ class Crawler(CrawlerBase):
     history_capable_date = '2009-01-03'
     schedule = None
     time_zone = 9
-    has_rerun_releases = False
 
     def crawl(self, pub_date):
         page_url = 'http://www.atheistcartoons.com/?m=%s' % \

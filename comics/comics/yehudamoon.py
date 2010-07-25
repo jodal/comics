@@ -13,7 +13,6 @@ class Meta(MetaBase):
 class Crawler(CrawlerBase):
     history_capable_date = '2008-01-22'
     time_zone = -5
-    has_rerun_releases = False
 
     def crawl(self, pub_date):
         page_url = 'http://www.yehudamoon.com/index.php?date=%s' % \
