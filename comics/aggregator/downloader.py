@@ -74,7 +74,7 @@ class ImageDownloader(object):
             self.file_checksum = self._get_sha256sum(self.file)
             http_file.close()
         except urllib2.HTTPError, error:
-            raise DownloaderHTTPError(self.identifier, error)
+            raise DownloaderHTTPError(self.identifier, error.code)
 
     def _check_if_blacklisted(self, checksum):
         if checksum in settings.COMICS_IMAGE_BLACKLIST:

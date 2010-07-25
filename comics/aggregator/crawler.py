@@ -1,4 +1,5 @@
 import datetime as dt
+import httplib
 import time
 import urllib2
 
@@ -92,7 +93,9 @@ class CrawlerBase(object):
         try:
             results = self.crawl(pub_date)
         except urllib2.HTTPError, error:
-            raise CrawlerHTTPError(release.identifier, error)
+            raise CrawlerHTTPError(release.identifier, error.code)
+        except httplib.BadStatusLine, error:
+            raise CrawlerHTTPError(release.identifier, 'BadStatusLine')
 
         if results is None:
             return

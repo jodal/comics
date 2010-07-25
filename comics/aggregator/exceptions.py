@@ -23,7 +23,7 @@ class CrawlerHTTPError(CrawlerError):
 
     def __str__(self):
         return '%s: Crawler HTTP Error (%s)' % (
-            self.identifier, self.value.code)
+            self.identifier, self.value)
 
 class ImageURLNotFound(CrawlerError):
     """Exception raised when no URL is found by the crawler"""
@@ -64,7 +64,7 @@ class DownloaderHTTPError(DownloaderError):
 
     def __str__(self):
         return '%s: Downloader HTTP Error (%s)' % (
-            self.identifier, self.value.code)
+            self.identifier, self.value)
 
 class ImageAlreadyExists(DownloaderError):
     """Exception raised when trying to save an image that already exists"""
