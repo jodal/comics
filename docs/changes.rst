@@ -12,15 +12,22 @@ Unreleased
 **Crawlers**
 
 - New: ``apokalips``
+- New: ``axecop``
 - New: ``boxerhockey``
 - New: ``carpediem``
 - New: ``crfh``
 - New: ``darylcagle``
+- New: ``havet``
 - New: ``heltnils``
+- New: ``intelsinsides``
+- New: ``misfile``
+- New: ``notinventedhere``
 - New: ``pondusno``
 - New: ``radiogaga``
+- New: ``scenesfromamultiverse``
 - New: ``sheldon``
 - New: ``thegutters``
+- Update ``ctrlaltdelete`` to work after site change.
 - Update ``eon`` with new source site.
 - Update ``lunch`` with new source site.
 
