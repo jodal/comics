@@ -13,7 +13,8 @@ class Crawler(CrawlerBase):
     time_zone = -8
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://feeds.feedburner.com/intelsinsides?format=xml')
+        feed = self.parse_feed(
+            'http://feeds.feedburner.com/intelsinsides?format=xml')
 
 	# There's no populated pubDate in the RSS feed; instead, the date is
 	# listed in the title.  Sometimes, this date has a leading zero.
@@ -21,13 +22,12 @@ class Crawler(CrawlerBase):
         base_date = pub_date.strftime('%d %B %Y')
         possible_dates = []
         possible_dates.append(base_date)
-        possible_dates.append(base_date[1:])
+        if base_date[0] == '0':
+            possible_dates.append(base_date[1:])
 
-	# The feed yields an empty pubDate and instead uses a date string in
-	# the title.  More fragile, but eh... I didn't write the feed.
         for entry in feed.all():
             if entry.title not in possible_dates:
                 continue
-
-            url = entry.html(entry.description).src('img[src*="images.nvidia.com"]')
+            url = entry.html(entry.description).src(
+                'img[src*="images.nvidia.com"]')
             return CrawlerImage(url)

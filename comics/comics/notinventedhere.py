@@ -12,11 +12,9 @@ class Meta(MetaBase):
 
 class Crawler(CrawlerBase):
     history_capable_date = '2009-09-21'
-    time_zone = 0 
-    has_rerun_releases = False
+    time_zone = 0
 
     def crawl(self, pub_date):
         url = 'http://thiswas.notinventedhe.re/on/%s' % \
             pub_date.strftime('%Y-%m-%d')
-
         return CrawlerImage(url)

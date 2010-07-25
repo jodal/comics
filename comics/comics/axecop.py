@@ -15,8 +15,6 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://axecop.com/index.php/achome/rss_2.0/')
         for entry in feed.for_date(pub_date):
-            page_url = entry.link
-            page = self.parse_page(page_url)
-
+            page = self.parse_page(entry.link)
             url = page.src('img[src*="/images/uploads/axecop"]')
             return CrawlerImage(url)
