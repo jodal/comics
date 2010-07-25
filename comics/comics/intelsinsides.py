@@ -4,7 +4,7 @@ from comics.meta.base import MetaBase
 class Meta(MetaBase):
     name = "Intel's Insides"
     language = 'en'
-    url = 'http://intelsinsides.com/'
+    url = 'http://www.intelsinsides.com/'
     start_date = '2009-09-21'
     rights = 'Steve Lait'
 
