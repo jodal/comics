@@ -23,19 +23,19 @@ Unreleased
 **Crawlers**
 
 - New: ``apokalips``
-- New: ``axecop``
+- New: ``axecop`` (fixes GH-8)
 - New: ``boxerhockey``
 - New: ``carpediem``
 - New: ``crfh``
 - New: ``darylcagle``
-- New: ``havet``
+- New: ``havet`` (fixes GH-7)
 - New: ``heltnils``
-- New: ``intelsinsides``
-- New: ``misfile``
-- New: ``notinventedhere``
+- New: ``intelsinsides`` (fixes GH-9)
+- New: ``misfile`` (fixes GH-3)
+- New: ``notinventedhere`` (fixes GH-4)
 - New: ``pondusno``
 - New: ``radiogaga``
-- New: ``scenesfromamultiverse``
+- New: ``scenesfromamultiverse`` (fixes GH-10)
 - New: ``sheldon``
 - New: ``thegutters``
 - Update ``8bittheater`` which is no longer published.
