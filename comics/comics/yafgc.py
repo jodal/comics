@@ -14,6 +14,8 @@ class Crawler(CrawlerBase):
     time_zone = -8
 
     def crawl(self, pub_date):
-        url = 'http://yafgc.shipsinker.com/istrip_files/strips/%s.jpg' % (
-            pub_date.strftime('%Y%m%d'),)
-        return CrawlerImage(url)
+        feed = self.parse_feed('http://yafgc.net/inc/feed.php')
+        for entry in feed.for_date(pub_date):
+            url = entry.summary.src('img[src*="/img/comic/"]')
+            title = entry.title
+            return CrawlerImage(url, title)

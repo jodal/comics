@@ -35,9 +35,10 @@ Unreleased
 - New: ``scenesfromamultiverse``
 - New: ``sheldon``
 - New: ``thegutters``
-- Update ``ctrlaltdelete`` to work after site change.
+- Update ``ctrlaltdelete`` to work after source site changes.
 - Update ``eon`` with new source site.
 - Update ``lunch`` with new source site.
+- Update ``yafgc`` to work after source site changes.
 
 
 1.0.2 (2010-04-11)
