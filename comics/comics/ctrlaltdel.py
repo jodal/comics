@@ -21,4 +21,4 @@ class Crawler(CrawlerBase):
             pub_date.strftime('%Y%m%d'))
         url = page.src('img[src*="/comics/"]')
         title = page.alt('img[src*="/comics/"]')
-        return CrawlerImage(url)
+        return CrawlerImage(url, title)
