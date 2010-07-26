@@ -18,6 +18,7 @@ Unreleased
   adapt`` errors.
 - Handle MIME types like ``image/jpeg, image/jpeg`` returned by
   :class:`mimetools.Message.gettype`.
+- Use :attr:`Crawler.headers` for image requests, and not just page requests.
 
 **Crawlers**
 

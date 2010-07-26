@@ -110,6 +110,8 @@ class CrawlerBase(object):
             results = [results]
 
         for result in results:
+            # Use HTTP headers when requesting images
+            result.request_headers.update(self.headers)
             release.add_image(result)
 
         return release
