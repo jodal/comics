@@ -16,8 +16,7 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.dieselsweeties.com/ds-unifeed.xml')
         for entry in feed.for_date(pub_date):
-            if entry.title.startswith('DS Web:'):
-                url = entry.summary.src('img')
-                title = entry.title.replace('DS Web: ', '').strip()
-                text = entry.summary.alt('img')
-                return CrawlerImage(url, title, text)
+            url = entry.summary.src('img[src*="/strips/"]')
+            title = entry.title
+            text = entry.summary.alt('img[src*="/strips/"]')
+            return CrawlerImage(url, title, text)
