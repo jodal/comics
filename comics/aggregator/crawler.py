@@ -44,6 +44,12 @@ class CrawlerImage(object):
         self.text = text
         self.request_headers = headers or {}
 
+        # Convert from e.g. lxml.etree._ElementUnicodeResult to unicode
+        if self.title is not None and type(self.title) != unicode:
+            self.title = unicode(self.title)
+        if self.text is not None and type(self.text) != unicode:
+            self.text = unicode(self.text)
+
     def validate(self, identifier):
         if not self.url:
             raise ImageURLNotFound(identifier)

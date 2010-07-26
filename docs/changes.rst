@@ -9,6 +9,14 @@ versioned release.
 Unreleased
 ==========
 
+**Bugfixes**
+
+- Make crawlers handle :exc:`httplib.BadStatusLine` exception raised when HTTP
+  responses are empty.
+- Make crawlers convert :class:`lxml.etree._ElementUnicodeResult` to unicode
+  objects before saving to the database, to avoid ``DatabaseError: can't
+  adapt`` errors.
+
 **Crawlers**
 
 - New: ``apokalips``
