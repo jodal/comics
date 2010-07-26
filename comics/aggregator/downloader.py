@@ -1,4 +1,5 @@
 import hashlib
+import httplib
 import mimetypes
 import tempfile
 import urllib2
@@ -75,6 +76,8 @@ class ImageDownloader(object):
             http_file.close()
         except urllib2.HTTPError, error:
             raise DownloaderHTTPError(self.identifier, error.code)
+        except httplib.BadStatusLine, error:
+            raise DownloaderHTTPError(self.identifier, 'BadStatusLine')
 
     def _check_if_blacklisted(self, checksum):
         if checksum in settings.COMICS_IMAGE_BLACKLIST:
