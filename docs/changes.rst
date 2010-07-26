@@ -16,6 +16,8 @@ Unreleased
 - Make crawlers convert :class:`lxml.etree._ElementUnicodeResult` to unicode
   objects before saving to the database, to avoid ``DatabaseError: can't
   adapt`` errors.
+- Handle MIME types like ``image/jpeg, image/jpeg`` returned by
+  :class:`mimetools.Message.gettype`.
 
 **Crawlers**
 

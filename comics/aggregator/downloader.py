@@ -8,8 +8,8 @@ from django.conf import settings
 from django.core.files import File
 from django.db import transaction
 
-from comics.aggregator.exceptions import (FileNotAnImage, DownloaderHTTPError,
-    ImageAlreadyExists, ImageIsBlacklisted)
+from comics.aggregator.exceptions import (DownloaderError, FileNotAnImage,
+    DownloaderHTTPError, ImageAlreadyExists, ImageIsBlacklisted)
 from comics.core.models import Release, Image
 
 class ReleaseDownloader(object):
@@ -115,9 +115,15 @@ class ImageDownloader(object):
         return tmp
 
     def _get_file_extension(self, http_file):
-        file_ext = mimetypes.guess_extension(http_file.info().gettype())
+        mime_type = http_file.info().gettype()
+        # MIME types like "image/jpeg, image/jpeg" has been observed.
+        mime_type = mime_type.split(',')[0]
+        file_ext = mimetypes.guess_extension(mime_type)
         if file_ext == '.jpe':
             file_ext = '.jpg'
+        if file_ext is None:
+            raise DownloaderError(self.identifier,
+                'File extension not found: %s' % mime_type)
         return file_ext
 
     def _get_sha256sum(self, file_handle):
