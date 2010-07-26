@@ -12,7 +12,11 @@ class Crawler(CrawlerBase):
     history_capable_date = '2008-06-27'
     time_zone = -5
 
+    # Without User-Agent set, the server returns empty responses
+    headers = {'User-Agent': 'Mozilla/4.0'}
+
     def crawl(self, pub_date):
-        url = 'http://www.cad-comic.com/comics/sillies/%s.gif' % (
-            pub_date.strftime('%Y%m%d'),)
+        page = self.parse_page('http://www.cad-comic.com/sillies/%s' %
+            pub_date.strftime('%Y%m%d'))
+        url = page.src('img[src*="/comics/"]')
         return CrawlerImage(url)
