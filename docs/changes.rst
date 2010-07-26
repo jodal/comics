@@ -6,8 +6,10 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
-Unreleased
-==========
+1.0.3 (2010-07-26)
+==================
+
+Another minor release bringing 17 new and 11 updated crawlers.
 
 **Bugfixes**
 
