@@ -25,6 +25,7 @@ Unreleased
 - New: ``apokalips``
 - New: ``axecop`` (fixes GH-8)
 - New: ``boxerhockey``
+- New: ``bugcomic`` (fixes GH-11)
 - New: ``carpediem``
 - New: ``crfh``
 - New: ``darylcagle``
