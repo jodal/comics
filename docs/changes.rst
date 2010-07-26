@@ -37,6 +37,7 @@ Unreleased
 - New: ``scenesfromamultiverse``
 - New: ``sheldon``
 - New: ``thegutters``
+- Update ``8bittheater`` which is no longer published.
 - Update ``ctrlaltdelete`` to work after source site changes.
 - Update ``ctrlaltdeletesillies`` to work after source site changes.
 - Update ``dieselsweetiesweb`` to work after source site changes.
