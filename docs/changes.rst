@@ -38,6 +38,7 @@ Unreleased
 - Update ``ctrlaltdelete`` to work after source site changes.
 - Update ``eon`` with new source site.
 - Update ``lunch`` with new source site.
+- Update ``sometingpositive`` to get all releases.
 - Update ``yafgc`` to work after source site changes.
 
 

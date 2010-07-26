@@ -13,6 +13,8 @@ class Crawler(CrawlerBase):
     schedule = 'Mo,Tu,We,Th,Fr'
 
     def crawl(self, pub_date):
-        url = 'http://www.somethingpositive.net/sp%sa.gif' % (
+        page_url = 'http://www.somethingpositive.net/sp%s.shtml' % (
             pub_date.strftime('%m%d%Y'),)
+        page = self.parse_page(page_url)
+        url = page.src('img[src^="http://www.somethingpositive.net/sp"]')
         return CrawlerImage(url)
