@@ -91,7 +91,7 @@ Data model
 
 *comics*' data model is very simple. The :mod:`comics.core` app consists of
 three models; :class:`Comic <comics.core.models.Comic>`, :class:`Release
-<comics.core.modes.Release>`, and :class:`Strip <comics.core.models.Strip>`.
+<comics.core.models.Release>`, and :class:`Image <comics.core.models.Image>`.
 The :mod:`comics.sets` app adds an additional model named :class:`Set
 <comics.sets.models.Set>`. Changes to the data model are managed using `South
 <http://south.aeracode.org/>`_ database migrations. If you need to change the
