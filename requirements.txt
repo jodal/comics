@@ -3,4 +3,3 @@ PIL
 FeedParser
 lxml
 south
-python-mock
