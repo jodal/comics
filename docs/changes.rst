@@ -15,6 +15,7 @@ In development
 
 **Crawlers**
 
+- New: ``stuffnoonetoldme``
 - Update ``gunshow`` to work after source site changes.
 
 
