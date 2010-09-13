@@ -6,6 +6,14 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
+In development
+==============
+
+**Crawlers**
+
+- Update ``gunshow`` to work after source site changes.
+
+
 1.0.3 (2010-07-26)
 ==================
 
