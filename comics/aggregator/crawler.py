@@ -1,5 +1,6 @@
 import datetime as dt
 import httplib
+import socket
 import time
 import urllib2
 
@@ -102,6 +103,8 @@ class CrawlerBase(object):
             raise CrawlerHTTPError(release.identifier, error.code)
         except httplib.BadStatusLine, error:
             raise CrawlerHTTPError(release.identifier, 'BadStatusLine')
+        except socket.error, error:
+            raise CrawlerHTTPError(release.identifier, error)
 
         if results is None:
             return

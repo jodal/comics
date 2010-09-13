@@ -9,6 +9,10 @@ versioned release.
 In development
 ==============
 
+**Bugfixes**
+
+- Catch :exc:`socket.error` in :meth:`CrawlerBase.get_crawler_release()`.
+
 **Crawlers**
 
 - Update ``gunshow`` to work after source site changes.
