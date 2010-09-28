@@ -16,7 +16,9 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.bugcomic.com/feed/')
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src*="/comics-rss/"]').replace(
-                '-rss', '')
+            url = entry.summary.src('img[src*="/comics-rss/"]')
+            if url is None:
+                return
+            url = url.replace('-rss', '')
             title = entry.title
             return CrawlerImage(url, title)

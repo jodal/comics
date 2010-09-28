@@ -17,6 +17,7 @@ In development
 
 - New: ``stuffnoonetoldme``
 - Update ``gunshow`` to work after source site changes.
+- Update ``bugcomic`` to not fail if URL is not empty.
 
 
 1.0.3 (2010-07-26)
