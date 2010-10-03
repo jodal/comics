@@ -16,6 +16,7 @@ In development
 **Crawlers**
 
 - New: ``stuffnoonetoldme``
+- New: ``utensokker``
 - Update ``gunshow`` to work after source site changes.
 - Update ``bugcomic`` to not fail if URL is not empty.
 
