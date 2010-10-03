@@ -15,6 +15,7 @@ In development
 
 **Crawlers**
 
+- New: ``hipsterhitler``
 - New: ``stuffnoonetoldme``
 - New: ``utensokker``
 - Update ``gunshow`` to work after source site changes.
