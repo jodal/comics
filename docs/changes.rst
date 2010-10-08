@@ -19,8 +19,9 @@ In development
 - New: ``marriedtothesea``
 - New: ``stuffnoonetoldme``
 - New: ``utensokker``
-- Update ``gunshow`` to work after source site changes.
 - Update ``bugcomic`` to not fail if URL is not empty.
+- Update ``extralife`` to work after source site changes.
+- Update ``gunshow`` to work after source site changes.
 
 
 1.0.3 (2010-07-26)
