@@ -9,19 +9,18 @@ class Meta(MetaBase):
     rights = 'Scott Johnson'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 10
+    history_capable_days = 32
     schedule = 'Tu,Th'
     time_zone = -7
 
+    # Without User-Agent set, the server returns empty responses
+    headers = {'User-Agent': 'Mozilla/4.0'}
+
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://www.myextralife.com/feed/')
+        feed = self.parse_feed(
+            'http://www.myextralife.com/category/comic/feed/')
         for entry in feed.for_date(pub_date):
-            if not '/comic/' in entry.link:
-                continue
             url = entry.summary.src('img[src*="/comics-rss/"]')
             url = url.replace('/comics-rss/', '/comics/')
-            title = entry.summary.title('img[src*="/comics-rss/"]')
-            title = title.replace('Comic: ', '')
-            title = title.replace(u'\u201c', '')
-            title = title.replace(u'\u201d', '')
+            title = entry.title
             return CrawlerImage(url, title)

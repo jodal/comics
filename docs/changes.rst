@@ -6,6 +6,25 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
+In development
+==============
+
+**Bugfixes**
+
+- Catch :exc:`socket.error` in :meth:`CrawlerBase.get_crawler_release()`.
+
+**Crawlers**
+
+- New: ``hipsterhitler``
+- New: ``marriedtothesea``
+- New: ``stuffnoonetoldme``
+- New: ``utensokker``
+- Update ``bugcomic`` to not fail if URL is not empty, and to work after source
+  site changes.
+- Update ``extralife`` to work after source site changes.
+- Update ``gunshow`` to work after source site changes.
+
+
 1.0.3 (2010-07-26)
 ==================
 
