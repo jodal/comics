@@ -1,6 +1,8 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
+import re
+
 class Meta(MetaBase):
     name = 'Questionable Content'
     language = 'en'
@@ -9,20 +11,18 @@ class Meta(MetaBase):
     rights = 'Jeph Jacques'
 
 class Crawler(CrawlerBase):
-    history_capable_date = '2003-08-01'
+    history_capable_days = 0
     schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = -6
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://www.questionablecontent.net/QCRSS.xml')
-        for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src*="questionablecontent"]')
+        check_date = pub_date.strftime(r'%B %d, %Y')
 
-            if url is None:
-                continue
+        page = self.parse_page('http://www.questionablecontent.net/')
+        if check_date in page.text('div#news'):
+            title = None
+            text_formatter = re.compile('[ 	\n]{2,}')
+            text = text_formatter.sub('\n\n', page.text('div#news')).strip()
+            url = page.src('img#strip')
 
-            title = entry.title
-            paragraphs = [p.strip() for p in entry.html(entry.description)
-                .text('p', default=[], allow_multiple=True) if p.strip()]
-            text = '\n\n'.join(paragraphs)
             return CrawlerImage(url, title, text)
