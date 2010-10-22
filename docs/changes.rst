@@ -6,8 +6,11 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
-In development
-==============
+1.0.4 (2010-10-23)
+==================
+
+Yet another minor release bringing a bug fix, four new and five updated
+crawlers.
 
 **Bugfixes**
 
