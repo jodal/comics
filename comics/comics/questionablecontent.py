@@ -11,18 +11,13 @@ class Meta(MetaBase):
     rights = 'Jeph Jacques'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 0
     schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = -6
 
     def crawl(self, pub_date):
-        check_date = pub_date.strftime(r'%B %d, %Y')
-
         page = self.parse_page('http://www.questionablecontent.net/')
-        if check_date in page.text('div#news'):
-            title = None
-            text_formatter = re.compile('[ 	\n]{2,}')
-            text = text_formatter.sub('\n\n', page.text('div#news')).strip()
+        if pub_date.strftime('%B %d, %Y') in page.text('div#news'):
             url = page.src('img#strip')
-
+            title = None
+            text = re.sub(r'\s{2,}', '\n\n', page.text('div#news')).strip()
             return CrawlerImage(url, title, text)
