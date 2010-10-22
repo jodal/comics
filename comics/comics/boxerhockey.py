@@ -10,9 +10,15 @@ class Meta(MetaBase):
 
 class Crawler(CrawlerBase):
     time_zone = -7
+    history_capable_days = 30
 
     def crawl(self, pub_date):
-        page_url = 'http://boxerhockey.fireball20xl.com/'
-        page = self.parse_page(page_url)
-        url = page.src('img[src*="comics/"]')
-        return CrawlerImage(url)
+        feed = self.parse_feed('http://boxerhockey.fireball20xl.com/inc/feed.php')
+        for entry in feed.for_date(pub_date):
+            title = entry.title
+            page_uri = entry.link
+            page = self.parse_page(page_uri)
+            url = page.src('img#comicimg')
+            text = None
+
+            return CrawlerImage(url, title, text)
