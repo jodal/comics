@@ -6,6 +6,17 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
+In development
+==============
+
+No description yet.
+
+**Crawlers**
+
+- Update ``questionablecontent`` to not check if the page contains the expected
+  date, as that make us lose some releases.
+
+
 1.0.4 (2010-10-23)
 ==================
 
