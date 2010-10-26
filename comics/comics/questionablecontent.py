@@ -17,9 +17,7 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         page = self.parse_page('http://www.questionablecontent.net/')
-        title = None
-        text_formatter = re.compile('[ 	\n]{2,}')
-        text = text_formatter.sub('\n\n', page.text('div#news')).strip()
         url = page.src('img#strip')
-
+        title = None
+        text = re.sub(r'\s{2,}', '\n\n', page.text('div#news')).strip()
         return CrawlerImage(url, title, text)

@@ -6,8 +6,11 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
-In development
-==============
+1.0.4 (2010-10-23)
+==================
+
+Yet another minor release bringing a bug fix, four new and five updated
+crawlers.
 
 **Bugfixes**
 
@@ -19,10 +22,13 @@ In development
 - New: ``marriedtothesea``
 - New: ``stuffnoonetoldme``
 - New: ``utensokker``
+- Update ``boxerhockey`` to use feed instead of site.
 - Update ``bugcomic`` to not fail if URL is not empty, and to work after source
   site changes.
 - Update ``extralife`` to work after source site changes.
 - Update ``gunshow`` to work after source site changes.
+- Update ``questionablecontent`` to use site instead of feed, since it lacks
+  some releases.
 
 
 1.0.3 (2010-07-26)
