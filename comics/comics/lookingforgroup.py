@@ -15,7 +15,11 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/LookingForGroup')
+        images = []
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src*="lfgcomic.com"]')
-            title = entry.title.replace('Looking For Group:', '').strip()
-            return CrawlerImage(url, title)
+            if entry.title.startswith('Looking For Group:'):
+                url = entry.summary.src('img[src*="lfgcomic.com"]')
+                title = entry.title.replace('Looking For Group:', '').strip()
+                images.append(CrawlerImage(url, title))
+        if images:
+            return images

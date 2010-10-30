@@ -14,6 +14,8 @@ No description yet.
 **Crawlers**
 
 - New: ``faktafraverden``
+- Update ``lookingforgroup`` to ignore non-comic releases and fetch multiple
+  pages released on the same day.
 - Update ``questionablecontent`` to not check if the page contains the expected
   date, as that make us lose some releases.
 
