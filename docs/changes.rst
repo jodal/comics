@@ -14,6 +14,7 @@ No description yet.
 **Crawlers**
 
 - New: ``faktafraverden``
+- New: ``lunchdb``
 - Update ``lookingforgroup`` to ignore non-comic releases and fetch multiple
   pages released on the same day.
 - Update ``questionablecontent`` to not check if the page contains the expected
