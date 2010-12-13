@@ -304,6 +304,10 @@ If the ``selector`` matches multiple elements, one of two things will happen:
 
         Returns the ``value`` attribute of the element matching ``selector``.
 
+    .. method:: id(selector[, default=None, allow_multiple=False])
+
+        Returns the ``id`` attribute of the element matching ``selector``.
+
     .. method:: remove(selector)
 
         Remove the elements matching ``selector`` from the parsed document.

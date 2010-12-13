@@ -30,6 +30,9 @@ class LxmlParser(object):
     def value(self, selector, default=None, allow_multiple=False):
         return self._get('value', selector, default, allow_multiple)
 
+    def id(self, selector, default=None, allow_multiple=False):
+        return self._get('id', selector, default, allow_multiple)
+
     def text(self, selector, default=None, allow_multiple=False):
         try:
             if allow_multiple:
