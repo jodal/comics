@@ -9,7 +9,6 @@ class Meta(MetaBase):
     rights = 'Danielle Corsetto'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 1
     schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = -5
 
