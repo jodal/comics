@@ -15,6 +15,8 @@ No description yet.
 
 - Do not throw :exc:`ParserError` in :mod:`comics.aggregator.lxmlparser` when
   the XML document is a all-space string.
+- Catch :exc:`socket.error` in :mod:`comics.aggregator.downloader`, like we
+  already do in :mod:`comics.aggregator.crawler`.
 
 **Crawlers**
 
