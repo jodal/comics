@@ -28,6 +28,7 @@ No description yet.
 - Update ``gws`` to work again, and add text parsing.
 - Update ``lookingforgroup`` to ignore non-comic releases and fetch multiple
   pages released on the same day.
+- Update ``magpieluck`` to handle titles without a dash.
 - Update ``questionablecontent`` to not check if the page contains the expected
   date, as that make us lose some releases.
 

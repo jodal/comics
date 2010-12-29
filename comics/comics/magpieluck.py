@@ -17,6 +17,6 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed('http://feeds.feedburner.com/MagpieLuckComic')
         for entry in feed.for_date(pub_date):
             url = entry.content0.src('img[src*="/wp-content/"]')
-            title = entry.title.split('- ', 1)[1]
+            title = entry.title.split('- ', 1)[-1]
             text = entry.content0.alt('img[src*="/wp-content/"]')
             return CrawlerImage(url, title, text)
