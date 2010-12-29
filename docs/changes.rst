@@ -32,6 +32,7 @@ No description yet.
 - Update ``magpieluck`` to handle titles without a dash.
 - Update ``questionablecontent`` to not check if the page contains the expected
   date, as that make us lose some releases.
+- Update ``utensokker`` to use RSS feed.
 
 
 1.0.4 (2010-10-23)
