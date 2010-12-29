@@ -11,6 +11,11 @@ In development
 
 No description yet.
 
+**Bugfixes**
+
+- Do not throw :exc:`ParserError` in :mod:`comics.aggregator.lxmlparser` when
+  the XML document is a all-space string.
+
 **Crawlers**
 
 - New: ``brandondraws``

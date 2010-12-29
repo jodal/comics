@@ -93,7 +93,7 @@ class LxmlParser(object):
         return root
 
     def _parse_string(self, string):
-        if len(string) == 0:
+        if len(string.strip()) == 0:
             string = '<xml />'
         return fromstring(string)
 
