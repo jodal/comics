@@ -9,7 +9,7 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://drawbrandondraw.com/'
     start_date = '2010-06-29'
-    rights = 'by Brandon D, Creative Commons Share-Alike 3.0'
+    rights = 'Brandon B, CC BY-NC-SA 3.0'
 
 class ComicTextParser(HTMLParser):
     visible_text = None
