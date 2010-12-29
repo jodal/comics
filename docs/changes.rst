@@ -26,6 +26,7 @@ No description yet.
 - New: ``lunchdb``
 - Update ``foxtrot`` crawler to work after site change.
 - Update ``gws`` to work again, and add text parsing.
+- Update ``havet`` meta data.
 - Update ``lookingforgroup`` to ignore non-comic releases and fetch multiple
   pages released on the same day.
 - Update ``magpieluck`` to handle titles without a dash.
