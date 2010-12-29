@@ -24,6 +24,7 @@ No description yet.
 - New: ``crookedgremlins``
 - New: ``faktafraverden``
 - New: ``lunchdb``
+- New: ``orneryboy``
 - New: ``reveland``
 - Update ``foxtrot`` crawler to work after site change.
 - Update ``gws`` to work again, and add text parsing.
