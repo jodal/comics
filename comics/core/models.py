@@ -133,10 +133,6 @@ class Image(models.Model):
     class Meta:
         db_table = 'comics_image'
 
-    def delete(self, *args, **kwargs):
-        super(Image, self).delete(*args, **kwargs)
-        os.remove(self.file.path)
-
     def __unicode__(self):
         return u'%s image %s' % (self.comic, self.checksum)
 
