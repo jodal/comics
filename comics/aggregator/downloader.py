@@ -77,6 +77,8 @@ class ImageDownloader(object):
             http_file.close()
         except urllib2.HTTPError, error:
             raise DownloaderHTTPError(self.identifier, error.code)
+        except urllib2.URLError, error:
+            raise DownloaderHTTPError(self.identifier, error.reason)
         except httplib.BadStatusLine, error:
             raise DownloaderHTTPError(self.identifier, 'BadStatusLine')
         except socket.error, error:

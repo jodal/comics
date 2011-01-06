@@ -101,6 +101,8 @@ class CrawlerBase(object):
             results = self.crawl(pub_date)
         except urllib2.HTTPError, error:
             raise CrawlerHTTPError(release.identifier, error.code)
+        except urllib2.URLError, error:
+            raise CrawlerHTTPError(release.identifier, error.reason)
         except httplib.BadStatusLine, error:
             raise CrawlerHTTPError(release.identifier, 'BadStatusLine')
         except socket.error, error:

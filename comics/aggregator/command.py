@@ -18,8 +18,6 @@ def log_errors(func):
             return func(*args, **kwargs)
         except ComicsError, error:
             logger.info(error)
-        except urllib2.URLError, error:
-            logger.error(u'%s: %s', args[0].identifier, error)
         except Exception, error:
             logger.exception(u'%s: %s', args[0].identifier, error)
     return inner
