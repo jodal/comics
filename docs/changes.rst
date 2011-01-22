@@ -11,6 +11,7 @@ versioned release.
 
 **Crawlers**
 
+- New: ``romanticallyapocalyptic``
 - Update ``wulffmorgenthaler`` to work after site change.
 - Update ``userfriendly`` to support reruns.
 
