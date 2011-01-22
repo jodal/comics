@@ -1,4 +1,4 @@
-.. _spec-public-active-schedule:
+.. _spec-navigation-overhaul:
 
 Spec-005: Unit Test and Refactoring of Navigation
 =================================================================
