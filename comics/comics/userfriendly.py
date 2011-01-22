@@ -11,6 +11,7 @@ class Meta(MetaBase):
 class Crawler(CrawlerBase):
     history_capable_date = '1997-11-17'
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
+    has_rerun_releases = True
 
     def crawl(self, pub_date):
         page_url = 'http://ars.userfriendly.org/cartoons/?id=%s' % (

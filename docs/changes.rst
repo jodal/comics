@@ -12,6 +12,7 @@ versioned release.
 **Crawlers**
 
 - Update ``wulffmorgenthaler`` to work after site change.
+- Update ``userfriendly`` to support reruns.
 
 
 1.0.5 (2010-12-29)
