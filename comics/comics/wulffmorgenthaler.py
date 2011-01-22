@@ -9,7 +9,7 @@ class Meta(MetaBase):
     rights = 'Mikael Wulff & Anders Morgenthaler'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 10
+    history_capable_days = 20
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = 1
 
@@ -17,5 +17,5 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed('http://feeds.feedburner.com/wulffmorgenthaler')
         for entry in feed.for_date(pub_date):
             url = entry.summary.src(
-                'img[src^="http://www.wulffmorgenthaler.com/"]')
+                'img[src^="http://wulffmorgenthaler.com/"]')
             return CrawlerImage(url)

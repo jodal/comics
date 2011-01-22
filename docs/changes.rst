@@ -6,6 +6,14 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
+1.0.6 (in development)
+======================
+
+**Crawlers**
+
+- Update ``wulffmorgenthaler`` to work after site change.
+
+
 1.0.5 (2010-12-29)
 ==================
 
