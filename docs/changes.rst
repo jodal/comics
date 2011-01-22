@@ -12,6 +12,7 @@ versioned release.
 **Crawlers**
 
 - New: ``romanticallyapocalyptic``
+- New: ``schlockmercenary``
 - Update ``wulffmorgenthaler`` to work after site change.
 - Update ``userfriendly`` to support reruns.
 
