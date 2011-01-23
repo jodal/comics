@@ -129,8 +129,7 @@ class ComicAggregatorTestCase(TestCase):
             self.crawler_mock, pub_date)
 
         self.assertEqual(1, self.crawler_mock.get_crawler_release.call_count)
-        self.assertEqual(pub_date,
-            self.crawler_mock.get_crawler_release.call_args[0][0])
+        self.crawler_mock.get_crawler_release.assert_called_with(pub_date)
 
     def test_download_release(self):
         crawler_release = CrawlerRelease(self.comic, dt.date(2008, 3, 1))
@@ -139,8 +138,7 @@ class ComicAggregatorTestCase(TestCase):
         self.aggregator._download_release(crawler_release)
 
         self.assertEqual(1, self.downloader_mock.download.call_count)
-        self.assertEqual(crawler_release,
-            self.downloader_mock.download.call_args[0][0])
+        self.downloader_mock.download.assert_called_with(crawler_release)
 
     def test_get_valid_date_from_history_capable(self):
         expected = dt.date(2008, 3, 1)
