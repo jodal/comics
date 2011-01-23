@@ -1,5 +1,5 @@
 import datetime as dt
-import pmock
+import mock
 
 from django.test import TestCase
 
@@ -91,23 +91,22 @@ class ComicAggregatorTestCase(TestCase):
         self.aggregator = command.Aggregator(config)
         self.aggregator.identifier = 'slug'
 
-        self.comic = pmock.Mock()
+        self.comic = mock.Mock()
         self.comic.slug = 'slug'
-        self.crawler_mock = pmock.Mock()
+        self.crawler_mock = mock.Mock()
         self.crawler_mock.comic = self.comic
-        self.downloader_mock = pmock.Mock()
+        self.downloader_mock = mock.Mock()
 
     def test_init(self):
         self.assert_(isinstance(self.aggregator.config,
             command.AggregatorConfig))
 
     def test_init_optparse_config(self):
-        optparse_options_mock = pmock.Mock()
+        optparse_options_mock = mock.Mock()
         optparse_options_mock.comic_slugs = None
         optparse_options_mock.from_date = None
         optparse_options_mock.to_date = None
-        optparse_options_mock.stubs().method('get').will(
-            pmock.return_value(None))
+        optparse_options_mock.get.return_value = None
 
         result = command.Aggregator(optparse_options=optparse_options_mock)
 
@@ -124,24 +123,24 @@ class ComicAggregatorTestCase(TestCase):
     def test_crawl_one_comic_one_date(self):
         pub_date = dt.date(2008, 3, 1)
         crawler_release = CrawlerRelease(self.comic, pub_date)
-        self.crawler_mock.expects(
-            pmock.once()).get_crawler_release(pmock.eq(pub_date)).will(
-            pmock.return_value(crawler_release))
+        self.crawler_mock.get_crawler_release.return_value = crawler_release
 
         self.aggregator._crawl_one_comic_one_date(
             self.crawler_mock, pub_date)
 
-        self.crawler_mock.verify()
+        self.assertEqual(1, self.crawler_mock.get_crawler_release.call_count)
+        self.assertEqual(pub_date,
+            self.crawler_mock.get_crawler_release.call_args[0][0])
 
     def test_download_release(self):
         crawler_release = CrawlerRelease(self.comic, dt.date(2008, 3, 1))
-        self.downloader_mock.expects(
-            pmock.once()).download(pmock.eq(crawler_release))
         self.aggregator._get_downloader = lambda: self.downloader_mock
 
         self.aggregator._download_release(crawler_release)
 
-        self.downloader_mock.verify()
+        self.assertEqual(1, self.downloader_mock.download.call_count)
+        self.assertEqual(crawler_release,
+            self.downloader_mock.download.call_args[0][0])
 
     def test_get_valid_date_from_history_capable(self):
         expected = dt.date(2008, 3, 1)

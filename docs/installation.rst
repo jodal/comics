@@ -55,7 +55,7 @@ Optional dependencies for development
 
 Additional dependencies which are handy for development:
 
-- python-pmock (for mocking in unit tests)
+- python-mock (for mocking in unit tests)
 - python-coverage (for checking test coverage)
 - python-sphinx (for generating HTML documentation)
 - python-django-debug-toolbar (for debugging)
