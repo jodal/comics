@@ -108,7 +108,7 @@ class CrawlerBase(object):
         except socket.error, error:
             raise CrawlerHTTPError(release.identifier, error)
 
-        if results is None:
+        if not results:
             return
 
         if not hasattr(results, '__iter__'):

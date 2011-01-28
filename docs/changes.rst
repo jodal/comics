@@ -16,6 +16,11 @@ versioned release.
   ``default``. This ensures that using the return value in for loops will not
   fail if no matches are found.
 
+- :meth:`comics.aggregator.crawler.CrawlerBase.get_crawler_release` does no
+  longer create empty releases if the ``do_crawl`` method returns false values,
+  like empty lists. It previously only stopped processing if ``do_crawl``
+  returned :class:`None`.
+
 **Crawlers**
 
 - New: ``romanticallyapocalyptic``
