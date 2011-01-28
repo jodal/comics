@@ -62,6 +62,8 @@ class LxmlParser(object):
             else:
                 return self._decode(self._select(selector).get(attr))
         except DoesNotExist:
+            if allow_multiple and default is None:
+                return []
             return default
 
     def _select(self, selector, allow_multiple=False):

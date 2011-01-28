@@ -9,6 +9,13 @@ versioned release.
 1.0.6 (in development)
 ======================
 
+**Bugfixes**
+
+- :class:`comics.aggregator.lxmlparser.LxmlParser` methods now returns an empty
+  list if ``allow_multiple`` is :class:`True` and no value is given for
+  ``default``. This ensures that using the return value in for loops will not
+  fail if no matches are found.
+
 **Crawlers**
 
 - New: ``romanticallyapocalyptic``
