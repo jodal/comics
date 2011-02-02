@@ -26,6 +26,7 @@ versioned release.
 - New: ``romanticallyapocalyptic``
 - New: ``schlockmercenary``
 - New: ``spaceavalanche``
+- New: ``treadingground``
 - Update ``wulffmorgenthaler`` to work after site change.
 - Update ``userfriendly`` to support reruns.
 
