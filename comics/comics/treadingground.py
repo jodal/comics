@@ -19,5 +19,5 @@ class Crawler(CrawlerBase):
             url = entry.content0.src('img[src*="/comics/"]')
             url = url.replace('/thumbs', '').replace('-medium', '')
             title = entry.title
-            text = entry.summary
+            text = entry.summary.text('')
             return CrawlerImage(url, title, text)
