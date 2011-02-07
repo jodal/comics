@@ -507,8 +507,7 @@ Submitting your new crawler for inclusion in *comics*
 =====================================================
 
 When your crawler is working properly, you may submit it for inclusion in
-*comics*. You may either send the crawler to `comics@jodal.no
-<mailto:comics@jodal.no>`_, or, even better, fork *comics* at `GitHub
+*comics*. You should fork *comics* at `GitHub
 <http://github.com/jodal/comics>`_, commit your new crawler to your own fork,
 and send me a *pull request* through GitHub.
 
