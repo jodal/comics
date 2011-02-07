@@ -27,8 +27,9 @@ versioned release.
 - New: ``schlockmercenary``
 - New: ``spaceavalanche``
 - New: ``treadingground``
-- Update ``wulffmorgenthaler`` to work after site change.
+- Update ``smbc`` to work after feed change.
 - Update ``userfriendly`` to support reruns.
+- Update ``wulffmorgenthaler`` to work after site change.
 
 
 1.0.5 (2010-12-29)
