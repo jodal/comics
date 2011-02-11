@@ -21,6 +21,9 @@ versioned release.
   like empty lists. It previously only stopped processing if ``do_crawl``
   returned :class:`None`.
 
+- Remove ``safe`` filter from title text, and explicitly use ``escape``, even
+  though they should be implicitly escaped. Thanks to XKCD #859.
+
 **Crawlers**
 
 - New: ``romanticallyapocalyptic``
