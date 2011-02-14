@@ -27,6 +27,7 @@ versioned release.
 **Crawlers**
 
 - A lot of comic release schedule updates.
+- New: ``nerfnow``
 - New: ``romanticallyapocalyptic``
 - New: ``schlockmercenary``
 - New: ``spaceavalanche``
