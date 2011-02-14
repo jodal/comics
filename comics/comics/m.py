@@ -9,9 +9,10 @@ class Meta(MetaBase):
     rights = 'Mads Eriksen'
 
 class Crawler(CrawlerBase):
-    history_capable_date = '2005-01-31'
-    time_zone = 1
     has_rerun_releases = True
+    history_capable_date = '2005-01-31'
+    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
+    time_zone = 1
 
     def crawl(self, pub_date):
         url = 'http://g2.start.no/tegneserier/striper/m/mstriper/m%s.gif' % (

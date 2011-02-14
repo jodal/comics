@@ -13,9 +13,10 @@ class Crawler(CrawlerBase):
     time_zone = -5
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://www.rsspect.com/rss/threeps.xml')
+        feed = self.parse_feed('http://threepanelsoul.com/feed/')
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img')
             title = entry.title
-            text = entry.summary.alt('img')
-            return CrawlerImage(url, title, text)
+            url = entry.content0.src('img[src*="/comics-rss/"]')
+            if url is not None:
+                url = url.replace('-rss', '')
+                return CrawlerImage(url, title)

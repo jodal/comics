@@ -10,6 +10,7 @@ class Meta(MetaBase):
 
 class Crawler(CrawlerBase):
     history_capable_date = '2003-06-11'
+    schedule = None
 
     def crawl(self, pub_date):
         page_url = 'http://www.countyoursheep.com/d/%s.html' % (

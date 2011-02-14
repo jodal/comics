@@ -10,7 +10,7 @@ class Meta(MetaBase):
 
 class Crawler(CrawlerBase):
     history_capable_days = 32
-    schedule = 'Tu,Th'
+    schedule = 'Mo'
     time_zone = -7
 
     # Without User-Agent set, the server returns empty responses

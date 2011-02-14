@@ -26,11 +26,26 @@ versioned release.
 
 **Crawlers**
 
+- A lot of comic release schedule updates.
 - New: ``romanticallyapocalyptic``
 - New: ``schlockmercenary``
 - New: ``spaceavalanche``
 - New: ``treadingground``
+- Update ``butternutsquash`` which is no longer published.
+- Update ``charliehorse`` which is no longer published.
+- Update ``garfield`` to include Sunday editions.
+- Update ``hipsterhitler`` to work after feed change.
+- Update ``idiotcomics`` which is no longer published.
+- Update ``inktank`` which is no longer published.
+- Update ``intelsinsides`` which is no longer published.
+- Update ``kiwiblitz`` to work after feed change.
+- Update ``lifewithrippy`` which is no longer published.
+- Update ``pcweenies`` to work after feed change.
+- Update ``petpeevy`` which is no longer published.
 - Update ``smbc`` to work after feed change.
+- Update ``superpoop`` which is no longer published.
+- Update ``thegutters`` to use feed instead of broken page parser.
+- Update ``threepanelsoul`` to work after feed change.
 - Update ``userfriendly`` to support reruns.
 - Update ``wulffmorgenthaler`` to work after site change.
 

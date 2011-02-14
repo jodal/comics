@@ -9,7 +9,13 @@ class Meta(MetaBase):
     rights = 'Blind Ferret Entertainment'
 
 class Crawler(CrawlerBase):
+    history_capable_days = 14
+    schedule = 'Mo,We,Fr'
+    time_zone = -5
+
     def crawl(self, pub_date):
-        page = self.parse_page('http://the-gutters.com')
-        url = page.src('img[class="img_comic"]')
-        return CrawlerImage(url)
+        feed = self.parse_feed('http://feeds.feedburner.com/TheGutters')
+        for entry in feed.for_date(pub_date):
+            url = entry.html(entry.description).src('img[src*="/comics/"]')
+            title = entry.title.replace('Gutters: ', '')
+            return CrawlerImage(url, title)

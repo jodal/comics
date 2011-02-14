@@ -12,6 +12,7 @@ class Meta(MetaBase):
 
 class Crawler(CrawlerBase):
     history_capable_date = '2001-09-09'
+    schedule = None
     time_zone = -5
 
     # Without User-Agent set, the server returns empty responses

@@ -9,7 +9,8 @@ class Meta(MetaBase):
     rights = 'Thomas & Daniel Drinnen'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 32
+    history_capable_days = 365
+    schedule = None
     time_zone = -6
 
     def crawl(self, pub_date):

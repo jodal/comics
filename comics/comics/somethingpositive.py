@@ -11,6 +11,7 @@ class Meta(MetaBase):
 class Crawler(CrawlerBase):
     history_capable_date = '2001-12-19'
     schedule = 'Mo,Tu,We,Th,Fr'
+    time_zone = -6
 
     def crawl(self, pub_date):
         page_url = 'http://www.somethingpositive.net/sp%s.shtml' % (

@@ -9,11 +9,15 @@ class Meta(MetaBase):
     rights = 'Jim Davis'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 31
+    history_capable_days = 100
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = -5
 
     def crawl(self, pub_date):
-        url = 'http://images.ucomics.com/comics/ga/%s.gif' % (
-            pub_date.strftime('%Y/ga%y%m%d'),)
+        if pub_date.weekday() == 6:
+            url = 'http://picayune.uclick.com/comics/ga/%s.jpg' % (
+                pub_date.strftime('%Y/ga%y%m%d'),)
+        else:
+            url = 'http://images.ucomics.com/comics/ga/%s.gif' % (
+                pub_date.strftime('%Y/ga%y%m%d'),)
         return CrawlerImage(url)

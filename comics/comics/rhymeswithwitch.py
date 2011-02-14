@@ -9,7 +9,7 @@ class Meta(MetaBase):
     rights = 'r*k*milholland'
 
 class Crawler(CrawlerBase):
-    history_capable_date = '2006-08-09'
+    schedule = None
 
     def crawl(self, pub_date):
         page_url = 'http://www.rhymes-with-witch.com/rww%s.shtml' % (

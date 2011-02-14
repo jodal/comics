@@ -9,5 +9,7 @@ class Meta(MetaBase):
     rights = 'Nicholas Gurewitch'
 
 class Crawler(CrawlerBase):
+    schedule = None
+
     def crawl(self, pub_date):
         pass # Comic no longer published

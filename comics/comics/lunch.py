@@ -14,8 +14,9 @@ class Meta(MetaBase):
     rights = 'Børge Lund'
 
 class Crawler(CrawlerBase):
-    time_zone = 1
     history_capable_date = '2009-04-01'
+    schedule = 'Mo,We,Fr'
+    time_zone = 1
 
     def crawl(self, pub_date):
         page = self.parse_page('http://lunchstriper.lunddesign.no/comics/')

@@ -9,8 +9,8 @@ class Meta(MetaBase):
     rights = 'Mike Gioia, CC BY-NC 2.5'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 30
-    schedule = 'Mo,Th'
+    history_capable_days = 300
+    schedule = None
     time_zone = -5
 
     def crawl(self, pub_date):

@@ -14,8 +14,9 @@ class Crawler(CrawlerBase):
     time_zone = -8
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://www.kiwiblitz.com/?feed=rss2')
+        feed = self.parse_feed('http://www.kiwiblitz.com/feed/')
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src*="/comics/"]')
-            title = entry.summary.alt('img[src*="/comics/"]')
+            page = self.parse_page(entry.link)
+            url = page.src('img[src*="/comics/"]')
+            title = page.alt('img[src*="/comics/"]')
             return CrawlerImage(url, title)

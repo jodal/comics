@@ -11,7 +11,7 @@ class Meta(MetaBase):
 
 class Crawler(PondusNoCrawlerBase):
     history_capable_days = 14
-    schedule = 'Mo,Tu,We,Th,Fr'
+    schedule = 'Mo,Tu,We,Fr'
 
     def crawl(self, pub_date):
         return self.crawl_helper('Radio-Gaga', pub_date)

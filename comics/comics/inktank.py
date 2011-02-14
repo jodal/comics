@@ -5,17 +5,13 @@ class Meta(MetaBase):
     name = 'InkTank'
     language = 'en'
     url = 'http://www.inktank.com/'
-    start_date = '2008-04-01'
+    start_date = '2008-03-31'
+    end_date = '2010-07-02'
     rights = 'Barry T. Smith'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 180
-    schedule = 'Mo,We,Fr'
+    schedule = None
     time_zone = -8
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://feeds.feedburner.com/inktank/HstZ')
-        for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src*="/comics-rss/"]')
-            title = entry.title
-            return CrawlerImage(url, title)
+        pass # Comic no longer published

@@ -9,7 +9,7 @@ class Meta(MetaBase):
 
 class Crawler(PondusNoCrawlerBase):
     history_capable_days = 7 * 7 # weeks
-    schedule = 'Tu,Fr'
+    schedule = 'We,Sa'
 
     def crawl(self, pub_date):
         return self.crawl_helper('Helt-Nils', pub_date)
