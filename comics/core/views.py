@@ -153,8 +153,10 @@ def status(request, days=21):
         timeline[release.comic][day][0].add('fetched')
         timeline[release.comic][day][2] = release
 
+    days = [dt.date.today() - dt.timedelta(days=i) for i in range(-1, 22)]
+
     return render_to_response('core/status.html',
-        {'timeline': timeline},
+        {'days': days, 'timeline': timeline},
         context_instance=RequestContext(request))
 
 def redirect(request, comic):

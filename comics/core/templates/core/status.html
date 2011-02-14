@@ -9,6 +9,13 @@
 <h2>Crawler status</h2>
 
 <table id="status">
+  <tr>
+    <th></th>
+    <th></th>
+    {% for day in days %}
+      <th>{{ day|date:"M j" }}</th>
+    {% endfor %}
+  </tr>
   {% for comic, days in timeline.items %}
     <tr>
       <th><a href="{{ comic.get_absolute_url }}">{{ comic.slug }}</a></th>
