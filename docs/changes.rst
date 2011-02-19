@@ -6,8 +6,12 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
-1.0.6 (in development)
-======================
+1.0.6 (2011-02-10)
+==================
+
+The 1.0.6 release includes two bugfixes, five new crawlers, and many updated
+crawlers. Also, most crawler schedules have been updated to make the status
+page more useful.
 
 **Bugfixes**
 
