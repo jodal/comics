@@ -6,6 +6,14 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
+In development
+==============
+
+**Crawlers**
+
+- Update ``treadingground`` to not crash if URL is not found.
+
+
 1.0.6 (2011-02-19)
 ==================
 

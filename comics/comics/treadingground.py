@@ -17,7 +17,8 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed('http://www.treadingground.com/?feed=rss2')
         for entry in feed.for_date(pub_date):
             url = entry.content0.src('img[src*="/comics/"]')
-            url = url.replace('/thumbs', '').replace('-medium', '')
-            title = entry.title
-            text = entry.summary.text('')
-            return CrawlerImage(url, title, text)
+            if url is not None:
+                url = url.replace('/thumbs', '').replace('-medium', '')
+                title = entry.title
+                text = entry.summary.text('')
+                return CrawlerImage(url, title, text)
