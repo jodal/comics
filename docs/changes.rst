@@ -11,6 +11,7 @@ In development
 
 **Crawlers**
 
+- New: ``satw``
 - Update ``treadingground`` to not crash if URL is not found.
 
 
