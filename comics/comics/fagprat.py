@@ -4,13 +4,13 @@ from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
-    name = 'Fagprat	 (db.no)'
+    name = 'Fagprat (db.no)'
     language = 'no'
     url = 'http://www.dagbladet.no/tegneserie/fagprat'
     rights = 'Flu Hartberg'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 14
+    history_capable_date = '2010-11-15'
     schedule = 'Mo,We,Fr'
     time_zone = 1
 
