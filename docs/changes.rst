@@ -12,6 +12,7 @@ In development
 **Crawlers**
 
 - New: ``satw``
+- Update ``m`` as it moved from start.no to dagbladet.no.
 - Update ``treadingground`` to not crash if URL is not found.
 
 
