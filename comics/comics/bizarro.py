@@ -4,7 +4,7 @@ from comics.meta.base import MetaBase
 class Meta(MetaBase):
     name = 'Bizarro'
     language = 'en'
-    url = 'http://bizarrocomic.blogspot.com/'
+    url = 'http://www.bizarrocomics.com/'
     start_date = '1985-01-01'
     rights = 'Dan Piraro'
 
@@ -15,17 +15,14 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         feed = self.parse_feed(
-            'http://feeds.feedburner.com/bizarroblog')
+            'http://www.bizarrocomics.com/?feed=rss2')
 
         for entry in feed.for_date(pub_date):
             if 'daily Bizarros' not in entry.tags:
                 continue
 
-            # We want direct link to image, not an HTML page.
-            url = entry.summary.href('a:first-child')
-            if url is not None:
-                url = url.replace('s1600-h', 's1600')
-
+            urls = entry.content0.src('img.size-full', allow_multiple=True)
+            url = urls[0]
             title = entry.title
 
             # FIXME Store "Bizarro is brought to you today by ..."

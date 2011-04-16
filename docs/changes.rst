@@ -13,6 +13,7 @@ In development
 
 - New: ``fagprat``
 - New: ``satw``
+- Update ``bizarro`` which moved to a new site.
 - Update ``m`` as it moved from start.no to dagbladet.no.
 - Update ``treadingground`` to not crash if URL is not found.
 
