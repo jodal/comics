@@ -14,6 +14,7 @@ In development
 - New: ``fagprat``
 - New: ``satw``
 - New: ``stickycomics``
+- New: ``tehgladiators``
 - Update ``bizarro`` which moved to a new site.
 - Update ``lookingforgroup`` after feed change.
 - Update ``m`` as it moved from start.no to dagbladet.no.
