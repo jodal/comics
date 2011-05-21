@@ -20,6 +20,7 @@ In development
 - Update ``m`` as it moved from start.no to dagbladet.no.
 - Update ``nerfnow`` which crashed when it did not find an image URL.
 - Update ``treadingground`` to not crash if URL is not found.
+- Update ``zits`` with new feed URL.
 
 
 1.0.6 (2011-02-19)

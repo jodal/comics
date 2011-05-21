@@ -14,9 +14,8 @@ class Crawler(CrawlerBase):
     time_zone = -5
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://www.arcamax.com/zits/channelfeed')
+        feed = self.parse_feed('http://www.arcamax.com/thefunnies/zits/rss')
         for entry in feed.all():
             if entry.title.endswith(pub_date.strftime('%-1m/%-1d/%Y')):
-                page = self.parse_page(entry.link)
-                url = page.src('p.m0 img')
+                url = entry.summary.src('img')
                 return CrawlerImage(url)
