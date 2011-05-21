@@ -22,6 +22,7 @@ In development
 - Update ``m`` as it moved from start.no to dagbladet.no.
 - Update ``nerfnow`` which crashed when it did not find an image URL.
 - Update ``peanuts`` which has moved from comics.com to gocomics.com.
+- Update ``pondusbt`` after URL changes.
 - Update ``treadingground`` to not crash if URL is not found.
 - Update ``zits`` with new feed URL.
 
