@@ -16,6 +16,7 @@ In development
 - New: ``stickycomics``
 - New: ``tehgladiators``
 - Update ``bizarro`` which moved to a new site.
+- Update ``countyoursheep`` after URL changes.
 - Update ``lookingforgroup`` after feed change.
 - Update ``m`` as it moved from start.no to dagbladet.no.
 - Update ``nerfnow`` which crashed when it did not find an image URL.

@@ -12,9 +12,12 @@ class Crawler(CrawlerBase):
     history_capable_date = '2003-06-11'
     schedule = None
 
+    # Without User-Agent set, the server returns 403 Forbidden
+    headers = {'User-Agent': 'Mozilla/4.0'}
+
     def crawl(self, pub_date):
-        page_url = 'http://www.countyoursheep.com/d/%s.html' % (
+        page_url = 'http://countyoursheep.keenspot.com/d/%s.html' % (
             pub_date.strftime('%Y%m%d'),)
         page = self.parse_page(page_url)
-        url = page.src('img[src^="http://countyoursheep.keenspot.com/comics/"]')
+        url = page.src('img[src^="http://cdn.countyoursheep.keenspot.com/comics/"]')
         return CrawlerImage(url)
