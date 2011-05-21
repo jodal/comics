@@ -13,6 +13,6 @@ class Crawler(CrawlerBase):
     time_zone = -5
 
     def crawl(self, pub_date):
-        url = 'http://www.cagle.com/working/%s/cagle00.gif' % (
+        url = 'http://www.cagle.com/working/%s/cagle00.jpg' % (
             pub_date.strftime('%y%m%d'),)
         return CrawlerImage(url)
