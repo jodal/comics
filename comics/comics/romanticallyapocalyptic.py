@@ -8,14 +8,14 @@ class Meta(MetaBase):
     rights = 'Vitaly S. Alexius'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 365
+    history_capable_days = None
     schedule = None
     time_zone = -5
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://www.romanticallyapocalyptic.com/'
-            'feeds/comic/rss.xml')
-        for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img')
-            title = entry.title
-            return CrawlerImage(url, title)
+        page = self.parse_page('http://www.romanticallyapocalyptic.com/')
+        urls = page.src('img[src*="/art/"]', allow_multiple=True)
+        for possible_url in urls:
+            if 'thumb' not in possible_url:
+                url = possible_url
+        return CrawlerImage(url)
