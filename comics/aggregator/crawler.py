@@ -190,21 +190,6 @@ class CrawlerBase(object):
         return int(time.mktime(date.timetuple()))
 
 
-class ComicsComCrawlerBase(CrawlerBase):
-    """Base comic crawler for all comics hosted at comics.com"""
-
-    check_image_mime_type = False
-
-    def crawl_helper(self, comics_com_title, pub_date):
-        page_url = 'http://comics.com/%(slug)s/%(date)s/' % {
-            'slug': comics_com_title.lower().replace(' ', '_'),
-            'date': pub_date.strftime('%Y-%m-%d'),
-        }
-        page = self.parse_page(page_url)
-        url = page.src('a.STR_StripImage img[alt^="%s"]' % comics_com_title)
-        return CrawlerImage(url)
-
-
 class GoComicsComCrawlerBase(CrawlerBase):
     """Base comic crawler for all comics hosted at gocomics.com"""
 
