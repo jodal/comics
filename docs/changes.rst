@@ -15,14 +15,21 @@ In development
 - New: ``satw``
 - New: ``stickycomics``
 - New: ``tehgladiators``
+- Update ``betty`` which has moved from comics.com to gocomics.com.
 - Update ``bizarro`` which moved to a new site.
+- Update ``brandondraws`` which is no longer published.
 - Update ``countyoursheep`` after URL changes.
 - Update ``darylcagle`` after change from GIF to JPEG.
+- Update ``fminus`` which has moved from comics.com to gocomics.com.
+- Update ``getfuzzy`` which has moved from comics.com to gocomics.com.
 - Update ``lookingforgroup`` after feed change.
 - Update ``m`` as it moved from start.no to dagbladet.no.
 - Update ``nerfnow`` which crashed when it did not find an image URL.
 - Update ``peanuts`` which has moved from comics.com to gocomics.com.
+- Update ``pearlsbeforeswine`` which has moved from comics.com to gocomics.com.
 - Update ``pondusbt`` after URL changes.
+- Update ``romanticallyapocalyptic`` to use web page instead of feed.
+- Update ``roseisrose`` which has moved from comics.com to gocomics.com.
 - Update ``treadingground`` to not crash if URL is not found.
 - Update ``zits`` with new feed URL.
 
