@@ -29,7 +29,7 @@ class Crawler(CrawlerBase):
         if current_day is None:
             return
 
-        url = page.src('div[id="ss_img_div"] img')
+        url = page.src('div[id="ss_img_div"] img[src*=strips]')
         # If we can't figure the title out, just don't store it
         try:
             title_full = page.text('option[value*="%s"]' %
