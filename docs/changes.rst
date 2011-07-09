@@ -15,6 +15,7 @@ In development
 - New: ``satw``
 - New: ``stickycomics``
 - New: ``tehgladiators``
+- New: ``shortpacked``
 - Update ``betty`` which has moved from comics.com to gocomics.com.
 - Update ``bizarro`` which moved to a new site.
 - Update ``brandondraws`` which is no longer published.
@@ -31,6 +32,8 @@ In development
 - Update ``romanticallyapocalyptic`` to use web page instead of feed.
 - Update ``roseisrose`` which has moved from comics.com to gocomics.com.
 - Update ``treadingground`` to not crash if URL is not found.
+- Update ``threadingground`` which is no longer published.
+- Update ``yehudamoon`` which was broken by addition of new images.
 - Update ``zits`` with new feed URL.
 
 
