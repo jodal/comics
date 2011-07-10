@@ -30,6 +30,7 @@ In development
 - Update ``peanuts`` which has moved from comics.com to gocomics.com.
 - Update ``pearlsbeforeswine`` which has moved from comics.com to gocomics.com.
 - Update ``pondusbt`` after URL changes.
+- Update ``rockybt`` to work after site change.
 - Update ``romanticallyapocalyptic`` to use web page instead of feed.
 - Update ``roseisrose`` which has moved from comics.com to gocomics.com.
 - Update ``treadingground`` to not crash if URL is not found.
