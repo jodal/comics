@@ -15,6 +15,7 @@ In development
 - New: ``satw``
 - New: ``stickycomics``
 - New: ``tehgladiators``
+- New: ``gregcomic``
 - Update ``betty`` which has moved from comics.com to gocomics.com.
 - Update ``bizarro`` which moved to a new site.
 - Update ``brandondraws`` which is no longer published.
