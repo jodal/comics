@@ -22,6 +22,7 @@ In development
 - Update ``brandondraws`` which is no longer published.
 - Update ``countyoursheep`` after URL changes.
 - Update ``darylcagle`` after change from GIF to JPEG.
+- Update ``faktafraverden`` which is no longer published.
 - Update ``fminus`` which has moved from comics.com to gocomics.com.
 - Update ``getfuzzy`` which has moved from comics.com to gocomics.com.
 - Update ``lookingforgroup`` after feed change.

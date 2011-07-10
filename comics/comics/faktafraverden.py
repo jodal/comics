@@ -11,11 +11,5 @@ class Meta(MetaBase):
     rights = 'Karstein Volle'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 40
-    schedule = 'Mo,We,Fr'
-    time_zone = 1
-
     def crawl(self, pub_date):
-        url = 'http://www.dagbladet.no/tegneserie/faktafraverdenarkiv' \
-            + '/serve.php?%s' % (self.date_to_epoch(pub_date),)
-        return CrawlerImage(url)
+        pass # Comic no longer published
