@@ -4,7 +4,7 @@ from comics.meta.base import MetaBase
 class Meta(MetaBase):
     name = 'Nemi (bt.no)'
     language = 'no'
-    url = 'http://www.bt.no/tegneserier/nemi/'
+    url = 'http://www.bt.no/bergenpuls/tegneserier/tegneserier_nemi/'
     start_date = '1997-01-01'
     rights = 'Lise Myhre'
 
@@ -14,6 +14,6 @@ class Crawler(CrawlerBase):
     time_zone = 1
 
     def crawl(self, pub_date):
-        url = 'http://images.bt.no/gfx/cartoons/nemi/%s.gif' % (
+        url = 'http://www.bt.no/external/cartoon/nemi/%s.gif' % (
             pub_date.strftime('%d%m%y'),)
         return CrawlerImage(url)

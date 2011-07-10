@@ -26,6 +26,7 @@ In development
 - Update ``getfuzzy`` which has moved from comics.com to gocomics.com.
 - Update ``lookingforgroup`` after feed change.
 - Update ``m`` as it moved from start.no to dagbladet.no.
+- Update ``nemibt`` to work after site change.
 - Update ``nerfnow`` which crashed when it did not find an image URL.
 - Update ``peanuts`` which has moved from comics.com to gocomics.com.
 - Update ``pearlsbeforeswine`` which has moved from comics.com to gocomics.com.
