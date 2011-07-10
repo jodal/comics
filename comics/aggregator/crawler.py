@@ -207,7 +207,7 @@ class GoComicsComCrawlerBase(CrawlerBase):
         page_url = 'http://www.gocomics.com/%s/%s' % (
             url_name.lower().replace(' ', ''), pub_date.strftime('%Y/%m/%d/'))
         page = self.parse_page(page_url)
-        url = page.src('a.photo img[alt="%s"]' % short_name)
+        url = page.src('img.strip[alt="%s"]' % short_name)
         return CrawlerImage(url)
 
 

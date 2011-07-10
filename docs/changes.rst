@@ -38,6 +38,7 @@ In development
 - Update ``threadingground`` which is no longer published.
 - Update ``yehudamoon`` which was broken by addition of new images.
 - Update ``zits`` with new feed URL.
+- Update generic GoComics.com crawler to also support larger Sunday issues.
 
 
 1.0.6 (2011-02-19)
