@@ -12,10 +12,11 @@ In development
 **Crawlers**
 
 - New: ``fagprat``
+- New: ``gregcomic``
 - New: ``satw``
+- New: ``shortpacked``
 - New: ``stickycomics``
 - New: ``tehgladiators``
-- New: ``shortpacked``
 - Update ``betty`` which has moved from comics.com to gocomics.com.
 - Update ``bizarro`` which moved to a new site.
 - Update ``brandondraws`` which is no longer published.
