@@ -6,12 +6,9 @@ from django.contrib import admin
 admin.autodiscover()
 
 from comics.core.feeds import ComicFeed
+from comics.core.urls import COMIC
 from comics.sets.feeds import SetFeed
-
-feeds = {
-    'c': ComicFeed,
-    's': SetFeed,
-}
+from comics.sets.urls import SET
 
 urlpatterns = patterns('',
     # Comic core
@@ -24,8 +21,8 @@ urlpatterns = patterns('',
     (r'^feedback/', include('comics.feedback.urls')),
 
     # Comic feeds
-    url(r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed',
-        {'feed_dict': feeds}, name='feeds'),
+    url(r'^feeds/c/%s/$' % (COMIC,), ComicFeed(), name='comic-feed'),
+    url(r'^feeds/s/%s/$' % (SET,), SetFeed(), name='set-feed'),
 
     # Django admin
     (r'^admin/media/(?P<path>.*)$', 'django.views.static.serve',
