@@ -6,8 +6,8 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
-1.0.7 (2011-07-13)
-==================
+v1.0.7 (2011-07-13)
+===================
 
 Just new and updated crawlers.
 
@@ -44,8 +44,8 @@ Just new and updated crawlers.
 - Update generic GoComics.com crawler to also support larger Sunday issues.
 
 
-1.0.6 (2011-02-19)
-==================
+v1.0.6 (2011-02-19)
+===================
 
 The 1.0.6 release includes two bugfixes, five new crawlers, and many updated
 crawlers. Also, most crawler schedules have been updated to make the status
@@ -93,8 +93,8 @@ page more useful.
 - Update ``wulffmorgenthaler`` to work after site change.
 
 
-1.0.5 (2010-12-29)
-==================
+v1.0.5 (2010-12-29)
+===================
 
 A couple of bugfixes, and new and updated crawlers.
 
@@ -124,8 +124,8 @@ A couple of bugfixes, and new and updated crawlers.
 - Update ``utensokker`` to use RSS feed.
 
 
-1.0.4 (2010-10-23)
-==================
+v1.0.4 (2010-10-23)
+===================
 
 Yet another minor release bringing a bug fix, four new and five updated
 crawlers.
@@ -149,8 +149,8 @@ crawlers.
   some releases.
 
 
-1.0.3 (2010-07-26)
-==================
+v1.0.3 (2010-07-26)
+===================
 
 Another minor release bringing 17 new and 11 updated crawlers.
 
@@ -197,8 +197,8 @@ Another minor release bringing 17 new and 11 updated crawlers.
 - Update ``yafgc`` to work after source site changes.
 
 
-1.0.2 (2010-04-11)
-==================
+v1.0.2 (2010-04-11)
+===================
 
 A minor release to get crawler updates out there. Two new cool but partly
 immature features are included, as they do not affect existing features or
@@ -225,8 +225,8 @@ change database schema.
 - Update ``spikedmath`` to fetch multiple images per release.
 
 
-1.0.1 (2010-02-23)
-==================
+v1.0.1 (2010-02-23)
+===================
 
 This release features 17 new crawlers and three updated crawlers, most by
 *comic*'s new contributor Jim Wyllie. Let's get more of those!
@@ -265,8 +265,8 @@ This release features 17 new crawlers and three updated crawlers, most by
 - Update ``butternutsquash`` after target site change.
 
 
-1.0.0 (2010-01-27)
-==================
+v1.0.0 (2010-01-27)
+===================
 
 A week has gone, and here is the 1.0.0 final release. Enjoy :-)
 
@@ -275,8 +275,8 @@ A week has gone, and here is the 1.0.0 final release. Enjoy :-)
 - Update ``uvod`` crawler to use new feed.
 
 
-1.0.0.rc2 (2010-01-19)
-======================
+v1.0.0.rc2 (2010-01-19)
+=======================
 
 Second release candidate for 1.0.0. Again, I will bump to 1.0.0 in a week if no
 new issues arises.
@@ -286,8 +286,8 @@ new issues arises.
 - Make ``core/0006`` migration work on the sqlite3 backend.
 
 
-1.0.0.rc1 (2010-01-17)
-======================
+v1.0.0.rc1 (2010-01-17)
+=======================
 
 First release, so no list of changes. Will bump to 1.0.0 in a week if no issues
 arise. Please report any problems at http://github.com/jodal/comics/issues.
