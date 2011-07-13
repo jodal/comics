@@ -1,7 +1,12 @@
 from comics.settings.dev import *
 
 # Use in-memory Sqlite3 database for testing to reduce startup time
-DATABASE_ENGINE = 'sqlite3'
+DATABASES = {
+    'default': {
+        'NAME': None,
+        'ENGINE': 'django.db.backends.sqlite3',
+    }
+}
 
 # Remove cache middleware when running tests, as these cause problems in
 # django.contrib.{admin,auth,session} unit tests.
