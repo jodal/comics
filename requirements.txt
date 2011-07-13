@@ -1,5 +1,5 @@
-Django>=1.1
-PIL
-FeedParser
-lxml
-south
+PIL >= 1.1, < 1.2
+Django >= 1.1, < 1.2
+South >= 0.6, < 0.8
+feedparser >= 4.0, < 6
+lxml >= 2.0, < 3
