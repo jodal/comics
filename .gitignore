@@ -4,9 +4,10 @@
 *.sqlite3
 *.swp
 comics/settings/local.py
-docs/_build
 debug_toolbar
 django
+docs/_build
 media/admin
 media/c
 pip-log.txt
+venv
