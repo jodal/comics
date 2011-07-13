@@ -118,12 +118,16 @@ settings. A full ``local.py`` may look like this::
     MANAGERS = ADMINS
 
     # Database settings
-    DATABASE_ENGINE = 'postgresql_psycopg2'
-    DATABASE_NAME = 'comics'
-    DATABASE_USER = 'comics'
-    DATABASE_PASSWORD = 'euthahM7evei'
-    DATABASE_HOST = 'localhost'
-    DATABASE_PORT = ''
+    DATABASES = {
+        'default': {
+            ENGINE: 'django.db.backends.postgresql_psycopg2',
+            NAME: 'comics',
+            USER: 'comics',
+            PASSWORD: 'euthahM7evei',
+            HOST: 'localhost',
+            PORT: '',
+        }
+    }
 
     # Internal IP addresses
     INTERNAL_IPS = ('127.0.0.1',)
