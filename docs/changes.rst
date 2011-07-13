@@ -6,6 +6,12 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
+v1.1 (in development)
+=====================
+
+- Require Django 1.2
+
+
 v1.0.7 (2011-07-13)
 ===================
 
