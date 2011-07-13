@@ -17,6 +17,7 @@
 </p>
 
 <form action="{% url set-edit set.name %}" method="post" id="edit_set">
+    {% csrf_token %}
 
 {% if all_comics %}
     {{ form.comics }}

@@ -8,8 +8,12 @@ DJANGO_DIR = os.path.dirname(os.path.abspath(django.__file__))
 
 SECRET_KEY = 'This key should really be overriden in comics/settings/local.py'
 
-DATABASE_ENGINE = 'sqlite3'
-DATABASE_NAME = os.path.join(PROJECT_DIR, '../db.sqlite3')
+DATABASES = {
+    'default': {
+        'NAME': os.path.join(PROJECT_DIR, '../db.sqlite3'),
+        'ENGINE': 'django.db.backends.sqlite3',
+    }
+}
 
 # Local time zone for this installation. All choices can be found here:
 # http://www.postgresql.org/docs/current/static/datetime-keywords.html#DATETIME-TIMEZONE-SET-TABLE
@@ -49,7 +53,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.gzip.GZipMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
     'comics.sets.middleware.SetMiddleware',
 )

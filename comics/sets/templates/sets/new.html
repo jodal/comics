@@ -23,6 +23,7 @@ and anyone can modify any existing set, just like a wiki.</p>
     to the URL of your comic set.</p>
 
     <form action="{% url set-new %}" method="post" id="new_set">
+        {% csrf_token %}
         <p class="buttons">
             {{ form.name }}
             <button type="submit" class="positive">

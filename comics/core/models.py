@@ -50,7 +50,7 @@ class Comic(models.Model):
         return reverse('comic-latest', kwargs={'comic': self.slug})
 
     def get_feed_url(self):
-        return reverse('feeds', kwargs={'url': 'c/%s' % self.slug})
+        return reverse('comic-feed', kwargs={'comic': self.slug})
 
     def get_redirect_url(self):
         return reverse('redirect', kwargs={'comic': self.slug})

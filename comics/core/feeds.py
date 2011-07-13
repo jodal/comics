@@ -1,7 +1,7 @@
 import datetime
 
 from django.conf import settings
-from django.contrib.syndication.feeds import Feed, FeedDoesNotExist
+from django.contrib.syndication.views import Feed, FeedDoesNotExist
 from django.utils.feedgenerator import Atom1Feed
 
 from comics.core.models import Comic
@@ -12,10 +12,8 @@ class ComicFeed(Feed):
     title_template = 'feeds/release-title.html'
     description_template = 'feeds/release-content.html'
 
-    def get_object(self, bits):
-        if len(bits) != 1:
-            raise Comic.DoesNotExist
-        return Comic.objects.get(slug=bits[0])
+    def get_object(self, request, comic):
+        return Comic.objects.get(slug=comic)
 
     def title(self, obj):
         return '%s: %s' % (settings.COMICS_SITE_TITLE, obj.name)
