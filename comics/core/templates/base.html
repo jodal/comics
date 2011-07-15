@@ -1,4 +1,4 @@
-{% load versioned_media %}<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
 "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -9,9 +9,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="Content-Language" content="en-us" />
     <title>{% block title %}{% endblock %} | {{ site_title }}</title>
-    <link rel="stylesheet" type="text/css" href="{% versioned_media "style/reset-fonts-grids.css" %}" />
-    <link rel="stylesheet" type="text/css" href="{% versioned_media "style/base-min.css" %}" />
-    <link rel="shortcut icon" type="image/png" href="{% versioned_media "images/favicon.png" %}" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/reset-fonts-grids.css" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/base-min.css" />
+    <link rel="shortcut icon" type="image/png" href="{{ STATIC_URL }}images/favicon.png" />
 {% block extra_head %}{% endblock %}
 </head>
 

@@ -1,15 +1,14 @@
 {% extends "base.html" %}
 {% load cache %}
-{% load versioned_media %}
 
 {% block extra_head %}
 {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{% versioned_media "style/default.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/default.css" />
 {% endblock %}
 
 {% block extra_footer %}
 {{ block.super }}
-    <script type="text/javascript" src="{% versioned_media "scripts/navigation.js" %}"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}scripts/navigation.js"></script>
     {% if google_analytics_code %}
         <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
