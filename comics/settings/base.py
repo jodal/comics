@@ -36,7 +36,7 @@ SITE_ID = 1
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, '../media/'))
+MEDIA_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, '../media/')) + '/'
 
 # URL that handles the media served from MEDIA_ROOT.
 # Example: "http://media.lawrence.com"
