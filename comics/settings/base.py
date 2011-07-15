@@ -141,7 +141,15 @@ LOGGING = {
 }
 
 # Caching
-CACHE_BACKEND = 'locmem:///?timeout=300&max_entries=1000'
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'TIMEOUT': 300,
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000,
+        },
+    }
+}
 CACHE_MIDDLEWARE_SECONDS = 300
 CACHE_MIDDLEWARE_KEY_PREFIX = 'comics'
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True

@@ -14,7 +14,11 @@ MIDDLEWARE_CLASSES = [i for i in MIDDLEWARE_CLASSES
     if not i.startswith('django.middleware.cache')]
 
 # Use a memory cache backend for django.contrib.sessions.tests tests
-CACHE_BACKEND = 'locmem:///?timeout=300&max_entries=1000'
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
 
 # If South is installed system-wide it tries to write to a log file that is
 # only accessible as root
