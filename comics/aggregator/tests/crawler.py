@@ -1,5 +1,5 @@
 import datetime as dt
-import unittest
+from django.utils import unittest
 
 from comics.aggregator import crawler
 
