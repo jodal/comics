@@ -40,9 +40,7 @@
 {% block content %}
 
 {% block comic_top_menu %}
-    {% with 1 as top_menu %}
-        {% include "core/release-menu.html" %}
-    {% endwith %}
+    {% include "core/release-menu.html" with top_menu=1 %}
 {% endblock %}
 
 <h2>{{ page.title|safe }}</h2>
@@ -74,9 +72,7 @@
         </span></a>
     </h3>
 
-    {% with 1 as show_time_since %}
-        {% include "core/release-content.html" %}
-    {% endwith %}
+    {% include "core/release-content.html" with show_time_since=1 %}
 
 </div>
 
@@ -113,9 +109,7 @@
 </div>
 
 {% block comic_bottom_menu %}
-    {% with 0 as top_menu %}
-        {% include "core/release-menu.html" %}
-    {% endwith %}
+    {% include "core/release-menu.html" with top_menu=0 %}
 {% endblock %}
 
 {% endblock %}
