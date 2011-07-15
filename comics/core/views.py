@@ -4,8 +4,7 @@ from django.conf import settings
 from django.core.cache import cache
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.shortcuts import render_to_response, get_object_or_404
-from django.template.context import RequestContext
+from django.shortcuts import render, get_object_or_404
 from django.utils.datastructures import SortedDict
 
 from comics.core.models import Comic, Release
@@ -31,8 +30,7 @@ def generic_show(request, queryset, page, latest=False, extra_context=None):
     }
     if extra_context is not None:
         kwargs.update(extra_context)
-    return render_to_response('core/release-list.html', kwargs,
-        context_instance=RequestContext(request))
+    return render(request, 'core/release-list.html', kwargs)
 
 
 ### Top comics ###
@@ -77,8 +75,7 @@ def top_year(request, year):
 def comic_list(request):
     """List all available comics"""
 
-    return render_to_response('core/comic-list.html',
-        context_instance=RequestContext(request))
+    return render(request, 'core/comic-list.html')
 
 def comic_show(request, comic, year=None, month=None, day=None, days=1):
     """Show one specific comic from one or more dates"""
@@ -121,8 +118,7 @@ def comic_year(request, comic, year):
 ### Other views ###
 
 def about(request):
-    return render_to_response('core/about.html',
-        context_instance=RequestContext(request))
+    return render(request, 'core/about.html')
 
 def status(request, days=21):
     timeline = SortedDict()
@@ -155,20 +151,17 @@ def status(request, days=21):
 
     days = [dt.date.today() - dt.timedelta(days=i) for i in range(-1, 22)]
 
-    return render_to_response('core/status.html',
-        {'days': days, 'timeline': timeline},
-        context_instance=RequestContext(request))
+    return render(request, 'core/status.html',
+        {'days': days, 'timeline': timeline})
 
 def redirect(request, comic):
     comic = get_object_or_404(Comic, slug=comic)
     if comic.url is None:
         raise Http404
-    return render_to_response('core/redirect.html', {'url': comic.url},
-        context_instance=RequestContext(request))
+    return render(request, 'core/redirect.html', {'url': comic.url})
 
 def robots(request):
     return HttpResponse('User-Agent: *\nDisallow: /\n', mimetype='text/plain')
 
 def widgets(request):
-    return render_to_response('core/widgets.html',
-        context_instance=RequestContext(request))
+    return render(request, 'core/widgets.html')
