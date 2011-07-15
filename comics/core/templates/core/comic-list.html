@@ -21,7 +21,7 @@
     {% for comic in all_comics %}
     <tr>
         <td>
-            <a href="{{ comic.get_feed_url }}"><img src="{{ MEDIA_URL }}icons/feed.png" width="16" height="16" alt="Comic feed: {{ comic.name }}" title="Comic feed: {{ comic.name }}" /></a>
+            <a href="{{ comic.get_feed_url }}"><img src="{{ STATIC_URL }}icons/feed.png" width="16" height="16" alt="Comic feed: {{ comic.name }}" title="Comic feed: {{ comic.name }}" /></a>
             <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
         </td>
         <td>{{ comic.get_language_display }}</td>

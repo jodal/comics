@@ -19,5 +19,5 @@ def versioned_media(path):
 
     filepath = os.path.join(settings.MEDIA_ROOT, path)
     modification_time = os.path.getmtime(filepath)
-    return ''.join([settings.MEDIA_URL, path, '?%d' % int(modification_time)])
+    return ''.join([settings.STATIC_URL, path, '?%d' % int(modification_time)])
 
