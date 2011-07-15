@@ -3,6 +3,8 @@ from __future__ import absolute_import
 from django.conf import settings
 from django.conf.urls.defaults import *
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 admin.autodiscover()
 
 from comics.core.feeds import ComicFeed
@@ -25,10 +27,8 @@ urlpatterns = patterns('',
     url(r'^feeds/s/%s/$' % (SET,), SetFeed(), name='set-feed'),
 
     # Django admin
-    (r'^admin/media/(?P<path>.*)$', 'django.views.static.serve',
-        {'document_root': settings.ADMIN_MEDIA_ROOT}),
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    (r'^admin/(.*)', admin.site.root),
+    (r'^admin/', include(admin.site.urls)),
 )
 
 # Comic search
@@ -43,3 +43,5 @@ if not settings.MEDIA_URL.startswith('http'):
         (r'^media/(?P<path>.*)$', 'django.views.static.serve',
             {'document_root': settings.MEDIA_ROOT}),
     )
+
+urlpatterns += staticfiles_urlpatterns()
