@@ -3,8 +3,7 @@ import datetime as dt
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404
-from django.shortcuts import render_to_response, get_object_or_404
-from django.template.context import RequestContext
+from django.shortcuts import render, get_object_or_404
 from django.template.defaultfilters import slugify
 from django.views.decorators.cache import never_cache
 
@@ -40,8 +39,7 @@ def set_new(request):
         'form': form,
         'recent_sets': request.session.get('recent_sets', None),
     }
-    return render_to_response('sets/new.html', kwargs,
-        context_instance=RequestContext(request))
+    return render(request, 'sets/new.html', kwargs)
 
 @never_cache
 def set_edit(request, set):
@@ -65,8 +63,7 @@ def set_edit(request, set):
         'form': form,
         'set': set,
     }
-    return render_to_response('sets/edit.html', kwargs,
-        context_instance=RequestContext(request))
+    return render(request, 'sets/edit.html', kwargs)
 
 @never_cache
 def set_show(request, set, year=None, month=None, day=None, days=1):

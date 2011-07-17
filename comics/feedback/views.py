@@ -2,8 +2,7 @@ from django.conf import settings
 from django.core.mail import mail_admins
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
-from django.template.context import RequestContext
+from django.shortcuts import render
 
 from comics.feedback.forms import FeedbackForm
 
@@ -20,12 +19,9 @@ def feedback(request):
     else:
         form = FeedbackForm()
 
-    return render_to_response('feedback/form.html', {
-        'feedback_form': form,
-    }, context_instance=RequestContext(request))
+    return render(request, 'feedback/form.html', {'feedback_form': form})
 
 def feedback_thanks(request):
     """Display form submit confirmation page"""
 
-    return render_to_response('feedback/thanks.html',
-        context_instance=RequestContext(request))
+    return render(request, 'feedback/thanks.html')

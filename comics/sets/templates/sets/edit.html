@@ -10,7 +10,7 @@
 
 <p class="buttons">
     <a href="{{ set.get_absolute_url }}">
-        <img src="{{ MEDIA_URL }}icons/zoom.png"
+        <img src="{{ STATIC_URL }}icons/zoom.png"
             alt="Set: {{ set.name }}"
             title="Set: {{ set.name }}" />
         View comic set</a>
@@ -48,10 +48,10 @@
 
 <div class="buttons">
 <button type="submit" class="positive">
-    <img src="{{ MEDIA_URL }}icons/accept.png" alt="" />
+    <img src="{{ STATIC_URL }}icons/accept.png" alt="" />
     Save changes</button>
 <a href="{{ set.get_absolute_url }}" class="negative">
-    <img src="{{ MEDIA_URL }}icons/cancel.png" alt="" />
+    <img src="{{ STATIC_URL }}icons/cancel.png" alt="" />
     Cancel</a>
 </div>
 

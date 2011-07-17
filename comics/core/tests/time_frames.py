@@ -1,9 +1,10 @@
 import datetime as dt
-from unittest import TestCase
+
+from django.utils import unittest
 
 from comics.core.utils import time_frames as tf
 
-class TimeFramesTestCase(TestCase):
+class TimeFramesTestCase(unittest.TestCase):
     def setUp(self):
         tf.today = lambda: dt.date(2008, 2, 29)
 

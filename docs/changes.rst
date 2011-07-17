@@ -9,7 +9,7 @@ versioned release.
 v1.1 (in development)
 =====================
 
-- Require Django 1.2
+- Require Django 1.3
 
 
 v1.0.7 (2011-07-13)
