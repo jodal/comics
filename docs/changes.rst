@@ -12,8 +12,8 @@ v1.1 (in development)
 - Require Django 1.3
 
 
-1.0.8 (2011-08-10)
-==================
+v1.0.8 (2011-08-10)
+===================
 
 Just new and updated crawlers.
 
@@ -28,8 +28,8 @@ Just new and updated crawlers.
 - Update ``whattheduck`` schedule.
 
 
-1.0.7 (2011-07-13)
-==================
+v1.0.7 (2011-07-13)
+===================
 
 Just new and updated crawlers.
 
