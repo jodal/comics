@@ -6,17 +6,16 @@ from comics.meta.base import MetaBase
 class Meta(MetaBase):
     name = 'Havet'
     language = 'no'
-    url = 'http://nettserier.no/havet/'
+    url = 'http://havet.nettserier.no/'
     start_date = '2007-09-27'
     rights = 'Øystein Ottesen'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 180
+    history_capable_days = 90
     schedule = 'We'
     time_zone = 1
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://nettserier.no/havet/rss/')
-        for entry in feed.for_date(pub_date):
-            url = entry.html(entry.description).src('img')
-            return CrawlerImage(url)
+        url = 'http://havet.nettserier.no/_striper/havet-%s.jpg' % (
+            self.date_to_epoch(pub_date),)
+        return CrawlerImage(url)

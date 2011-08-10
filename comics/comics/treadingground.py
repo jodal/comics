@@ -9,9 +9,7 @@ class Meta(MetaBase):
     rights = 'Nick Wright'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 30
-    schedule = 'Mo,We,Fr'
-    time_zone = -5
+    schedule = None
 
     def crawl(self, pub_date):
-        pass
+        pass # Comic no longer published

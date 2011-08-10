@@ -14,14 +14,8 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         feed = self.parse_feed(
-            'http://feeds2.feedburner.com/TheChalkboardManifesto')
-
-        for entry in feed.all():
-            title = entry.summary.text('h1')
-
-            if pub_date.strftime('%m/%d/%y') not in title:
-                continue
-
-            url = entry.summary.src('img[src*="chalkboardmanifesto.com"]')
+            'http://feeds.feedburner.com/TheChalkboardManifesto')
+        for entry in feed.for_date(pub_date):
+            url = entry.summary.src('img[alt="comic"]')
             title = entry.title
             return CrawlerImage(url, title)
