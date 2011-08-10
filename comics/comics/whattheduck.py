@@ -10,7 +10,7 @@ class Meta(MetaBase):
 
 class Crawler(CrawlerBase):
     history_capable_days = 7
-    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
+    schedule = 'Mo'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.whattheduck.net/strip/rss.xml')

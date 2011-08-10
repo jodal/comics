@@ -13,6 +13,7 @@ versioned release.
 
 - New: ``mysticrevolution``
 - New: ``theidlestate``
+- Update ``whattheduck`` schedule.
 
 
 1.0.7 (2011-07-13)
