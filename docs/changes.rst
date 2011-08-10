@@ -13,6 +13,9 @@ versioned release.
 
 - New: ``mysticrevolution``
 - New: ``theidlestate``
+- Update ``havet`` to work after feed removal.
+- Update ``reveland`` to work after feed removal.
+- Update ``utensokker`` to work after feed removal.
 - Update ``whattheduck`` schedule.
 
 
