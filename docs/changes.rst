@@ -6,6 +6,15 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
+1.0.8 (in development)
+======================
+
+**Crawlers**
+
+- New: ``mysticrevolution``
+- New: ``theidlestate``
+
+
 1.0.7 (2011-07-13)
 ==================
 
