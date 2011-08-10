@@ -15,6 +15,7 @@ versioned release.
 - New: ``theidlestate``
 - Update ``havet`` to work after feed removal.
 - Update ``reveland`` to work after feed removal.
+- Update ``thechalkboardmanifesto`` to work after feed change.
 - Update ``utensokker`` to work after feed removal.
 - Update ``whattheduck`` schedule.
 
