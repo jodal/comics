@@ -71,7 +71,7 @@ example will work without them.
         # mod_wsgi setup
         WSGIDaemonProcess comics user=comics-user group=comics-user threads=50 maximum-requests=10000
         WSGIProcessGroup comics
-        WSGIScriptAlias / /path/to/comics/wsgi/prod.wsgi
+        WSGIScriptAlias / /path/to/comics/wsgi/deploy.wsgi
         <Directory /path/to/comics/comics/wsgi>
             Order deny,allow
             Allow from all
@@ -86,13 +86,13 @@ For details, please refer to the documentation of the `Apache
 Example WSGI file
 =================
 
-This is the ``prod.wsgi`` file refered to in the Apache vhost above. The
+This is the ``deploy.wsgi`` file refered to in the Apache vhost above. The
 ``sys.path`` line assumes that the file is located in a directory inside the
-*comics* project, as the ``prod.wsgi`` shipped with *comics* is. If your WSGI
+*comics* project, as the ``deploy.wsgi`` shipped with *comics* is. If your WSGI
 file is located elsewhere, the ``sys.path`` line must be changed to point to
 wherever your *comics* project folder is located.
 
-.. literalinclude:: ../wsgi/prod.wsgi
+.. literalinclude:: ../wsgi/deploy.wsgi
     :language: python
 
 
