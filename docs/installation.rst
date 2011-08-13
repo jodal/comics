@@ -16,7 +16,7 @@ Or, in an isolated environment using `virtualenv
 <http://www.virtualenv.org>`_::
 
     cd comics/
-    virtualenv --no-site-packages venv/
+    virtualenv venv/
     source venv/bin/activate
     pip install -r requirements.txt
 
