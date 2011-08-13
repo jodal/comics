@@ -120,12 +120,12 @@ settings. A full ``local.py`` may look like this::
     # Database settings
     DATABASES = {
         'default': {
-            ENGINE: 'django.db.backends.postgresql_psycopg2',
-            NAME: 'comics',
-            USER: 'comics',
-            PASSWORD: 'euthahM7evei',
-            HOST: 'localhost',
-            PORT: '',
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'comics',
+            'USER': 'comics',
+            'PASSWORD': 'euthahM7evei',
+            'HOST': 'localhost',
+            'PORT': '',
         }
     }
 
