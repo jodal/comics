@@ -5,61 +5,50 @@ Installation
 Software requirements
 =====================
 
+The dependencies can be installed using `pip <http://www.pip-installer.org>`_.
+
+You can either install the dependencies globally on your computer::
+
+    cd comics/
+    sudo pip install -r requirements.txt
+
+Or, in an isolated environment using `virtualenv
+<http://www.virtualenv.org>`_::
+
+    cd comics/
+    virtualenv --no-site-packages venv/
+    source venv/bin/activate
+    pip install -r requirements.txt
+
+If you make use of a virtualenv for a real deployment, you'll also need to make
+sure that the WSGI file and the cronjob activate the virtualenv.
+
+
 Minimum dependencies
 --------------------
 
-The absolute minimum requirements for getting *comics* up and running is:
+The absolute minimum requirements for getting *comics* up and running is
+documented in the file ``requirements.txt``:
 
-- `Python <http://www.python.org/>`_ >= 2.6
-- `PIL <http://www.pythonware.com/products/pil/>`_ >= 1.1
-- `Django <http://www.djangoproject.com/>`_ >= 1.3
-- `South <http://south.aeracode.org/>`_ >= 0.6
-- `feedparser <http://www.feedparser.org/>`_ >= 4.0
-- `lxml <http://codespeak.net/lxml/>`_ >= 2.0
-
-To install these on Ubuntu 9.10, run::
-
-    sudo aptitude install python-setuptools python-pip python-django \
-        python-feedparser python-lxml python-imaging
-    sudo pip install South
-
-To install these on Ubuntu 10.04, run::
-
-    sudo aptitude install python-django python-django-south python-feedparser \
-        python-lxml python-imaging
-
-If you are running Mac OS X with `MacPorts <http://www.macports.org/>`_
-installed, you can install the dependencies by running::
-
-    sudo ports install python26 py26-django py26-south py26-feedparser \
-        py26-lxml py26-pil
-
-If you would like to use `pip <http://pip.openplans.org/>`_ to install these
-dependencies, a ``requirements.txt`` file for pip is provided with the
-*comics* source code.
+.. literalinclude:: ../requirements.txt
 
 
 Optional dependencies for real deployments
 ------------------------------------------
 
-Optional dependencies (listed by Debian package names) if you want to use a
-real database and/or memcache:
-
-- python-psycopg2
-- postgresql-X.Y (postgresql-8.3 has been used for development)
-- cmemcache (from source, or alternatively python-memcache)
+For a real deployment, you should consider using another database than SQLite,
+which is the default.  In that case, you also need to install Python libraries
+for connecting to your database of choice, e.g. ``psycopg2`` if you are using
+PostgreSQL.
 
 
 Optional dependencies for development
 -------------------------------------
 
-Additional dependencies which are handy for development:
+There are also some additional requirements only needed for development, which
+are listed in the file ``requirements-dev.txt``:
 
-- python-mock (for mocking in unit tests)
-- python-coverage (for checking test coverage)
-- python-sphinx (for generating HTML documentation)
-- python-django-debug-toolbar (for debugging)
-- python-django-extensions (for generating the data model diagram)
+.. literalinclude:: ../requirements-dev.txt
 
 
 Get *comics*
