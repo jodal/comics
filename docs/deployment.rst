@@ -157,7 +157,17 @@ To get new comics, you should run ``getcomics`` regularly. One way is to use
 
     MAILTO=comics@example.com
     PYTHONPATH=/path/to/comics
-    1 * * * * comics-user /path/to/comics/comics/manage.py getcomics -v0
+    1 * * * * comics-user python /path/to/comics/comics/manage.py getcomics -v0
+
+If you have installed *comics*' dependencies in a virtualenv instead of
+globally, the cronjob must also activate the virtualenv. This can be done by
+using the ``python`` interpreter from the virtualenv:
+
+.. code-block:: sh
+
+    MAILTO=comics@example.com
+    PYTHONPATH=/path/to/comics
+    1 * * * * comics-user /path/to/comics/venv/bin/python /path/to/comics/comics/manage.py getcomics -v0
 
 By setting ``MAILTO`` any exceptions raised by the comic crawlers will be sent
 by mail to the given mail address. ``1 * * * *`` specifies that the command
