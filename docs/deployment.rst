@@ -135,6 +135,8 @@ settings. A full ``local.py`` may look like this::
     # Media
     MEDIA_ROOT = '/var/www/comics.example.com/media/'
     MEDIA_URL = 'http://comics.example.com/media/'
+    STATIC_ROOT = '/var/www/comics.example.com/static/'
+    STATIC_URL = 'http://comics.example.com/static/'
     COMICS_MEDIA_ROOT = '%sc/' % MEDIA_ROOT
     COMICS_MEDIA_URL = '%sc/' % MEDIA_URL
 
@@ -145,6 +147,19 @@ settings. A full ``local.py`` may look like this::
 Of course, you should change most, if not all, of these settings for your own
 installation. If your are not running a *memcached* server, remove the part on
 caching from your ``local.py``.
+
+
+Collecting static files
+=======================
+
+When you're not running in development mode, you'll need to collect the static
+files from all apps into the ``STATIC_ROOT``. To do this, run::
+
+    python manage.py collectstatic
+
+You have to rerun this command every time you deploy changes to graphics, CSS
+and JavaScript. For more details, see the Django documentation on `staticfiles
+<https://docs.djangoproject.com/en/1.3/howto/static-files/>`_.
 
 
 Example cronjob
