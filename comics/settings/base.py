@@ -86,6 +86,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
+    'comics.core.middleware.MinifyHTMLMiddleware',
     'comics.sets.middleware.SetMiddleware',
 )
 
@@ -165,11 +166,13 @@ TIME_FORMAT = 'H:i'
 # Explicitly use HtmlParser to avoid depending on BeautifulSoup through the use
 # of LxmlParser
 COMPRESS_PARSER = 'compressor.parser.HtmlParser'
-# Turn on CSS compression. JS compression is on by default if jsmin is installed.
+# Turn on CSS compression. JS compression is on by default if jsmin is installed
 COMPRESS_CSS_FILTERS = [
     'compressor.filters.css_default.CssAbsoluteFilter',
     'compressor.filters.cssmin.CSSMinFilter',
 ]
+# Turn on HTML compression through custom middleware
+COMPRESS_HTML = True
 
 ### Additional non-Django settings used by comics
 
