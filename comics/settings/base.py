@@ -166,6 +166,11 @@ HAYSTACK_SITECONF = 'comics.search.indexes'
 HAYSTACK_SEARCH_ENGINE = 'solr'
 HAYSTACK_SOLR_URL = 'http://127.0.0.1:8983/solr'
 
+# django_compressor settings
+# Explicitly use HtmlParser to avoid depending on BeautifulSoup through the use
+# of LxmlParser
+COMPRESS_PARSER = 'compressor.parser.HtmlParser'
+
 ### Additional non-Django settings used by comics
 
 # Name of the site, used in e.g. feeds
