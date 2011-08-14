@@ -31,12 +31,6 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
 )
 
-# Comic search
-if 'comics.search' in settings.INSTALLED_APPS:
-    urlpatterns += patterns('',
-        (r'^search/', include('comics.search.urls')),
-    )
-
 # Let Django host media if doing local development on runserver
 if not settings.MEDIA_URL.startswith('http'):
     urlpatterns += patterns('',

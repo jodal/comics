@@ -16,6 +16,7 @@ v1.1 (in development)
   improving page load times.
 - Slightly refreshed graphical design.
 - Split the "all comics" list at the bottom of the page into four columns.
+- Remove the optional comic meta data search functionality.
 
 
 v1.0.8 (2011-08-10)
