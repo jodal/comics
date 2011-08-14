@@ -9,28 +9,42 @@ versioned release.
 v1.1 (in development)
 =====================
 
-- Require Django 1.3.
-- Require django_compressor, with cssmin and jsmin, for merging and compressing
-  CSS and JavaScript, to improve page load times.
-- Minify HTML to improve page load times.
-- Upgrade optional Google Analytics code to the asynchronous version, to
-  improve page load times.
+- New/upgraded requirements:
+
+  - Django 1.3
+  - django_compressor
+  - cssmin
+  - jsmin
+
+- Page speed improvements:
+
+  - CSS and JavaScript is now merged and minified.
+  - HTML is minified.
+  - Optional Google Analytics code is upgraded to the asynchronous version.
+  - All icons have been replaced with sprites to reduce number of elements that
+    must be downloaded.
+
 - Slightly refreshed graphical design.
-- Split the "all comics" list at the bottom of the page into four columns.
-- Remove the optional comic meta data search functionality.
-- Add ``active`` flag to comics and mark no longer published comics as
-  inactive.
-- Inactive comics are no longer loaded by the ``loadmeta``  command unless
-  explicitly specified by name or they have been previously loaded. In other
-  words, inactive comics will not automatically be included in new
-  installations.
-- Inactive comics are no longer included in the top 10 on the front page.
-- Inactive comics are now marked in the comics list on the bottom of all pages.
-- Inactive comics are now marked in the comics list page.
-- Inactive comics are now excluded from the set edit form, effectively removing
-  them from the set on save.
-- Replace all icons with sprites to reduce number of elements that must be
-  downloaded to show a page.
+
+- The "all comics" list at the bottom of the page have been changed from a
+  cloud to lists in four columns.
+
+- The optional comic meta data search functionality have been removed.
+
+- Better handling of inactive comics:
+
+  - Add ``active`` flag to comics.
+  - Marked no longer published comics as inactive.
+  - Inactive comics are no longer loaded by the ``loadmeta``  command unless
+    explicitly specified by name or they have been previously loaded. In other
+    words, inactive comics will not automatically be included in new
+    installations.
+  - Inactive comics are no longer included in the top 10 on the front page.
+  - Inactive comics are now marked in the comics list on the bottom of all
+    pages.
+  - Inactive comics are now marked in the comics list page.
+  - Inactive comics are now excluded from the set edit form, effectively
+    removing them from the set on save.
 
 
 v1.0.8 (2011-08-10)
