@@ -124,23 +124,21 @@ hr.clear {
 }
 
 /* Header area */
-#hd, #hd .content {
-    background: #204a87;
-    color: white;
+#hd {
+    background: #eeeeec;
+    color: black;
+    border-bottom: 1px solid #d3d7cf;
 }
 #hd .content {
     padding: 1em;
     height: 4em;
 }
-#hd a {
-    background: transparent;
-    color: white;
-    text-decoration: none;
-}
 #hd #title {
     float: left;
 }
-#hd h1 a:hover {
+#hd #title a {
+    background: transparent;
+    color: black;
     text-decoration: none;
 }
 #hd #sitemenu {
@@ -168,9 +166,10 @@ hr.clear {
 }
 
 /* Cloud area */
-#cloud, #cloud .content {
-    background: #3465a4;
-    color: white;
+#cloud {
+    background: #eeeeec;
+    color: black;
+    border-top: 1px solid #d3d7cf;
 }
 #cloud .content {
     line-height: 1.5em;
@@ -189,7 +188,7 @@ hr.clear {
 }
 #cloud a {
     background: transparent;
-    color: white;
+    color: black;
     margin-right: 0.5em;
     text-decoration: none;
     white-space: nowrap;
