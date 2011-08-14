@@ -145,30 +145,17 @@ hr.clear {
 }
 #hd #sitemenu {
     float: right;
-    margin-top: 2em;
-    margin-right: 0.5em;
+    margin-top: 1.5em;
 }
 #hd #sitemenu ul {
     margin: 0;
 }
 #hd #sitemenu ul li {
     display: inline;
-    list-style-type: none;
     margin: 0;
-    padding-left: 0.5em;
 }
 #hd #sitemenu a {
-    background: #3465a4;
-    border: 1px solid #4475b4;
     padding: 0.5em 1em;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-box-shadow: 1px 1px 3px #4475b4;
-    -webkit-box-shadow: 1px 1px 3px #4475b4;
-}
-#hd #sitemenu a:hover {
-    background: #4475b4;
-    text-decoration: none;
 }
 
 /* Body area */
