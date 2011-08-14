@@ -377,10 +377,8 @@ div.buttons {
     color: #565656;
     cursor: pointer;
     padding: 7px 6px 7px 6px; /* Links */
-    -moz-box-shadow: 1px 1px 3px #ccc;
-    -webkit-box-shadow: 1px 1px 3px #ccc;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
 }
 .buttons button {
     width: auto;
