@@ -157,7 +157,7 @@ hr.clear {
 }
 
 /* Body area */
-#bd, #bd .content {
+#bd {
     background: white;
     color: black;
 }
@@ -242,10 +242,10 @@ hr.clear {
 }
 .release .image img {
     background: white;
-    border: 2px solid #ddd;
+    border: 2px solid #d3d7cf;
     padding: 0.5em;
-    -moz-box-shadow: 2px 2px 6px #ddd;
-    -webkit-box-shadow: 2px 2px 6px #ddd;
+    -moz-box-shadow: 2px 2px 6px #d3d7cf;
+    -webkit-box-shadow: 2px 2px 6px #d3d7cf;
 }
 .release p {
     margin: 0.5em 0;
@@ -266,12 +266,12 @@ hr.clear {
 
 /* Message panels */
 .info, .success, .warning, .notice, .error {
-    border: 3px solid black;
+    border: 3px solid #d3d7cf;
     padding: 0.8em;
     margin: 0.5em 0;
     width: 30em;
-    -moz-box-shadow: 2px 2px 6px #ddd;
-    -webkit-box-shadow: 2px 2px 6px #ddd;
+    -moz-box-shadow: 2px 2px 6px #d3d7cf;
+    -webkit-box-shadow: 2px 2px 6px #d3d7cf;
 }
 .info h3, .success h3, .warning h3, .notice h3, .error h3 {
     margin: 0 0 0.5em 0;
@@ -370,7 +370,7 @@ div.buttons {
 .buttons a, .buttons button {
     margin: 0 5px 0 0;
     background-color: #f5f5f5;
-    border: 1px solid #ddd;
+    border: 1px solid #d3d7cf;
     line-height: 130%;
     text-decoration: none;
     font-weight: bold;
@@ -439,7 +439,7 @@ div.buttons {
 }
 .buttons a.inactive:active, button.inactive:active {
     background-color: #f5f5f5;
-    border: 1px solid #ddd;
+    border: 1px solid #d3d7cf;
     color: #c0c0c0;
 }
 .buttons a.inactive img, button.inactive img {
