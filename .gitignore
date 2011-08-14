@@ -7,7 +7,7 @@ comics/settings/local.py
 debug_toolbar
 django
 docs/_build
-media/admin
 media/c
 pip-log.txt
+static/
 venv
