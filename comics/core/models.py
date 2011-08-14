@@ -26,6 +26,8 @@ class Comic(models.Model):
     # Optional fields
     url = models.URLField(verbose_name='URL', blank=True,
         help_text='URL to the official website')
+    active = models.BooleanField(default=True,
+        help_text='Wheter the comic is still being crawled')
     start_date = models.DateField(blank=True, null=True,
         help_text='First published at')
     end_date = models.DateField(blank=True, null=True,
