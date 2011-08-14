@@ -242,10 +242,11 @@ hr.clear {
 }
 .release .image img {
     background: white;
-    border: 2px solid #d3d7cf;
+    border: 1px solid #d3d7cf;
     padding: 0.5em;
-    -moz-box-shadow: 2px 2px 6px #d3d7cf;
-    -webkit-box-shadow: 2px 2px 6px #d3d7cf;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
 }
 .release p {
     margin: 0.5em 0;
@@ -266,12 +267,13 @@ hr.clear {
 
 /* Message panels */
 .info, .success, .warning, .notice, .error {
-    border: 3px solid #d3d7cf;
+    border: 1px solid #d3d7cf;
     padding: 0.8em;
     margin: 0.5em 0;
     width: 30em;
-    -moz-box-shadow: 2px 2px 6px #d3d7cf;
-    -webkit-box-shadow: 2px 2px 6px #d3d7cf;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
 }
 .info h3, .success h3, .warning h3, .notice h3, .error h3 {
     margin: 0 0 0.5em 0;
@@ -364,7 +366,7 @@ hr.clear {
 
 /* Buttons
  * from http://particletree.com/features/rediscovering-the-button-element/ */
-div.buttons {
+.buttons {
     margin: 1em 0;
 }
 .buttons a, .buttons button {
@@ -379,6 +381,7 @@ div.buttons {
     padding: 7px 6px 7px 6px; /* Links */
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
+    border-radius: 3px;
 }
 .buttons button {
     width: auto;
