@@ -7,6 +7,7 @@ class Meta(MetaBase):
     name = 'Rutetid'
     language = 'no'
     url = 'http://www.dagbladet.no/tegneserie/rutetid/'
+    active = False
     rights = 'Frode Øverli'
 
 class Crawler(CrawlerBase):
