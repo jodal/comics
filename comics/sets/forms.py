@@ -22,7 +22,7 @@ class NewSetForm(forms.ModelForm):
 
 class EditSetForm(forms.ModelForm):
     comics = forms.ModelMultipleChoiceField(
-        Comic.objects.all(),
+        Comic.objects.filter(active=True),
         required=False,
         widget=forms.CheckboxSelectMultiple)
     add_new_comics = forms.BooleanField(
