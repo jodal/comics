@@ -211,33 +211,6 @@ hr.clear {
     text-decoration: underline;
 }
 
-/* Footer area */
-#ft, #ft .content {
-    background: #204a87;
-    color: white;
-}
-#ft .content {
-    padding: 1em;
-}
-#ft a {
-    background: transparent;
-    color: white;
-    text-decoration: none;
-}
-#ft a:hover {
-    text-decoration: underline;
-}
-#ft ul {
-    font-size: 100%;
-    margin: 0;
-}
-#ft ul li {
-    display: inline;
-    list-style-type: none;
-    margin: 0;
-    padding-right: 1em;
-}
-
 /* Timeframe and navigation menu */
 .menu {
     margin: 0.5em 0;
