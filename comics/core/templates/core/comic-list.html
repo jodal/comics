@@ -19,7 +19,7 @@
         <th>Last fetched</th>
     </tr>
     {% for comic in all_comics %}
-    <tr>
+    <tr class="{% if comic.active %}active{% else %}inactive{% endif %}">
         <td>
             <a href="{{ comic.get_feed_url }}"><img src="{{ STATIC_URL }}icons/feed.png" width="16" height="16" alt="Comic feed: {{ comic.name }}" title="Comic feed: {{ comic.name }}" /></a>
             <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
@@ -31,6 +31,9 @@
             set{{ comic.number_of_sets|pluralize }}</td>
         <td><a href="{{ comic.get_redirect_url }}">{{ comic.url }}</a></td>
         <td>
+            {% if not comic.active %}
+                Inactive,
+            {% endif %}
             {% if comic.release__fetched__max %}
                 {{ comic.release__fetched__max|timesince }} ago
             {% else %}

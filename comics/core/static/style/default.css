@@ -46,6 +46,9 @@ table {
 table tr {
     border-bottom: 1px solid #eeeeec;
 }
+table tr.inactive {
+    color: #666;
+}
 table th, table td {
     border: 0;
     padding: 0.5em;
