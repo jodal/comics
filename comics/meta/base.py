@@ -18,8 +18,11 @@ class MetaBase(object):
     def slug(self):
         return self.__module__.split('.')[-1]
 
+    def is_previously_loaded(self):
+        return bool(Comic.objects.filter(slug=self.slug).count())
+
     def create_comic(self):
-        if Comic.objects.filter(slug=self.slug).count():
+        if self.is_previously_loaded():
             comic = Comic.objects.get(slug=self.slug)
             comic.name = self.name
             comic.language = self.language

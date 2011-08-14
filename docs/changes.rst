@@ -20,7 +20,9 @@ v1.1 (in development)
 - Add ``active`` flag to comics and mark no longer published comics as
   inactive.
 - Inactive comics are no longer loaded by the ``loadmeta``  command unless
-  explicitly specified by name.
+  explicitly specified by name or they have been previously loaded. In other
+  words, inactive comics will not automatically be included in new
+  installations.
 - Inactive comics are no longer included in the top 10 on the front page.
 - Inactive comics are now marked in the comics list on the bottom of all pages.
 - Inactive comics are now marked in the comics list page.

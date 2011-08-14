@@ -57,7 +57,14 @@ class MetaLoader(object):
         return comic_module.Meta()
 
     def _should_load_meta(self, meta):
-        return self.include_inactive or meta.active
+        if meta.active:
+            return True
+        elif self.include_inactive:
+            return True
+        elif meta.is_previously_loaded():
+            return True
+        else:
+            return False
 
     def _load_meta(self, meta):
         logger.debug('Syncing comic meta data with database')
