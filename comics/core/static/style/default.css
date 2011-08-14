@@ -191,9 +191,13 @@ hr.clear {
     width: 17em;
 }
 #cloud a {
-    background: transparent;
-    color: black;
     text-decoration: none;
+}
+#cloud a {
+    color: black;
+}
+#cloud li.inactive a {
+    color: #666;
 }
 #cloud a:hover {
     text-decoration: underline;
