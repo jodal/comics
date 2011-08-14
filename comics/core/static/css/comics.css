@@ -159,9 +159,6 @@ hr.clear {
     display: inline;
     margin: 0;
 }
-#hd #site_menu a {
-    padding: 0.5em 1em;
-}
 
 /* Body area */
 #bd {
@@ -489,13 +486,17 @@ button.inactive .sprite {
 .sprite-cancel { background-position: 0 -528px; width: 16px; height: 16px; }
 .sprite-delete { background-position: 0 -594px; width: 16px; height: 16px; }
 .sprite-feed { background-position: 0 -660px; width: 16px; height: 16px; }
-.sprite-layout { background-position: 0 -726px; width: 16px; height: 16px; }
-.sprite-lightbulb { background-position: 0 -792px; width: 16px; height: 16px; }
-.sprite-package { background-position: 0 -858px; width: 16px; height: 16px; }
-.sprite-pencil { background-position: 0 -924px; width: 16px; height: 16px; }
-.sprite-resultset_first { background-position: 0 -990px; width: 16px; height: 16px; }
-.sprite-resultset_last { background-position: 0 -1056px; width: 16px; height: 16px; }
-.sprite-resultset_next { background-position: 0 -1122px; width: 16px; height: 16px; }
-.sprite-resultset_previous { background-position: 0 -1188px; width: 16px; height: 16px; }
-.sprite-star { background-position: 0 -1254px; width: 16px; height: 16px; }
-.sprite-zoom { background-position: 0 -1320px; width: 16px; height: 16px; }
+.sprite-house { background-position: 0 -726px; width: 16px; height: 16px; }
+.sprite-images { background-position: 0 -792px; width: 16px; height: 16px; }
+.sprite-layout { background-position: 0 -858px; width: 16px; height: 16px; }
+.sprite-lightbulb { background-position: 0 -924px; width: 16px; height: 16px; }
+.sprite-package { background-position: 0 -990px; width: 16px; height: 16px; }
+.sprite-page_white_code { background-position: 0 -1056px; width: 16px; height: 16px; }
+.sprite-pencil { background-position: 0 -1122px; width: 16px; height: 16px; }
+.sprite-resultset_first { background-position: 0 -1188px; width: 16px; height: 16px; }
+.sprite-resultset_last { background-position: 0 -1254px; width: 16px; height: 16px; }
+.sprite-resultset_next { background-position: 0 -1320px; width: 16px; height: 16px; }
+.sprite-resultset_previous { background-position: 0 -1386px; width: 16px; height: 16px; }
+.sprite-star { background-position: 0 -1452px; width: 16px; height: 16px; }
+.sprite-thumb_up { background-position: 0 -1518px; width: 16px; height: 16px; }
+.sprite-zoom { background-position: 0 -1584px; width: 16px; height: 16px; }

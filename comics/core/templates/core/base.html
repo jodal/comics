@@ -34,10 +34,26 @@
         <div id="site_menu" class="buttons">
 {% block site_menu %}
 <ul>
-    <li><a href="{% url top-latest %}">Home</a></li>
-    <li><a href="{% url set-new %}">Sets</a></li>
-    <li><a href="{% url feedback %}">Feedback</a></li>
-    <li><a href="{% url about %}">About</a></li>
+    <li>
+        <a href="{% url top-latest %}">
+        <span class="sprite sprite-house"></span>
+        Home</a>
+    </li>
+    <li>
+        <a href="{% url set-new %}">
+        <span class="sprite sprite-images"></span>
+        Sets</a>
+    </li>
+    <li>
+        <a href="{% url feedback %}">
+        <span class="sprite sprite-thumb_up"></span>
+        Feedback</a>
+    </li>
+    <li>
+        <a href="{% url about %}">
+        <span class="sprite sprite-page_white_code"></span>
+        About</a>
+    </li>
 </ul>
 {% endblock %}
         </div>
