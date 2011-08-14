@@ -253,7 +253,14 @@ hr.clear {
     margin: 0.5em 0;
 }
 .release p.image_text {
+    border: 1px solid #d3d7cf;
     font-style: italic;
+    padding: 0.5em 0.8em;
+    width: 60%;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+
 }
 .release p.meta {
     background: transparent;
