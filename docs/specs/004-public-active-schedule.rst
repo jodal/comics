@@ -6,7 +6,7 @@ Spec-004: Add new database fields for public, active and schedule
 *Spec created:*
     2010-03-03
 *Spec implemented:*
-    N/A
+    Partly, 2011-08-14
 
 
 Goals
@@ -30,9 +30,10 @@ Goals
   a) Private comics are not loaded by ``loadmeta``.
   b) Load all comics, but hide private comics unless logged in.
 
-- Add ``active`` field to Comic model that can be used to indicate that a comic
-  is no longer crawled. All comics should have default value ``True`` and info
-  loaded through ``loadmeta``. The status page should ignore inactive comics.
+- [done, 2011-08-14] Add ``active`` field to Comic model that can be used to
+  indicate that a comic is no longer crawled. All comics should have default
+  value ``True`` and info loaded through ``loadmeta``. The status page should
+  ignore inactive comics.
 
 - Add ``schedule`` field Comic model to track comic's schedule. This
   information will thus be moved from the crawler to the comic instance in the
@@ -51,5 +52,5 @@ Implementation plan
 5. Update status page to use "new" schedule.
 6. Remove old ``get_comic_schedule`` from utils.
 7. Update crawler and/or view code to respect public flag.
-8. Update crawler and/or view code to respect active flag.
+8. [done, 2011-08-14] Update crawler and/or view code to respect active flag.
 9. Update docs if required.
