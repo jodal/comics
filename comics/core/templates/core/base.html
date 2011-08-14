@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load cache compress %}
+{% load cache compress list_to_columns %}
 
 {% block extra_footer %}
 {{ block.super }}
@@ -64,11 +64,14 @@
     <div class="content">
 {% block cloud %}
     <h2><a href="{% url comic-list %}">All comics</a></h2>
-    <ul>
-    {% for comic in all_comics %}
-        <li><a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a></li>
+    {% list_to_columns all_comics as comic_columns 4 %}
+    {% for comic_column in comic_columns %}
+        <ul>
+        {% for comic in comic_column %}
+            <li><a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a></li>
+        {% endfor %}
+        </ul>
     {% endfor %}
-    </ul>
 {% endblock cloud %}
     </div>
 </div>

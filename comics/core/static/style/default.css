@@ -5,7 +5,7 @@ html {
 }
 
 body {
-    text-align: justify;
+    text-align: left;
 }
 
 /* Grid layout */
@@ -179,23 +179,21 @@ hr.clear {
     line-height: 1.5em;
     padding: 1em;
 }
-#cloud h2, #cloud ul {
-    font-size: 100%;
+#cloud h2 {
+    font-size: 123.1%;
 }
 #cloud h2 {
-    display: inline;
     font-weight: bold;
 }
-#cloud ul, #cloud ul li {
-    display: inline;
-    margin: 0;
+#cloud ul {
+    float: left;
+    font-size: 100%;
+    width: 17em;
 }
 #cloud a {
     background: transparent;
     color: black;
-    margin-right: 0.5em;
     text-decoration: none;
-    white-space: nowrap;
 }
 #cloud a:hover {
     text-decoration: underline;
