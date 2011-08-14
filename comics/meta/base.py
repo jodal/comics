@@ -9,6 +9,7 @@ class MetaBase(object):
     url = None
 
     # Default values
+    active = True
     start_date = None
     end_date = None
     rights = ''
@@ -29,6 +30,7 @@ class MetaBase(object):
                 slug=self.slug,
                 language=self.language,
                 url=self.url)
+        comic.active = self.active
         comic.start_date = self._get_date(self.start_date)
         comic.end_date = self._get_date(self.end_date)
         comic.rights = self.rights
