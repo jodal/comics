@@ -37,14 +37,27 @@
 {% endblock %}
 
 
-{% block content %}
-
-{% block comic_top_menu %}
+{% block top_menu %}
+<div id="top_menu">
+    <div class="content">
     {% include "core/release-menu.html" with top_menu=1 %}
+    </div>
+</div>
 {% endblock %}
 
-<h2>{{ page.title|safe }}</h2>
 
+{% block bottom_menu %}
+<div id="bottom_menu">
+    <div class="content">
+    {% include "core/release-menu.html" with top_menu=0 %}
+    </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+<h2>{{ page.title|safe }}</h2>
 
 {% ifequal page.view_type 'set' %}
     {% if set %}
@@ -57,7 +70,6 @@
     </p>
     {% endif %}
 {% endifequal %}
-
 
 <div id="releases">
 
@@ -108,11 +120,8 @@
 
 </div>
 
-{% block comic_bottom_menu %}
-    {% include "core/release-menu.html" with top_menu=0 %}
 {% endblock %}
 
-{% endblock %}
 
 {% block extra_footer %}
     <script type="text/javascript">
