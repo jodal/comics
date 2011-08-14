@@ -1,9 +1,11 @@
 {% extends "base.html" %}
-{% load cache %}
+{% load cache compress %}
 
 {% block extra_head %}
 {{ block.super }}
+{% compress css %}
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}style/default.css" />
+{% endcompress %}
 {% endblock %}
 
 {% block extra_footer %}
