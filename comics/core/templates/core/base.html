@@ -1,8 +1,9 @@
 {% extends "base.html" %}
-{% load cache %}
+{% load cache compress %}
 
 {% block extra_footer %}
 {{ block.super }}
+{% compress js %}
     <script type="text/javascript" src="{{ STATIC_URL }}scripts/navigation.js"></script>
     {% if google_analytics_code %}
         <script type="text/javascript">
@@ -16,6 +17,7 @@
             } catch(err) {}
         </script>
     {% endif %}
+{% endcompress %}
 {% endblock %}
 
 {% block body %}
