@@ -1,5 +1,7 @@
-<div class="pagination">
+<div class="pagination buttons">
+    <ul>
     {% for number in paginator.page_range %}
-        <a href="?page={{ number }}&q={{ query }}">{{ number }}</a>
+        <li><a href="?page={{ number }}&q={{ query }}">{{ number }}</a></li>
     {% endfor %}
+    </ul>
 </div>

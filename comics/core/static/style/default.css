@@ -238,20 +238,6 @@ hr.clear {
     float: right;
     margin-bottom: 1em;
 }
-.pagination a {
-    color: #FFF;
-    background: #3465a4;
-    border: 1px solid #4475b4;
-    padding: 0.1em 0.3em;
-    text-decoration: none;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-box-shadow: 1px 1px 3px #4475b4;
-    -webkit-box-shadow: 1px 1px 3px #4475b4;
-}
-.pagination a:hover {
-    background: #4475b4;
-}
 
 /* Comic releases */
 .release {
