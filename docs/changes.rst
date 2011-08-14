@@ -9,7 +9,13 @@ versioned release.
 v1.1 (in development)
 =====================
 
-- Require Django 1.3
+- Require Django 1.3.
+- Require django_compressor, with cssmin and jsmin, for merging and compressing
+  CSS and JavaScript, and thus improving page load times.
+- Upgrade optional Google Analytics code to the asynchronous version, and thus
+  improving page load times.
+- Slightly refreshed graphical design.
+- Split the "all comics" list at the bottom of the page into four columns.
 
 
 v1.0.8 (2011-08-10)
