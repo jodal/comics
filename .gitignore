@@ -9,5 +9,4 @@ django
 docs/_build
 media/c
 pip-log.txt
-static/
 venv

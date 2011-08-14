@@ -63,9 +63,7 @@
     {% if set %}
     <p class="buttons">
         <a href="{% url set-edit set.name %}">
-            <img src="{{ STATIC_URL }}img/icons/pencil.png"
-                alt="Edit comic set: {{ set.name }}"
-                title="Edit comic set: {{ set.name }}" />
+            <span class="sprite sprite-pencil"></span>
             Edit comic set</a>
     </p>
     {% endif %}

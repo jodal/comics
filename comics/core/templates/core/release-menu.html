@@ -8,8 +8,9 @@
 {% else %}
     <a class="inactive">
 {% endif %}
-        <img src="{{ STATIC_URL }}img/icons/resultset_first.png" alt="" />
-        First</a></li>
+        <span class="sprite sprite-resultset_first"></span>
+        First</a>
+    </li>
 
     <li>
 {% if page.prev_url %}
@@ -17,8 +18,9 @@
 {% else %}
     <a class="inactive">
 {% endif %}
-        <img src="{{ STATIC_URL }}img/icons/resultset_previous.png" alt="" />
-        Previous</a></li>
+        <span class="sprite sprite-resultset_previous"></span>
+        Previous</a>
+    </li>
 
     <li>
 {% if page.next_url %}
@@ -27,7 +29,9 @@
     <a class="inactive">
 {% endif %}
         Next
-        <img src="{{ STATIC_URL }}img/icons/resultset_next.png" alt="" /></a></li>
+        <span class="sprite sprite-resultset_next"></span>
+    </a>
+    </li>
 
     <li>
 {% if page.last_url %}
@@ -36,7 +40,8 @@
     <a class="inactive">
 {% endif %}
         Last
-        <img src="{{ STATIC_URL }}img/icons/resultset_last.png" alt="" /></a></li>
+        <span class="sprite sprite-resultset_last"></span>
+    </a></li>
 </ul>
 </div>
 
@@ -49,7 +54,7 @@
     {% else %}
         <a class="inactive">
     {% endif %}
-        <img src="{{ STATIC_URL }}img/icons/{{ time_frame.icon }}.png" alt="" />
+        <span class="sprite sprite-{{ time_frame.icon }}"></span>
         {{ time_frame.title }}</a></li>
 {% endfor %}
 {% ifequal page.view_type 'comic' %}
@@ -57,8 +62,7 @@
     <li>
         <a href="{{ comics.0.0.get_feed_url }}"
             title="Comic feed: {{ comics.0.0.name }}">
-            <img src="{{ STATIC_URL }}img/icons/feed.png"
-                alt="Comic feed: {{ comics.0.0.name }}" />
+            <span class="sprite sprite-feed"></span>
             Feed</a></li>
     {% endif %}
 {% endifequal %}
@@ -67,8 +71,7 @@
     <li>
         <a href="{{ set.get_feed_url }}"
             title="Comic set feed: {{ set.name }}">
-            <img src="{{ STATIC_URL }}img/icons/feed.png"
-                alt="Comic set feed: {{ set.name }}" />
+            <span class="sprite sprite-feed"></span>
             Feed</a></li>
     {% endif %}
 {% endifequal %}

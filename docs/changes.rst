@@ -28,6 +28,8 @@ v1.1 (in development)
 - Inactive comics are now marked in the comics list page.
 - Inactive comics are now excluded from the set edit form, effectively removing
   them from the set on save.
+- Replace all icons with sprites to reduce number of elements that must be
+  downloaded to show a page.
 
 
 v1.0.8 (2011-08-10)
