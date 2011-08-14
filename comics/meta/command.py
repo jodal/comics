@@ -7,6 +7,7 @@ logger = logging.getLogger('comics.meta.command')
 
 class MetaLoader(object):
     def __init__(self, options):
+        self.include_inactive = self._get_include_inactive(options)
         self.comic_slugs = self._get_comic_slugs(options)
 
     def start(self):
@@ -16,6 +17,15 @@ class MetaLoader(object):
 
     def stop(self):
         pass
+
+    def _get_include_inactive(self, options):
+        comic_slugs = options.get('comic_slugs', None)
+        if comic_slugs is None or len(comic_slugs) == 0:
+            logger.debug('Excluding inactive comics')
+            return False
+        else:
+            logger.debug('Including inactive comics')
+            return True
 
     def _get_comic_slugs(self, options):
         comic_slugs = options.get('comic_slugs', None)
@@ -29,7 +39,10 @@ class MetaLoader(object):
     def _try_load_comic_meta(self, comic_slug):
         try:
             meta = self._get_meta(comic_slug)
-            self._load_meta(meta)
+            if self._should_load_meta(meta):
+                self._load_meta(meta)
+            else:
+                logger.debug('Skipping inactive comic')
         except MetaError, error:
             logger.error(error)
         except Exception, error:
@@ -42,6 +55,9 @@ class MetaLoader(object):
             raise MetaError('%s does not have a Meta class' %
                 comic_module.__name__)
         return comic_module.Meta()
+
+    def _should_load_meta(self, meta):
+        return self.include_inactive or meta.active
 
     def _load_meta(self, meta):
         logger.debug('Syncing comic meta data with database')

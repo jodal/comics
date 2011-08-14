@@ -17,6 +17,15 @@ v1.1 (in development)
 - Slightly refreshed graphical design.
 - Split the "all comics" list at the bottom of the page into four columns.
 - Remove the optional comic meta data search functionality.
+- Add ``active`` flag to comics and mark no longer published comics as
+  inactive.
+- Inactive comics are no longer loaded by the ``loadmeta``  command unless
+  explicitly specified by name.
+- Inactive comics are no longer included in the top 10 on the front page.
+- Inactive comics are now marked in the comics list on the bottom of all pages.
+- Inactive comics are now marked in the comics list page.
+- Inactive comics are now excluded from the set edit form, effectively removing
+  them from the set on save.
 
 
 v1.0.8 (2011-08-10)

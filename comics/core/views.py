@@ -129,7 +129,7 @@ def status(request, days=21):
     releases = releases.select_related('comic__slug')
     releases = releases.order_by('comic__slug').distinct()
 
-    for comic in Comic.objects.all():
+    for comic in Comic.objects.filter(active=True):
         schedule = get_comic_schedule(comic)
         timeline[comic] = []
 

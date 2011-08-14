@@ -11,7 +11,7 @@ def get_top_comics():
     comics = cache.get('top_comics')
 
     if comics is None:
-        comics = Comic.objects.all().order_by(
+        comics = Comic.objects.filter(active=True).order_by(
             '-number_of_sets', 'name')[:settings.COMICS_MAX_IN_TOP_LIST]
         cache.set('top_comics', list(comics ))
 

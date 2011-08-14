@@ -63,6 +63,11 @@ The :class:`Meta` class fields
 
         *Required.* A string with the URL of the comic's web page.
 
+    .. attribute:: active
+
+        *Optional.* Wheter or not this comic is still being crawled. Defaults
+        to :class:`True`.
+
     .. attribute:: start_date
 
         *Optional.* The first date the comic was published at.

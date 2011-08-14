@@ -64,7 +64,8 @@
     {% for comic_column in comic_columns %}
         <ul>
         {% for comic in comic_column %}
-            <li><a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a></li>
+            <li class="{% if comic.active %}active{% else %}inactive{% endif %}">
+                <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a></li>
         {% endfor %}
         </ul>
     {% endfor %}

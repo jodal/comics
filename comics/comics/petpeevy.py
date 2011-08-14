@@ -5,10 +5,9 @@ class Meta(MetaBase):
     name = 'Pet Peevy'
     language = 'en'
     url = 'http://dobbcomics.com/'
+    active = False
     rights = 'Rob Snyder'
 
 class Crawler(CrawlerBase):
-    schedule = None
-
     def crawl(self, pub_date):
-        pass # Comic no longer pubslshed
+        pass # Comic no longer published
