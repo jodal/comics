@@ -8,7 +8,13 @@ versioned release.
 v1.1.1 (in development)
 =======================
 
+**Bugfixes**
+
 - Add missing CSRF token to feedback form.
+
+**Crawlers**
+
+- Update ``asofterworld`` to work after feed change.
 
 
 v1.1.0 (2011-08-15)

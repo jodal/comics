@@ -16,8 +16,10 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.rsspect.com/rss/asw.xml')
         for entry in feed.for_date(pub_date):
-            if entry.link != 'http://www.asofterworld.com':
-                url = entry.summary.src('img[src*="/clean/"]')
+            if not entry.link.startswith('http://www.asofterworld.com'):
+                url = entry.summary.src('img[src*="/clean/"]',
+                    allow_multiple=True)[0]
                 title = entry.title
-                text = entry.summary.title('img[src*="/clean/"]')
+                text = entry.summary.title( 'img[src*="/clean/"]',
+                    allow_multiple=True)[0]
                 return CrawlerImage(url, title, text)
