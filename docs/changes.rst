@@ -10,6 +10,7 @@ v1.1.1 (in development)
 
 **Bugfixes**
 
+- Fix missing whitespaces on about page after HTML minification.
 - Add missing CSRF token to feedback form.
 
 **Crawlers**
