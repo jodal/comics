@@ -5,6 +5,11 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+v1.1.1 (in development)
+=======================
+
+- Add missing CSRF token to feedback form.
+
 
 v1.1.0 (2011-08-15)
 ===================
