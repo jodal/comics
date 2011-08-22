@@ -17,8 +17,11 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed('http://www.rsspect.com/rss/asw.xml')
         for entry in feed.for_date(pub_date):
             if not entry.link.startswith('http://www.asofterworld.com'):
-                url = entry.summary.src('img[src*="/clean/"]',
-                    allow_multiple=True)[0]
+                urls = entry.summary.src('img[src*="/clean/"]',
+                    allow_multiple=True)
+                if not urls:
+                    continue
+                url = urls[0]
                 title = entry.title
                 text = entry.summary.title( 'img[src*="/clean/"]',
                     allow_multiple=True)[0]
