@@ -68,6 +68,11 @@ form input, form textarea {
     font-size: 123.1%;
     padding: 0.2em;
 }
+form label {
+    display: inline-block;
+    min-width: 6em;
+    margin-right: 1em;
+}
 form#new_set {
     text-align: right;
 }
