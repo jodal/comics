@@ -9,6 +9,8 @@
 mail address if you want a reply.</p>
 
 <form action="" method="post" id="feedback">
+    {% csrf_token %}
+
     <p>{{ feedback_form.message }}</p>
 
     <p class="buttons">

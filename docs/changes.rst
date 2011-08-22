@@ -5,6 +5,20 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+v1.1.1 (2011-08-22)
+===================
+
+Some fixes a week after the v1.1 feature release.
+
+**Bugfixes**
+
+- Fix missing whitespaces on about page after HTML minification.
+- Add missing CSRF token to feedback form.
+
+**Crawlers**
+
+- Update ``asofterworld`` to work after feed change.
+
 
 v1.1.0 (2011-08-15)
 ===================
