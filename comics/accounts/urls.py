@@ -65,6 +65,6 @@ urlpatterns = patterns('',
         name='auth_password_reset_complete'),
     url(r'^password/reset/done/$',
         auth_views.password_reset_done,
-        {'template_name': 'auth/password_done.html'},
+        {'template_name': 'auth/password_reset_done.html'},
         name='auth_password_reset_done'),
 )
