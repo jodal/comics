@@ -5,6 +5,19 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+v1.2 (in development)
+=====================
+
+- New requirements:
+
+  - py-bcrypt
+  - django-bcrypt
+
+- Authentication
+
+  - Use bcrypt to hash passwords.
+
+
 v1.1.1 (2011-08-22)
 ===================
 

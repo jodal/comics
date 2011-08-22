@@ -112,6 +112,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.webdesign',
     'compressor',
+    'django_bcrypt',
     'south',
     'comics.aggregator',
     'comics.core',

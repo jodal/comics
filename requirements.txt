@@ -14,3 +14,7 @@ lxml >= 2.0, < 3
 django_compressor >= 0.9, < 0.10
 cssmin >= 0.1, < 2
 jsmin >= 2.0, < 2.1
+
+# For better password hashing
+py-bcrypt >= 0.2, < 0.3
+django-bcrypt >= 0.9, < 0.10
