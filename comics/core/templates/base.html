@@ -38,11 +38,18 @@
         <span class="sprite sprite-house"></span>
         Home</a>
     </li>
+{% if user.is_authenticated %}
     <li>
         <a href="{% url set-new %}">
         <span class="sprite sprite-images"></span>
         Sets</a>
     </li>
+{% else %}
+    <li>
+        <a href="{% url registration_register %}">
+        Register</a>
+    </li>
+{% endif %}
     <li>
         <a href="{% url feedback %}">
         <span class="sprite sprite-thumb_up"></span>
@@ -53,6 +60,12 @@
         <span class="sprite sprite-page_white_code"></span>
         About</a>
     </li>
+{% if user.is_authenticated %}
+    <li>
+        <a href="{% url auth_logout %}">
+        Logout</a>
+    </li>
+{% endif %}
 </ul>
 {% endblock site_menu %}
         </div>
