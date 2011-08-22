@@ -51,7 +51,8 @@ urlpatterns = patterns('',
         {
             'template_name': 'auth/password_reset.html',
             'email_template_name': 'auth/password_reset_email.txt',
-            'subject_template_name': 'auth/password_reset_email_subject.txt',
+            # XXX The next line is not supported until Django 1.4
+            #'subject_template_name': 'auth/password_reset_email_subject.txt',
         },
         name='auth_password_reset'),
     url(r'^password/reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
