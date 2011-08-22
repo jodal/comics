@@ -1,6 +1,7 @@
 import datetime as dt
 
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
@@ -35,6 +36,7 @@ def generic_show(request, queryset, page, latest=False, extra_context=None):
 
 ### Top comics ###
 
+@login_required
 def top_show(request, year=None, month=None, day=None, days=1):
     """Show top comics from one or more dates"""
 
@@ -50,6 +52,7 @@ def top_show(request, year=None, month=None, day=None, days=1):
         year=year, month=month, day=day, days=days)
     return generic_show(request, queryset, page)
 
+@login_required
 def top_latest(request):
     """Show latest release for each comic"""
 
@@ -57,6 +60,7 @@ def top_latest(request):
     page = get_navigation(request, 'top', days=1, latest=True)
     return generic_show(request, queryset, page, latest=True)
 
+@login_required
 def top_year(request, year):
     """Redirect to first day of year if not in the future"""
 
@@ -72,11 +76,13 @@ def top_year(request, year):
 
 ### One comic ###
 
+@login_required
 def comic_list(request):
     """List all available comics"""
 
     return render(request, 'core/comic-list.html')
 
+@login_required
 def comic_show(request, comic, year=None, month=None, day=None, days=1):
     """Show one specific comic from one or more dates"""
 
@@ -93,6 +99,7 @@ def comic_show(request, comic, year=None, month=None, day=None, days=1):
         year=year, month=month, day=day, days=days)
     return generic_show(request, queryset, page)
 
+@login_required
 def comic_latest(request, comic):
     """Show latest release from comic"""
 
@@ -101,6 +108,7 @@ def comic_latest(request, comic):
     page = get_navigation(request, 'comic', instance=comic, days=1, latest=True)
     return generic_show(request, queryset, page, latest=True)
 
+@login_required
 def comic_year(request, comic, year):
     """Redirect to first day of year if not in the future"""
 
@@ -120,6 +128,7 @@ def comic_year(request, comic, year):
 def about(request):
     return render(request, 'core/about.html')
 
+@login_required
 def status(request, days=21):
     timeline = SortedDict()
     first = dt.date.today() + dt.timedelta(days=1)
@@ -154,6 +163,7 @@ def status(request, days=21):
     return render(request, 'core/status.html',
         {'days': days, 'timeline': timeline})
 
+@login_required
 def redirect(request, comic):
     comic = get_object_or_404(Comic, slug=comic)
     if comic.url is None:
@@ -163,5 +173,6 @@ def redirect(request, comic):
 def robots(request):
     return HttpResponse('User-Agent: *\nDisallow: /\n', mimetype='text/plain')
 
+@login_required
 def widgets(request):
     return render(request, 'core/widgets.html')

@@ -1,6 +1,7 @@
 import datetime as dt
 
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
@@ -13,6 +14,7 @@ from comics.core.views import generic_show
 from comics.sets.models import Set
 from comics.sets.forms import NewSetForm, EditSetForm
 
+@login_required
 @never_cache
 def set_new(request):
     """Create a new set and redirect to set settings"""
@@ -41,6 +43,7 @@ def set_new(request):
     }
     return render(request, 'sets/new.html', kwargs)
 
+@login_required
 @never_cache
 def set_edit(request, set):
     """Edit what comics is part of a set"""
@@ -65,6 +68,7 @@ def set_edit(request, set):
     }
     return render(request, 'sets/edit.html', kwargs)
 
+@login_required
 @never_cache
 def set_show(request, set, year=None, month=None, day=None, days=1):
     """Show comics in this set from one or more dates"""
@@ -82,6 +86,7 @@ def set_show(request, set, year=None, month=None, day=None, days=1):
         year=year, month=month, day=day, days=days)
     return generic_show(request, queryset, page, extra_context={'set': set})
 
+@login_required
 @never_cache
 def set_latest(request, set):
     """Show latest releases from set"""
@@ -92,6 +97,7 @@ def set_latest(request, set):
     return generic_show(request, queryset, page, latest=True,
         extra_context={'set': set})
 
+@login_required
 def set_year(request, set, year=None):
     """Redirect to first day of year if not in the future"""
 
