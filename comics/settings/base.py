@@ -113,6 +113,7 @@ INSTALLED_APPS = (
     'django.contrib.webdesign',
     'compressor',
     'django_bcrypt',
+    'registration',
     'south',
     'comics.aggregator',
     'comics.core',
@@ -174,6 +175,9 @@ COMPRESS_CSS_FILTERS = [
 ]
 # Turn on HTML compression through custom middleware
 COMPRESS_HTML = True
+
+# django-registration settings
+ACCOUNT_ACTIVATION_DAYS = 7
 
 ### Additional non-Django settings used by comics
 

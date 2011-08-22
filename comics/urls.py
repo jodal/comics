@@ -22,6 +22,9 @@ urlpatterns = patterns('',
     # Feedback app
     (r'^feedback/', include('comics.feedback.urls')),
 
+    # User handling
+    (r'^accounts/', include('registration.backends.default.urls')),
+
     # Comic feeds
     url(r'^feeds/c/%s/$' % (COMIC,), ComicFeed(), name='comic-feed'),
     url(r'^feeds/s/%s/$' % (SET,), SetFeed(), name='set-feed'),
