@@ -3,6 +3,7 @@ from __future__ import absolute_import
 from django.conf import settings
 from django.conf.urls.defaults import *
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 admin.autodiscover()
@@ -23,7 +24,7 @@ urlpatterns = patterns('',
     (r'^feedback/', include('comics.feedback.urls')),
 
     # User handling
-    (r'^accounts/', include('registration.backends.default.urls')),
+    (r'^accounts/', include('comics.accounts.urls')),
 
     # Comic feeds
     url(r'^feeds/c/%s/$' % (COMIC,), ComicFeed(), name='comic-feed'),

@@ -117,6 +117,7 @@ INSTALLED_APPS = (
     'south',
     'comics.aggregator',
     'comics.core',
+    'comics.accounts',
     'comics.feedback',
     'comics.meta',
     'comics.sets',
