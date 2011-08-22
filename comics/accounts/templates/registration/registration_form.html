@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Registration{% endblock %}
+{% block title %}Register{% endblock %}
 
 {% block content %}
 
-<h2>Registration</h2>
+<h2>Register</h2>
 
 <form action="{% url registration_register %}" method="post">
     {% csrf_token %}
