@@ -179,6 +179,7 @@ COMPRESS_HTML = True
 
 # django-registration settings
 ACCOUNT_ACTIVATION_DAYS = 7
+LOGIN_REDIRECT_URL = '/'
 
 ### Additional non-Django settings used by comics
 
