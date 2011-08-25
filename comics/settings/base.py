@@ -183,9 +183,6 @@ LOGIN_REDIRECT_URL = '/'
 
 ### Additional non-Django settings used by comics
 
-# Name of the site, used in e.g. feeds
-COMICS_SITE_TITLE = 'Daily Comics'
-
 # Location of the comic images
 COMICS_MEDIA_ROOT = '%sc/' % MEDIA_ROOT
 COMICS_MEDIA_URL = '%sc/' % MEDIA_URL

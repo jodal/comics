@@ -22,6 +22,8 @@ v1.2 (in development)
   - Use bcrypt to hash passwords.
 
 - Removed setting ``COMICS_SITE_TAGLINE``.
+- Removed setting ``COMICS_SITE_TITLE`` in preference of Django's sites
+  framework. You can now change the site title in the admin interface.
 
 
 v1.1.1 (2011-08-22)

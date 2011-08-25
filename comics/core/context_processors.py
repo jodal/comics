@@ -6,7 +6,7 @@ from comics.core.models import Comic
 
 def site_settings(request):
     return {
-        'site_title': settings.COMICS_SITE_TITLE,
+        'site_title': Site.objects.get_current().name,
         'google_analytics_code': settings.COMICS_GOOGLE_ANALYTICS_CODE,
     }
 
