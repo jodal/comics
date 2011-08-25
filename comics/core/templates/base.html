@@ -47,6 +47,7 @@
 {% else %}
     <li>
         <a href="{% url registration_register %}">
+        <span class="sprite sprite-user_add"></span>
         Register</a>
     </li>
 {% endif %}
@@ -63,6 +64,7 @@
 {% if user.is_authenticated %}
     <li>
         <a href="{% url auth_logout %}">
+        <span class="sprite sprite-user_go"></span>
         Logout</a>
     </li>
 {% endif %}
