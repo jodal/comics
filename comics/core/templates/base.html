@@ -33,18 +33,23 @@
         <div id="site_menu" class="menu buttons">
 {% block site_menu %}
 <ul>
+{% if user.is_authenticated %}
     <li>
         <a href="{% url top-latest %}">
         <span class="sprite sprite-house"></span>
         Home</a>
     </li>
-{% if user.is_authenticated %}
     <li>
         <a href="{% url set-new %}">
         <span class="sprite sprite-images"></span>
         Sets</a>
     </li>
 {% else %}
+    <li>
+        <a href="{% url auth_login %}">
+        <span class="sprite sprite-user_go"></span>
+        Login</a>
+    </li>
     <li>
         <a href="{% url registration_register %}">
         <span class="sprite sprite-user_add"></span>
