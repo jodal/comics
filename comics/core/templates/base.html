@@ -21,9 +21,104 @@
 <body>
 
 {% block body %}
-{% endblock %}
 
-{% block extra_footer %}{% endblock %}
+<div id="hd">
+    <div class="content">
+        <div id="site_title">
+
+<h1 class="title"><a href="{% url top-latest %}">{{ site_title }}</a></h1>
+<p class="tagline"><a href="{% url top-latest %}">{{ site_tagline }}</a></p>
+
+        </div>
+        <div id="site_menu" class="menu buttons">
+{% block site_menu %}
+<ul>
+{% if user.is_authenticated %}
+    <li>
+        <a href="{% url top-latest %}">
+        <span class="sprite sprite-house"></span>
+        Home</a>
+    </li>
+    <li>
+        <a href="{% url accounts_profile %}">
+        <span class="sprite sprite-user_edit"></span>
+        My account</a>
+    </li>
+    <li>
+        <a href="{% url auth_logout %}">
+        <span class="sprite sprite-user_go"></span>
+        Logout</a>
+    </li>
+    <li>
+        <a href="{% url set-new %}">
+        <span class="sprite sprite-images"></span>
+        Sets</a>
+    </li>
+{% else %}
+    <li>
+        <a href="{% url auth_login %}">
+        <span class="sprite sprite-user_go"></span>
+        Login</a>
+    </li>
+    <li>
+        <a href="{% url registration_register %}">
+        <span class="sprite sprite-user_add"></span>
+        Register</a>
+    </li>
+{% endif %}
+    <li>
+        <a href="{% url feedback %}">
+        <span class="sprite sprite-thumb_up"></span>
+        Feedback</a>
+    </li>
+    <li>
+        <a href="{% url about %}">
+        <span class="sprite sprite-page_white_code"></span>
+        About</a>
+    </li>
+</ul>
+{% endblock site_menu %}
+        </div>
+    </div>
+</div>
+
+{% block top_menu %}{% endblock top_menu %}
+
+<div id="bd">
+    <div class="content">
+{% block content %}{% endblock content %}
+    </div>
+</div>
+
+{% block bottom_menu %}{% endblock bottom_menu %}
+
+<div id="cloud">
+    <div class="content">
+{% block cloud %}{% endblock cloud %}
+    </div>
+</div>
+
+{% endblock body %}
+
+{% block extra_footer %}
+    {{ block.super }}
+    {% compress js %}
+      <script type="text/javascript" src="{{ STATIC_URL }}js/navigation.js"></script>
+        {% if google_analytics_code %}
+            <script type="text/javascript">
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', '{{ google_analytics_code }}']);
+                _gaq.push(['_trackPageview']);
+
+                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            </script>
+        {% endif %}
+    {% endcompress %}
+{% endblock extra_footer %}
 
 </body>
 

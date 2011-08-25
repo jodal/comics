@@ -68,6 +68,11 @@ form input, form textarea {
     font-size: 123.1%;
     padding: 0.2em;
 }
+form label {
+    display: inline-block;
+    min-width: 6em;
+    margin-right: 1em;
+}
 form#new_set {
     text-align: right;
 }
@@ -103,6 +108,12 @@ ul {
 ul li {
     list-style-type: square;
     margin-left: 1.5em;
+}
+dl dt {
+    font-weight: bold;
+}
+dl dd {
+    margin-bottom: 1em;
 }
 
 /* Links */
@@ -499,4 +510,7 @@ button.inactive .sprite {
 .sprite-resultset_previous { background-position: 0 -1386px; width: 16px; height: 16px; }
 .sprite-star { background-position: 0 -1452px; width: 16px; height: 16px; }
 .sprite-thumb_up { background-position: 0 -1518px; width: 16px; height: 16px; }
-.sprite-zoom { background-position: 0 -1584px; width: 16px; height: 16px; }
+.sprite-user_add { background-position: 0 -1584px; width: 16px; height: 16px; }
+.sprite-user_edit { background-position: 0 -1650px; width: 16px; height: 16px; }
+.sprite-user_go { background-position: 0 -1716px; width: 16px; height: 16px; }
+.sprite-zoom { background-position: 0 -1782px; width: 16px; height: 16px; }
