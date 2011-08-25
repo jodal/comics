@@ -12,9 +12,13 @@ v1.2 (in development)
 
   - py-bcrypt
   - django-bcrypt
+  - django-registration (development version or 0.8 if released)
 
-- Authentication
+- User accounts:
 
+  - Add user account registration, activation, login, logout, password change,
+    password reset, and account summary.
+  - Add user information to emails sent from the feedback page.
   - Use bcrypt to hash passwords.
 
 
