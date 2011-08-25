@@ -1,0 +1,20 @@
+{% extends "core/base.html" %}
+
+{% block title %}My account{% endblock %}
+
+{% block content %}
+
+<h2>My account</h2>
+
+<dl>
+    <dt>Username:</dt>
+    <dd>{{ user.username }}</dd>
+
+    <dt>E-mail:</dt>
+    <dd>{{ user.email }}</dd>
+
+    <dt>Password:</dt>
+    <dd><a href="{% url auth_password_change %}">Change</a></dd>
+</dl>
+
+{% endblock content %}

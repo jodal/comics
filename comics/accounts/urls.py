@@ -37,6 +37,11 @@ urlpatterns = patterns('',
         {'template_name': 'auth/logout.html'},
         name='auth_logout'),
 
+    url(r'^profile/$',
+        direct_to_template,
+        {'template': 'accounts/profile.html'},
+        name='accounts_profile'),
+
     url(r'^password/change/$',
         auth_views.password_change,
         {'template_name': 'auth/password_change.html'},

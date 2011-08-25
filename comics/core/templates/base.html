@@ -40,6 +40,16 @@
         Home</a>
     </li>
     <li>
+        <a href="{% url accounts_profile %}">
+        <span class="sprite sprite-user_edit"></span>
+        My account</a>
+    </li>
+    <li>
+        <a href="{% url auth_logout %}">
+        <span class="sprite sprite-user_go"></span>
+        Logout</a>
+    </li>
+    <li>
         <a href="{% url set-new %}">
         <span class="sprite sprite-images"></span>
         Sets</a>
@@ -66,13 +76,6 @@
         <span class="sprite sprite-page_white_code"></span>
         About</a>
     </li>
-{% if user.is_authenticated %}
-    <li>
-        <a href="{% url auth_logout %}">
-        <span class="sprite sprite-user_go"></span>
-        Logout</a>
-    </li>
-{% endif %}
 </ul>
 {% endblock site_menu %}
         </div>

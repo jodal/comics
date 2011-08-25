@@ -109,6 +109,12 @@ ul li {
     list-style-type: square;
     margin-left: 1.5em;
 }
+dl dt {
+    font-weight: bold;
+}
+dl dd {
+    margin-bottom: 1em;
+}
 
 /* Links */
 a {
