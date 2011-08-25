@@ -165,6 +165,9 @@ CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 DATE_FORMAT = 'D j M Y'
 TIME_FORMAT = 'H:i'
 
+# Session settings
+SESSION_COOKIE_AGE = 86400 * 365
+
 # django_compressor settings
 # Explicitly use HtmlParser to avoid depending on BeautifulSoup through the use
 # of LxmlParser
