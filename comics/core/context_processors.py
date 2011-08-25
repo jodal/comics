@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.sites.models import Site
 from django.db.models import Count, Max
 
 from comics.core.models import Comic
@@ -6,7 +7,6 @@ from comics.core.models import Comic
 def site_settings(request):
     return {
         'site_title': settings.COMICS_SITE_TITLE,
-        'site_tagline': settings.COMICS_SITE_TAGLINE,
         'google_analytics_code': settings.COMICS_GOOGLE_ANALYTICS_CODE,
     }
 

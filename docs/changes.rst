@@ -21,6 +21,8 @@ v1.2 (in development)
   - Add user information to emails sent from the feedback page.
   - Use bcrypt to hash passwords.
 
+- Removed setting ``COMICS_SITE_TAGLINE``.
+
 
 v1.1.1 (2011-08-22)
 ===================

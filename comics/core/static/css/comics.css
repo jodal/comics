@@ -18,7 +18,7 @@ body {
 
 /* Headers */
 h1 {
-    font-size: 197%;
+    font-size: 260%;
     font-weight: bolder;
     margin: 0;
 }
@@ -146,7 +146,7 @@ hr.clear {
 }
 #hd .content {
     padding: 1em;
-    height: 4em;
+    height: 3em;
 }
 #hd #site_title {
     float: left;
@@ -156,12 +156,8 @@ hr.clear {
     color: black;
     text-decoration: none;
 }
-#hd #site_title .tagline {
-    font-size: 93%;
-}
 #hd #site_menu {
     float: right;
-    margin-top: 1.5em;
 }
 #hd #site_menu ul {
     margin: 0;

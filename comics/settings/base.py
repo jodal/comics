@@ -185,7 +185,6 @@ LOGIN_REDIRECT_URL = '/'
 
 # Name of the site, used in e.g. feeds
 COMICS_SITE_TITLE = 'Daily Comics'
-COMICS_SITE_TAGLINE = 'your personal comics aggregator'
 
 # Location of the comic images
 COMICS_MEDIA_ROOT = '%sc/' % MEDIA_ROOT
