@@ -10,6 +10,7 @@ v1.1.2 (in development)
 
 **Crawlers**
 
+- New: ``hejibits``
 - New: ``timetrabble``
 - Update ``pennyarcade`` after site change.
 
