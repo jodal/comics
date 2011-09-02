@@ -12,6 +12,7 @@ v1.1.2 (in development)
 
 - New: ``buttersafe``
 - New: ``hejibits``
+- New: ``optipess``
 - New: ``timetrabble``
 - Update ``pennyarcade`` after site change.
 
