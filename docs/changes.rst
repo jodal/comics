@@ -5,6 +5,14 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+v1.1.2 (in development)
+=======================
+
+**Crawlers**
+
+- Update ``pennyarcade`` after site change.
+
+
 v1.1.1 (2011-08-22)
 ===================
 
