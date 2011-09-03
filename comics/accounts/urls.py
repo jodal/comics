@@ -2,13 +2,14 @@ from django.conf.urls.defaults import *
 from django.contrib.auth import views as auth_views
 from django.views.generic.simple import direct_to_template
 
-from registration.views import activate
-from registration.views import register
+from registration.views import activate, register
+
+from comics.accounts.forms import AuthenticationForm
 
 urlpatterns = patterns('',
     url(r'^register/$',
         register,
-        {'backend': 'registration.backends.default.DefaultBackend'},
+        {'backend': 'comics.accounts.backends.RegistrationBackend'},
         name='registration_register'),
     url(r'^register/complete/$',
         direct_to_template,
@@ -25,12 +26,15 @@ urlpatterns = patterns('',
         name='registration_activation_complete'),
     url(r'^activate/(?P<activation_key>\w+)/$',
         activate,
-        {'backend': 'registration.backends.default.DefaultBackend'},
+        {'backend': 'comics.accounts.backends.RegistrationBackend'},
         name='registration_activate'),
 
     url(r'^login/$',
         auth_views.login,
-        {'template_name': 'auth/login.html'},
+        {
+            'authentication_form': AuthenticationForm,
+            'template_name': 'auth/login.html',
+        },
         name='auth_login'),
     url(r'^logout/$',
         auth_views.logout,

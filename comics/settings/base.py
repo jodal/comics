@@ -180,9 +180,16 @@ COMPRESS_CSS_FILTERS = [
 # Turn on HTML compression through custom middleware
 COMPRESS_HTML = True
 
+# django.contrib.auth settings
+AUTHENTICATION_BACKENDS = (
+    'comics.accounts.backends.AuthBackend',
+    'django.contrib.auth.backends.ModelBackend'
+)
+
 # django-registration settings
 ACCOUNT_ACTIVATION_DAYS = 7
 LOGIN_REDIRECT_URL = '/'
+REGISTRATION_BACKEND = 'comics.accounts.backends.RegistrationBackend'
 
 ### Additional non-Django settings used by comics
 
