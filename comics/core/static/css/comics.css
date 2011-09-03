@@ -109,6 +109,9 @@ ul li {
     list-style-type: square;
     margin-left: 1.5em;
 }
+dl {
+    margin-bottom: 2em;
+}
 dl dt {
     font-weight: bold;
 }
