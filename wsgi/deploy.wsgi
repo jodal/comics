@@ -14,22 +14,9 @@ if DEBUG:
 else:
     os.environ['DJANGO_SETTINGS_MODULE'] = 'comics.settings'
 
-try:
-    from comics.settings.local import VIRTUALENV_ROOT
-except ImportError as e:
-    VIRTUALENV_ROOT = None
-
-# If we need to activate virtualenv, do that here
-if VIRTUALENV_ROOT is not None:
-    VIRTUALENV_ROOT = os.path.join(
-        root_path, 'comics/settings', VIRTUALENV_ROOT
-    )
-    virtualenv_bin = os.path.join(VIRTUALENV_ROOT, 'bin')
-    activate_this = os.path.join(virtualenv_bin, 'activate_this.py')
-
-    execfile(activate_this, dict(__file__=activate_this))
-    import django
-    django = reload(django)
+# Slip into the virtualenv if we have to...
+from comics.utils.virtualenv import enter_virtualenv
+enter_virtualenv()
 
 import django.core.handlers.wsgi
 application = django.core.handlers.wsgi.WSGIHandler()
