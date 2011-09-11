@@ -10,3 +10,4 @@ docs/_build
 media/c
 pip-log.txt
 venv
+wsgi/local.py
