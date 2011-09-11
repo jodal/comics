@@ -6,7 +6,10 @@ Controls all interactions with any configured virtualenv
 """
 
 def enter_virtualenv():
-    """Enters a virtualenv setup based on comics.settings.local's settings."""
+    """Enters a virtualenv setup based on comics.settings.local's settings.
+    Try to call this as early as you can so you don't pollute the namespace
+    with all sorts of things that should be in the virtualenv but are
+    instead using the global instances."""
 
     root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 
         '../../'))
