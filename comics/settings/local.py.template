@@ -3,11 +3,4 @@
 # Make this unique, and don't share it with anybody.
 #SECRET_KEY = ''
 
-# If you wish to run comics in virtualenv, change this variable to location of
-# your virtualenv location (relative to the path of this file)
-VIRTUALENV_ROOT = None
-
-# If you wish to turn on debugging, set that to 'True' here
-DEBUG = False
-
 # You can override any settings here, like database settings.
