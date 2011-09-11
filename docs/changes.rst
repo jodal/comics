@@ -8,6 +8,14 @@ versioned release.
 v1.1.2 (in development)
 =======================
 
+**Features**
+
+- Full-featured `virtualenv <http://www.virtualenv.org>`_ support
+
+**Bugfixes**
+
+- Properly updated South requirement to use South v0.7
+
 **Crawlers**
 
 - New: ``buttersafe``
@@ -15,6 +23,32 @@ v1.1.2 (in development)
 - New: ``optipess``
 - New: ``timetrabble``
 - Update ``pennyarcade`` after site change.
+
+v1.1.1 to v1.1.2 Migration Guide
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**WSGI Updates**
+
+If you use the WSGI interface, you can use ``wsgi/local.py`` (based off of
+``wsgi/local.py.template``) to set local settings, like the use of
+``virtualenv`` and debugging settings.  You need to at least create a local
+file::
+
+    cp wsgi/local.py.template wsgi/local.py
+
+**manage.py and virtualenv**
+
+If you choose to use ``virtualenv``, be sure to put it in the proper
+environment first for both your cronjob and manual executions::
+
+    source <path_to_virtualenv>/bin/activate
+    python manage.py getcomics
+
+**Change in Requirements**
+
+Be sure to update your requirements if you use ``pip``::
+
+    pip -r requirements.txt
 
 
 v1.1.1 (2011-08-22)
@@ -71,6 +105,40 @@ v1.1.0 (2011-08-15)
   - Inactive comics are now marked in the comics list page.
   - Inactive comics are now excluded from the set edit form, effectively
     removing them from the set on save.
+
+v1.0.8 to v1.1.0 Migration Guide
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Ordered steps for syncronizing your v1.0.x installation with v1.1.0.  You should perform them in order.
+
+**Changes to comics.settings**
+
+- Database settings use the non-backward-compatible `Django 1.2 format
+  <https://docs.djangoproject.com/en/dev/releases/1.2/#specifying-databases>`_.
+  See ``base.py`` for the new default example and port it to your ``local.py``
+  settings file.
+
+- ``South`` requires knowledge of the proper database adapter to migrate your
+  database; see ``base.py`` for the syntax of the appropriate adapter setting
+  in ``local.py``
+
+**Database Migration**
+
+You need ``South`` v0.7 or later to perform the database migration.
+
+.. WARNING::
+   v1.1.0 only requires South v0.6 or later as per the ``requirements.txt``
+   file; this is a bug and migration will not work if you're using South v0.6.x
+
+::
+
+    python manage.py migrate comics.core
+
+**Static File Collection**
+
+You need to collect your static files.  See the section on `Collecting static
+files <deployment.html?highlight=collectstatic#collecting-static-files>`_ for
+how to do this.
 
 
 v1.0.8 (2011-08-10)
