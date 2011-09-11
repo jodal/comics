@@ -17,7 +17,9 @@ DATABASES = {
 
 # South database adapter; you need this to properly migrate your db between versions.
 # Change this if you change DATABASES above.
-SOUTH_DATABASE_ADAPTER = 'south.db.sqlite3'
+SOUTH_DATABASE_ADAPTERS = {
+    'default' : 'south.db.sqlite3',
+}
 
 # Local time zone for this installation. All choices can be found here:
 # http://www.postgresql.org/docs/current/static/datetime-keywords.html#DATETIME-TIMEZONE-SET-TABLE
