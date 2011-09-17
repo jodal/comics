@@ -16,6 +16,6 @@ class Crawler(CrawlerBase):
         page_url = 'http://www.penny-arcade.com/comic/%s/' % (
             pub_date.strftime('%Y/%m/%d'),)
         page = self.parse_page(page_url)
-        title = page.text('h1')
-        url = page.src('img[alt="%s"]' % title)
+        title = page.text('#pageTitle h2')
+        url = page.src('.comic img')
         return CrawlerImage(url, title)

@@ -5,6 +5,7 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+
 v1.2 (in development)
 =====================
 
@@ -24,6 +25,35 @@ v1.2 (in development)
 - Removed setting ``COMICS_SITE_TAGLINE``.
 - Removed setting ``COMICS_SITE_TITLE`` in preference of Django's sites
   framework. You can now change the site title in the admin interface.
+
+
+v1.1.2 (2011-09-18)
+===================
+
+A couple of bugfixes easing the transition from 1.0.x to 1.1.x by jwyllie83,
+and some new crawlers.
+
+**Bugfixes**
+
+- Updated South requirement to v0.7, which is needed to support the last
+  migration introduced by comics v1.1.0.
+
+- If you use WSGI, you can now add a file ``wsgi/local.py`` based off of
+  ``wsgi/local.py.template`` to set local settings for WSGI, like the use of
+  ``virtualenv`` and debugging settings. This removes the need for changing Git
+  tracked files, like ``deploy.wsgi`` for adding e.g. ``virtualenv`` support.
+
+**Crawlers**
+
+- New: ``buttersafe``
+- New: ``doghouse``
+- New: ``eatthattoast``
+- New: ``hejibits``
+- New: ``optipess``
+- New: ``savagechickens``
+- New: ``threewordphrase``
+- New: ``timetrabble``
+- Update ``pennyarcade`` after site change.
 
 
 v1.1.1 (2011-08-22)
@@ -80,6 +110,73 @@ v1.1.0 (2011-08-15)
   - Inactive comics are now marked in the comics list page.
   - Inactive comics are now excluded from the set edit form, effectively
     removing them from the set on save.
+
+
+v1.0.x to v1.1.x migration guide
+--------------------------------
+
+Ordered steps for syncronizing your v1.0.x installation with v1.1.0. You
+should perform them in order.
+
+**Using virtualenv**
+
+If you choose to use ``virtualenv`` keeping all of comics' dependencies
+sandboxed, be sure to activate the environment both in your cronjob and when
+manually executing ``manage.py``::
+
+    source <path_to_virtualenv>/bin/activate
+    python manage.py getcomics
+
+If you use WSGI, the WSGI file must be modified to support ``virtualenv``. See
+:ref:`example-wsgi-file` for how the bundled WSGI file solves this.
+
+**New dependencies**
+
+There are several new dependencies. All of them are listed in the file
+``requirements.txt`` and may be installed using ``pip``, optionally inside a
+``virtualenv``::
+
+    pip install -r requirements.txt
+
+To avoid compiling dependencies which are not pure Python and thus requires the
+installation of various C libraries and Python's development packages, it may
+be wise to use your distribution's package manger for some packages, like
+``lxml`` and ``PIL``. E.g. on Ubuntu I would install the dependencies like
+this::
+
+    sudo apt-get install python-lxml python-imaging
+    pip install -r requirements.txt
+
+This way, ``lxml`` and ``PIL`` are installed from APT, and ``pip`` installs the
+remaining pure Python dependencies.
+
+**Settings changes**
+
+Database settings now use the new `Django 1.2 format
+<https://docs.djangoproject.com/en/dev/releases/1.2/#specifying-databases>`_.
+See ``comics/settings/base.py`` for the new default setting and use it as an
+example for porting your ``comics/settings/local.py`` settings file.
+
+**Database migration**
+
+A new database field has been added. To migrate your database to work with
+v1.1.0, run::
+
+    python manage.py migrate
+
+.. warning ::
+
+    You need South v0.7 or later to perform the database migration.
+
+    comics v1.1.0's ``requirements.txt`` file only require South v0.6 or later.
+    This is a bug, and the migration will not work if you're using South
+    v0.6.x.
+
+**Static files  collection**
+
+We now use Django's new static files system. After installing you need to
+"collect" your static files. See :ref:`collecting-static-files` for how to do
+this.
 
 
 v1.0.8 (2011-08-10)

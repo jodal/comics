@@ -83,6 +83,8 @@ For details, please refer to the documentation of the `Apache
 <http://code.google.com/p/modwsgi/>`_ projects.
 
 
+.. _example-wsgi-file:
+
 Example WSGI file
 =================
 
@@ -149,6 +151,8 @@ Of course, you should change most, if not all, of these settings for your own
 installation. If your are not running a *memcached* server, remove the part on
 caching from your ``local.py``.
 
+
+.. _collecting-static-files:
 
 Collecting static files
 =======================
