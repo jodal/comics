@@ -24,6 +24,7 @@ v1.1.2 (in development)
 - New: ``eatthattoast``
 - New: ``hejibits``
 - New: ``optipess``
+- New: ``savagechickens``
 - New: ``threewordphrase``
 - New: ``timetrabble``
 - Update ``pennyarcade`` after site change.
