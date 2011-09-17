@@ -1,0 +1,9 @@
+# Local settings that affect how WSGI should be loaded
+
+# Set this to a path (relative to this directory) to a virtualenv root if you
+# would like WSGI to use it
+VIRTUALENV_ROOT = None
+
+# Set your preferred DJANGO_SETTINGS_MODULE here
+# DJANGO_SETTINGS_MODULE = 'comics.settings.dev'
+DJANGO_SETTINGS_MODULE = 'comics.settings'
