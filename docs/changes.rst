@@ -5,8 +5,11 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
-v1.1.2 (in development)
-=======================
+v1.1.2 (2011-09-18)
+===================
+
+A couple of bugfixes easing the transition from 1.0.x to 1.1.x by jwyllie83,
+and some new crawlers.
 
 **Bugfixes**
 
