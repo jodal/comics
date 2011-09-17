@@ -21,6 +21,7 @@ v1.1.2 (in development)
 **Crawlers**
 
 - New: ``buttersafe``
+- New: ``eatthattoast``
 - New: ``hejibits``
 - New: ``optipess``
 - New: ``threewordphrase``
