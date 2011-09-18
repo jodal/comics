@@ -181,6 +181,7 @@ COMPRESS_CSS_FILTERS = [
 COMPRESS_HTML = True
 
 # django.contrib.auth settings
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'
 AUTHENTICATION_BACKENDS = (
     'comics.accounts.backends.AuthBackend',
     'django.contrib.auth.backends.ModelBackend'

@@ -12,6 +12,9 @@
 
     <dt>Password:</dt>
     <dd><a href="{% url auth_password_change %}">Change</a></dd>
+
+    <dt>Secret key:</dt>
+    <dd>{{ user.get_profile.secret_key }}</dd>
 </dl>
 
 <div class="buttons">
