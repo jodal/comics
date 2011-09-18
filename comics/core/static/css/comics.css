@@ -69,8 +69,10 @@ form input, form textarea {
     padding: 0.2em;
 }
 form label {
+    color: #666;
     display: inline-block;
-    min-width: 6em;
+    font-weight: bold;
+    min-width: 10em;
     margin-right: 1em;
 }
 form#new_set {
