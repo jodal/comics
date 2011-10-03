@@ -4,10 +4,7 @@
 *.sqlite3
 *.swp
 comics/settings/local.py
-debug_toolbar
-django
 docs/_build
 media/c
-pip-log.txt
 venv
 wsgi/local.py
