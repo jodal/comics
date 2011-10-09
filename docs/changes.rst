@@ -5,6 +5,14 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+v1.1.3 (in development)
+=======================
+
+**Crawlers**
+
+- Update ``threewordphrase`` to be more robust.
+
+
 v1.1.2 (2011-09-18)
 ===================
 
