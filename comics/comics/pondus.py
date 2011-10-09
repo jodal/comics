@@ -11,7 +11,7 @@ class Meta(MetaBase):
     rights = 'Frode Øverli'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 14
+    history_capable_days = 30
     schedule = 'Mo,Tu,We,Th,Fr,Sa'
     time_zone = 1
 
