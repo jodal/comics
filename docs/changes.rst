@@ -27,6 +27,15 @@ v1.2 (in development)
   framework. You can now change the site title in the admin interface.
 
 
+v1.1.3 (in development)
+=======================
+
+**Crawlers**
+
+- Update ``eatthattoast`` after site change.
+- Update ``threewordphrase`` to be more robust.
+
+
 v1.1.2 (2011-09-18)
 ===================
 
