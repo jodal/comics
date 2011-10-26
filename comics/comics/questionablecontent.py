@@ -19,5 +19,7 @@ class Crawler(CrawlerBase):
         page = self.parse_page('http://www.questionablecontent.net/')
         url = page.src('img#strip')
         title = None
-        text = re.sub(r'\s{2,}', '\n\n', page.text('div#news')).strip()
+        text = page.text('div#news')
+        if text:
+            text = re.sub(r'\s{2,}', '\n\n', text).strip()
         return CrawlerImage(url, title, text)
