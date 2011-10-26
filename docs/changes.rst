@@ -10,6 +10,7 @@ v1.1.3 (in development)
 
 **Crawlers**
 
+- New: ``extraordinary``
 - Update ``eatthattoast`` after site change.
 - Update ``threewordphrase`` to be more robust.
 
