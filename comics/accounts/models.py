@@ -23,7 +23,7 @@ class UserProfile(models.Model):
         self.generate_new_secret_key()
 
     def __unicode__(self):
-        return u'User profile for %s' % (self.user)
+        return u'User profile for %s' % self.user
 
     def generate_new_secret_key(self):
         self.secret_key = uuid.uuid4().hex
