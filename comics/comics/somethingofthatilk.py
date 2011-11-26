@@ -2,7 +2,7 @@ from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
-    name = 'Something of that ilk'
+    name = 'Something of that Ilk'
     language = 'en'
     url = 'http://www.somethingofthatilk.com/'
     start_date = '2011-02-19'
