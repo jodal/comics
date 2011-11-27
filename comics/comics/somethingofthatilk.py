@@ -9,15 +9,12 @@ class Meta(MetaBase):
     rights = 'Ty Devries'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 1
     schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = -5
 
     def crawl(self, pub_date):
         page = self.parse_page('http://www.somethingofthatilk.com/')
-        url = 'http://www.somethingofthatilk.com/'
         url = page.src('img[src*="/comics/"]')
-        
-        print '\n\n', url, '\n\n'        
+        title = page.alt('img[src*="/comics/"]')     
 
-        return CrawlerImage(url)
+        return CrawlerImage(url, title)
