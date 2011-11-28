@@ -2,7 +2,7 @@ from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
-    name = 'Manly guys doing manly things'
+    name = 'Manly Guys Doing Manly Things'
     language = 'en'
     url = 'http://thepunchlineismachismo.com/'
     start_date = '2005-05-29'
@@ -19,3 +19,4 @@ class Crawler(CrawlerBase):
             url = entry.summary.src('img[src*="/comics-rss/"]')
             title = entry.title 
             return CrawlerImage(url, title)
+
