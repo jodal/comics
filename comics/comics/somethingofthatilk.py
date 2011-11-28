@@ -15,6 +15,6 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         page = self.parse_page('http://www.somethingofthatilk.com/')
         url = page.src('img[src*="/comics/"]')
-        title = page.alt('img[src*="/comics/"]')     
-
+        title = page.alt('img[src*="/comics/"]')
         return CrawlerImage(url, title)
+
