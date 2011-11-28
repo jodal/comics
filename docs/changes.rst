@@ -11,6 +11,7 @@ v1.1.3 (in development)
 **Crawlers**
 
 - New: ``extraordinary``
+- New: ``somethingofthatilk``. Contributed by Jim Frode Hoff.
 - Update ``eatthattoast`` after site change.
 - Update ``questionablecontent`` to be more robust.
 - Update ``threewordphrase`` to be more robust.
