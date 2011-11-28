@@ -9,7 +9,7 @@ class Meta(MetaBase):
     rights = 'Kelly Turnbull, CC BY-NC-SA 3.0'
 
 class Crawler(CrawlerBase):
-    history_capable_date = '2011-10-10'
+    history_capable_days = 60
     schedule = 'Mo'
     time_zone = -5
 
