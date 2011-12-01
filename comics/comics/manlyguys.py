@@ -17,5 +17,5 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed('http://thepunchlineismachismo.com/feed')
         for entry in feed.for_date(pub_date):
             url = entry.summary.src('img[src*="/comics-rss/"]')
-            title = entry.title
+            title = entry.title 
             return CrawlerImage(url, title)
