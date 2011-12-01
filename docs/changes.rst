@@ -11,6 +11,7 @@ v1.1.3 (in development)
 **Crawlers**
 
 - New: ``extraordinary``
+- New: ``icanbarelydraw``. Contributed by Jim Frode Hoff.
 - New: ``manlyguys``. Contributed by Jim Frode Hoff.
 - New: ``somethingofthatilk``. Contributed by Jim Frode Hoff.
 - Update ``eatthattoast`` after site change.
