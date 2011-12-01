@@ -4,7 +4,7 @@ from comics.meta.base import MetaBase
 class Meta(MetaBase):
     name = 'I Can Barely Draw'
     language = 'en'
-    url = 'http://www.icanbarelydraw.com/comic/'
+    url = 'http://www.icanbarelydraw.com/'
     start_date = '2011-08-05'
     rights = 'Group effort, CC BY-NC-ND 3.0'
 
