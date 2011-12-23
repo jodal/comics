@@ -15,6 +15,7 @@ v1.1.3 (in development)
 - New: ``manlyguys``. Contributed by Jim Frode Hoff.
 - New: ``somethingofthatilk``. Contributed by Jim Frode Hoff.
 - Update ``eatthattoast`` after site change.
+- Update ``extralife`` to be more robust.
 - Update ``questionablecontent`` to be more robust.
 - Update ``threewordphrase`` to be more robust.
 
