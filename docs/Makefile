@@ -86,13 +86,3 @@ doctest:
 	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) _build/doctest
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in _build/doctest/output.txt."
-
-github: clean dirhtml
-	rm -rf /tmp/comics-html && cp -r _build/dirhtml /tmp/comics-html
-	git stash save
-	cd .. && \
-	    git checkout gh-pages && \
-	    git pull && \
-	    rm -r * && \
-	    cp -r /tmp/comics-html/* . && \
-	    git add *
