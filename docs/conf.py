@@ -18,10 +18,6 @@ import sys, os
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.append(os.path.abspath(os.path.dirname(__file__ + '../comics')))
 
-# When RTD builds the project, it sets the READTHEDOCS environment variable to
-# the string True.
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-
 # -- General configuration -----------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
@@ -42,7 +38,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'comics'
-copyright = u'2009-2011, Stein Magnus Jodal'
+copyright = u'2009-2012, Stein Magnus Jodal'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -95,10 +91,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  Major themes that come with
 # Sphinx are currently 'default' and 'sphinxdoc'.
-if on_rtd:
-    html_theme = 'default'
-else:
-    html_theme = 'nature'
+html_theme = 'default'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
