@@ -17,6 +17,7 @@ v1.1.3 (in development)
 - Update ``eatthattoast`` after site change.
 - Update ``extralife`` to be more robust.
 - Update ``questionablecontent`` to be more robust.
+- Update ``romanticallyapocalyptic`` to be more robust.
 - Update ``threewordphrase`` to be more robust.
 
 
