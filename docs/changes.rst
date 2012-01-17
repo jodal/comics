@@ -15,6 +15,10 @@ v1.2 (in development)
   - django-bcrypt
   - django-registration (development version or 0.8 if released)
 
+- Updated dependencies:
+
+  - django_compress >= 1.1, < 1.2
+
 - User accounts:
 
   - Add user account registration, activation, login, logout, password change,

@@ -11,7 +11,7 @@ feedparser >= 4.0, < 6
 lxml >= 2.0, < 3
 
 # For static resource compression
-django_compressor >= 0.9, < 0.10
+django_compressor >= 1.1, < 1.2
 cssmin >= 0.1, < 2
 jsmin >= 2.0, < 2.1
 
