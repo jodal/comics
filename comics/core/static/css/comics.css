@@ -2,6 +2,11 @@ body {
     padding-top: 60px;
 }
 
+.nav a.disabled,
+.nav a.disabled:hover {
+    color: #666;
+}
+
 #cloud h3 {
     border-bottom: 1px solid #ddd;
     margin-bottom: 20px;
@@ -15,7 +20,6 @@ body {
     width: 40em;
 }
 
-/* Status states */
 #status td,
 #status_legend td {
     text-align: center;
