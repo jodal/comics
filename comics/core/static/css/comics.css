@@ -7,6 +7,10 @@ body {
     color: #666;
 }
 
+h3 a:hover {
+    text-decoration: none;
+}
+
 #cloud h3 {
     border-bottom: 1px solid #ddd;
     margin-bottom: 20px;
