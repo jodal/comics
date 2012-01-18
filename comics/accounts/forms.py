@@ -13,7 +13,7 @@ attrs_dict = { 'class': 'required' }
 class RegistrationForm(BootstrapForm):
     email = forms.EmailField(
         widget=forms.TextInput(attrs=dict(attrs_dict, maxlength=75)),
-        label=_("Email address"))
+        label=_("Email"))
     password1 = forms.CharField(
         widget=forms.PasswordInput(attrs=attrs_dict, render_value=False),
         label=_("Password"))
@@ -113,6 +113,7 @@ class PasswordResetForm(auth_forms.PasswordResetForm, BootstrapMixin):
     def __init__(self, *args, **kwargs):
         auth_forms.PasswordResetForm.__init__(self, *args, **kwargs)
         self.__bootstrap__()
+        self.fields['email'].label = 'Email'
 
     def __str__(self):
         return self.as_div()
