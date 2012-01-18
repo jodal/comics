@@ -23,7 +23,7 @@
 
 {% block body %}
 
-<div class="topbar-wrapper" style="z-index: 5;">
+<div class="topbar-wrapper">
     <div class="topbar" data-dropdown="dropdown">
         <div class="topbar-inner">
             <div class="container">
@@ -32,41 +32,27 @@
                 <ul>
                 {% if user.is_authenticated %}
                     <li>
-                        <a href="{% url top-latest %}">
-                        <span class="sprite sprite-house"></span>
-                        Home</a>
+                        <a href="{% url top-latest %}">Home</a>
                     </li>
                     <li>
-                        <a href="{% url accounts_profile %}">
-                        <span class="sprite sprite-user_edit"></span>
-                        My account</a>
+                        <a href="{% url accounts_profile %}">My account</a>
                     </li>
                     <li>
-                        <a href="{% url set-new %}">
-                        <span class="sprite sprite-images"></span>
-                        Sets</a>
+                        <a href="{% url set-new %}">Sets</a>
                     </li>
                 {% else %}
                     <li>
-                        <a href="{% url auth_login %}">
-                        <span class="sprite sprite-user_go"></span>
-                        Login</a>
+                        <a href="{% url auth_login %}">Login</a>
                     </li>
                     <li>
-                        <a href="{% url registration_register %}">
-                        <span class="sprite sprite-user_add"></span>
-                        Register</a>
+                        <a href="{% url registration_register %}">Register</a>
                     </li>
                 {% endif %}
                     <li>
-                        <a href="{% url feedback %}">
-                        <span class="sprite sprite-thumb_up"></span>
-                        Feedback</a>
+                        <a href="{% url feedback %}">Feedback</a>
                     </li>
                     <li>
-                        <a href="{% url about %}">
-                        <span class="sprite sprite-page_white_code"></span>
-                        About</a>
+                        <a href="{% url about %}">About</a>
                     </li>
                 </ul>
                 {% endblock site_menu %}
@@ -77,15 +63,11 @@
 </div>
 
 <div id="bd">
-    <div class="content">
 {% block content %}{% endblock content %}
-    </div>
 </div>
 
 <div id="cloud">
-    <div class="content">
 {% block cloud %}{% endblock cloud %}
-    </div>
 </div>
 
 {% endblock body %}
