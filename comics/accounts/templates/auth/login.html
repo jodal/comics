@@ -4,25 +4,19 @@
 
 {% block content %}
 
-<h2>Login</h2>
+<h1>Login</h1>
 
 <form method="post" action="{% url auth_login %}">
     {% csrf_token %}
-    <input type="hidden" name="next" value="{{ next }}" />
+    <input type="hidden" name="next" value="{{ next }}">
 
-    {{ form.as_p }}
+    {{ form }}
 
-    <p class="buttons">
-        <button type="submit" class="positive">
-            <span class="sprite sprite-accept"></span>
-            Login
-        </button>
-    </p>
+    <div class="actions">
+        <button type="submit" class="btn primary">Login</button>
+        &nbsp;
+        <a href="{% url auth_password_reset %}" class="btn">Reset password</a>
+    </div>
 </form>
-
-<ul>
-    <li><a href="{% url auth_password_reset %}">Forgot your password?</a></li>
-    <li><a href="{% url registration_register %}">Need an account?</a></li>
-</ul>
 
 {% endblock %}

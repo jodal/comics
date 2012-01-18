@@ -6,46 +6,59 @@
 
 {% block content %}
 
-<h2>List of comics</h2>
+<div class="page_hader">
+    <h1>List of comics</h1>
+</div>
 
 {% if all_comics %}
-<table>
-    <tr>
-        <th>Comic</th>
-        <th>Language</th>
-        <th class="alignright"># releases</th>
-        <th class="alignright"># sets</th>
-        <th>Website</th>
-        <th>Last fetched</th>
-    </tr>
-    {% for comic in all_comics %}
-    <tr class="{% if comic.active %}active{% else %}inactive{% endif %}">
-        <td>
-            <a href="{{ comic.get_feed_url }}">
-                <span class="sprite sprite-feed" title="Comic feed: {{ comic.name }}"></span></a>
-            <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
-        </td>
-        <td>{{ comic.get_language_display }}</td>
-        <td class="alignright">{{ comic.release__count }}
-            release{{ comic.release__count|pluralize }}</td>
-        <td class="alignright">{{ comic.number_of_sets }}
-            set{{ comic.number_of_sets|pluralize }}</td>
-        <td><a href="{{ comic.get_redirect_url }}">{{ comic.url }}</a></td>
-        <td>
-            {% if not comic.active %}
-                Inactive,
-            {% endif %}
-            {% if comic.release__fetched__max %}
-                {{ comic.release__fetched__max|timesince }} ago
-            {% else %}
-                Never
-            {% endif %}
-        </td>
-    </tr>
-    {% endfor %}
+<table class="condensed-table bordered-table zebra-striped">
+    <thead>
+        <tr>
+            <th>Comic</th>
+            <th>Language</th>
+            <th class="alignright"># releases</th>
+            <th class="alignright"># sets</th>
+            <th>Website</th>
+            <th>Last fetched</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for comic in all_comics %}
+        <tr class="{% if comic.active %}active{% else %}inactive{% endif %}">
+            <td>
+                <a href="{{ comic.get_feed_url }}">
+                    <span class="label" title="Comic feed: {{ comic.name }}">
+                        Feed</span>
+                </a>
+                &nbsp;
+                <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
+            </td>
+            <td>{{ comic.get_language_display }}</td>
+            <td class="alignright">{{ comic.release__count }}
+                release{{ comic.release__count|pluralize }}</td>
+            <td class="alignright">{{ comic.number_of_sets }}
+                set{{ comic.number_of_sets|pluralize }}</td>
+            <td><a href="{{ comic.get_redirect_url }}">{{ comic.url }}</a></td>
+            <td>
+                {% if not comic.active %}
+                    Inactive,
+                {% endif %}
+                {% if comic.release__fetched__max %}
+                    {{ comic.release__fetched__max|timesince }} ago
+                {% else %}
+                    Never
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 {% else %}
-<p>No comics found.</p>
+<div class="alert-message error">
+    <p>
+        <strong>No comics found.</strong>
+    </p>
+</div>
 {% endif %}
 
 {% endblock %}

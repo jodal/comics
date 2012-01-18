@@ -4,14 +4,15 @@ Django >= 1.3, < 1.4
 South >= 0.7, < 0.8
 
 # For image handling
-PIL >= 1.1, < 1.2
+#PIL >= 1.1, < 1.2 # Doesn't work on multiarch system
+Pillow >= 1.7, < 1.8
 
 # For crawling comics
 feedparser >= 4.0, < 6
 lxml >= 2.0, < 3
 
 # For static resource compression
-django_compressor >= 0.9, < 0.10
+django_compressor >= 1.1, < 1.2
 cssmin >= 0.1, < 2
 jsmin >= 2.0, < 2.1
 
@@ -22,3 +23,6 @@ django-bcrypt >= 0.9, < 0.10
 # For user registration with email verification
 # 0.8 of django-registration has not been released yet, and 0.7 is archaic
 https://bitbucket.org/ubernostrum/django-registration/get/tip.tar.gz#egg=django-registration
+
+# For Twitter Bootstrap compatible Django forms
+git+git://github.com/earle/django-bootstrap.git#egg=bootstrap

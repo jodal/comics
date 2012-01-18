@@ -4,11 +4,16 @@
 
 {% block content %}
 
-<h2>Account activation</h2>
+<h1>Account activation</h1>
 
-<p class="success">
-    Your account has successfully been activated.
-    You may now <a href="{% url auth_login %}">login</a>.
-</p>
+<div class="alert-message block-message success">
+    <p>
+        <strong>Your account has successfully been activated.</strong>
+    </p>
+
+    <div class="alert-actions">
+        <a href="{% url auth_login %}" class="btn small">Login</a>
+    </div>
+</div>
 
 {% endblock %}

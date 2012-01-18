@@ -111,6 +111,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'django.contrib.webdesign',
+    'bootstrap',
     'compressor',
     'django_bcrypt',
     'registration',

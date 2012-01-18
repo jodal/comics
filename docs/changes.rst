@@ -14,6 +14,12 @@ v1.2 (in development)
   - py-bcrypt
   - django-bcrypt
   - django-registration (development version or 0.8 if released)
+  - django-bootstrap (By earle on GitHub. There are multiple projects with this
+    name.)
+
+- Updated dependencies:
+
+  - django_compress >= 1.1, < 1.2
 
 - User accounts:
 
@@ -23,8 +29,11 @@ v1.2 (in development)
   - Use bcrypt to hash passwords.
 
 - Removed setting ``COMICS_SITE_TAGLINE``.
+
 - Removed setting ``COMICS_SITE_TITLE`` in preference of Django's sites
   framework. You can now change the site title in the admin interface.
+
+- New design based on Twitter Bootstrap.
 
 
 v1.1.3 (in development)
@@ -32,6 +41,7 @@ v1.1.3 (in development)
 
 **Crawlers**
 
+- New: ``dresdencodak``
 - New: ``extraordinary``
 - New: ``icanbarelydraw``. Contributed by Jim Frode Hoff.
 - New: ``manlyguys``. Contributed by Jim Frode Hoff.
@@ -39,6 +49,7 @@ v1.1.3 (in development)
 - Update ``eatthattoast`` after site change.
 - Update ``extralife`` to be more robust.
 - Update ``questionablecontent`` to be more robust.
+- Update ``romanticallyapocalyptic`` to be more robust.
 - Update ``threewordphrase`` to be more robust.
 
 

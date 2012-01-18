@@ -4,11 +4,14 @@
 
 {% block content %}
 
-<h2>Account activation</h2>
+<h1>Account activation</h1>
 
-<p class="error">
-    Activation of your account failed. You supplied the activation key:
-    <strong>{{ activation_key }}</strong>
-</p>
+<div class="alert-message block-message error">
+    <p>
+        <strong>Activation of your account failed.</strong>
+        You supplied the activation key:
+        <strong>{{ activation_key }}</strong>
+    </p>
+</div>
 
 {% endblock %}

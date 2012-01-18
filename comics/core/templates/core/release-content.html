@@ -1,3 +1,5 @@
+<div class="well">
+
 {% for image in release.get_ordered_images %}
 
     {% if image.title %}
@@ -8,21 +10,23 @@
         <img src="{{ image.file.url }}"
             height="{{ image.height }}" width="{{ image.width }}"
             alt="{{ release }}"
-            {% if image.text %}title="{{ image.text|escape }}"{% endif %}
-        />
+            {% if image.text %}title="{{ image.text|escape }}"{% endif %}>
     </a></p>
 
     {% if image.text %}
-        <p class="image_text">{{ image.text|escape|linebreaksbr }}</p>
+        <blockquote class="image_text">{{ image.text|escape|linebreaksbr }}
+        </blockquote>
     {% endif %}
 
 {% empty %}
 
-    <p>No matching images found.</p>
+    <div class="alert-message block-message warning">
+        <p>No matching images found.</p>
+    </div>
 
 {% endfor %}
 
-<p class="meta">
+<div class="meta">
     Credits: {{ release.comic.rights }}.
     {% comment %}
     {# Commented out as it _really_ slows site down #}
@@ -39,5 +43,6 @@
     {% endif %}
     from
     <a href="{{ release.comic.get_redirect_url }}">{{ release.comic.url }}</a>.
-</p>
+</div>
 
+</div>
