@@ -5,7 +5,6 @@
         <li>
             <a href="{{ comics.0.0.get_feed_url }}"
                 title="Comic feed: {{ comics.0.0.name }}">
-                <span class="sprite sprite-feed"></span>
                 Feed</a></li>
         {% endif %}
     {% endifequal %}
@@ -15,7 +14,6 @@
         <li>
             <a href="{{ set.get_feed_url }}"
                 title="Comic set feed: {{ set.name }}">
-                <span class="sprite sprite-feed"></span>
                 Feed</a></li>
         {% endif %}
     {% endifequal %}
@@ -30,7 +28,6 @@
             {% else %}
                 <a class="disabled">
             {% endif %}
-                <span class="sprite sprite-{{ time_frame.icon }}"></span>
                 {{ time_frame.title }}</a></li>
         {% endfor %}
         </ul>

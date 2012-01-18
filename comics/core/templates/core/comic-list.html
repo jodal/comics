@@ -27,7 +27,10 @@
         <tr class="{% if comic.active %}active{% else %}inactive{% endif %}">
             <td>
                 <a href="{{ comic.get_feed_url }}">
-                    <span class="sprite sprite-feed" title="Comic feed: {{ comic.name }}"></span></a>
+                    <span class="label" title="Comic feed: {{ comic.name }}">
+                        Feed</span>
+                </a>
+                &nbsp;
                 <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
             </td>
             <td>{{ comic.get_language_display }}</td>
