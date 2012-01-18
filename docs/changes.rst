@@ -14,6 +14,8 @@ v1.2 (in development)
   - py-bcrypt
   - django-bcrypt
   - django-registration (development version or 0.8 if released)
+  - django-bootstrap (By earle on GitHub. There are multiple projects with this
+    name.)
 
 - Updated dependencies:
 
@@ -27,8 +29,11 @@ v1.2 (in development)
   - Use bcrypt to hash passwords.
 
 - Removed setting ``COMICS_SITE_TAGLINE``.
+
 - Removed setting ``COMICS_SITE_TITLE`` in preference of Django's sites
   framework. You can now change the site title in the admin interface.
+
+- New design based on Twitter Bootstrap.
 
 
 v1.1.3 (in development)

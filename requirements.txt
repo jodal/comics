@@ -23,3 +23,6 @@ django-bcrypt >= 0.9, < 0.10
 # For user registration with email verification
 # 0.8 of django-registration has not been released yet, and 0.7 is archaic
 https://bitbucket.org/ubernostrum/django-registration/get/tip.tar.gz#egg=django-registration
+
+# For Twitter Bootstrap compatible Django forms
+git+git://github.com/earle/django-bootstrap.git#egg=bootstrap

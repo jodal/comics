@@ -172,7 +172,3 @@ def redirect(request, comic):
 
 def robots(request):
     return HttpResponse('User-Agent: *\nDisallow: /\n', mimetype='text/plain')
-
-@login_required
-def widgets(request):
-    return render(request, 'core/widgets.html')

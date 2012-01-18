@@ -46,26 +46,15 @@
 {% endblock %}
 
 
-{% block bottom_menu %}
-<div id="bottom_menu">
-    <div class="content">
-    {% include "core/release-menu.html" with top_menu=0 %}
-    </div>
-</div>
-{% endblock %}
-
-
 {% block content %}
 
-<h2>{{ page.title|safe }}</h2>
+<h1>{{ page.title|safe }}</h1>
 
 {% ifequal page.view_type 'set' %}
     {% if set %}
-    <p class="buttons">
-        <a href="{% url set-edit set.name %}">
-            <span class="sprite sprite-pencil"></span>
-            Edit comic set</a>
-    </p>
+        <div class="well">
+            <a href="{% url set-edit set.name %}" class="btn">Edit comic set</a>
+        </div>
     {% endif %}
 {% endifequal %}
 
@@ -77,9 +66,12 @@
 <div class="release">
 
     <h3 id="release-{{ release.id }}">
-        <a href="{{ release.get_absolute_url }}">{{ release.comic.name }}
-        <span class="pub_date">published {{ release.pub_date|naturalday }}
-        </span></a>
+        <a href="{{ release.get_absolute_url }}">
+            {{ release.comic.name }}
+            <small class="pub_date">
+                published {{ release.pub_date|naturalday }}
+            </small>
+        </a>
     </h3>
 
     {% include "core/release-content.html" with show_time_since=1 %}
@@ -97,9 +89,11 @@
 
     <h3><a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a></h3>
 
-    <p>No matching release found. See
-    <a href="{% url comic-latest comic.slug %}">the latest release</a> or
-    the <a href="{{ comic.get_redirect_url }}">official site</a>.</p>
+    <div class="alert-message block-message info">
+        <p>No matching release found. See
+        <a href="{% url comic-latest comic.slug %}">the latest release</a> or
+        the <a href="{{ comic.get_redirect_url }}">official site</a>.</p>
+    </div>
 
 </div>
 
@@ -107,12 +101,16 @@
     {% endfor %}
 {% empty %}
 
-<p>
-    No comics found.
-    {% if set %}
-        <a href="{% url set-edit set.name %}">Edit set</a> to add comics.
-    {% endif %}
-</p>
+<div class="alert-message block-message info">
+    <p>
+        <strong>No comics found.</strong>
+    </p>
+    <div class="alert-actions">
+        {% if set %}
+            <a href="{% url set-edit set.name %}" class="btn small">Edit comics set</a>
+        {% endif %}
+    </div>
+</div>
 
 {% endfor %}
 

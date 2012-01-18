@@ -1,12 +1,9 @@
-<div class="menu buttons{% if top_menu %} topmenu{% else %} bottommenu{% endif %}">
-
-<div class="navigation">
-<ul>
+<ul class="nav secondary-nav">
     <li>
 {% if page.first_url %}
     <a href="{{ page.first_url }}"{% if top_menu %} id="first"{% endif %}>
 {% else %}
-    <a class="inactive">
+    <a class="disabled">
 {% endif %}
         <span class="sprite sprite-resultset_first"></span>
         First</a>
@@ -16,7 +13,7 @@
 {% if page.prev_url %}
     <a href="{{ page.prev_url }}"{% if top_menu %} id="prev"{% endif %}>
 {% else %}
-    <a class="inactive">
+    <a class="disabled">
 {% endif %}
         <span class="sprite sprite-resultset_previous"></span>
         Previous</a>
@@ -26,7 +23,7 @@
 {% if page.next_url %}
     <a href="{{ page.next_url }}"{% if top_menu %} id="next"{% endif %}>
 {% else %}
-    <a class="inactive">
+    <a class="disabled">
 {% endif %}
         Next
         <span class="sprite sprite-resultset_next"></span>
@@ -37,46 +34,45 @@
 {% if page.last_url %}
     <a href="{{ page.last_url }}"{% if top_menu %} id="last"{% endif %}>
 {% else %}
-    <a class="inactive">
+    <a class="disabled">
 {% endif %}
         Last
         <span class="sprite sprite-resultset_last"></span>
     </a></li>
 </ul>
-</div>
 
-<div class="timeframe">
-<ul>
-{% for time_frame in page.time_frames %}
-    <li>
-    {% if time_frame.url %}
-        <a href="{{ time_frame.url }}">
-    {% else %}
-        <a class="inactive">
-    {% endif %}
-        <span class="sprite sprite-{{ time_frame.icon }}"></span>
-        {{ time_frame.title }}</a></li>
-{% endfor %}
-{% ifequal page.view_type 'comic' %}
-    {% if comics.0.0 %}
-    <li>
-        <a href="{{ comics.0.0.get_feed_url }}"
-            title="Comic feed: {{ comics.0.0.name }}">
-            <span class="sprite sprite-feed"></span>
-            Feed</a></li>
-    {% endif %}
-{% endifequal %}
-{% ifequal page.view_type 'set' %}
-    {% if set %}
-    <li>
-        <a href="{{ set.get_feed_url }}"
-            title="Comic set feed: {{ set.name }}">
-            <span class="sprite sprite-feed"></span>
-            Feed</a></li>
-    {% endif %}
-{% endifequal %}
+<ul class="nav secondary-nav">
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle">Timeframe</a>
+        <ul class="dropdown-menu">
+        {% for time_frame in page.time_frames %}
+            <li>
+            {% if time_frame.url %}
+                <a href="{{ time_frame.url }}">
+            {% else %}
+                <a class="disabled">
+            {% endif %}
+                <span class="sprite sprite-{{ time_frame.icon }}"></span>
+                {{ time_frame.title }}</a></li>
+        {% endfor %}
+        {% ifequal page.view_type 'comic' %}
+            {% if comics.0.0 %}
+            <li>
+                <a href="{{ comics.0.0.get_feed_url }}"
+                    title="Comic feed: {{ comics.0.0.name }}">
+                    <span class="sprite sprite-feed"></span>
+                    Feed</a></li>
+            {% endif %}
+        {% endifequal %}
+        {% ifequal page.view_type 'set' %}
+            {% if set %}
+            <li>
+                <a href="{{ set.get_feed_url }}"
+                    title="Comic set feed: {{ set.name }}">
+                    <span class="sprite sprite-feed"></span>
+                    Feed</a></li>
+            {% endif %}
+        {% endifequal %}
+        </ul>
+    </li>
 </ul>
-</div>
-
-<hr class="clear" />
-</div>

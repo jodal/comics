@@ -4,23 +4,20 @@
 
 {% block content %}
 
-<h2>My account</h2>
+<h1>My account</h1>
 
 <dl>
-    <dt>Email:</dt>
+    <dt>Email</dt>
     <dd>{{ user.email }}</dd>
 
-    <dt>Password:</dt>
-    <dd><a href="{% url auth_password_change %}">Change</a></dd>
-
-    <dt>Secret key:</dt>
+    <dt>Secret key</dt>
     <dd>{{ user.get_profile.secret_key }}</dd>
 </dl>
 
-<div class="buttons">
-     <a href="{% url auth_logout %}">
-     <span class="sprite sprite-user_go"></span>
-     Logout</a>
+<div class="well">
+     <a href="{% url auth_logout %}" class="btn danger">Logout</a>
+     &nbsp;
+     <a href="{% url auth_password_change %}" class="btn">Change password</a>
 </div>
 
 {% endblock content %}

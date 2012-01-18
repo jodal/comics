@@ -6,52 +6,24 @@
 
 {% block content %}
 
-<h2>Edit comic set &ldquo;{{ set.name }}&rdquo;</h2>
+<h1>Edit comic set &ldquo;{{ set.name }}&rdquo;</h1>
 
-<p class="buttons">
-    <a href="{{ set.get_absolute_url }}">
-        <span class="sprite sprite-zoom"></span>
-        View comic set</a>
-</p>
+{% if not all_comics %}
+    <div class="alert-message error">
+        <p>No comics found.</p>
+    </div>
+{% endif %}
 
 <form action="{% url set-edit set.name %}" method="post" id="edit_set">
     {% csrf_token %}
 
-{% if all_comics %}
-    {{ form.comics }}
-{% else %}
-    <p class="warning">No comics found.</p>
-{% endif %}
+    {{ form }}
 
-<div class="info">
-    <p class="title">
-        {{ form.add_new_comics }}
-        {{ form.add_new_comics.label }}
-    </p>
-
-    <p>If you check this, all new comics added to the site will automatically
-    be added to your comic set. You may of course later remove them using this
-    page.</p>
-</div>
-
-<div class="info">
-    <p class="title">
-        {{ form.hide_empty_comics }}
-        {{ form.hide_empty_comics.label }}
-    </p>
-
-    <p>If you check this, comics without releases in your selected time
-    interval will be hidden.</p>
-</div>
-
-<div class="buttons">
-<button type="submit" class="positive">
-    <span class="sprite sprite-accept"></span>
-    Save changes</button>
-<a href="{{ set.get_absolute_url }}" class="negative">
-    <span class="sprite sprite-cancel"></span>
-    Cancel</a>
-</div>
+    <div class="actions">
+        <button type="submit" class="btn primary">Save changes</button>
+        &nbsp;
+        <a href="{{ set.get_absolute_url }}" class="btn">Cancel</a>
+    </div>
 
 </form>
 

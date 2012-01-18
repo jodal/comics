@@ -1,12 +1,13 @@
 import datetime
 
+from bootstrap.forms import BootstrapModelForm
 from django import forms
 from django.template.defaultfilters import slugify
 
 from comics.core.models import Comic
 from comics.sets.models import Set
 
-class NewSetForm(forms.ModelForm):
+class NewSetForm(BootstrapModelForm):
     class Meta:
         model = Set
         fields = ('name',)
@@ -20,15 +21,19 @@ class NewSetForm(forms.ModelForm):
             set.save()
         return set
 
-class EditSetForm(forms.ModelForm):
+class EditSetForm(BootstrapModelForm):
     comics = forms.ModelMultipleChoiceField(
-        Comic.objects.filter(active=True),
-        required=False,
-        widget=forms.CheckboxSelectMultiple)
+        Comic.objects.filter(active=True), required=False)
     add_new_comics = forms.BooleanField(
-        label='Automatically add new comics to the set', required=False)
+        label='Automatically add new comics to the set', required=False,
+        help_text='If you check this, all new comics added to the site will ' +
+            'automatically be added to your comic set. You may of course '
+            'later remove them using this page.')
     hide_empty_comics = forms.BooleanField(
-        label='Hide comics without matching releases from view', required=False)
+        label='Hide comics without matching releases from view',
+        required=False,
+        help_text='If you check this, comics without releases in your ' +
+            'selected time interval will be hidden.')
 
     class Meta:
         model = Set

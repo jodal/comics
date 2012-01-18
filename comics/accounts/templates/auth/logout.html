@@ -4,11 +4,16 @@
 
 {% block content %}
 
-<h2>Logged out</h2>
+<h1>Logged out</h1>
 
-<p class="info">
-    You have been logged out.
-    <a href="{% url auth_login %}">Log in again</a>
-</p>
+<div class="alert-message block-message info">
+    <p>
+        <strong>You have been logged out.</strong>
+    </p>
+
+    <div class="alert-actions">
+        <a href="{% url auth_login %}" class="btn small">Log in again</a>
+    </div>
+</div>
 
 {% endblock %}

@@ -4,19 +4,16 @@
 
 {% block content %}
 
-<h2>Register</h2>
+<h1>Register</h1>
 
 <form action="{% url registration_register %}" method="post">
     {% csrf_token %}
 
-    {{ form.as_p }}
+    {{ form }}
 
-    <p class="buttons">
-        <button type="submit" class="positive">
-            <span class="sprite sprite-user_add"></span>
-            Register
-        </button>
-    </p>
+    <div class="actions">
+        <button type="submit" class="btn primary">Register</button>
+    </div>
 </form>
 
 {% endblock %}
