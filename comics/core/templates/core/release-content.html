@@ -10,8 +10,7 @@
         <img src="{{ image.file.url }}"
             height="{{ image.height }}" width="{{ image.width }}"
             alt="{{ release }}"
-            {% if image.text %}title="{{ image.text|escape }}"{% endif %}
-        />
+            {% if image.text %}title="{{ image.text|escape }}"{% endif %}>
     </a></p>
 
     {% if image.text %}

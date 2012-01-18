@@ -5,7 +5,7 @@
 
 
 {% block extra_head %}
-<meta http-equiv="refresh" content="0;{{ url }}" />
+<meta http-equiv="refresh" content="0;{{ url }}">
 {% endblock %}
 
 
@@ -13,6 +13,8 @@
 
 <h1>Redirecting</h1>
 
-<p>You are being redirected to {{ url }}.</p>
+<div class="alert-message info">
+    <p>You are being redirected to {{ url }}.</p>
+</div>
 
 {% endblock %}

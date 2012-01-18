@@ -11,28 +11,28 @@
         {% if comics.0.0 %}
             <link rel="alternate" type="application/atom+xml"
                 href="{{ comics.0.0.get_feed_url }}"
-                title="Comic feed: {{ comics.0.0.name }}" />
+                title="Comic feed: {{ comics.0.0.name }}">
         {% endif %}
     {% endifequal %}
     {% ifequal page.view_type 'set' %}
         {% if set %}
             <link rel="alternate" type="application/atom+xml"
                 href="{{ set.get_feed_url }}"
-                title="Comic set feed: {{ set.name }}" />
+                title="Comic set feed: {{ set.name }}">
         {% endif %}
     {% endifequal %}
     {% if page.first_url %}
-        <link rel="start" href="{{ page.first_url }}" />
-        <link rel="first" href="{{ page.first_url }}" />
+        <link rel="start" href="{{ page.first_url }}">
+        <link rel="first" href="{{ page.first_url }}">
     {% endif %}
     {% if page.prev_url %}
-        <link rel="prev" href="{{ page.prev_url }}" />
+        <link rel="prev" href="{{ page.prev_url }}">
     {% endif %}
     {% if page.next_url %}
-        <link rel="next" href="{{ page.next_url }}" />
+        <link rel="next" href="{{ page.next_url }}">
     {% endif %}
     {% if page.last_url %}
-        <link rel="last" href="{{ page.last_url }}" />
+        <link rel="last" href="{{ page.last_url }}">
     {% endif %}
 {% endblock %}
 
@@ -89,7 +89,7 @@
         <p>
             <strong>No matching release found.</strong> See
             <a href="{% url comic-latest comic.slug %}">the latest release</a> or
-            the <a href="{{ comic.get_redirect_url }}">official site</a>.</p>
+            the <a href="{{ comic.get_redirect_url }}">official site</a>.
         </p>
     </div>
 

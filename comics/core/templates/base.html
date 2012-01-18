@@ -1,18 +1,15 @@
-{% load compress %}<?xml version="1.0" encoding="UTF-8"?>
+{% load compress %}
+<!DOCTYPE html>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<html lang="en-us">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta http-equiv="Content-Language" content="en-us" />
+    <meta charset="UTF-8">
     <title>{% block title %}{% endblock %} | {{ site_title }}</title>
-    <link rel="shortcut icon" type="image/png" href="{{ STATIC_URL }}img/favicon.png" />
+    <link rel="shortcut icon" type="image/png" href="{{ STATIC_URL }}img/favicon.png">
 {% compress css %}
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-1.4.0.min.css" />
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/comics.css" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-1.4.0.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/comics.css">
 {% endcompress %}
 {% block extra_head %}{% endblock %}
 </head>
