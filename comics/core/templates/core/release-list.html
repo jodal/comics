@@ -90,9 +90,11 @@
     <h3><a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a></h3>
 
     <div class="alert-message block-message info">
-        <p>No matching release found. See
-        <a href="{% url comic-latest comic.slug %}">the latest release</a> or
-        the <a href="{{ comic.get_redirect_url }}">official site</a>.</p>
+        <p>
+            <strong>No matching release found.</strong> See
+            <a href="{% url comic-latest comic.slug %}">the latest release</a> or
+            the <a href="{{ comic.get_redirect_url }}">official site</a>.</p>
+        </p>
     </div>
 
 </div>

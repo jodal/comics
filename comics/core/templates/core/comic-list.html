@@ -51,7 +51,11 @@
     </tbody>
 </table>
 {% else %}
-<p>No comics found.</p>
+<div class="alert-message error">
+    <p>
+        <strong>No comics found.</strong>
+    </p>
+</div>
 {% endif %}
 
 {% endblock %}
