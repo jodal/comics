@@ -2,24 +2,24 @@
 {% load cache compress list_to_columns %}
 
 {% block cloud %}
-    {% if user.is_authenticated %}
-        {% cache 500 all_comics %}
-            {% if all_comics %}
-                <h3><a href="{% url comic-list %}">All comics</a></h3>
-                {% list_to_columns all_comics as comic_columns 4 %}
-                <div class="row">
-                {% for comic_column in comic_columns %}
-                    <div class="span4">
-                        <ul>
-                        {% for comic in comic_column %}
-                            <li class="{% if comic.active %}active{% else %}inactive{% endif %}">
-                                <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a></li>
-                        {% endfor %}
-                        </ul>
-                    </div>
+  {% if user.is_authenticated %}
+    {% cache 500 all_comics %}
+      {% if all_comics %}
+        <h3><a href="{% url comic-list %}">All comics</a></h3>
+        {% list_to_columns all_comics as comic_columns 4 %}
+        <div class="row">
+          {% for comic_column in comic_columns %}
+            <div class="span4">
+              <ul>
+                {% for comic in comic_column %}
+                  <li class="{% if comic.active %}active{% else %}inactive{% endif %}">
+                    <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a></li>
                 {% endfor %}
-                </div>
-            {% endif %}
-        {% endcache %}
-    {% endif %}
+              </ul>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endcache %}
+  {% endif %}
 {% endblock cloud %}

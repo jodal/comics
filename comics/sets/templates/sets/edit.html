@@ -1,32 +1,31 @@
 {% extends "core/base.html" %}
 
 
-{% block title %}Edit set "{{ set.name }}"{% endblock %}
+{% block title %}
+  Edit set "{{ set.name }}"
+{% endblock %}
 
 
 {% block content %}
 
-<h1>Edit comic set &ldquo;{{ set.name }}&rdquo;</h1>
+  <h1>Edit comic set &ldquo;{{ set.name }}&rdquo;</h1>
 
-{% if not all_comics %}
+  {% if not all_comics %}
     <div class="alert-message error">
-        <p>
-            <strong>No comics found.</strong>
-        </p>
+      <p><strong>No comics found.</strong></p>
     </div>
-{% endif %}
+  {% endif %}
 
-<form action="{% url set-edit set.name %}" method="post" id="edit_set">
+  <form action="{% url set-edit set.name %}" method="post" id="edit_set">
     {% csrf_token %}
 
     {{ form }}
 
     <div class="actions">
-        <button type="submit" class="btn primary">Save changes</button>
-        &nbsp;
-        <a href="{{ set.get_absolute_url }}" class="btn">Cancel</a>
+      <button type="submit" class="btn primary">Save changes</button>
+      &nbsp;
+      <a href="{{ set.get_absolute_url }}" class="btn">Cancel</a>
     </div>
-
-</form>
+  </form>
 
 {% endblock %}

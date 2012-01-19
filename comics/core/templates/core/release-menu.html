@@ -1,72 +1,75 @@
 <ul class="nav secondary-nav">
 
-    {% ifequal page.view_type 'comic' %}
-        {% if comics.0.0 %}
+  {% ifequal page.view_type 'comic' %}
+    {% if comics.0.0 %}
+      <li>
+        <a href="{{ comics.0.0.get_feed_url }}"
+          title="Comic feed: {{ comics.0.0.name }}">
+          Feed</a>
+      </li>
+    {% endif %}
+  {% endifequal %}
+
+  {% ifequal page.view_type 'set' %}
+    {% if set %}
+      <li>
+        <a href="{{ set.get_feed_url }}"
+          title="Comic set feed: {{ set.name }}">
+          Feed</a>
+      </li>
+    {% endif %}
+  {% endifequal %}
+
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle">Time frame</a>
+    <ul class="dropdown-menu">
+      {% for time_frame in page.time_frames %}
         <li>
-            <a href="{{ comics.0.0.get_feed_url }}"
-                title="Comic feed: {{ comics.0.0.name }}">
-                Feed</a></li>
-        {% endif %}
-    {% endifequal %}
-
-    {% ifequal page.view_type 'set' %}
-        {% if set %}
-        <li>
-            <a href="{{ set.get_feed_url }}"
-                title="Comic set feed: {{ set.name }}">
-                Feed</a></li>
-        {% endif %}
-    {% endifequal %}
-
-    <li class="dropdown">
-        <a href="#" class="dropdown-toggle">Time frame</a>
-        <ul class="dropdown-menu">
-        {% for time_frame in page.time_frames %}
-            <li>
-            {% if time_frame.url %}
-                <a href="{{ time_frame.url }}">
-            {% else %}
-                <a class="disabled">
-            {% endif %}
-                {{ time_frame.title }}</a></li>
-        {% endfor %}
-        </ul>
-    </li>
-
-    <li>
-        {% if page.first_url %}
-            <a href="{{ page.first_url }}" id="first">
-        {% else %}
+          {% if time_frame.url %}
+            <a href="{{ time_frame.url }}">
+          {% else %}
             <a class="disabled">
-        {% endif %}
-        First</a>
-    </li>
+          {% endif %}
+          {{ time_frame.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </li>
 
-    <li>
-        {% if page.prev_url %}
-            <a href="{{ page.prev_url }}" id="prev">
-        {% else %}
-            <a class="disabled">
-        {% endif %}
-        Previous</a>
-    </li>
+  <li>
+    {% if page.first_url %}
+      <a href="{{ page.first_url }}" id="first">
+    {% else %}
+      <a class="disabled">
+    {% endif %}
+    First</a>
+  </li>
 
-    <li>
-        {% if page.next_url %}
-            <a href="{{ page.next_url }}" id="next">
-        {% else %}
-            <a class="disabled">
-        {% endif %}
-        Next
-    </a>
-    </li>
+  <li>
+    {% if page.prev_url %}
+      <a href="{{ page.prev_url }}" id="prev">
+    {% else %}
+      <a class="disabled">
+    {% endif %}
+    Previous</a>
+  </li>
 
-    <li>
-        {% if page.last_url %}
-            <a href="{{ page.last_url }}" id="last">
-        {% else %}
-            <a class="disabled">
-        {% endif %}
-        Last
-    </a></li>
+  <li>
+    {% if page.next_url %}
+      <a href="{{ page.next_url }}" id="next">
+    {% else %}
+      <a class="disabled">
+    {% endif %}
+    Next
+  </a>
+  </li>
+
+  <li>
+    {% if page.last_url %}
+      <a href="{{ page.last_url }}" id="last">
+    {% else %}
+      <a class="disabled">
+    {% endif %}
+    Last
+  </a></li>
 </ul>

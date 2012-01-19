@@ -1,23 +1,25 @@
 {% extends "core/base.html" %}
 
-{% block title %}My account{% endblock %}
+{% block title %}
+  My account
+{% endblock %}
 
 {% block content %}
 
-<h1>My account</h1>
+  <h1>My account</h1>
 
-<dl>
+  <dl>
     <dt>Email</dt>
     <dd>{{ user.email }}</dd>
 
     <dt>Secret key</dt>
     <dd>{{ user.get_profile.secret_key }}</dd>
-</dl>
+  </dl>
 
-<div class="well">
+  <div class="well">
      <a href="{% url auth_logout %}" class="btn danger">Logout</a>
      &nbsp;
      <a href="{% url auth_password_change %}" class="btn">Change password</a>
-</div>
+  </div>
 
 {% endblock content %}
