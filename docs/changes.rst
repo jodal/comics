@@ -12,6 +12,7 @@ v1.1.3 (in development)
 
 - New: ``dresdencodak``
 - New: ``extraordinary``
+- New: ``gunnerkrigg``
 - New: ``icanbarelydraw``. Contributed by Jim Frode Hoff.
 - New: ``manlyguys``. Contributed by Jim Frode Hoff.
 - New: ``somethingofthatilk``. Contributed by Jim Frode Hoff.
