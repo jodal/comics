@@ -10,6 +10,7 @@ v1.1.3 (in development)
 
 **Crawlers**
 
+- New: ``beyondthetree``
 - New: ``dresdencodak``
 - New: ``extraordinary``
 - New: ``gunnerkrigg``
