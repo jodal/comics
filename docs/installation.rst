@@ -80,10 +80,19 @@ To create the database and database schema, open a terminal, go to the
 
     python manage.py syncdb
 
+When asked to create a superuser, select no, as this will cause the
+initialization to fail. You may create a superuser later in the process.
+
 Parts of the database is managed by the South database migrations tool. To
 create that part of the database, run::
 
     python manage.py migrate
+
+Optional:
+
+Create a superuser by running::
+
+    python manage.py createsuperuser
 
 
 Seed database
