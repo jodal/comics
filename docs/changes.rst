@@ -16,6 +16,7 @@ v1.1.3 (in development)
 - New: ``gunnerkrigg``
 - New: ``icanbarelydraw``. Contributed by Jim Frode Hoff.
 - New: ``manlyguys``. Contributed by Jim Frode Hoff.
+- New: ``menagea3``
 - New: ``sequentialarts``
 - New: ``somethingofthatilk``. Contributed by Jim Frode Hoff.
 - Update ``eatthattoast`` after site change.
