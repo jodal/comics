@@ -26,7 +26,7 @@
 
   {% endfor %}
 
-  <div class="meta">
+  <p class="meta">
     Credits: {{ release.comic.rights }}.
     {% comment %}
     {# Commented out as it _really_ slows site down #}
@@ -43,6 +43,6 @@
     {% endif %}
     from
     <a href="{{ release.comic.get_redirect_url }}">{{ release.comic.url }}</a>.
-  </div>
+  </p>
 
 </div>
