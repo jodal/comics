@@ -10,6 +10,7 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
 
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     secret_key = models.CharField(max_length=32, blank=False,
