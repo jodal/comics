@@ -9,7 +9,7 @@ class Meta(MetaBase):
     rights = 'Lora Innes'
 
 class Crawler(CrawlerBase):
-    schedule = 'Fr'
+    schedule = 'We,Fr'
 
     def crawl(self, pub_date):
         page = self.parse_page('http://thedreamercomic.com/comic.php')

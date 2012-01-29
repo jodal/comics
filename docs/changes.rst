@@ -28,17 +28,43 @@ v1.1.3 (in development)
 - Update ``buttersafe`` with new release schedule.
 - Update ``calvinandhobbes`` after site change.
 - Update ``carpediem`` after site change.
+- Update ``darylcagle`` after site change.
+- Update ``devilbear`` with new release schedule.
 - Update ``eatthattoast`` after site change.
 - Update ``eon`` after site change.
 - Update ``extralife`` to be more robust.
 - Update ``fanboys`` after site change.
+- Update ``gregcomic`` with new release schedule.
+- Update ``gucomics`` after site change.
 - Update ``heltnils`` after site change.
+- Update ``hipsterhitler`` after site change.
+- Update ``kalscartoon`` after site change.
+- Update ``lefthandedtoons`` with new release schedule.
+- Update ``loku`` which is no longer published.
+- Update ``m`` with new release schedule.
+- Update ``mortenm`` which is no longer published.
+- Update ``mysticrevolution`` after site change.
+- Update ``nemibt`` with new release schedule.
+- Update ``nerfnow`` with new release schedule.
+- Update ``optipess`` with new release schedule.
+- Update ``orneryboy`` with new release schedule.
 - Update ``pidjin`` after site change.
 - Update ``pondusno`` which is no longer published.
 - Update ``questionablecontent`` to be more robust.
 - Update ``radiogaga`` after site change.
+- Update ``reallife`` with new release schedule.
+- Update ``reveland`` with new release schedule.
 - Update ``romanticallyapocalyptic`` to be more robust.
+- Update ``savagechickens`` with new release schedule.
+- Update ``sheldon`` with new release schedule.
+- Update ``somethingpositive`` after site change.
+- Update ``stickycomics`` after site change.
+- Update ``tehgladiators`` after site change.
+- Update ``thedreamer`` with new release schedule.
 - Update ``threewordphrase`` to be more robust.
+- Update ``utensokker`` with new release schedule.
+- Update ``wulffmorgenthalerap`` after site change.
+- Update ``yehudamoon`` with new release schedule.
 
 
 v1.1.2 (2011-09-18)

@@ -10,6 +10,7 @@ class Meta(MetaBase):
 
 class Crawler(CrawlerBase):
     history_capable_days = 14
+    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = -7
 
     def crawl(self, pub_date):

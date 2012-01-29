@@ -18,8 +18,6 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             if entry.title.startswith('Comic:'):
                 page = self.parse_page(entry.link)
-                url = page.src(
-                    'img[src^="http://www.gucomics.com/comics/"]'
-                    '[alt^="Comic for:"]')
-                title = entry.summary.text('')
+                url = page.src('img[src*="/comics/"][alt^="Comic for:"]')
+                title = entry.summary.title('img')
                 return CrawlerImage(url, title)
