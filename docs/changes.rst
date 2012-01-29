@@ -5,8 +5,11 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
-v1.1.3 (in development)
-=======================
+
+v1.1.3 (2012-01-29)
+===================
+
+This release adds 9 new crawlers and updates 46 existing crawlers.
 
 **Crawlers**
 
