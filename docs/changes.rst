@@ -31,7 +31,9 @@ v1.1.3 (in development)
 - Update ``eatthattoast`` after site change.
 - Update ``eon`` after site change.
 - Update ``extralife`` to be more robust.
+- Update ``fanboys`` after site change.
 - Update ``heltnils`` after site change.
+- Update ``pidjin`` after site change.
 - Update ``pondusno`` which is no longer published.
 - Update ``questionablecontent`` to be more robust.
 - Update ``radiogaga`` after site change.
