@@ -1,7 +1,6 @@
 {% extends "core/base.html" %}
 
-{% load humanize %}
-{% load cache %}
+{% load cache humanize %}
 
 
 {% block title %}
@@ -62,8 +61,6 @@
     {% for comic, releases in comics %}
       {% for release in releases %}
 
-      {% cache 3600 comic.id release.id %}
-
         <div class="release">
           <h3 id="release-{{ release.id }}">
             <a href="{{ release.get_absolute_url }}">
@@ -73,9 +70,10 @@
               </small>
             </a>
           </h3>
-          {% include "core/release-content.html" with show_time_since=1 %}
+          {% cache 3600 'release' release.id %}
+            {% include "core/release-content.html" %}
+          {% endcache %}
         </div>
-	{% endcache %}
 
       {% empty %}
 
