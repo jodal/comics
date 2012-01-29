@@ -14,5 +14,5 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         page = self.parse_page('http://www.aftenposten.no/tegneserier/')
-        url = page.src('img#theCartoon')
+        url = page.src('img.originalImage')
         return CrawlerImage(url)

@@ -9,18 +9,15 @@ class Meta(MetaBase):
     rights = 'Tudor Muscalu & Eugen Erhan'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 32
+    history_capable_days = 90
     time_zone = -8
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/Pidjin')
         for entry in feed.for_date(pub_date):
             result = []
-            for i in range(1, 10):
-                url = entry.content0.src('img[src$="000%d.jpg"]' % i)
-                text = entry.content0.title('img[src$="000%d.jpg"]' % i)
-                if url and text:
-                    result.append(CrawlerImage(url, text=text))
-            if result:
-                result[0].title = entry.title
+            urls = entry.content0.src('img[src*="/wp-content/uploads/"]',
+                allow_multiple=True)
+            for url in urls:
+                result.append(CrawlerImage(url))
             return result

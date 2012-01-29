@@ -2,22 +2,22 @@ from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
-    name = 'Hipster Hitler'
+    name = 'Beyond the Tree'
     language = 'en'
-    url = 'http://www.hipsterhitler.com/'
-    start_date = '2010-08-01'
-    rights = 'JC & APK'
+    url = 'http://beyondthetree.wordpress.com/'
+    start_date = '2008-03-20'
+    rights = 'Nhani'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 120
-    schedule = None
+    history_capable_days = 60
+    schedule = 'Th,Su'
     time_zone = 0
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://hipsterhitler.com/feed/')
+        feed = self.parse_feed('http://beyondthetree.wordpress.com/feed/')
         for entry in feed.for_date(pub_date):
-            if 'Comics' not in entry.tags:
+            if 'Comic' not in entry.tags:
                 continue
-            url = entry.content0.src('img')
+            url = entry.content0.src('img[src*="/btt-"]')
             title = entry.title
             return CrawlerImage(url, title)

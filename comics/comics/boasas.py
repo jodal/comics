@@ -9,13 +9,14 @@ class Meta(MetaBase):
     rights = 'Steven L. Cloud'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 40
+    history_capable_days = 365
     schedule = None
     time_zone = -5
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://www.boasas.com/boasas_rss.xml')
+        feed = self.parse_feed('http://www.boasas.com/rss')
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img')
+            page = self.parse_page(entry.link)
+            url = page.src('.high_res img')
             title = entry.title
             return CrawlerImage(url, title)

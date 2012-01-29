@@ -14,8 +14,6 @@ class Crawler(CrawlerBase):
     time_zone = -6
 
     def crawl(self, pub_date):
-        page_url = 'http://www.somethingpositive.net/sp%s.shtml' % (
+        url = 'http://www.somethingpositive.net/sp%s.png' % (
             pub_date.strftime('%m%d%Y'),)
-        page = self.parse_page(page_url)
-        url = page.src('img[src^="http://www.somethingpositive.net/sp"]')
         return CrawlerImage(url)

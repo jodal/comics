@@ -6,17 +6,9 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://www.lo-ku.com/'
     start_date = '2009-06-15'
+    active = False
     rights = 'Thomas & Daniel Drinnen'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 365
-    schedule = None
-    time_zone = -6
-
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://www.lo-ku.com/feed/')
-        for entry in feed.for_date(pub_date):
-            url = entry.content0.src('img[src*="/comics/"]')
-            url = url.replace('/thumbs', '').replace('-medium', '')
-            title = entry.title
-            return CrawlerImage(url, title)
+        pass # Comic no longer published

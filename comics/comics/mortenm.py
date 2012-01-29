@@ -2,17 +2,14 @@ from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
 class Meta(MetaBase):
-    name = 'Morten M (vg.no)'
+    name = 'Morten M'
     language = 'no'
     url = 'http://www.vg.no/spesial/mortenm/'
     start_date = '1978-01-01'
+    end_date = '2011-12-31'
+    active = False
     rights = 'Morten M. Kristiansen'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 120
-    time_zone = 1
-
     def crawl(self, pub_date):
-        url = 'http://static.vg.no/gfx/mortenm/output/%s.jpg' % (
-            pub_date.strftime('%Y/%m/%Y-%m-%d'),)
-        return CrawlerImage(url)
+        pass # Comic no longer published
