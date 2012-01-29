@@ -70,9 +70,11 @@
               </small>
             </a>
           </h3>
-          {% cache 3600 'release' release.id %}
-            {% include "core/release-content.html" %}
-          {% endcache %}
+          <div class="well">
+            {% cache 3600 'release' release.id %}
+              {% include "core/release-content.html" %}
+            {% endcache %}
+          </div>
         </div>
 
       {% empty %}
