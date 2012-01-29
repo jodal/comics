@@ -19,6 +19,14 @@ v1.1.3 (in development)
 - New: ``menagea3``
 - New: ``sequentialarts``
 - New: ``somethingofthatilk``. Contributed by Jim Frode Hoff.
+- Update ``amazingsuperpowers`` with new release schedule.
+- Update ``billy`` which is no longer published.
+- Update ``bizarro`` with new release schedule.
+- Update ``bizarrono`` which is no longer published.
+- Update ``boasas`` after site change.
+- Update ``bgobt`` with new release schedule.
+- Update ``buttersafe`` with new release schedule.
+- Update ``calvinandhobbes`` after site change.
 - Update ``eatthattoast`` after site change.
 - Update ``extralife`` to be more robust.
 - Update ``questionablecontent`` to be more robust.
