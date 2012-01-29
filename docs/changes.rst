@@ -27,9 +27,14 @@ v1.1.3 (in development)
 - Update ``bgobt`` with new release schedule.
 - Update ``buttersafe`` with new release schedule.
 - Update ``calvinandhobbes`` after site change.
+- Update ``carpediem`` after site change.
 - Update ``eatthattoast`` after site change.
+- Update ``eon`` after site change.
 - Update ``extralife`` to be more robust.
+- Update ``heltnils`` after site change.
+- Update ``pondusno`` which is no longer published.
 - Update ``questionablecontent`` to be more robust.
+- Update ``radiogaga`` after site change.
 - Update ``romanticallyapocalyptic`` to be more robust.
 - Update ``threewordphrase`` to be more robust.
 
