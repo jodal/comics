@@ -13,10 +13,13 @@ class Crawler(CrawlerBase):
     time_zone = -5
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://fanboys-online.com/rss/comic.xml')
+        feed = self.parse_feed('http://fanboys-online.com/?feed=rss2')
         for entry in feed.for_date(pub_date):
-            if entry.title.startswith('Comic:'):
-                title = entry.title.replace('Comic: ', '')
-                url = 'http://fanboys-online.com/comics/%s.jpg' % (
-                    pub_date.strftime('%Y%m%d'),)
-                return CrawlerImage(url, title)
+            if 'Comic' not in entry.tags:
+                continue
+            url = entry.summary.src('img.comicthumbnail')
+            if not url:
+                continue
+            url = url.replace('comics-rss', 'comics')
+            title = entry.title
+            return CrawlerImage(url, title)

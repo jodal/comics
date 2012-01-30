@@ -1,17 +1,19 @@
 {% extends "base.html" %}
 
-{% block title %}Account activation{% endblock %}
+{% block title %}
+  Account activation
+{% endblock %}
 
 {% block content %}
 
-<h1>Account activation</h1>
+  <h1>Account activation</h1>
 
-<div class="alert-message block-message error">
+  <div class="alert-message block-message error">
     <p>
-        <strong>Activation of your account failed.</strong>
-        You supplied the activation key:
-        <strong>{{ activation_key }}</strong>
+      <strong>Activation of your account failed.</strong>
+      You supplied the activation key:
+      <strong>{{ activation_key }}</strong>
     </p>
-</div>
+  </div>
 
 {% endblock %}

@@ -1,127 +1,125 @@
 {% extends "core/base.html" %}
-{% load humanize %}
+
+{% load cache humanize %}
 
 
-{% block title %}{{ page.title|safe }}{% endblock %}
+{% block title %}
+  {{ page.title|safe }}
+{% endblock %}
 
 
 {% block extra_head %}
-    {{ block.super }}
-    {% ifequal page.view_type 'comic' %}
-        {% if comics.0.0 %}
-            <link rel="alternate" type="application/atom+xml"
-                href="{{ comics.0.0.get_feed_url }}"
-                title="Comic feed: {{ comics.0.0.name }}">
-        {% endif %}
-    {% endifequal %}
-    {% ifequal page.view_type 'set' %}
-        {% if set %}
-            <link rel="alternate" type="application/atom+xml"
-                href="{{ set.get_feed_url }}"
-                title="Comic set feed: {{ set.name }}">
-        {% endif %}
-    {% endifequal %}
-    {% if page.first_url %}
-        <link rel="start" href="{{ page.first_url }}">
-        <link rel="first" href="{{ page.first_url }}">
+  {{ block.super }}
+  {% ifequal page.view_type 'comic' %}
+    {% if comics.0.0 %}
+      <link rel="alternate" type="application/atom+xml"
+        href="{{ comics.0.0.get_feed_url }}"
+        title="Comic feed: {{ comics.0.0.name }}">
     {% endif %}
-    {% if page.prev_url %}
-        <link rel="prev" href="{{ page.prev_url }}">
+  {% endifequal %}
+  {% ifequal page.view_type 'set' %}
+    {% if set %}
+      <link rel="alternate" type="application/atom+xml"
+        href="{{ set.get_feed_url }}"
+        title="Comic set feed: {{ set.name }}">
     {% endif %}
-    {% if page.next_url %}
-        <link rel="next" href="{{ page.next_url }}">
-    {% endif %}
-    {% if page.last_url %}
-        <link rel="last" href="{{ page.last_url }}">
-    {% endif %}
+  {% endifequal %}
+  {% if page.first_url %}
+    <link rel="start" href="{{ page.first_url }}">
+    <link rel="first" href="{{ page.first_url }}">
+  {% endif %}
+  {% if page.prev_url %}
+    <link rel="prev" href="{{ page.prev_url }}">
+  {% endif %}
+  {% if page.next_url %}
+    <link rel="next" href="{{ page.next_url }}">
+  {% endif %}
+  {% if page.last_url %}
+    <link rel="last" href="{{ page.last_url }}">
+  {% endif %}
 {% endblock %}
 
 
 {% block top_menu %}
-    {% include "core/release-menu.html" %}
+  {% include "core/release-menu.html" %}
 {% endblock %}
 
 
 {% block content %}
 
-<h1>{{ page.title|safe }}</h1>
+  <h1>{{ page.title|safe }}</h1>
 
-{% ifequal page.view_type 'set' %}
+  {% ifequal page.view_type 'set' %}
     {% if set %}
-        <div class="well">
-            <a href="{% url set-edit set.name %}" class="btn">Edit comic set</a>
-        </div>
+      <div class="well">
+        <a href="{% url set-edit set.name %}" class="btn">Edit comic set</a>
+      </div>
     {% endif %}
-{% endifequal %}
+  {% endifequal %}
 
-<div id="releases">
+  <div id="releases">
+    {% for comic, releases in comics %}
+      {% for release in releases %}
 
-{% for comic, releases in comics %}
-    {% for release in releases %}
-
-<div class="release">
-
-    <h3 id="release-{{ release.id }}">
-        <a href="{{ release.get_absolute_url }}">
-            {{ release.comic.name }}
-            <small class="pub_date">
+        <div class="release">
+          <h3 id="release-{{ release.id }}">
+            <a href="{{ release.get_absolute_url }}">
+              {{ release.comic.name }}
+              <small class="pub_date">
                 published {{ release.pub_date|naturalday }}
-            </small>
-        </a>
-    </h3>
+              </small>
+            </a>
+          </h3>
+          <div class="well">
+            {% cache 3600 'release' release.id %}
+              {% include "core/release-content.html" %}
+            {% endcache %}
+          </div>
+        </div>
 
-    {% include "core/release-content.html" with show_time_since=1 %}
+      {% empty %}
 
-</div>
-
-    {% empty %}
         {% if set and set.hide_empty_comics %}
-
-<!-- No release for {{ comic.name }} -->
-
+          <!-- No release for {{ comic.name }} -->
         {% else %}
+          <div class="release">
+            <h3><a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a></h3>
 
-<div class="release">
+            <div class="alert-message block-message info">
+              <p>
+                <strong>No matching release found.</strong> See
+                <a href="{% url comic-latest comic.slug %}">the latest release</a> or
+                the <a href="{{ comic.get_redirect_url }}">official site</a>.
+              </p>
+            </div>
+          </div>
+        {% endif %}
 
-    <h3><a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a></h3>
+      {% endfor %}
+    {% empty %}
 
-    <div class="alert-message block-message info">
+      <div class="alert-message block-message info">
         <p>
-            <strong>No matching release found.</strong> See
-            <a href="{% url comic-latest comic.slug %}">the latest release</a> or
-            the <a href="{{ comic.get_redirect_url }}">official site</a>.
+          <strong>No comics found.</strong>
         </p>
-    </div>
-
-</div>
-
-        {% endif %}
-    {% endfor %}
-{% empty %}
-
-<div class="alert-message block-message info">
-    <p>
-        <strong>No comics found.</strong>
-    </p>
-    <div class="alert-actions">
-        {% if set %}
+        <div class="alert-actions">
+          {% if set %}
             <a href="{% url set-edit set.name %}" class="btn small">Edit comics set</a>
-        {% endif %}
-    </div>
-</div>
+          {% endif %}
+        </div>
+      </div>
 
-{% endfor %}
-
-</div>
+    {% endfor %}
+  </div>
 
 {% endblock %}
 
 
 {% block extra_footer %}
-    <script type="text/javascript">
-        var releases = [{% for comic, releases in comics %}{% for release in releases %}
-            'release-{{ release.id }}'{% if not forloop.last or not forloop.parentloop.last%},{% endif %}{% endfor %}{% endfor %}
-        ];
-    </script>
-{{ block.super }}
+  <script type="text/javascript">
+    var releases = [{% for comic, releases in comics %}{% for release in releases %}
+      'release-{{ release.id }}'{% if not forloop.last or not forloop.parentloop.last%},{% endif %}{% endfor %}{% endfor %}
+    ];
+  </script>
+  {{ block.super }}
 {% endblock %}

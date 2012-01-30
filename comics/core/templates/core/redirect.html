@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 
 
-{% block title %}Redirecting{% endblock %}
+{% block title %}
+  Redirecting
+{% endblock %}
 
 
 {% block extra_head %}
-<meta http-equiv="refresh" content="0;{{ url }}">
+  <meta http-equiv="refresh" content="0;{{ url }}">
 {% endblock %}
 
 
 {% block body %}
+  <h1>Redirecting</h1>
 
-<h1>Redirecting</h1>
-
-<div class="alert-message info">
+  <div class="alert-message info">
     <p>You are being redirected to {{ url }}.</p>
-</div>
-
+  </div>
 {% endblock %}

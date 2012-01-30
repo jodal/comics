@@ -18,7 +18,7 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             if 'comics' not in entry.tags:
                 continue
-            url = entry.content0.src('img[src*="/wp-content/"]')
+            url = entry.content0.src('img[src*="/wp-content/uploads/"]')
             title = entry.title
-            text = entry.content0.alt('img[src*="/wp-content/"]')
+            text = entry.content0.alt('img[src*="/wp-content/uploads/"]')
             return CrawlerImage(url, title, text)

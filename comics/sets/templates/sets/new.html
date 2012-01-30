@@ -1,55 +1,57 @@
 {% extends "core/base.html" %}
 
 
-{% block title %}Comic sets{% endblock %}
+{% block title %}
+  Comic sets
+{% endblock %}
 
 
 {% block content %}
 
-<h1>Comic sets</h1>
+  <h1>Comic sets</h1>
 
-<div class="row">
+  <div class="row">
     <div class="span8">
 
-        <h4>A comics set is...</h4>
+      <h4>A comics set is...</h4>
 
-        <p>A comic set is a personal selection of comics. Anyone can create a new set,
-        and anyone can modify any existing set, just like a wiki.</p>
+      <p>A comic set is a personal selection of comics. Anyone can create a new set,
+      and anyone can modify any existing set, just like a wiki.</p>
 
-        <h4>Getting started</h4>
+      <h4>Getting started</h4>
 
-        <p>To get started with your own personal comic set, enter a name for
-        it, e.g. your username or nickname. To get to your comic set later,
-        enter the name again, or go directly to the URL of your comic set.</p>
+      <p>To get started with your own personal comic set, enter a name for
+      it, e.g. your username or nickname. To get to your comic set later,
+      enter the name again, or go directly to the URL of your comic set.</p>
 
     </div>
     <div class="span8">
 
-        <h4>Use a comic set</h4>
+      <h4>Use a comic set</h4>
 
-        <form action="{% url set-new %}" method="post" id="new_set">
-            {% csrf_token %}
+      <form action="{% url set-new %}" method="post" id="new_set">
+        {% csrf_token %}
 
-            {{ form }}
+        {{ form }}
 
-            <div class="actions">
-                <button type="submit" class="btn primary">Go to set</button>
-            </div>
-        </form>
+        <div class="actions">
+          <button type="submit" class="btn primary">Go to set</button>
+        </div>
+      </form>
 
-        <h4>Recently used sets</h4>
+      <h4>Recently used sets</h4>
 
-        <ul>
-            {% for set in recent_sets %}
-                <li>
-                    <a href="{{ set.get_absolute_url }}">{{ set.name }}</a>
-                </li>
-            {% empty %}
-                <li>None</li>
-            {% endfor %}
-        </ul>
+      <ul>
+        {% for set in recent_sets %}
+          <li>
+            <a href="{{ set.get_absolute_url }}">{{ set.name }}</a>
+          </li>
+        {% empty %}
+          <li>None</li>
+        {% endfor %}
+      </ul>
 
     </div>
-</div>
+  </div>
 
 {% endblock %}

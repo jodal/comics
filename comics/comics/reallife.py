@@ -10,7 +10,6 @@ class Meta(MetaBase):
 
 class Crawler(CrawlerBase):
     history_capable_date = '1999-11-15'
-    schedule = 'Mo,Tu,We,Th,Fr'
 
     def crawl(self, pub_date):
         page_url = 'http://www.reallifecomics.com/archive/%s.html' % (

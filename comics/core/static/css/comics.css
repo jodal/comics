@@ -19,6 +19,9 @@ h3 a:hover {
 #cloud a {
     color: #404040;
 }
+#cloud .inactive a {
+    color: #c0c0c0;
+}
 
 #feedback textarea {
     width: 40em;

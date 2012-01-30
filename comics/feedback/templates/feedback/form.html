@@ -2,17 +2,15 @@
 
 
 {% block content %}
+  <h1>Feedback</h1>
 
-<h1>Feedback</h1>
-
-<form action="" method="post" id="feedback">
+  <form action="" method="post" id="feedback">
     {% csrf_token %}
 
     {{ feedback_form }}
 
     <div class="actions">
-        <button type="submit" class="btn primary">Send feedback</button>
+      <button type="submit" class="btn primary">Send feedback</button>
     </div>
-</form>
-
+  </form>
 {% endblock %}

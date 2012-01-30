@@ -1,22 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %}Login{% endblock %}
+{% block title %}
+  Login
+{% endblock %}
 
 {% block content %}
 
-<h1>Login</h1>
+  <h1>Login</h1>
 
-<form method="post" action="{% url auth_login %}">
+  <form method="post" action="{% url auth_login %}">
     {% csrf_token %}
     <input type="hidden" name="next" value="{{ next }}">
 
     {{ form }}
 
     <div class="actions">
-        <button type="submit" class="btn primary">Login</button>
-        &nbsp;
-        <a href="{% url auth_password_reset %}" class="btn">Reset password</a>
+      <button type="submit" class="btn primary">Login</button>
+      &nbsp;
+      <a href="{% url auth_password_reset %}" class="btn">Reset password</a>
     </div>
-</form>
+  </form>
 
 {% endblock %}

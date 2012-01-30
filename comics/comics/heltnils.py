@@ -4,14 +4,13 @@ from comics.meta.base import MetaBase
 class Meta(MetaBase):
     name = 'Helt Nils'
     language = 'no'
-    url = 'http://pondus.no/#CartoonGallery'
+    url = 'http://www.pondus.no/'
     rights = 'Nils Ofstad'
 
 class Crawler(PondusNoCrawlerBase):
-    history_capable_days = 7 * 7 # weeks
     schedule = 'We,Sa'
 
     def crawl(self, pub_date):
-        return self.crawl_helper('Helt-Nils', pub_date)
+        return self.crawl_helper('20060')
 
 

@@ -4,17 +4,21 @@ from comics.meta.base import MetaBase
 class Meta(MetaBase):
     name = 'Mystic Revolution'
     language = 'en'
-    url = 'http://mysticrev.com/'
+    url = 'http://mysticrevolution.keenspot.com/'
     start_date = '2004-01-01'
     rights = 'Jennifer Brazas'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 0
+    history_capable_days = 7
     schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = -6
 
+    # Without User-Agent set, the server returns 403 Forbidden
+    headers = {'User-Agent': 'Mozilla/4.0'}
+
     def crawl(self, pub_date):
-        page = self.parse_page('http://mysticrev.com/index.php')
-        url = page.src('div#comic img')
-        title = page.alt('div#comic img')
-        return CrawlerImage(url, title)
+        page = self.parse_page('http://mysticrevolution.keenspot.com/')
+        url = page.src('#comicpage_ img')
+        title = page.alt('#comicpage_ img')
+        if pub_date.strftime('%Y%m%d') in url:
+            return CrawlerImage(url, title)
