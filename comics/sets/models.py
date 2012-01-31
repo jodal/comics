@@ -27,10 +27,10 @@ class Set(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('set-latest', kwargs={'set': self.name})
+        return reverse('namedset-latest', kwargs={'namedset': self.name})
 
     def get_feed_url(self):
-        return reverse('set-feed', kwargs={'set': self.name})
+        return reverse('namedset-feed', kwargs={'namedset': self.name})
 
     def get_slug(self):
         return self.name

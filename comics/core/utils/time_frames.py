@@ -95,19 +95,19 @@ def this_month_time_frame(view_type, slug, start_date):
         'icon': 'calendar_view_month',
     }
 
-def new_since_last_visit_time_frame(set_slug, last_visit):
+def new_since_last_visit_time_frame(namedset, last_visit):
     """
     Returns time frame called "new since last visit", given a set slug and a
     date for the user's last visit.
 
     """
 
-    view_name = 'set-last-days'
+    view_name = 'namedset-last-days'
     if last_visit == today():
         return None
     else:
         days_since_last_visit = (today() - last_visit).days
-        kwargs = {'set': set_slug, 'days': days_since_last_visit}
+        kwargs = {'namedset': namedset, 'days': days_since_last_visit}
         return {
             'title': 'New',
             'url': unquote(reverse(view_name, kwargs=kwargs)),

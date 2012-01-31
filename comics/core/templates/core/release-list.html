@@ -17,7 +17,7 @@
         title="Comic feed: {{ comics.0.0.name }}">
     {% endif %}
   {% endifequal %}
-  {% ifequal page.view_type 'set' %}
+  {% ifequal page.view_type 'namedset' %}
     {% if set %}
       <link rel="alternate" type="application/atom+xml"
         href="{{ set.get_feed_url }}"
@@ -49,10 +49,10 @@
 
   <h1>{{ page.title|safe }}</h1>
 
-  {% ifequal page.view_type 'set' %}
+  {% ifequal page.view_type 'namedset' %}
     {% if set %}
       <div class="well">
-        <a href="{% url set-edit set.name %}" class="btn">Edit comic set</a>
+        <a href="{% url namedset-edit set.name %}" class="btn">Edit comic set</a>
       </div>
     {% endif %}
   {% endifequal %}
@@ -104,7 +104,7 @@
         </p>
         <div class="alert-actions">
           {% if set %}
-            <a href="{% url set-edit set.name %}" class="btn small">Edit comics set</a>
+            <a href="{% url namedset-edit set.name %}" class="btn small">Edit comics set</a>
           {% endif %}
         </div>
       </div>

@@ -11,7 +11,7 @@ class SetMiddleware(object):
         - Add the current set to recent_sets list.
         """
 
-        if 'set' in view_kwargs and hasattr(request, 'session'):
+        if 'namedset' in view_kwargs and hasattr(request, 'session'):
             session = request.session
 
             # Create last_visit
@@ -31,14 +31,14 @@ class SetMiddleware(object):
 
             try:
                 # Update 'last loaded' time stamp on the set
-                set = Set.objects.get(name=view_kwargs['set'])
-                set.set_loaded()
+                named_set = Set.objects.get(name=view_kwargs['namedset'])
+                named_set.set_loaded()
 
                 # Add set to recent_sets in the session
                 if not 'recent_sets' in session:
-                    session['recent_sets'] = [set]
-                elif not set in session['recent_sets']:
-                    session['recent_sets'].append(set)
+                    session['recent_sets'] = [named_set]
+                elif not named_set in session['recent_sets']:
+                    session['recent_sets'].append(named_set)
                     # Since we only modified a list in the session and not
                     # the session object itself, we must mark the session
                     # as modified to have the changes saved

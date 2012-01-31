@@ -13,13 +13,13 @@ class NewSetForm(BootstrapModelForm):
         fields = ('name',)
 
     def save(self, commit=True):
-        set = super(NewSetForm, self).save(commit=False)
-        set.name = slugify(set.name)
-        set.last_modified = datetime.datetime.now()
-        set.last_loaded = datetime.datetime.now()
+        named_set = super(NewSetForm, self).save(commit=False)
+        named_set.name = slugify(named_set.name)
+        named_set.last_modified = datetime.datetime.now()
+        named_set.last_loaded = datetime.datetime.now()
         if commit:
-            set.save()
-        return set
+            named_set.save()
+        return named_set
 
 class EditSetForm(BootstrapModelForm):
     comics = forms.ModelMultipleChoiceField(
@@ -40,9 +40,9 @@ class EditSetForm(BootstrapModelForm):
         fields = ('comics', 'add_new_comics', 'hide_empty_comics')
 
     def save(self, commit=True):
-        comics_set = super(EditSetForm, self).save(commit=False)
-        comics_set.last_modified = datetime.datetime.now()
+        named_set = super(EditSetForm, self).save(commit=False)
+        named_set.last_modified = datetime.datetime.now()
         if commit:
-            comics_set.save()
+            named_set.save()
             self.save_m2m()
-        return comics_set
+        return named_set

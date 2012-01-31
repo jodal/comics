@@ -16,7 +16,7 @@
     </div>
   {% endif %}
 
-  <form action="{% url set-edit set.name %}" method="post" id="edit_set">
+  <form action="{% url namedset-edit set.name %}" method="post" id="edit_set">
     {% csrf_token %}
 
     {{ form }}

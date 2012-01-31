@@ -28,7 +28,8 @@ def navigation_days(request, view_type, instance=None,
     One comic
         navigation_days('comic', instance=comic, year=2007, month=7, day=19)
     Comic set
-        navigation_days('set', instance=comics_set, year=2007, month=7, day=19)
+        navigation_days('namedset', instance=named_set, year=2007, month=7,
+            day=19)
     """
 
     today = dt.date.today()
@@ -146,7 +147,7 @@ def navigation_days(request, view_type, instance=None,
         title.append('Top %d' % settings.COMICS_MAX_IN_TOP_LIST)
     elif view_type == 'comic':
         title.append(instance.name)
-    elif view_type == 'set':
+    elif view_type == 'namedset':
         title.append(instance.name)
     title.append('>')
     if latest:
@@ -189,7 +190,7 @@ def navigation_month(request, view_type, instance=None, year=None, month=None):
     One comic
         navigation_month('comic', instance=comic, year=2007, month=7)
     Comic set
-        navigation_month('set', instance=comics_slug, year=2007, month=7)
+        navigation_month('namedset', instance=named_set, year=2007, month=7)
     """
 
     today = dt.date.today()
@@ -284,7 +285,7 @@ def navigation_month(request, view_type, instance=None, year=None, month=None):
         title.append('Top %d' % settings.COMICS_MAX_IN_TOP_LIST)
     elif view_type == 'comic':
         title.append(instance.name)
-    elif view_type == 'set':
+    elif view_type == 'namedset':
         title.append(instance.name)
     title.append('>')
     title.append('%s' % start_date.strftime('%B %Y'))
