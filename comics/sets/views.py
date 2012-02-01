@@ -11,8 +11,11 @@ from django.views.decorators.cache import never_cache
 from comics.core.models import Comic
 from comics.core.utils.navigation import get_navigation
 from comics.core.views import generic_show
-from comics.sets.models import NamedSet
+from comics.sets.models import NamedSet, UserSet
 from comics.sets.forms import NewNamedSetForm, EditNamedSetForm
+
+
+# Named set views
 
 @login_required
 @never_cache
@@ -109,6 +112,55 @@ def named_set_year(request, namedset, year=None):
     else:
         return HttpResponseRedirect(reverse('namedset-date', kwargs={
             'namedset': namedset,
+            'year': year,
+            'month': 1,
+            'day': 1,
+        }))
+
+
+# User set views
+
+@login_required
+@never_cache
+def user_set_show(request, year=None, month=None, day=None, days=1):
+    """Show comics in this user set from one or more dates"""
+
+    year = year and int(year)
+    month = month and int(month)
+    day = day and int(day)
+    days = days and int(days)
+    if not (1 <= days <= settings.COMICS_MAX_DAYS_IN_PAGE):
+        raise Http404
+
+    user_set = get_object_or_404(UserSet, user=request.user)
+    queryset = user_set.comics.all()
+    page = get_navigation(request, 'userset', instance=user_set,
+        year=year, month=month, day=day, days=days)
+    return generic_show(request, queryset, page,
+        extra_context={'user_set': user_set})
+
+@login_required
+@never_cache
+def user_set_latest(request):
+    """Show latest releases from user set"""
+
+    user_set = get_object_or_404(UserSet, user=request.user)
+    queryset = user_set.comics.all()
+    page = get_navigation(request, 'userset', instance=user_set, days=1,
+        latest=True)
+    return generic_show(request, queryset, page, latest=True,
+        extra_context={'user_set': user_set})
+
+@login_required
+def user_set_year(request, year=None):
+    """Redirect to first day of year if not in the future"""
+
+    if int(year) > dt.date.today().year:
+        raise Http404
+    else:
+        user_set = get_object_or_404(UserSet, user=request.user)
+        return HttpResponseRedirect(reverse('user-set-date', kwargs={
+            'user_set': user_set,
             'year': year,
             'month': 1,
             'day': 1,

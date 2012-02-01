@@ -9,8 +9,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils.datastructures import SortedDict
 
 from comics.core.models import Comic, Release
-from comics.core.utils.comic_releases import (get_comic_releases_struct,
-    get_top_comics)
+from comics.core.utils.comic_releases import get_comic_releases_struct
 from comics.core.utils.navigation import get_navigation
 from comics.aggregator.utils import get_comic_schedule
 
@@ -34,47 +33,7 @@ def generic_show(request, queryset, page, latest=False, extra_context=None):
     return render(request, 'core/release-list.html', kwargs)
 
 
-### Top comics ###
-
-@login_required
-def top_show(request, year=None, month=None, day=None, days=1):
-    """Show top comics from one or more dates"""
-
-    year = year and int(year)
-    month = month and int(month)
-    day = day and int(day)
-    days = days and int(days)
-    if not (1 <= days <= settings.COMICS_MAX_DAYS_IN_PAGE):
-        raise Http404
-
-    queryset = get_top_comics()
-    page = get_navigation(request, 'top',
-        year=year, month=month, day=day, days=days)
-    return generic_show(request, queryset, page)
-
-@login_required
-def top_latest(request):
-    """Show latest release for each comic"""
-
-    queryset = get_top_comics()
-    page = get_navigation(request, 'top', days=1, latest=True)
-    return generic_show(request, queryset, page, latest=True)
-
-@login_required
-def top_year(request, year):
-    """Redirect to first day of year if not in the future"""
-
-    if int(year) > dt.date.today().year:
-        raise Http404
-    else:
-        return HttpResponseRedirect(reverse('top-date', kwargs={
-            'year': year,
-            'month': 1,
-            'day': 1,
-        }))
-
-
-### One comic ###
+# One comic views
 
 @login_required
 def comic_list(request):
@@ -123,7 +82,7 @@ def comic_year(request, comic, year):
         }))
 
 
-### Other views ###
+# Other views
 
 def about(request):
     return render(request, 'core/about.html')

@@ -23,12 +23,13 @@ def get_navigation(request, view_type, instance=None,
 def navigation_days(request, view_type, instance=None,
          year=None, month=None, day=None, days=7, latest=False):
     """
-    Top comics
-        navigation_days('top', year=2007, month=7, day=19)
     One comic
         navigation_days('comic', instance=comic, year=2007, month=7, day=19)
-    Comic set
+    Named set
         navigation_days('namedset', instance=named_set, year=2007, month=7,
+            day=19)
+    User set
+        navigation_days('userset', instance=named_set, year=2007, month=7,
             day=19)
     """
 
@@ -103,7 +104,7 @@ def navigation_days(request, view_type, instance=None,
         'month': next_date.month,
         'day': next_date.day,
     }
-    if instance is not None:
+    if instance is not None and view_type in ('comic', 'namedset'):
         if first_date is not None:
             first_kwargs[view_type] = instance.slug
         if last_date is not None:
@@ -143,13 +144,12 @@ def navigation_days(request, view_type, instance=None,
 
     # Title
     title = []
-    if view_type == 'top':
-        title.append('Top %d' % settings.COMICS_MAX_IN_TOP_LIST)
-    elif view_type == 'comic':
+    if view_type == 'comic':
         title.append(instance.name)
     elif view_type == 'namedset':
         title.append(instance.name)
-    title.append('>')
+    if title:
+        title.append('>')
     if latest:
         title.append('Latest')
     else:
@@ -163,7 +163,7 @@ def navigation_days(request, view_type, instance=None,
             ))
     title = ' '.join(title)
 
-    if instance is not None:
+    if instance is not None and view_type in ('comic', 'namedset'):
         slug = instance.slug
     else:
         slug = None
@@ -185,12 +185,12 @@ def navigation_days(request, view_type, instance=None,
 
 def navigation_month(request, view_type, instance=None, year=None, month=None):
     """
-    Top comics
-        navigation_month('top', year=2007, month=7)
     One comic
         navigation_month('comic', instance=comic, year=2007, month=7)
-    Comic set
+    Named set
         navigation_month('namedset', instance=named_set, year=2007, month=7)
+    User set
+        navigation_month('userset', instance=named_set, year=2007, month=7)
     """
 
     today = dt.date.today()
@@ -252,7 +252,7 @@ def navigation_month(request, view_type, instance=None, year=None, month=None):
         'year': next_month.year,
         'month': next_month.month,
     }
-    if instance is not None:
+    if instance is not None and view_type in ('comic', 'namedset'):
         if first_month is not None:
             first_kwargs[view_type] = instance.slug
         if last_month is not None:
@@ -281,17 +281,16 @@ def navigation_month(request, view_type, instance=None, year=None, month=None):
 
     # Title
     title = []
-    if view_type == 'top':
-        title.append('Top %d' % settings.COMICS_MAX_IN_TOP_LIST)
-    elif view_type == 'comic':
+    if view_type == 'comic':
         title.append(instance.name)
     elif view_type == 'namedset':
         title.append(instance.name)
-    title.append('>')
+    if title:
+        title.append('>')
     title.append('%s' % start_date.strftime('%B %Y'))
     title = ' '.join(title)
 
-    if instance is not None:
+    if instance is not None and view_type in ('comic', 'namedset'):
         slug = instance.slug
     else:
         slug = None

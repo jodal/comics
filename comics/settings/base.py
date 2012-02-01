@@ -199,9 +199,6 @@ REGISTRATION_BACKEND = 'comics.accounts.backends.RegistrationBackend'
 COMICS_MEDIA_ROOT = '%sc/' % MEDIA_ROOT
 COMICS_MEDIA_URL = '%sc/' % MEDIA_URL
 
-# Number of comics to show in the top list
-COMICS_MAX_IN_TOP_LIST = 10
-
 # Maximum number of days to show in one page
 COMICS_MAX_DAYS_IN_PAGE = 31
 
