@@ -8,7 +8,7 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding model 'UserSet'
-        db.create_table('comics_user_set', (
+        db.create_table('comics_userset', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
             ('add_new_comics', self.gf('django.db.models.fields.BooleanField')(default=False)),
@@ -21,7 +21,7 @@ class Migration(SchemaMigration):
 
     def backwards(self, orm):
         # Deleting model 'UserSet'
-        db.delete_table('comics_user_set')
+        db.delete_table('comics_userset')
 
 
     models = {
@@ -86,7 +86,7 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100', 'db_index': 'True'})
         },
         'sets.userset': {
-            'Meta': {'object_name': 'UserSet', 'db_table': "'comics_user_set'"},
+            'Meta': {'object_name': 'UserSet', 'db_table': "'comics_userset'"},
             'add_new_comics': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'comics': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['core.Comic']", 'symmetrical': 'False'}),
             'hide_empty_comics': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),

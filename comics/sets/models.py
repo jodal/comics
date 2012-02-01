@@ -54,7 +54,7 @@ class UserSet(models.Model):
     comics = models.ManyToManyField(Comic)
 
     class Meta:
-        db_table = 'comics_user_set'
+        db_table = 'comics_userset'
 
     def __unicode__(self):
         return u'Comic set for %s' % self.user
