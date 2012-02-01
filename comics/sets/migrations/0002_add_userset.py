@@ -3,6 +3,7 @@ import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from comics.sets.models import *
 
 class Migration(SchemaMigration):
 
@@ -18,10 +19,19 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('sets', ['UserSet'])
 
+        # Adding ManyToManyField 'UserSet.comics'
+        db.create_table('comics_userset_comics', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('userset', models.ForeignKey(UserSet, null=False)),
+            ('comic', models.ForeignKey(Comic, null=False))
+        ))
 
     def backwards(self, orm):
         # Deleting model 'UserSet'
         db.delete_table('comics_userset')
+
+        # Dropping ManyToManyField 'UserSet.comics'
+        db.delete_table('comics_userset_comics')
 
 
     models = {
