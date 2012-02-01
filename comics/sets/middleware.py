@@ -1,6 +1,6 @@
 import datetime
 
-from comics.sets.models import Set
+from comics.sets.models import NamedSet
 
 class SetMiddleware(object):
     def process_view(self, request, view_func, view_args, view_kwargs):
@@ -31,7 +31,7 @@ class SetMiddleware(object):
 
             try:
                 # Update 'last loaded' time stamp on the set
-                named_set = Set.objects.get(name=view_kwargs['namedset'])
+                named_set = NamedSet.objects.get(name=view_kwargs['namedset'])
                 named_set.set_loaded()
 
                 # Add set to recent_sets in the session
@@ -43,7 +43,7 @@ class SetMiddleware(object):
                     # the session object itself, we must mark the session
                     # as modified to have the changes saved
                     session.modified = True
-            except Set.DoesNotExist:
+            except NamedSet.DoesNotExist:
                 pass
 
         return None

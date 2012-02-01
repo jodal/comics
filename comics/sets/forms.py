@@ -5,15 +5,15 @@ from django import forms
 from django.template.defaultfilters import slugify
 
 from comics.core.models import Comic
-from comics.sets.models import Set
+from comics.sets.models import NamedSet
 
-class NewSetForm(BootstrapModelForm):
+class NewNamedSetForm(BootstrapModelForm):
     class Meta:
-        model = Set
+        model = NamedSet
         fields = ('name',)
 
     def save(self, commit=True):
-        named_set = super(NewSetForm, self).save(commit=False)
+        named_set = super(NewNamedSetForm, self).save(commit=False)
         named_set.name = slugify(named_set.name)
         named_set.last_modified = datetime.datetime.now()
         named_set.last_loaded = datetime.datetime.now()
@@ -21,7 +21,7 @@ class NewSetForm(BootstrapModelForm):
             named_set.save()
         return named_set
 
-class EditSetForm(BootstrapModelForm):
+class EditNamedSetForm(BootstrapModelForm):
     comics = forms.ModelMultipleChoiceField(
         Comic.objects.filter(active=True), required=False)
     add_new_comics = forms.BooleanField(
@@ -36,11 +36,11 @@ class EditSetForm(BootstrapModelForm):
             'selected time interval will be hidden.')
 
     class Meta:
-        model = Set
+        model = NamedSet
         fields = ('comics', 'add_new_comics', 'hide_empty_comics')
 
     def save(self, commit=True):
-        named_set = super(EditSetForm, self).save(commit=False)
+        named_set = super(EditNamedSetForm, self).save(commit=False)
         named_set.last_modified = datetime.datetime.now()
         if commit:
             named_set.save()

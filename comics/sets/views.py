@@ -11,8 +11,8 @@ from django.views.decorators.cache import never_cache
 from comics.core.models import Comic
 from comics.core.utils.navigation import get_navigation
 from comics.core.views import generic_show
-from comics.sets.models import Set
-from comics.sets.forms import NewSetForm, EditSetForm
+from comics.sets.models import NamedSet
+from comics.sets.forms import NewNamedSetForm, EditNamedSetForm
 
 @login_required
 @never_cache
@@ -20,22 +20,23 @@ def named_set_new(request):
     """Create a new named set and redirect to named set settings"""
 
     if request.method == 'POST':
-        form = NewSetForm(request.POST)
+        form = NewNamedSetForm(request.POST)
         if 'name' in form.data:
             try:
                 # If already exists, load the set
-                named_set = Set.objects.get(name=slugify(form.data['name']))
+                named_set = NamedSet.objects.get(
+                    name=slugify(form.data['name']))
                 named_set.last_loaded = dt.datetime.now()
                 named_set.save()
                 return HttpResponseRedirect(named_set.get_absolute_url())
-            except Set.DoesNotExist:
+            except NamedSet.DoesNotExist:
                 # Else, create the set
                 if form.is_valid():
                     named_set = form.save()
                     return HttpResponseRedirect(reverse('namedset-edit',
                         kwargs={'namedset': named_set.name}))
     else:
-        form = NewSetForm()
+        form = NewNamedSetForm()
 
     kwargs = {
         'form': form,
@@ -48,19 +49,19 @@ def named_set_new(request):
 def named_set_edit(request, namedset):
     """Edit what comics is part of a named set"""
 
-    named_set = get_object_or_404(Set, name=namedset)
+    named_set = get_object_or_404(NamedSet, name=namedset)
 
     if request.method == 'POST':
-        form = EditSetForm(request.POST, instance=named_set)
+        form = EditNamedSetForm(request.POST, instance=named_set)
         if form.is_valid():
             form.save()
             # Update comic's number_of_set count
             for comic in Comic.objects.all():
-                comic.number_of_sets = comic.set_set.count()
+                comic.number_of_sets = comic.namedset_set.count()
                 comic.save()
             return HttpResponseRedirect(named_set.get_absolute_url())
     else:
-        form = EditSetForm(instance=named_set)
+        form = EditNamedSetForm(instance=named_set)
 
     kwargs = {
         'form': form,
@@ -80,7 +81,7 @@ def named_set_show(request, namedset, year=None, month=None, day=None, days=1):
     if not (1 <= days <= settings.COMICS_MAX_DAYS_IN_PAGE):
         raise Http404
 
-    named_set = get_object_or_404(Set, name=namedset)
+    named_set = get_object_or_404(NamedSet, name=namedset)
     queryset = named_set.comics.all()
     page = get_navigation(request, 'namedset', instance=named_set,
         year=year, month=month, day=day, days=days)
@@ -92,7 +93,7 @@ def named_set_show(request, namedset, year=None, month=None, day=None, days=1):
 def named_set_latest(request, namedset):
     """Show latest releases from named set"""
 
-    named_set = get_object_or_404(Set, name=namedset)
+    named_set = get_object_or_404(NamedSet, name=namedset)
     queryset = named_set.comics.all()
     page = get_navigation(request, 'namedset', instance=named_set, days=1,
         latest=True)

@@ -10,7 +10,7 @@ admin.autodiscover()
 
 from comics.core.feeds import ComicFeed
 from comics.core.urls import COMIC
-from comics.sets.feeds import SetFeed
+from comics.sets.feeds import NamedSetFeed
 from comics.sets.urls import SET
 
 urlpatterns = patterns('',
@@ -28,7 +28,7 @@ urlpatterns = patterns('',
 
     # Comic feeds
     url(r'^feeds/c/%s/$' % (COMIC,), ComicFeed(), name='comic-feed'),
-    url(r'^feeds/s/%s/$' % (SET,), SetFeed(), name='namedset-feed'),
+    url(r'^feeds/s/%s/$' % (SET,), NamedSetFeed(), name='namedset-feed'),
 
     # Django admin
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
