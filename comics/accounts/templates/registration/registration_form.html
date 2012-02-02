@@ -8,12 +8,12 @@
 
   <h1>Register</h1>
 
-  <form action="{% url registration_register %}" method="post">
+  <form action="{% url registration_register %}" method="post" class="form-horizontal">
     {% csrf_token %}
 
     {{ form }}
 
-    <div class="actions">
+    <div class="form-actions">
       <button type="submit" class="btn primary">Register</button>
     </div>
   </form>

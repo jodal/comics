@@ -4,12 +4,12 @@
 {% block content %}
   <h1>Feedback</h1>
 
-  <form action="" method="post" id="feedback">
+  <form action="" method="post" id="feedback" class="form-horizontal">
     {% csrf_token %}
 
     {{ feedback_form }}
 
-    <div class="actions">
+    <div class="form-actions">
       <button type="submit" class="btn primary">Send feedback</button>
     </div>
   </form>

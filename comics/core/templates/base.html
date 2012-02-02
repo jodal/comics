@@ -8,7 +8,8 @@
     <title>{% block title %}{% endblock %} | {{ site_title }}</title>
     <link rel="shortcut icon" type="image/png" href="{{ STATIC_URL }}img/favicon.png">
     {% compress css %}
-      <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-1.4.0.min.css">
+      <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-2.0.0.min.css">
+      <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-responsive-2.0.0.min.css">
       <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/comics.css">
     {% endcompress %}
     {% block extra_head %}{% endblock %}
@@ -19,13 +20,18 @@
 
       {% block body %}
 
-        <div class="topbar-wrapper">
-          <div class="topbar" data-dropdown="dropdown">
-            <div class="topbar-inner">
-              <div class="container">
-                <h3><a href="{% url top-latest %}">{{ site_title }}</a></h3>
+        <div class="navbar navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </a>
+              <a class="brand" href="{% url top-latest %}">{{ site_title }}</a>
+              <div class="nav-collapse">
                 {% block site_menu %}
-                  <ul>
+                  <ul class="nav">
                   {% if user.is_authenticated %}
                     <li>
                       <a href="{% url top-latest %}">Home</a>
@@ -74,7 +80,7 @@
       {{ block.super }}
       {% compress js %}
         <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.7.1.min.js"></script>
-        <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-dropdown-1.4.0.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-2.0.0.min.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/navigation.js"></script>
         <script type="text/javascript" src="{{ STATIC_URL }}js/comics.js"></script>
         {% if google_analytics_code %}
