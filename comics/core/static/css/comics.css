@@ -2,9 +2,9 @@ body {
     padding-top: 60px;
 }
 
-.nav a.disabled,
-.nav a.disabled:hover {
-    color: #666;
+.navbar .nav a.disabled,
+.navbar .nav a.disabled:hover {
+    color: #444;
 }
 
 h3 a:hover {
