@@ -6,7 +6,7 @@
 
 {% block content %}
 
-  <h1>Register</h1>
+  <h1>Register <small>a new account</small></h1>
 
   <form action="{% url registration_register %}" method="post" class="form-horizontal">
     {% csrf_token %}
@@ -14,7 +14,10 @@
     {{ form }}
 
     <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Register</button>
+      <button type="submit" class="btn btn-primary">
+        <i class="icon-plus-sign icon-white"></i>
+        Register
+      </button>
     </div>
   </form>
 

@@ -2,9 +2,16 @@ body {
     padding-top: 60px;
 }
 
-.navbar .nav a.disabled,
-.navbar .nav a.disabled:hover {
-    color: #444;
+.navbar .nav > li > a {
+    color: #fff;
+    opacity: 0.6;
+}
+.navbar .nav > li > a:hover {
+    opacity: 1.0;
+}
+.navbar .nav > li > a.disabled,
+.navbar .nav > li > a.disabled:hover {
+    opacity: 0.3;
 }
 
 h3 a:hover {

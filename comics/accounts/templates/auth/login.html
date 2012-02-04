@@ -6,7 +6,7 @@
 
 {% block content %}
 
-  <h1>Login</h1>
+  <h1>Login <small>to your account</small></h1>
 
   <form method="post" action="{% url auth_login %}" class="form-horizontal">
     {% csrf_token %}
@@ -15,9 +15,15 @@
     {{ form }}
 
     <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Login</button>
+      <button type="submit" class="btn btn-primary">
+        <i class="icon-ok-sign icon-white"></i>
+        Login
+      </button>
       &nbsp;
-      <a href="{% url auth_password_reset %}" class="btn">Reset password</a>
+      <a href="{% url auth_password_reset %}" class="btn">
+        <i class="icon-refresh"></i>
+        Reset password
+      </a>
     </div>
   </form>
 

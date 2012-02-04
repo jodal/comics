@@ -34,27 +34,41 @@
                   <ul class="nav">
                   {% if user.is_authenticated %}
                     <li>
-                      <a href="{% url top-latest %}">Home</a>
+                      <a href="{% url top-latest %}">
+                        <i class="icon-home icon-white"></i>
+                        Home</a>
                     </li>
                     <li>
-                      <a href="{% url accounts_profile %}">My account</a>
+                      <a href="{% url accounts_profile %}">
+                        <i class="icon-cog icon-white"></i>
+                        My account</a>
                     </li>
                     <li>
-                      <a href="{% url set-new %}">Sets</a>
+                      <a href="{% url set-new %}">
+                        <i class="icon-bookmark icon-white"></i>
+                        Sets</a>
                     </li>
                   {% else %}
                     <li>
-                      <a href="{% url auth_login %}">Login</a>
+                      <a href="{% url auth_login %}">
+                        <i class="icon-ok-sign icon-white"></i>
+                        Login</a>
                     </li>
                     <li>
-                      <a href="{% url registration_register %}">Register</a>
+                      <a href="{% url registration_register %}">
+                        <i class="icon-plus-sign icon-white"></i>
+                        Register</a>
                     </li>
                   {% endif %}
                     <li>
-                      <a href="{% url feedback %}">Feedback</a>
+                      <a href="{% url feedback %}">
+                        <i class="icon-envelope icon-white"></i>
+                        Feedback</a>
                     </li>
                     <li>
-                      <a href="{% url about %}">About</a>
+                      <a href="{% url about %}">
+                        <i class="icon-info-sign icon-white"></i>
+                        About</a>
                     </li>
                   </ul>
                 {% endblock site_menu %}
