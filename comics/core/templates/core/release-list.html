@@ -52,7 +52,10 @@
   {% ifequal page.view_type 'set' %}
     {% if set %}
       <div class="well">
-        <a href="{% url set-edit set.name %}" class="btn">Edit comic set</a>
+        <a href="{% url set-edit set.name %}" class="btn">
+          <i class="icon-edit"></i>
+          Edit comic set
+        </a>
       </div>
     {% endif %}
   {% endifequal %}
