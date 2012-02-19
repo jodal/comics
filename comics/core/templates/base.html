@@ -51,11 +51,23 @@
                         </li>
                       </ul>
                     </li>
-                    <li>
-                      <a href="{% url set-new %}">
-                        <i class="icon-bookmark icon-white"></i>
-                        Sets</a>
-                    </li>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-calendar icon-white"></i>Sets <b class="caret"></b>
+                      </a>
+                      <ul class="dropdown-menu">
+                       {% for set in request.session.recent_sets %}
+                         <li>
+                           <a href="{{ set.get_absolute_url }}"><i class="icon-bookmark"></i> {{ set.name }}</a>
+                         </li>
+                        {% endfor %}
+                         <li>
+                           <a href="{% url set-new %}">
+                            <i class="icon-plus-sign"></i>
+                             New set</a>
+                         </li>
+                      </ul>
+                   </li>
                   {% else %}
                     <li>
                       <a href="{% url auth_login %}">
