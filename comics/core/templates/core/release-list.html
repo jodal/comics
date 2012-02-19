@@ -65,7 +65,7 @@
       {% for release in releases %}
 
         <div class="release">
-          <h3 id="release-{{ release.id }}">
+          <h3 id="r{{ release.id }}">
             <a href="{{ release.get_absolute_url }}">
               {{ release.comic.name }}
               <small class="pub_date">
@@ -121,7 +121,7 @@
 {% block extra_footer %}
   <script type="text/javascript">
     var releases = [{% for comic, releases in comics %}{% for release in releases %}
-      'release-{{ release.id }}'{% if not forloop.last or not forloop.parentloop.last%},{% endif %}{% endfor %}{% endfor %}
+      'r{{ release.id }}'{% if not forloop.last or not forloop.parentloop.last%},{% endif %}{% endfor %}{% endfor %}
     ];
   </script>
   {{ block.super }}
