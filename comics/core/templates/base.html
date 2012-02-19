@@ -38,18 +38,10 @@
                         <i class="icon-home icon-white"></i>
                         Home</a>
                     </li>
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <li class="{{ active.account|yesno:"active," }}" >
+                      <a href="{% url account_settings %}">
                         <i class="icon-user icon-white"></i>
-                        Account <b class="caret"></b></a>
-                      <ul class="dropdown-menu">
-                        <li class="{{ active.account_settings|yesno:"active," }}" >
-                          <a href="{% url account_settings %}">Settings</a>
-                        </li>
-                        <li>
-                          <a href="{% url auth_logout %}">Logout</a>
-                        </li>
-                      </ul>
+                        Account</a>
                     </li>
                     <li class="{{ active.sets|yesno:"active," }}" >
                       <a href="{% url set-new %}">

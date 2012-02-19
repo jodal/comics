@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 from django.contrib.auth import views as auth_views
-from django.views.generic.simple import direct_to_template, redirect_to
+from django.views.generic.simple import direct_to_template
 
 from registration.views import activate, register
 
@@ -47,12 +47,11 @@ urlpatterns = patterns('',
         {'template_name': 'auth/logout.html'},
         name='auth_logout'),
 
-    url(r'^$', redirect_to, {'url': 'settings/'}),
-    url(r'^settings/$',
+    url(r'^/$',
         direct_to_template,
         {
             'template': 'accounts/settings.html',
-            'extra_context': {'active': {'account_settings': True}},
+            'extra_context': {'active': {'account': True}},
         },
         name='account_settings'),
 
