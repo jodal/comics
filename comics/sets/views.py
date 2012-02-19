@@ -37,11 +37,11 @@ def set_new(request):
     else:
         form = NewSetForm()
 
-    kwargs = {
+    return render(request, 'sets/new.html', {
+        'active': {'sets': True},
         'form': form,
         'recent_sets': request.session.get('recent_sets', None),
-    }
-    return render(request, 'sets/new.html', kwargs)
+    })
 
 @login_required
 @never_cache

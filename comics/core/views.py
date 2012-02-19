@@ -26,6 +26,7 @@ def generic_show(request, queryset, page, latest=False, extra_context=None):
         end_date=page.get('end_date', None))
 
     kwargs = {
+        'active': {'home': True},
         'page': page,
         'comics': comics,
     }
@@ -126,7 +127,7 @@ def comic_year(request, comic, year):
 ### Other views ###
 
 def about(request):
-    return render(request, 'core/about.html')
+    return render(request, 'core/about.html', {'active': {'about': True}})
 
 @login_required
 def status(request, days=21):

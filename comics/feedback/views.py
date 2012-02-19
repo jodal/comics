@@ -29,7 +29,10 @@ def feedback(request):
     else:
         form = FeedbackForm()
 
-    return render(request, 'feedback/form.html', {'feedback_form': form})
+    return render(request, 'feedback/form.html', {
+        'active': {'feedback': True},
+        'feedback_form': form,
+    })
 
 def feedback_thanks(request):
     """Display form submit confirmation page"""

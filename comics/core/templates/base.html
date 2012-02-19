@@ -33,7 +33,7 @@
                 {% block site_menu %}
                   <ul class="nav">
                   {% if user.is_authenticated %}
-                    <li>
+                    <li class="{{ active.home|yesno:"active," }}" >
                       <a href="{% url top-latest %}">
                         <i class="icon-home icon-white"></i>
                         Home</a>
@@ -43,7 +43,7 @@
                         <i class="icon-user icon-white"></i>
                         Account <b class="caret"></b></a>
                       <ul class="dropdown-menu">
-                        <li>
+                        <li class="{{ active.account_settings|yesno:"active," }}" >
                           <a href="{% url account_settings %}">Settings</a>
                         </li>
                         <li>
@@ -51,29 +51,29 @@
                         </li>
                       </ul>
                     </li>
-                    <li>
+                    <li class="{{ active.sets|yesno:"active," }}" >
                       <a href="{% url set-new %}">
                         <i class="icon-bookmark icon-white"></i>
                         Sets</a>
                     </li>
                   {% else %}
-                    <li>
+                    <li class="{{ active.login|yesno:"active," }}" >
                       <a href="{% url auth_login %}">
                         <i class="icon-ok-sign icon-white"></i>
                         Login</a>
                     </li>
-                    <li>
+                    <li class="{{ active.register|yesno:"active," }}" >
                       <a href="{% url registration_register %}">
                         <i class="icon-plus-sign icon-white"></i>
                         Register</a>
                     </li>
                   {% endif %}
-                    <li>
+                    <li class="{{ active.feedback|yesno:"active," }}" >
                       <a href="{% url feedback %}">
                         <i class="icon-envelope icon-white"></i>
                         Feedback</a>
                     </li>
-                    <li>
+                    <li class="{{ active.about|yesno:"active," }}" >
                       <a href="{% url about %}">
                         <i class="icon-info-sign icon-white"></i>
                         About</a>
