@@ -24,7 +24,10 @@
 
           <tr>
             <th>Secret key</th>
-            <td>{{ user.get_profile.secret_key }}</td>
+            <td>
+              {{ user.get_profile.secret_key }}
+              <a href="{% url new_secret_key %}">Generate new key</a></td>
+            </td>
           </tr>
         </tbody>
       </table>

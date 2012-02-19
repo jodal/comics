@@ -6,6 +6,7 @@ from registration.views import activate, register
 
 from comics.accounts.forms import (AuthenticationForm, PasswordChangeForm,
     PasswordResetForm)
+from comics.accounts.views import new_secret_key
 
 urlpatterns = patterns('',
     url(r'^register/$',
@@ -89,4 +90,6 @@ urlpatterns = patterns('',
         auth_views.password_reset_done,
         {'template_name': 'auth/password_reset_done.html'},
         name='auth_password_reset_done'),
+
+    url(r'^key/$', new_secret_key, name='new_secret_key'),
 )
