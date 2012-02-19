@@ -5,7 +5,9 @@
   {% if user.is_authenticated %}
     {% cache 500 'all_comics' %}
       {% if all_comics %}
-        <h3><a href="{% url comic-list %}">All comics</a></h3>
+        <div class="page-header">
+          <h3><a href="{% url comic-list %}">All comics</a></h3>
+        </div>
         {% list_to_columns all_comics as comic_columns 4 %}
         <div class="row">
           {% for comic_column in comic_columns %}
