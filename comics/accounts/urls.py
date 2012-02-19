@@ -47,7 +47,7 @@ urlpatterns = patterns('',
         {'template_name': 'auth/logout.html'},
         name='auth_logout'),
 
-    url(r'^/$',
+    url(r'^$',
         direct_to_template,
         {
             'template': 'accounts/settings.html',
