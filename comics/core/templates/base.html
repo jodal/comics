@@ -38,10 +38,18 @@
                         <i class="icon-home icon-white"></i>
                         Home</a>
                     </li>
-                    <li>
-                      <a href="{% url account_settings %}">
-                        <i class="icon-cog icon-white"></i>
-                        Settings</a>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-user icon-white"></i>
+                        Account <b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a href="{% url account_settings %}">Settings</a>
+                        </li>
+                        <li>
+                          <a href="{% url auth_logout %}">Logout</a>
+                        </li>
+                      </ul>
                     </li>
                     <li>
                       <a href="{% url set-new %}">
