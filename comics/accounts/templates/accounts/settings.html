@@ -8,24 +8,27 @@
 
   <h1>Account settings</h1>
 
-  <dl>
-    <dt>Email</dt>
-    <dd>{{ user.email }}</dd>
+  <div class="row">
+    <div class="span6">
+      <table class="table table-striped">
+        <tbody>
+          <tr>
+            <th>Email</th>
+            <td>{{ user.email }}</td>
+          </tr>
 
-    <dt>Secret key</dt>
-    <dd>{{ user.get_profile.secret_key }}</dd>
-  </dl>
+          <tr>
+            <th>Password</th>
+            <td><a href="{% url auth_password_change %}">Change password</a></td>
+          </tr>
 
-  <div class="well">
-    <a href="{% url auth_logout %}" class="btn btn-danger">
-      <i class="icon-off icon-white"></i>
-      Logout
-    </a>
-    &nbsp;
-    <a href="{% url auth_password_change %}" class="btn">
-      <i class="icon-edit"></i>
-      Change password
-    </a>
+          <tr>
+            <th>Secret key</th>
+            <td>{{ user.get_profile.secret_key }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
 {% endblock content %}
