@@ -42,10 +42,10 @@ urlpatterns = patterns('',
         {'template_name': 'auth/logout.html'},
         name='auth_logout'),
 
-    url(r'^profile/$',
+    url(r'^settings/$',
         direct_to_template,
-        {'template': 'accounts/profile.html'},
-        name='accounts_profile'),
+        {'template': 'accounts/settings.html'},
+        name='account_settings'),
 
     url(r'^password/change/$',
         auth_views.password_change,
