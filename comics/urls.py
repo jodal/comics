@@ -24,7 +24,7 @@ urlpatterns = patterns('',
     (r'^feedback/', include('comics.feedback.urls')),
 
     # User handling
-    (r'^accounts/', include('comics.accounts.urls')),
+    (r'^account/', include('comics.accounts.urls')),
 
     # Comic feeds
     url(r'^feeds/c/%s/$' % (COMIC,), ComicFeed(), name='comic-feed'),
