@@ -11,7 +11,7 @@
   <h1>List of comics</h1>
 
   {% if all_comics %}
-    <table class="condensed-table bordered-table zebra-striped">
+    <table class="table table-condensed table-bordered table-striped">
       <thead>
         <tr>
           <th>Comic</th>
@@ -54,7 +54,7 @@
       </tbody>
     </table>
   {% else %}
-    <div class="alert-message error">
+    <div class="alert alert-error">
       <p>
         <strong>No comics found.</strong>
       </p>

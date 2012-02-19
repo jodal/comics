@@ -17,9 +17,15 @@
   </dl>
 
   <div class="well">
-     <a href="{% url auth_logout %}" class="btn danger">Logout</a>
-     &nbsp;
-     <a href="{% url auth_password_change %}" class="btn">Change password</a>
+    <a href="{% url auth_logout %}" class="btn btn-danger">
+      <i class="icon-off icon-white"></i>
+      Logout
+    </a>
+    &nbsp;
+    <a href="{% url auth_password_change %}" class="btn">
+      <i class="icon-edit"></i>
+      Change password
+    </a>
   </div>
 
 {% endblock content %}

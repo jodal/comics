@@ -9,7 +9,7 @@
         {% list_to_columns all_comics as comic_columns 4 %}
         <div class="row">
           {% for comic_column in comic_columns %}
-            <div class="span4">
+            <div class="span3">
               <ul>
                 {% for comic in comic_column %}
                   <li class="{% if comic.active %}active{% else %}inactive{% endif %}">

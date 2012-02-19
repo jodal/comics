@@ -11,7 +11,7 @@
   <h1>Edit comic set &ldquo;{{ set.name }}&rdquo;</h1>
 
   {% if not all_comics %}
-    <div class="alert-message error">
+    <div class="alert alert-error">
       <p><strong>No comics found.</strong></p>
     </div>
   {% endif %}
@@ -22,9 +22,14 @@
     {{ form }}
 
     <div class="actions">
-      <button type="submit" class="btn primary">Save changes</button>
+      <button type="submit" class="btn btn-primary">
+        <i class="icon-ok icon-white"></i>
+        Save changes
+      </button>
       &nbsp;
-      <a href="{{ set.get_absolute_url }}" class="btn">Cancel</a>
+      <a href="{{ set.get_absolute_url }}" class="btn">
+        Cancel
+      </a>
     </div>
   </form>
 

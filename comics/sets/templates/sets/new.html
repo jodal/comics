@@ -11,7 +11,7 @@
   <h1>Comic sets</h1>
 
   <div class="row">
-    <div class="span8">
+    <div class="span6">
 
       <h4>A comics set is...</h4>
 
@@ -25,17 +25,20 @@
       enter the name again, or go directly to the URL of your comic set.</p>
 
     </div>
-    <div class="span8">
+    <div class="span6">
 
       <h4>Use a comic set</h4>
 
-      <form action="{% url namedset-new %}" method="post" id="new_set">
+      <form action="{% url namedset-new %}" method="post" id="new_set" class="form-horizontal">
         {% csrf_token %}
 
         {{ form }}
 
-        <div class="actions">
-          <button type="submit" class="btn primary">Go to set</button>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            <i class="icon-play-circle icon-white"></i>
+            Go to set
+          </button>
         </div>
       </form>
 
