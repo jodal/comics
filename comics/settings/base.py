@@ -182,6 +182,7 @@ COMPRESS_CSS_FILTERS = [
 COMPRESS_HTML = True
 
 # django.contrib.auth settings
+LOGIN_URL = '/account/login/'
 AUTH_PROFILE_MODULE = 'accounts.UserProfile'
 AUTHENTICATION_BACKENDS = (
     'comics.accounts.backends.AuthBackend',
