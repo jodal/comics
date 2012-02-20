@@ -44,7 +44,7 @@ urlpatterns = patterns('',
         name='auth_login'),
     url(r'^logout/$',
         auth_views.logout,
-        {'template_name': 'auth/logout.html'},
+        {'next_page': '/account/login/'},
         name='auth_logout'),
 
     url(r'^$',
