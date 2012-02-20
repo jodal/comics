@@ -47,7 +47,9 @@
 
 {% block content %}
 
-  <h1>{{ page.title|safe }}</h1>
+  <div class="page-header">
+    <h1>{{ page.title|safe }}</h1>
+  </div>
 
   {% ifequal page.view_type 'set' %}
     {% if set %}

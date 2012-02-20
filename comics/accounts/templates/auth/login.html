@@ -6,7 +6,9 @@
 
 {% block content %}
 
-  <h1>Login <small>to your account</small></h1>
+  <div class="page-header">
+    <h1>Login <small>to your account</small></h1>
+  </div>
 
   <form method="post" action="{% url auth_login %}" class="form-horizontal">
     {% csrf_token %}
