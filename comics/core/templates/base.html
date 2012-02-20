@@ -79,6 +79,15 @@
         </div>
 
         <div id="bd">
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+                <a class="close" data-dismiss="alert">×</a>
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+
           {% block content %}{% endblock content %}
         </div>
 
