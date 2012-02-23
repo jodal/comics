@@ -6,6 +6,14 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
+v1.1.4 (in development)
+=======================
+
+**Crawlers**
+
+- New: ``kellermannen``
+
+
 v1.1.3 (2012-01-29)
 ===================
 
