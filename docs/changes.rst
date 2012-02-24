@@ -12,6 +12,7 @@ v1.1.4 (in development)
 **Crawlers**
 
 - New: ``kellermannen``
+- Update ``darylcagle`` after feed change.
 
 
 v1.1.3 (2012-01-29)
