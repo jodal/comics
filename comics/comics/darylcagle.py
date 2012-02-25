@@ -17,6 +17,6 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             if 'cartoon' not in entry.tags:
                 continue
-            url = entry.content0.src('img')
+            url = entry.summary.src('img')
             title = entry.title
             return CrawlerImage(url, title)
