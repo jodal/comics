@@ -33,56 +33,61 @@
                 {% block site_menu %}
                   <ul class="nav">
                   {% if user.is_authenticated %}
-                    <li>
+                    <li class="{{ active.home|yesno:"active," }}" >
                       <a href="{% url userset-latest %}">
                         <i class="icon-home icon-white"></i>
                         Home</a>
                     </li>
-                    <li>
-                      <a href="{% url accounts_profile %}">
-                        <i class="icon-cog icon-white"></i>
-                        My account</a>
+                    <li class="{{ active.account|yesno:"active," }}" >
+                      <a href="{% url account_settings %}">
+                        <i class="icon-user icon-white"></i>
+                        Account</a>
                     </li>
-                    <li>
-<<<<<<< HEAD
-                      <a href="{% url namedset-new %}">Sets</a>
-=======
-                      <a href="{% url set-new %}">
+                    <li class="{{ active.sets|yesno:"active," }}" >
+                      <a href="{% url namedset-new %}">
                         <i class="icon-bookmark icon-white"></i>
                         Sets</a>
->>>>>>> develop
                     </li>
                   {% else %}
-                    <li>
+                    <li class="{{ active.login|yesno:"active," }}" >
                       <a href="{% url auth_login %}">
                         <i class="icon-ok-sign icon-white"></i>
                         Login</a>
                     </li>
-                    <li>
+                    <li class="{{ active.register|yesno:"active," }}" >
                       <a href="{% url registration_register %}">
                         <i class="icon-plus-sign icon-white"></i>
                         Register</a>
                     </li>
                   {% endif %}
-                    <li>
+                    <li class="{{ active.feedback|yesno:"active," }}" >
                       <a href="{% url feedback %}">
                         <i class="icon-envelope icon-white"></i>
                         Feedback</a>
                     </li>
-                    <li>
+                    <li class="{{ active.about|yesno:"active," }}" >
                       <a href="{% url about %}">
                         <i class="icon-info-sign icon-white"></i>
                         About</a>
                     </li>
                   </ul>
                 {% endblock site_menu %}
-                {% block top_menu %}{% endblock top_menu %}
               </div>
+              {% block top_menu %}{% endblock top_menu %}
             </div>
           </div>
         </div>
 
         <div id="bd">
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+                <a class="close" data-dismiss="alert">×</a>
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+
           {% block content %}{% endblock content %}
         </div>
 

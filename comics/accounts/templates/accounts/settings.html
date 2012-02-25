@@ -1,0 +1,44 @@
+{% extends "core/base.html" %}
+
+{% block title %}
+  Account
+{% endblock %}
+
+{% block content %}
+
+  <div class="page-header">
+    <h1>Account <small>Manage your account</small></h1>
+  </div>
+
+  <div class="row">
+    <div class="span6">
+      <table class="table table-striped">
+        <tbody>
+          <tr>
+            <th>Email</th>
+            <td>{{ user.email }}</td>
+          </tr>
+
+          <tr>
+            <th>Password</th>
+            <td><a href="{% url auth_password_change %}">Change password</a></td>
+          </tr>
+
+          <tr>
+            <th>Secret key</th>
+            <td>
+              {{ user.get_profile.secret_key }}
+              <a href="{% url new_secret_key %}">Generate new key</a></td>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <p>
+    <a href="{% url auth_logout %}" class="btn btn-danger">
+      <i class="icon-off icon-white"></i> Logout</a>
+  </p>
+
+{% endblock content %}

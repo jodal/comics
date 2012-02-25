@@ -14,14 +14,15 @@ body {
     opacity: 0.3;
 }
 
-h3 a:hover {
-    text-decoration: none;
-}
-
-#cloud h3 {
-    border-bottom: 1px solid #ddd;
+#cloud {
     margin-bottom: 20px;
+}
+#cloud .page-header {
     margin-top: 40px;
+    padding-bottom: 5px;
+}
+#cloud h3 a:hover {
+    text-decoration: none;
 }
 #cloud a {
     color: #404040;

@@ -21,7 +21,8 @@ class UserProfile(models.Model):
 
     def __init__(self, *args, **kwargs):
         super(UserProfile, self).__init__(*args, **kwargs)
-        self.generate_new_secret_key()
+        if self.secret_key is None:
+            self.generate_new_secret_key()
 
     def __unicode__(self):
         return u'User profile for %s' % self.user

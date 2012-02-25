@@ -2,7 +2,10 @@
 
 
 {% block content %}
-  <h1>Feedback</h1>
+
+  <div class="page-header">
+    <h1>Feedback <small>to the site administrator</small></h1>
+  </div>
 
   <form action="" method="post" id="feedback" class="form-horizontal">
     {% csrf_token %}
@@ -16,4 +19,5 @@
       </button>
     </div>
   </form>
+
 {% endblock %}

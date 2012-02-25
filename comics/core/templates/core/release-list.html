@@ -47,16 +47,17 @@
 
 {% block content %}
 
-  <h1>{{ page.title|safe }}</h1>
+  <div class="page-header">
+    <h1>{{ page.title|safe }}</h1>
+  </div>
 
   {% ifequal page.view_type 'namedset' %}
     {% if set %}
-      <div class="well">
+      <p>
         <a href="{% url namedset-edit set.name %}" class="btn">
-          <i class="icon-edit"></i>
-          Edit comic set
+          <i class="icon-edit"></i> Edit comic set
         </a>
-      </div>
+      </p>
     {% endif %}
   {% endifequal %}
 
@@ -65,7 +66,7 @@
       {% for release in releases %}
 
         <div class="release">
-          <h3 id="release-{{ release.id }}">
+          <h3 id="r{{ release.id }}">
             <a href="{{ release.get_absolute_url }}">
               {{ release.comic.name }}
               <small class="pub_date">
@@ -88,12 +89,10 @@
           <div class="release">
             <h3><a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a></h3>
 
-            <div class="alert alert-block alert-info">
-              <p>
-                <strong>No matching release found.</strong> See
-                <a href="{% url comic-latest comic.slug %}">the latest release</a> or
-                the <a href="{{ comic.get_redirect_url }}">official site</a>.
-              </p>
+            <div class="well">
+              <strong>No matching release found.</strong> See
+              <a href="{% url comic-latest comic.slug %}">the latest release</a> or
+              the <a href="{{ comic.get_redirect_url }}">official site</a>.
             </div>
           </div>
         {% endif %}
@@ -121,7 +120,7 @@
 {% block extra_footer %}
   <script type="text/javascript">
     var releases = [{% for comic, releases in comics %}{% for release in releases %}
-      'release-{{ release.id }}'{% if not forloop.last or not forloop.parentloop.last%},{% endif %}{% endfor %}{% endfor %}
+      'r{{ release.id }}'{% if not forloop.last or not forloop.parentloop.last%},{% endif %}{% endfor %}{% endfor %}
     ];
   </script>
   {{ block.super }}

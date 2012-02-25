@@ -8,48 +8,50 @@
 
 {% block content %}
 
-<h1>Crawler status</h1>
+  <div class="page-header">
+    <h1>Crawler status</h1>
+  </div>
 
-<table id="status" class="condensed-table bordered-table zebra-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th></th>
-      {% for day in days %}
-        <th>{{ day|date:"M j" }}</th>
-      {% endfor %}
-    </tr>
-  </thead>
-  <tbody>
-  {% for comic, days in timeline.items %}
-    <tr>
-      <th><a href="{{ comic.get_absolute_url }}">{{ comic.slug }}</a></th>
-      <th><a href="{{ comic.get_redirect_url }}">Website</a></th>
-      {% for classes, day, release in days %}
-        <td title="{{ day|date }}"{% if classes %} class="{{ classes|join:" " }}"{% endif %}>
-          {% if release %}
-            <a href="{{ release.get_absolute_url }}">{{ day|date:"D" }}</a>
-          {% else %}
-            {{ day|date:"D" }}
-          {% endif %}
-        </td>
-      {% endfor %}
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
+  <table id="status" class="condensed-table bordered-table zebra-striped">
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        {% for day in days %}
+          <th>{{ day|date:"M j" }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+    {% for comic, days in timeline.items %}
+      <tr>
+        <th><a href="{{ comic.get_absolute_url }}">{{ comic.slug }}</a></th>
+        <th><a href="{{ comic.get_redirect_url }}">Website</a></th>
+        {% for classes, day, release in days %}
+          <td title="{{ day|date }}"{% if classes %} class="{{ classes|join:" " }}"{% endif %}>
+            {% if release %}
+              <a href="{{ release.get_absolute_url }}">{{ day|date:"D" }}</a>
+            {% else %}
+              {{ day|date:"D" }}
+            {% endif %}
+          </td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
 
-<h3>Legend</h3>
+  <h3>Legend</h3>
 
-<table id="status_legend" class="bordered-table">
-  <tbody>
-    <tr>
-      <td class="scheduled fetched">Scheduled and fetched</td>
-      <td class="fetched">Fetched</td>
-      <td class="scheduled">Scheduled</td>
-      <td>Neither</td>
-    </tr>
-  </tbody>
-</table>
+  <table id="status_legend" class="bordered-table">
+    <tbody>
+      <tr>
+        <td class="scheduled fetched">Scheduled and fetched</td>
+        <td class="fetched">Fetched</td>
+        <td class="scheduled">Scheduled</td>
+        <td>Neither</td>
+      </tr>
+    </tbody>
+  </table>
 
 {% endblock %}

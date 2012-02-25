@@ -6,7 +6,9 @@
 
 {% block content %}
 
-  <h1>Register <small>a new account</small></h1>
+  <div class="page-header">
+    <h1>Register <small>a new account</small></h1>
+  </div>
 
   <form action="{% url registration_register %}" method="post" class="form-horizontal">
     {% csrf_token %}

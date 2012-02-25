@@ -6,11 +6,15 @@ from registration.views import activate, register
 
 from comics.accounts.forms import (AuthenticationForm, PasswordChangeForm,
     PasswordResetForm)
+from comics.accounts.views import new_secret_key
 
 urlpatterns = patterns('',
     url(r'^register/$',
         register,
-        {'backend': 'comics.accounts.backends.RegistrationBackend'},
+        {
+            'backend': 'comics.accounts.backends.RegistrationBackend',
+            'extra_context': {'active': {'register': True}},
+        },
         name='registration_register'),
     url(r'^register/complete/$',
         direct_to_template,
@@ -34,18 +38,22 @@ urlpatterns = patterns('',
         auth_views.login,
         {
             'authentication_form': AuthenticationForm,
+            'extra_context': {'active': {'login': True}},
             'template_name': 'auth/login.html',
         },
         name='auth_login'),
     url(r'^logout/$',
         auth_views.logout,
-        {'template_name': 'auth/logout.html'},
+        {'next_page': '/account/login/'},
         name='auth_logout'),
 
-    url(r'^profile/$',
+    url(r'^$',
         direct_to_template,
-        {'template': 'accounts/profile.html'},
-        name='accounts_profile'),
+        {
+            'template': 'accounts/settings.html',
+            'extra_context': {'active': {'account': True}},
+        },
+        name='account_settings'),
 
     url(r'^password/change/$',
         auth_views.password_change,
@@ -81,4 +89,6 @@ urlpatterns = patterns('',
         auth_views.password_reset_done,
         {'template_name': 'auth/password_reset_done.html'},
         name='auth_password_reset_done'),
+
+    url(r'^key/$', new_secret_key, name='new_secret_key'),
 )
