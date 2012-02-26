@@ -73,6 +73,12 @@
                 published {{ release.pub_date|naturalday }}
               </small>
             </a>
+            <a href="#" class="btn pull-right" class="userset-add-comic">
+              <i class="icon-plus"></i> Add to my comics
+            </a>
+            <a href="#" class="btn pull-right" class="userset-remove-comic">
+              <i class="icon-minus"></i> Remove from my comics
+            </a>
           </h3>
           <div class="well">
             {% cache 3600 'release' release.id %}
