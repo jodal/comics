@@ -13,6 +13,7 @@ v1.1.4 (in development)
 
 - New: ``kellermannen``
 - Update ``darylcagle`` after feed change.
+- Update ``playervsplayer`` after feed change.
 
 
 v1.1.3 (2012-01-29)
