@@ -122,6 +122,24 @@ def named_set_year(request, namedset, year=None):
 
 @login_required
 @never_cache
+def user_set_toggle_comic(request):
+    """Add to or remove from comic to the current user's set"""
+
+    if request.method != 'POST':
+        raise Http404
+
+    user_set = get_object_or_404(UserSet, user=request.user)
+    comic = get_object_or_404(Comic, slug=request.POST['comic'])
+
+    if 'add_comic' in request.POST:
+        user_set.comics.add(comic)
+    elif 'remove_comic' in request.POST:
+        user_set.comics.remove(comic)
+
+    return HttpResponseRedirect(reverse('userset-latest'))
+
+@login_required
+@never_cache
 def user_set_show(request, year=None, month=None, day=None, days=1):
     """Show comics in this user set from one or more dates"""
 
