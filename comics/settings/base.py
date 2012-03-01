@@ -3,14 +3,14 @@
 import os
 import django
 
-PROJECT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../')
-DJANGO_DIR = os.path.dirname(os.path.abspath(django.__file__))
+PROJECT_DIR = os.path.abspath(os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), '..'))
 
 SECRET_KEY = 'This key should really be overriden in comics/settings/local.py'
 
 DATABASES = {
     'default': {
-        'NAME': os.path.join(PROJECT_DIR, '../db.sqlite3'),
+        'NAME': os.path.abspath(os.path.join(PROJECT_DIR, '..', 'db.sqlite3')),
         'ENGINE': 'django.db.backends.sqlite3',
     }
 }
@@ -36,7 +36,7 @@ SITE_ID = 1
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, '../media/')) + '/'
+MEDIA_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, '..', 'media')) + '/'
 
 # URL that handles the media served from MEDIA_ROOT.
 # Example: "http://media.lawrence.com"
@@ -46,7 +46,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, '../static/'))
+STATIC_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, '..', 'static'))
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -235,7 +235,8 @@ COMICS_IMAGE_BLACKLIST = (
 )
 
 # Comics log file
-COMICS_LOG_FILENAME = os.path.join(PROJECT_DIR, '../comics.log')
+COMICS_LOG_FILENAME = os.path.abspath(
+    os.path.join(PROJECT_DIR, '..', 'comics.log'))
 
 # Time zone used for comic crawlers without a specified time zone
 # UTC=0, CET=1, EST=-5, PST=-8
