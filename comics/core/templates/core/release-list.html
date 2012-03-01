@@ -66,14 +66,19 @@
       {% for release in releases %}
 
         <div class="release">
-          <form action="{% url toggle_comic %}" method="post" class="pull-right">
+          <form action="{% url toggle_comic %}" method="post"
+            class="pull-right userset-toggle">
             {% csrf_token %}
             <input type="hidden" name="comic" value="{{ comic.slug }}">
-            <button name="add_comic" class="btn userset-add-comic">
-              <i class="icon-plus"></i> Add to my comics
-            </button>
-            <button name="remove_comic" class="btn userset-remove-comic">
+            <button type="submit" name="remove_comic"
+              class="btn userset-remove-comic
+                {% if comic not in user_set_comics %}hidden{% endif %}">
               <i class="icon-minus"></i> Remove from my comics
+            </button>
+            <button type="submit" name="add_comic"
+              class="btn userset-add-comic
+                {% if comic in user_set_comics %}hidden{% endif %}">
+              <i class="icon-plus"></i> Add to my comics
             </button>
           </form>
 
