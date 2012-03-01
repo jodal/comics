@@ -1,6 +1,7 @@
 import datetime as dt
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404
@@ -133,8 +134,10 @@ def user_set_toggle_comic(request):
 
     if 'add_comic' in request.POST:
         user_set.comics.add(comic)
+        messages.info(request, 'Added "%s" to my comics' % comic.name)
     elif 'remove_comic' in request.POST:
         user_set.comics.remove(comic)
+        messages.info(request, 'Removed "%s" from my comics' % comic.name)
 
     return HttpResponseRedirect(reverse('userset-latest'))
 
