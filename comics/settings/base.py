@@ -100,6 +100,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'comics.core.context_processors.site_settings',
     'comics.core.context_processors.all_comics',
+    'comics.sets.context_processors.user_set',
 )
 
 INSTALLED_APPS = (
