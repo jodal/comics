@@ -1,10 +1,10 @@
 *.log
 *.log.*
 *.pyc
-*.sqlite3
-*.swp
-comics/settings/local.py
-docs/_build
-media/c
-venv
-wsgi/local.py
+*.sw[po]
+/comics/settings/local.py
+/db.sqlite3
+/docs/_build
+/media
+/static
+/wsgi/local.py
