@@ -19,3 +19,4 @@ Public License version 3.
 - `Documentation <http://comics.readthedocs.org/>`_
 - Feedback? Requests? `Create an issue <http://github.com/jodal/comics/issues>`_
 - IRC: ``#dailycomics`` at `irc.freenode.net <http://freenode.net/>`_
+- `Contributors <https://github.com/jodal/comics/contributors>`_
