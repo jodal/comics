@@ -7,6 +7,7 @@ from registration.views import activate, register
 from comics.accounts.forms import (AuthenticationForm, PasswordChangeForm,
     PasswordResetForm)
 from comics.accounts.views import new_secret_key
+from comics.sets.views import user_set_toggle_comic
 
 urlpatterns = patterns('',
     url(r'^register/$',
@@ -91,4 +92,6 @@ urlpatterns = patterns('',
         name='auth_password_reset_done'),
 
     url(r'^key/$', new_secret_key, name='new_secret_key'),
+
+    url(r'^toggle-comic/$', user_set_toggle_comic, name='toggle_comic'),
 )
