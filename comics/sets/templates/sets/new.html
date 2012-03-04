@@ -31,7 +31,7 @@
 
       <h4>Use a comic set</h4>
 
-      <form action="{% url set-new %}" method="post" id="new_set" class="form-horizontal">
+      <form action="{% url namedset-new %}" method="post" id="new_set" class="form-horizontal">
         {% csrf_token %}
 
         {{ form }}

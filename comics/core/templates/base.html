@@ -28,13 +28,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </a>
-              <a class="brand" href="{% url top-latest %}">{{ site_title }}</a>
+              <a class="brand" href="{% url userset-latest %}">{{ site_title }}</a>
               <div class="nav-collapse">
                 {% block site_menu %}
                   <ul class="nav">
                   {% if user.is_authenticated %}
                     <li class="{{ active.home|yesno:"active," }}" >
-                      <a href="{% url top-latest %}">
+                      <a href="{% url userset-latest %}">
                         <i class="icon-home icon-white"></i>
                         Home</a>
                     </li>
@@ -44,7 +44,7 @@
                         Account</a>
                     </li>
                     <li class="{{ active.sets|yesno:"active," }}" >
-                      <a href="{% url set-new %}">
+                      <a href="{% url namedset-new %}">
                         <i class="icon-bookmark icon-white"></i>
                         Sets</a>
                     </li>

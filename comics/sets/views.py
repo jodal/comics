@@ -1,6 +1,7 @@
 import datetime as dt
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404
@@ -11,31 +12,35 @@ from django.views.decorators.cache import never_cache
 from comics.core.models import Comic
 from comics.core.utils.navigation import get_navigation
 from comics.core.views import generic_show
-from comics.sets.models import Set
-from comics.sets.forms import NewSetForm, EditSetForm
+from comics.sets.models import NamedSet, UserSet
+from comics.sets.forms import NewNamedSetForm, EditNamedSetForm
+
+
+# Named set views
 
 @login_required
 @never_cache
-def set_new(request):
-    """Create a new set and redirect to set settings"""
+def named_set_new(request):
+    """Create a new named set and redirect to named set settings"""
 
     if request.method == 'POST':
-        form = NewSetForm(request.POST)
+        form = NewNamedSetForm(request.POST)
         if 'name' in form.data:
             try:
                 # If already exists, load the set
-                comics_set = Set.objects.get(name=slugify(form.data['name']))
-                comics_set.last_loaded = dt.datetime.now()
-                comics_set.save()
-                return HttpResponseRedirect(comics_set.get_absolute_url())
-            except Set.DoesNotExist:
+                named_set = NamedSet.objects.get(
+                    name=slugify(form.data['name']))
+                named_set.last_loaded = dt.datetime.now()
+                named_set.save()
+                return HttpResponseRedirect(named_set.get_absolute_url())
+            except NamedSet.DoesNotExist:
                 # Else, create the set
                 if form.is_valid():
-                    comics_set = form.save()
-                    return HttpResponseRedirect(reverse('set-edit',
-                        kwargs={'set': comics_set.name}))
+                    named_set = form.save()
+                    return HttpResponseRedirect(reverse('namedset-edit',
+                        kwargs={'namedset': named_set.name}))
     else:
-        form = NewSetForm()
+        form = NewNamedSetForm()
 
     return render(request, 'sets/new.html', {
         'active': {'sets': True},
@@ -45,33 +50,33 @@ def set_new(request):
 
 @login_required
 @never_cache
-def set_edit(request, set):
-    """Edit what comics is part of a set"""
+def named_set_edit(request, namedset):
+    """Edit what comics is part of a named set"""
 
-    set = get_object_or_404(Set, name=set)
+    named_set = get_object_or_404(NamedSet, name=namedset)
 
     if request.method == 'POST':
-        form = EditSetForm(request.POST, instance=set)
+        form = EditNamedSetForm(request.POST, instance=named_set)
         if form.is_valid():
             form.save()
             # Update comic's number_of_set count
             for comic in Comic.objects.all():
-                comic.number_of_sets = comic.set_set.count()
+                comic.number_of_sets = comic.namedset_set.count()
                 comic.save()
-            return HttpResponseRedirect(set.get_absolute_url())
+            return HttpResponseRedirect(named_set.get_absolute_url())
     else:
-        form = EditSetForm(instance=set)
+        form = EditNamedSetForm(instance=named_set)
 
     kwargs = {
         'form': form,
-        'set': set,
+        'set': named_set,
     }
     return render(request, 'sets/edit.html', kwargs)
 
 @login_required
 @never_cache
-def set_show(request, set, year=None, month=None, day=None, days=1):
-    """Show comics in this set from one or more dates"""
+def named_set_show(request, namedset, year=None, month=None, day=None, days=1):
+    """Show comics in this named set from one or more dates"""
 
     year = year and int(year)
     month = month and int(month)
@@ -80,32 +85,103 @@ def set_show(request, set, year=None, month=None, day=None, days=1):
     if not (1 <= days <= settings.COMICS_MAX_DAYS_IN_PAGE):
         raise Http404
 
-    set = get_object_or_404(Set, name=set)
-    queryset = set.comics.all()
-    page = get_navigation(request, 'set', instance=set,
+    named_set = get_object_or_404(NamedSet, name=namedset)
+    queryset = named_set.comics.all()
+    page = get_navigation(request, 'namedset', instance=named_set,
         year=year, month=month, day=day, days=days)
-    return generic_show(request, queryset, page, extra_context={'set': set})
+    return generic_show(request, queryset, page,
+        extra_context={'set': named_set})
 
 @login_required
 @never_cache
-def set_latest(request, set):
-    """Show latest releases from set"""
+def named_set_latest(request, namedset):
+    """Show latest releases from named set"""
 
-    set = get_object_or_404(Set, name=set)
-    queryset = set.comics.all()
-    page = get_navigation(request, 'set', instance=set, days=1, latest=True)
+    named_set = get_object_or_404(NamedSet, name=namedset)
+    queryset = named_set.comics.all()
+    page = get_navigation(request, 'namedset', instance=named_set, days=1,
+        latest=True)
     return generic_show(request, queryset, page, latest=True,
-        extra_context={'set': set})
+        extra_context={'set': named_set})
 
 @login_required
-def set_year(request, set, year=None):
+def named_set_year(request, namedset, year=None):
     """Redirect to first day of year if not in the future"""
 
     if int(year) > dt.date.today().year:
         raise Http404
     else:
-        return HttpResponseRedirect(reverse('set-date', kwargs={
-            'set': set,
+        return HttpResponseRedirect(reverse('namedset-date', kwargs={
+            'namedset': namedset,
+            'year': year,
+            'month': 1,
+            'day': 1,
+        }))
+
+
+# User set views
+
+@login_required
+@never_cache
+def user_set_toggle_comic(request):
+    """Add to or remove from comic to the current user's set"""
+
+    if request.method != 'POST':
+        raise Http404
+
+    user_set = get_object_or_404(UserSet, user=request.user)
+    comic = get_object_or_404(Comic, slug=request.POST['comic'])
+
+    if 'add_comic' in request.POST:
+        user_set.comics.add(comic)
+        messages.info(request, 'Added "%s" to my comics' % comic.name)
+    elif 'remove_comic' in request.POST:
+        user_set.comics.remove(comic)
+        messages.info(request, 'Removed "%s" from my comics' % comic.name)
+
+    return HttpResponseRedirect(reverse('userset-latest'))
+
+@login_required
+@never_cache
+def user_set_show(request, year=None, month=None, day=None, days=1):
+    """Show comics in this user set from one or more dates"""
+
+    year = year and int(year)
+    month = month and int(month)
+    day = day and int(day)
+    days = days and int(days)
+    if not (1 <= days <= settings.COMICS_MAX_DAYS_IN_PAGE):
+        raise Http404
+
+    user_set = get_object_or_404(UserSet, user=request.user)
+    queryset = user_set.comics.all()
+    page = get_navigation(request, 'userset', instance=user_set,
+        year=year, month=month, day=day, days=days)
+    return generic_show(request, queryset, page,
+        extra_context={'user_set': user_set})
+
+@login_required
+@never_cache
+def user_set_latest(request):
+    """Show latest releases from user set"""
+
+    user_set = get_object_or_404(UserSet, user=request.user)
+    queryset = user_set.comics.all()
+    page = get_navigation(request, 'userset', instance=user_set, days=1,
+        latest=True)
+    return generic_show(request, queryset, page, latest=True,
+        extra_context={'user_set': user_set})
+
+@login_required
+def user_set_year(request, year=None):
+    """Redirect to first day of year if not in the future"""
+
+    if int(year) > dt.date.today().year:
+        raise Http404
+    else:
+        user_set = get_object_or_404(UserSet, user=request.user)
+        return HttpResponseRedirect(reverse('user-set-date', kwargs={
+            'user_set': user_set,
             'year': year,
             'month': 1,
             'day': 1,

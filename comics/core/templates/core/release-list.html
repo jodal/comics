@@ -17,7 +17,7 @@
         title="Comic feed: {{ comics.0.0.name }}">
     {% endif %}
   {% endifequal %}
-  {% ifequal page.view_type 'set' %}
+  {% ifequal page.view_type 'namedset' %}
     {% if set %}
       <link rel="alternate" type="application/atom+xml"
         href="{{ set.get_feed_url }}"
@@ -51,10 +51,10 @@
     <h1>{{ page.title|safe }}</h1>
   </div>
 
-  {% ifequal page.view_type 'set' %}
+  {% ifequal page.view_type 'namedset' %}
     {% if set %}
       <p>
-        <a href="{% url set-edit set.name %}" class="btn">
+        <a href="{% url namedset-edit set.name %}" class="btn">
           <i class="icon-edit"></i> Edit comic set
         </a>
       </p>
@@ -66,6 +66,22 @@
       {% for release in releases %}
 
         <div class="release">
+          <form action="{% url toggle_comic %}" method="post"
+            class="pull-right userset-toggle">
+            {% csrf_token %}
+            <input type="hidden" name="comic" value="{{ comic.slug }}">
+            <button type="submit" name="remove_comic"
+              class="btn userset-remove-comic
+                {% if comic not in user_set_comics %}hidden{% endif %}">
+              <i class="icon-minus"></i> Remove from my comics
+            </button>
+            <button type="submit" name="add_comic"
+              class="btn userset-add-comic
+                {% if comic in user_set_comics %}hidden{% endif %}">
+              <i class="icon-plus"></i> Add to my comics
+            </button>
+          </form>
+
           <h3 id="r{{ release.id }}">
             <a href="{{ release.get_absolute_url }}">
               {{ release.comic.name }}
@@ -106,7 +122,7 @@
         </p>
         <p class="alert-actions">
           {% if set %}
-            <a href="{% url set-edit set.name %}" class="btn small">Edit comics set</a>
+            <a href="{% url namedset-edit set.name %}" class="btn small">Edit comics set</a>
           {% endif %}
         </p>
       </div>

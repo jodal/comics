@@ -101,6 +101,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'comics.core.context_processors.site_settings',
     'comics.core.context_processors.all_comics',
+    'comics.sets.context_processors.user_set',
 )
 
 INSTALLED_APPS = (
@@ -202,9 +203,6 @@ REGISTRATION_BACKEND = 'comics.accounts.backends.RegistrationBackend'
 # Location of the comic images
 COMICS_MEDIA_ROOT = '%sc/' % MEDIA_ROOT
 COMICS_MEDIA_URL = '%sc/' % MEDIA_URL
-
-# Number of comics to show in the top list
-COMICS_MAX_IN_TOP_LIST = 10
 
 # Maximum number of days to show in one page
 COMICS_MAX_DAYS_IN_PAGE = 31
