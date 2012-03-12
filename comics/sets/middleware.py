@@ -1,8 +1,17 @@
 import datetime
 
-from comics.sets.models import NamedSet
+from comics.sets.models import NamedSet, UserSet
 
 class SetMiddleware(object):
+    def process_request(self, request):
+        if request.user.is_active:
+            request.user_set, _ = UserSet.objects.get_or_create(user=request.user,
+                defaults={
+                    'last_modified': datetime.datetime.now(),
+                    'last_loaded': datetime.datetime.now(),
+                })
+        return None
+
     def process_view(self, request, view_func, view_args, view_kwargs):
         """
         For set views do the following on the session object:
