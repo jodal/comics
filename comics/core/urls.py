@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import patterns, url
 
 from comics.core import views
 from comics.sets import views as set_views

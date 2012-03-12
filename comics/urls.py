@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 
 from django.conf import settings
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import include, patterns, url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns

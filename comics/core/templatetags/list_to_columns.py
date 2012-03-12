@@ -1,6 +1,6 @@
 """Splits query results list into multiple sublists for template display."""
 
-from django.template import Library, Node
+from django.template import Library, Node, TemplateSyntaxError
 
 register = Library()
 

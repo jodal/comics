@@ -2,10 +2,13 @@
 
 import re
 from uuid import uuid4
+
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
+from django.contrib.sites.models import RequestSite, Site
 
-from registration.backends.default import *
+from registration import signals
+from registration.backends.default import DefaultBackend
 from registration.models import RegistrationProfile
 
 from forms import RegistrationForm
