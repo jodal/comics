@@ -179,9 +179,7 @@ def user_set_year(request, year=None):
     if int(year) > dt.date.today().year:
         raise Http404
     else:
-        user_set = get_object_or_404(UserSet, user=request.user)
-        return HttpResponseRedirect(reverse('user-set-date', kwargs={
-            'user_set': user_set,
+        return HttpResponseRedirect(reverse('userset-date', kwargs={
             'year': year,
             'month': 1,
             'day': 1,
