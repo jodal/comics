@@ -129,14 +129,13 @@ def user_set_toggle_comic(request):
     if request.method != 'POST':
         raise Http404
 
-    user_set = get_object_or_404(UserSet, user=request.user)
     comic = get_object_or_404(Comic, slug=request.POST['comic'])
 
     if 'add_comic' in request.POST:
-        user_set.comics.add(comic)
+        request.user_set.comics.add(comic)
         messages.info(request, 'Added "%s" to my comics' % comic.name)
     elif 'remove_comic' in request.POST:
-        user_set.comics.remove(comic)
+        request.user_set.comics.remove(comic)
         messages.info(request, 'Removed "%s" from my comics' % comic.name)
 
     return HttpResponseRedirect(reverse('userset-latest'))
@@ -153,24 +152,20 @@ def user_set_show(request, year=None, month=None, day=None, days=1):
     if not (1 <= days <= settings.COMICS_MAX_DAYS_IN_PAGE):
         raise Http404
 
-    user_set = get_object_or_404(UserSet, user=request.user)
-    queryset = user_set.comics.all()
-    page = get_navigation(request, 'userset', instance=user_set,
+    queryset = request.user_set.comics.all()
+    page = get_navigation(request, 'userset', instance=request.user_set,
         year=year, month=month, day=day, days=days)
-    return generic_show(request, queryset, page,
-        extra_context={'user_set': user_set})
+    return generic_show(request, queryset, page)
 
 @login_required
 @never_cache
 def user_set_latest(request):
     """Show latest releases from user set"""
 
-    user_set = get_object_or_404(UserSet, user=request.user)
-    queryset = user_set.comics.all()
-    page = get_navigation(request, 'userset', instance=user_set, days=1,
-        latest=True)
-    return generic_show(request, queryset, page, latest=True,
-        extra_context={'user_set': user_set})
+    queryset = request.user_set.comics.all()
+    page = get_navigation(request, 'userset', instance=request.user_set,
+        days=1, latest=True)
+    return generic_show(request, queryset, page, latest=True)
 
 @login_required
 def user_set_year(request, year=None):
