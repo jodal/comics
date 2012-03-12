@@ -5,11 +5,11 @@ from django import forms
 from django.template.defaultfilters import slugify
 
 from comics.core.models import Comic
-from comics.sets.models import NamedSet
+from comics.sets.models import Set
 
 class NewNamedSetForm(BootstrapModelForm):
     class Meta:
-        model = NamedSet
+        model = Set
         fields = ('name',)
 
     def save(self, commit=True):
@@ -36,7 +36,7 @@ class EditNamedSetForm(BootstrapModelForm):
             'selected time interval will be hidden.')
 
     class Meta:
-        model = NamedSet
+        model = Set
         fields = ('comics', 'add_new_comics', 'hide_empty_comics')
 
     def save(self, commit=True):

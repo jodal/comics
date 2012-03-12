@@ -6,7 +6,7 @@ from django.contrib.syndication.views import Feed, FeedDoesNotExist
 from django.utils.feedgenerator import Atom1Feed
 
 from comics.core.models import Release
-from comics.sets.models import NamedSet
+from comics.sets.models import Set
 from comics.core.utils.comic_releases import add_images
 
 class NamedSetFeed(Feed):
@@ -16,7 +16,7 @@ class NamedSetFeed(Feed):
     description_template = 'feeds/release-content.html'
 
     def get_object(self, request, namedset):
-        return NamedSet.objects.get(name=namedset)
+        return Set.objects.get(name=namedset)
 
     def title(self, obj):
         return '%s: Set: %s' % (Site.objects.get_current().name, obj.name)
@@ -29,9 +29,8 @@ class NamedSetFeed(Feed):
     def items(self, obj):
         from_date = datetime.date.today() \
             - datetime.timedelta(settings.COMICS_MAX_DAYS_IN_FEED)
-        releases = Release.objects.select_related(depth=1
-            ).filter(comic__named_set=obj, pub_date__gte=from_date
-            ).order_by('-pub_date')
+        releases = Release.objects.select_related(depth=1).filter(comic__set=obj,
+            pub_date__gte=from_date).order_by('-pub_date')
         add_images(releases)
         return releases
 

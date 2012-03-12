@@ -7,7 +7,7 @@ from django.db.models import signals
 
 from comics.core.models import Comic
 
-class NamedSet(models.Model):
+class Set(models.Model):
     name = models.SlugField(max_length=100, unique=True,
         help_text='The set identifier')
     add_new_comics = models.BooleanField(default=False,
@@ -20,7 +20,7 @@ class NamedSet(models.Model):
     comics = models.ManyToManyField(Comic)
 
     class Meta:
-        db_table = 'comics_namedset'
+        db_table = 'comics_set'
         ordering = ['name']
 
     def __unicode__(self):
