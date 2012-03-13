@@ -64,14 +64,6 @@ class UserSet(models.Model):
         self.save()
 
 
-def create_user_set_for_new_users_callback(sender, **kwargs):
-    if sender == User and kwargs['created']:
-        user_set = UserSet(user=kwargs['instance'])
-        user_set.save()
-
-signals.post_save.connect(create_user_set_for_new_users_callback, sender=User)
-
-
 def add_new_comic_to_user_sets_callback(sender, **kwargs):
     if sender == Comic and kwargs['created']:
         # Add new comic to all sets with add_new_comics=True
