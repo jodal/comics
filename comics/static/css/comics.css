@@ -2,16 +2,14 @@ body {
     padding-top: 60px;
 }
 
-.navbar .nav > li > a {
-    color: #fff;
-    opacity: 0.6;
-}
-.navbar .nav > li > a:hover {
-    opacity: 1.0;
-}
 .navbar .nav > li > a.disabled,
 .navbar .nav > li > a.disabled:hover {
+    color: #000 !important;
     opacity: 0.3;
+}
+
+h3 a:hover {
+    text-decoration: none;
 }
 
 .release h3 {
@@ -24,9 +22,6 @@ body {
 #cloud .page-header {
     margin-top: 40px;
     padding-bottom: 5px;
-}
-#cloud h3 a:hover {
-    text-decoration: none;
 }
 #cloud a {
     color: #404040;
