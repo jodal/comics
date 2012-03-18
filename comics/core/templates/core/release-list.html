@@ -65,7 +65,7 @@
     {% for comic, releases in comics %}
       {% for release in releases %}
 
-        <div class="release">
+        <div class="release well">
           <form action="{% url toggle_comic %}" method="post"
             class="pull-right userset-toggle">
             {% csrf_token %}
@@ -90,11 +90,10 @@
               </small>
             </a>
           </h3>
-          <div class="well">
-            {% cache 3600 'release' release.id %}
-              {% include "core/release-content.html" %}
-            {% endcache %}
-          </div>
+
+          {% cache 3600 'release' release.id %}
+            {% include "core/release-content.html" %}
+          {% endcache %}
         </div>
 
       {% empty %}
