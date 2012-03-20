@@ -5,7 +5,7 @@ class Command(ComicsBaseCommand):
     option_list = ComicsBaseCommand.option_list + (
         make_option('-c', '--comic',
             action='append', dest='comic_slugs', metavar='COMIC',
-            help='Comic to crawl, repeat for multiple [default: all]'),
+            help='Comic to add to site, repeat for multiple [default: all]'),
     )
 
     def handle(self, *args, **options):

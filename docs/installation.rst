@@ -96,19 +96,19 @@ Seed database
 
 Then we need to seed the database with information on what comics exist::
 
-    python manage.py loadmeta
+    python manage.py comics_addcomics
 
 Optionally, you can add ``-c xkcd`` to only load the *XKCD* comic from
 ``comics/comics/comics/xkcd.py``.
 
 
-Get some comics
----------------
+Get some comic releases
+-----------------------
 
 Next, we need to get hold of some comic releases, so we will crawl the web for
 them::
 
-    python manage.py getcomics
+    python manage.py comics_getreleases
 
 
 Development web server
@@ -128,7 +128,7 @@ administration tasks, like removing comics or releases.
 More options
 ------------
 
-All of these commands got more options available. I.e. ``getcomics`` can crawl
-specific comics, and arbitrary ranges of dates instead of just getting the
-latest release. Add the ``--help`` argument to any of the commands to get a
-full listing.
+All of these commands got more options available. I.e. ``comics_getreleases``
+can crawl specific comics, and arbitrary ranges of dates instead of just
+getting the latest release. Add the ``--help`` argument to any of the commands
+to get a full listing.

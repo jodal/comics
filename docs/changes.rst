@@ -35,6 +35,13 @@ v1.2 (in development)
 
 - New design based on Twitter Bootstrap.
 
+- Renamed commands:
+
+  - ``loadmeta`` is now called ``comics_addcomics``
+  - ``getcomics`` is now called ``comics_getreleases``
+
+  Remember to update your cronjobs.
+
 
 v1.1.4 (in development)
 =======================

@@ -470,42 +470,43 @@ Loading :class:`Meta` for your new comic
 ----------------------------------------
 
 For *comics* to know about your new crawler, you need to load the comic meta
-data into *comics*'s database. To do so, we run the ``loadmeta`` command::
+data into *comics*'s database. To do so, we run the ``comics_addcomics``
+command::
 
-    python manage.py loadmeta -c foo
+    python manage.py comics_addcomics -c foo
 
 If you do any changes to the :class:`Meta` class of any crawler, you must rerun
-``loadmeta`` to update the database representation of the comic.
+``comics_addcomics`` to update the database representation of the comic.
 
 
 Running the crawler
 -------------------
 
-When ``loadmeta`` has created a :class:`comics.core.models.Comic` instance for
-the new crawler, you may use your new crawler to fetch the comic's release for
-the current date by running::
+When ``comics_addcomics`` has created a :class:`comics.core.models.Comic`
+instance for the new crawler, you may use your new crawler to fetch the comic's
+release for the current date by running::
 
-    python manage.py getcomics -c foo
+    python manage.py comics_getreleases -c foo
 
 If you want to get comics releases for more than the current day, you may
 specify a date range to crawl, like::
 
-    python manage.py getcomics -c foo -f 2009-01-01 -t 2009-03-31
+    python manage.py comics_getreleases -c foo -f 2009-01-01 -t 2009-03-31
 
 The date range will automatically be adjusted to the crawlers *history
 capability*. You may also get comics for a date range without a specific end.
 In which case, the current date will be used instead::
 
-    python manage.py getcomics -c foo -f 2009-01-01
+    python manage.py comics_getreleases -c foo -f 2009-01-01
 
 If your new crawler is not working properly, you may add ``-v2`` to the command
 to turn on full debug output::
 
-    python manage.py getcomics -c foo -v2
+    python manage.py comics_getreleases -c foo -v2
 
-For a full overview of ``getcomics`` options, run::
+For a full overview of ``comics_getreleases`` options, run::
 
-    python manage.py getcomics --help
+    python manage.py comics_getreleases --help
 
 
 Submitting your new crawler for inclusion in *comics*

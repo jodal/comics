@@ -170,14 +170,14 @@ and JavaScript. For more details, see the Django documentation on `staticfiles
 Example cronjob
 ===============
 
-To get new comics, you should run ``getcomics`` regularly. One way is to use
-``cron`` e.g. by placing the following in ``/etc/cron.d/comics``:
+To get new comics, you should run ``comics_getreleases`` regularly. One way is
+to use ``cron`` e.g. by placing the following in ``/etc/cron.d/comics``:
 
 .. code-block:: sh
 
     MAILTO=comics@example.com
     PYTHONPATH=/path/to/comics
-    1 * * * * comics-user python /path/to/comics/comics/manage.py getcomics -v0
+    1 * * * * comics-user python /path/to/comics/comics/manage.py comics_getreleases -v0
 
 If you have installed *comics*' dependencies in a virtualenv instead of
 globally, the cronjob must also activate the virtualenv. This can be done by
@@ -187,7 +187,7 @@ using the ``python`` interpreter from the virtualenv:
 
     MAILTO=comics@example.com
     PYTHONPATH=/path/to/comics
-    1 * * * * comics-user /path/to/comics/venv/bin/python /path/to/comics/comics/manage.py getcomics -v0
+    1 * * * * comics-user /path/to/comics/venv/bin/python /path/to/comics/comics/manage.py comics_getreleaes -v0
 
 By setting ``MAILTO`` any exceptions raised by the comic crawlers will be sent
 by mail to the given mail address. ``1 * * * *`` specifies that the command
