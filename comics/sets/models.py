@@ -49,8 +49,6 @@ class UserSet(models.Model):
         help_text='Automatically add new comics to the set')
     hide_empty_comics = models.BooleanField(default=False,
         help_text='Hide comics without matching releases from view')
-    last_modified = models.DateTimeField()
-    last_loaded = models.DateTimeField()
     comics = models.ManyToManyField(Comic)
 
     class Meta:
@@ -58,10 +56,6 @@ class UserSet(models.Model):
 
     def __unicode__(self):
         return u'Comic set for %s' % self.user
-
-    def set_loaded(self):
-        self.last_loaded = datetime.datetime.now()
-        self.save()
 
 
 def add_new_comic_to_user_sets_callback(sender, **kwargs):
