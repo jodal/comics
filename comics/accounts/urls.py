@@ -37,7 +37,7 @@ urlpatterns = patterns('',
     url(r'^login/$',
         auth_views.login,
         {
-            'authenticate_form': AuthenticationForm,
+            'authentication_form': AuthenticationForm,
             'extra_context': {'active': {'login': True}},
             'template_name': 'auth/login.html',
         },
