@@ -9,6 +9,39 @@ versioned release.
 v1.1.4 (in development)
 =======================
 
+**Bugfixes**
+
+- Store only the name of recently used sets in the session, instead of full
+  set objects. After applying this fix, you should either delete all existing
+  sessions::
+
+      $ python manage.py shell
+      >>> from django.contrib.sessions.models import Session
+      >>> Session.objects.all().delete()
+
+  Or migrate the content of your existing sessions::
+
+      $ python manage.py cleanup
+      $ python manage.py shell
+
+      # Then run the following Python script in the Python shell:
+
+      from django.contrib.sessions.backends.db import SessionStore
+      from django.contrib.sessions.models import Session
+      store = SessionStore()
+      for session in Session.objects.all():
+          data = session.get_decoded()
+          set_names = []
+          for set in data.get('recent_sets', []):
+              if hasattr(set, 'name'):
+                  set_names.append(set.name)
+              else:
+                  set_names.append(set)
+          data['recent_sets'] = set_names
+          session.session_data = store.encode(data)
+          session.save()
+          print '.',
+
 **Crawlers**
 
 - New: ``kellermannen``

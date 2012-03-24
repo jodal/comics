@@ -35,9 +35,12 @@ def set_new(request):
     else:
         form = NewSetForm()
 
+    recent_sets = Set.objects.filter(
+        name__in=request.session.get('recent_sets', []))
+
     kwargs = {
         'form': form,
-        'recent_sets': request.session.get('recent_sets', None),
+        'recent_sets': recent_sets,
     }
     return render(request, 'sets/new.html', kwargs)
 
