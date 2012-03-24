@@ -107,7 +107,6 @@ may look like this::
     MEDIA_URL = 'http://comics.example.com/media/'
     STATIC_ROOT = '/var/www/comics.example.com/static/'
     STATIC_URL = 'http://comics.example.com/static/'
-    ADMIN_MEDIA_PREFIX = '%sadmin/' % STATIC_URL
     COMICS_MEDIA_ROOT = '%sc/' % MEDIA_ROOT
     COMICS_MEDIA_URL = '%sc/' % MEDIA_URL
 
