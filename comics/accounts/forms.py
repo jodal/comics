@@ -1,6 +1,7 @@
 # Based on https://bitbucket.org/jokull/django-email-login/
 
 from django.contrib.auth import authenticate
+from django.contrib.auth import forms as auth_forms
 from django.contrib.auth.models import User
 from django import forms
 from django.utils.translation import ugettext_lazy as _
@@ -93,3 +94,9 @@ class AuthenticationForm(forms.Form):
 
     def get_user(self):
         return self.user_cache
+
+
+class PasswordResetForm(auth_forms.PasswordResetForm):
+    def __init__(self, *args, **kwargs):
+        auth_forms.PasswordResetForm.__init__(self, *args, **kwargs)
+        self.fields['email'].label = 'Email'
