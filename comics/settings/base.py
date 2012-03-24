@@ -1,7 +1,4 @@
-# Django settings for comics project.
-
 import os
-import django
 
 PROJECT_DIR = os.path.abspath(os.path.join(
     os.path.dirname(os.path.abspath(__file__)), '..'))
@@ -15,61 +12,39 @@ DATABASES = {
     }
 }
 
-# Local time zone for this installation. All choices can be found here:
-# http://www.postgresql.org/docs/current/static/datetime-keywords.html#DATETIME-TIMEZONE-SET-TABLE
 TIME_ZONE = 'Europe/Oslo'
-
-# Language code for this installation. All choices can be found here:
-# http://www.w3.org/TR/REC-html40/struct/dirlang.html#langcodes
-# http://blogs.law.harvard.edu/tech/stories/storyReader$15
 LANGUAGE_CODE = 'en-us'
 
-# If you set this to False, Django will make some optimizations so as not
-# to load the internationalization machinery.
 USE_I18N = False
-
-# If you set this to False, Django will not format dates, numbers and
-# calendars according to the current locale
 USE_L10N = True
 
 SITE_ID = 1
 
-# Absolute path to the directory that holds media.
-# Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, '..', 'media')) + '/'
-
-# URL that handles the media served from MEDIA_ROOT.
-# Example: "http://media.lawrence.com"
+MEDIA_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, '..', 'media'))
 MEDIA_URL = '/media/'
 
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/home/media/media.lawrence.com/static/"
 STATIC_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, '..', 'static'))
-
-# URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
-
-# Additional locations of static files
 STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
     os.path.join(PROJECT_DIR, 'static'),
 )
-
-# List of finder classes that know how to find static files in
-# various locations.
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
     'compressor.finders.CompressorFinder',
 )
 
-# List of callables that know how to import templates from various sources.
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'comics.core.context_processors.site_settings',
+    'comics.core.context_processors.all_comics',
+    'comics.sets.context_processors.user_set',
+)
+
 TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
@@ -84,19 +59,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.http.ConditionalGetMiddleware',
     'comics.core.middleware.MinifyHTMLMiddleware',
     'comics.sets.middleware.SetMiddleware',
-)
-
-ROOT_URLCONF = 'comics.urls'
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.contrib.messages.context_processors.messages',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'comics.core.context_processors.site_settings',
-    'comics.core.context_processors.all_comics',
-    'comics.sets.context_processors.user_set',
 )
 
 INSTALLED_APPS = (
@@ -123,11 +85,8 @@ INSTALLED_APPS = (
     'comics.utils',
 )
 
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error.
-# See http://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
+ROOT_URLCONF = 'comics.urls'
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -152,7 +111,6 @@ LOGGING = {
     }
 }
 
-# Caching
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
@@ -166,31 +124,32 @@ CACHE_MIDDLEWARE_SECONDS = 300
 CACHE_MIDDLEWARE_KEY_PREFIX = 'comics'
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
-# Formats
 DATE_FORMAT = 'D j M Y'
 TIME_FORMAT = 'H:i'
 
-# Session settings
 SESSION_COOKIE_AGE = 86400 * 365
 
-# WSGI application used by manage.py runserver
 WSGI_APPLICATION = 'comics.wsgi.application'
 
 
-# django_compressor settings
+### django_compressor settings
+
 # Explicitly use HtmlParser to avoid depending on BeautifulSoup through the use
 # of LxmlParser
 COMPRESS_PARSER = 'compressor.parser.HtmlParser'
+
 # Turn on CSS compression. JS compression is on by default if jsmin is installed
 COMPRESS_CSS_FILTERS = [
     'compressor.filters.css_default.CssAbsoluteFilter',
     'compressor.filters.cssmin.CSSMinFilter',
 ]
+
 # Turn on HTML compression through custom middleware
 COMPRESS_HTML = True
 
 
-# django.contrib.auth settings
+### django.contrib.auth settings
+
 LOGIN_URL = '/account/login/'
 AUTH_PROFILE_MODULE = 'accounts.UserProfile'
 AUTHENTICATION_BACKENDS = (
@@ -199,17 +158,18 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
-# django-registration settings
+### django-registration settings
+
 ACCOUNT_ACTIVATION_DAYS = 7
 LOGIN_REDIRECT_URL = '/'
 REGISTRATION_BACKEND = 'comics.accounts.backends.RegistrationBackend'
 
 
-### Additional non-Django settings used by comics
+### comics settings
 
 # Location of the comic images
-COMICS_MEDIA_ROOT = '%sc/' % MEDIA_ROOT
-COMICS_MEDIA_URL = '%sc/' % MEDIA_URL
+COMICS_MEDIA_ROOT = os.path.join(MEDIA_ROOT, 'c')
+COMICS_MEDIA_URL = MEDIA_URL + 'c/'
 
 # Maximum number of days to show in one page
 COMICS_MAX_DAYS_IN_PAGE = 31
