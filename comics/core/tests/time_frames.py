@@ -74,6 +74,6 @@ class TimeFramesTestCase(unittest.TestCase):
         comic_result = tf.time_frames(
             'comic', start_date, 'a_comic_slug', last_visit)
         set_result = tf.time_frames(
-            'set', start_date, 'a_set_slug', last_visit)
+            'namedset', start_date, 'a_set_slug', last_visit)
 
         self.assert_(len(comic_result) < len(set_result))
