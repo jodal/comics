@@ -16,8 +16,8 @@ Or, in an isolated environment using `virtualenv
 <http://www.virtualenv.org>`_::
 
     cd comics/
-    virtualenv venv/
-    source venv/bin/activate
+    virtualenv ../comics-virtualenv/
+    source ../comics-virtualenv/bin/activate
     pip install -r requirements.txt
 
 If you make use of a virtualenv for a real deployment, you'll also need to make
@@ -75,8 +75,9 @@ A file-based SQLite database will be used, unless you have created a file
 ``comics/comics/settings/local.py`` where you have configured another database,
 like PostgreSQL.
 
-To create the database and database schema, open a terminal, go to the
-``comics/comics/`` directory, and run::
+To create the database and database schema, open a terminal, go to top level
+directory in your checkout of the comics repo, where you'll find the file
+``manage.py``, and run::
 
     python manage.py syncdb --migrate --noinput
 

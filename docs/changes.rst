@@ -43,6 +43,9 @@ v1.2 (in development)
 
   Remember to update your cronjobs.
 
+- Moved ``manage.py`` one level higher in the directory structure, to follow
+  the new defaults in Django 1.4. Again, remember to update your cronjobs.
+
 
 v1.1.4 (in development)
 =======================
