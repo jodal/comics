@@ -17,8 +17,7 @@ cssmin >= 0.1, < 0.2
 jsmin >= 2.0, < 2.1
 
 # For user registration with email verification
-# 0.8 of django-registration has not been released yet, and 0.7 is archaic
-https://bitbucket.org/ubernostrum/django-registration/get/tip.tar.gz#egg=django-registration
+django-registration >= 0.8, < 0.9
 
 # For Twitter Bootstrap compatible Django forms
 git+git://github.com/earle/django-bootstrap.git#egg=bootstrap

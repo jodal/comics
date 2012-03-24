@@ -11,7 +11,7 @@ v1.2 (in development)
 
 - New requirements:
 
-  - django-registration (development version or 0.8 if released)
+  - django-registration >= 0.8, < 0.9
   - django-bootstrap (By earle on GitHub. There are multiple projects with this
     name.)
 
