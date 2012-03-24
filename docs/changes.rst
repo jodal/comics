@@ -11,8 +11,6 @@ v1.2 (in development)
 
 - New requirements:
 
-  - py-bcrypt
-  - django-bcrypt
   - django-registration (development version or 0.8 if released)
   - django-bootstrap (By earle on GitHub. There are multiple projects with this
     name.)

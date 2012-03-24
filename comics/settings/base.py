@@ -117,7 +117,6 @@ INSTALLED_APPS = (
     'django.contrib.webdesign',
     'bootstrap',
     'compressor',
-    'django_bcrypt',
     'registration',
     'south',
     'comics.aggregator',
