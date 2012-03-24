@@ -25,7 +25,6 @@ v1.2 (in development)
   - Add user account registration, activation, login, logout, password change,
     password reset, and account summary.
   - Add user information to emails sent from the feedback page.
-  - Use bcrypt to hash passwords.
 
 - Removed setting ``COMICS_SITE_TAGLINE``.
 
