@@ -4,8 +4,6 @@ from django.views.generic.simple import direct_to_template
 
 from registration.views import activate, register
 
-from comics.accounts.forms import (AuthenticationForm, PasswordChangeForm,
-    PasswordResetForm)
 from comics.accounts.views import new_secret_key
 from comics.sets.views import user_set_toggle_comic
 
@@ -38,7 +36,6 @@ urlpatterns = patterns('',
     url(r'^login/$',
         auth_views.login,
         {
-            'authentication_form': AuthenticationForm,
             'extra_context': {'active': {'login': True}},
             'template_name': 'auth/login.html',
         },
@@ -60,7 +57,6 @@ urlpatterns = patterns('',
         auth_views.password_change,
         {
             'template_name': 'auth/password_change.html',
-            'password_change_form': PasswordChangeForm,
         },
         name='auth_password_change'),
     url(r'^password/change/done/$',
@@ -75,7 +71,6 @@ urlpatterns = patterns('',
             'email_template_name': 'auth/password_reset_email.txt',
             # XXX The next line is not supported until Django 1.4
             #'subject_template_name': 'auth/password_reset_email_subject.txt',
-            'password_reset_form': PasswordResetForm,
         },
         name='auth_password_reset'),
     url(r'^password/reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',

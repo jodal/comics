@@ -12,8 +12,7 @@ v1.2 (in development)
 - New requirements:
 
   - django-registration >= 0.8, < 0.9
-  - django-bootstrap (By earle on GitHub. There are multiple projects with this
-    name.)
+  - django-bootstrap-form >= 2.0, < 2.1
 
 - Updated dependencies:
 

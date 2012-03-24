@@ -1,13 +1,12 @@
 import datetime
 
-from bootstrap.forms import BootstrapModelForm
 from django import forms
 from django.template.defaultfilters import slugify
 
 from comics.core.models import Comic
 from comics.sets.models import Set
 
-class NewNamedSetForm(BootstrapModelForm):
+class NewNamedSetForm(forms.ModelForm):
     class Meta:
         model = Set
         fields = ('name',)
@@ -21,7 +20,7 @@ class NewNamedSetForm(BootstrapModelForm):
             named_set.save()
         return named_set
 
-class EditNamedSetForm(BootstrapModelForm):
+class EditNamedSetForm(forms.ModelForm):
     comics = forms.ModelMultipleChoiceField(
         Comic.objects.filter(active=True), required=False)
     add_new_comics = forms.BooleanField(

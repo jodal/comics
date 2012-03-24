@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load bootstrap %}
 
 {% block title %}
   Register
@@ -13,7 +14,7 @@
   <form action="{% url registration_register %}" method="post" class="form-horizontal">
     {% csrf_token %}
 
-    {{ form }}
+    {{ form|bootstrap }}
 
     <div class="form-actions">
       <button type="submit" class="btn btn-primary">

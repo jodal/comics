@@ -1,8 +1,6 @@
 # Based on https://bitbucket.org/jokull/django-email-login/
 
-from bootstrap.forms import BootstrapForm, BootstrapMixin
 from django.contrib.auth import authenticate
-from django.contrib.auth import forms as auth_forms
 from django.contrib.auth.models import User
 from django import forms
 from django.utils.translation import ugettext_lazy as _
@@ -10,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 attrs_dict = { 'class': 'required' }
 
 
-class RegistrationForm(BootstrapForm):
+class RegistrationForm(forms.Form):
     email = forms.EmailField(
         widget=forms.TextInput(attrs=dict(attrs_dict, maxlength=75)),
         label=_("Email"))
@@ -48,7 +46,7 @@ class RegistrationForm(BootstrapForm):
         return self.cleaned_data['email']
 
 
-class AuthenticationForm(BootstrapForm):
+class AuthenticationForm(forms.Form):
     """
     Base class for authenticating users. Extend this to get a form that accepts
     username/password logins.
@@ -95,28 +93,3 @@ class AuthenticationForm(BootstrapForm):
 
     def get_user(self):
         return self.user_cache
-
-
-class PasswordChangeForm(auth_forms.PasswordChangeForm, BootstrapMixin):
-    def __init__(self, *args, **kwargs):
-        auth_forms.PasswordChangeForm.__init__(self, *args, **kwargs)
-        self.__bootstrap__()
-
-    def __str__(self):
-        return self.as_div()
-
-    def __unicode__(self):
-        return self.as_div()
-
-
-class PasswordResetForm(auth_forms.PasswordResetForm, BootstrapMixin):
-    def __init__(self, *args, **kwargs):
-        auth_forms.PasswordResetForm.__init__(self, *args, **kwargs)
-        self.__bootstrap__()
-        self.fields['email'].label = 'Email'
-
-    def __str__(self):
-        return self.as_div()
-
-    def __unicode__(self):
-        return self.as_div()

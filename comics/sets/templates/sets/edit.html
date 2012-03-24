@@ -1,4 +1,5 @@
 {% extends "core/base.html" %}
+{% load bootstrap %}
 
 
 {% block title %}
@@ -21,7 +22,7 @@
   <form action="{% url namedset-edit set.name %}" method="post" id="edit_set">
     {% csrf_token %}
 
-    {{ form }}
+    {{ form|bootstrap }}
 
     <div class="actions">
       <button type="submit" class="btn btn-primary">
