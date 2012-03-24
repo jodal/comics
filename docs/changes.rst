@@ -46,6 +46,14 @@ v1.2 (in development)
 - Moved ``manage.py`` one level higher in the directory structure, to follow
   the new defaults in Django 1.4. Again, remember to update your cronjobs.
 
+- Moved file with WSGI application from ``wsgi/deploy.wsgi`` to
+  ``comics/wsgi/__init__.py`` to follow the new default structure in Django
+  1.4. Remember to update your web server configuration.
+
+- The WSGI file is now also used when using Django's ``runserver`` command
+  while developing, making the development and deployment environments more
+  alike.
+
 
 v1.1.4 (in development)
 =======================

@@ -33,9 +33,8 @@ Example Apache vhost
 ====================
 
 This example requires your Apache to have the ``mod_wsgi`` module. For
-efficient static media serving and caching, you should also enable
-``mod_deflate`` and ``mod_expires``, but they are optional and the following
-example will work without them.
+efficient static media serving and caching, you should probably enable
+``mod_deflate`` and ``mod_expires`` for ``/media`` and ``/static``.
 
 .. code-block:: apache
 
@@ -49,29 +48,12 @@ example will work without them.
 
         # Static media hosting
         Alias /media/ /path/to/comics/media/
-        <Location /media/>
-            # Turn off directory indexes
-            Options -Indexes
-
-            # Turn on ETag generation
-            FileETag MTime Size
-
-            # Turn on compression
-            <IfModule deflate_module>
-                AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript
-            </IfModule>
-
-            # Set cache expire to one month from now
-            <IfModule expires_module>
-                ExpiresActive On
-                ExpiresDefault A2592000
-            </IfModule>
-        </Location>
+        Alias /static/ /path/to/comics/static/
 
         # mod_wsgi setup
         WSGIDaemonProcess comics user=comics-user group=comics-user threads=50 maximum-requests=10000
         WSGIProcessGroup comics
-        WSGIScriptAlias / /path/to/comics/wsgi/deploy.wsgi
+        WSGIScriptAlias / /path/to/comics/comics/wsgi/__init__.py
         <Directory /path/to/comics/comics/wsgi>
             Order deny,allow
             Allow from all
@@ -83,29 +65,15 @@ For details, please refer to the documentation of the `Apache
 <http://code.google.com/p/modwsgi/>`_ projects.
 
 
-.. _example-wsgi-file:
-
-Example WSGI file
-=================
-
-This is the ``deploy.wsgi`` file refered to in the Apache vhost above. The
-``sys.path`` line assumes that the file is located in a directory inside the
-*comics* project, as the ``deploy.wsgi`` shipped with *comics* is. If your WSGI
-file is located elsewhere, the ``sys.path`` line must be changed to point to
-wherever your *comics* project folder is located.
-
-.. literalinclude:: ../wsgi/deploy.wsgi
-    :language: python
-
-
 Example ``settings/local.py``
 =============================
 
-In general, you should not change the settings files shipped with *comics*, but
-instead override the settings in your own ``comics/comics/settings/local.py``.
-Even if you do not want to override any default settings, you must add a
-``local.py`` which at least sets ``SECRET_KEY`` and most probably your database
-settings. A full ``local.py`` may look like this::
+To change settings, you should not change the settings files shipped with
+*comics*, but instead override the settings in your own
+``comics/comics/settings/local.py``.  Even if you do not want to override any
+default settings, you must add a ``local.py`` which at least sets
+``SECRET_KEY`` and most probably your database settings. A full ``local.py``
+may look like this::
 
     # Local settings -- do NOT commit to a VCS
 

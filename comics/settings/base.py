@@ -173,6 +173,10 @@ TIME_FORMAT = 'H:i'
 # Session settings
 SESSION_COOKIE_AGE = 86400 * 365
 
+# WSGI application used by manage.py runserver
+WSGI_APPLICATION = 'comics.wsgi.application'
+
+
 # django_compressor settings
 # Explicitly use HtmlParser to avoid depending on BeautifulSoup through the use
 # of LxmlParser
@@ -185,6 +189,7 @@ COMPRESS_CSS_FILTERS = [
 # Turn on HTML compression through custom middleware
 COMPRESS_HTML = True
 
+
 # django.contrib.auth settings
 LOGIN_URL = '/account/login/'
 AUTH_PROFILE_MODULE = 'accounts.UserProfile'
@@ -193,10 +198,12 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend'
 )
 
+
 # django-registration settings
 ACCOUNT_ACTIVATION_DAYS = 7
 LOGIN_REDIRECT_URL = '/'
 REGISTRATION_BACKEND = 'comics.accounts.backends.RegistrationBackend'
+
 
 ### Additional non-Django settings used by comics
 
