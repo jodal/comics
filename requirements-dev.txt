@@ -1,5 +1,4 @@
 mock
-coverage
 sphinx
 django-debug-toolbar
 django-extensions

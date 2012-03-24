@@ -120,10 +120,6 @@ To run unit tests::
 
     python manage.py test --settings=comics.settings.testing
 
-To run unit tests with statement coverage::
-
-    python manage.py test --settings=comics.settings.coverage
-
 
 Change specifications
 =====================
