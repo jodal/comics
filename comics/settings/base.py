@@ -6,7 +6,7 @@ import django
 PROJECT_DIR = os.path.abspath(os.path.join(
     os.path.dirname(os.path.abspath(__file__)), '..'))
 
-SECRET_KEY = 'This key should really be overriden in comics/settings/local.py'
+SECRET_KEY = ''
 
 DATABASES = {
     'default': {
