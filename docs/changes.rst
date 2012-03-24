@@ -19,6 +19,7 @@ v1.2 (in development)
 
 - Updated dependencies:
 
+  - Django >= 1.4, < 1.5
   - django_compress >= 1.1, < 1.2
 
 - User accounts:
