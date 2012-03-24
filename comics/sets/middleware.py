@@ -42,9 +42,9 @@ class SetMiddleware(object):
 
                 # Add set to recent_sets in the session
                 if not 'recent_sets' in session:
-                    session['recent_sets'] = [named_set]
+                    session['recent_sets'] = [named_set.name]
                 elif not named_set in session['recent_sets']:
-                    session['recent_sets'].append(named_set)
+                    session['recent_sets'].append(named_set.name)
                     # Since we only modified a list in the session and not
                     # the session object itself, we must mark the session
                     # as modified to have the changes saved

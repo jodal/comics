@@ -41,11 +41,15 @@ def named_set_new(request):
     else:
         form = NewNamedSetForm()
 
-    return render(request, 'sets/new.html', {
+    recent_sets = Set.objects.filter(
+        name__in=request.session.get('recent_sets', []))
+
+    kwargs = {
         'active': {'sets': True},
         'form': form,
-        'recent_sets': request.session.get('recent_sets', None),
-    })
+        'recent_sets': recent_sets,
+    }
+    return render(request, 'sets/new.html', kwargs)
 
 @login_required
 @never_cache
