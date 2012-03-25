@@ -1,4 +1,4 @@
-{% load compress %}
+{% load compress static %}
 <!DOCTYPE html>
 
 <html lang="en-us">
@@ -6,11 +6,11 @@
   <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %} | {{ site_title }}</title>
-    <link rel="shortcut icon" type="image/png" href="{{ STATIC_URL }}img/favicon.png">
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}">
     {% compress css %}
-      <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-2.0.2-spacelab.min.css">
-      <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-responsive-2.0.2.min.css">
-      <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/comics.css">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-2.0.2-spacelab.min.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-responsive-2.0.2.min.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/comics.css' %}">
     {% endcompress %}
     {% block extra_head %}{% endblock %}
   </head>
@@ -102,10 +102,10 @@
     {% block extra_footer %}
       {{ block.super }}
       {% compress js %}
-        <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.7.1.min.js"></script>
-        <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-2.0.2.min.js"></script>
-        <script type="text/javascript" src="{{ STATIC_URL }}js/navigation.js"></script>
-        <script type="text/javascript" src="{{ STATIC_URL }}js/comics.js"></script>
+        <script type="text/javascript" src="{% static 'js/jquery-1.7.1.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/bootstrap-2.0.2.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/navigation.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/comics.js' %}"></script>
         {% if google_analytics_code %}
           <script type="text/javascript">
             var _gaq = _gaq || [];
