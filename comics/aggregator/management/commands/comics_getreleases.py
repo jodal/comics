@@ -1,5 +1,5 @@
 from comics.aggregator.command import Aggregator
-from comics.utils.commands import ComicsBaseCommand, make_option
+from comics.core.command_utils import ComicsBaseCommand, make_option
 
 class Command(ComicsBaseCommand):
     option_list = ComicsBaseCommand.option_list + (

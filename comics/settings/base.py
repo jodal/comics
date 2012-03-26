@@ -83,7 +83,6 @@ INSTALLED_APPS = (
     'comics.feedback',
     'comics.meta',
     'comics.sets',
-    'comics.utils',
 )
 
 ROOT_URLCONF = 'comics.urls'
