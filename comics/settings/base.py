@@ -138,7 +138,8 @@ WSGI_APPLICATION = 'comics.wsgi.application'
 # of LxmlParser
 COMPRESS_PARSER = 'compressor.parser.HtmlParser'
 
-# Turn on CSS compression. JS compression is on by default if jsmin is installed
+# Turn on CSS compression. JS compression is on by default if jsmin is
+# installed
 COMPRESS_CSS_FILTERS = [
     'compressor.filters.css_default.CssAbsoluteFilter',
     'compressor.filters.cssmin.CSSMinFilter',

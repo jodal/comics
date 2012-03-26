@@ -3,13 +3,14 @@ import sys
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'comics.settings')
 
-root_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+root_path = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.insert(0, root_path)
 
 VIRTUALENV_ROOT = None
 
 try:
-    from comics.wsgi.local import *
+    from comics.wsgi.local import *  # NOQA
 except ImportError:
     pass
 

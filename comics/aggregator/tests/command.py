@@ -163,14 +163,13 @@ class ComicAggregatorTestCase(TestCase):
         self.assertEquals(expected, result)
 
     def test_get_crawler(self):
-        pass # TODO
+        pass  # TODO
 
     def test_get_downloader(self):
-        pass # TODO
+        pass  # TODO
 
     def test_aggregate_one_comic(self):
-        pass # TODO
+        pass  # TODO
 
     def test_start(self):
-        pass # TODO
-
+        pass  # TODO

@@ -28,7 +28,7 @@ class CrawlerRelease(object):
 
     @property
     def identifier(self):
-       return u'%s/%s' % (self.comic.slug, self.pub_date)
+        return u'%s/%s' % (self.comic.slug, self.pub_date)
 
     @property
     def images(self):
@@ -217,8 +217,7 @@ class PondusNoCrawlerBase(CrawlerBase):
     time_zone = 1
 
     def crawl_helper(self, url_id):
-        page_url = 'http://www.pondus.no/default.aspx?section=artikkel&id=%s' % (
-            url_id)
+        page_url = 'http://www.pondus.no/?section=artikkel&id=%s' % url_id
         page = self.parse_page(page_url)
         url = page.src('.imagegallery img')
         return CrawlerImage(url)

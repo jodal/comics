@@ -11,7 +11,7 @@ from django.utils import timezone
 from comics.core.models import Comic
 from comics.core.utils.navigation import get_navigation
 from comics.core.views import generic_show
-from comics.sets.models import Set, UserSet
+from comics.sets.models import Set
 from comics.sets.forms import NewNamedSetForm, EditNamedSetForm
 
 

@@ -33,8 +33,10 @@ class Set(models.Model):
 
     def get_slug(self):
         return self.name
+
     def set_slug(self, slug):
         self.name = slug
+
     slug = property(get_slug, set_slug)
 
     def set_loaded(self):

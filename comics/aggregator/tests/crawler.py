@@ -4,7 +4,7 @@ from django.utils import unittest
 from comics.aggregator import crawler
 
 class CurrentDateWhenLocalTZIsUTCTest(unittest.TestCase):
-    time_zone = 0 # UTC+0, GMT
+    time_zone = 0  # UTC+0, GMT
 
     def setUp(self):
         self.now = datetime.datetime(2001, 2, 5, 22, 1, 0)
@@ -36,7 +36,7 @@ class CurrentDateWhenLocalTZIsUTCTest(unittest.TestCase):
         self.assertEqual(c.current_date, yesterday)
 
 class CurrentDateWhenLocalTZIsCETTest(CurrentDateWhenLocalTZIsUTCTest):
-    time_zone = 1 # UTC+1, CET
+    time_zone = 1  # UTC+1, CET
 
 class CurrentDateWhenLocalTZIsESTTest(CurrentDateWhenLocalTZIsUTCTest):
-    time_zone = -5 # UTC-5, EST
+    time_zone = -5  # UTC-5, EST

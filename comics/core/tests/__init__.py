@@ -1,1 +1,1 @@
-from comics.core.tests.time_frames import *
+from comics.core.tests.time_frames import *  # NOQA

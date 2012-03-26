@@ -1,4 +1,4 @@
-from comics.settings.dev import *
+from comics.settings.dev import *  # NOQA
 
 # Use in-memory Sqlite3 database for testing to reduce startup time
 DATABASES = {

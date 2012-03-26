@@ -41,9 +41,13 @@ class RegistrationBackend(DefaultBackend):
         return RegistrationForm
 
 email_re = re.compile(
-    r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*"  # dot-atom
-    r'|^"([\001-\010\013\014\016-\037!#-\[\]-\177]|\\[\001-\011\013\014\016-\177])*"' # quoted-string
-    r')@(?:[A-Z0-9-]+\.)+[A-Z]{2,6}$', re.IGNORECASE)  # domain
+    # dot-atom
+    r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*"
+    # quoted-string
+    r'|^"([\001-\010\013\014\016-\037!#-\[\]-\177]|'
+    r'\\[\001-\011\013\014\016-\177])*"'
+    # domain
+    r')@(?:[A-Z0-9-]+\.)+[A-Z]{2,6}$', re.IGNORECASE)
 
 class AuthBackend(ModelBackend):
     """Authenticate using email only"""

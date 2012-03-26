@@ -2,7 +2,6 @@ import datetime
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.core.cache import cache
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
@@ -66,7 +65,8 @@ def comic_latest(request, comic):
 
     comic = get_object_or_404(Comic, slug=comic)
     queryset = [comic]
-    page = get_navigation(request, 'comic', instance=comic, days=1, latest=True)
+    page = get_navigation(request, 'comic',
+        instance=comic, days=1, latest=True)
     return generic_show(request, queryset, page, latest=True)
 
 @login_required
@@ -103,7 +103,7 @@ def status(request, days=21):
         schedule = get_comic_schedule(comic)
         timeline[comic] = []
 
-        for i in range(days+2):
+        for i in range(days + 2):
             day = first - datetime.timedelta(days=i)
             classes = set()
 

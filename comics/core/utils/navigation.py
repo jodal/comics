@@ -4,7 +4,6 @@ import calendar
 import datetime
 from urllib import unquote
 
-from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.http import Http404

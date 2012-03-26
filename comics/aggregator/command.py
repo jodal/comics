@@ -3,7 +3,6 @@
 import datetime
 import logging
 import socket
-import urllib2
 
 from comics.aggregator.downloader import ReleaseDownloader
 from comics.core.exceptions import ComicsError
