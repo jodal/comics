@@ -1,6 +1,6 @@
 {% extends "core/base.html" %}
-
 {% load cache humanize %}
+{% load url from future %}
 
 
 {% block title %}
@@ -51,10 +51,10 @@
     <h1>{{ page.title|safe }}</h1>
   </div>
 
-  {% ifequal page.view_type 'namedset' %}
+  {% ifequal page.view_type "namedset" %}
     {% if set %}
       <p>
-        <a href="{% url namedset-edit set.name %}" class="btn">
+        <a href="{% url "namedset-edit" set.name %}" class="btn">
           <i class="icon-edit"></i> Edit comic set
         </a>
       </p>
@@ -66,7 +66,7 @@
       {% for release in releases %}
 
         <div class="release well">
-          <form action="{% url toggle_comic %}" method="post"
+          <form action="{% url "toggle_comic" %}" method="post"
             class="pull-right userset-toggle">
             {% csrf_token %}
             <input type="hidden" name="comic" value="{{ comic.slug }}">
@@ -106,7 +106,7 @@
 
             <div class="well">
               <strong>No matching release found.</strong> See
-              <a href="{% url comic-latest comic.slug %}">the latest release</a> or
+              <a href="{% url "comic-latest" comic.slug %}">the latest release</a> or
               the <a href="{{ comic.get_redirect_url }}">official site</a>.
             </div>
           </div>
@@ -121,7 +121,7 @@
         </p>
         <p class="alert-actions">
           {% if set %}
-            <a href="{% url namedset-edit set.name %}" class="btn small">Edit comics set</a>
+            <a href="{% url "namedset-edit" set.name %}" class="btn small">Edit comics set</a>
           {% endif %}
         </p>
       </div>

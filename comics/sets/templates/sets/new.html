@@ -1,4 +1,5 @@
 {% extends "core/base.html" %}
+{% load url from future %}
 {% load bootstrap %}
 
 
@@ -32,7 +33,7 @@
 
       <h4>Use a comic set</h4>
 
-      <form action="{% url namedset-new %}" method="post" id="new_set" class="form-horizontal">
+      <form action="{% url "namedset-new" %}" method="post" id="new_set" class="form-horizontal">
         {% csrf_token %}
 
         {{ form|bootstrap }}

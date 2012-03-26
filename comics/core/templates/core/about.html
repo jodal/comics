@@ -1,4 +1,5 @@
 {% extends "core/base.html" %}
+{% load url from future %}
 
 
 {% block title %}
@@ -27,7 +28,7 @@
       <a href="http://github.com/jodal/comics">GitHub</a>.</p>
 
       <p>Feedback to the site administrator may be submitted through the
-      <a href="{% url feedback %}">feedback</a> page.</p>
+      <a href="{% url "feedback" %}">feedback</a> page.</p>
     </div>
     <div class="span4">
       <h3>Colophon</h3>
