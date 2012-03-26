@@ -1,8 +1,3 @@
-#__idea__ = 'PyCharm'
-#__author__ = 'Nina Margrethe Smørsgård'
-#__gitHub__ = 'https://github.com/NinaMargrethe/'
-#__date__ = '3/26/12'
-
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
@@ -14,8 +9,7 @@ class Meta(MetaBase):
     rights = 'Humon'
 
 class Crawler(CrawlerBase):
-    schedule = None
-    time_zone = 1
+    time_zone = 0
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/manalanextdoor')
