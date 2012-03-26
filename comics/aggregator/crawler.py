@@ -1,10 +1,11 @@
-import datetime as dt
+import datetime
 import httplib
 import socket
 import time
 import urllib2
 
 from django.conf import settings
+from django.utils import timezone
 
 from comics.aggregator.exceptions import (CrawlerHTTPError, ImageURLNotFound,
     NotHistoryCapable, ReleaseAlreadyExists)
@@ -12,9 +13,9 @@ from comics.aggregator.feedparser import FeedParser
 from comics.aggregator.lxmlparser import LxmlParser
 
 # For testability
-now = dt.datetime.now
-today = dt.date.today
-timezone = time.timezone
+now = timezone.now
+today = datetime.date.today
+utc_offset_in_s = time.timezone
 
 class CrawlerRelease(object):
     def __init__(self, comic, pub_date,
@@ -140,18 +141,18 @@ class CrawlerBase(object):
     def current_date(self):
         if self.time_zone is None:
             self.time_zone = settings.COMICS_DEFAULT_TIME_ZONE
-        local_time_zone = - timezone // 3600
+        local_time_zone = - utc_offset_in_s // 3600
         hour_diff = local_time_zone - self.time_zone
-        current_time = now() - dt.timedelta(hours=hour_diff)
+        current_time = now() - datetime.timedelta(hours=hour_diff)
         return current_time.date()
 
     @property
     def history_capable(self):
         if self.history_capable_date is not None:
-            return dt.datetime.strptime(
+            return datetime.datetime.strptime(
                 self.history_capable_date, '%Y-%m-%d').date()
         elif self.history_capable_days is not None:
-            return (today() - dt.timedelta(self.history_capable_days))
+            return (today() - datetime.timedelta(self.history_capable_days))
         else:
             return today()
 
@@ -184,7 +185,7 @@ class CrawlerBase(object):
         return self.pages[page_url]
 
     def string_to_date(self, *args, **kwargs):
-        return dt.datetime.strptime(*args, **kwargs).date()
+        return datetime.datetime.strptime(*args, **kwargs).date()
 
     def date_to_epoch(self, date):
         return int(time.mktime(date.timetuple()))

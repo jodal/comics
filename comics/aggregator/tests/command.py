@@ -1,4 +1,4 @@
-import datetime as dt
+import datetime
 import mock
 
 from django.test import TestCase
@@ -24,37 +24,37 @@ class AggregatorConfigTestCase(TestCase):
             command.AggregatorConfig, options=True)
 
     def test_set_from_date(self):
-        from_date = dt.date(2008, 3, 11)
+        from_date = datetime.date(2008, 3, 11)
         self.cc._set_from_date(from_date)
         self.assertEquals(from_date, self.cc.from_date)
 
     def test_set_from_date_from_string(self):
-        from_date = dt.date(2008, 3, 11)
+        from_date = datetime.date(2008, 3, 11)
         self.cc._set_from_date(str(from_date))
         self.assertEquals(from_date, self.cc.from_date)
 
     def test_set_to_date(self):
-        to_date = dt.date(2008, 3, 11)
+        to_date = datetime.date(2008, 3, 11)
         self.cc._set_to_date(to_date)
         self.assertEquals(to_date, self.cc.to_date)
 
     def test_set_to_date_from_string(self):
-        to_date = dt.date(2008, 3, 11)
+        to_date = datetime.date(2008, 3, 11)
         self.cc._set_to_date(str(to_date))
         self.assertEquals(to_date, self.cc.to_date)
 
     def test_validate_dates_valid(self):
-        self.cc.from_date = dt.date(2008, 3, 11)
-        self.cc.to_date = dt.date(2008, 3, 11)
+        self.cc.from_date = datetime.date(2008, 3, 11)
+        self.cc.to_date = datetime.date(2008, 3, 11)
         self.assertTrue(self.cc._validate_dates())
 
-        self.cc.from_date = dt.date(2008, 2, 29)
-        self.cc.to_date = dt.date(2008, 3, 2)
+        self.cc.from_date = datetime.date(2008, 2, 29)
+        self.cc.to_date = datetime.date(2008, 3, 2)
         self.assertTrue(self.cc._validate_dates())
 
     def test_validate_dates_invalid(self):
-        self.cc.from_date = dt.date(2008, 3, 11)
-        self.cc.to_date = dt.date(2008, 3, 10)
+        self.cc.from_date = datetime.date(2008, 3, 11)
+        self.cc.to_date = datetime.date(2008, 3, 10)
         self.assertRaises(ComicsError, self.cc._validate_dates)
 
     def test_get_comic_by_slug_valid(self):
@@ -121,7 +121,7 @@ class ComicAggregatorTestCase(TestCase):
         self.assertRaises(AssertionError, command.Aggregator)
 
     def test_crawl_one_comic_one_date(self):
-        pub_date = dt.date(2008, 3, 1)
+        pub_date = datetime.date(2008, 3, 1)
         crawler_release = CrawlerRelease(self.comic, pub_date)
         self.crawler_mock.get_crawler_release.return_value = crawler_release
 
@@ -132,7 +132,7 @@ class ComicAggregatorTestCase(TestCase):
         self.crawler_mock.get_crawler_release.assert_called_with(pub_date)
 
     def test_download_release(self):
-        crawler_release = CrawlerRelease(self.comic, dt.date(2008, 3, 1))
+        crawler_release = CrawlerRelease(self.comic, datetime.date(2008, 3, 1))
         self.aggregator._get_downloader = lambda: self.downloader_mock
 
         self.aggregator._download_release(crawler_release)
@@ -141,21 +141,21 @@ class ComicAggregatorTestCase(TestCase):
         self.downloader_mock.download.assert_called_with(crawler_release)
 
     def test_get_valid_date_from_history_capable(self):
-        expected = dt.date(2008, 3, 1)
+        expected = datetime.date(2008, 3, 1)
         self.crawler_mock.comic = Comic.objects.get(slug='xkcd')
         self.crawler_mock.history_capable = expected
-        self.crawler_mock.current_date = dt.date(2008, 4, 1)
+        self.crawler_mock.current_date = datetime.date(2008, 4, 1)
 
         result = self.aggregator._get_valid_date(
-            self.crawler_mock, dt.date(2008, 2, 1))
+            self.crawler_mock, datetime.date(2008, 2, 1))
 
         self.assertEquals(expected, result)
 
     def test_get_valid_date_from_config(self):
-        expected = dt.date(2008, 3, 1)
+        expected = datetime.date(2008, 3, 1)
         self.crawler_mock.comic = Comic.objects.get(slug='xkcd')
-        self.crawler_mock.history_capable = dt.date(2008, 1, 1)
-        self.crawler_mock.current_date = dt.date(2008, 4, 1)
+        self.crawler_mock.history_capable = datetime.date(2008, 1, 1)
+        self.crawler_mock.current_date = datetime.date(2008, 4, 1)
 
         result = self.aggregator._get_valid_date(
             self.crawler_mock, expected)

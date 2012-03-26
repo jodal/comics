@@ -1,6 +1,6 @@
 """Utils for building the time frame menus"""
 
-import datetime as dt
+import datetime
 from urllib import unquote
 
 from django.core.urlresolvers import reverse
@@ -117,7 +117,7 @@ def new_since_last_visit_time_frame(namedset, last_visit):
 def time_frame_ends_in_future(start_date, days):
     """Returns true if the time frame ends in the future"""
 
-    return start_date + dt.timedelta(days) > today()
+    return start_date + datetime.timedelta(days) > today()
 
 def last_or_date(start_date, days):
     """If time frame ends in the future, return 'last', else 'date'"""
@@ -128,4 +128,4 @@ def last_or_date(start_date, days):
         return 'date'
 
 # For testability
-today = dt.date.today
+today = datetime.date.today

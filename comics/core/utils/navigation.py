@@ -1,7 +1,7 @@
 """Utils for building the time frame and navigation menus"""
 
 import calendar
-import datetime as dt
+import datetime
 from urllib import unquote
 
 from django.conf import settings
@@ -33,15 +33,15 @@ def navigation_days(request, view_type, instance=None,
             day=19)
     """
 
-    today = dt.date.today()
-    one_day = dt.timedelta(1)
+    today = datetime.date.today()
+    one_day = datetime.timedelta(1)
 
     # Start/end dates
     if days and not (year or month or day):
         start_date = today - one_day * (days - 1)
     else:
         try:
-            start_date = dt.date(year, month, day)
+            start_date = datetime.date(year, month, day)
         except ValueError:
             raise Http404
     end_date = start_date + one_day * (days - 1)
@@ -193,8 +193,8 @@ def navigation_month(request, view_type, instance=None, year=None, month=None):
         navigation_month('userset', instance=named_set, year=2007, month=7)
     """
 
-    today = dt.date.today()
-    one_day = dt.timedelta(1)
+    today = datetime.date.today()
+    one_day = datetime.timedelta(1)
 
     if year is None:
         year = today.year
@@ -203,9 +203,9 @@ def navigation_month(request, view_type, instance=None, year=None, month=None):
 
     # Start/end dates
     try:
-        start_date = dt.date(year, month, 1)
+        start_date = datetime.date(year, month, 1)
         num_days = calendar.monthrange(year, month)[1]
-        end_date = dt.date(year, month, num_days)
+        end_date = datetime.date(year, month, num_days)
     except ValueError:
         raise Http404
 
@@ -215,13 +215,13 @@ def navigation_month(request, view_type, instance=None, year=None, month=None):
     if view_type == 'comic' and instance is not None:
         try:
             first_release = instance.release_set.order_by('pub_date')[0]
-            first_month = dt.date(first_release.pub_date.year,
+            first_month = datetime.date(first_release.pub_date.year,
                 first_release.pub_date.month, 1)
             last_release = instance.release_set.latest()
             last_month_num_days = calendar.monthrange(
                 last_release.pub_date.year,
                 last_release.pub_date.month)[1]
-            last_month = dt.date(last_release.pub_date.year,
+            last_month = datetime.date(last_release.pub_date.year,
                 last_release.pub_date.month, last_month_num_days)
         except (IndexError, ObjectDoesNotExist):
             # Comic has no releases
@@ -314,4 +314,4 @@ def last_visit(request):
     if hasattr(request, 'session') and 'last_visit' in request.session:
         return request.session['last_visit']
     else:
-        return dt.date.today()
+        return datetime.date.today()

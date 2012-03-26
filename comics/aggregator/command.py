@@ -1,6 +1,6 @@
 """Aggregator which fetches comic releases from the web"""
 
-import datetime as dt
+import datetime
 import logging
 import socket
 import urllib2
@@ -31,11 +31,11 @@ class Aggregator(object):
             self.config = config
 
     def start(self):
-        start_time = dt.datetime.now()
+        start_time = datetime.datetime.now()
         for comic in self.config.comics:
             self.identifier = comic.slug
             self._aggregate_one_comic(comic)
-        ellapsed_time = dt.datetime.now() - start_time
+        ellapsed_time = datetime.datetime.now() - start_time
         logger.info('Crawling completed in %s', ellapsed_time)
 
     def stop(self):
@@ -55,7 +55,7 @@ class Aggregator(object):
             crawler_release = self._crawl_one_comic_one_date(crawler, pub_date)
             if crawler_release:
                 self._download_release(crawler_release)
-            pub_date += dt.timedelta(days=1)
+            pub_date += datetime.timedelta(days=1)
 
     @log_errors
     def _crawl_one_comic_one_date(self, crawler, pub_date):
@@ -145,13 +145,13 @@ class AggregatorConfig(object):
 
     def _set_from_date(self, from_date):
         if from_date is not None:
-            self.from_date = dt.datetime.strptime(
+            self.from_date = datetime.datetime.strptime(
                 str(from_date), self.DATE_FORMAT).date()
         logger.debug('From date: %s', self.from_date)
 
     def _set_to_date(self, to_date):
         if to_date is not None:
-            self.to_date = dt.datetime.strptime(
+            self.to_date = datetime.datetime.strptime(
                 str(to_date), self.DATE_FORMAT).date()
         logger.debug('To date: %s', self.to_date)
 

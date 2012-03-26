@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-import datetime as dt
+import datetime
 import feedparser
 
 from comics.aggregator.lxmlparser import LxmlParser
@@ -12,7 +12,8 @@ class FeedParser(object):
 
     def for_date(self, date):
         return [Entry(e, self.encoding) for e in self.raw_feed.entries
-            if e.updated_parsed and dt.date(*e.updated_parsed[:3]) == date]
+            if e.updated_parsed and
+                datetime.date(*e.updated_parsed[:3]) == date]
 
     def all(self):
         return [Entry(e, self.encoding) for e in self.raw_feed.entries]

@@ -1,7 +1,6 @@
-import datetime
-
 from django import forms
 from django.template.defaultfilters import slugify
+from django.utils import timezone
 
 from comics.core.models import Comic
 from comics.sets.models import Set
@@ -14,8 +13,8 @@ class NewNamedSetForm(forms.ModelForm):
     def save(self, commit=True):
         named_set = super(NewNamedSetForm, self).save(commit=False)
         named_set.name = slugify(named_set.name)
-        named_set.last_modified = datetime.datetime.now()
-        named_set.last_loaded = datetime.datetime.now()
+        named_set.last_modified = timezone.now()
+        named_set.last_loaded = timezone.now()
         if commit:
             named_set.save()
         return named_set
@@ -40,7 +39,7 @@ class EditNamedSetForm(forms.ModelForm):
 
     def save(self, commit=True):
         named_set = super(EditNamedSetForm, self).save(commit=False)
-        named_set.last_modified = datetime.datetime.now()
+        named_set.last_modified = timezone.now()
         if commit:
             named_set.save()
             self.save_m2m()

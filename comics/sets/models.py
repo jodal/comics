@@ -1,9 +1,8 @@
-import datetime
-
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models import signals
+from django.utils import timezone
 
 from comics.core.models import Comic
 
@@ -39,7 +38,7 @@ class Set(models.Model):
     slug = property(get_slug, set_slug)
 
     def set_loaded(self):
-        self.last_loaded = datetime.datetime.now()
+        self.last_loaded = timezone.now()
         self.save()
 
 

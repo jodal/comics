@@ -1,5 +1,3 @@
-import datetime as dt
-
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -8,6 +6,7 @@ from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.template.defaultfilters import slugify
 from django.views.decorators.cache import never_cache
+from django.utils import timezone
 
 from comics.core.models import Comic
 from comics.core.utils.navigation import get_navigation
@@ -29,7 +28,7 @@ def named_set_new(request):
             try:
                 # If already exists, load the set
                 named_set = Set.objects.get(name=slugify(form.data['name']))
-                named_set.last_loaded = dt.datetime.now()
+                named_set.last_loaded = timezone.now()
                 named_set.save()
                 return HttpResponseRedirect(named_set.get_absolute_url())
             except Set.DoesNotExist:
@@ -111,7 +110,7 @@ def named_set_latest(request, namedset):
 def named_set_year(request, namedset, year=None):
     """Redirect to first day of year if not in the future"""
 
-    if int(year) > dt.date.today().year:
+    if int(year) > timezone.now().year:
         raise Http404
     else:
         return HttpResponseRedirect(reverse('namedset-date', kwargs={
@@ -174,7 +173,7 @@ def user_set_latest(request):
 def user_set_year(request, year=None):
     """Redirect to first day of year if not in the future"""
 
-    if int(year) > dt.date.today().year:
+    if int(year) > timezone.now().year:
         raise Http404
     else:
         return HttpResponseRedirect(reverse('userset-date', kwargs={

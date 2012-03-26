@@ -1,4 +1,4 @@
-import datetime as dt
+import datetime
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -6,6 +6,7 @@ from django.core.cache import cache
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
+from django.utils import timezone
 from django.utils.datastructures import SortedDict
 
 from comics.core.models import Comic, Release
@@ -72,7 +73,7 @@ def comic_latest(request, comic):
 def comic_year(request, comic, year):
     """Redirect to first day of year if not in the future"""
 
-    if int(year) > dt.date.today().year:
+    if int(year) > timezone.now().year:
         raise Http404
     else:
         return HttpResponseRedirect(reverse('comic-date', kwargs={
@@ -91,8 +92,8 @@ def about(request):
 @login_required
 def status(request, days=21):
     timeline = SortedDict()
-    first = dt.date.today() + dt.timedelta(days=1)
-    last = dt.datetime.today() - dt.timedelta(days=days)
+    first = datetime.date.today() + datetime.timedelta(days=1)
+    last = datetime.date.today() - datetime.timedelta(days=days)
 
     releases = Release.objects.filter(pub_date__gte=last)
     releases = releases.select_related('comic__slug')
@@ -103,7 +104,7 @@ def status(request, days=21):
         timeline[comic] = []
 
         for i in range(days+2):
-            day = first - dt.timedelta(days=i)
+            day = first - datetime.timedelta(days=i)
             classes = set()
 
             if not schedule:
@@ -118,7 +119,8 @@ def status(request, days=21):
         timeline[release.comic][day][0].add('fetched')
         timeline[release.comic][day][2] = release
 
-    days = [dt.date.today() - dt.timedelta(days=i) for i in range(-1, 22)]
+    days = [datetime.date.today() - datetime.timedelta(days=i)
+        for i in range(-1, 22)]
 
     return render(request, 'core/status.html',
         {'days': days, 'timeline': timeline})

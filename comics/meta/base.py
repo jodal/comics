@@ -1,4 +1,4 @@
-import datetime as dt
+import datetime
 
 from comics.core.models import Comic
 
@@ -42,4 +42,4 @@ class MetaBase(object):
     def _get_date(self, date):
         if date is None:
             return None
-        return dt.datetime.strptime(date, '%Y-%m-%d').date()
+        return datetime.datetime.strptime(date, '%Y-%m-%d').date()
