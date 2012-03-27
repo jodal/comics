@@ -90,6 +90,7 @@ v1.1.4 (in development)
 **Crawlers**
 
 - New: ``kellermannen``
+- New: ``manalanextdoor``
 - Update ``darylcagle`` after feed change.
 - Update ``playervsplayer`` after feed change.
 
