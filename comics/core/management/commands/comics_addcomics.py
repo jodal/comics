@@ -1,5 +1,5 @@
+from comics.core.comic_data import ComicDataLoader
 from comics.core.command_utils import ComicsBaseCommand, make_option
-from comics.meta.command import MetaLoader
 
 class Command(ComicsBaseCommand):
     option_list = ComicsBaseCommand.option_list + (
@@ -10,8 +10,8 @@ class Command(ComicsBaseCommand):
 
     def handle(self, *args, **options):
         super(Command, self).handle(*args, **options)
-        meta_loader = MetaLoader(options)
+        data_loader = ComicDataLoader(options)
         try:
-            meta_loader.start()
+            data_loader.start()
         except KeyboardInterrupt:
-            meta_loader.stop()
+            data_loader.stop()
