@@ -17,13 +17,6 @@
         title="Comic feed: {{ comics.0.0.name }}">
     {% endif %}
   {% endifequal %}
-  {% ifequal page.view_type 'namedset' %}
-    {% if set %}
-      <link rel="alternate" type="application/atom+xml"
-        href="{{ set.get_feed_url }}"
-        title="Comic set feed: {{ set.name }}">
-    {% endif %}
-  {% endifequal %}
   {% if page.first_url %}
     <link rel="start" href="{{ page.first_url }}">
     <link rel="first" href="{{ page.first_url }}">
@@ -50,16 +43,6 @@
   <div class="page-header">
     <h1>{{ page.title|safe }}</h1>
   </div>
-
-  {% ifequal page.view_type "namedset" %}
-    {% if set %}
-      <p>
-        <a href="{% url "namedset-edit" set.name %}" class="btn">
-          <i class="icon-edit"></i> Edit comic set
-        </a>
-      </p>
-    {% endif %}
-  {% endifequal %}
 
   <div id="releases">
     {% for comic, releases in comics %}
@@ -98,7 +81,7 @@
 
       {% empty %}
 
-        {% if set and set.hide_empty_comics %}
+        {% if user_set.hide_empty_comics %}
           <!-- No release for {{ comic.name }} -->
         {% else %}
           <div class="release">
@@ -120,9 +103,6 @@
           <strong>No comics found.</strong>
         </p>
         <p class="alert-actions">
-          {% if set %}
-            <a href="{% url "namedset-edit" set.name %}" class="btn small">Edit comics set</a>
-          {% endif %}
         </p>
       </div>
 

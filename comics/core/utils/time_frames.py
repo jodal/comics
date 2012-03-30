@@ -5,16 +5,8 @@ from urllib import unquote
 
 from django.core.urlresolvers import reverse
 
-def time_frames(view_type, start_date, slug, last_visit):
+def time_frames(view_type, slug, start_date):
     """Returns a list of time frame menu items"""
-
-    result = generic_time_frames(view_type, slug, start_date)
-    if view_type == 'set':
-        result += set_time_frames(slug, last_visit)
-    return result
-
-def generic_time_frames(view_type, slug, start_date):
-    """Returns a list of generic time frame menu items"""
 
     return [
         latest_time_frame(view_type, slug),
@@ -22,15 +14,6 @@ def generic_time_frames(view_type, slug, start_date):
         a_week_time_frame(view_type, slug, start_date),
         this_month_time_frame(view_type, slug, start_date),
     ]
-
-def set_time_frames(slug, last_visit):
-    """Returns a list of time frame menu items specific for set views"""
-
-    time_frame = new_since_last_visit_time_frame(slug, last_visit)
-    if time_frame is not None:
-        return [time_frame]
-    else:
-        return []
 
 def latest_time_frame(view_type, slug):
     """Returns menu item for the "latest" time frame"""
@@ -94,25 +77,6 @@ def this_month_time_frame(view_type, slug, start_date):
         'url': unquote(reverse(view_name, kwargs=kwargs)),
         'icon': 'calendar_view_month',
     }
-
-def new_since_last_visit_time_frame(namedset, last_visit):
-    """
-    Returns time frame called "new since last visit", given a set slug and a
-    date for the user's last visit.
-
-    """
-
-    view_name = 'namedset-last-days'
-    if last_visit == today():
-        return None
-    else:
-        days_since_last_visit = (today() - last_visit).days
-        kwargs = {'namedset': namedset, 'days': days_since_last_visit}
-        return {
-            'title': 'New',
-            'url': unquote(reverse(view_name, kwargs=kwargs)),
-            'icon': 'calendar_add',
-        }
 
 def time_frame_ends_in_future(start_date, days):
     """Returns true if the time frame ends in the future"""

@@ -172,8 +172,7 @@ def navigation_days(request, view_type, instance=None,
         'view_type': view_type,
         'title': title,
         'today': today,
-        'time_frames': time_frames(view_type, start_date, slug,
-            last_visit(request)),
+        'time_frames': time_frames(view_type, slug, start_date),
         'start_date': start_date,
         'end_date': end_date,
         'first_date': first_date,   'first_url': first_url,
@@ -299,8 +298,7 @@ def navigation_month(request, view_type, instance=None, year=None, month=None):
         'view_type': view_type,
         'title': title,
         'today': today,
-        'time_frames': time_frames(view_type, start_date, slug,
-            last_visit(request)),
+        'time_frames': time_frames(view_type, slug, start_date),
         'start_date': start_date,
         'end_date': end_date,
         'first_month': first_month, 'first_url': first_url,
@@ -308,9 +306,3 @@ def navigation_month(request, view_type, instance=None, year=None, month=None):
         'prev_month': prev_month,   'prev_url': prev_url,
         'next_month': next_month,   'next_url': next_url,
     }
-
-def last_visit(request):
-    if hasattr(request, 'session') and 'last_visit' in request.session:
-        return request.session['last_visit']
-    else:
-        return datetime.date.today()

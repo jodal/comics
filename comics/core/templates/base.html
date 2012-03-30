@@ -44,11 +44,6 @@
                         <i class="icon-user"></i>
                         Account</a>
                     </li>
-                    <li class="{{ active.sets|yesno:"active," }}" >
-                      <a href="{% url "namedset-new" %}">
-                        <i class="icon-bookmark"></i>
-                        Sets</a>
-                    </li>
                   {% else %}
                     <li class="{{ active.login|yesno:"active," }}" >
                       <a href="{% url "auth_login" %}">

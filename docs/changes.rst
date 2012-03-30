@@ -24,6 +24,7 @@ v1.2 (in development)
   - Add user account registration, activation, login, logout, password change,
     password reset, and account summary.
   - Add user information to emails sent from the feedback page.
+  - Replace "comic sets" with user associated comic selections.
 
 - Removed setting ``COMICS_SITE_TAGLINE``.
 

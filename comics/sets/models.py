@@ -6,6 +6,7 @@ from django.utils import timezone
 
 from comics.core.models import Comic
 
+
 class Set(models.Model):
     name = models.SlugField(max_length=100, unique=True,
         help_text='The set identifier')
@@ -24,12 +25,6 @@ class Set(models.Model):
 
     def __unicode__(self):
         return self.name
-
-    def get_absolute_url(self):
-        return reverse('namedset-latest', kwargs={'namedset': self.name})
-
-    def get_feed_url(self):
-        return reverse('namedset-feed', kwargs={'namedset': self.name})
 
     def get_slug(self):
         return self.name
