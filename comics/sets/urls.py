@@ -6,6 +6,10 @@ from comics.sets import views
 SET = r'(?P<namedset>[0-9a-z-_]+)'
 
 urlpatterns = patterns('',
+    # User-associated comic sets
+    url(r'^import/$',
+        views.user_set_import_named_set, name='namedset-import'),
+
     # Named comic sets
     url(r'^$',
         views.named_set_new, name='namedset-new'),

@@ -8,13 +8,16 @@ body {
     opacity: 0.3;
 }
 
+h3 {
+    margin: 20px 0 10px;
+}
 h3 a:hover {
     text-decoration: none;
 }
 
 .release h3,
 .release form {
-    margin-bottom: 12px;
+    margin: 0 0 12px;
 }
 
 #cloud {
