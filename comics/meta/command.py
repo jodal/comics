@@ -43,7 +43,7 @@ class MetaLoader(object):
                 self._load_meta(meta)
             else:
                 logger.debug('Skipping inactive comic')
-        except MetaError, error:
+        except ComicDataError, error:
             logger.error(error)
         except Exception, error:
             logger.exception(error)
@@ -52,7 +52,7 @@ class MetaLoader(object):
         logger.debug('Importing comic module for %s', comic_slug)
         comic_module = get_comic_module(comic_slug)
         if not hasattr(comic_module, 'Meta'):
-            raise MetaError('%s does not have a Meta class' %
+            raise ComicDataError('%s does not have a Meta class' %
                 comic_module.__name__)
         return comic_module.Meta()
 

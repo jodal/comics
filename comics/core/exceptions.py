@@ -6,3 +6,9 @@ class ComicsError(Exception):
 
     def __str__(self):
         return 'Generic comics error (%s)' % self.value
+
+
+class ComicDataError(ComicsError):
+    """Base class for comic data exceptions"""
+    def __str__(self):
+        return 'Comics data error (%s)' % self.value
