@@ -51,6 +51,9 @@ v1.2 (in development)
   while developing, making the development and deployment environments more
   alike.
 
+- Renamed :class:`MetaBase` to :class:`ComicDataBase`, and moved it to
+  :mod:`comics.core.comic_data`. Remember to update any custom crawlers.
+
 
 v1.1.4 (in development)
 =======================

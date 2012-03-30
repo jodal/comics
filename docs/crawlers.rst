@@ -11,17 +11,17 @@ how to write new crawlers for *comics*.
 A crawler example
 =================
 
-The crawlers are split in two separate pieces. The :class:`Meta` part contains
-meta data about the comic used for display at the web site. The
+The crawlers are split in two separate pieces. The :class:`ComicData` part
+contains meta data about the comic used for display at the web site. The
 :class:`Crawler` part contains properties needed for crawling and the crawler
 implementation itself.
 
 ::
 
     from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-    from comics.meta.base import MetaBase
+    from comics.core.comci_data import ComicDataBase
 
-    class Meta(MetaBase):
+    class ComicData(ComicDataBase):
         name = 'xkcd'
         language = 'en'
         url = 'http://www.xkcd.com/'
@@ -42,10 +42,10 @@ implementation itself.
                 return CrawlerImage(url, title, text)
 
 
-The :class:`Meta` class fields
-==============================
+The :class:`ComicData` class fields
+===================================
 
-.. class:: Meta
+.. class:: ComicData
 
     .. attribute:: name
 
@@ -466,8 +466,8 @@ file ``foo.py``. The file must be placed in the ``comics/comics/comics/``
 directory, and will be available in Python as ``comics.comics.foo``.
 
 
-Loading :class:`Meta` for your new comic
-----------------------------------------
+Loading :class:`ComicData` for your new comic
+---------------------------------------------
 
 For *comics* to know about your new crawler, you need to load the comic meta
 data into *comics*'s database. To do so, we run the ``comics_addcomics``
@@ -475,8 +475,8 @@ command::
 
     python manage.py comics_addcomics -c foo
 
-If you do any changes to the :class:`Meta` class of any crawler, you must rerun
-``comics_addcomics`` to update the database representation of the comic.
+If you do any changes to the :class:`ComicData` class of any crawler, you must
+rerun ``comics_addcomics`` to update the database representation of the comic.
 
 
 Running the crawler
