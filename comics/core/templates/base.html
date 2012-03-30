@@ -24,51 +24,44 @@
         <div class="navbar navbar-fixed-top">
           <div class="navbar-inner">
             <div class="container">
-              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </a>
               <a class="brand" href="{% url "userset-latest" %}">{{ site_title }}</a>
-              <div class="nav-collapse">
-                {% block site_menu %}
-                  <ul class="nav">
-                  {% if user.is_authenticated %}
-                    <li class="{{ active.home|yesno:"active," }}" >
-                      <a href="{% url "userset-latest" %}">
-                        <i class="icon-home"></i>
-                        Home</a>
-                    </li>
-                    <li class="{{ active.account|yesno:"active," }}" >
-                      <a href="{% url "account_settings" %}">
-                        <i class="icon-user"></i>
-                        Account</a>
-                    </li>
-                  {% else %}
-                    <li class="{{ active.login|yesno:"active," }}" >
-                      <a href="{% url "auth_login" %}">
-                        <i class="icon-ok-sign"></i>
-                        Login</a>
-                    </li>
-                    <li class="{{ active.register|yesno:"active," }}" >
-                      <a href="{% url "registration_register" %}">
-                        <i class="icon-plus-sign"></i>
-                        Register</a>
-                    </li>
-                  {% endif %}
-                    <li class="{{ active.feedback|yesno:"active," }}" >
-                      <a href="{% url "feedback" %}">
-                        <i class="icon-envelope"></i>
-                        Feedback</a>
-                    </li>
-                    <li class="{{ active.about|yesno:"active," }}" >
-                      <a href="{% url "about" %}">
-                        <i class="icon-info-sign"></i>
-                        About</a>
-                    </li>
-                  </ul>
-                {% endblock site_menu %}
-              </div>
+              {% block site_menu %}
+                <ul class="nav">
+                {% if user.is_authenticated %}
+                  <li class="{{ active.home|yesno:"active," }}" >
+                    <a href="{% url "userset-latest" %}">
+                      <i class="icon-home"></i>
+                      Home</a>
+                  </li>
+                  <li class="{{ active.account|yesno:"active," }}" >
+                    <a href="{% url "account_settings" %}">
+                      <i class="icon-user"></i>
+                      Account</a>
+                  </li>
+                {% else %}
+                  <li class="{{ active.login|yesno:"active," }}" >
+                    <a href="{% url "auth_login" %}">
+                      <i class="icon-ok-sign"></i>
+                      Login</a>
+                  </li>
+                  <li class="{{ active.register|yesno:"active," }}" >
+                    <a href="{% url "registration_register" %}">
+                      <i class="icon-plus-sign"></i>
+                      Register</a>
+                  </li>
+                {% endif %}
+                  <li class="{{ active.feedback|yesno:"active," }}" >
+                    <a href="{% url "feedback" %}">
+                      <i class="icon-envelope"></i>
+                      Feedback</a>
+                  </li>
+                  <li class="{{ active.about|yesno:"active," }}" >
+                    <a href="{% url "about" %}">
+                      <i class="icon-info-sign"></i>
+                      About</a>
+                  </li>
+                </ul>
+              {% endblock site_menu %}
               {% block top_menu %}{% endblock top_menu %}
             </div>
           </div>
