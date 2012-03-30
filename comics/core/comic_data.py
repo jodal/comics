@@ -1,9 +1,55 @@
+import datetime
 import logging
 
 from comics.comics import get_comic_module_names, get_comic_module
 from comics.core.exceptions import ComicDataError
+from comics.core.models import Comic
 
 logger = logging.getLogger('comics.core.comic_data')
+
+
+class ComicDataBase(object):
+    # Required values
+    name = None
+    language = None
+    url = None
+
+    # Default values
+    active = True
+    start_date = None
+    end_date = None
+    rights = ''
+
+    @property
+    def slug(self):
+        return self.__module__.split('.')[-1]
+
+    def is_previously_loaded(self):
+        return bool(Comic.objects.filter(slug=self.slug).count())
+
+    def create_comic(self):
+        if self.is_previously_loaded():
+            comic = Comic.objects.get(slug=self.slug)
+            comic.name = self.name
+            comic.language = self.language
+            comic.url = self.url
+        else:
+            comic = Comic(
+                name=self.name,
+                slug=self.slug,
+                language=self.language,
+                url=self.url)
+        comic.active = self.active
+        comic.start_date = self._get_date(self.start_date)
+        comic.end_date = self._get_date(self.end_date)
+        comic.rights = self.rights
+        comic.save()
+
+    def _get_date(self, date):
+        if date is None:
+            return None
+        return datetime.datetime.strptime(date, '%Y-%m-%d').date()
+
 
 class ComicDataLoader(object):
     def __init__(self, options):
@@ -51,10 +97,10 @@ class ComicDataLoader(object):
     def _get_data(self, comic_slug):
         logger.debug('Importing comic module for %s', comic_slug)
         comic_module = get_comic_module(comic_slug)
-        if not hasattr(comic_module, 'Meta'):
-            raise ComicDataError('%s does not have a Meta class' %
+        if not hasattr(comic_module, 'ComicData'):
+            raise ComicDataError('%s does not have a ComicData class' %
                 comic_module.__name__)
-        return comic_module.Meta()
+        return comic_module.ComicData()
 
     def _should_load_data(self, data):
         if data.active:

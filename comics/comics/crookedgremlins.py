@@ -1,7 +1,7 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'Crooked Gremlins'
     language = 'en'
     url = 'http://www.crookedgremlins.com/'
@@ -13,7 +13,8 @@ class Crawler(CrawlerBase):
     time_zone = -8
 
     def crawl(self, pub_date):
-        page_url = Meta.url + pub_date.strftime(r'%m/%d/%Y/')
+        page_url = 'http://www.crookedgremlins.com/%s' % (
+            pub_date.strftime(r'%m/%d/%Y/'))
         page = self.parse_page(page_url)
 
         image_location = 'div#content > img'

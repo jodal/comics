@@ -1,7 +1,7 @@
 from comics.aggregator.crawler import GoComicsComCrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'FoxTrot'
     language = 'en'
     url = 'http://www.gocomics.com/foxtrot'

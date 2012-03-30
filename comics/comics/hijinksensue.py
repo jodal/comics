@@ -1,7 +1,7 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'HijiNKS Ensue'
     language = 'en'
     url = 'http://hijinksensue.com/'

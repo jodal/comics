@@ -1,9 +1,9 @@
 # encoding: utf-8
 
 from comics.aggregator.crawler import PondusNoCrawlerBase
-from comics.comics.pondus import Meta as PondusMeta
+from comics.comics.pondus import ComicData as PondusData
 
-class Meta(PondusMeta):
+class ComicData(PondusData):
     name = 'Pondus (pondus.no)'
     url = 'http://www.pondus.no/'
     active = False

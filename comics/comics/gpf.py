@@ -1,7 +1,7 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'General Protection Fault'
     language = 'en'
     url = 'http://www.gpf-comics.com/'

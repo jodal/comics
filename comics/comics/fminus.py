@@ -1,7 +1,7 @@
 from comics.aggregator.crawler import GoComicsComCrawlerBase
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'F Minus'
     language = 'en'
     url = 'http://comics.com/f_minus/'

@@ -1,7 +1,7 @@
 from comics.aggregator.crawler import GoComicsComCrawlerBase
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'Tank McNamara'
     language = 'en'
     url = 'http://www.gocomics.com/tankmcnamara'

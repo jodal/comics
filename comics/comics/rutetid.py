@@ -1,9 +1,9 @@
 # encoding: utf-8
 
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'Rutetid'
     language = 'no'
     url = 'http://www.dagbladet.no/tegneserie/rutetid/'

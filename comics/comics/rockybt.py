@@ -1,7 +1,7 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.comics.rocky import Meta as RockyMeta
+from comics.comics.rocky import ComicData as RockyData
 
-class Meta(RockyMeta):
+class ComicData(RockyData):
     name = 'Rocky (bt.no)'
     url = 'http://www.bt.no/bergenpuls/tegneserier/tegneserier_rocky/'
 

@@ -1,8 +1,8 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 from comics.core.models import Release
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'The Dreamer'
     language = 'en'
     url = 'http://thedreamercomic.com/'

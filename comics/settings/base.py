@@ -81,7 +81,6 @@ INSTALLED_APPS = (
     'comics.core',
     'comics.accounts',
     'comics.feedback',
-    'comics.meta',
     'comics.sets',
 )
 

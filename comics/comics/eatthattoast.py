@@ -1,9 +1,9 @@
 import re
 
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'Eat That Toast!'
     language = 'en'
     url = 'http://eatthattoast.com/'

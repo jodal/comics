@@ -1,7 +1,7 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'Sheldon'
     language = 'en'
     url = 'http://www.sheldoncomics.com/'
@@ -9,7 +9,7 @@ class Meta(MetaBase):
     rights = 'Dave Kellett'
 
 class Crawler(CrawlerBase):
-    history_capable_date = Meta.start_date
+    history_capable_date = ComicData.start_date
     schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = -5
 
