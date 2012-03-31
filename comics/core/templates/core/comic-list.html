@@ -19,7 +19,6 @@
           <th>Comic</th>
           <th>Language</th>
           <th class="alignright"># releases</th>
-          <th class="alignright"># sets</th>
           <th>Website</th>
           <th>Last fetched</th>
         </tr>
@@ -38,8 +37,6 @@
             <td>{{ comic.get_language_display }}</td>
             <td class="alignright">{{ comic.release__count }}
               release{{ comic.release__count|pluralize }}</td>
-            <td class="alignright">{{ comic.number_of_sets }}
-              set{{ comic.number_of_sets|pluralize }}</td>
             <td><a href="{{ comic.get_redirect_url }}">{{ comic.url }}</a></td>
             <td>
               {% if not comic.active %}
