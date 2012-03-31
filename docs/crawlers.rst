@@ -19,7 +19,7 @@ implementation itself.
 ::
 
     from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-    from comics.core.comci_data import ComicDataBase
+    from comics.core.comic_data import ComicDataBase
 
     class ComicData(ComicDataBase):
         name = 'xkcd'
