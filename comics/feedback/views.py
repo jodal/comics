@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.sites.models import RequestSite, Site
 from django.core.mail import mail_admins
 from django.core.urlresolvers import reverse
@@ -30,7 +31,10 @@ def feedback(request):
             message = '%s\n\n%s' % (message, metadata)
 
             mail_admins(subject, message)
-            return HttpResponseRedirect(reverse('feedback-thanks'))
+
+            messages.info(request,
+                'Thank you for taking the time to help improve the site! :-)')
+            return HttpResponseRedirect(reverse('userset-latest'))
     else:
         form = FeedbackForm()
 
@@ -38,8 +42,3 @@ def feedback(request):
         'active': {'feedback': True},
         'feedback_form': form,
     })
-
-def feedback_thanks(request):
-    """Display form submit confirmation page"""
-
-    return render(request, 'feedback/thanks.html')
