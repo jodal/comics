@@ -28,7 +28,7 @@ def feedback(request):
                     request.user.username, request.user.email)
             else:
                 metadata += 'User: anonymous\n'
-            message = '%s\n\n%s' % (message, metadata)
+            message = '%s\n\n-- \n%s' % (message, metadata)
 
             mail_admins(subject, message)
 
