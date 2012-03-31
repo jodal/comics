@@ -3,9 +3,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404
-from django.shortcuts import get_object_or_404
-from django.views.decorators.cache import never_cache
+from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
+from django.views.decorators.cache import never_cache
 
 from comics.core.models import Comic
 from comics.core.utils.navigation import get_navigation
@@ -38,25 +38,25 @@ def user_set_toggle_comic(request):
 def user_set_import_named_set(request):
     """Import comics from a named set into the current user's set"""
 
-    if request.method != 'POST':
-        raise Http404
+    if request.method == 'POST':
+        try:
+            named_set = Set.objects.get(name=request.POST['namedset'])
+        except Set.DoesNotExist:
+            messages.error(request, 'No comic set named "%s" found.' %
+                request.POST['namedset'])
+            return HttpResponseRedirect(reverse('import_named_set'))
 
-    try:
-        named_set = Set.objects.get(name=request.POST['namedset'])
-    except Set.DoesNotExist:
-        messages.error(request, 'No comic set named "%s" found.' %
-            request.POST['namedset'])
-        return HttpResponseRedirect(reverse('account_settings'))
+        count_before = len(request.user_set.comics.all())
+        request.user_set.comics.add(*named_set.comics.all())
+        count_added = len(request.user_set.comics.all()) - count_before
+        messages.info(request, '%d comic(s) was added to your comics selection.' %
+            count_added)
+        if count_added > 0:
+            return HttpResponseRedirect(reverse('userset-latest'))
+        else:
+            return HttpResponseRedirect(reverse('import_named_set'))
 
-    count_before = len(request.user_set.comics.all())
-    request.user_set.comics.add(*named_set.comics.all())
-    count_added = len(request.user_set.comics.all()) - count_before
-    messages.info(request, '%d comic(s) was added to your comics selection.' %
-        count_added)
-    if count_added > 0:
-        return HttpResponseRedirect(reverse('userset-latest'))
-    else:
-        return HttpResponseRedirect(reverse('account_settings'))
+    return render(request, 'sets/import_named_set.html')
 
 
 @login_required

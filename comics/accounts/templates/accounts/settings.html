@@ -1,20 +1,18 @@
-{% extends "core/base.html" %}
+{% extends "accounts/base.html" %}
 {% load url from future %}
 
 {% block title %}
   Account
 {% endblock %}
 
-{% block content %}
+{% block account_content %}
 
   <div class="page-header">
-    <h1>Account <small>Manage your account</small></h1>
+    <h1>Account details</h1>
   </div>
 
   <div class="row">
-    <div class="span5">
-
-      <h3>Account details</h3>
+    <div class="span6">
 
       <table class="table table-striped">
         <tbody>
@@ -22,43 +20,22 @@
             <th>Email</th>
             <td>{{ user.email }}</td>
           </tr>
-
           <tr>
-            <th>Password</th>
-            <td><a href="{% url "auth_password_change" %}">Change password</a></td>
+            <th>Date joined</th>
+            <td>{{ user.date_joined|date }}</td>
           </tr>
-
           <tr>
-            <th>Secret key</th>
-            <td>
-              {{ user.get_profile.secret_key }}
-              <a href="{% url "new_secret_key" %}">Generate new key</a></td>
-            </td>
+            <th>Last login</th>
+            <td>{{ user.last_login|date }}</td>
+          </tr>
+          <tr>
+            <th>Selected comics</th>
+            <td>{{ user_set.comics.count }} / {{ all_comics.count }}</td>
           </tr>
         </tbody>
       </table>
 
-      <p>
-        <a href="{% url "auth_logout" %}" class="btn btn-primary">
-          <i class="icon-off icon-white"></i> Logout</a>
-      </p>
-
-    </div>
-    <div class="span4">
-
-      <h3>Import an old comic set</h3>
-
-      <p>This adds all comics from the given "comic set" to your comic
-      selection. No comics are removed from your selection.</p>
-
-      <form action="{% url 'namedset-import' %}" method="post" class="form-inline">
-        {% csrf_token %}
-        <input type="text" name="namedset" placeholder="Set name">
-        &nbsp;
-        <button type="submit" class="btn btn-primary">Import</button>
-      </form>
-
     </div>
   </div>
 
-{% endblock content %}
+{% endblock %}

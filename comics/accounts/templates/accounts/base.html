@@ -1,0 +1,23 @@
+{% extends "core/base.html" %}
+{% load url from future %}
+
+{% block content %}
+
+<div class="row">
+  <div class="span2">
+    <ul class="nav nav-list">
+      <li class="nav-header">Account</li>
+      <li><a href="{% url "account_settings" %}">Account details</a></li>
+      <li><a href="{% url "auth_password_change" %}">Change password</a></li>
+      <li><a href="{% url "secret_key" %}">Secret key</a></li>
+      <li><a href="{% url "import_named_set" %}">Import comic set</a></li>
+      <li class="divider"></li>
+      <li><a href="{% url "auth_logout" %}">Logout</a>
+    </ul>
+  </div>
+  <div class="span10">
+    {% block account_content %}{% endblock %}
+  </div>
+</div>
+
+{% endblock %}

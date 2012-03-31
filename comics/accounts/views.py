@@ -5,14 +5,14 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 @login_required
-def new_secret_key(request):
-    """Generate a new secret key for the current user"""
+def secret_key(request):
+    """Show and generate a new secret key for the current user"""
 
     if request.method == 'POST':
         user_profile = request.user.get_profile()
         user_profile.generate_new_secret_key()
         user_profile.save()
         messages.info(request, 'A new secret key was generated.')
-        return HttpResponseRedirect(reverse('account_settings'))
+        return HttpResponseRedirect(reverse('secret_key'))
 
-    return render(request, 'accounts/new_secret_key.html')
+    return render(request, 'accounts/secret_key.html')

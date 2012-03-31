@@ -2,15 +2,18 @@ from django.conf.urls.defaults import patterns, url
 from django.contrib.auth import views as auth_views
 from django.views.generic.simple import direct_to_template
 
-from registration.views import activate, register
+from registration import views as reg_views
 
 from comics.accounts.forms import AuthenticationForm, PasswordResetForm
-from comics.accounts.views import new_secret_key
-from comics.sets.views import user_set_toggle_comic
+from comics.accounts import views as accounts_views
+from comics.sets import views as set_views
 
 urlpatterns = patterns('',
+
+    ### django-registration
+
     url(r'^register/$',
-        register,
+        reg_views.register,
         {
             'backend': 'comics.accounts.backends.RegistrationBackend',
             'extra_context': {'active': {'register': True}},
@@ -30,9 +33,11 @@ urlpatterns = patterns('',
         {'template': 'registration/activation_complete.html'},
         name='registration_activation_complete'),
     url(r'^activate/(?P<activation_key>\w+)/$',
-        activate,
+        reg_views.activate,
         {'backend': 'comics.accounts.backends.RegistrationBackend'},
         name='registration_activate'),
+
+    ### django.contrib.auth
 
     url(r'^login/$',
         auth_views.login,
@@ -46,14 +51,6 @@ urlpatterns = patterns('',
         auth_views.logout,
         {'next_page': '/account/login/'},
         name='auth_logout'),
-
-    url(r'^$',
-        direct_to_template,
-        {
-            'template': 'accounts/settings.html',
-            'extra_context': {'active': {'account': True}},
-        },
-        name='account_settings'),
 
     url(r'^password/change/$',
         auth_views.password_change,
@@ -88,7 +85,22 @@ urlpatterns = patterns('',
         {'template_name': 'auth/password_reset_done.html'},
         name='auth_password_reset_done'),
 
-    url(r'^key/$', new_secret_key, name='new_secret_key'),
+    ### comics.accounts
 
-    url(r'^toggle-comic/$', user_set_toggle_comic, name='toggle_comic'),
+    url(r'^$',
+        direct_to_template,
+        {
+            'template': 'accounts/settings.html',
+            'extra_context': {'active': {'account': True}},
+        },
+        name='account_settings'),
+
+    url(r'^secret-key/$',
+        accounts_views.secret_key, name='secret_key'),
+
+    url(r'^toggle-comic/$',
+        set_views.user_set_toggle_comic, name='toggle_comic'),
+
+    url(r'^import-set/$',
+        set_views.user_set_import_named_set, name='import_named_set'),
 )

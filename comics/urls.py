@@ -14,9 +14,6 @@ urlpatterns = patterns('',
     # Comic core
     (r'^', include('comics.core.urls')),
 
-    # Comic sets
-    (r'^s/', include('comics.sets.urls')),
-
     # Feedback app
     (r'^feedback/', include('comics.feedback.urls')),
 
