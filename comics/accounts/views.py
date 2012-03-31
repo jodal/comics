@@ -9,6 +9,7 @@ def account_details(request):
     return render(request, 'accounts/details.html', {
         'active': {
             'account': True,
+            'account_details': True,
         }
     })
 
@@ -23,4 +24,9 @@ def secret_key(request):
         messages.info(request, 'A new secret key was generated.')
         return HttpResponseRedirect(reverse('secret_key'))
 
-    return render(request, 'accounts/secret_key.html')
+    return render(request, 'accounts/secret_key.html', {
+        'active': {
+            'account': True,
+            'secret_key': True,
+        }
+    })

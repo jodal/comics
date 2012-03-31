@@ -49,14 +49,19 @@ def user_set_import_named_set(request):
         count_before = len(request.user_set.comics.all())
         request.user_set.comics.add(*named_set.comics.all())
         count_added = len(request.user_set.comics.all()) - count_before
-        messages.info(request, '%d comic(s) was added to your comics selection.' %
-            count_added)
+        messages.info(request,
+            '%d comic(s) was added to your comics selection.' % count_added)
         if count_added > 0:
             return HttpResponseRedirect(reverse('userset-latest'))
         else:
             return HttpResponseRedirect(reverse('import_named_set'))
 
-    return render(request, 'sets/import_named_set.html')
+    return render(request, 'sets/import_named_set.html', {
+        'active': {
+            'account': True,
+            'import_named_set': True,
+        }
+    })
 
 
 @login_required

@@ -56,6 +56,10 @@ urlpatterns = patterns('',
         auth_views.password_change,
         {
             'template_name': 'auth/password_change.html',
+            'extra_context': {'active': {
+                'account': True,
+                'auth_password_change': True,
+            }},
         },
         name='auth_password_change'),
     url(r'^password/change/done/$',
