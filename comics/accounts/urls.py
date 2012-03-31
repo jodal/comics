@@ -5,7 +5,7 @@ from django.views.generic.simple import direct_to_template
 from registration import views as reg_views
 
 from comics.accounts.forms import AuthenticationForm, PasswordResetForm
-from comics.accounts import views as accounts_views
+from comics.accounts import views as account_views
 from comics.sets import views as set_views
 
 urlpatterns = patterns('',
@@ -88,15 +88,10 @@ urlpatterns = patterns('',
     ### comics.accounts
 
     url(r'^$',
-        direct_to_template,
-        {
-            'template': 'accounts/settings.html',
-            'extra_context': {'active': {'account': True}},
-        },
-        name='account_settings'),
+        account_views.account_details, name='account'),
 
     url(r'^secret-key/$',
-        accounts_views.secret_key, name='secret_key'),
+        account_views.secret_key, name='secret_key'),
 
     url(r'^toggle-comic/$',
         set_views.user_set_toggle_comic, name='toggle_comic'),

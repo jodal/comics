@@ -5,6 +5,14 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 @login_required
+def account_details(request):
+    return render(request, 'accounts/details.html', {
+        'active': {
+            'account': True,
+        }
+    })
+
+@login_required
 def secret_key(request):
     """Show and generate a new secret key for the current user"""
 
