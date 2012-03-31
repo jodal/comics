@@ -1,4 +1,4 @@
-from django.conf import settings
+from django.contrib.sites.models import RequestSite, Site
 from django.core.mail import mail_admins
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
@@ -12,7 +12,12 @@ def feedback(request):
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
         if form.is_valid():
-            subject = 'Feedback from %s' % settings.COMICS_SITE_TITLE
+            if Site._meta.installed:
+                site_title = Site.objects.get_current().name
+            else:
+                site_title = RequestSite(request).name
+
+            subject = 'Feedback from %s' % site_title
             message = form.cleaned_data['message']
 
             metadata = 'Client IP address: %s\n' % request.META['REMOTE_ADDR']
