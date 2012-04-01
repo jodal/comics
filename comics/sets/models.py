@@ -53,6 +53,12 @@ class UserSet(models.Model):
     def __unicode__(self):
         return u'Comic set for %s' % self.user
 
+    def get_absolute_url(self):
+        return reverse('userset-latest')
+
+    def get_feed_url(self):
+        return reverse('userset-feed')
+
 
 def add_new_comic_to_user_sets_callback(sender, **kwargs):
     if sender == Comic and kwargs['created']:

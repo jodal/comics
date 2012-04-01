@@ -1,7 +1,9 @@
 from django.conf.urls.defaults import patterns, url
 
 from comics.core import views
+from comics.core.feeds import ComicFeed
 from comics.sets import views as set_views
+from comics.sets.feeds import UserSetFeed
 
 YEAR = r'(?P<year>(19|20)\d{2})'
 MONTH = r'(?P<month>(0*[1-9]|1[0-2]))'
@@ -20,6 +22,7 @@ urlpatterns = patterns('',
         set_views.user_set_show, name='userset-date'),
     url(r'^%s/%s/%s/%s/$' % (YEAR, MONTH, DAY, DAYS),
         set_views.user_set_show, name='userset-date-days'),
+    url(r'^feed/$', UserSetFeed(), name='userset-feed'),
 
     # View one specific comic
     url(r'^c/$',
@@ -36,6 +39,7 @@ urlpatterns = patterns('',
         views.comic_show, name='comic-date'),
     url(r'^c/%s/%s/%s/%s/%s/$' % (COMIC, YEAR, MONTH, DAY, DAYS),
         views.comic_show, name='comic-date-days'),
+    url(r'^c/%s/feed/$' % (COMIC,), ComicFeed(), name='comic-feed'),
 
     # Status page
     url(r'^status/$', views.status, name='status'),

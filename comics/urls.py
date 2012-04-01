@@ -7,9 +7,6 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 admin.autodiscover()
 
-from comics.core.feeds import ComicFeed
-from comics.core.urls import COMIC
-
 urlpatterns = patterns('',
     # Comic core
     (r'^', include('comics.core.urls')),
@@ -19,9 +16,6 @@ urlpatterns = patterns('',
 
     # User handling
     (r'^account/', include('comics.accounts.urls')),
-
-    # Comic feeds
-    url(r'^feeds/c/%s/$' % (COMIC,), ComicFeed(), name='comic-feed'),
 
     # Django admin
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),

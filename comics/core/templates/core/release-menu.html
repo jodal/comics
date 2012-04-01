@@ -11,15 +11,13 @@
     {% endif %}
   {% endifequal %}
 
-  {% ifequal page.view_type 'set' %}
-    {% if set %}
-      <li>
-        <a href="{{ set.get_feed_url }}"
-          title="Comic set feed: {{ set.name }}">
-          <i class="icon-fire"></i>
-          Feed</a>
-      </li>
-    {% endif %}
+  {% ifequal page.view_type 'userset' %}
+    <li>
+      <a href="{{ user_set.get_feed_url }}?key={{ user.get_profile.secret_key }}"
+        title="Comic feed for {{ user.email }}">
+        <i class="icon-fire"></i>
+        Feed</a>
+    </li>
   {% endifequal %}
 
   <li class="dropdown">

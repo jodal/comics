@@ -10,6 +10,7 @@ from django.views.decorators.cache import never_cache
 from comics.core.models import Comic
 from comics.core.utils.navigation import get_navigation
 from comics.core.views import generic_show
+from comics.sets.feeds import UserSetFeed
 from comics.sets.models import Set
 
 
