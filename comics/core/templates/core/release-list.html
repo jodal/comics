@@ -41,6 +41,19 @@
 {% block content %}
 
   <div class="page-header">
+    <div class="pull-right">
+      <div class="btn-group">
+        {% for time_frame in page.time_frames %}
+          {% if time_frame.url %}
+            <a href="{{ time_frame.url }}" class="btn">
+          {% else %}
+            <a href="#" class="btn disabled">
+          {% endif %}
+            {{ time_frame.title }}
+          </a>
+        {% endfor %}
+      </div>
+    </div>
     <h1>{{ page.title|safe }}</h1>
   </div>
 

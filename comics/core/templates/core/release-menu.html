@@ -20,24 +20,6 @@
     </li>
   {% endifequal %}
 
-  <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      <i class="icon-calendar"></i>
-      Time frame <b class="caret"></b></a>
-    <ul class="dropdown-menu">
-      {% for time_frame in page.time_frames %}
-        <li>
-          {% if time_frame.url %}
-            <a href="{{ time_frame.url }}">
-          {% else %}
-            <a class="disabled">
-          {% endif %}
-          {{ time_frame.title }}</a>
-        </li>
-      {% endfor %}
-    </ul>
-  </li>
-
   <li>
     {% if page.first_url %}
       <a href="{{ page.first_url }}" id="first">
