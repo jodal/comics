@@ -41,7 +41,7 @@ class UserSetFeed(Feed):
 
     def items(self, user_set):
         return Release.objects.select_related(depth=1).filter(
-            comic__userset=user_set).order_by('-fetched')[:1000]
+            comic__userset=user_set).order_by('-fetched')[:500]
 
     def item_pubdate(self, item):
         return item.fetched
