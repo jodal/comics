@@ -159,13 +159,3 @@
   </div>
 
 {% endblock %}
-
-
-{% block extra_footer %}
-  <script type="text/javascript">
-    var releases = [{% for comic, releases in comics %}{% for release in releases %}
-      'r{{ release.id }}'{% if not forloop.last or not forloop.parentloop.last%},{% endif %}{% endfor %}{% endfor %}
-    ];
-  </script>
-  {{ block.super }}
-{% endblock %}

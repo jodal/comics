@@ -1,20 +1,51 @@
-var keyboardNavigation = (function (releases) {
-    var index = -1;
+var keyboardNavigation = (function () {
+    var getTopPosition = function ($release) {
+        var releasePosition = $release.position().top;
+        var navbarHeight = $('.navbar').outerHeight();
+        var spacer = 10;
+        return releasePosition - navbarHeight - spacer;
+    };
 
-    if (!releases) {
-        releases = [];
-    }
+    var getBottomPosition = function ($release) {
+        return getTopPosition($release) + $release.outerHeight();
+    };
 
-    var scrollToIndex = function () {
-        if (index == -1) {
-            $(window).scrollTop(0);
+    var scrollTo = function (target) {
+        var position;
+        if (target === 'top') {
+            position = 0;
         } else {
-            var releasePosition = $('#' + releases[index])
-                .parent('.release')
-                .position().top;
-            var navbarHeight = $('.navbar').outerHeight();
-            var spacer = 10;
-            $(window).scrollTop(releasePosition - navbarHeight - spacer);
+            position = getTopPosition(target);
+        }
+        $(window).scrollTop(position);
+    };
+
+    var goToPreviousRelease = function () {
+        var $previousRelease = $('.release').filter(function (index) {
+            return $(window).scrollTop() > getTopPosition($(this));
+        }).last();
+
+        if ($previousRelease.length) {
+            scrollTo($previousRelease);
+        } else {
+            scrollTo('top');
+        }
+    };
+
+    var goToNextRelease = function () {
+        var $firstRelease = $('.release').first();
+        var beforeFirstRelease = (
+            $(window).scrollTop() < getTopPosition($firstRelease));
+        if (beforeFirstRelease) {
+            return scrollTo($firstRelease);
+        }
+
+        var $nextRelease = $('.release').filter(function (index) {
+            return $(window).scrollTop() < getBottomPosition($(this));
+        }).first().next();
+
+        if ($nextRelease.length) {
+            scrollTo($nextRelease);
         }
     };
 
@@ -29,20 +60,6 @@ var keyboardNavigation = (function (releases) {
         var next_url = $('#next').attr('href');
         if (next_url) {
             window.location = next_url;
-        }
-    };
-
-    var goToPreviousRelease = function () {
-        if (index >= 0) {
-            index -= 1;
-            scrollToIndex();
-        }
-    };
-
-    var goToNextRelease = function () {
-        if (index < releases.length - 1) {
-            index += 1;
-            scrollToIndex();
         }
     };
 
@@ -61,7 +78,7 @@ var keyboardNavigation = (function (releases) {
             goToNextPage();
         }
     };
-})(releases);
+})();
 
 $(function() {
     $(document).keypress(keyboardNavigation);
