@@ -6,25 +6,15 @@ var keyboardNavigation = (function () {
         return releasePosition - navbarHeight - spacer;
     };
 
-    var scrollTo = function (target) {
-        var position;
-        if (target === 'top') {
-            position = 0;
-        } else {
-            position = getPosition(target);
-        }
-        $(window).scrollTop(position);
-    };
-
     var goToPreviousRelease = function () {
         var $previousRelease = $('.release').filter(function (index) {
             return $(window).scrollTop() > getPosition($(this));
         }).last();
 
         if ($previousRelease.length) {
-            scrollTo($previousRelease);
+            $(window).scrollTop(getPosition($previousRelease));
         } else {
-            scrollTo('top');
+            $(window).scrollTop(0);
         }
     };
 
@@ -34,7 +24,7 @@ var keyboardNavigation = (function () {
         }).first();
 
         if ($nextRelease.length) {
-            scrollTo($nextRelease);
+            $(window).scrollTop(getPosition($nextRelease));
         }
     };
 
