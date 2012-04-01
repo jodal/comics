@@ -1,13 +1,9 @@
 var keyboardNavigation = (function () {
-    var getTopPosition = function ($release) {
+    var getPosition = function ($release) {
         var releasePosition = $release.position().top;
         var navbarHeight = $('.navbar').outerHeight();
         var spacer = 10;
         return releasePosition - navbarHeight - spacer;
-    };
-
-    var getBottomPosition = function ($release) {
-        return getTopPosition($release) + $release.outerHeight();
     };
 
     var scrollTo = function (target) {
@@ -15,14 +11,14 @@ var keyboardNavigation = (function () {
         if (target === 'top') {
             position = 0;
         } else {
-            position = getTopPosition(target);
+            position = getPosition(target);
         }
         $(window).scrollTop(position);
     };
 
     var goToPreviousRelease = function () {
         var $previousRelease = $('.release').filter(function (index) {
-            return $(window).scrollTop() > getTopPosition($(this));
+            return $(window).scrollTop() > getPosition($(this));
         }).last();
 
         if ($previousRelease.length) {
@@ -33,16 +29,9 @@ var keyboardNavigation = (function () {
     };
 
     var goToNextRelease = function () {
-        var $firstRelease = $('.release').first();
-        var beforeFirstRelease = (
-            $(window).scrollTop() < getTopPosition($firstRelease));
-        if (beforeFirstRelease) {
-            return scrollTo($firstRelease);
-        }
-
         var $nextRelease = $('.release').filter(function (index) {
-            return $(window).scrollTop() < getBottomPosition($(this));
-        }).first().next();
+            return $(window).scrollTop() < getPosition($(this));
+        }).first();
 
         if ($nextRelease.length) {
             scrollTo($nextRelease);
