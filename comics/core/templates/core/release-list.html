@@ -84,14 +84,29 @@
         {% if user_set.hide_empty_comics %}
           <!-- No release for {{ comic.name }} -->
         {% else %}
-          <div class="release">
+          <div class="release well">
+            <form action="{% url "toggle_comic" %}" method="post"
+              class="pull-right userset-toggle">
+              {% csrf_token %}
+              <input type="hidden" name="comic" value="{{ comic.slug }}">
+              <button type="submit" name="remove_comic"
+                class="btn btn-danger btn-small userset-remove-comic
+                  {% if comic not in user_set_comics %}hidden{% endif %}">
+                <i class="icon-minus icon-white"></i> Remove from my comics
+              </button>
+              <button type="submit" name="add_comic"
+                class="btn btn-success btn-small userset-add-comic
+                  {% if comic in user_set_comics %}hidden{% endif %}">
+                <i class="icon-plus icon-white"></i> Add to my comics
+              </button>
+            </form>
+
+
             <h3><a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a></h3>
 
-            <div class="well">
-              <strong>No matching release found.</strong> See
-              <a href="{% url "comic-latest" comic.slug %}">the latest release</a> or
-              the <a href="{{ comic.get_redirect_url }}">official site</a>.
-            </div>
+            <strong>No matching release found.</strong> See
+            <a href="{% url "comic-latest" comic.slug %}">the latest release</a> or
+            the <a href="{{ comic.get_redirect_url }}">official site</a>.
           </div>
         {% endif %}
 
