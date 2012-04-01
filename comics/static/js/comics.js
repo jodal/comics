@@ -81,6 +81,7 @@ var usersetToggler = (function () {
         addComic: function (event) {
             event.preventDefault();
             var $button = $(this);
+            $button.attr('disabled', 'disabled');
             var $form = $button.parent('form');
             var data = $form.serialize() + '&add_comic=1';
             $.post($form.attr('action'), data, function () {
@@ -93,6 +94,7 @@ var usersetToggler = (function () {
             if ($button.find('.action:visible').length) {
                 showConfirmation($button);
             } else {
+                $button.attr('disabled', 'disabled');
                 var $form = $button.parent('form');
                 var data = $form.serialize() + '&remove_comic=1';
                 $.post($form.attr('action'), data, function () {
