@@ -14,39 +14,39 @@ var keyboardNavigation = (function (releases) {
                 .position().top;
             var navbarHeight = $('.navbar').outerHeight();
             var spacer = 10;
-            $(document).scrollTop(releasePosition - navbarHeight - spacer);
+            $(window).scrollTop(releasePosition - navbarHeight - spacer);
         }
     };
 
-    var goToPreviousPage = function() {
+    var goToPreviousPage = function () {
         var prev_url = $('#prev').attr('href');
         if (prev_url) {
             window.location = prev_url;
         }
     };
 
-    var goToNextPage = function() {
+    var goToNextPage = function () {
         var next_url = $('#next').attr('href');
         if (next_url) {
             window.location = next_url;
         }
     };
 
-    var goToPreviousRelease = function() {
+    var goToPreviousRelease = function () {
         if (index >= 0) {
             index -= 1;
             scrollToIndex();
         }
     };
 
-    var goToNextRelease = function() {
+    var goToNextRelease = function () {
         if (index < releases.length - 1) {
             index += 1;
             scrollToIndex();
         }
     };
 
-    return function(event) {
+    return function (event) {
         if (event.which == 72 || event.which == 104) { // H or h
             event.preventDefault();
             goToPreviousPage();
