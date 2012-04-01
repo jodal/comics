@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 from django.views.decorators.cache import never_cache
@@ -20,7 +20,9 @@ def user_set_toggle_comic(request):
     """Add to or remove from comic to the current user's set"""
 
     if request.method != 'POST':
-        raise Http404
+        response = HttpResponse(status=405)
+        response['Allowed'] = 'POST'
+        return response
 
     comic = get_object_or_404(Comic, slug=request.POST['comic'])
 
