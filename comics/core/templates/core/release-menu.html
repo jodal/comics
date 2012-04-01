@@ -1,25 +1,5 @@
 <ul class="nav pull-right">
 
-  {% ifequal page.view_type 'comic' %}
-    {% if comics.0.0 %}
-      <li>
-        <a href="{{ comics.0.0.get_feed_url }}?key={{ user.get_profile.secret_key }}"
-          title="Comic feed for {{ comics.0.0.name }}">
-          <i class="icon-fire"></i>
-          Feed</a>
-      </li>
-    {% endif %}
-  {% endifequal %}
-
-  {% ifequal page.view_type 'userset' %}
-    <li>
-      <a href="{{ user_set.get_feed_url }}?key={{ user.get_profile.secret_key }}"
-        title="Comic feed for {{ user.email }}">
-        <i class="icon-fire"></i>
-        Feed</a>
-    </li>
-  {% endifequal %}
-
   <li>
     {% if page.first_url %}
       <a href="{{ page.first_url }}" id="first">

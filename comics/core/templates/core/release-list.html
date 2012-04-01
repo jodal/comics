@@ -41,7 +41,7 @@
 {% block content %}
 
   <div class="page-header">
-    <div class="pull-right">
+    <div class="btn-toolbar pull-right">
       <div class="btn-group">
         {% for time_frame in page.time_frames %}
           {% if time_frame.url %}
@@ -53,7 +53,26 @@
           </a>
         {% endfor %}
       </div>
+
+      <div class="btn-group">
+        {% ifequal page.view_type 'comic' %}
+          {% if comics.0.0 %}
+            <a href="{{ comics.0.0.get_feed_url }}?key={{ user.get_profile.secret_key }}"
+              title="Comic feed for {{ comics.0.0.name }}" class="btn">
+              <i class="icon-fire"></i>
+              Feed</a>
+          {% endif %}
+        {% endifequal %}
+
+        {% ifequal page.view_type 'userset' %}
+          <a href="{{ user_set.get_feed_url }}?key={{ user.get_profile.secret_key }}"
+            title="Comic feed for {{ user.email }}" class="feed">
+            <i class="icon-fire"></i>
+            Feed</a>
+        {% endifequal %}
+      </div>
     </div>
+
     <h1>{{ page.title|safe }}</h1>
   </div>
 
