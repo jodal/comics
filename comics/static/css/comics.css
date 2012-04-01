@@ -28,6 +28,11 @@ h3 a:hover {
     margin: 0 0 12px;
 }
 
+.btn .confirmation,
+.btn .success {
+    display: none;
+}
+
 .userset-add-comic,
 .userset-remove-comic {
     opacity: 0.5;

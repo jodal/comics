@@ -59,6 +59,55 @@ var keyboardNavigation = (function () {
     };
 })();
 
+var usersetToggler = (function () {
+    var showConfirmation = function($button) {
+        $button.css('opacity', 1);
+        $button.find('.action').hide();
+        $button.find('.confirmation').show();
+        $button.addClass('btn-danger');
+    };
+
+    var showSuccess = function($button) {
+        $button.css('opacity', 1);
+        $button.find('.action').hide();
+        $button.find('.confirmation').hide();
+        $button.find('.success').show();
+        $button
+            .removeClass('btn-danger')
+            .addClass('btn-success');
+    };
+
+    return {
+        addComic: function (event) {
+            event.preventDefault();
+            var $button = $(this);
+            var $form = $button.parent('form');
+            var data = $form.serialize() + '&add_comic=1';
+            $.post($form.attr('action'), data, function () {
+                showSuccess($button);
+            });
+        },
+        removeComic: function (event) {
+            event.preventDefault();
+            var $button = $(this);
+            if ($button.find('.action:visible').length) {
+                showConfirmation($button);
+            } else {
+                var $form = $button.parent('form');
+                var data = $form.serialize() + '&remove_comic=1';
+                $.post($form.attr('action'), data, function () {
+                    showSuccess($button);
+                    $button
+                        .parents('.release').slideUp('slow')
+                        .children().fadeOut('slow');
+                });
+            }
+        }
+    };
+})();
+
 $(function() {
     $(document).keypress(keyboardNavigation);
+    $('.userset-add-comic').click(usersetToggler.addComic);
+    $('.userset-remove-comic').click(usersetToggler.removeComic);
 });

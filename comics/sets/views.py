@@ -28,12 +28,17 @@ def user_set_toggle_comic(request):
 
     if 'add_comic' in request.POST:
         request.user_set.comics.add(comic)
-        messages.info(request, 'Added "%s" to my comics' % comic.name)
+        if not request.is_ajax():
+            messages.info(request, 'Added "%s" to my comics' % comic.name)
     elif 'remove_comic' in request.POST:
         request.user_set.comics.remove(comic)
-        messages.info(request, 'Removed "%s" from my comics' % comic.name)
+        if not request.is_ajax():
+            messages.info(request, 'Removed "%s" from my comics' % comic.name)
 
-    return HttpResponseRedirect(reverse('userset-latest'))
+    if request.is_ajax():
+        return HttpResponse(status=204)
+    else:
+        return HttpResponseRedirect(reverse('userset-latest'))
 
 
 @login_required
