@@ -60,14 +60,14 @@ var keyboardNavigation = (function () {
 })();
 
 var usersetToggler = (function () {
-    var showConfirmation = function($button) {
+    var showConfirmation = function ($button) {
         $button.css('opacity', 1);
         $button.find('.action').hide();
         $button.find('.confirmation').show();
         $button.addClass('btn-danger');
     };
 
-    var showSuccess = function($button) {
+    var showSuccess = function ($button) {
         $button.css('opacity', 1);
         $button.find('.action').hide();
         $button.find('.confirmation').hide();
@@ -75,6 +75,10 @@ var usersetToggler = (function () {
         $button
             .removeClass('btn-danger')
             .addClass('btn-success');
+    };
+
+    var isSetPage = function () {
+        return !(window.location + '').match(/\/c\//);
     };
 
     return {
@@ -99,9 +103,11 @@ var usersetToggler = (function () {
                 var data = $form.serialize() + '&remove_comic=1';
                 $.post($form.attr('action'), data, function () {
                     showSuccess($button);
-                    $button
-                        .parents('.release').slideUp('slow')
-                        .children().fadeOut('slow');
+                    if (isSetPage()) {
+                        $button
+                            .parents('.release').slideUp('slow')
+                            .children().fadeOut('slow');
+                    }
                 });
             }
         }
