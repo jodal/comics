@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
     rights = 'Trond J. Stavås'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 90
+    history_capable_date = '2008-06-23'
     schedule = 'Mo,We,Fr'
     time_zone = 1
 
