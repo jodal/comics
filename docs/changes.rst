@@ -13,6 +13,7 @@ v1.1.4 (in development)
 
 - New: ``kellermannen``
 - New: ``manalanextdoor``
+- New: ``thegamercat``
 - Update ``darylcagle`` after feed change.
 - Update ``playervsplayer`` after feed change.
 
