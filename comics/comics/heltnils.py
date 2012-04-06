@@ -12,5 +12,3 @@ class Crawler(PondusNoCrawlerBase):
 
     def crawl(self, pub_date):
         return self.crawl_helper('20060')
-
-

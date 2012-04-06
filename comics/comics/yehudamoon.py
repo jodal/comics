@@ -35,6 +35,6 @@ class Crawler(CrawlerBase):
             title_full = page.text('option[value*="%s"]' %
                 pub_date.strftime('%Y-%m-%d'))
             title = re.sub('^.*- *', '', title_full)
-        except TypeError, e:
+        except TypeError:
             title = None
         return CrawlerImage(url, title)

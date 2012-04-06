@@ -8,6 +8,7 @@ from comics.aggregator.crawler import CrawlerRelease
 from comics.aggregator.exceptions import ComicsError
 from comics.core.models import Comic
 
+
 class AggregatorConfigTestCase(TestCase):
     fixtures = ['test_comics.json']
 
@@ -81,6 +82,7 @@ class AggregatorConfigTestCase(TestCase):
 
         self.cc.set_comics_to_crawl([])
         self.assertEquals(all_count, len(self.cc.comics))
+
 
 class ComicAggregatorTestCase(TestCase):
     fixtures = ['test_comics.json']

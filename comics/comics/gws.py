@@ -23,7 +23,7 @@ class Crawler(CrawlerBase):
             blog_paragraphs = page.text(
                 'div#%s div.entry p' % blog_post_id, allow_multiple=True)
             text = '\n\n'.join(blog_paragraphs)
-        except StandardError, e:
+        except StandardError:
             text = None
 
         return CrawlerImage(url, title, text)

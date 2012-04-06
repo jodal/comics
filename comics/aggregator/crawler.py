@@ -17,6 +17,7 @@ now = timezone.now
 today = datetime.date.today
 utc_offset_in_s = time.timezone
 
+
 class CrawlerRelease(object):
     def __init__(self, comic, pub_date,
             check_image_mime_type=True, has_rerun_releases=False):

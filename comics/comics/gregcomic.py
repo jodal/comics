@@ -1,5 +1,3 @@
-import re
-
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
@@ -31,5 +29,5 @@ class Crawler(CrawlerBase):
                 title = test_page.alt('div.comicpane img')
                 if url is not None:
                     return CrawlerImage(url, title)
-            except StandardError as e:
+            except StandardError:
                 continue

@@ -11,6 +11,7 @@ from comics.comics import get_comic_module
 logger = logging.getLogger('comics.aggregator.command')
 socket.setdefaulttimeout(10)
 
+
 def log_errors(func):
     def inner(*args, **kwargs):
         try:
@@ -20,6 +21,7 @@ def log_errors(func):
         except Exception, error:
             logger.exception(u'%s: %s', args[0].identifier, error)
     return inner
+
 
 class Aggregator(object):
     def __init__(self, config=None, optparse_options=None):

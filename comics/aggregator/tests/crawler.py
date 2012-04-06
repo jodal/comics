@@ -3,6 +3,7 @@ from django.utils import unittest
 
 from comics.aggregator import crawler
 
+
 class CurrentDateWhenLocalTZIsUTCTest(unittest.TestCase):
     time_zone = 0  # UTC+0, GMT
 
@@ -35,8 +36,10 @@ class CurrentDateWhenLocalTZIsUTCTest(unittest.TestCase):
         yesterday = self.now.date() - datetime.timedelta(days=1)
         self.assertEqual(c.current_date, yesterday)
 
+
 class CurrentDateWhenLocalTZIsCETTest(CurrentDateWhenLocalTZIsUTCTest):
     time_zone = 1  # UTC+1, CET
+
 
 class CurrentDateWhenLocalTZIsESTTest(CurrentDateWhenLocalTZIsUTCTest):
     time_zone = -5  # UTC-5, EST

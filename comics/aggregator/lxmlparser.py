@@ -3,6 +3,7 @@ import urllib2
 
 from comics.aggregator.exceptions import CrawlerError
 
+
 class LxmlParser(object):
     def __init__(self, url=None, string=None, headers=None):
         self._retrieved_url = None
@@ -107,11 +108,14 @@ class LxmlParser(object):
                 string = string.decode('iso-8859-1')
         return string
 
+
 class LxmlParserException(CrawlerError):
     pass
 
+
 class DoesNotExist(LxmlParserException):
     pass
+
 
 class MultipleElementsReturned(LxmlParserException):
     pass

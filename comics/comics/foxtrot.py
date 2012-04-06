@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import GoComicsComCrawlerBase, CrawlerImage
+from comics.aggregator.crawler import GoComicsComCrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 class ComicData(ComicDataBase):

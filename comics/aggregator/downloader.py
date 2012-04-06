@@ -13,6 +13,7 @@ from comics.aggregator.exceptions import (DownloaderError, FileNotAnImage,
     DownloaderHTTPError, ImageAlreadyExists, ImageIsBlacklisted)
 from comics.core.models import Release, Image
 
+
 class ReleaseDownloader(object):
     def download(self, crawler_release):
         images = self._download_images(crawler_release)

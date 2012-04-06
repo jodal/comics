@@ -5,6 +5,7 @@ import feedparser
 
 from comics.aggregator.lxmlparser import LxmlParser
 
+
 class FeedParser(object):
     def __init__(self, url):
         self.raw_feed = feedparser.parse(url)
@@ -17,6 +18,7 @@ class FeedParser(object):
 
     def all(self):
         return [Entry(e, self.encoding) for e in self.raw_feed.entries]
+
 
 class Entry(object):
     def __init__(self, entry, encoding=None):

@@ -15,7 +15,8 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         img_locator = 'center > img[title]'
-        page = self.parse_page('http://www.overcompensating.com/posts/%s.html' %
+        page = self.parse_page(
+            'http://www.overcompensating.com/posts/%s.html' %
             pub_date.strftime('%Y%m%d'))
         url = page.src(img_locator)
 

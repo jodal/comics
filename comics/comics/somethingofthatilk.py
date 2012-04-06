@@ -17,4 +17,3 @@ class Crawler(CrawlerBase):
         url = page.src('img[src*="/comics/"]')
         title = page.alt('img[src*="/comics/"]')
         return CrawlerImage(url, title)
-

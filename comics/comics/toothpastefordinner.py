@@ -14,7 +14,8 @@ class Crawler(CrawlerBase):
     time_zone = -5
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://www.toothpastefordinner.com/rss/rss.php')
+        feed = self.parse_feed(
+            'http://www.toothpastefordinner.com/rss/rss.php')
         for entry in feed.for_date(pub_date):
             url = entry.summary.src('img[src*="/%s/"]' %
                 pub_date.strftime('%m%d%y'))

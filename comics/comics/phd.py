@@ -16,7 +16,7 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed(
             'http://www.phdcomics.com/gradfeed_justcomics.php')
-        for entry in self.feed.for_date(pub_date):
+        for entry in feed.for_date(pub_date):
             url = entry.summary.src('img')
             title = entry.title.split("'")[1]
             return CrawlerImage(url, title)

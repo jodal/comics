@@ -23,6 +23,6 @@ class Crawler(CrawlerBase):
                     continue
                 url = urls[0]
                 title = entry.title
-                text = entry.summary.title( 'img[src*="/clean/"]',
+                text = entry.summary.title('img[src*="/clean/"]',
                     allow_multiple=True)[0]
                 return CrawlerImage(url, title, text)

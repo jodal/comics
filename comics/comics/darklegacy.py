@@ -18,4 +18,4 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             title = entry.title
             url = entry.link.replace('.html', '.jpg')
-            return CrawlerImage(url)
+            return CrawlerImage(url, title)
