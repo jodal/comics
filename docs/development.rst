@@ -123,29 +123,3 @@ To run unit tests::
 To run unit tests with statement coverage::
 
     python manage.py test --settings=comics.settings.coverage
-
-
-Change specifications
-=====================
-
-When planning or doing larger changes to *comics*, notes may be added to the
-documentation as a *change specification*.
-
-.. toctree::
-    :glob:
-
-    specs/*
-
-
-To-do list
-==========
-
-A loosely prioritized list of things to fix. Patches accepted.
-
-``bin/smush``
-    Process images with ``bin/smush`` to reduce their size 10-20% (without
-    affecting their quality) and thus reducing page load time.
-:mod:`comics.aggregator.command`
-    Use comic week schedule to crawl less often on non-schedule days.
-:mod:`comics.core.utils.navigation`
-    Unit test and refactor.
