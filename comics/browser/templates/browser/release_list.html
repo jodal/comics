@@ -1,0 +1,190 @@
+{% extends "browser/base.html" %}
+{% load cache humanize %}
+{% load url from future %}
+
+
+{% block title %}
+  {{ title|safe }}
+{% endblock %}
+
+
+{% block extra_head %}
+  {{ block.super }}
+  {% if feed_url %}
+    <link rel="alternate" type="application/atom+xml"
+      href="{{ feed_url }}"
+      title="{{ feed_title }}">
+  {% endif %}
+  {% if first_url %}
+    <link rel="start" href="{{ first_url }}">
+    <link rel="first" href="{{ first_url }}">
+  {% endif %}
+  {% if prev_url %}
+    <link rel="prev" href="{{ prev_url }}">
+  {% endif %}
+  {% if next_url %}
+    <link rel="next" href="{{ next_url }}">
+  {% endif %}
+  {% if last_url %}
+    <link rel="last" href="{{ last_url }}">
+  {% endif %}
+{% endblock %}
+
+
+{% block top_menu %}
+  <ul class="nav pull-right">
+    <li>
+      {% if first_url %}
+        <a href="{{ first_url }}" id="first">
+      {% else %}
+        <a class="disabled">
+      {% endif %}
+      <i class="icon-step-backward"></i>
+      First</a>
+    </li>
+
+    <li>
+      {% if prev_url %}
+        <a href="{{ prev_url }}" id="prev">
+      {% else %}
+        <a class="disabled">
+      {% endif %}
+      <i class="icon-backward"></i>
+      Previous</a>
+    </li>
+
+    <li>
+      {% if next_url %}
+        <a href="{{ next_url }}" id="next">
+      {% else %}
+        <a class="disabled">
+      {% endif %}
+      <i class="icon-forward"></i>
+      Next
+    </a>
+    </li>
+
+    <li>
+      {% if last_url %}
+        <a href="{{ last_url }}" id="last">
+      {% else %}
+        <a class="disabled">
+      {% endif %}
+      <i class="icon-step-forward"></i>
+      Last
+    </a></li>
+  </ul>
+{% endblock %}
+
+
+{% block content %}
+
+  <div class="page-header">
+    <div class="btn-toolbar pull-right">
+      <div class="btn-group">
+        {% if latest_url %}
+          <a href="{{ latest_url }}"
+            class="btn {% ifequal view_type 'latest' %}active{% endifequal %}">
+            Latest</a>
+        {% else %}
+          <a class="btn disabled">Latest</a>
+        {% endif %}
+        {% if day_url %}
+        <a href="{{ day_url }}"
+          class="btn {% ifequal view_type 'day' %}active{% endifequal %}">
+          Day</a>
+        {% else %}
+          <a class="btn disabled">Day</a>
+        {% endif %}
+        {% if month_url %}
+          <a href="{{ month_url }}"
+            class="btn {% ifequal view_type 'month' %}active{% endifequal %}">
+            Month</a>
+        {% else %}
+          <a class="btn disabled">Month</a>
+        {% endif %}
+      </div>
+
+      {% if feed_url %}
+        <div class="btn-group">
+          <a href="{{ feed_url }}"
+            title="{{ feed_title }}" class="btn">
+            <i class="icon-fire"></i> Feed</a>
+        </div>
+      {% endif %}
+    </div>
+
+    <h1>
+      {{ title|safe }}
+      {% if subtitle %}
+        <small>{{ subtitle|safe }}</small>
+      {% endif %}
+    </h1>
+  </div>
+
+  <div id="releases">
+    {% for release in release_list %}
+
+      <div class="release well">
+        <form action="{% url "toggle_comic" %}" method="post"
+          class="pull-right userset-toggle">
+          {% csrf_token %}
+          <input type="hidden" name="comic" value="{{ release.comic.slug }}">
+          <button type="submit" name="remove_comic"
+            class="btn btn-danger btn-small userset-remove-comic
+              {% if release.comic not in my_comics %}hidden{% endif %}">
+            <span class="action">
+              <i class="icon-minus-sign icon-white"></i>
+              Remove from my comics
+            </span>
+            <span class="confirmation">
+              <i class="icon-warning-sign icon-white"></i>
+              Click again to really remove this comic
+            </span>
+            <span class="success">
+              <i class="icon-ok icon-white"></i>
+              Removed
+            </span>
+          </button>
+          <button type="submit" name="add_comic"
+            class="btn btn-success btn-small userset-add-comic
+              {% if release.comic in my_comics %}hidden{% endif %}">
+            <span class="action">
+              <i class="icon-plus-sign icon-white"></i>
+              Add to my comics
+            </span>
+            <span class="success">
+              <i class="icon-ok icon-white"></i>
+              Added
+            </span>
+          </button>
+        </form>
+
+        <h3 id="r{{ release.id }}">
+          <a href="{{ release.get_absolute_url }}">
+            {{ release.comic.name }}
+            <small class="pub_date">
+              published {{ release.pub_date|naturalday }}
+            </small>
+          </a>
+        </h3>
+
+        {% cache 3600 'release' release.id %}
+          {% include "browser/release_content.html" %}
+        {% endcache %}
+      </div>
+
+    {% empty %}
+
+      <div class="alert alert-block alert-info">
+        <p>
+          <strong>No comics found.</strong> You can browse available comics
+          below, or
+          <a href="{% url "import_named_set" %}">import a comic set</a>.
+        </p>
+      </div>
+
+    {% endfor %}
+  </div>
+
+{% endblock %}

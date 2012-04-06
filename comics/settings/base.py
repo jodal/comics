@@ -80,6 +80,7 @@ INSTALLED_APPS = (
     'comics.aggregator',
     'comics.core',
     'comics.accounts',
+    'comics.browser',
     'comics.feedback',
     'comics.sets',
 )
@@ -123,7 +124,7 @@ CACHE_MIDDLEWARE_SECONDS = 300
 CACHE_MIDDLEWARE_KEY_PREFIX = 'comics'
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
-DATE_FORMAT = 'D j M Y'
+DATE_FORMAT = 'l j F Y'
 TIME_FORMAT = 'H:i'
 
 SESSION_COOKIE_AGE = 86400 * 365

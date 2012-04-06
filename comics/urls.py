@@ -20,6 +20,9 @@ urlpatterns = patterns('',
     # Django admin
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
+
+    # Comics browsing
+    (r'^', include('comics.browser.urls')),
 )
 
 # Let Django host media if doing local development on runserver

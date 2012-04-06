@@ -1,0 +1,40 @@
+{% for image in release.get_ordered_images %}
+
+  {% if image.title %}
+    <h4>&ldquo;{{ image.title|safe }}&rdquo;</h4>
+  {% endif %}
+
+  <p class="image"><a href="{{ release.get_absolute_url }}">
+    <img src="{{ image.file.url }}"
+      height="{{ image.height }}" width="{{ image.width }}"
+      alt="{{ release }}"
+      {% if image.text %}title="{{ image.text|escape }}"{% endif %}>
+  </a></p>
+
+  {% if image.text %}
+    <blockquote class="image_text">{{ image.text|escape|linebreaksbr }}
+    </blockquote>
+  {% endif %}
+
+{% empty %}
+
+  <div class="alert alert-block alert-warning">
+    <p>No matching images found.</p>
+  </div>
+
+{% endfor %}
+
+<p class="meta">
+  Credits: {{ release.comic.rights }}.
+  {% comment %}
+  {# Commented out as it _really_ slows site down #}
+  {% with release.get_images_first_release as first_release %}
+    {% ifnotequal release first_release %}
+      <a href="{{ first_release.get_absolute_url }}">
+      First released {{ first_release.pub_date|date }}</a>.
+    {% endifnotequal %}
+  {% endwith %}
+  {% endcomment %}
+  Retrieved at {{ release.fetched|time }}, {{ release.fetched|date }} from
+  <a href="{{ release.comic.get_redirect_url }}">{{ release.comic.url }}</a>.
+</p>
