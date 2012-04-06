@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
+
 @login_required
 def account_details(request):
     return render(request, 'accounts/details.html', {
@@ -12,6 +13,7 @@ def account_details(request):
             'account_details': True,
         }
     })
+
 
 @login_required
 def secret_key(request):

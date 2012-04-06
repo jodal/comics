@@ -7,6 +7,7 @@ from django.shortcuts import render
 
 from comics.feedback.forms import FeedbackForm
 
+
 def feedback(request):
     """Mail feedback to ADMINS"""
 
@@ -34,7 +35,7 @@ def feedback(request):
 
             messages.info(request,
                 'Thank you for taking the time to help improve the site! :-)')
-            return HttpResponseRedirect(reverse('userset-latest'))
+            return HttpResponseRedirect(reverse('home'))
     else:
         form = FeedbackForm()
 

@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class ComicManager(models.Manager):
     def sort_by_name(self):
         qs = self.get_query_set()

@@ -54,10 +54,10 @@ class UserSet(models.Model):
         return u'Comic set for %s' % self.user
 
     def get_absolute_url(self):
-        return reverse('userset-latest')
+        return reverse('mycomics_latest')
 
     def get_feed_url(self):
-        return reverse('userset-feed')
+        return reverse('mycomics_feed')
 
 
 def add_new_comic_to_user_sets_callback(sender, **kwargs):

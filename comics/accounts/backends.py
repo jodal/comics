@@ -13,6 +13,7 @@ from registration.models import RegistrationProfile
 
 from forms import RegistrationForm
 
+
 class RegistrationBackend(DefaultBackend):
     """
     Does not require the user to pick a username. Sets the username to a random
@@ -40,6 +41,7 @@ class RegistrationBackend(DefaultBackend):
         """
         return RegistrationForm
 
+
 email_re = re.compile(
     # dot-atom
     r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*"
@@ -48,6 +50,7 @@ email_re = re.compile(
     r'\\[\001-\011\013\014\016-\177])*"'
     # domain
     r')@(?:[A-Z0-9-]+\.)+[A-Z]{2,6}$', re.IGNORECASE)
+
 
 class AuthBackend(ModelBackend):
     """Authenticate using email only"""

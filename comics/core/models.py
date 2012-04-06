@@ -8,6 +8,7 @@ from django.core.cache import cache
 
 from comics.core.managers import ComicManager
 
+
 class Comic(models.Model):
     LANGUAGES = (
         ('en', 'English'),
@@ -49,13 +50,13 @@ class Comic(models.Model):
         return u'%s [%s]' % (self.name, self.language)
 
     def get_absolute_url(self):
-        return reverse('comic-latest', kwargs={'comic': self.slug})
+        return reverse('comic_latest', kwargs={'comic_slug': self.slug})
 
     def get_feed_url(self):
-        return reverse('comic-feed', kwargs={'comic': self.slug})
+        return reverse('comic_feed', kwargs={'comic_slug': self.slug})
 
     def get_redirect_url(self):
-        return reverse('redirect', kwargs={'comic': self.slug})
+        return reverse('comic_website', kwargs={'comic_slug': self.slug})
 
 
 class Release(models.Model):
@@ -75,8 +76,8 @@ class Release(models.Model):
         return u'%s published %s' % (self.comic, self.pub_date)
 
     def get_absolute_url(self):
-        return reverse('comic-date', kwargs={
-            'comic': self.comic.slug,
+        return reverse('comic_day', kwargs={
+            'comic_slug': self.comic.slug,
             'year': self.pub_date.year,
             'month': self.pub_date.month,
             'day': self.pub_date.day,
@@ -113,8 +114,10 @@ os.umask(0002)
 image_storage = FileSystemStorage(
     location=settings.COMICS_MEDIA_ROOT, base_url=settings.COMICS_MEDIA_URL)
 
+
 def image_file_path(instance, filename):
     return u'%s/%s/%s' % (instance.comic.slug, filename[0], filename)
+
 
 class Image(models.Model):
     # Required fields

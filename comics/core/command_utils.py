@@ -9,6 +9,7 @@ FILE_LOG_FORMAT = '%(asctime)s [%(process)d] %(name)-12s %(levelname)-8s ' \
     + '%(message)s'
 CONSOLE_LOG_FORMAT = '%(levelname)-8s %(message)s'
 
+
 class ComicsBaseCommand(BaseCommand):
     if not [option for option in BaseCommand.option_list
         if option.dest == 'verbosity']:

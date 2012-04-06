@@ -24,12 +24,12 @@
         <div class="navbar navbar-fixed-top">
           <div class="navbar-inner">
             <div class="container">
-              <a class="brand" href="{% url "userset-latest" %}">{{ site_title }}</a>
+              <a class="brand" href="{% url "home" %}">{{ site_title }}</a>
               {% block site_menu %}
                 <ul class="nav">
                 {% if user.is_authenticated %}
                   <li class="{{ active.home|yesno:"active," }}" >
-                    <a href="{% url "userset-latest" %}">
+                    <a href="{% url "home" %}">
                       <i class="icon-home"></i>
                       Home</a>
                   </li>

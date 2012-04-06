@@ -1,6 +1,7 @@
 from comics.core.comic_data import ComicDataLoader
 from comics.core.command_utils import ComicsBaseCommand, make_option
 
+
 class Command(ComicsBaseCommand):
     option_list = ComicsBaseCommand.option_list + (
         make_option('-c', '--comic',
