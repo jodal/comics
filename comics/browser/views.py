@@ -267,7 +267,7 @@ class MyComicsDayView(MyComicsMixin, ReleaseDayArchiveView):
     def get_last_url(self):
         dates = self.get_queryset().dates(self.date_field, 'day', 'DESC')
         if dates:
-            last_date = dats[0].date()
+            last_date = dates[0].date()
             if last_date > self.context['day']:
                 return reverse('mycomics_day', kwargs={
                     'year': last_date.year,
