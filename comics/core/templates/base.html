@@ -1,4 +1,4 @@
-{% load compress static %}
+{% load cache compress list_to_columns static %}
 {% load url from future %}
 <!DOCTYPE html>
 
@@ -81,7 +81,30 @@
         </div>
 
         <div id="cloud">
-          {% block cloud %}{% endblock cloud %}
+          {% block cloud %}
+            {% if user.is_authenticated %}
+              {% cache 500 'all_comics' %}
+                {% if all_comics %}
+                  <div class="page-header">
+                    <h3>All comics</h3>
+                  </div>
+                  {% list_to_columns all_comics as comic_columns 4 %}
+                  <div class="row">
+                    {% for comic_column in comic_columns %}
+                      <div class="span3">
+                        <ul>
+                          {% for comic in comic_column %}
+                            <li class="{% if comic.active %}active{% else %}inactive{% endif %}">
+                              <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              {% endcache %}
+            {% endif %}
+          {% endblock cloud %}
         </div>
 
       {% endblock body %}
