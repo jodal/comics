@@ -189,6 +189,14 @@
           <strong>No releases found for this comic.</strong>
           You can browse other available comics below.
         </div>
+
+        {% if user.is_superuser %}
+          <div class="alert alert-error">
+            <strong>To the site admin:</strong>
+            You can fetch releases by running:
+            <code>python manage.py comics_getreleases</code>
+          </div>
+        {% endif %}
       {% endifequal %}
 
     {% endfor %}

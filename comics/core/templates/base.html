@@ -96,11 +96,17 @@
                       </div>
                     {% endfor %}
                   {% else %}
-                    <div class="alert alert-warning">
+                    <div class="alert alert-info">
                       <strong>No comics found in the database.</strong>
-                      The site admin must use <code>python manage.py
-                        comics_addcomics</code> to add comics to the site.
                     </div>
+
+                    {% if user.is_superuser %}
+                      <div class="alert alert-error">
+                        <strong>To the site admin:</strong>
+                        You can add comics to the site by running:
+                        <code>python manage.py comics_addcomics</code>
+                      </div>
+                    {% endif %}
                   {% endif %}
                 </div>
               {% endcache %}
