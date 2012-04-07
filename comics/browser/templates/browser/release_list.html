@@ -176,12 +176,10 @@
 
     {% empty %}
 
-      <div class="alert alert-block alert-info">
-        <p>
-          <strong>No comics found.</strong> You can browse available comics
-          below, or
-          <a href="{% url "import_named_set" %}">import a comic set</a>.
-        </p>
+      <div class="alert alert-info">
+        <strong>No comics found in my comics.</strong>
+        You can browse available comics below, or
+        <a href="{% url "import_named_set" %}">import an old comic set</a>.
       </div>
 
     {% endfor %}

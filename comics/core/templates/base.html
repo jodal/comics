@@ -79,10 +79,10 @@
           {% block cloud %}
             {% if user.is_authenticated %}
               {% cache 500 'all_comics' %}
+                <div class="page-header">
+                  <h3>All comics</h3>
+                </div>
                 {% if all_comics %}
-                  <div class="page-header">
-                    <h3>All comics</h3>
-                  </div>
                   {% list_to_columns all_comics as comic_columns 4 %}
                   <div class="row">
                     {% for comic_column in comic_columns %}
@@ -95,8 +95,14 @@
                         </ul>
                       </div>
                     {% endfor %}
-                  </div>
-                {% endif %}
+                  {% else %}
+                    <div class="alert alert-warning">
+                      <strong>No comics found in the database.</strong>
+                      The site admin must use <code>python manage.py
+                        comics_addcomics</code> to add comics to the site.
+                    </div>
+                  {% endif %}
+                </div>
               {% endcache %}
             {% endif %}
           {% endblock cloud %}
