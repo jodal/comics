@@ -6,50 +6,88 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
-v1.2 (in development)
+v2.0 (in development)
 =====================
 
-- New requirements:
+Version 2.0 refreshes most parts of the *comics* web interface.
+
+- Design: New design based on Twitter Bootstrap.
+
+- User accounts:
+
+  - Add user account registration flow, which includes email address
+    verification, login, logout, password change, and password reset.
+
+  - Add account management interface.
+
+  - Add user information to footer of emails sent from the feedback page.
+
+  - Require a user specific secret key to allow access to feeds.
+
+- "My comics":
+
+  - Replace named comic sets with user associated comic selections, called "my
+    comics". An importer from old comics sets to "my comics" is included.
+
+  - Add buttons to all comic views for adding the comic to "my comics".
+
+  - Add buttons to "my comics" for removing the comic from "my comics".
+
+- Comics browsing:
+
+  - Orders the "latest" view by fetched time instead of comic name. New content
+    is always at the top.
+
+  - Removes browsing of weeks or N days.
+
+  - Reimplemented lots of crusty old code using Django's class-based generic
+    views.
+
+- Development:
+
+  - The WSGI file is now also used when using Django's ``runserver`` command
+    while developing, making the development and deployment environments more
+    alike.
+
+
+v1.1 to v2.0 migration guide
+----------------------------
+
+- New dependencies:
 
   - django-registration >= 0.8, < 0.9
+
   - django-bootstrap-form >= 2.0, < 2.1
 
 - Updated dependencies:
 
   - Django >= 1.4, < 1.5
+
   - django_compress >= 1.1, < 1.2
 
-- User accounts:
+- Settings:
 
-  - Add user account registration, activation, login, logout, password change,
-    password reset, and account summary.
-  - Add user information to emails sent from the feedback page.
-  - Replace "comic sets" with user associated comic selections.
+  - Removed setting ``COMICS_SITE_TITLE`` in preference of Django's sites
+    framework. You can now change the site title in the admin interface.
 
-- Removed setting ``COMICS_SITE_TAGLINE``.
+  - Removed setting ``COMICS_SITE_TAGLINE``.
 
-- Removed setting ``COMICS_SITE_TITLE`` in preference of Django's sites
-  framework. You can now change the site title in the admin interface.
-
-- New design based on Twitter Bootstrap.
-
-- Renamed commands:
+- Commands:
 
   - ``loadmeta`` is now called ``comics_addcomics``
+
   - ``getcomics`` is now called ``comics_getreleases``
 
   Remember to update your cronjobs.
 
-- Moved ``manage.py`` one level higher in the directory structure, to follow
-  the new defaults in Django 1.4. Again, remember to update your cronjobs.
+- Project layout:
 
-- Moved file with WSGI application from ``wsgi/deploy.wsgi`` to
-  ``comics/wsgi/__init__.py`` to follow the new default structure in Django
-  1.4. Remember to update your web server configuration.
+  - Moved ``manage.py`` one level higher in the directory structure, to follow
+    the new defaults in Django 1.4. Again, remember to update your cronjobs.
 
-- The WSGI file is now also used when using Django's ``runserver`` command
-  while developing, making the development and deployment environments more
-  alike.
+  - Moved file with WSGI application from ``wsgi/deploy.wsgi`` to
+    ``comics/wsgi/__init__.py`` to follow the new default structure in Django
+    1.4. Remember to update your web server configuration.
 
 - Renamed :class:`MetaBase` to :class:`ComicDataBase`, and moved it to
   :mod:`comics.core.comic_data`. Remember to update any custom crawlers.
