@@ -45,6 +45,9 @@ v1.1.4 (in development)
 **Crawlers**
 
 - New: ``kellermannen``
+- New: ``manalanextdoor``
+- New: ``thegamercat``
+- New: ``walkoflife``
 - Update ``darylcagle`` after feed change.
 - Update ``playervsplayer`` after feed change.
 
