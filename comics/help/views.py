@@ -5,7 +5,16 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
-from comics.feedback.forms import FeedbackForm
+from comics.help.forms import FeedbackForm
+
+
+def about(request):
+    return render(request, 'help/about.html', {
+        'active': {
+            'help': True,
+            'about': True,
+        },
+    })
 
 
 def feedback(request):
@@ -35,11 +44,23 @@ def feedback(request):
 
             messages.info(request,
                 'Thank you for taking the time to help improve the site! :-)')
-            return HttpResponseRedirect(reverse('home'))
+            return HttpResponseRedirect(reverse('help_feedback'))
     else:
         form = FeedbackForm()
 
-    return render(request, 'feedback/form.html', {
-        'active': {'feedback': True},
+    return render(request, 'help/feedback.html', {
+        'active': {
+            'help': True,
+            'feedback': True,
+        },
         'feedback_form': form,
+    })
+
+
+def keyboard(request):
+    return render(request, 'help/keyboard.html', {
+        'active': {
+            'help': True,
+            'keyboard': True,
+        },
     })

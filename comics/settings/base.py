@@ -78,10 +78,10 @@ INSTALLED_APPS = (
     'registration',
     'south',
     'comics.core',
-    'comics.aggregator',
     'comics.accounts',
+    'comics.aggregator',
     'comics.browser',
-    'comics.feedback',
+    'comics.help',
     'comics.sets',
     'comics.status',
 )

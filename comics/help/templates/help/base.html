@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load url from future %}
+
+
+{% block title %}
+  Help
+{% endblock %}
+
+
+{% block content %}
+
+  <div class="page-header">
+    <h1>Help</h1>
+  </div>
+
+  <ul class="nav nav-tabs">
+    <li class="{{ active.about|yesno:"active," }}">
+      <a href="{% url "help_about" %}">About the project</a>
+    </li>
+    <li class="{{ active.feedback|yesno:"active," }}">
+      <a href="{% url "help_feedback" %}">Feedback to site admin</a>
+    </li>
+    <li class="{{ active.keyboard|yesno:"active," }}">
+      <a href="{% url "help_keyboard" %}">Keyboard navigation</a>
+    </li>
+  </ul>
+
+  {% block help_content %}{% endblock %}
+
+{% endblock %}

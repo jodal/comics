@@ -1,17 +1,8 @@
-{% extends "base.html" %}
+{% extends "help/base.html" %}
 {% load bootstrap %}
 
 
-{% block title %}
-  Feedback
-{% endblock %}
-
-
-{% block content %}
-
-  <div class="page-header">
-    <h1>Feedback <small>to the site administrator</small></h1>
-  </div>
+{% block help_content %}
 
   <form action="" method="post" id="feedback" class="form-horizontal">
     {% csrf_token %}
@@ -21,7 +12,7 @@
     <div class="form-actions">
       <button type="submit" class="btn btn-primary">
         <i class="icon-envelope icon-white"></i>
-        Send feedback
+        Send to site administrator
       </button>
     </div>
   </form>

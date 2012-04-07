@@ -14,8 +14,8 @@ urlpatterns = patterns('',
     # User handling
     (r'^account/', include('comics.accounts.urls')),
 
-    # Feedback app
-    (r'^feedback/', include('comics.feedback.urls')),
+    # Help app
+    (r'^help/', include('comics.help.urls')),
 
     # Status app
     (r'^status/', include('comics.status.urls')),

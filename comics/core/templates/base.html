@@ -50,15 +50,10 @@
                       Register</a>
                   </li>
                 {% endif %}
-                  <li class="{{ active.feedback|yesno:"active," }}" >
-                    <a href="{% url "feedback" %}">
-                      <i class="icon-envelope"></i>
-                      Feedback</a>
-                  </li>
-                  <li class="{{ active.about|yesno:"active," }}" >
-                    <a href="{% url "about" %}">
-                      <i class="icon-info-sign"></i>
-                      About</a>
+                  <li class="{{ active.help|yesno:"active," }}" >
+                    <a href="{% url "help_about" %}">
+                      <i class="icon-question-sign"></i>
+                      Help</a>
                   </li>
                 </ul>
               {% endblock site_menu %}
