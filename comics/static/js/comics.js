@@ -79,8 +79,8 @@ var usersetToggler = (function () {
             .addClass('btn-success');
     };
 
-    var isSetPage = function () {
-        return !(window.location + '').match(/\/c\//);
+    var isMyComicsPage = function () {
+        return (window.location + '').match(/\/my\//);
     };
 
     return {
@@ -105,7 +105,7 @@ var usersetToggler = (function () {
                 var data = $form.serialize() + '&remove_comic=1';
                 $.post($form.attr('action'), data, function () {
                     showSuccess($button);
-                    if (isSetPage()) {
+                    if (isMyComicsPage()) {
                         $button
                             .parents('.release').slideUp('slow')
                             .children().fadeOut('slow');
