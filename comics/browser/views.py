@@ -159,8 +159,9 @@ class MyComicsMixin(object):
         return reverse('mycomics_latest')
 
     def get_day_url(self):
-        last_date = self.get_queryset().dates('pub_date', 'day', 'DESC')[0]
-        if last_date:
+        dates = self.get_queryset().dates('pub_date', 'day', 'DESC')
+        if dates:
+            last_date = dates[0]
             return reverse('mycomics_day', kwargs={
                 'year': last_date.year,
                 'month': last_date.month,
@@ -168,8 +169,9 @@ class MyComicsMixin(object):
             })
 
     def get_month_url(self):
-        last_month = self.get_queryset().dates('pub_date', 'month', 'DESC')[0]
-        if last_month:
+        months = self.get_queryset().dates('pub_date', 'month', 'DESC')
+        if months:
+            last_month = months[0]
             return reverse('mycomics_month', kwargs={
                 'year': last_month.year,
                 'month': last_month.month,
