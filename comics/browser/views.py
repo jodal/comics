@@ -52,6 +52,7 @@ class ReleaseMixin(ComicMixin):
             'my_comics': self.get_my_comics(),
 
             'active': {'home': True},
+            'object_type': self.get_object_type(),
             'view_type': self.get_view_type(),
 
             'title': self.get_title(),
@@ -71,6 +72,9 @@ class ReleaseMixin(ComicMixin):
 
     def get_my_comics(self):
         return self.request.user_set.comics.all()
+
+    def get_object_type(self):
+        return None
 
     def get_view_type(self):
         return None
@@ -151,6 +155,9 @@ class MyComicsMixin(object):
 
     def get_queryset(self):
         return Release.objects.filter(comic__in=self.get_my_comics())
+
+    def get_object_type(self):
+        return 'mycomics'
 
     def get_title(self):
         return 'My comics'
@@ -322,6 +329,9 @@ class OneComicMixin(object):
 
     def get_queryset(self):
         return Release.objects.filter(comic=self.comic)
+
+    def get_object_type(self):
+        return 'onecomic'
 
     def get_title(self):
         return self.comic.name

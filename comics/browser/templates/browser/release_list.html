@@ -176,11 +176,20 @@
 
     {% empty %}
 
-      <div class="alert alert-info">
-        <strong>No comics found in my comics.</strong>
-        You can browse available comics below, or
-        <a href="{% url "import_named_set" %}">import an old comic set</a>.
-      </div>
+      {% ifequal object_type 'mycomics' %}
+        <div class="alert alert-info">
+          <strong>No comics found in my comics.</strong>
+          You can browse available comics below, or
+          <a href="{% url "import_named_set" %}">import an old comic set</a>.
+        </div>
+      {% endifequal %}
+
+      {% ifequal object_type 'onecomic' %}
+        <div class="alert alert-info">
+          <strong>No releases found for this comic.</strong>
+          You can browse other available comics below.
+        </div>
+      {% endifequal %}
 
     {% endfor %}
   </div>
