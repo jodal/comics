@@ -11,11 +11,14 @@ urlpatterns = patterns('',
     # Comic core
     (r'^', include('comics.core.urls')),
 
+    # User handling
+    (r'^account/', include('comics.accounts.urls')),
+
     # Feedback app
     (r'^feedback/', include('comics.feedback.urls')),
 
-    # User handling
-    (r'^account/', include('comics.accounts.urls')),
+    # Status app
+    (r'^status/', include('comics.status.urls')),
 
     # Django admin
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),

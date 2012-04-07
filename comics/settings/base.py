@@ -77,12 +77,13 @@ INSTALLED_APPS = (
     'compressor',
     'registration',
     'south',
-    'comics.aggregator',
     'comics.core',
+    'comics.aggregator',
     'comics.accounts',
     'comics.browser',
     'comics.feedback',
     'comics.sets',
+    'comics.status',
 )
 
 ROOT_URLCONF = 'comics.urls'
