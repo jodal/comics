@@ -31,7 +31,7 @@ urlpatterns = patterns('',
         views.MyComicsDayView.as_view(),
         name='mycomics_day'),
     url(r'^my/feed/$',
-        feeds.MyComicsFeed(),
+        views.MyComicsFeed.as_view(),
         name='mycomics_feed'),
 
     # Views of a single comic

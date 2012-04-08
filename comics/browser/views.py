@@ -1,11 +1,16 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.models import RequestSite, Site
 from django.core.urlresolvers import reverse
+from django.http import Http404
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views.generic import (
     TemplateView, ListView, DayArchiveView, MonthArchiveView, RedirectView)
 
+from comics.accounts.models import UserProfile
 from comics.core.models import Comic, Release
+from comics.sets.models import UserSet
 
 
 class LoginRequiredMixin(object):
@@ -18,7 +23,7 @@ class LoginRequiredMixin(object):
         return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
 
 
-class ComicMixin(LoginRequiredMixin):
+class ComicMixin(object):
     """Things common for *all* views of comics"""
 
     @property
@@ -31,7 +36,7 @@ class ComicMixin(LoginRequiredMixin):
         return self._comic
 
 
-class ReleaseMixin(ComicMixin):
+class ReleaseMixin(LoginRequiredMixin, ComicMixin):
     """Things common for *all* views of comic releases"""
 
     template_name = 'browser/release_list.html'
@@ -324,6 +329,58 @@ class MyComicsYearView(LoginRequiredMixin, RedirectView):
         })
 
 
+class MyComicsFeed(MyComicsMixin, ListView):
+    paginate_by = 500
+    template_name = 'feeds/release_list.html'
+
+    def get_queryset(self):
+        releases = super(MyComicsFeed, self).get_queryset()
+        return releases.order_by('-fetched')
+
+    def get_context_data(self, **kwargs):
+        context = super(MyComicsFeed, self).get_context_data(**kwargs)
+        context.update({
+            'feed': {
+                'title': self.get_feed_title(),
+                'url': self.get_feed_url(),
+                'web_url': self.get_latest_url(),
+                'author': self.get_feed_author(),
+                'updated': self.get_last_updated(),
+            },
+        })
+        return context
+
+    def render_to_response(self, context, **kwargs):
+        return super(MyComicsFeed, self).render_to_response(context,
+            content_type='application/xml', **kwargs)
+
+    def get_user(self):
+        user_profile = get_object_or_404(UserProfile,
+            secret_key=self.request.GET.get('key', None))
+        user = user_profile.user
+        if not user.is_active:
+            raise Http404
+        return user
+
+    def get_my_comics(self):
+        (user_set, _) = UserSet.objects.get_or_create(user=self.get_user())
+        return user_set.comics.all()
+
+    def get_feed_author(self):
+        if Site._meta.installed:
+            site = Site.objects.get_current()
+        else:
+            site = RequestSite(self.request)
+        return site.name
+
+    def get_last_updated(self):
+        releases = self.get_queryset()
+        if releases:
+            return releases[0].fetched
+        else:
+            timezone.now()
+
+
 class OneComicMixin(object):
     """Things common for all views of a single comic"""
 
@@ -480,7 +537,7 @@ class OneComicYearView(LoginRequiredMixin, RedirectView):
         })
 
 
-class OneComicWebsiteRedirect(ComicMixin, TemplateView):
+class OneComicWebsiteRedirect(LoginRequiredMixin, ComicMixin, TemplateView):
     template_name = 'browser/comic_website.html'
 
     def get_context_data(self, **kwargs):
