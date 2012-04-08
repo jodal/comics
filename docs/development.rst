@@ -114,8 +114,7 @@ the following command:
 .. code-block:: sh
 
     python manage.py graph_models --settings=comics.settings.dev \
-        --output=docs/_static/data_model.png --group-models \
-        core sets
+        --output=docs/_static/data_model.png --group-models core accounts
 
 
 Running tests
