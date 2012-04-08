@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib.sites.models import RequestSite, Site
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
@@ -7,7 +8,6 @@ from django.utils.decorators import method_decorator
 from django.views.generic import (
     TemplateView, ListView, DayArchiveView, MonthArchiveView, RedirectView)
 
-from comics.accounts.models import UserProfile
 from comics.core.models import Comic, Release
 from comics.sets.models import UserSet
 
@@ -185,9 +185,9 @@ class ReleaseFeedView(ComicMixin, ListView):
             content_type='application/xml', **kwargs)
 
     def get_user(self):
-        user_profile = get_object_or_404(UserProfile,
-            secret_key=self.request.GET.get('key', None), user__is_active=True)
-        return user_profile.user
+        return get_object_or_404(User,
+            userprofile__secret_key=self.request.GET.get('key', None),
+            is_active=True)
 
     def get_web_url(self):
         return self.get_latest_url()
