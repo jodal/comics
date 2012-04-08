@@ -166,7 +166,7 @@ class ReleaseMonthArchiveView(ReleaseDateMixin, MonthArchiveView):
 class ReleaseFeedView(ComicMixin, ListView):
     """Things common for all *feed* views"""
 
-    template_name = 'feeds/release_list.html'
+    template_name = 'browser/release_feed.html'
 
     def get_context_data(self, **kwargs):
         context = super(ReleaseFeedView, self).get_context_data(**kwargs)
