@@ -67,9 +67,6 @@ v1.1 to v2.0 migration guide
 
 - Settings:
 
-  - Removed setting ``COMICS_SITE_TITLE`` in preference of Django's sites
-    framework. You can now change the site title in the admin interface.
-
   - Removed setting ``COMICS_SITE_TAGLINE``.
 
   - Replaced setting ``COMICS_MAX_DAYS_IN_PAGE`` with

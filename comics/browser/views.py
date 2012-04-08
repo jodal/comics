@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib.sites.models import RequestSite, Site
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -188,11 +187,7 @@ class ReleaseFeedView(ComicMixin, ListView):
         return self.get_latest_url()
 
     def get_feed_author(self):
-        if Site._meta.installed:
-            site = Site.objects.get_current()
-        else:
-            site = RequestSite(self.request)
-        return site.name
+        return settings.COMICS_SITE_TITLE
 
     def get_last_updated(self):
         releases = self.get_queryset()

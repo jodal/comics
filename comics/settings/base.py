@@ -19,8 +19,6 @@ USE_I18N = False
 USE_L10N = True
 USE_TZ = True
 
-SITE_ID = 1
-
 MEDIA_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, '..', 'media'))
 MEDIA_URL = '/media/'
 
@@ -68,7 +66,6 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.messages',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.staticfiles',
     'bootstrapform',
     'compressor',
@@ -165,6 +162,9 @@ REGISTRATION_BACKEND = 'comics.accounts.backends.RegistrationBackend'
 
 
 ### comics settings
+
+# Name of the site. Used in page header, page title, feed titles, etc.
+COMICS_SITE_TITLE = 'example.com'
 
 # Location of the comic images
 COMICS_MEDIA_ROOT = os.path.join(MEDIA_ROOT, 'c')
