@@ -179,8 +179,12 @@
       {% ifequal object_type 'mycomics' %}
         <div class="alert alert-info">
           <strong>No comics found in my comics.</strong>
-          You can browse available comics below, or
-          <a href="{% url "import_named_set" %}">import an old comic set</a>.
+          You can browse available comics below.
+          {% url "import_named_set" as import_named_set_url %}
+          {% if import_named_set_url %}
+            Alternatively, you can
+            <a href="{{ import_named_set_url }}">import an old comic set</a>.
+          {% endif %}
         </div>
       {% endifequal %}
 

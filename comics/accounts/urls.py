@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.conf.urls.defaults import patterns, url
 from django.contrib.auth import views as auth_views
 from django.views.generic.simple import direct_to_template
@@ -98,7 +99,10 @@ urlpatterns = patterns('',
 
     url(r'^toggle-comic/$',
         account_views.mycomics_toggle_comic, name='toggle_comic'),
-
-    url(r'^import-set/$',
-        account_views.mycomics_import_named_set, name='import_named_set'),
 )
+
+if 'comics.sets' in settings.INSTALLED_APPS:
+    urlpatterns += patterns('',
+        url(r'^import-set/$',
+            account_views.mycomics_import_named_set, name='import_named_set'),
+    )
