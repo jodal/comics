@@ -170,11 +170,11 @@ REGISTRATION_BACKEND = 'comics.accounts.backends.RegistrationBackend'
 COMICS_MEDIA_ROOT = os.path.join(MEDIA_ROOT, 'c')
 COMICS_MEDIA_URL = MEDIA_URL + 'c/'
 
-# Maximum number of days to show in one page
-COMICS_MAX_DAYS_IN_PAGE = 31
+# Maximum number of releases to show on one page
+COMICS_MAX_RELEASES_PER_PAGE = 50
 
-# Maximum number of days to show in a feed
-COMICS_MAX_DAYS_IN_FEED = 30
+# Maximum number of releases to include in a feed
+COMICS_MAX_RELEASES_IN_FEED = 500
 
 # SHA256 of blacklisted images
 COMICS_IMAGE_BLACKLIST = (

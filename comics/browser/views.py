@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.sites.models import RequestSite, Site
@@ -254,7 +255,7 @@ class MyComicsHome(LoginRequiredMixin, RedirectView):
 class MyComicsLatestView(MyComicsMixin, ReleaseLatestView):
     """View of the latest releases from my comics"""
 
-    paginate_by = 100
+    paginate_by = settings.COMICS_MAX_RELEASES_PER_PAGE
 
     def get_queryset(self):
         releases = super(MyComicsLatestView, self).get_queryset()
@@ -381,7 +382,7 @@ class MyComicsYearView(LoginRequiredMixin, RedirectView):
 class MyComicsFeed(MyComicsMixin, ReleaseFeedView):
     """Atom feed for releases from my comics"""
 
-    paginate_by = 500
+    paginate_by = settings.COMICS_MAX_RELEASES_IN_FEED
 
     def get_queryset(self):
         releases = super(MyComicsFeed, self).get_queryset()
@@ -549,7 +550,7 @@ class OneComicYearView(LoginRequiredMixin, RedirectView):
 class OneComicFeed(OneComicMixin, ReleaseFeedView):
     """Atom feed for releases of a single comic"""
 
-    paginate_by = 100
+    paginate_by = settings.COMICS_MAX_RELEASES_IN_FEED
 
     def get_queryset(self):
         releases = super(OneComicFeed, self).get_queryset()

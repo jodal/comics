@@ -72,6 +72,12 @@ v1.1 to v2.0 migration guide
 
   - Removed setting ``COMICS_SITE_TAGLINE``.
 
+  - Replaced setting ``COMICS_MAX_DAYS_IN_PAGE`` with
+    ``COMICS_MAX_RELEASES_PER_PAGE``.
+
+  - Replaced setting ``COMICS_MAX_DAYS_IN_FEED`` with
+    ``COMICS_MAX_RELEASES_IN_FEED``.
+
 - Commands:
 
   - ``loadmeta`` is now called ``comics_addcomics``
