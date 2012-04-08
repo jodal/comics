@@ -98,8 +98,8 @@ urlpatterns = patterns('',
         account_views.secret_key, name='secret_key'),
 
     url(r'^toggle-comic/$',
-        set_views.user_set_toggle_comic, name='toggle_comic'),
+        account_views.mycomics_toggle_comic, name='toggle_comic'),
 
     url(r'^import-set/$',
-        set_views.user_set_import_named_set, name='import_named_set'),
+        account_views.mycomics_import_named_set, name='import_named_set'),
 )

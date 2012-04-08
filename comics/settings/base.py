@@ -43,7 +43,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'comics.core.context_processors.site_settings',
     'comics.core.context_processors.all_comics',
-    'comics.sets.context_processors.user_set',
 )
 
 TEMPLATE_LOADERS = (
@@ -59,7 +58,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
     'comics.core.middleware.MinifyHTMLMiddleware',
-    'comics.sets.middleware.SetMiddleware',
 )
 
 INSTALLED_APPS = (

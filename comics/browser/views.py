@@ -9,7 +9,6 @@ from django.views.generic import (
     TemplateView, ListView, DayArchiveView, MonthArchiveView, RedirectView)
 
 from comics.core.models import Comic, Release
-from comics.sets.models import UserSet
 
 
 class LoginRequiredMixin(object):
@@ -38,12 +37,7 @@ class ComicMixin(object):
         return self._comic
 
     def get_my_comics(self):
-        user = self.get_user()
-        if user.is_active:
-            (user_set, _) = UserSet.objects.get_or_create(user=user)
-            return user_set.comics.all()
-        else:
-            return []
+        return self.get_user().get_profile().comics.all()
 
 
 class ReleaseMixin(LoginRequiredMixin, ComicMixin):

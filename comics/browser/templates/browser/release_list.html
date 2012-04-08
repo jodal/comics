@@ -127,11 +127,11 @@
 
       <div class="release well">
         <form action="{% url "toggle_comic" %}" method="post"
-          class="pull-right userset-toggle">
+          class="pull-right mycomics-toggle">
           {% csrf_token %}
           <input type="hidden" name="comic" value="{{ release.comic.slug }}">
           <button type="submit" name="remove_comic"
-            class="btn btn-danger btn-small userset-remove-comic
+            class="btn btn-danger btn-small mycomics-remove
               {% if release.comic not in my_comics %}hidden{% endif %}">
             <span class="action">
               <i class="icon-minus-sign icon-white"></i>
@@ -147,7 +147,7 @@
             </span>
           </button>
           <button type="submit" name="add_comic"
-            class="btn btn-success btn-small userset-add-comic
+            class="btn btn-success btn-small mycomics-add
               {% if release.comic in my_comics %}hidden{% endif %}">
             <span class="action">
               <i class="icon-plus-sign icon-white"></i>

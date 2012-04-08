@@ -30,7 +30,7 @@
           </tr>
           <tr>
             <th>Selected comics</th>
-            <td>{{ user_set.comics.count }} / {{ all_comics.count }}</td>
+            <td>{{ user.get_profile.comics.count }} / {{ all_comics.count }}</td>
           </tr>
         </tbody>
       </table>

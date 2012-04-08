@@ -61,7 +61,7 @@ var keyboardNavigation = (function () {
     };
 })();
 
-var usersetToggler = (function () {
+var mycomicsToggler = (function () {
     var showConfirmation = function ($button) {
         $button.css('opacity', 1);
         $button.find('.action').hide();
@@ -118,6 +118,6 @@ var usersetToggler = (function () {
 
 $(function() {
     $(document).keypress(keyboardNavigation);
-    $('.userset-add-comic').click(usersetToggler.addComic);
-    $('.userset-remove-comic').click(usersetToggler.removeComic);
+    $('.mycomics-add').click(mycomicsToggler.addComic);
+    $('.mycomics-remove').click(mycomicsToggler.removeComic);
 });
