@@ -2,10 +2,10 @@ comics
 ======
 
 *comics* is a web comics aggregator. Out of the box it can crawl and archive
-more than a hundred comics every day. The comics are made available through an
-easy to use web interface were multiple users can create sets of their favorite
-comics. Alternatively, *comics* provides feeds of both single comics and sets
-of comics.
+about two hundred comics every day. The comics are made available through an
+easy to use web interface were users can build personalized collections of
+their favorite comics, and then read them on the site or export them using
+feeds.
 
 Adding a new comic to your installation requires only the addition of a single
 Python file with some metadata and a few lines of code. To make crawler
