@@ -1,11 +1,13 @@
-{% load cache %}<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+
+{% load cache %}
 
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-us">
   <title>{{ feed.title }}</title>
   <link href="{{ feed.web_url }}" rel="alternate"></link>
   <link href="{{ feed.url }}" rel="self"></link>
   <id>{{ feed.web_url }}</id>
-  <updated>{{ feed.updated }}</updated>
+  <updated>{{ feed.updated|date:"c" }}</updated>
 
   {% for release in release_list %}
     <entry>
