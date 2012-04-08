@@ -379,6 +379,8 @@ class MyComicsMonthView(MyComicsMixin, ReleaseMonthArchiveView):
 
 
 class MyComicsYearView(LoginRequiredMixin, RedirectView):
+    """Redirect anyone trying to view the full year to January"""
+
     def get_redirect_url(self, **kwargs):
         return reverse('mycomics_month', kwargs={
             'year': kwargs['year'],
@@ -544,6 +546,8 @@ class OneComicMonthView(OneComicMixin, ReleaseMonthArchiveView):
 
 
 class OneComicYearView(LoginRequiredMixin, RedirectView):
+    """Redirect anyone trying to view the full year to January"""
+
     def get_redirect_url(self, **kwargs):
         return reverse('comic_month', kwargs={
             'comic_slug': kwargs['comic_slug'],
