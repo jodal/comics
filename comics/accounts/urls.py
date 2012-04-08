@@ -6,7 +6,6 @@ from registration import views as reg_views
 
 from comics.accounts.forms import AuthenticationForm, PasswordResetForm
 from comics.accounts import views as account_views
-from comics.sets import views as set_views
 
 urlpatterns = patterns('',
 
