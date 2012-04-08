@@ -4,27 +4,31 @@ from django.conf import settings
 from django.conf.urls.defaults import include, patterns
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.views.generic.simple import direct_to_template
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Comic core
-    (r'^', include('comics.core.urls')),
+    # Robots not welcome
+    (r'^robots\.txt$', direct_to_template, {
+        'template': 'robots.txt',
+        'mimetype': 'text/plain',
+    }),
 
-    # User handling
+    # User accounts management
     (r'^account/', include('comics.accounts.urls')),
 
-    # Help app
+    # Help, about and feedback
     (r'^help/', include('comics.help.urls')),
 
-    # Status app
+    # Comic crawler status
     (r'^status/', include('comics.status.urls')),
 
     # Django admin
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
 
-    # Comics browsing
+    # Comics browsing. Must be last one included.
     (r'^', include('comics.browser.urls')),
 )
 
