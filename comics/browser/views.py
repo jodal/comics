@@ -552,6 +552,16 @@ class OneComicYearView(LoginRequiredMixin, RedirectView):
         })
 
 
+class OneComicFeed(OneComicMixin, ReleaseFeedView):
+    """Atom feed for releases of a single comic"""
+
+    paginate_by = 100
+
+    def get_queryset(self):
+        releases = super(OneComicFeed, self).get_queryset()
+        return releases.order_by('-fetched')
+
+
 class OneComicWebsiteRedirect(LoginRequiredMixin, ComicMixin, TemplateView):
     template_name = 'browser/comic_website.html'
 

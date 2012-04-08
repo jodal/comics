@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import patterns, url
 
-from comics.browser import feeds, views
+from comics.browser import views
 
 YEAR = r'(?P<year>(19|20)\d{2})'                   # 1900-2099
 MONTH = r'(?P<month>(0*[1-9]|1[0-2]))'             # 1-12
@@ -51,6 +51,6 @@ urlpatterns = patterns('',
         views.OneComicWebsiteRedirect.as_view(),
         name='comic_website'),
     url(r'^%s/feed/$' % (COMIC,),
-        feeds.OneComicFeed(),
+        views.OneComicFeed.as_view(),
         name='comic_feed'),
 )
