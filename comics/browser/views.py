@@ -159,7 +159,8 @@ class MyComicsMixin(object):
     """Things common for all views of *my comics*"""
 
     def get_queryset(self):
-        return Release.objects.filter(comic__in=self.get_my_comics())
+        return Release.objects.select_related(depth=1).filter(
+            comic__in=self.get_my_comics())
 
     def get_user(self):
         return self.request.user
