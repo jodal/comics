@@ -92,8 +92,16 @@ Data model
 *comics*' data model is very simple. The :mod:`comics.core` app consists of
 three models; :class:`Comic <comics.core.models.Comic>`, :class:`Release
 <comics.core.models.Release>`, and :class:`Image <comics.core.models.Image>`.
-The :mod:`comics.sets` app adds an additional model named :class:`Set
-<comics.sets.models.Set>`. Changes to the data model are managed using `South
+The :mod:`comics.accounts` app adds a :class:`UserProfile
+<comics.accounts.models.UserProfile>` which add comic specific fields to
+Django's user model, including a mapping from the user to her preferred comics.
+
+.. deprecated:: 2.0
+   The :mod:`comics.sets` app has a model named :class:`Set
+   <comics.sets.models.Set>`. This model is deprecated and replaced by
+   :class:`UserProfile <comics.accounts.models.UserProfile>`.
+
+Changes to the data model are managed using `South
 <http://south.aeracode.org/>`_ database migrations. If you need to change the
 models, please provide the needed migrations.
 
@@ -106,7 +114,7 @@ the following command:
 .. code-block:: sh
 
     python manage.py graph_models --settings=comics.settings.dev \
-        --output=../docs/_static/data_model.png --group-models \
+        --output=docs/_static/data_model.png --group-models \
         core sets
 
 
