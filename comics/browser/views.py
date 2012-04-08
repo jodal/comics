@@ -402,7 +402,7 @@ class OneComicMixin(object):
     """Things common for all views of a single comic"""
 
     def get_queryset(self):
-        return Release.objects.filter(comic=self.comic)
+        return Release.objects.select_related(depth=1).filter(comic=self.comic)
 
     def get_object_type(self):
         return 'onecomic'
