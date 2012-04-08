@@ -1,7 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.models import RequestSite, Site
 from django.core.urlresolvers import reverse
-from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.decorators import method_decorator
@@ -187,11 +186,8 @@ class ReleaseFeedView(ComicMixin, ListView):
 
     def get_user(self):
         user_profile = get_object_or_404(UserProfile,
-            secret_key=self.request.GET.get('key', None))
-        user = user_profile.user
-        if not user.is_active:
-            raise Http404
-        return user
+            secret_key=self.request.GET.get('key', None), user__is_active=True)
+        return user_profile.user
 
     def get_web_url(self):
         return self.get_latest_url()
