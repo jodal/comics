@@ -52,9 +52,6 @@ class Comic(models.Model):
     def get_absolute_url(self):
         return reverse('comic_latest', kwargs={'comic_slug': self.slug})
 
-    def get_feed_url(self):
-        return reverse('comic_feed', kwargs={'comic_slug': self.slug})
-
     def get_redirect_url(self):
         return reverse('comic_website', kwargs={'comic_slug': self.slug})
 
