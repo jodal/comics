@@ -1,14 +1,35 @@
 from django.conf import settings
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls.defaults import include, patterns, url
 from django.contrib.auth import views as auth_views
 from django.views.generic.simple import direct_to_template
 
+from invitation import views as invitation_views
 from registration import views as reg_views
 
 from comics.accounts.forms import AuthenticationForm, PasswordResetForm
 from comics.accounts import views as account_views
 
 urlpatterns = patterns('',
+
+    ### django-invitation
+
+    url(r'^invite/complete/$',
+        direct_to_template,
+        {'template': 'invitation/invitation_complete.html'},
+        name='invitation_complete'),
+    url(r'^invite/$',
+        invitation_views.invite,
+        {
+            'extra_context': {'active': {'invite': True}},
+        },
+        name='invitation_invite'),
+    url(r'^invited/(?P<invitation_key>\w+)/$',
+        invitation_views.invited,
+        name='invitation_invited'),
+    url(r'^register/$',
+        invitation_views.register,
+        { 'backend': 'registration.backends.default.DefaultBackend' },
+        name='registration_register'),
 
     ### django-registration
 

@@ -71,6 +71,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'bootstrapform',
     'compressor',
+    'invitation',
     'registration',
     'south',
     'comics.core',
@@ -161,6 +162,12 @@ AUTHENTICATION_BACKENDS = (
 ACCOUNT_ACTIVATION_DAYS = 7
 LOGIN_REDIRECT_URL = '/'
 REGISTRATION_BACKEND = 'comics.accounts.backends.RegistrationBackend'
+
+
+### django-invitation settings
+
+ACCOUNT_INVITATION_DAYS = 7
+INVITATIONS_PER_USER = 30
 
 
 ### comics settings

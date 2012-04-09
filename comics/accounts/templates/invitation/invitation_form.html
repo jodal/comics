@@ -1,0 +1,50 @@
+{% extends "accounts/base.html" %}
+{% load bootstrap %}
+{% load url from future %}
+
+
+{% block title %}
+  Invite a friend
+{% endblock %}
+
+
+{% block account_content %}
+
+  <div class="page-header">
+    <h1>Invite a friend <small>to use {{ site_title }}</small></h1>
+  </div>
+
+  {% ifequal remaining_invitations 0 %}
+
+    <div class="alert alert-info">
+      <strong>You do not have any invitations left.</strong>
+      Please <a href="{% url "help_feedback" %}">contact the site admin</a>
+      to request more invitations.
+    </div>
+
+  {% else %}
+
+    <p>
+      You have <strong>{{ remaining_invitations }}
+      invitation{{ remaining_invitations|pluralize }}</strong> left.
+
+      When you submit the form below, your friend will get an email with a link
+      he can use to register a new user account.
+    </p>
+
+    <form action="" method="post" class="form-horizontal">
+      {% csrf_token %}
+
+      {{ form|bootstrap }}
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+          <i class="icon-share icon-white"></i>
+          Invite friend
+        </button>
+      </div>
+    </form>
+
+  {% endifequal %}
+
+{% endblock %}
