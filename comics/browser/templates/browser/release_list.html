@@ -125,8 +125,7 @@
   {% ifequal object_type 'mycomics' %}
     {% ifequal view_type 'latest' %}
       <div class="alert alert-info new-releases-alert">
-        <a class="close" data-dismiss="alert">×</a>
-        <span class="new-release-count">0</span> new release(s) available.
+        <strong class="new-release-count">0</strong> new release(s) available.
         <a href="{% url "mycomics_latest" %}">Show</a>
       </div>
     {% endifequal %}
