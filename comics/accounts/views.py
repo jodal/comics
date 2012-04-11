@@ -23,9 +23,9 @@ def secret_key(request):
     """Show and generate a new secret key for the current user"""
 
     if request.method == 'POST':
-        user_profile = request.user.get_profile()
-        user_profile.generate_new_secret_key()
-        user_profile.save()
+        comics_profile = request.user.comics_profile
+        comics_profile.generate_new_secret_key()
+        comics_profile.save()
         messages.info(request, 'A new secret key was generated.')
         return HttpResponseRedirect(reverse('secret_key'))
 
@@ -49,11 +49,11 @@ def mycomics_toggle_comic(request):
     comic = get_object_or_404(Comic, slug=request.POST['comic'])
 
     if 'add_comic' in request.POST:
-        request.user.get_profile().comics.add(comic)
+        request.user.comics_profile.comics.add(comic)
         if not request.is_ajax():
             messages.info(request, 'Added "%s" to my comics' % comic.name)
     elif 'remove_comic' in request.POST:
-        request.user.get_profile().comics.remove(comic)
+        request.user.comics_profile.comics.remove(comic)
         if not request.is_ajax():
             messages.info(request, 'Removed "%s" from my comics' % comic.name)
 
@@ -75,9 +75,9 @@ def mycomics_import_named_set(request):
                 request.POST['namedset'])
             return HttpResponseRedirect(reverse('import_named_set'))
 
-        count_before = len(request.user.get_profile().comics.all())
-        request.user.get_profile().comics.add(*named_set.comics.all())
-        count_after = len(request.user.get_profile().comics.all())
+        count_before = len(request.user.comics_profile.comics.all())
+        request.user.comics_profile.comics.add(*named_set.comics.all())
+        count_after = len(request.user.comics_profile.comics.all())
         count_added = count_after - count_before
         messages.info(request,
             '%d comic(s) was added to your comics selection.' % count_added)

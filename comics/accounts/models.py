@@ -18,7 +18,7 @@ def make_secret_key():
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, related_name='comics_profile')
     secret_key = models.CharField(max_length=32, blank=False,
         default=make_secret_key,
         help_text='Secret key for feed and API access')

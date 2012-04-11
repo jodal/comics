@@ -37,7 +37,7 @@ class ComicMixin(object):
         return self._comic
 
     def get_my_comics(self):
-        return self.get_user().get_profile().comics.all()
+        return self.get_user().comics_profile.comics.all()
 
 
 class ReleaseMixin(LoginRequiredMixin, ComicMixin):
@@ -180,7 +180,7 @@ class ReleaseFeedView(ComicMixin, ListView):
 
     def get_user(self):
         return get_object_or_404(User,
-            userprofile__secret_key=self.request.GET.get('key', None),
+            comics_profile__secret_key=self.request.GET.get('key', None),
             is_active=True)
 
     def get_web_url(self):
@@ -234,7 +234,7 @@ class MyComicsMixin(object):
 
     def get_feed_url(self):
         return '%s?key=%s' % (reverse('mycomics_feed'),
-            self.get_user().get_profile().secret_key)
+            self.get_user().comics_profile.secret_key)
 
     def get_feed_title(self):
         return 'Feed for %s' % self.get_user().email
@@ -423,7 +423,7 @@ class OneComicMixin(object):
     def get_feed_url(self):
         return '%s?key=%s' % (
             reverse('comic_feed', kwargs={'comic_slug': self.comic.slug}),
-            self.get_user().get_profile().secret_key)
+            self.get_user().comics_profile.secret_key)
 
     def get_feed_title(self):
         return 'Feed for %s' % self.comic.name
