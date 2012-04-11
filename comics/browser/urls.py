@@ -33,6 +33,9 @@ urlpatterns = patterns('',
     url(r'^my/feed/$',
         views.MyComicsFeed.as_view(),
         name='mycomics_feed'),
+    url(r'^my/num-releases-since/(?P<release_id>\d+)/$',
+        views.MyComicsNumReleasesSinceView.as_view(),
+        name='mycomics_num_releases_since'),
 
     # Views of a single comic
     url(r'^%s/$' % (COMIC,),

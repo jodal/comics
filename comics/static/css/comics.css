@@ -23,6 +23,10 @@ h3 a:hover {
     text-decoration: none;
 }
 
+.new-releases-alert {
+    display: none;
+}
+
 .release h3,
 .release form {
     margin: 0 0 12px;

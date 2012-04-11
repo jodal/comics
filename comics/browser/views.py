@@ -1,7 +1,10 @@
+import json
+
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.decorators import method_decorator
@@ -278,6 +281,20 @@ class MyComicsLatestView(MyComicsMixin, ReleaseLatestView):
         page = self.context['page_obj']
         if page.number != 1:
             return reverse('mycomics_latest_page_n', kwargs={'page': 1})
+
+
+class MyComicsNumReleasesSinceView(MyComicsLatestView):
+    def get_num_releases_since(self):
+        last_release_seen = Release.objects.get(id=self.kwargs['release_id'])
+        releases = super(MyComicsNumReleasesSinceView, self).get_queryset()
+        return releases.filter(fetched__gt=last_release_seen.fetched).count()
+
+    def render_to_response(self, context, **kwargs):
+        data = json.dumps({
+            'since_release_id': int(self.kwargs['release_id']),
+            'num_releases': self.get_num_releases_since(),
+        })
+        return HttpResponse(data, content_type='application/json')
 
 
 class MyComicsDayView(MyComicsMixin, ReleaseDayArchiveView):

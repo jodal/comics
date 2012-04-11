@@ -122,10 +122,20 @@
     </h1>
   </div>
 
+  {% ifequal object_type 'mycomics' %}
+    {% ifequal view_type 'latest' %}
+      <div class="alert alert-info new-releases-alert">
+        <a class="close" data-dismiss="alert">×</a>
+        <span class="new-release-count">0</span> new release(s) available.
+        <a href="{% url "mycomics_latest" %}">Show</a>
+      </div>
+    {% endifequal %}
+  {% endifequal %}
+
   <div id="releases">
     {% for release in release_list %}
 
-      <div class="release well">
+      <div class="release well" id="release-{{ release.id }}">
         <form action="{% url "toggle_comic" %}" method="post"
           class="pull-right mycomics-toggle">
           {% csrf_token %}
@@ -205,5 +215,21 @@
 
     {% endfor %}
   </div>
+
+{% endblock %}
+
+
+{% block extra_footer %}
+  {{ block.super }}
+
+  {% ifequal object_type 'mycomics' %}
+    {% ifequal view_type 'latest' %}
+      <script type="text/javascript">
+        $(function () {
+          setInterval(newReleaseCheck, 60 * 1000);
+        });
+      </script>
+    {% endifequal %}
+  {% endifequal %}
 
 {% endblock %}

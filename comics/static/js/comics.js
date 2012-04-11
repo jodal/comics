@@ -116,7 +116,35 @@ var mycomicsToggler = (function () {
     };
 })();
 
-$(function() {
+var newReleaseCheck = (function () {
+    var getLastReleaseId = function () {
+        var id = $('.release').first().attr('id')
+        if (id) {
+            return id.split('-')[1];
+        }
+    };
+
+    var onSuccess = function (data) {
+        if (data.num_releases > 0) {
+            showNewReleaseNotification(data.num_releases);
+        }
+    };
+
+    var showNewReleaseNotification = function (numReleases) {
+        var $el = $('.new-releases-alert');
+        $el.find('.new-release-count').html(numReleases);
+        $el.slideDown();
+    };
+
+    return function () {
+        var lastReleaseId = getLastReleaseId();
+        if (lastReleaseId) {
+            $.get('/my/num-releases-since/' + lastReleaseId + '/', onSuccess);
+        }
+    };
+})();
+
+$(function () {
     $(document).keypress(keyboardNavigation);
     $('.mycomics-add').click(mycomicsToggler.addComic);
     $('.mycomics-remove').click(mycomicsToggler.removeComic);
