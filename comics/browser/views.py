@@ -293,6 +293,7 @@ class MyComicsNumReleasesSinceView(MyComicsLatestView):
         data = json.dumps({
             'since_release_id': int(self.kwargs['release_id']),
             'num_releases': self.get_num_releases_since(),
+            'seconds_to_next_check': settings.COMICS_BROWSER_REFRESH_INTERVAL,
         })
         return HttpResponse(data, content_type='application/json')
 

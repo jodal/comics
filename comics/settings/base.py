@@ -208,3 +208,7 @@ COMICS_DEFAULT_TIME_ZONE = 1
 
 # Google Analytics tracking code
 COMICS_GOOGLE_ANALYTICS_CODE = None
+
+# How many seconds browsers at the latest view of My Comics should wait before
+# they check for new releases again
+COMICS_BROWSER_REFRESH_INTERVAL = 60

@@ -224,9 +224,7 @@
   {% ifequal object_type 'mycomics' %}
     {% ifequal view_type 'latest' %}
       <script type="text/javascript">
-        $(function () {
-          setInterval(newReleaseCheck, 60 * 1000);
-        });
+        $(newReleaseCheck);
       </script>
     {% endifequal %}
   {% endifequal %}

@@ -117,16 +117,19 @@ var mycomicsToggler = (function () {
 })();
 
 var newReleaseCheck = (function () {
+    var seconds_before_first_check = 60;
+
     var getLastReleaseId = function () {
-        var id = $('.release').first().attr('id')
+        var id = $('.release').first().attr('id');
         if (id) {
             return id.split('-')[1];
         }
     };
 
-    var onSuccess = function (data) {
-        if (data.num_releases > 0) {
-            showNewReleaseNotification(data.num_releases);
+    var checkForNewReleases = function () {
+        var lastReleaseId = getLastReleaseId();
+        if (lastReleaseId) {
+            $.get('/my/num-releases-since/' + lastReleaseId + '/', onSuccess);
         }
     };
 
@@ -136,11 +139,17 @@ var newReleaseCheck = (function () {
         $el.slideDown();
     };
 
-    return function () {
-        var lastReleaseId = getLastReleaseId();
-        if (lastReleaseId) {
-            $.get('/my/num-releases-since/' + lastReleaseId + '/', onSuccess);
+    var onSuccess = function (data) {
+        if (data.num_releases > 0) {
+            showNewReleaseNotification(data.num_releases);
         }
+        if (data.seconds_to_next_check !== null) {
+            setTimeout(checkForNewReleases, data.seconds_to_next_check * 1000);
+        }
+    };
+
+    return function () {
+        setTimeout(checkForNewReleases, seconds_before_first_check * 1000);
     };
 })();
 
