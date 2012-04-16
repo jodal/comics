@@ -14,6 +14,7 @@ v1.1.5 (in development)
 - New: ``chainsawsuit``
 - Update: ``calamitesofnature`` has been discontinued.
 - Update: ``duelinganalogs`` was broken due to feed changes.
+- Update: ``fagprat`` has a new schedule.
 
 
 v1.1.4 (2012-04-07)
