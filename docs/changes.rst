@@ -25,6 +25,7 @@ v1.1.5 (in development)
 - Update: ``playervsplayer`` was broken due to feed changes.
 - Update: ``pondus`` was broken due to a site change.
 - Update: ``savagechickens`` has a new schedule.
+- Update: ``theidlestate`` after site redesign and addition of a feed.
 
 
 v1.1.4 (2012-04-07)
