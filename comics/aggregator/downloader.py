@@ -121,8 +121,13 @@ class ImageDownloader(object):
 
     def _get_file_extension(self, http_file):
         mime_type = http_file.info().gettype()
+
         # MIME types like "image/jpeg, image/jpeg" has been observed.
         mime_type = mime_type.split(',')[0]
+
+        # The MIME type "image/pjpeg" have been observed.
+        mime_type = mime_type.replace('pjpeg', 'jpeg')
+
         file_ext = mimetypes.guess_extension(mime_type)
         if file_ext == '.jpe':
             file_ext = '.jpg'

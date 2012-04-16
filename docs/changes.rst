@@ -9,6 +9,11 @@ versioned release.
 v1.1.5 (in development)
 =======================
 
+**Bugfixes**
+
+- Handle aggregated images with MIME type ``image/pjpeg`` as JPEG images
+  instead of rejecting them.
+
 **Crawlers**
 
 - New: ``chainsawsuit``
