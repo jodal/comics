@@ -12,6 +12,7 @@ v1.1.5 (in development)
 **Crawlers**
 
 - New: ``chainsawsuit``
+- Update: ``calamitesofnature`` has been discontinued.
 
 
 v1.1.4 (2012-04-07)
