@@ -26,6 +26,7 @@ v1.1.5 (in development)
 - Update: ``pondus`` was broken due to a site change.
 - Update: ``savagechickens`` has a new schedule.
 - Update: ``theidlestate`` after site redesign and addition of a feed.
+- Update: ``veslemoy`` has a new schedule.
 
 
 v1.1.4 (2012-04-07)
