@@ -5,22 +5,11 @@ class ComicData(ComicDataBase):
     name = 'Calamities of Nature'
     language = 'en'
     url = 'http://www.calamitiesofnature.com/'
+    active = False
     start_date = '2007-12-11'
+    end_date = '2012-03-12'
     rights = 'Tony Piro'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 30
-    schedule = 'Mo,We,Fr'
-    time_zone = -9
-
     def crawl(self, pub_date):
-        feed = self.parse_feed(
-            'http://feeds.feedburner.com/calamitiesofnature')
-        for entry in feed.for_date(pub_date):
-            if entry.title.startswith('Blog'):
-                continue
-            url = entry.summary.src('img[src*="/archive/"]')
-            if url is not None:
-                url = url.replace('_sm', '')
-            title = entry.title.split(' - ')[-1]
-            return CrawlerImage(url, title)
+        pass # Comic no longer published

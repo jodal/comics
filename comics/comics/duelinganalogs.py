@@ -14,8 +14,8 @@ class Crawler(CrawlerBase):
     time_zone = -7
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://feeds2.feedburner.com/DuelingAnalogs')
+        feed = self.parse_feed('http://feeds.feedburner.com/DuelingAnalogs')
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src*="/comics/"]')
+            url = entry.content0.src('img[src*="/wp-content/uploads/"]')
             title = entry.title
             return CrawlerImage(url, title)

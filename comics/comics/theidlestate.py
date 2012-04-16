@@ -9,11 +9,15 @@ class ComicData(ComicDataBase):
     rights = 'Nick Wright'
 
 class Crawler(CrawlerBase):
-    history_capable_days = None
+    history_capable_days = 40
     schedule = 'Mo,We,Fr'
     time_zone = -5
 
     def crawl(self, pub_date):
-        page = self.parse_page('http://www.theidlestate.com')
-        url = page.src('img[src*="/wp-content/webcomic/idlestate/"]')
-        return CrawlerImage(url)
+        feed = self.parse_feed('http://www.theidlestate.com/?feed=rss2')
+        for entry in feed.for_date(pub_date):
+            if 'Peached' not in entry.tags:
+                continue
+            url = entry.content0.src('img[src*="/wp-content/webcomic/"]')
+            title = entry.title
+            return CrawlerImage(url, title)

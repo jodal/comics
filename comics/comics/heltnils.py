@@ -8,7 +8,7 @@ class ComicData(ComicDataBase):
     rights = 'Nils Ofstad'
 
 class Crawler(PondusNoCrawlerBase):
-    schedule = 'We,Sa'
+    schedule = 'Mo,Fr'
 
     def crawl(self, pub_date):
         return self.crawl_helper('20060')

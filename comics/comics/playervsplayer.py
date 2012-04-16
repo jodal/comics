@@ -4,7 +4,7 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = 'Player vs Player'
     language = 'en'
-    url = 'http://www.pvponline.com/'
+    url = 'http://pvponline.com/'
     start_date = '1998-05-04'
     rights = 'Scott R. Kurtz'
 
@@ -14,7 +14,7 @@ class Crawler(CrawlerBase):
     time_zone = -6
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://feeds.feedburner.com/Pvponline')
+        feed = self.parse_feed('http://pvponline.com/feed/')
         for entry in feed.for_date(pub_date):
             if not entry.title.startswith('Comic:'):
                 continue

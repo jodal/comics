@@ -96,6 +96,29 @@ v1.1 to v2.0 migration guide
   :mod:`comics.core.comic_data`. Remember to update any custom crawlers.
 
 
+v1.1.5 (in development)
+=======================
+
+**Bugfixes**
+
+- Handle aggregated images with MIME type ``image/pjpeg`` as JPEG images
+  instead of rejecting them.
+
+**Crawlers**
+
+- New: ``chainsawsuit``
+- Update: ``calamitesofnature`` has been discontinued.
+- Update: ``duelinganalogs`` was broken due to feed changes.
+- Update: ``fagprat`` has a new schedule.
+- Update: ``fanboys`` was broken due to feed changes.
+- Update: ``heltnils`` has a new schedule.
+- Update: ``playervsplayer`` was broken due to feed changes.
+- Update: ``pondus`` was broken due to a site change.
+- Update: ``savagechickens`` has a new schedule.
+- Update: ``theidlestate`` after site redesign and addition of a feed.
+- Update: ``veslemoy`` has a new schedule.
+
+
 v1.1.4 (2012-04-07)
 ===================
 
