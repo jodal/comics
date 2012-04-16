@@ -19,6 +19,7 @@ v1.1.5 (in development)
 - Update: ``heltnils`` has a new schedule.
 - Update: ``playervsplayer`` was broken due to feed changes.
 - Update: ``pondus`` was broken due to a site change.
+- Update: ``savagechickens`` has a new schedule.
 
 
 v1.1.4 (2012-04-07)
