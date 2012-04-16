@@ -18,6 +18,7 @@ v1.1.5 (in development)
 - Update: ``fanboys`` was broken due to feed changes.
 - Update: ``heltnils`` has a new schedule.
 - Update: ``playervsplayer`` was broken due to feed changes.
+- Update: ``pondus`` was broken due to a site change.
 
 
 v1.1.4 (2012-04-07)
