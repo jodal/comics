@@ -90,7 +90,11 @@
                         <ul>
                           {% for comic in comic_column %}
                             <li class="{% if comic.active %}active{% else %}inactive{% endif %}">
-                              <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a></li>
+                              {% if comic.is_new %}
+                                <span class="label label-info">New</span>&nbsp;
+                              {% endif %}
+                              <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
+                            </li>
                           {% endfor %}
                         </ul>
                       </div>

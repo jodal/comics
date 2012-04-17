@@ -1,3 +1,4 @@
+import datetime
 import os
 
 from django.conf import settings
@@ -5,6 +6,7 @@ from django.db import models
 from django.core.files.storage import FileSystemStorage
 from django.core.urlresolvers import reverse
 from django.core.cache import cache
+from django.utils import timezone
 
 from comics.core.managers import ComicManager
 
@@ -54,6 +56,15 @@ class Comic(models.Model):
 
     def get_redirect_url(self):
         return reverse('comic_website', kwargs={'comic_slug': self.slug})
+
+    def is_new(self):
+        first_release = self.release_set.all().order_by('fetched')[:1]
+        if not first_release:
+            return False
+        first_release = first_release[0]
+        some_time_ago = timezone.now() - datetime.timedelta(
+            days=settings.COMICS_NUM_DAYS_COMIC_IS_NEW)
+        return first_release.fetched > some_time_ago
 
 
 class Release(models.Model):

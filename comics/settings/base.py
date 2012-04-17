@@ -212,3 +212,6 @@ COMICS_GOOGLE_ANALYTICS_CODE = None
 # How many seconds browsers at the latest view of My Comics should wait before
 # they check for new releases again
 COMICS_BROWSER_REFRESH_INTERVAL = 60
+
+# Number of days a new comic on the site is labeled as new
+COMICS_NUM_DAYS_COMIC_IS_NEW = 7
