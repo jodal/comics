@@ -4,12 +4,12 @@
     <h4>&ldquo;{{ image.title|safe }}&rdquo;</h4>
   {% endif %}
 
-  <p class="image"><a href="{{ release.get_absolute_url }}">
+  <p class="image">
     <img src="{{ image.file.url }}"
       height="{{ image.height }}" width="{{ image.width }}"
       alt="{{ release }}"
       {% if image.text %}title="{{ image.text|escape }}"{% endif %}>
-  </a></p>
+  </p>
 
   {% if image.text %}
     <blockquote class="image_text">{{ image.text|escape|linebreaksbr }}
