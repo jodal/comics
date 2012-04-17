@@ -106,8 +106,9 @@ var mycomicsToggler = (function () {
                 $.post($form.attr('action'), data, function () {
                     showSuccess($button);
                     if (isMyComicsPage()) {
-                        $button
-                            .parents('.release').slideUp('slow')
+                        var comic = $button.parents('.release').data('comic');
+                        $('.release[data-comic="' + comic + '"]')
+                            .slideUp('slow')
                             .children().fadeOut('slow');
                     }
                 });
@@ -120,7 +121,7 @@ var newReleaseCheck = (function () {
     var seconds_before_first_check = 60;
 
     var getLastReleaseId = function () {
-        var id = $('.release').first().attr('id');
+        var id = $('.release').first().data('release-id');
         if (id) {
             return id.split('-')[1];
         }
