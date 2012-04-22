@@ -24,7 +24,7 @@ class SplitListNode(Node):
 
 
 def list_to_columns(parser, token):
-    """Parse template tag: {% list_to_colums results as new_results 2 %}"""
+    """Parse template tag: {% list_to_columns results as new_results 2 %}"""
     bits = token.contents.split()
     if len(bits) != 5:
         raise TemplateSyntaxError("list_to_columns results as new_results 2")
