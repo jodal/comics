@@ -121,10 +121,7 @@ var newReleaseCheck = (function () {
     var seconds_before_first_check = 60;
 
     var getLastReleaseId = function () {
-        var id = $('.release').first().data('release-id');
-        if (id) {
-            return id.split('-')[1];
-        }
+        return $('.release').first().data('release-id');
     };
 
     var checkForNewReleases = function () {
