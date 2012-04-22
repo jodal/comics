@@ -132,6 +132,8 @@
           <script type="text/javascript">
             var _gaq = _gaq || [];
             _gaq.push(['_setAccount', '{{ google_analytics_code }}']);
+            // Avoid sending Google Analytics cookies to subdomains
+            _gaq.push(['_setDomainName', document.domain]);
             _gaq.push(['_trackPageview']);
 
             (function() {
