@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from django.contrib.sites.models import Site
+from django.contrib.sites.models import RequestSite, Site
 
 from registration.models import SHA1_RE
 
@@ -106,11 +106,14 @@ class InvitationKey(models.Model):
         self.registrant = registrant
         self.save()
         
-    def send_to(self, email):
+    def send_to(self, email, request):
         """
         Send an invitation email to ``email``.
         """
-        current_site = Site.objects.get_current()
+        if Site._meta.installed:
+            current_site = Site.objects.get_current()
+        else:
+            current_site = RequestSite(request)
         
         subject = render_to_string('invitation/invitation_email_subject.txt',
                                    { 'site': current_site, 

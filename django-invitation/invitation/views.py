@@ -62,7 +62,7 @@ def invite(request, success_url=None,
         form = form_class(data=request.POST, files=request.FILES)
         if remaining_invitations > 0 and form.is_valid():
             invitation = InvitationKey.objects.create_invitation(request.user)
-            invitation.send_to(form.cleaned_data["email"])
+            invitation.send_to(form.cleaned_data["email"], request)
             # success_url needs to be dynamically generated here; setting a
             # a default value using reverse() will cause circular-import
             # problems with the default URLConf for this application, which
