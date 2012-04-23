@@ -167,7 +167,7 @@ REGISTRATION_BACKEND = 'comics.accounts.backends.RegistrationBackend'
 ### django-invitation settings
 
 ACCOUNT_INVITATION_DAYS = 7
-INVITATIONS_PER_USER = 30
+INVITATIONS_PER_USER = 10
 
 
 ### comics settings
