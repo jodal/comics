@@ -12,7 +12,13 @@
     <h1>Register <small>a new account</small></h1>
   </div>
 
-  <p>Sorry, but your invitation key, <strong>{{ invitation_key }}</strong>,
-  seems to be invalid.</p>
+  {% if invitation_key %}
+    <p>
+      <strong>The invitation key is invalid.</strong>
+      You provided the key: <strong>{{ invitation_key }}</strong>
+    </p>
+  {% else %}
+    <p>Open registration is currently turned off. You need an invite to join.</p>
+  {% endif %}
 
 {% endblock %}
