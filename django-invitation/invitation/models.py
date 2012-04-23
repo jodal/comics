@@ -3,6 +3,7 @@ import random
 import datetime
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 from django.utils.http import int_to_base36
 from django.utils.hashcompat import sha_constructor
 from django.utils.translation import ugettext_lazy as _
@@ -45,7 +46,7 @@ class InvitationKeyManager(models.Manager):
         from a combination of the ``User``'s username and a random salt.
         """
         salt = sha_constructor(str(random.random())).hexdigest()[:5]
-        key = sha_constructor("%s%s%s" % (datetime.datetime.now(), salt, user.username)).hexdigest()
+        key = sha_constructor("%s%s%s" % (timezone.now(), salt, user.username)).hexdigest()
         return self.create(from_user=user, key=key)
 
     def remaining_invitations_for_user(self, user):
@@ -66,7 +67,7 @@ class InvitationKeyManager(models.Manager):
 class InvitationKey(models.Model):
     key = models.CharField(_('invitation key'), max_length=40)
     date_invited = models.DateTimeField(_('date invited'), 
-                                        default=datetime.datetime.now)
+                                        default=timezone.now)
     from_user = models.ForeignKey(User, 
                                   related_name='invitations_sent')
     registrant = models.ForeignKey(User, null=True, blank=True, 
@@ -96,7 +97,7 @@ class InvitationKey(models.Model):
         
         """
         expiration_date = datetime.timedelta(days=settings.ACCOUNT_INVITATION_DAYS)
-        return self.date_invited + expiration_date <= datetime.datetime.now()
+        return self.date_invited + expiration_date <= timezone.now()
     key_expired.boolean = True
     
     def mark_used(self, registrant):
