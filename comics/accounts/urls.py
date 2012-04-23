@@ -16,7 +16,10 @@ urlpatterns = patterns('',
 
     url(r'^invite/complete/$',
         direct_to_template,
-        {'template': 'invitation/invitation_complete.html'},
+        {
+            'template': 'invitation/invitation_complete.html',
+            'extra_context': {'active': {'invite': True}},
+        },
         name='invitation_complete'),
     url(r'^invite/$',
         invitation_views.invite,
