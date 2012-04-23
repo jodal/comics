@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+{% load url from future %}
+
+{% block title %}
+  Register
+{% endblock %}
+
+{% block content %}
+
+  <div class="page-header">
+    <h1>Register <small>a new account</small></h1>
+  </div>
+
+  <p>Sorry, but your invitation key, <strong>{{ invitation_key }}</strong>,
+  seems to be invalid.</p>
+
+{% endblock %}

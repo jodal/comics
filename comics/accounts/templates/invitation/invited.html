@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+{% load url from future %}
+
+{% block title %}
+  Register
+{% endblock %}
+
+{% block content %}
+
+  <div class="page-header">
+    <h1>Register <small>a new account</small></h1>
+  </div>
+
+  <p>
+    You have been invited to join {{ site_title }}. If you would like to accept
+    the invitation, please
+    <a href="{% url "registration_register" %}?invitation_key={{ invitation_key }}">
+    click here</a> to sign up.
+  </p>
+
+{% endblock %}
