@@ -18,13 +18,19 @@ urlpatterns = patterns('',
         direct_to_template,
         {
             'template': 'invitation/invitation_complete.html',
-            'extra_context': {'active': {'invite': True}},
+            'extra_context': {'active': {
+                'account': True,
+                'invite': True,
+            }},
         },
         name='invitation_complete'),
     url(r'^invite/$',
         invitation_views.invite,
         {
-            'extra_context': {'active': {'invite': True}},
+            'extra_context': {'active': {
+                'account': True,
+                'invite': True,
+            }},
         },
         name='invitation_invite'),
     url(r'^invited/(?P<invitation_key>\w+)/$',
