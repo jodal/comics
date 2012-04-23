@@ -8,6 +8,10 @@ except ImportError:
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+TEMPLATE_LOADERS = (
+    'django.template.loaders.app_directories.Loader',
+)
+
 try:
     import debug_toolbar  # NOQA
     MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)

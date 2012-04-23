@@ -14,6 +14,7 @@
 
   <form action="{% url "registration_register" %}" method="post" class="form-horizontal">
     {% csrf_token %}
+    <input type="hidden" name="invitation_key" value="{{ invitation_key }}">
 
     {{ form|bootstrap }}
 

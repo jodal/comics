@@ -24,6 +24,10 @@ Version 2.0 refreshes most parts of the *comics* web interface.
 
   - Require a user specific secret key to allow access to feeds.
 
+  - Add support for requiring an invitation to register as a new user. Set the
+    setting ``INVITE_MODE`` to ``True`` to require invitation before
+    registration.
+
 - "My comics":
 
   - Replace named comic sets with user associated comic selections, called "my

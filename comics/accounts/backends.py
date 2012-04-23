@@ -8,13 +8,14 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import RequestSite, Site
 
 from registration import signals
-from registration.backends.default import DefaultBackend
 from registration.models import RegistrationProfile
+
+from invitation.backends import InvitationBackend
 
 from forms import RegistrationForm
 
 
-class RegistrationBackend(DefaultBackend):
+class RegistrationBackend(InvitationBackend):
     """
     Does not require the user to pick a username. Sets the username to a random
     string behind the scenes.

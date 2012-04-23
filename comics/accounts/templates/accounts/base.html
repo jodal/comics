@@ -23,6 +23,9 @@
             <a href="{{ import_named_set_url }}">Import comic set</a>
           </li>
         {% endif %}
+        <li class="{{ active.invite|yesno:"active," }}">
+          <a href="{% url "invitation_invite" %}">Invite a friend</a>
+        </li>
         <li class="divider"></li>
         <li><a href="{% url "auth_logout" %}">Logout</a>
       </ul>
