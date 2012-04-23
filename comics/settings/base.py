@@ -166,7 +166,13 @@ REGISTRATION_BACKEND = 'comics.accounts.backends.RegistrationBackend'
 
 ### django-invitation settings
 
+# Turn invitations off by default, leaving the site open for user registrations
+INVITE_MODE = False
+
+# Number of days an invitation will be valid
 ACCOUNT_INVITATION_DAYS = 7
+
+# Number of invitations each existing user can send
 INVITATIONS_PER_USER = 10
 
 
