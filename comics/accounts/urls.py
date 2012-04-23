@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.conf.urls.defaults import include, patterns, url
+from django.conf.urls.defaults import patterns, url
 from django.contrib.auth import views as auth_views
 from django.views.generic.simple import direct_to_template
 
@@ -28,18 +28,21 @@ urlpatterns = patterns('',
         name='invitation_invited'),
     url(r'^register/$',
         invitation_views.register,
-        { 'backend': 'registration.backends.default.DefaultBackend' },
-        name='registration_register'),
-
-    ### django-registration
-
-    url(r'^register/$',
-        reg_views.register,
         {
             'backend': 'comics.accounts.backends.RegistrationBackend',
             'extra_context': {'active': {'register': True}},
         },
         name='registration_register'),
+
+    ### django-registration
+
+    #url(r'^register/$',
+    #    reg_views.register,
+    #    {
+    #        'backend': 'comics.accounts.backends.RegistrationBackend',
+    #        'extra_context': {'active': {'register': True}},
+    #    },
+    #    name='registration_register'),
     url(r'^register/complete/$',
         direct_to_template,
         {'template': 'registration/registration_complete.html'},
