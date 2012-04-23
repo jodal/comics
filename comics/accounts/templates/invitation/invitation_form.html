@@ -47,4 +47,48 @@
 
   {% endifequal %}
 
+  {% if user.invitations_sent.count %}
+
+    <h2>Sent invitations</h2>
+
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Date sent</th>
+          <th>Invitation key</th>
+          <th>Used by</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for invitation in user.invitations_sent.all %}
+          <tr>
+            <td>
+              {{ invitation.date_invited|date:"Y-m-d" }}
+              {{ invitation.date_invited|time }}
+            </td>
+            <td>
+              {% if invitation.is_usable %}
+                <a href="{% url "invitation_invited" invitation_key=invitation.key %}">
+              {% endif %}
+              {{ invitation.key }}
+              {% if invitation.is_usable %}
+                </a>
+              {% endif %}
+            </td>
+            <td>
+              {% if invitation.registrant %}
+                {{ invitation.registrant.email }}
+              {% elif invitation.key_expired %}
+                <i class="icon-ban-circle"></i> Unused, expired
+              {% elif invitation.is_usable %}
+                <i class="icon-ok-circle"></i> Unused, still valid
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  {% endif %}
+
 {% endblock %}
