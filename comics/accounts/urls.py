@@ -6,7 +6,8 @@ from django.views.generic.simple import direct_to_template
 from invitation import views as invitation_views
 from registration import views as reg_views
 
-from comics.accounts.forms import AuthenticationForm, PasswordResetForm
+from comics.accounts.forms import (AuthenticationForm, PasswordResetForm,
+    RegistrationForm)
 from comics.accounts import views as account_views
 
 urlpatterns = patterns('',
@@ -30,6 +31,7 @@ urlpatterns = patterns('',
         invitation_views.register,
         {
             'backend': 'comics.accounts.backends.RegistrationBackend',
+            'form_class': RegistrationForm,
             'extra_context': {'active': {'register': True}},
         },
         name='registration_register'),
