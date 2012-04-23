@@ -23,7 +23,7 @@ jsmin >= 2.0, < 2.1
 django-registration >= 0.8, < 0.9
 
 # For user invitation
-django-invitation >= 1.0, < 1.1
+-e django-invitation
 
 # For Twitter Bootstrap compatible Django forms
 django-bootstrap-form >= 2.0, < 2.1
