@@ -35,6 +35,9 @@ h4 {
 .release form {
     margin: 0 0 12px;
 }
+.release .meta {
+    margin: 0;
+}
 
 .btn .confirmation,
 .btn .success {
