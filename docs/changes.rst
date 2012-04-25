@@ -79,6 +79,11 @@ v1.1 to v2.0 migration guide
   - Replaced setting ``COMICS_MAX_DAYS_IN_FEED`` with
     ``COMICS_MAX_RELEASES_IN_FEED``.
 
+  - Removed ``COMICS_MEDIA_ROOT`` and ``COMICS_MEDIA_URL``. As static files
+    now are located under ``STATIC_ROOT`` and ``STATIC_URL``, the entire
+    namespace under ``MEDIA_ROOT`` and ``MEDIA_URL`` are now available for
+    downloaded media, like crawled comics.
+
 - Commands:
 
   - ``loadmeta`` is now called ``comics_addcomics``

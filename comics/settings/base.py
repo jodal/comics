@@ -196,12 +196,6 @@ INVITATIONS_PER_USER = 10
 #: Name of the site. Used in page header, page title, feed titles, etc.
 COMICS_SITE_TITLE = 'example.com'
 
-#: Location of the comic images on disk
-COMICS_MEDIA_ROOT = os.path.join(MEDIA_ROOT, 'c')
-
-#: Location of the comic images on the web
-COMICS_MEDIA_URL = MEDIA_URL + 'c/'
-
 #: Maximum number of releases to show on one page
 COMICS_MAX_RELEASES_PER_PAGE = 50
 

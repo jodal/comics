@@ -120,7 +120,7 @@ class Release(models.Model):
 os.umask(0002)
 
 image_storage = FileSystemStorage(
-    location=settings.COMICS_MEDIA_ROOT, base_url=settings.COMICS_MEDIA_URL)
+    location=settings.MEDIA_ROOT, base_url=settings.MEDIA_URL)
 
 
 def image_file_path(instance, filename):

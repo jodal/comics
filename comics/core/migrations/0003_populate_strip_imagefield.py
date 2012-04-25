@@ -14,7 +14,7 @@ class Migration:
         for i, strip in enumerate(orm.Strip.objects.all()):
             print '%s %d/%d' % (strip.checksum, i + 1, total)
             filename = '%s.%s' % (strip.checksum, strip.filename.split('.')[-1])
-            file_path = '%s/%s' % (settings.COMICS_MEDIA_ROOT, strip.filename)
+            file_path = '%s/%s' % (settings.MEDIA_ROOT, strip.filename)
             file_path = os.path.abspath(file_path)
             with open(file_path) as fh:
                 strip.file.save(filename, File(fh))
@@ -32,7 +32,7 @@ class Migration:
                 'date': first_release.pub_date.strftime('%Y-%m-%d'),
                 'ext': strip.file.name.split('.')[-1],
             }
-            file_path = '%s/%s' % (settings.COMICS_MEDIA_ROOT, filename)
+            file_path = '%s/%s' % (settings.MEDIA_ROOT, filename)
             file_path = os.path.abspath(file_path)
             try:
                 os.makedirs(os.path.dirname(file_path))

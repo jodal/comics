@@ -119,8 +119,6 @@ may look like this::
     MEDIA_URL = 'http://comics.example.com/media/'
     STATIC_ROOT = '/var/www/comics.example.com/static/'
     STATIC_URL = 'http://comics.example.com/static/'
-    COMICS_MEDIA_ROOT = '%sc/' % MEDIA_ROOT
-    COMICS_MEDIA_URL = '%sc/' % MEDIA_URL
 
     # Caching
     CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
