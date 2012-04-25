@@ -140,15 +140,16 @@
           {% csrf_token %}
           <input type="hidden" name="comic" value="{{ release.comic.slug }}">
           <button type="submit" name="remove_comic"
-            class="btn btn-danger btn-small mycomics-remove
+            title="Remove from my comics"
+            class="btn btn-small mycomics-remove
               {% if release.comic not in my_comics %}hidden{% endif %}">
             <span class="action">
-              <i class="icon-minus-sign icon-white"></i>
+              <i class="icon-remove"></i>
               Remove
             </span>
             <span class="confirmation">
               <i class="icon-warning-sign icon-white"></i>
-              Click again to really remove this comic
+              Click again to remove from my comics
             </span>
             <span class="success">
               <i class="icon-ok icon-white"></i>
@@ -156,11 +157,12 @@
             </span>
           </button>
           <button type="submit" name="add_comic"
-            class="btn btn-success btn-small mycomics-add
+            title="Add to my comics"
+            class="btn btn-small mycomics-add
               {% if release.comic in my_comics %}hidden{% endif %}">
             <span class="action">
-              <i class="icon-plus-sign icon-white"></i>
-              Add to my comics
+              <i class="icon-plus"></i>
+              Add
             </span>
             <span class="success">
               <i class="icon-ok icon-white"></i>
