@@ -3,7 +3,7 @@ Deployment
 **********
 
 The following example documents *one way* to deploy *comics*. As *comics* is a
-standard Django project with an additional batch job, it may be deployed in
+standard Django project with an additional batch job for , it may be deployed in
 just about any way a Django project may be deployed. Please refer to `Django's
 deployment documentation
 <http://docs.djangoproject.com/en/dev/howto/deployment/>`_ for further details.
@@ -63,6 +63,18 @@ efficient static media serving and caching, you should probably enable
 For details, please refer to the documentation of the `Apache
 <http://httpd.apache.org/docs/>`_ and `mod_wsgi
 <http://code.google.com/p/modwsgi/>`_ projects.
+
+
+Available settings
+==================
+
+The Django docs got a `list of all available settings
+<https://docs.djangoproject.com/en/1.4/ref/settings/>`_. Some of them are
+repeated here if they are especially relevant for *comics*. In addition,
+*comics* adds some settings of its own, which are all listed here as well.
+
+.. automodule:: comics.settings.base
+    :members:
 
 
 Example ``settings/local.py``
@@ -131,7 +143,7 @@ files from all apps into the ``STATIC_ROOT``. To do this, run::
 
 You have to rerun this command every time you deploy changes to graphics, CSS
 and JavaScript. For more details, see the Django documentation on `staticfiles
-<https://docs.djangoproject.com/en/1.3/howto/static-files/>`_.
+<https://docs.djangoproject.com/en/1.4/howto/static-files/>`_.
 
 
 Example cronjob

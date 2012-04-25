@@ -5,6 +5,8 @@ PROJECT_DIR = os.path.abspath(os.path.join(
 
 SECRET_KEY = ''
 
+#: Database settings. You will want to change this for production. See the
+#: Django docs for details.
 DATABASES = {
     'default': {
         'NAME': os.path.abspath(os.path.join(PROJECT_DIR, '..', 'db.sqlite3')),
@@ -12,18 +14,28 @@ DATABASES = {
     }
 }
 
+#: Time zone of the server. Used by Django's time zone support
+#: handling in comics
 TIME_ZONE = 'Europe/Oslo'
+
 LANGUAGE_CODE = 'en-us'
 
 USE_I18N = False
 USE_L10N = True
 USE_TZ = True
 
+#: Path on disk to where downloaded media will be stored and served from
 MEDIA_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, '..', 'media'))
+
+#: URL to where downloaded media will be stored and served from
 MEDIA_URL = '/media/'
 
+#: Path on disk to where static files will be served from
 STATIC_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, '..', 'static'))
+
+#: URL to where static files will be served from
 STATIC_URL = '/static/'
+
 STATICFILES_DIRS = (
     os.path.join(PROJECT_DIR, 'static'),
 )
@@ -125,6 +137,7 @@ CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 DATE_FORMAT = 'l j F Y'
 TIME_FORMAT = 'H:i'
 
+#: Time the user session cookies will be valid. 1 year by default.
 SESSION_COOKIE_AGE = 86400 * 365
 
 WSGI_APPLICATION = 'comics.wsgi.application'
@@ -159,39 +172,43 @@ AUTHENTICATION_BACKENDS = (
 
 ### django-registration settings
 
+#: Number of days an the account activation link will work
 ACCOUNT_ACTIVATION_DAYS = 7
+
 LOGIN_REDIRECT_URL = '/'
 REGISTRATION_BACKEND = 'comics.accounts.backends.RegistrationBackend'
 
 
 ### django-invitation settings
 
-# Turn invitations off by default, leaving the site open for user registrations
+#: Turn invitations off by default, leaving the site open for user registrations
 INVITE_MODE = False
 
-# Number of days an invitation will be valid
+#: Number of days an invitation will be valid
 ACCOUNT_INVITATION_DAYS = 7
 
-# Number of invitations each existing user can send
+#: Number of invitations each existing user can send
 INVITATIONS_PER_USER = 10
 
 
 ### comics settings
 
-# Name of the site. Used in page header, page title, feed titles, etc.
+#: Name of the site. Used in page header, page title, feed titles, etc.
 COMICS_SITE_TITLE = 'example.com'
 
-# Location of the comic images
+#: Location of the comic images on disk
 COMICS_MEDIA_ROOT = os.path.join(MEDIA_ROOT, 'c')
+
+#: Location of the comic images on the web
 COMICS_MEDIA_URL = MEDIA_URL + 'c/'
 
-# Maximum number of releases to show on one page
+#: Maximum number of releases to show on one page
 COMICS_MAX_RELEASES_PER_PAGE = 50
 
-# Maximum number of releases to include in a feed
+#: Maximum number of releases to include in a feed
 COMICS_MAX_RELEASES_IN_FEED = 500
 
-# SHA256 of blacklisted images
+#: SHA256 of blacklisted images
 COMICS_IMAGE_BLACKLIST = (
     # Empty file
     'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
@@ -213,20 +230,25 @@ COMICS_IMAGE_BLACKLIST = (
     '38eca900236617b2c38768c5e5fa410544fea7a3b79cc1e9bd45043623124dbf',
 )
 
-# Comics log file
+#: Comics log file path on disk
 COMICS_LOG_FILENAME = os.path.abspath(
     os.path.join(PROJECT_DIR, '..', 'comics.log'))
 
-# Time zone used for comic crawlers without a specified time zone
-# UTC=0, CET=1, EST=-5, PST=-8
+#: Time zone of the server's clock. Used for comic crawlers without a specified
+#: time zone, and to calculate the offset of other crawlers.
+#:
+#: Examples: UTC=0, CET=1, EST=-5, PST=-8.
+#:
+#: This should be replaced by Django 1.4's time zone support.
 COMICS_DEFAULT_TIME_ZONE = 1
 
-# Google Analytics tracking code
+#: Google Analytics tracking code. Tracking code will be included on all pages
+#: if this is set.
 COMICS_GOOGLE_ANALYTICS_CODE = None
 
-# How many seconds browsers at the latest view of My Comics should wait before
-# they check for new releases again
+#: Number of seconds browsers at the latest view of "My comics" should wait before
+#: they check for new releases again
 COMICS_BROWSER_REFRESH_INTERVAL = 60
 
-# Number of days a new comic on the site is labeled as new
+#: Number of days a new comic on the site is labeled as new
 COMICS_NUM_DAYS_COMIC_IS_NEW = 7
