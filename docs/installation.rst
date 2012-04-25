@@ -1,6 +1,13 @@
-
 Installation
 ************
+
+First of all, *comics* is just a `Django <http://www.djangoproject.org/>`_
+application. Thus, if there are details not outlined in *comics*' own docs,
+you'll probably find the answer in Django's docs. For example, database
+settings are mentioned on this page, but no details are given, as we're just
+talking about Django's database settings. Django got better docs for their
+database settings than we could ever write, so please refer to Django's docs.
+
 
 Software requirements
 =====================
@@ -56,9 +63,12 @@ Get *comics*
 
 You can get hold of *comics* in two ways:
 
-- Download the lastest release from http://github.com/jodal/comics/downloads.
+- Download the lastest release from http://github.com/jodal/comics/tags.
+
 - Get the latest development version of *comics* by cloning the Git
-  repository, by running ``git clone git://github.com/jodal/comics``.
+  repository. You can do so by running::
+
+      git clone git://github.com/jodal/comics
 
 
 Run *comics*
@@ -132,4 +142,4 @@ More options
 All of these commands got more options available. I.e. ``comics_getreleases``
 can crawl specific comics, and arbitrary ranges of dates instead of just
 getting the latest release. Add the ``--help`` argument to any of the commands
-to get a full listing.
+to get a full listing of the available options.
