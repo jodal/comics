@@ -241,7 +241,7 @@ class MyComicsMixin(object):
             self.get_user().comics_profile.secret_key)
 
     def get_feed_title(self):
-        return 'Feed for %s' % self.get_user().email
+        return 'Comics for %s' % self.get_user().email
 
 
 class MyComicsHome(LoginRequiredMixin, RedirectView):
@@ -445,7 +445,7 @@ class OneComicMixin(object):
             self.get_user().comics_profile.secret_key)
 
     def get_feed_title(self):
-        return 'Feed for %s' % self.comic.name
+        return 'Comics from %s' % self.comic.name
 
     def get_first_url(self):
         dates = self.get_queryset().dates('pub_date', 'day')
