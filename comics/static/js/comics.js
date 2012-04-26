@@ -118,7 +118,7 @@ var mycomicsToggler = (function () {
 })();
 
 var newReleaseCheck = (function () {
-    var seconds_before_first_check = 60;
+    var secondsBeforeFirstCheck = 60;
 
     var getLastReleaseId = function () {
         return $('.release').first().data('release-id');
@@ -127,7 +127,9 @@ var newReleaseCheck = (function () {
     var checkForNewReleases = function () {
         var lastReleaseId = getLastReleaseId();
         if (lastReleaseId) {
-            $.get('/my/num-releases-since/' + lastReleaseId + '/', onSuccess);
+            $.get('/my/num-releases-since/' + lastReleaseId + '/')
+                .done(onSuccess)
+                .fail(onFailure);
         }
     };
 
@@ -146,8 +148,12 @@ var newReleaseCheck = (function () {
         }
     };
 
+    var onFailure = function () {
+        setTimeout(checkForNewReleases, secondsBeforeFirstCheck * 1000);
+    };
+
     return function () {
-        setTimeout(checkForNewReleases, seconds_before_first_check * 1000);
+        setTimeout(checkForNewReleases, secondsBeforeFirstCheck* 1000);
     };
 })();
 
