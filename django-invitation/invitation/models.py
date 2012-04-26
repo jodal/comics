@@ -74,6 +74,9 @@ class InvitationKey(models.Model):
                                   related_name='invitations_used')
     
     objects = InvitationKeyManager()
+
+    class Meta:
+        ordering = ['-date_invited']
     
     def __unicode__(self):
         return u"Invitation from %s on %s" % (self.from_user.username, self.date_invited)
