@@ -19,5 +19,7 @@ class Crawler(CrawlerBase):
             if 'Peached' not in entry.tags:
                 continue
             url = entry.content0.src('img[src*="/wp-content/webcomic/"]')
+            url = url.replace('/thumbs', '')
+            url = url.replace('-medium', '')
             title = entry.title
             return CrawlerImage(url, title)
