@@ -149,8 +149,9 @@ Example cronjob
 
 To get new comics, you should run ``comics_getreleases`` regularly. In
 addition, you should run ``cleanup`` once in a while to remove expired user
-sessions from the database. One way is to use ``cron`` e.g. by placing the
-following in ``/etc/cron.d/comics``:
+sessions from the database, and ``cleanupinvitation`` to remove expired user
+invitations. One way is to use ``cron`` e.g. by placing the following in
+``/etc/cron.d/comics``:
 
 .. code-block:: sh
 
@@ -158,6 +159,7 @@ following in ``/etc/cron.d/comics``:
     PYTHONPATH=/path/to/comics
     1 * * * * comics-user python /path/to/comics/manage.py comics_getreleases -v0
     0 3 * * * comics-user python /path/to/comics/manage.py cleanup -v0
+    0 3 * * * comics-user python /path/to/comics/manage.py cleanupinvitation -v0
 
 If you have installed *comics*' dependencies in a virtualenv instead of
 globally, the cronjob must also activate the virtualenv. This can be done by
@@ -169,6 +171,7 @@ using the ``python`` interpreter from the virtualenv:
     PYTHONPATH=/path/to/comics
     1 * * * * comics-user /path/to/comics-virtualenv/bin/python /path/to/comics/manage.py comics_getreleases -v0
     0 3 * * * comics-user /path/to/comics-virtualenv/bin/python /path/to/comics/manage.py cleanup -v0
+    0 3 * * * comics-user /path/to/comics-virtualenv/bin/python /path/to/comics/manage.py cleanupinvitation -v0
 
 By setting ``MAILTO`` any exceptions raised by the comic crawlers will be sent
 by mail to the given mail address. ``1 * * * *`` specifies that the command
