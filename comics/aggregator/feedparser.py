@@ -13,8 +13,8 @@ class FeedParser(object):
 
     def for_date(self, date):
         return [Entry(e, self.encoding) for e in self.raw_feed.entries
-            if e.updated_parsed and
-                datetime.date(*e.updated_parsed[:3]) == date]
+            if e.published_parsed and
+                datetime.date(*e.published_parsed[:3]) == date]
 
     def all(self):
         return [Entry(e, self.encoding) for e in self.raw_feed.entries]
