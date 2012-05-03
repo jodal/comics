@@ -59,7 +59,7 @@ class InvitationKeyManager(models.Manager):
         return invitation_user.invitations_remaining
 
     def delete_expired_keys(self):
-        for key in self.all():
+        for key in self.filter(registrant__isnull=True):
             if key.key_expired():
                 key.delete()
 
