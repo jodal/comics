@@ -63,18 +63,18 @@ var keyboardNavigation = (function () {
 
 var mycomicsToggler = (function () {
     var showConfirmation = function ($button) {
-        $button.css('opacity', 1);
-        $button.find('.action').hide();
+        $button.css('opacity', 1);
+        $button.find('.action').hide();
         $button.find('.confirmation').show();
-        $button.addClass('btn-danger');
+        $button.addClass('btn-danger');
     };
 
     var showSuccess = function ($button) {
-        $button.css('opacity', 1);
-        $button.find('.action').hide();
-        $button.find('.confirmation').hide();
-        $button.find('.success').show();
-        $button
+        $button.css('opacity', 1);
+        $button.find('.action').hide();
+        $button.find('.confirmation').hide();
+        $button.find('.success').show();
+        $button
             .removeClass('btn-danger')
             .addClass('btn-success');
     };
@@ -97,22 +97,22 @@ var mycomicsToggler = (function () {
         removeComic: function (event) {
             event.preventDefault();
             var $button = $(this);
-            if ($button.find('.action:visible').length) {
+            if ($button.find('.action:visible').length) {
                 showConfirmation($button);
-            } else {
+            } else {
                 $button.attr('disabled', 'disabled');
                 var $form = $button.parent('form');
                 var data = $form.serialize() + '&remove_comic=1';
                 $.post($form.attr('action'), data, function () {
                     showSuccess($button);
                     if (isMyComicsPage()) {
-                        var comic = $button.parents('.release').data('comic');
+                        var comic = $button.parents('.release').data('comic');
                         $('.release[data-comic="' + comic + '"]')
                             .slideUp('slow')
                             .children().fadeOut('slow');
                     }
                 });
-            }
+            }
         }
     };
 })();
@@ -153,7 +153,7 @@ var newReleaseCheck = (function () {
     };
 
     return function () {
-        setTimeout(checkForNewReleases, secondsBeforeFirstCheck* 1000);
+        setTimeout(checkForNewReleases, secondsBeforeFirstCheck * 1000);
     };
 })();
 
