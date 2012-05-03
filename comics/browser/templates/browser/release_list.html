@@ -218,17 +218,3 @@
   </div>
 
 {% endblock %}
-
-
-{% block extra_footer %}
-  {{ block.super }}
-
-  {% ifequal object_type 'mycomics' %}
-    {% ifequal view_type 'latest' %}
-      <script type="text/javascript">
-        $(newReleaseCheck);
-      </script>
-    {% endifequal %}
-  {% endifequal %}
-
-{% endblock %}

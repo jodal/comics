@@ -152,8 +152,14 @@ var newReleaseCheck = (function () {
         setTimeout(checkForNewReleases, secondsBeforeFirstCheck * 1000);
     };
 
+    var isPageOneOfMyComicsLatest = function () {
+        return (window.location + '').match(/\/my\/(page1\/)?$/);
+    };
+
     return function () {
-        setTimeout(checkForNewReleases, secondsBeforeFirstCheck * 1000);
+        if (isPageOneOfMyComicsLatest()) {
+            setTimeout(checkForNewReleases, secondsBeforeFirstCheck * 1000);
+        }
     };
 })();
 
@@ -161,4 +167,5 @@ $(function () {
     $(document).keypress(keyboardNavigation);
     $('.mycomics-add').click(mycomicsToggler.addComic);
     $('.mycomics-remove').click(mycomicsToggler.removeComic);
+    newReleaseCheck();
 });
