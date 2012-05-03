@@ -2,7 +2,8 @@
 
 {% load cache %}
 
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-us">
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-us"
+    xml:base="{{ feed.base_url }}">
   <title>{{ feed.title }}</title>
   <link href="{{ feed.web_url }}" rel="alternate"></link>
   <link href="{{ feed.url }}" rel="self"></link>
