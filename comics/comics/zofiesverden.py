@@ -15,5 +15,5 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         url = ('http://www.dagbladet.no/tegneserie/' +
-            'zofiesverdenarkiv/serve.php?' + self.date_to_epoch(pub_date))
+            'zofiesverdenarkiv/serve.php?%d' % self.date_to_epoch(pub_date))
         return CrawlerImage(url)
