@@ -170,8 +170,8 @@ class ReleaseFeedView(ComicMixin, ListView):
         context.update({
             'feed': {
                 'title': self.get_feed_title(),
-                'url': self.get_feed_url(),
-                'web_url': self.get_web_url(),
+                'url': self.request.build_absolute_uri(self.get_feed_url()),
+                'web_url': self.request.build_absolute_uri(self.get_web_url()),
                 'author': self.get_feed_author(),
                 'updated': self.get_last_updated(),
             },
