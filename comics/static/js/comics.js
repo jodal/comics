@@ -43,6 +43,9 @@ var keyboardNavigation = (function () {
     };
 
     return function (event) {
+        if (event.ctrlKey || event.altKey || event.metaKey) {
+            return;
+        }
         if ($('#releases').length) {
             if (event.which == 72 || event.which == 104) { // H or h
                 event.preventDefault();
