@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from django.conf import settings
@@ -72,6 +73,7 @@ class ReleaseMixin(LoginRequiredMixin, ComicMixin):
             'subtitle': self.get_subtitle(),
 
             'latest_url': self.get_latest_url(),
+            'today_url': self.get_today_url(),
             'day_url': self.get_day_url(),
             'month_url': self.get_month_url(),
             'feed_url': self.get_feed_url(),
@@ -96,6 +98,9 @@ class ReleaseMixin(LoginRequiredMixin, ComicMixin):
         return None
 
     def get_latest_url(self):
+        return None
+
+    def get_today_url(self):
         return None
 
     def get_day_url(self):
@@ -217,6 +222,9 @@ class MyComicsMixin(object):
 
     def get_latest_url(self):
         return reverse('mycomics_latest')
+
+    def get_today_url(self):
+        return reverse('mycomics_today')
 
     def get_day_url(self):
         dates = self.get_queryset().dates('pub_date', 'day', 'DESC')
@@ -344,6 +352,18 @@ class MyComicsDayView(MyComicsMixin, ReleaseDayArchiveView):
                 })
 
 
+class MyComicsTodayView(MyComicsDayView):
+    """View of releases from my comics for a given day"""
+
+    allow_empty = True
+    year = str(datetime.date.today().year)
+    month = str(datetime.date.today().month)
+    day = str(datetime.date.today().day)
+
+    def get_view_type(self):
+        return 'today'
+
+
 class MyComicsMonthView(MyComicsMixin, ReleaseMonthArchiveView):
     """View of releases from my comics for a given month"""
 
@@ -419,6 +439,9 @@ class OneComicMixin(object):
 
     def get_latest_url(self):
         return reverse('comic_latest', kwargs={'comic_slug': self.comic.slug})
+
+    def get_today_url(self):
+        return reverse('comic_today', kwargs={'comic_slug': self.comic.slug})
 
     def get_day_url(self):
         dates = self.get_queryset().dates('pub_date', 'day', 'DESC')
@@ -522,6 +545,18 @@ class OneComicDayView(OneComicMixin, ReleaseDayArchiveView):
 
     def get_current_day(self):
         return self.context['day']
+
+
+class OneComicTodayView(OneComicDayView):
+    """View of the releases from a single comic for today"""
+
+    allow_empty = True
+    year = str(datetime.date.today().year)
+    month = str(datetime.date.today().month)
+    day = str(datetime.date.today().day)
+
+    def get_view_type(self):
+        return 'today'
 
 
 class OneComicMonthView(OneComicMixin, ReleaseMonthArchiveView):

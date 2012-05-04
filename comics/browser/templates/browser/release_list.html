@@ -89,10 +89,17 @@
         {% else %}
           <a class="btn disabled">Latest</a>
         {% endif %}
+        {% if today_url %}
+          <a href="{{ today_url }}"
+            class="btn {% ifequal view_type 'today' %}active{% endifequal %}">
+            Today</a>
+        {% else %}
+          <a class="btn disabled">Today</a>
+        {% endif %}
         {% if day_url %}
-        <a href="{{ day_url }}"
-          class="btn {% ifequal view_type 'day' %}active{% endifequal %}">
-          Day</a>
+          <a href="{{ day_url }}"
+            class="btn {% ifequal view_type 'day' %}active{% endifequal %}">
+            Day</a>
         {% else %}
           <a class="btn disabled">Day</a>
         {% endif %}
