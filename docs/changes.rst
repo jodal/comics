@@ -17,6 +17,7 @@ v1.1.5 (in development)
 **Crawlers**
 
 - New: ``chainsawsuit``
+- New: ``goblins``
 - New: ``subnormality``
 - Update: ``applegeeks`` was discontinued a long time ago.
 - Update: ``applegeekslite`` was discontinued a long time ago.
