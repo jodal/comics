@@ -10,7 +10,8 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views.generic import (
-    TemplateView, ListView, DayArchiveView, MonthArchiveView, RedirectView)
+    TemplateView, ListView, RedirectView,
+    DayArchiveView, TodayArchiveView, MonthArchiveView)
 
 from comics.core.models import Comic, Release
 
@@ -153,6 +154,18 @@ class ReleaseDayArchiveView(ReleaseDateMixin, DayArchiveView):
 
     def get_subtitle(self):
         return self.context['day'].strftime('%A %d %B %Y').replace(' 0', ' ')
+
+
+class ReleaseTodayArchiveView(ReleaseDateMixin, TodayArchiveView):
+    """Things common for all *today* views"""
+
+    allow_empty = True
+
+    def get_view_type(self):
+        return 'today'
+
+    def get_subtitle(self):
+        return 'Today'
 
 
 class ReleaseMonthArchiveView(ReleaseDateMixin, MonthArchiveView):
@@ -352,16 +365,10 @@ class MyComicsDayView(MyComicsMixin, ReleaseDayArchiveView):
                 })
 
 
-class MyComicsTodayView(MyComicsDayView):
-    """View of releases from my comics for a given day"""
+class MyComicsTodayView(MyComicsMixin, ReleaseTodayArchiveView):
+    """View of releases from my comics for today"""
 
-    allow_empty = True
-    year = str(datetime.date.today().year)
-    month = str(datetime.date.today().month)
-    day = str(datetime.date.today().day)
-
-    def get_view_type(self):
-        return 'today'
+    pass
 
 
 class MyComicsMonthView(MyComicsMixin, ReleaseMonthArchiveView):
@@ -547,16 +554,11 @@ class OneComicDayView(OneComicMixin, ReleaseDayArchiveView):
         return self.context['day']
 
 
-class OneComicTodayView(OneComicDayView):
+class OneComicTodayView(OneComicMixin, ReleaseTodayArchiveView):
     """View of the releases from a single comic for today"""
 
-    allow_empty = True
-    year = str(datetime.date.today().year)
-    month = str(datetime.date.today().month)
-    day = str(datetime.date.today().day)
-
-    def get_view_type(self):
-        return 'today'
+    def get_current_day(self):
+        return self.context['day']
 
 
 class OneComicMonthView(OneComicMixin, ReleaseMonthArchiveView):
