@@ -9,7 +9,9 @@ from comics.aggregator.lxmlparser import LxmlParser
 class FeedParser(object):
     def __init__(self, url):
         self.raw_feed = feedparser.parse(url)
-        self.encoding = self.raw_feed.encoding or None
+        self.encoding = None
+        if hasattr(self.raw_feed, 'encoding') and self.raw_feed.encoding:
+            self.encoding = self.raw_feed.encoding
 
     def for_date(self, date):
         return [
