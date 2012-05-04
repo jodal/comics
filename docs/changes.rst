@@ -18,6 +18,8 @@ v1.1.5 (in development)
 
 - New: ``chainsawsuit``
 - New: ``subnormality``
+- Update: ``applegeeks`` was discontinued a long time ago.
+- Update: ``applegeekslite`` was discontinued a long time ago.
 - Update: ``calamitesofnature`` has been discontinued.
 - Update: ``duelinganalogs`` was broken due to feed changes.
 - Update: ``fagprat`` has a new schedule.
