@@ -3,6 +3,7 @@ import httplib
 import socket
 import time
 import urllib2
+import xml.sax._exceptions
 
 from django.conf import settings
 from django.utils import timezone
@@ -109,6 +110,8 @@ class CrawlerBase(object):
             raise CrawlerHTTPError(release.identifier, 'BadStatusLine')
         except socket.error, error:
             raise CrawlerHTTPError(release.identifier, error)
+        except xml.sax._exceptions.SAXException, error:
+            raise CrawlerHTTPError(release.identifier, error.message)
 
         if not results:
             return
