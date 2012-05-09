@@ -125,6 +125,7 @@ v1.1.5 (in development)
 - Update: ``fagprat`` has a new schedule.
 - Update: ``fanboys`` was broken due to feed changes.
 - Update: ``heltnils`` has a new schedule.
+- Update: ``hijinksensure`` was broken due to feed changes.
 - Update: ``playervsplayer`` was broken due to feed changes.
 - Update: ``pondus`` was broken due to a site change.
 - Update: ``savagechickens`` has a new schedule.
