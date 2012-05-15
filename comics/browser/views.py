@@ -422,11 +422,11 @@ class MyComicsYearView(LoginRequiredMixin, RedirectView):
 class MyComicsFeed(MyComicsMixin, ReleaseFeedView):
     """Atom feed for releases from my comics"""
 
-    paginate_by = settings.COMICS_MAX_RELEASES_IN_FEED
-
     def get_queryset(self):
+        from_date = datetime.date.today() - datetime.timedelta(
+            days=settings.COMICS_MAX_DAYS_IN_FEED)
         releases = super(MyComicsFeed, self).get_queryset()
-        return releases.order_by('-fetched')
+        return releases.filter(fetched__gte=from_date).order_by('-fetched')
 
 
 class OneComicMixin(object):
@@ -621,11 +621,11 @@ class OneComicYearView(LoginRequiredMixin, RedirectView):
 class OneComicFeed(OneComicMixin, ReleaseFeedView):
     """Atom feed for releases of a single comic"""
 
-    paginate_by = settings.COMICS_MAX_RELEASES_IN_FEED
-
     def get_queryset(self):
+        from_date = datetime.date.today() - datetime.timedelta(
+            days=settings.COMICS_MAX_DAYS_IN_FEED)
         releases = super(OneComicFeed, self).get_queryset()
-        return releases.order_by('-fetched')
+        return releases.filter(fetched__gte=from_date).order_by('-fetched')
 
 
 class OneComicWebsiteRedirect(LoginRequiredMixin, ComicMixin, TemplateView):

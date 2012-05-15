@@ -199,8 +199,8 @@ COMICS_SITE_TITLE = 'example.com'
 #: Maximum number of releases to show on one page
 COMICS_MAX_RELEASES_PER_PAGE = 50
 
-#: Maximum number of releases to include in a feed
-COMICS_MAX_RELEASES_IN_FEED = 500
+#: Maximum number of days to show in a feed
+COMICS_MAX_DAYS_IN_FEED = 30
 
 #: SHA256 of blacklisted images
 COMICS_IMAGE_BLACKLIST = (
