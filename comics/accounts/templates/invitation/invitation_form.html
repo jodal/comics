@@ -78,6 +78,9 @@
             <td>
               {% if invitation.registrant %}
                 {{ invitation.registrant.email }}
+                {% if not invitation.registrant.is_active %}
+                  (not verified)
+                {% endif %}
               {% elif invitation.key_expired %}
                 <i class="icon-ban-circle"></i> Unused, expired
               {% elif invitation.is_usable %}
