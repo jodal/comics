@@ -105,12 +105,14 @@ running::
 Seed database
 -------------
 
-Then we need to seed the database with information on what comics exist::
+Then we need to seed the database with information on what comics to crawl.
+E.g. to add the *XKCD* comic from ``comics/comics/comics/xkcd.py``, run::
 
-    python manage.py comics_addcomics
+    python manage.py comics_addcomics -c xkcd
 
-Optionally, you can add ``-c xkcd`` to only load the *XKCD* comic from
-``comics/comics/comics/xkcd.py``.
+Optionally, you can add all available active comics to the database::
+
+    python manage.py comics_addcomics -c all
 
 
 Get some comic releases

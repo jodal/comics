@@ -76,6 +76,9 @@ class ComicDataLoader(object):
     def _get_comic_slugs(self, options):
         comic_slugs = options.get('comic_slugs', None)
         if comic_slugs is None or len(comic_slugs) == 0:
+            logger.error('No comic given. Use -c option to specify comic(s).')
+            return []
+        elif 'all' in comic_slugs:
             logger.debug('Load targets: all comics')
             return get_comic_module_names()
         else:

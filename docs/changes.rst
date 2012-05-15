@@ -83,7 +83,9 @@ v1.1 to v2.0 migration guide
 
 - Commands:
 
-  - ``loadmeta`` is now called ``comics_addcomics``
+  - ``loadmeta`` is now called ``comics_addcomics``. It no longer defaults to
+    adding all comics to your installation, but you must now specify ``-c all``
+    to do so.
 
   - ``getcomics`` is now called ``comics_getreleases``
 
