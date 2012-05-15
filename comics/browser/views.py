@@ -159,8 +159,6 @@ class ReleaseDayArchiveView(ReleaseDateMixin, DayArchiveView):
 class ReleaseTodayArchiveView(ReleaseDateMixin, TodayArchiveView):
     """Things common for all *today* views"""
 
-    allow_empty = True
-
     def get_view_type(self):
         return 'today'
 
@@ -368,7 +366,7 @@ class MyComicsDayView(MyComicsMixin, ReleaseDayArchiveView):
 class MyComicsTodayView(MyComicsMixin, ReleaseTodayArchiveView):
     """View of releases from my comics for today"""
 
-    pass
+    allow_empty = True
 
 
 class MyComicsMonthView(MyComicsMixin, ReleaseMonthArchiveView):
@@ -448,7 +446,11 @@ class OneComicMixin(object):
         return reverse('comic_latest', kwargs={'comic_slug': self.comic.slug})
 
     def get_today_url(self):
-        return reverse('comic_today', kwargs={'comic_slug': self.comic.slug})
+        dates = self.get_queryset().dates('pub_date', 'day', 'DESC')
+        dates = [date.date() for date in dates]
+        if datetime.date.today() in dates:
+            return reverse('comic_today',
+                kwargs={'comic_slug': self.comic.slug})
 
     def get_day_url(self):
         dates = self.get_queryset().dates('pub_date', 'day', 'DESC')
