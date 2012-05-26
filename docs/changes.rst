@@ -47,6 +47,10 @@ Version 2.0 refreshes most parts of the *comics* web interface.
   - Reimplemented lots of crusty old code using Django's class-based generic
     views.
 
+- Comics crawling:
+
+  - Blacklisted the GoComics placeholder image.
+
 - Development:
 
   - The WSGI file is now also used when using Django's ``runserver`` command
