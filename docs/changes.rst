@@ -6,6 +6,15 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
+v1.1.6 (in development)
+=======================
+
+**Crawlers**
+
+- Update: `dieselsweetiesweb` to be more robust to missing elements in the
+  feed.
+
+
 v1.1.5 (2012-05-09)
 ===================
 
