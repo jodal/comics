@@ -64,6 +64,9 @@ h4 {
 #cloud .badges .label {
     margin-left: 3px;
 }
+#cloud .following {
+    font-weight: bold;
+}
 #cloud .inactive {
     opacity: 0.4;
 }
