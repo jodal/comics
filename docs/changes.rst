@@ -111,6 +111,12 @@ v1.1 to v2.0 migration guide
 v1.1.6 (in development)
 =======================
 
+**Bugfixes**
+
+- :meth:`LxmlParser.text()` now returns an empty list if :attr:`allow_multiple`
+  is :class:`True` and :attr:`default` is not specified. This is identical to
+  how all other :class:`LxmlParser` selector methods already work.
+
 **Crawlers**
 
 - Update: `dieselsweetiesweb` to be more robust to missing elements in the

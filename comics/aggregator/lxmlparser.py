@@ -44,6 +44,8 @@ class LxmlParser(object):
             else:
                 return self._decode(self._select(selector).text_content())
         except DoesNotExist:
+            if allow_multiple and default is None:
+                return []
             return default
 
     def remove(self, selector):
