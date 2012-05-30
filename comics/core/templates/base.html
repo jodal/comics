@@ -89,7 +89,7 @@
                       <div class="span3">
                         <ul class="unstyled">
                           {% for comic in comic_column %}
-                            <li class="{% if not comic.active %}inactive{% endif %}{% if comic in my_comics %} following{% endif %}">
+                            <li class="{% if not comic.active %}inactive{% endif %}{% if comic in my_comics %} subscribed{% endif %}">
                               <div class="badges">
                                 {% if not comic.active %}
                                   <span class="label">Inactive</span>
@@ -98,7 +98,7 @@
                                   <span class="label label-info">New</span>
                                 {% endif %}
                                 {% if comic in my_comics %}
-                                  <span class="label label-inverse">Following</span>
+                                  <span class="label label-inverse">Subscribed</span>
                                 {% endif %}
                               </div>
                               <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
