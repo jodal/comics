@@ -111,6 +111,7 @@ v1.1 to v2.0 migration guide
   their new user accounts. Add the following to your local settings file,
   ``comics/settings/local.py``::
 
+      from comics.settings.base import INSTALLED_APPS
       INSTALLED_APPS += ('comics.sets',)
 
 - Renamed :class:`MetaBase` to :class:`ComicDataBase`, and moved it to
