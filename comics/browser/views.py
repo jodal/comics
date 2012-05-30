@@ -368,6 +368,15 @@ class MyComicsTodayView(MyComicsMixin, ReleaseTodayArchiveView):
 
     allow_empty = True
 
+    def get_prev_url(self):
+        prev_date = self.get_previous_day(self.context['day'])
+        if prev_date:
+            return reverse('mycomics_day', kwargs={
+                'year': prev_date.year,
+                'month': prev_date.month,
+                'day': prev_date.day,
+            })
+
 
 class MyComicsMonthView(MyComicsMixin, ReleaseMonthArchiveView):
     """View of releases from my comics for a given month"""
