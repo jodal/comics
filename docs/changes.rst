@@ -104,6 +104,15 @@ v1.1 to v2.0 migration guide
     ``comics/wsgi/__init__.py`` to follow the new default structure in Django
     1.4. Remember to update your web server configuration.
 
+- As the comic sets functionality have been replaced, the app ``comics.sets``
+  is no longer activated by default. If you're upgrading from comics v1.x and
+  have existing sets in your database, you *should* activate the
+  ``comics.sets`` app so that your users may import their old comic sets into
+  their new user accounts. Add the following to your local settings file,
+  ``comics/settings/local.py``::
+
+      INSTALLED_APPS += ('comics.sets',)
+
 - Renamed :class:`MetaBase` to :class:`ComicDataBase`, and moved it to
   :mod:`comics.core.comic_data`. Remember to update any custom crawlers.
 

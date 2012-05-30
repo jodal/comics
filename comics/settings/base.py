@@ -91,7 +91,6 @@ INSTALLED_APPS = (
     'comics.aggregator',
     'comics.browser',
     'comics.help',
-    'comics.sets',
     'comics.status',
 )
 
