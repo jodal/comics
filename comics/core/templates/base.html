@@ -91,6 +91,9 @@
                           {% for comic in comic_column %}
                             <li class="{% if not comic.active %}inactive{% endif %}">
                               <div class="badges">
+                                {% if not comic.active %}
+                                  <span class="label">Inactive</span>
+                                {% endif %}
                                 {% if comic.is_new %}
                                   <span class="label label-info">New</span>
                                 {% endif %}
