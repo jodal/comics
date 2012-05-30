@@ -45,7 +45,7 @@ h4 {
 }
 
 #cloud {
-    margin-bottom: 20px;
+    margin-bottom: 50px;
 }
 #cloud .page-header {
     margin-top: 40px;
@@ -56,6 +56,16 @@ h4 {
 }
 #cloud .inactive a {
     color: #c0c0c0;
+}
+#cloud li {
+    border-bottom: 1px solid #f5f5f5;
+    padding: 3px 0;
+}
+#cloud .badges {
+    float: right;
+}
+#cloud .badges .label {
+    margin-left: 3px;
 }
 
 #feedback textarea {

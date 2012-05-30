@@ -87,12 +87,14 @@
                   <div class="row">
                     {% for comic_column in comic_columns %}
                       <div class="span3">
-                        <ul>
+                        <ul class="unstyled">
                           {% for comic in comic_column %}
-                            <li class="{% if comic.active %}active{% else %}inactive{% endif %}">
-                              {% if comic.is_new %}
-                                <span class="label label-info">New</span>&nbsp;
-                              {% endif %}
+                            <li class="{% if not comic.active %}inactive{% endif %}">
+                              <div class="badges">
+                                {% if comic.is_new %}
+                                  <span class="label label-info">New</span>
+                                {% endif %}
+                              </div>
                               <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
                             </li>
                           {% endfor %}
