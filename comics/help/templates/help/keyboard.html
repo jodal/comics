@@ -2,7 +2,7 @@
 
 
 {% block title %}
-  Keyboard navigation
+  Keyboard shortcuts 
 {% endblock %}
 
 
@@ -18,34 +18,7 @@
   <div class="row">
     <div class="span4">
 
-      <h3>Comics browsing</h3>
-
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Shortcut</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>h</code></td>
-            <td>Go to the previous page</td>
-          </tr>
-          <tr>
-            <td><code>j</code></td>
-            <td>Go to the comic below</td>
-          </tr>
-          <tr>
-            <td><code>k</code></td>
-            <td>Go to the comic above</td>
-          </tr>
-          <tr>
-            <td><code>l</code></td>
-            <td>Go to the next page</td>
-          </tr>
-        </tbody>
-      </table>
+      {% include "help/keyboard_content.html" %}
 
     </div>
   </div>

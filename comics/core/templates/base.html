@@ -130,6 +130,16 @@
 
     </div>
 
+    <div class="keyboard-shortcuts modal hide">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Keyboard shortcuts</h3>
+      </div>
+      <div class="modal-body">
+        {% include "help/keyboard_content.html" %}
+      </div>
+    </div>
+
     {% block extra_footer %}
       {{ block.super }}
       {% compress js %}

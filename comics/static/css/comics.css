@@ -19,6 +19,9 @@ body {
 h3 {
     margin: 20px 0 10px;
 }
+.modal h3 {
+    margin: 0;
+}
 h3 a:hover {
     text-decoration: none;
 }
