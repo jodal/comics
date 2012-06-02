@@ -14,9 +14,8 @@ DATABASES = {
     }
 }
 
-#: Time zone of the server. Used by Django's time zone support
-#: handling in comics
-TIME_ZONE = 'Europe/Oslo'
+#: Default time zone to use when displaying datetimes to users
+TIME_ZONE = 'UTC'
 
 LANGUAGE_CODE = 'en-us'
 
