@@ -63,8 +63,7 @@
         {% for invitation in user.invitations_sent.all %}
           <tr>
             <td>
-              {{ invitation.date_invited|date:"Y-m-d" }}
-              {{ invitation.date_invited|time }}
+              {{ invitation.date_invited|date:"Y-m-d H:i e" }}
             </td>
             <td>
               {% if invitation.is_usable %}

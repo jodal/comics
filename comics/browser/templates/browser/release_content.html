@@ -35,6 +35,6 @@
     {% endifnotequal %}
   {% endwith %}
   {% endcomment %}
-  Retrieved at {{ release.fetched|time }}, {{ release.fetched|date }} from
+  Retrieved at {{ release.fetched|date:"Y-m-d H:i e" }} from
   <a href="{{ release.comic.get_redirect_url }}">{{ release.comic.url }}</a>.
 </p>
