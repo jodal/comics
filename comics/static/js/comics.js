@@ -138,6 +138,14 @@ var mycomicsEditor = (function () {
     };
 })();
 
+var fullSizeToggler = function () {
+    if ($('img', this).css('max-width') !== 'none') {
+        $('img', this).css('max-width', 'none');
+    } else {
+        $('img', this).css('max-width', '100%');
+    }
+};
+
 var newReleaseCheck = (function () {
     var secondsBeforeFirstCheck = 60;
 
@@ -190,5 +198,6 @@ $(function () {
     $('.mycomics-remove').click(mycomicsToggler.removeComic);
     $('.mycomics-edit').click(mycomicsEditor.edit);
     $('.mycomics-cancel').click(mycomicsEditor.cancel);
+    $('.release .image').click(fullSizeToggler);
     newReleaseCheck();
 });
