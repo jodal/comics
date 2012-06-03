@@ -146,6 +146,7 @@
           class="pull-right mycomics-toggle">
           {% csrf_token %}
           <input type="hidden" name="comic" value="{{ release.comic.slug }}">
+{% comment %}
           <button type="submit" name="remove_comic"
             title="Remove from my comics"
             class="btn btn-small mycomics-remove
@@ -163,17 +164,18 @@
               Removed
             </span>
           </button>
+{% endcomment %}
           <button type="submit" name="add_comic"
             title="Add to my comics"
-            class="btn btn-small mycomics-add
+            class="btn mycomics-add
               {% if release.comic in my_comics %}hidden{% endif %}">
             <span class="action">
               <i class="icon-plus"></i>
-              Add
+              Add to my comics
             </span>
             <span class="success">
               <i class="icon-ok icon-white"></i>
-              Added
+              Added to my comics
             </span>
           </button>
         </form>
