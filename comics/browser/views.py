@@ -66,7 +66,7 @@ class ReleaseMixin(LoginRequiredMixin, ComicMixin):
         return {
             'my_comics': self.get_my_comics(),
 
-            'active': {'home': True},
+            'active': {'comics': True},
             'object_type': self.get_object_type(),
             'view_type': self.get_view_type(),
 

@@ -28,10 +28,10 @@
               {% block site_menu %}
                 <ul class="nav">
                 {% if user.is_authenticated %}
-                  <li class="{{ active.home|yesno:"active," }}" >
-                    <a href="{% url "home" %}">
-                      <i class="icon-home"></i>
-                      Home</a>
+                  <li class="{{ active.comics|yesno:"active," }}" >
+                    <a href="{% url "mycomics_latest" %}">
+                      <i class="icon-th-large"></i>
+                      Comics</a>
                   </li>
                   <li class="{{ active.account|yesno:"active," }}" >
                     <a href="{% url "account" %}">
