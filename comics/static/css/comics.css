@@ -61,13 +61,14 @@ h4 {
     border-bottom: 1px solid #f5f5f5;
     padding: 3px 0;
 }
-#cloud .badges {
-    float: right;
+#cloud label {
+    margin-bottom: 0;
 }
-#cloud .badges .label {
+#cloud .label {
     margin-left: 3px;
 }
-#cloud .subscribed {
+#cloud .subscribed,
+#cloud .subscribed label {
     font-weight: bold;
 }
 #cloud .inactive {

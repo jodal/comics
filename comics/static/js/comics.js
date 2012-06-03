@@ -124,6 +124,20 @@ var mycomicsToggler = (function () {
     };
 })();
 
+var mycomicsEditor = (function () {
+    return {
+        edit: function (event) {
+            event.preventDefault();
+            $('#cloud .edit-view').show();
+            $('#cloud .show-view').hide();
+        },
+        cancel: function (event) {
+            $('#cloud .show-view').show();
+            $('#cloud .edit-view').hide();
+        }
+    };
+})();
+
 var newReleaseCheck = (function () {
     var secondsBeforeFirstCheck = 60;
 
@@ -174,5 +188,7 @@ $(function () {
     $(document).keypress(keyboardNavigation);
     $('.mycomics-add').click(mycomicsToggler.addComic);
     $('.mycomics-remove').click(mycomicsToggler.removeComic);
+    $('.mycomics-edit').click(mycomicsEditor.edit);
+    $('.mycomics-cancel').click(mycomicsEditor.cancel);
     newReleaseCheck();
 });
