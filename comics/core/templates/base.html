@@ -24,7 +24,11 @@
         <div class="navbar navbar-fixed-top">
           <div class="navbar-inner">
             <div class="container">
-              <a class="brand" href="{% url "home" %}">{{ site_title }}</a>
+              {% if user.is_authenticated %}
+                <a class="brand" href="{% url "mycomics_latest" %}">{{ site_title }}</a>
+              {% else %}
+                <a class="brand" href="{% url "home" %}">{{ site_title }}</a>
+              {% endif %}
               {% block site_menu %}
                 <ul class="nav">
                 {% if user.is_authenticated %}
