@@ -39,7 +39,7 @@ def secret_key(request):
 
 @login_required
 def mycomics_toggle_comic(request):
-    """Add to or remove from comic to the current user's set"""
+    """Change a single comic in My comics"""
 
     if request.method != 'POST':
         response = HttpResponse(status=405)
@@ -64,8 +64,39 @@ def mycomics_toggle_comic(request):
 
 
 @login_required
+def mycomics_edit_comics(request):
+    """Change multiple comics in My comics"""
+
+    if request.method != 'POST':
+        response = HttpResponse(status=405)
+        response['Allowed'] = 'POST'
+        return response
+
+    my_comics = request.user.comics_profile.comics.all()
+
+    for comic in my_comics:
+        if comic.slug not in request.POST:
+            request.user.comics_profile.comics.remove(comic)
+            if not request.is_ajax():
+                messages.info(request, 'Removed "%s" from my comics' % comic.name)
+
+    for comic in Comic.objects.all():
+        if comic.slug in request.POST and comic not in my_comics:
+            request.user.comics_profile.comics.add(comic)
+            if not request.is_ajax():
+                messages.info(request, 'Added "%s" to my comics' % comic.name)
+
+    if request.is_ajax():
+        return HttpResponse(status=204)
+    elif 'HTTP_REFERER' in request.META:
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    else:
+        return HttpResponseRedirect(reverse('mycomics_latest'))
+
+
+@login_required
 def mycomics_import_named_set(request):
-    """Import comics from a named set into the current user's set"""
+    """Import comics from a named set into My comics"""
 
     if request.method == 'POST':
         try:

@@ -137,6 +137,9 @@ urlpatterns = patterns('',
 
     url(r'^toggle-comic/$',
         account_views.mycomics_toggle_comic, name='toggle_comic'),
+
+    url(r'^edit-comics/$',
+        account_views.mycomics_edit_comics, name='edit_comics'),
 )
 
 if 'comics.sets' in settings.INSTALLED_APPS:
