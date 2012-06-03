@@ -5,10 +5,16 @@
   {% endif %}
 
   <p class="image">
+    {% if image.width > 1130 %}
+      <a href="{{ image.file.url }}" title="View full size">
+    {% endif %}
     <img src="{{ image.file.url }}"
       height="{{ image.height }}" width="{{ image.width }}"
       alt="{{ release }}"
       {% if image.text %}title="{{ image.text|escape }}"{% endif %}>
+    {% if image.width > 1130 %}
+      </a>
+    {% endif %}
   </p>
 
   {% if image.text %}
