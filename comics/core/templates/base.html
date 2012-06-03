@@ -1,4 +1,4 @@
-{% load cache compress list_to_columns static %}
+{% load cache compress static %}
 {% load url from future %}
 <!DOCTYPE html>
 
@@ -76,54 +76,7 @@
         </div>
 
         <div id="cloud">
-          {% block cloud %}
-            {% if user.is_authenticated %}
-              {% with user.comics_profile.comics.all as my_comics %}
-                <div class="page-header">
-                  <h3>All comics</h3>
-                </div>
-                {% if all_comics %}
-                  {% list_to_columns all_comics as comic_columns 4 %}
-                  <div class="row">
-                    {% for comic_column in comic_columns %}
-                      <div class="span3">
-                        <ul class="unstyled">
-                          {% for comic in comic_column %}
-                            <li class="{% if not comic.active %}inactive{% endif %}{% if comic in my_comics %} subscribed{% endif %}">
-                              <div class="badges">
-                                {% if not comic.active %}
-                                  <span class="label">Inactive</span>
-                                {% endif %}
-                                {% if comic.is_new %}
-                                  <span class="label label-info">New</span>
-                                {% endif %}
-                                {% if comic in my_comics %}
-                                  <span class="label label-inverse">Subscribed</span>
-                                {% endif %}
-                              </div>
-                              <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
-                            </li>
-                          {% endfor %}
-                        </ul>
-                      </div>
-                    {% endfor %}
-                  {% else %}
-                    <div class="alert alert-info">
-                      <strong>No comics found in the database.</strong>
-                    </div>
-
-                    {% if user.is_superuser %}
-                      <div class="alert alert-error">
-                        <strong>To the site admin:</strong>
-                        You can add comics to the site by running:
-                        <code>python manage.py comics_addcomics -c ...</code>
-                      </div>
-                    {% endif %}
-                  {% endif %}
-                </div>
-              {% endwith %}
-            {% endif %}
-          {% endblock cloud %}
+          {% block cloud %}{% endblock %}
         </div>
 
       {% endblock body %}
