@@ -133,7 +133,7 @@ class ReleaseLatestView(ReleaseMixin, ListView):
     """Things common for all *latest* views"""
 
     def get_subtitle(self):
-        return 'Latest'
+        return 'Latest releases'
 
     def get_view_type(self):
         return 'latest'
