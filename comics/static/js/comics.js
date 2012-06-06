@@ -46,12 +46,11 @@ var keyboardNavigation = (function () {
         if (event.ctrlKey || event.altKey || event.metaKey) {
             return;
         }
-        if (event.which === 63) {
-            event.preventDefault();
-            $('.keyboard-shortcuts.modal').modal();
-        }
         if ($('#releases').length) {
-            if (event.which === 72 || event.which === 104) { // H or h
+            if (event.which === 63) { // ?
+                event.preventDefault();
+                $('.keyboard-shortcuts.modal').modal();
+            } else if (event.which === 72 || event.which === 104) { // H or h
                 event.preventDefault();
                 goToPreviousPage();
             } else if (event.which === 74 || event.which === 106) { // J or j
