@@ -560,8 +560,8 @@ class OneComicLatestView(OneComicMixin, ReleaseLatestView):
     paginate_by = 1
 
     def get_queryset(self):
-        release = super(OneComicLatestView, self).get_queryset()
-        return release.order_by('-fetched')
+        releases = super(OneComicLatestView, self).get_queryset()
+        return releases.order_by('-fetched')
 
     def get_current_day(self):
         try:
@@ -578,7 +578,7 @@ class OneComicLatestView(OneComicMixin, ReleaseLatestView):
             pass
 
     def get_next_day(self, day):
-        return None  # Nothing is newer than 'latest'
+        pass  # Nothing is newer than 'latest'
 
 
 class OneComicDayView(OneComicMixin, ReleaseDayArchiveView):
