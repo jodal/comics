@@ -66,11 +66,11 @@ class Comic(models.Model):
 class Release(models.Model):
     # Required fields
     comic = models.ForeignKey(Comic)
-    pub_date = models.DateField(verbose_name='publication date')
+    pub_date = models.DateField(verbose_name='publication date', db_index=True)
     images = models.ManyToManyField('Image', related_name='releases')
 
     # Automatically populated fields
-    fetched = models.DateTimeField(auto_now_add=True)
+    fetched = models.DateTimeField(auto_now_add=True, db_index=True)
 
     class Meta:
         db_table = 'comics_release'
