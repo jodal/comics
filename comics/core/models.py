@@ -2,10 +2,10 @@ import datetime
 import os
 
 from django.conf import settings
-from django.db import models
+from django.core.cache import cache
 from django.core.files.storage import FileSystemStorage
 from django.core.urlresolvers import reverse
-from django.core.cache import cache
+from django.db import models
 from django.utils import timezone
 
 from comics.core.managers import ComicManager
@@ -38,7 +38,7 @@ class Comic(models.Model):
     rights = models.CharField(max_length=100, blank=True,
         help_text='Author, copyright, and/or licensing information')
 
-    # Automatically populated fields (i.e. for denormalization)
+    # Automatically populated fields
     added = models.DateTimeField(auto_now_add=True,
         help_text='Time the comic was added to the site')
 
@@ -61,6 +61,7 @@ class Comic(models.Model):
         some_time_ago = timezone.now() - datetime.timedelta(
             days=settings.COMICS_NUM_DAYS_COMIC_IS_NEW)
         return self.added > some_time_ago
+
 
 class Release(models.Model):
     # Required fields
