@@ -39,6 +39,8 @@ class Comic(models.Model):
         help_text='Author, copyright, and/or licensing information')
 
     # Automatically populated fields (i.e. for denormalization)
+    added = models.DateTimeField(auto_now_add=True,
+        help_text='Time the comic was added to the site')
 
     objects = ComicManager()
 
@@ -56,14 +58,9 @@ class Comic(models.Model):
         return reverse('comic_website', kwargs={'comic_slug': self.slug})
 
     def is_new(self):
-        first_release = self.release_set.all().order_by('fetched')[:1]
-        if not first_release:
-            return False
-        first_release = first_release[0]
         some_time_ago = timezone.now() - datetime.timedelta(
             days=settings.COMICS_NUM_DAYS_COMIC_IS_NEW)
-        return first_release.fetched > some_time_ago
-
+        return self.added > some_time_ago
 
 class Release(models.Model):
     # Required fields

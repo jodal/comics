@@ -123,6 +123,9 @@ v1.1 to v2.0 migration guide
     If you would want to rollback from 2.x to 1.x the data in this field can be
     regenerated, as it's only a denormalization of data available elsewhere.
 
+  - The datetime field `Comic.added` has been added. It is automatically
+    populated with a date in the far past upon database migration.
+
 
 v1.1.6 (in development)
 =======================
