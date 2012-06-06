@@ -286,83 +286,81 @@
 
 
 {% block cloud %}
-  {% with user.comics_profile.comics.all as my_comics %}
-    <form action="{% url "edit_comics" %}" method="post">
-      {% csrf_token %}
+  <form action="{% url "edit_comics" %}" method="post">
+    {% csrf_token %}
 
-      <div class="page-header">
-        <div class="pull-right">
-          <div class="show-view">
-            <button type="button" class="btn mycomics-edit">
-              <i class="icon-pencil"></i>
-              Change subscriptions
-            </button>
-          </div>
-          <div class="edit-view hide">
-            <button type="reset" class="btn mycomics-cancel">
-              Cancel
-            </button>
-            &nbsp;
-            <button type="submit" class="btn btn-primary">
-              <i class="icon-ok icon-white"></i>
-              Save changes
-            </button>
-          </div>
+    <div class="page-header">
+      <div class="pull-right">
+        <div class="show-view">
+          <button type="button" class="btn mycomics-edit">
+            <i class="icon-pencil"></i>
+            Change subscriptions
+          </button>
         </div>
-        <h2>All comics <small>aggregated by {{ site_title }}</small></h2>
+        <div class="edit-view hide">
+          <button type="reset" class="btn mycomics-cancel">
+            Cancel
+          </button>
+          &nbsp;
+          <button type="submit" class="btn btn-primary">
+            <i class="icon-ok icon-white"></i>
+            Save changes
+          </button>
+        </div>
       </div>
+      <h2>All comics <small>aggregated by {{ site_title }}</small></h2>
+    </div>
 
-      {% if all_comics %}
-        {% list_to_columns all_comics as comic_columns 4 %}
-        <div class="row">
+    {% if all_comics %}
+      {% list_to_columns all_comics as comic_columns 4 %}
+      <div class="row">
 
-          {% for comic_column in comic_columns %}
-            <div class="span3">
-              <ul class="unstyled">
-                {% for comic in comic_column %}
-                  <li class="{% if not comic.active %}inactive{% endif %}{% if comic in my_comics %} subscribed{% endif %}">
-                    <div class="pull-right">
-                      {% if not comic.active %}
-                        <span class="label">Inactive</span>
-                      {% endif %}
-                      {% if comic.is_new %}
-                        <span class="label label-info">New</span>
-                      {% endif %}
-                      {% if comic in my_comics %}
-                        <span class="label label-inverse">Subscribed</span>
-                      {% endif %}
-                    </div>
-                    <div class="show-view">
-                      <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
-                    </div>
-                    <div class="edit-view hide">
-                      <label class="checkbox">
-                        <input type="checkbox" name="{{ comic.slug }}"
-                          {% if comic in my_comics %}checked="checked"{% endif %}>
-                        {{ comic.name }}
-                      </label>
-                    </div>
-                  </li>
-                {% endfor %}
-              </ul>
-            </div>
-          {% endfor %}
-
-        </div>
-      {% else %}
-
-        <div class="alert alert-info">
-          <strong>No comics found in the database.</strong>
-        </div>
-        {% if user.is_superuser %}
-          <div class="alert alert-error">
-            <strong>To the site admin:</strong>
-            You can add comics to the site by running:
-            <code>python manage.py comics_addcomics -c ...</code>
+        {% for comic_column in comic_columns %}
+          <div class="span3">
+            <ul class="unstyled">
+              {% for comic in comic_column %}
+                <li class="{% if not comic.active %}inactive{% endif %}{% if comic in my_comics %} subscribed{% endif %}">
+                  <div class="pull-right">
+                    {% if not comic.active %}
+                      <span class="label">Inactive</span>
+                    {% endif %}
+                    {% if comic.is_new %}
+                      <span class="label label-info">New</span>
+                    {% endif %}
+                    {% if comic in my_comics %}
+                      <span class="label label-inverse">Subscribed</span>
+                    {% endif %}
+                  </div>
+                  <div class="show-view">
+                    <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
+                  </div>
+                  <div class="edit-view hide">
+                    <label class="checkbox">
+                      <input type="checkbox" name="{{ comic.slug }}"
+                        {% if comic in my_comics %}checked="checked"{% endif %}>
+                      {{ comic.name }}
+                    </label>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
           </div>
-        {% endif %}
+        {% endfor %}
 
+      </div>
+    {% else %}
+
+      <div class="alert alert-info">
+        <strong>No comics found in the database.</strong>
+      </div>
+      {% if user.is_superuser %}
+        <div class="alert alert-error">
+          <strong>To the site admin:</strong>
+          You can add comics to the site by running:
+          <code>python manage.py comics_addcomics -c ...</code>
+        </div>
       {% endif %}
-    </form>
-  {% endwith %}
+
+    {% endif %}
+  </form>
 {% endblock %}
