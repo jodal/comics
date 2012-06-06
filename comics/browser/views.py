@@ -211,10 +211,9 @@ class ReleaseFeedView(ComicMixin, ListView):
         return settings.COMICS_SITE_TITLE
 
     def get_last_updated(self):
-        releases = self.get_queryset()
-        if releases:
-            return releases[0].fetched
-        else:
+        try:
+            return self.get_queryset().values_list('fetched', flat=True)[0]
+        except IndexError:
             return timezone.now()
 
 
