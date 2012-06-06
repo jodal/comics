@@ -117,6 +117,12 @@ v1.1 to v2.0 migration guide
 - Renamed :class:`MetaBase` to :class:`ComicDataBase`, and moved it to
   :mod:`comics.core.comic_data`. Remember to update any custom crawlers.
 
+- Database changes:
+
+  - The field `Comic.number_of_sets` have been removed as it is no longer used.
+    If you would want to rollback from 2.x to 1.x the data in this field can be
+    regenerated, as it's only a denormalization of data available elsewhere.
+
 
 v1.1.6 (in development)
 =======================

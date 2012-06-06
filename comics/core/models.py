@@ -39,8 +39,6 @@ class Comic(models.Model):
         help_text='Author, copyright, and/or licensing information')
 
     # Automatically populated fields (i.e. for denormalization)
-    number_of_sets = models.PositiveIntegerField(default=0,
-        help_text='Number of sets the comic is in (automatically updated)')
 
     objects = ComicManager()
 
