@@ -1,7 +1,7 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
-class Comicdata(ComicDataBase):
+class ComicData(ComicDataBase):
     name = 'Zelda'
     language = 'no'
     url = 'http://www.dagbladet.no/tegneserie/zelda/'
