@@ -27,6 +27,7 @@ v1.1.6 (in development)
 - Update: ``bunny`` is no longer published.
 - Update: ``carpediem`` is no longer published.
 - Update: ``countyoursheep`` is no longer published.
+- Update: ``crfh`` after site change.
 - Update: ``dieselsweetiesweb`` to be more robust to missing elements in the
   feed.
 
