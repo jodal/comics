@@ -152,8 +152,8 @@ v1.1 to v2.0 migration guide
       python manage.py syncdb --migrate
 
 
-v1.1.6 (in development)
-=======================
+v1.1.6 (2012-06-10)
+===================
 
 **Bugfixes**
 
