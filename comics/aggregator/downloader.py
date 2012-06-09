@@ -48,7 +48,6 @@ class ImageDownloader(object):
         self.comic = crawler_release.comic
         self.pub_date = crawler_release.pub_date
         self.has_reruns = crawler_release.has_rerun_releases
-        self.check_image_mime_type = crawler_release.check_image_mime_type
         self.file = None
         self.file_extension = None
         self.file_checksum = None
@@ -126,8 +125,7 @@ class ImageDownloader(object):
         return image
 
     def _check_image_mime_type(self, http_file):
-        if (self.check_image_mime_type
-                and not http_file.info().getmaintype() == 'image'):
+        if http_file.info().getmaintype() != 'image':
             raise FileNotAnImage(self.identifier)
 
     def _get_temporary_file(self, source_file):

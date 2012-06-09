@@ -62,6 +62,8 @@ Version 2.0 refreshes most parts of the *comics* web interface.
   - Try to verify that image files are valid by loading them with PIL before
     saving them. (Fixes: :issue:`17`)
 
+  - Removed unused ``check_image_mime_type`` crawler setting.
+
 - Development:
 
   - The WSGI file is now also used when using Django's ``runserver`` command

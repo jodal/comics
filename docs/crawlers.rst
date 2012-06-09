@@ -131,13 +131,6 @@ The :class:`Crawler` class fields
 
         Example: :class:`True`` or :class:`False``.
 
-    .. attribute:: check_image_mime_type
-
-        *Optional.* Default: :class:`True`. Whether to check the mime type of
-        the image when downloading.
-
-        Example: :class:`True` or :class:`False`.
-
     .. attribute:: headers
 
         *Optional.* Default: ``None``. Any HTTP headers to send with any URI

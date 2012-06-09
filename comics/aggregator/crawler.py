@@ -20,11 +20,9 @@ utc_offset_in_s = time.timezone
 
 
 class CrawlerRelease(object):
-    def __init__(self, comic, pub_date,
-            check_image_mime_type=True, has_rerun_releases=False):
+    def __init__(self, comic, pub_date, has_rerun_releases=False):
         self.comic = comic
         self.pub_date = pub_date
-        self.check_image_mime_type = check_image_mime_type
         self.has_rerun_releases = has_rerun_releases
         self._images = []
 
@@ -76,8 +74,6 @@ class CrawlerBase(object):
     ### Downloader settings
     # Whether the comic reruns old images as new releases
     has_rerun_releases = False
-    # Whether to check the mime type of the image when downloading
-    check_image_mime_type = True
 
     ### Settings used for both crawling and downloading
     # Dictionary of HTTP headers to send when retrieving items from the site
@@ -97,7 +93,6 @@ class CrawlerBase(object):
 
         pub_date = self._get_date_to_crawl(pub_date)
         release = CrawlerRelease(self.comic, pub_date,
-            check_image_mime_type=self.check_image_mime_type,
             has_rerun_releases=self.has_rerun_releases)
 
         try:
