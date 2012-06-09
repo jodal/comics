@@ -30,19 +30,21 @@ Version 2.0 refreshes most parts of the *comics* web interface.
 
 - "My comics":
 
-  - Replace named comic sets with user associated comic selections, called "my
-    comics". An importer from old comics sets to "my comics" is included.
+  - Replace named comic sets with comic subscriptions associated with users,
+    called "my comics". An importer for converting old comics sets to "my
+    comics" is included.
 
   - Add buttons to all comic views for adding the comic to "my comics".
 
-  - Add buttons to "my comics" for removing the comic from "my comics".
+  - Extend comics list in the footer to include subscription management.
 
 - Comics browsing:
 
   - Orders the "latest" view by fetched time instead of comic name. New content
     is always at the top.
 
-  - Removes browsing of weeks or N days.
+  - Removes browsing of weeks or N days, with the exception of +1 days, which
+    is kept as a "today" view.
 
   - Reimplemented lots of crusty old code using Django's class-based generic
     views.
@@ -86,7 +88,7 @@ v1.1 to v2.0 migration guide
   - Removed ``COMICS_MEDIA_ROOT`` and ``COMICS_MEDIA_URL``. As static files
     now are located under ``STATIC_ROOT`` and ``STATIC_URL``, the entire
     namespace under ``MEDIA_ROOT`` and ``MEDIA_URL`` are now available for
-    downloaded media, like crawled comics.
+    downloaded media, e.g. crawled comics.
 
 - Commands:
 
@@ -134,8 +136,9 @@ v1.1 to v2.0 migration guide
   - The datetime field `Comic.added` has been added. It is automatically
     populated with a date in the far past upon database migration.
 
-  - Added two new database indexes to the ``Release`` model. They will be
-    automatically created on database migration.
+  - Added two new database indexes to the ``Release`` model, which both help a
+    lot towards making comics browsing faster. They will be automatically
+    created on database migration.
 
 
 v1.1.6 (in development)
