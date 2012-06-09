@@ -33,6 +33,7 @@ v1.1.6 (in development)
 - Update: ``hijinksensue`` after feed change.
 - Update: ``m`` is no longer published.
 - Update: ``magpieluck`` is no longer published.
+- Update: ``picturesforsadchildren`` after feed change.
 
 
 v1.1.5 (2012-05-09)
