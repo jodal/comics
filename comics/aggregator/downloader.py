@@ -76,13 +76,13 @@ class ImageDownloader(object):
             self.file_extension = self._get_file_extension(http_file)
             self.file_checksum = self._get_sha256sum(self.file)
             http_file.close()
-        except urllib2.HTTPError, error:
+        except urllib2.HTTPError as error:
             raise DownloaderHTTPError(self.identifier, error.code)
-        except urllib2.URLError, error:
+        except urllib2.URLError as error:
             raise DownloaderHTTPError(self.identifier, error.reason)
-        except httplib.BadStatusLine, error:
+        except httplib.BadStatusLine as error:
             raise DownloaderHTTPError(self.identifier, 'BadStatusLine')
-        except socket.error, error:
+        except socket.error as error:
             raise DownloaderHTTPError(self.identifier, error)
 
     def _check_if_blacklisted(self, checksum):
@@ -123,10 +123,10 @@ class ImageDownloader(object):
     def _get_file_extension(self, http_file):
         mime_type = http_file.info().gettype()
 
-        # MIME types like "image/jpeg, image/jpeg" has been observed.
+        # MIME types like "image/jpeg, image/jpeg" have been observed.
         mime_type = mime_type.split(',')[0]
 
-        # The MIME type "image/pjpeg" have been observed.
+        # The MIME type "image/pjpeg" has been observed.
         mime_type = mime_type.replace('pjpeg', 'jpeg')
 
         file_ext = mimetypes.guess_extension(mime_type)
