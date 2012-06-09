@@ -163,6 +163,7 @@ v1.1.6 (in development)
 
 **Crawlers**
 
+- New: ``oatmeal``
 - New: ``zelda``
 - Update: ``abstrusegoose`` has a schedule.
 - Update: ``asofterworld`` after feed change.
