@@ -17,9 +17,11 @@ class Crawler(CrawlerBase):
         feed_url = 'http://feeds.feedburner.com/hijinksensue'
         feed = self.parse_feed(feed_url)
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src*="/comics/%s"]' %
+            url = entry.summary.src('img[src*="/comics-rss/%s"]' %
                 pub_date.strftime('%Y'))
+            if url is None:
+                # Weed out the blog posts without images
+                return
+            url = url.replace('-rss', '')
             title = entry.title
-            # Weed out the blog posts without images
-            if url is not None:
-                return CrawlerImage(url, title)
+            return CrawlerImage(url, title)
