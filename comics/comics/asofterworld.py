@@ -1,3 +1,5 @@
+import re
+
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.meta.base import MetaBase
 
@@ -16,13 +18,14 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.rsspect.com/rss/asw.xml')
         for entry in feed.for_date(pub_date):
-            if not entry.link.startswith('http://www.asofterworld.com'):
+            if entry.title == 'A Softer World':
                 urls = entry.summary.src('img[src*="/clean/"]',
                     allow_multiple=True)
                 if not urls:
                     continue
                 url = urls[0]
-                title = entry.title
+                asw_id = re.findall('(\d+)$', entry.link)[0]
+                title = '%s: %s' % (entry.title, asw_id)
                 text = entry.summary.title( 'img[src*="/clean/"]',
                     allow_multiple=True)[0]
                 return CrawlerImage(url, title, text)
