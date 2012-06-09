@@ -23,6 +23,7 @@ v1.1.6 (in development)
 - Update: ``axecop`` has a schedule.
 - Update: ``basicinstructions`` has a new schedule.
 - Update: ``bgobt`` is no longer published.
+- Update: ``boasas`` is no longer published.
 - Update: ``dieselsweetiesweb`` to be more robust to missing elements in the
   feed.
 
