@@ -6,9 +6,8 @@ class Meta(MetaBase):
     language = 'no'
     url = 'http://www.pondus.no/'
     rights = 'Nikklas Eriksson'
+    active = False
 
 class Crawler(PondusNoCrawlerBase):
-    schedule = 'Mo,Tu,Th,Fr,Su'
-
     def crawl(self, pub_date):
-        return self.crawl_helper('20056')
+        pass # Comic no longer published
