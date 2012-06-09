@@ -6,8 +6,8 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
-v1.1.6 (in development)
-=======================
+v1.1.6 (2012-06-10)
+===================
 
 **Bugfixes**
 
