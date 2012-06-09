@@ -87,7 +87,7 @@ v1.1 to v2.0 migration guide
 
   - Django >= 1.4, < 1.5
 
-  - django_compress >= 1.1, < 1.2
+  - django_compressor >= 1.1, < 1.2
 
 - Settings:
 
