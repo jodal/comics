@@ -78,6 +78,13 @@ class DownloaderHTTPError(DownloaderError):
             self.identifier, self.value)
 
 
+class ImageTypeError(DownloaderError):
+    """Exception raised when the image type isn't in the whitelist"""
+
+    def __str__(self):
+        return '%s: Invalid image type (%s)' % (self.identifier, self.value)
+
+
 class ImageIsCorrupt(DownloaderError):
     """Exception raised when the fetched image is corrupt"""
 

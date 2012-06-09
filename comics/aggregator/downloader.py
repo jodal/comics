@@ -15,7 +15,7 @@ from django.core.files import File
 from django.db import transaction
 
 from comics.aggregator.exceptions import (DownloaderError, FileNotAnImage,
-    DownloaderHTTPError, ImageIsCorrupt, ImageAlreadyExists,
+    DownloaderHTTPError, ImageTypeError, ImageIsCorrupt, ImageAlreadyExists,
     ImageIsBlacklisted)
 from comics.core.models import Release, Image
 
@@ -54,6 +54,7 @@ class ImageDownloader(object):
 
     def download(self, crawler_image):
         self._download_image(crawler_image.url, crawler_image.request_headers)
+        self._check_if_known_image_type(self.file_extension)
         self._check_if_blacklisted(self.file_checksum)
         existing_image = self._get_existing_image(self.file_checksum)
         if existing_image is not None:
@@ -78,8 +79,9 @@ class ImageDownloader(object):
             request = urllib2.Request(url, None, request_headers)
             http_file = urllib2.urlopen(request)
             self._check_image_mime_type(http_file)
-            self.file = self._get_temporary_file(http_file)
             self.file_extension = self._get_file_extension(http_file)
+            self._check_known_image_type(self.file_extension)
+            self.file = self._get_temporary_file(http_file)
             self.file_checksum = self._get_sha256sum(self.file)
             http_file.close()
         except urllib2.HTTPError as error:
@@ -127,6 +129,10 @@ class ImageDownloader(object):
     def _check_image_mime_type(self, http_file):
         if http_file.info().getmaintype() != 'image':
             raise FileNotAnImage(self.identifier)
+
+    def _check_known_image_type(self, extension):
+        if extension not in ('.gif', '.jpg', '.png'):
+            raise ImageTypeError(self.identifier, extension)
 
     def _get_temporary_file(self, source_file):
         tmp = tempfile.NamedTemporaryFile(suffix='comics')
