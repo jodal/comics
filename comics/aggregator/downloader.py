@@ -54,7 +54,6 @@ class ImageDownloader(object):
 
     def download(self, crawler_image):
         self._download_image(crawler_image.url, crawler_image.request_headers)
-        self._check_if_known_image_type(self.file_extension)
         self._check_if_blacklisted(self.file_checksum)
         existing_image = self._get_existing_image(self.file_checksum)
         if existing_image is not None:
