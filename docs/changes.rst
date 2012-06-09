@@ -164,8 +164,41 @@ v1.1.6 (in development)
 **Crawlers**
 
 - New: ``zelda``
-- Update: `dieselsweetiesweb` to be more robust to missing elements in the
+- Update: ``abstrusegoose`` has a schedule.
+- Update: ``asofterworld`` after feed change.
+- Update: ``axecop`` has a schedule.
+- Update: ``basicinstructions`` has a new schedule.
+- Update: ``bgobt`` is no longer published.
+- Update: ``boasas`` is no longer published.
+- Update: ``bunny`` is no longer published.
+- Update: ``carpediem`` is no longer published.
+- Update: ``countyoursheep`` is no longer published.
+- Update: ``crfh`` after site change.
+- Update: ``darklegacy`` does not follow a schedule.
+- Update: ``devilbear`` does not follow a schedule.
+- Update: ``dieselsweetiesweb`` to be more robust to missing elements in the
   feed.
+- Update: ``goblins`` does not follow a schedule.
+- Update: ``gunshow`` has a new release schedule.
+- Update: ``hijinksensue`` after feed change.
+- Update: ``icanbarelydraw`` has a new release schedule.
+- Update: ``kiwiblitz`` does not follow a schedule.
+- Update: ``littlegamers`` does not follow a schedule.
+- Update: ``m`` is no longer published.
+- Update: ``magpieluck`` is no longer published.
+- Update: ``pcweenies`` does not follow a schedule.
+- Update: ``picturesforsadchildren`` after feed change.
+- Update: ``radiogaga`` has a new release schedule.
+- Update: ``rhymeswithwitch`` is no longer published.
+- Update: ``spaceavalanche`` after feed change.
+- Update: ``stuffnoonetoldme`` is no longer published.
+- Update: ``subnormality`` got a sensible history capability.
+- Update: ``tehgladiators`` does not follow a schedule.
+- Update: ``theidlestate`` does not follow a schedule.
+- Update: ``utensokker`` is no longer published.
+- Update: ``uvod`` got an updated homepage address.
+- Update: ``virtualshackles`` does not follow a schedule.
+- Update: ``walkoflife`` does not follow a schedule.
 
 
 v1.1.5 (2012-05-09)

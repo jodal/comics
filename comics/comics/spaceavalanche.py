@@ -15,6 +15,9 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/SpaceAvalanche1')
         for entry in feed.for_date(pub_date):
-            url = entry.content0.src('img[src*="/wp-content/"]')
-            title = entry.title
-            return CrawlerImage(url, title)
+            urls = entry.content0.src('img[src*="/wp-content/"]',
+                allow_multiple=True)
+            if urls:
+                url = urls[0]
+                title = entry.title
+                return CrawlerImage(url, title)

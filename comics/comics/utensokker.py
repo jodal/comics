@@ -8,13 +8,10 @@ class ComicData(ComicDataBase):
     language = 'no'
     url = 'http://utensokker.nettserier.no/'
     start_date = '2009-07-14'
+    start_date = '2012-02-02'
+    active = False
     rights = 'Bjørnar Grandalen'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 90
-    time_zone = 1
-
     def crawl(self, pub_date):
-        url = 'http://utensokker.nettserier.no/_striper/utensokker-%s.jpg' % (
-            self.date_to_epoch(pub_date),)
-        return CrawlerImage(url)
+        pass # Comic no longer published

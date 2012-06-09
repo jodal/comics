@@ -10,6 +10,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_date = '2008-09-04'
+    schedule = 'Mo,We,Fr'
 
     def crawl(self, pub_date):
         page_url = 'http://www.gunshowcomic.com/d/%s.html' % (
