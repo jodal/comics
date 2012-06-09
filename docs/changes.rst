@@ -64,6 +64,9 @@ Version 2.0 refreshes most parts of the *comics* web interface.
 
   - Removed unused ``check_image_mime_type`` crawler setting.
 
+  - Whitelist GIF, JPEG, and PNG files. All other file types are rejected.
+    (Fixes: :issue:`16`)
+
 - Development:
 
   - The WSGI file is now also used when using Django's ``runserver`` command
