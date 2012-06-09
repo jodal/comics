@@ -54,7 +54,7 @@ Version 2.0 refreshes most parts of the *comics* web interface.
   - Blacklisted the GoComics placeholder image.
 
   - Try to verify that image files are valid by loading them with PIL before
-    saving them.
+    saving them. (Fixes: :issue:`17`)
 
 - Development:
 
