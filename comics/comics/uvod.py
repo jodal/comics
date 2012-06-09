@@ -4,7 +4,7 @@ from comics.meta.base import MetaBase
 class Meta(MetaBase):
     name = 'The Unspeakable Vault (of Doom)'
     language = 'en'
-    url = 'http://www.macguff.fr/goomi/unspeakable/'
+    url = 'http://www.goominet.com/unspeakable-vault/'
     rights = 'Francois Launet'
 
 class Crawler(CrawlerBase):

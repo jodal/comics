@@ -9,7 +9,7 @@ class Meta(MetaBase):
     rights = 'Winston Rowntree'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 10000
+    history_capable_date = '2008-11-25'
     time_zone = 1
 
     def crawl(self, pub_date):
