@@ -22,32 +22,38 @@ Version 2.0 refreshes most parts of the *comics* web interface.
 
   - Add user information to footer of emails sent from the feedback page.
 
-  - Require a user specific secret key to allow access to feeds.
+  - Require a user specific secret key to allow access to feeds. (Fixes:
+    :issue:`25`)
 
   - Add support for requiring an invitation to register as a new user. Set the
     setting ``INVITE_MODE`` to ``True`` to require invitation before
-    registration.
+    registration. (Fixes: :issue:`29`)
 
 - "My comics":
 
   - Replace named comic sets with comic subscriptions associated with users,
     called "my comics". An importer for converting old comics sets to "my
-    comics" is included.
+    comics" is included. (Fixes: :issue:`26`, :issue:`27`)
 
   - Add buttons to all comic views for adding the comic to "my comics".
 
   - Extend comics list in the footer to include subscription management.
+    (Fixes: :issue:`28`, :issue:`49`)
 
 - Comics browsing:
 
   - Orders the "latest" view by fetched time instead of comic name. New content
-    is always at the top.
+    is always at the top. (Fixes: :issue:`13`)
 
   - Removes browsing of weeks or N days, with the exception of +1 days, which
     is kept as a "today" view.
 
   - Reimplemented lots of crusty old code using Django's class-based generic
     views.
+
+  - Reimplement feeds using regular feeds instead of Django's feed abstraction
+    to reduce the feed response time enough to not cause timeouts when using
+    e.g. Netvibes to subscribe to feeds. (Fixes: :issue:`5`)
 
 - Comics crawling:
 
