@@ -5,12 +5,18 @@ import socket
 import tempfile
 import urllib2
 
+try:
+    from PIL import Image as PILImage
+except ImportError:
+    import Image as PILImage
+
 from django.conf import settings
 from django.core.files import File
 from django.db import transaction
 
 from comics.aggregator.exceptions import (DownloaderError, FileNotAnImage,
-    DownloaderHTTPError, ImageAlreadyExists, ImageIsBlacklisted)
+    DownloaderHTTPError, ImageIsCorrupt, ImageAlreadyExists,
+    ImageIsBlacklisted)
 from comics.core.models import Release, Image
 
 
@@ -53,6 +59,7 @@ class ImageDownloader(object):
         existing_image = self._get_existing_image(self.file_checksum)
         if existing_image is not None:
             return existing_image
+        self._check_if_corrupt(self.file)
         return self._create_new_image(crawler_image.title, crawler_image.text)
 
     @property
@@ -97,6 +104,15 @@ class ImageDownloader(object):
             return image
         except Image.DoesNotExist:
             return None
+
+    def _check_if_corrupt(self, file_handle):
+        image = PILImage.open(file_handle)
+        try:
+            image.load()
+        except IndexError:
+            raise ImageIsCorrupt(self.identifier)
+        except IOError as error:
+            raise ImageIsCorrupt(self.identifier, error.message)
 
     @transaction.commit_on_success
     def _create_new_image(self, title, text):

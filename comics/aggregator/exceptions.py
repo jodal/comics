@@ -78,6 +78,13 @@ class DownloaderHTTPError(DownloaderError):
             self.identifier, self.value)
 
 
+class ImageIsCorrupt(DownloaderError):
+    """Exception raised when the fetched image is corrupt"""
+
+    def __str__(self):
+        return '%s: Image is corrupt (%s)' % (self.identifier, self.value)
+
+
 class ImageAlreadyExists(DownloaderError):
     """Exception raised when trying to save an image that already exists"""
 
