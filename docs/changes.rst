@@ -19,6 +19,7 @@ v1.1.6 (in development)
 
 - New: ``zelda``
 - Update: ``abstrusegoose`` has a schedule.
+- Update: ``axecop`` has a schedule.
 - Update: ``basicinstructions`` has a new schedule.
 - Update: ``dieselsweetiesweb`` to be more robust to missing elements in the
   feed.
