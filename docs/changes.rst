@@ -166,7 +166,9 @@ v1.1.6 (in development)
 - New: ``oatmeal``
 - New: ``zelda``
 - Update: ``abstrusegoose`` has a schedule.
+- Update: ``apokalips`` is no longer published.
 - Update: ``asofterworld`` after feed change.
+- Update: ``atheistcartoons`` is no longer published.
 - Update: ``axecop`` has a schedule.
 - Update: ``basicinstructions`` has a new schedule.
 - Update: ``bgobt`` is no longer published.
