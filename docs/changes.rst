@@ -31,6 +31,8 @@ v1.1.6 (in development)
 - Update: ``dieselsweetiesweb`` to be more robust to missing elements in the
   feed.
 - Update: ``hijinksensue`` after feed change.
+- Update: ``m`` is no longer published.
+- Update: ``magpieluck`` is no longer published.
 
 
 v1.1.5 (2012-05-09)

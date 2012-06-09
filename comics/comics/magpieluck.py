@@ -6,17 +6,10 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://magpieluck.com/'
     start_date = '2009-07-30'
+    end_date = '2011-09-08'
+    active = False
     rights = 'Katie Sekelsky, CC BY-NC-SA 3.0'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 32
-    schedule = None
-    time_zone = -5
-
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://feeds.feedburner.com/MagpieLuckComic')
-        for entry in feed.for_date(pub_date):
-            url = entry.content0.src('img[src*="/wp-content/"]')
-            title = entry.title.split('- ', 1)[-1]
-            text = entry.content0.alt('img[src*="/wp-content/"]')
-            return CrawlerImage(url, title, text)
+        pass # Comic no longer published
