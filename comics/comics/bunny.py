@@ -6,16 +6,10 @@ class Meta(MetaBase):
     language = 'en'
     url = 'http://bunny-comic.com/'
     start_date = '2004-08-22'
+    end_date = '2011-11-20'
+    active = False
     rights = 'H. Davies, CC BY-NC-SA'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 0
-    time_zone = -8
-
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://www.bunny-comic.com/rss/bunny.xml')
-        for entry in feed.all():
-            url = entry.summary.src('img[src*="/strips/"]')
-            title = entry.title
-            text = entry.summary.alt('img[src*="/strips/"]')
-            return CrawlerImage(url, title, text)
+        pass # Comic no longer published
