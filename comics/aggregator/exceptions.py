@@ -63,13 +63,6 @@ class DownloaderError(AggregatorError):
             self.identifier, self.value)
 
 
-class FileNotAnImage(DownloaderError):
-    """Exception raised when the fetched file is not an image"""
-
-    def __str__(self):
-        return '%s: File not an image' % self.identifier
-
-
 class DownloaderHTTPError(DownloaderError):
     """Exception used to wrap urllib2.HTTPError from the downloader"""
 
@@ -79,7 +72,7 @@ class DownloaderHTTPError(DownloaderError):
 
 
 class ImageTypeError(DownloaderError):
-    """Exception raised when the image type isn't in the whitelist"""
+    """Exception raised when the image isn't of the right type"""
 
     def __str__(self):
         return '%s: Invalid image type (%s)' % (self.identifier, self.value)

@@ -57,15 +57,17 @@ Version 2.0 refreshes most parts of the *comics* web interface.
 
 - Comics crawling:
 
-  - Blacklisted the GoComics placeholder image.
-
   - Try to verify that image files are valid by loading them with PIL before
     saving them. (Fixes: :issue:`17`)
+
+  - Use PIL instead of server provided MIME types to identify the image type.
 
   - Removed unused ``check_image_mime_type`` crawler setting.
 
   - Whitelist GIF, JPEG, and PNG files. All other file types are rejected.
     (Fixes: :issue:`16`)
+
+  - Blacklisted the GoComics placeholder image.
 
 - Development:
 
