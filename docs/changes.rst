@@ -6,10 +6,11 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
-v2.0 (in development)
-=====================
+v2.0.0 (2012-06-11)
+===================
 
-Version 2.0 refreshes most parts of the *comics* web interface.
+Version 2 refreshes the entire *comics* web interface. The aggregation part
+of *comics* is mostly unchanged since v1.1.
 
 - Design: New design based on Twitter Bootstrap.
 
