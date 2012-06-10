@@ -2,7 +2,6 @@ import datetime
 import os
 
 from django.conf import settings
-from django.core.cache import cache
 from django.core.files.storage import FileSystemStorage
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -87,28 +86,9 @@ class Release(models.Model):
             'day': self.pub_date.day,
         })
 
-    def get_images_first_release(self):
-        key = 'release_images_first_release:%s' % self.id
-        first = cache.get(key)
-
-        if first is not None:
-            return first
-
-        try:
-            first = self.images.all()[0].get_first_release()
-        except IndexError:
-            return
-
-        cache.set(key, first)
-        return first
-
-    def set_ordered_images(self, images):
-        self._ordered_images = images
-
     def get_ordered_images(self):
         if not getattr(self, '_ordered_images', []):
             self._ordered_images = list(self.images.order_by('id'))
-
         return self._ordered_images
 
 
@@ -144,6 +124,3 @@ class Image(models.Model):
 
     def __unicode__(self):
         return u'%s image %s' % (self.comic, self.checksum)
-
-    def get_first_release(self):
-        return self.releases.select_related('comic').order_by('pub_date')[0]
