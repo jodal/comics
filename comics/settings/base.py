@@ -179,7 +179,8 @@ REGISTRATION_BACKEND = 'comics.accounts.backends.RegistrationBackend'
 
 ### django-invitation settings
 
-#: Turn invitations off by default, leaving the site open for user registrations
+#: Turn invitations off by default, leaving the site open for user
+#: registrations
 INVITE_MODE = False
 
 #: Number of days an invitation will be valid
@@ -240,8 +241,8 @@ COMICS_DEFAULT_TIME_ZONE = 1
 #: if this is set.
 COMICS_GOOGLE_ANALYTICS_CODE = None
 
-#: Number of seconds browsers at the latest view of "My comics" should wait before
-#: they check for new releases again
+#: Number of seconds browsers at the latest view of "My comics" should wait
+#: before they check for new releases again
 COMICS_BROWSER_REFRESH_INTERVAL = 60
 
 #: Number of days a new comic on the site is labeled as new

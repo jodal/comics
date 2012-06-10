@@ -8,7 +8,7 @@ import urllib2
 try:
     from PIL import Image as PILImage
 except ImportError:
-    import Image as PILImage
+    import Image as PILImage # NOQA
 
 from django.conf import settings
 from django.core.files import File
@@ -141,7 +141,8 @@ class ImageDownloader(object):
             return '%s%s' % (checksum, extension)
 
     @transaction.commit_on_success
-    def _create_new_image(self, comic, title, text, image_file, file_name, checksum):
+    def _create_new_image(self, comic, title, text,
+            image_file, file_name, checksum):
         image = Image(comic=comic, checksum=checksum)
         image.file.save(file_name, File(image_file))
         if title is not None:

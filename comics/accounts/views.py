@@ -78,7 +78,8 @@ def mycomics_edit_comics(request):
         if comic.slug not in request.POST:
             request.user.comics_profile.comics.remove(comic)
             if not request.is_ajax():
-                messages.info(request, 'Removed "%s" from my comics' % comic.name)
+                messages.info(request,
+                    'Removed "%s" from my comics' % comic.name)
 
     for comic in Comic.objects.all():
         if comic.slug in request.POST and comic not in my_comics:
