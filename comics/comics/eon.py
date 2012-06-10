@@ -1,7 +1,7 @@
 from comics.aggregator.crawler import PondusNoCrawlerBase
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'EON'
     language = 'no'
     url = 'http://www.pondus.no/'

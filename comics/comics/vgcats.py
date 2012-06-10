@@ -1,9 +1,9 @@
-import datetime as dt
+import datetime
 
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'VG Cats'
     language = 'en'
     url = 'http://www.vgcats.com/'
@@ -20,7 +20,7 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         # FIXME: Seems like they are using gif images now and then
-        if pub_date < dt.date(2003, 5, 1):
+        if pub_date < datetime.date(2003, 5, 1):
             file_ext = 'gif'
         else:
             file_ext = 'jpg'

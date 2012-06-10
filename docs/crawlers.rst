@@ -11,17 +11,17 @@ how to write new crawlers for *comics*.
 A crawler example
 =================
 
-The crawlers are split in two separate pieces. The :class:`Meta` part contains
-meta data about the comic used for display at the web site. The
+The crawlers are split in two separate pieces. The :class:`ComicData` part
+contains meta data about the comic used for display at the web site. The
 :class:`Crawler` part contains properties needed for crawling and the crawler
 implementation itself.
 
 ::
 
     from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-    from comics.meta.base import MetaBase
+    from comics.core.comic_data import ComicDataBase
 
-    class Meta(MetaBase):
+    class ComicData(ComicDataBase):
         name = 'xkcd'
         language = 'en'
         url = 'http://www.xkcd.com/'
@@ -42,10 +42,10 @@ implementation itself.
                 return CrawlerImage(url, title, text)
 
 
-The :class:`Meta` class fields
-==============================
+The :class:`ComicData` class fields
+===================================
 
-.. class:: Meta
+.. class:: ComicData
 
     .. attribute:: name
 
@@ -130,13 +130,6 @@ The :class:`Crawler` class fields
         images as new releases.
 
         Example: :class:`True`` or :class:`False``.
-
-    .. attribute:: check_image_mime_type
-
-        *Optional.* Default: :class:`True`. Whether to check the mime type of
-        the image when downloading.
-
-        Example: :class:`True` or :class:`False`.
 
     .. attribute:: headers
 
@@ -466,46 +459,47 @@ file ``foo.py``. The file must be placed in the ``comics/comics/comics/``
 directory, and will be available in Python as ``comics.comics.foo``.
 
 
-Loading :class:`Meta` for your new comic
-----------------------------------------
+Loading :class:`ComicData` for your new comic
+---------------------------------------------
 
 For *comics* to know about your new crawler, you need to load the comic meta
-data into *comics*'s database. To do so, we run the ``loadmeta`` command::
+data into *comics*'s database. To do so, we run the ``comics_addcomics``
+command::
 
-    python manage.py loadmeta -c foo
+    python manage.py comics_addcomics -c foo
 
-If you do any changes to the :class:`Meta` class of any crawler, you must rerun
-``loadmeta`` to update the database representation of the comic.
+If you do any changes to the :class:`ComicData` class of any crawler, you must
+rerun ``comics_addcomics`` to update the database representation of the comic.
 
 
 Running the crawler
 -------------------
 
-When ``loadmeta`` has created a :class:`comics.core.models.Comic` instance for
-the new crawler, you may use your new crawler to fetch the comic's release for
-the current date by running::
+When ``comics_addcomics`` has created a :class:`comics.core.models.Comic`
+instance for the new crawler, you may use your new crawler to fetch the comic's
+release for the current date by running::
 
-    python manage.py getcomics -c foo
+    python manage.py comics_getreleases -c foo
 
 If you want to get comics releases for more than the current day, you may
 specify a date range to crawl, like::
 
-    python manage.py getcomics -c foo -f 2009-01-01 -t 2009-03-31
+    python manage.py comics_getreleases -c foo -f 2009-01-01 -t 2009-03-31
 
 The date range will automatically be adjusted to the crawlers *history
 capability*. You may also get comics for a date range without a specific end.
 In which case, the current date will be used instead::
 
-    python manage.py getcomics -c foo -f 2009-01-01
+    python manage.py comics_getreleases -c foo -f 2009-01-01
 
 If your new crawler is not working properly, you may add ``-v2`` to the command
 to turn on full debug output::
 
-    python manage.py getcomics -c foo -v2
+    python manage.py comics_getreleases -c foo -v2
 
-For a full overview of ``getcomics`` options, run::
+For a full overview of ``comics_getreleases`` options, run::
 
-    python manage.py getcomics --help
+    python manage.py comics_getreleases --help
 
 
 Submitting your new crawler for inclusion in *comics*

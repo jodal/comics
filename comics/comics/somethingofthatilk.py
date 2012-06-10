@@ -1,7 +1,7 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'Something of that Ilk'
     language = 'en'
     url = 'http://www.somethingofthatilk.com/'
@@ -17,4 +17,3 @@ class Crawler(CrawlerBase):
         url = page.src('img[src*="/comics/"]')
         title = page.alt('img[src*="/comics/"]')
         return CrawlerImage(url, title)
-

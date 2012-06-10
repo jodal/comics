@@ -1,7 +1,7 @@
 from comics.aggregator.crawler import CrawlerBase
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'The Perry Bible Fellowship'
     language = 'en'
     url = 'http://www.pbfcomics.com/'

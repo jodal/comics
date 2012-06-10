@@ -1,6 +1,36 @@
-
 Installation
 ************
+
+First of all, *comics* is just a `Django <http://www.djangoproject.org/>`_
+application. Thus, if there are details not outlined in *comics*' own docs,
+you'll probably find the answer in Django's docs. For example, database
+settings are mentioned on this page, but no details are given, as we're just
+talking about Django's database settings. Django got better docs for their
+database settings than we could ever write, so please refer to Django's docs.
+
+
+Get *comics*
+============
+
+You can get hold of *comics* in two ways:
+
+- Download the lastest release from http://github.com/jodal/comics/tags and
+  unpack it.
+
+- Clone the Git repository. You can do so by running::
+
+      git clone git://github.com/jodal/comics
+      cd comics/
+
+  You'll then find the current stable/maintenance version in the ``master``
+  branch::
+
+      git checkout master
+
+  And the current development version in the ``develop`` branch::
+
+      git checkout develop
+
 
 Software requirements
 =====================
@@ -16,8 +46,8 @@ Or, in an isolated environment using `virtualenv
 <http://www.virtualenv.org>`_::
 
     cd comics/
-    virtualenv venv/
-    source venv/bin/activate
+    virtualenv ../comics-virtualenv/
+    source ../comics-virtualenv/bin/activate
     pip install -r requirements.txt
 
 If you make use of a virtualenv for a real deployment, you'll also need to make
@@ -27,7 +57,7 @@ sure that the WSGI file and the cronjob activate the virtualenv.
 Minimum dependencies
 --------------------
 
-The absolute minimum requirements for getting *comics* up and running is
+The absolute minimum requirements for getting *comics* up and running are
 documented in the file ``requirements.txt``:
 
 .. literalinclude:: ../requirements.txt
@@ -51,16 +81,6 @@ are listed in the file ``requirements-dev.txt``:
 .. literalinclude:: ../requirements-dev.txt
 
 
-Get *comics*
-============
-
-You can get hold of *comics* in two ways:
-
-- Download the lastest release from http://github.com/jodal/comics/downloads.
-- Get the latest development version of *comics* by cloning the Git
-  repository, by running ``git clone git://github.com/jodal/comics``.
-
-
 Run *comics*
 ============
 
@@ -75,35 +95,54 @@ A file-based SQLite database will be used, unless you have created a file
 ``comics/comics/settings/local.py`` where you have configured another database,
 like PostgreSQL.
 
-To create the database and database schema, open a terminal, go to the
-``comics/comics/`` directory, and run::
+To create the database and database schema, open a terminal, go to top level
+directory in your checkout of the comics repo, where you'll find the file
+``manage.py``, and run::
 
-    python manage.py syncdb
+    python manage.py syncdb --migrate --noinput
 
-Parts of the database is managed by the South database migrations tool. To
-create that part of the database, run::
+Parts of the database is managed by the South database migrations tool.
+:option:`--migrate` makes syncdb also run a database migration. You can also
+run ``python manage.py migrate`` as an independent step.
 
-    python manage.py migrate
+:option:`--noinput` stops syncdb from asking you to create a superuser, as this
+will fail at this point. Instead, when syncdb has finished, create a superuser
+by running::
+
+    python manage.py createsuperuser
 
 
 Seed database
 -------------
 
-Then we need to seed the database with information on what comics exist::
+Then we need to seed the database with information on what comics to crawl.
+E.g. to add the *XKCD* comic from ``comics/comics/comics/xkcd.py``, run::
 
-    python manage.py loadmeta
+    python manage.py comics_addcomics -c xkcd
 
-Optionally, you can add ``-c xkcd`` to only load the *XKCD* comic from
-``comics/comics/comics/xkcd.py``.
+Optionally, you can add all available active comics to the database::
+
+    python manage.py comics_addcomics -c all
 
 
-Get some comics
----------------
+Get some comic releases
+-----------------------
 
 Next, we need to get hold of some comic releases, so we will crawl the web for
-them::
+them. This will get today's releases for all added comics::
 
-    python manage.py getcomics
+    python manage.py comics_getreleases
+
+To get the release for a specific added comics, you can filter with
+:option:`--comic` or :option:`-c`::
+
+    python manage.py comics_getreleases -c xkcd
+
+To get releases for a range of days, you can specify a date range with
+:option:`--from` or :option:`-f` and :option:`--to` or :option:`-t`. Both
+defaults to today, so you can leave the end of the range out::
+
+    python manage.py comics_getreleases -f 2011-11-11
 
 
 Development web server
@@ -112,7 +151,7 @@ Development web server
 Finally, to be able to browse the comic releases we have aggregated, start the
 Django development web server by running::
 
-    python manage.py runserver
+    python manage.py runserver --settings=comics.settings.dev
 
 If you now point your web browser at http://localhost:8000/ you will be able to
 browse all available comics. If you provided a username and password at the
@@ -123,7 +162,6 @@ administration tasks, like removing comics or releases.
 More options
 ------------
 
-All of these commands got more options available. I.e. ``getcomics`` can crawl
-specific comics, and arbitrary ranges of dates instead of just getting the
-latest release. Add the ``--help`` argument to any of the commands to get a
-full listing.
+All of the ``manage.py`` commands got more options available. Add the
+:option:`--help` argument to any of the commands to get a full listing of the
+available options.

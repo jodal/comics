@@ -1,7 +1,7 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'Girls With Slingshots'
     language = 'en'
     url = 'http://www.girlswithslingshots.com/'
@@ -23,7 +23,7 @@ class Crawler(CrawlerBase):
             blog_paragraphs = page.text(
                 'div#%s div.entry p' % blog_post_id, allow_multiple=True)
             text = '\n\n'.join(blog_paragraphs)
-        except StandardError, e:
+        except StandardError:
             text = None
 
         return CrawlerImage(url, title, text)

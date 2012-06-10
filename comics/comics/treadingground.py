@@ -1,7 +1,7 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.aggregator.crawler import CrawlerBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'Treading Ground'
     language = 'en'
     url = 'http://www.treadingground.com/'

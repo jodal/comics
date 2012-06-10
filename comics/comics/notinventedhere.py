@@ -1,9 +1,7 @@
-import re
-
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'Not Invented Here'
     language = 'en'
     url = 'http://notinventedhe.re/'

@@ -1,9 +1,9 @@
 import re
 
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'Yehuda Moon'
     language = 'en'
     url = 'http://www.yehudamoon.com/'
@@ -35,6 +35,6 @@ class Crawler(CrawlerBase):
             title_full = page.text('option[value*="%s"]' %
                 pub_date.strftime('%Y-%m-%d'))
             title = re.sub('^.*- *', '', title_full)
-        except TypeError, e:
+        except TypeError:
             title = None
         return CrawlerImage(url, title)

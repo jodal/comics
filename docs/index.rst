@@ -7,11 +7,11 @@ Contents
 .. toctree::
     :maxdepth: 3
 
-    changes
     installation
-    crawlers
     deployment
+    crawlers
     development
+    changes
 
 
 Indices and tables

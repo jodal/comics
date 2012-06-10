@@ -1,7 +1,7 @@
 from comics.aggregator.crawler import PondusNoCrawlerBase
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'Helt Nils'
     language = 'no'
     url = 'http://www.pondus.no/'
@@ -12,5 +12,3 @@ class Crawler(PondusNoCrawlerBase):
 
     def crawl(self, pub_date):
         return self.crawl_helper('20060')
-
-

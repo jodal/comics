@@ -1,12 +1,14 @@
+import datetime
 import os
 
 from django.conf import settings
-from django.db import models
 from django.core.files.storage import FileSystemStorage
 from django.core.urlresolvers import reverse
-from django.core.cache import cache
+from django.db import models
+from django.utils import timezone
 
 from comics.core.managers import ComicManager
+
 
 class Comic(models.Model):
     LANGUAGES = (
@@ -35,9 +37,9 @@ class Comic(models.Model):
     rights = models.CharField(max_length=100, blank=True,
         help_text='Author, copyright, and/or licensing information')
 
-    # Automatically populated fields (i.e. for denormalization)
-    number_of_sets = models.PositiveIntegerField(default=0,
-        help_text='Number of sets the comic is in (automatically updated)')
+    # Automatically populated fields
+    added = models.DateTimeField(auto_now_add=True,
+        help_text='Time the comic was added to the site')
 
     objects = ComicManager()
 
@@ -49,23 +51,25 @@ class Comic(models.Model):
         return u'%s [%s]' % (self.name, self.language)
 
     def get_absolute_url(self):
-        return reverse('comic-latest', kwargs={'comic': self.slug})
-
-    def get_feed_url(self):
-        return reverse('comic-feed', kwargs={'comic': self.slug})
+        return reverse('comic_latest', kwargs={'comic_slug': self.slug})
 
     def get_redirect_url(self):
-        return reverse('redirect', kwargs={'comic': self.slug})
+        return reverse('comic_website', kwargs={'comic_slug': self.slug})
+
+    def is_new(self):
+        some_time_ago = timezone.now() - datetime.timedelta(
+            days=settings.COMICS_NUM_DAYS_COMIC_IS_NEW)
+        return self.added > some_time_ago
 
 
 class Release(models.Model):
     # Required fields
     comic = models.ForeignKey(Comic)
-    pub_date = models.DateField(verbose_name='publication date')
+    pub_date = models.DateField(verbose_name='publication date', db_index=True)
     images = models.ManyToManyField('Image', related_name='releases')
 
     # Automatically populated fields
-    fetched = models.DateTimeField(auto_now_add=True)
+    fetched = models.DateTimeField(auto_now_add=True, db_index=True)
 
     class Meta:
         db_table = 'comics_release'
@@ -75,35 +79,16 @@ class Release(models.Model):
         return u'%s published %s' % (self.comic, self.pub_date)
 
     def get_absolute_url(self):
-        return reverse('comic-date', kwargs={
-            'comic': self.comic.slug,
+        return reverse('comic_day', kwargs={
+            'comic_slug': self.comic.slug,
             'year': self.pub_date.year,
             'month': self.pub_date.month,
             'day': self.pub_date.day,
         })
 
-    def get_images_first_release(self):
-        key = 'release_images_first_release:%s' % self.id
-        first = cache.get(key)
-
-        if first is not None:
-            return first
-
-        try:
-            first = self.images.all()[0].get_first_release()
-        except IndexError:
-            return
-
-        cache.set(key, first)
-        return first
-
-    def set_ordered_images(self, images):
-        self._ordered_images = images
-
     def get_ordered_images(self):
         if not getattr(self, '_ordered_images', []):
             self._ordered_images = list(self.images.order_by('id'))
-
         return self._ordered_images
 
 
@@ -111,10 +96,12 @@ class Release(models.Model):
 os.umask(0002)
 
 image_storage = FileSystemStorage(
-    location=settings.COMICS_MEDIA_ROOT, base_url=settings.COMICS_MEDIA_URL)
+    location=settings.MEDIA_ROOT, base_url=settings.MEDIA_URL)
+
 
 def image_file_path(instance, filename):
     return u'%s/%s/%s' % (instance.comic.slug, filename[0], filename)
+
 
 class Image(models.Model):
     # Required fields
@@ -137,6 +124,3 @@ class Image(models.Model):
 
     def __unicode__(self):
         return u'%s image %s' % (self.comic, self.checksum)
-
-    def get_first_release(self):
-        return self.releases.select_related('comic').order_by('pub_date')[0]

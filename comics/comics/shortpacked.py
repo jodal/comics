@@ -1,7 +1,7 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'Shortpacked'
     language = 'en'
     url = 'http://www.shortpacked.com/'
@@ -24,7 +24,7 @@ class Crawler(CrawlerBase):
             all_paragraphs = page.text('div[class*="%s"] p' % post_id,
                 allow_multiple=True)
             text = '\n\n'.join(all_paragraphs)
-        except StandardError, e:
+        except StandardError:
             text = None
 
         return CrawlerImage(url, title, text)

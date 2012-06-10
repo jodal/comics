@@ -1,5 +1,11 @@
+# Mocking in unit tests
 mock
-coverage
+
+# Documentation generation
 sphinx
+
+# Debugging of database queries, etc.
 django-debug-toolbar
+
+# Generation of the model graph used in the docs
 django-extensions

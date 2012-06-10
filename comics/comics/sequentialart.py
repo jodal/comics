@@ -1,7 +1,7 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'Sequential Art'
     language = 'en'
     url = 'http://www.collectedcurios.com/'
@@ -12,6 +12,7 @@ class Crawler(CrawlerBase):
     time_zone = 0
 
     def crawl(self, pub_date):
-        page = self.parse_page('http://www.collectedcurios.com/sequentialart.php')
+        page = self.parse_page(
+            'http://www.collectedcurios.com/sequentialart.php')
         url = page.src('img#strip')
         return CrawlerImage(url)

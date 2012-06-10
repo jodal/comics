@@ -1,0 +1,61 @@
+{% extends "help/base.html" %}
+{% load url from future %}
+
+
+{% block title %}
+  About the project
+{% endblock %}
+
+
+{% block help_content %}
+
+  <div class="page-header">
+    <h1>About <small>the open source project</small></h1>
+  </div>
+
+  <div class="row">
+    <div class="span3">
+
+      <h3>Functionality</h3>
+
+      <p><em>comics</em> is a web comics aggregator. Out of the box it can
+      crawl and archive about two hundred comics every day. The comics are made
+      available through an easy to use web interface were users can build
+      personalized collections of their favorite comics, and then read them on
+      the site or export them using feeds.</p>
+
+    </div>
+    <div class="span3">
+
+      <h3>Development</h3>
+
+      <p><em>comics</em> is licensed under the GNU Affero General Public License
+      version 3. Development of the generic <em>comics</em> software is
+      coordinated through
+      <a href="http://github.com/jodal/comics">GitHub</a>.</p>
+
+      <p>Feedback to the administrator of this specific <em>comics</em>
+      installation may be submitted through the
+      <a href="{% url "help_feedback" %}">feedback</a> page.</p>
+
+    </div>
+    <div class="span3">
+
+      <h3>Technology</h3>
+
+      <p><em>comics</em> makes use of
+      the <a href="http://www.python.org/">Python</a> programming language,
+      the <a href="http://www.djangoproject.com/">Django</a> web framework,
+      the <a href="http://www.jquery.com/">jQuery</a> JavaScript library,
+      the <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a>
+      web design toolkit, and icons by
+      <a href="http://glyphicons.com/">Glyphicons</a>.
+      All output should adhere to the
+      <a href="http://validator.w3.org/check/referer">HTML5</a>,
+      <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a>, and
+      <a href="http://validator.w3.org/feed/">Atom</a> web standards.</p>
+
+    </div>
+  </div>
+
+{% endblock %}

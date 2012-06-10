@@ -6,6 +6,7 @@ from django.conf import settings
 RE_MULTISPACE = re.compile(r'\s{2,}')
 RE_NEWLINE = re.compile(r'\n')
 
+
 class MinifyHTMLMiddleware(object):
     def process_response(self, request, response):
         if 'text/html' in response['Content-Type'] and settings.COMPRESS_HTML:

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+{% load cache %}
+
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-us"
+    xml:base="{{ feed.base_url }}">
+  <title>{{ feed.title }}</title>
+  <link href="{{ feed.web_url }}" rel="alternate"></link>
+  <link href="{{ feed.url }}" rel="self"></link>
+  <id>{{ feed.web_url }}</id>
+  <updated>{{ feed.updated|date:"c" }}</updated>
+
+  {% for release in release_list %}
+    <entry>
+      <title>{{ release.comic.name|safe }} published {{ release.pub_date|date }}</title>
+      <link href="{{ release.get_absolute_url }}" rel="alternate"></link>
+      <updated>{{ release.fetched|date:"c" }}</updated>
+      <author>
+        <name>{{ feed.author }}</name>
+      </author>
+      <id>{{ release.get_absolute_url }}</id>
+      <summary type="html">
+        {% filter force_escape %}
+          {% spaceless %}
+            <div class="release">
+              {% cache 3600 'release' release.id %}
+                {% include "browser/release_content.html" with release=release %}
+              {% endcache %}
+            </div>
+          {% endspaceless %}
+        {% endfilter %}
+      </summary>
+      <rights>{{ release.comic.rights }}</rights>
+    </entry>
+  {% endfor %}
+</feed>

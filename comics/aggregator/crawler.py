@@ -1,10 +1,12 @@
-import datetime as dt
+import datetime
 import httplib
 import socket
 import time
 import urllib2
+import xml.sax._exceptions
 
 from django.conf import settings
+from django.utils import timezone
 
 from comics.aggregator.exceptions import (CrawlerHTTPError, ImageURLNotFound,
     NotHistoryCapable, ReleaseAlreadyExists)
@@ -12,22 +14,21 @@ from comics.aggregator.feedparser import FeedParser
 from comics.aggregator.lxmlparser import LxmlParser
 
 # For testability
-now = dt.datetime.now
-today = dt.date.today
-timezone = time.timezone
+now = timezone.now
+today = datetime.date.today
+utc_offset_in_s = time.timezone
+
 
 class CrawlerRelease(object):
-    def __init__(self, comic, pub_date,
-            check_image_mime_type=True, has_rerun_releases=False):
+    def __init__(self, comic, pub_date, has_rerun_releases=False):
         self.comic = comic
         self.pub_date = pub_date
-        self.check_image_mime_type = check_image_mime_type
         self.has_rerun_releases = has_rerun_releases
         self._images = []
 
     @property
     def identifier(self):
-       return u'%s/%s' % (self.comic.slug, self.pub_date)
+        return u'%s/%s' % (self.comic.slug, self.pub_date)
 
     @property
     def images(self):
@@ -73,8 +74,6 @@ class CrawlerBase(object):
     ### Downloader settings
     # Whether the comic reruns old images as new releases
     has_rerun_releases = False
-    # Whether to check the mime type of the image when downloading
-    check_image_mime_type = True
 
     ### Settings used for both crawling and downloading
     # Dictionary of HTTP headers to send when retrieving items from the site
@@ -94,19 +93,20 @@ class CrawlerBase(object):
 
         pub_date = self._get_date_to_crawl(pub_date)
         release = CrawlerRelease(self.comic, pub_date,
-            check_image_mime_type=self.check_image_mime_type,
             has_rerun_releases=self.has_rerun_releases)
 
         try:
             results = self.crawl(pub_date)
-        except urllib2.HTTPError, error:
+        except urllib2.HTTPError as error:
             raise CrawlerHTTPError(release.identifier, error.code)
-        except urllib2.URLError, error:
+        except urllib2.URLError as error:
             raise CrawlerHTTPError(release.identifier, error.reason)
-        except httplib.BadStatusLine, error:
+        except httplib.BadStatusLine:
             raise CrawlerHTTPError(release.identifier, 'BadStatusLine')
-        except socket.error, error:
+        except socket.error as error:
             raise CrawlerHTTPError(release.identifier, error)
+        except xml.sax._exceptions.SAXException as error:
+            raise CrawlerHTTPError(release.identifier, error.message)
 
         if not results:
             return
@@ -140,18 +140,18 @@ class CrawlerBase(object):
     def current_date(self):
         if self.time_zone is None:
             self.time_zone = settings.COMICS_DEFAULT_TIME_ZONE
-        local_time_zone = - timezone // 3600
+        local_time_zone = - utc_offset_in_s // 3600
         hour_diff = local_time_zone - self.time_zone
-        current_time = now() - dt.timedelta(hours=hour_diff)
+        current_time = now() - datetime.timedelta(hours=hour_diff)
         return current_time.date()
 
     @property
     def history_capable(self):
         if self.history_capable_date is not None:
-            return dt.datetime.strptime(
+            return datetime.datetime.strptime(
                 self.history_capable_date, '%Y-%m-%d').date()
         elif self.history_capable_days is not None:
-            return (today() - dt.timedelta(self.history_capable_days))
+            return (today() - datetime.timedelta(self.history_capable_days))
         else:
             return today()
 
@@ -184,7 +184,7 @@ class CrawlerBase(object):
         return self.pages[page_url]
 
     def string_to_date(self, *args, **kwargs):
-        return dt.datetime.strptime(*args, **kwargs).date()
+        return datetime.datetime.strptime(*args, **kwargs).date()
 
     def date_to_epoch(self, date):
         return int(time.mktime(date.timetuple()))
@@ -216,8 +216,7 @@ class PondusNoCrawlerBase(CrawlerBase):
     time_zone = 1
 
     def crawl_helper(self, url_id):
-        page_url = 'http://www.pondus.no/default.aspx?section=artikkel&id=%s' % (
-            url_id)
+        page_url = 'http://www.pondus.no/?section=artikkel&id=%s' % url_id
         page = self.parse_page(page_url)
         url = page.src('.imagegallery img')
         return CrawlerImage(url)

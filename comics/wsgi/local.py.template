@@ -1,0 +1,15 @@
+# Local settings that affect how WSGI should be loaded
+
+import os
+
+# If you would like WSGI to run comics from a virtualenv, set this to a path,
+# relative to this directory, to a virtualenv root.
+#VIRTUALENV_ROOT = '../../comics-virtualenv/'
+
+# Set your preferred DJANGO_SETTINGS_MODULE.
+#
+# To use development settings:
+#os.environ['DJANGO_SETTINGS_MODULE'] = 'comics.settings.dev'
+#
+# To use production settings (default):
+#os.environ['DJANGO_SETTINGS_MODULE'] = 'comics.settings'

@@ -1,0 +1,58 @@
+{% extends "accounts/base.html" %}
+{% load url from future %}
+
+{% block title %}
+  Account
+{% endblock %}
+
+{% block account_content %}
+
+  <div class="page-header">
+    <h1>Account details</h1>
+  </div>
+
+  <div class="row">
+    <div class="span6">
+
+      <table class="table table-striped">
+        <tbody>
+          <tr>
+            <th>Email</th>
+            <td>{{ user.email }}</td>
+          </tr>
+          <tr>
+            <th>Last login</th>
+            <td>{{ user.last_login|date }}</td>
+          </tr>
+          <tr>
+            <th>Date joined</th>
+            <td>{{ user.date_joined|date }}</td>
+          </tr>
+          {% for invitation in user.invitations_used.all %}
+            <tr>
+              <th>Invited by</th>
+              <td>{{ invitation.from_user.email }}</td>
+            </tr>
+          {% endfor %}
+          <tr>
+            <th>Invitations sent</th>
+            <td>
+              {{ user.invitations_sent.count }}
+
+              <div class="pull-right">
+                <a href="{% url "invitation_invite" %}" class="btn btn-mini">
+                  Invite more friends</a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>Selected comics</th>
+            <td>{{ user.comics_profile.comics.count }} / {{ all_comics.count }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+{% endblock %}

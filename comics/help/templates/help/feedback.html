@@ -1,0 +1,29 @@
+{% extends "help/base.html" %}
+{% load bootstrap %}
+
+
+{% block title %}
+  Feedback to site admin
+{% endblock %}
+
+
+{% block help_content %}
+
+  <div class="page-header">
+    <h1>Feedback <small>to site admin</small></h1>
+  </div>
+
+  <form action="" method="post" id="feedback" class="form-horizontal">
+    {% csrf_token %}
+
+    {{ feedback_form|bootstrap }}
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">
+        <i class="icon-envelope icon-white"></i>
+        Send to site administrator
+      </button>
+    </div>
+  </form>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% load bootstrap %}
+
+{% block title %}
+  Login
+{% endblock %}
+
+{% block content %}
+
+  <div class="page-header">
+    <h1>Login <small>to your account</small></h1>
+  </div>
+
+  <form method="post" action="{% url "auth_login" %}" class="form-horizontal">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}">
+
+    {{ form|bootstrap }}
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">
+        <i class="icon-ok-sign icon-white"></i>
+        Login
+      </button>
+      &nbsp;
+      <a href="{% url "auth_password_reset" %}" class="btn">
+        <i class="icon-refresh"></i>
+        Reset password
+      </a>
+    </div>
+  </form>
+
+{% endblock %}

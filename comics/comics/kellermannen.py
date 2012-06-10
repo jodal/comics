@@ -1,7 +1,7 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'Kellermannen'
     language = 'no'
     url = 'http://www.dagbladet.no/tegneserie/kellermannen/'
@@ -13,6 +13,6 @@ class Crawler(CrawlerBase):
     time_zone = 1
 
     def crawl(self, pub_date):
-        url = 'http://www.dagbladet.no/tegneserie/kellermannenarkiv/serve.php?%s' % (
-            self.date_to_epoch(pub_date),)
+        url = ('http://www.dagbladet.no/tegneserie/' +
+            'kellermannenarkiv/serve.php?%d' % self.date_to_epoch(pub_date))
         return CrawlerImage(url)

@@ -1,7 +1,7 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'Dark Legacy'
     language = 'en'
     url = 'http://www.darklegacycomics.com/'
@@ -17,4 +17,4 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             title = entry.title
             url = entry.link.replace('.html', '.jpg')
-            return CrawlerImage(url)
+            return CrawlerImage(url, title)

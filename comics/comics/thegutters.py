@@ -1,8 +1,7 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
-from comics.core.models import Release
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'The Gutters'
     language = 'en'
     url = 'http://the-gutters.com/'

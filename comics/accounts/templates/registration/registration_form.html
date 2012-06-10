@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% load bootstrap %}
+
+{% block title %}
+  Register
+{% endblock %}
+
+{% block content %}
+
+  <div class="page-header">
+    <h1>Register <small>a new account</small></h1>
+  </div>
+
+  <form action="{% url "registration_register" %}" method="post" class="form-horizontal">
+    {% csrf_token %}
+    <input type="hidden" name="invitation_key" value="{{ invitation_key }}">
+
+    {{ form|bootstrap }}
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">
+        <i class="icon-plus-sign icon-white"></i>
+        Register
+      </button>
+    </div>
+  </form>
+
+{% endblock %}

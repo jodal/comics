@@ -1,21 +1,34 @@
 from __future__ import absolute_import
 
-import datetime as dt
+import datetime
 import feedparser
+import warnings
 
 from comics.aggregator.lxmlparser import LxmlParser
+
 
 class FeedParser(object):
     def __init__(self, url):
         self.raw_feed = feedparser.parse(url)
-        self.encoding = self.raw_feed.encoding or None
+        self.encoding = None
+        if hasattr(self.raw_feed, 'encoding') and self.raw_feed.encoding:
+            self.encoding = self.raw_feed.encoding
 
     def for_date(self, date):
-        return [Entry(e, self.encoding) for e in self.raw_feed.entries
-            if e.updated_parsed and dt.date(*e.updated_parsed[:3]) == date]
+        with warnings.catch_warnings():
+            # feedparser 5.1.2 issues a warning whenever we use updated_parsed
+            warnings.simplefilter('ignore')
+            return [
+                Entry(e, self.encoding) for e in self.raw_feed.entries
+                if hasattr(e, 'published_parsed') and e.published_parsed and
+                    datetime.date(*e.published_parsed[:3]) == date
+                or hasattr(e, 'updated_parsed') and e.updated_parsed and
+                    datetime.date(*e.updated_parsed[:3]) == date
+            ]
 
     def all(self):
         return [Entry(e, self.encoding) for e in self.raw_feed.entries]
+
 
 class Entry(object):
     def __init__(self, entry, encoding=None):

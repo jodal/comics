@@ -1,5 +1,6 @@
-from comics.settings.base import *
+from comics.settings.base import *  # NOQA
+
 try:
-    from comics.settings.local import *
+    from comics.settings.local import *  # NOQA
 except ImportError:
     pass

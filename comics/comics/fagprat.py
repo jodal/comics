@@ -1,9 +1,9 @@
 # encoding: utf-8
 
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.meta.base import MetaBase
+from comics.core.comic_data import ComicDataBase
 
-class Meta(MetaBase):
+class ComicData(ComicDataBase):
     name = 'Fagprat (db.no)'
     language = 'no'
     url = 'http://www.dagbladet.no/tegneserie/fagprat'
@@ -15,6 +15,6 @@ class Crawler(CrawlerBase):
     time_zone = 1
 
     def crawl(self, pub_date):
-        url = 'http://www.dagbladet.no/tegneserie/fagpratarkiv/serve.php?%s' % (
-            self.date_to_epoch(pub_date),)
+        url = ('http://www.dagbladet.no/tegneserie/' +
+            'fagpratarkiv/serve.php?%d' % self.date_to_epoch(pub_date))
         return CrawlerImage(url)

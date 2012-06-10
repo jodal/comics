@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load url from future %}
+
+
+{% block content %}
+
+  <div class="row">
+    <div class="span2">
+      <ul class="nav nav-list">
+        <li class="nav-header">Help</li>
+        <li class="{{ active.about|yesno:"active," }}">
+          <a href="{% url "help_about" %}">About the project</a>
+        </li>
+        <li class="{{ active.feedback|yesno:"active," }}">
+          <a href="{% url "help_feedback" %}">Feedback to site admin</a>
+        </li>
+        <li class="{{ active.keyboard|yesno:"active," }}">
+          <a href="{% url "help_keyboard" %}">Keyboard shortcuts</a>
+        </li>
+      </ul>
+    </div>
+    <div  class="span10">
+      {% block help_content %}{% endblock %}
+    </div>
+  </div>
+
+{% endblock %}
