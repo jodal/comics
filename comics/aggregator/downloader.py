@@ -48,7 +48,7 @@ class ImageDownloader(object):
         self.comic = crawler_release.comic
         self.pub_date = crawler_release.pub_date
         self.has_reruns = crawler_release.has_rerun_releases
-        self.file = None
+        self.file_handle = None
         self.file_extension = None
         self.file_checksum = None
 
@@ -58,7 +58,7 @@ class ImageDownloader(object):
         existing_image = self._get_existing_image(self.file_checksum)
         if existing_image is not None:
             return existing_image
-        self._check_if_corrupt(self.file)
+        self._check_if_corrupt(self.file_handle)
         return self._create_new_image(crawler_image.title, crawler_image.text)
 
     @property
@@ -80,14 +80,14 @@ class ImageDownloader(object):
             self._check_image_mime_type(http_file)
             self.file_extension = self._get_file_extension(http_file)
             self._check_known_image_type(self.file_extension)
-            self.file = self._get_temporary_file(http_file)
-            self.file_checksum = self._get_sha256sum(self.file)
+            self.file_handle = self._get_temporary_file(http_file)
+            self.file_checksum = self._get_sha256sum(self.file_handle)
             http_file.close()
         except urllib2.HTTPError as error:
             raise DownloaderHTTPError(self.identifier, error.code)
         except urllib2.URLError as error:
             raise DownloaderHTTPError(self.identifier, error.reason)
-        except httplib.BadStatusLine as error:
+        except httplib.BadStatusLine:
             raise DownloaderHTTPError(self.identifier, 'BadStatusLine')
         except socket.error as error:
             raise DownloaderHTTPError(self.identifier, error)
@@ -117,7 +117,7 @@ class ImageDownloader(object):
     @transaction.commit_on_success
     def _create_new_image(self, title, text):
         image = Image(comic=self.comic, checksum=self.file_checksum)
-        image.file.save(self.file_name, File(self.file))
+        image.file.save(self.file_name, File(self.file_handle))
         if title is not None:
             image.title = title
         if text is not None:
