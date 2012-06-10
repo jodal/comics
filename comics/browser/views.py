@@ -35,8 +35,6 @@ class ComicMixin(object):
     @property
     def comic(self):
         if not hasattr(self, '_comic'):
-            self._comic = None
-        if not self._comic and 'comic_slug' in self.kwargs:
             self._comic = get_object_or_404(
                 Comic, slug=self.kwargs['comic_slug'])
         return self._comic
@@ -236,10 +234,15 @@ class MyComicsMixin(object):
     def get_today_url(self):
         return reverse('mycomics_today')
 
+    def _get_last_pub_date(self):
+        if not hasattr(self, '_last_pub_date'):
+            self._last_pub_date = self.get_queryset().values_list(
+                'pub_date', flat=True).order_by('-pub_date')[0]
+        return self._last_pub_date
+
     def get_day_url(self):
         try:
-            last_date = self.get_queryset().values_list(
-                'pub_date', flat=True).order_by('-pub_date')[0]
+            last_date = self._get_last_pub_date()
             return reverse('mycomics_day', kwargs={
                 'year': last_date.year,
                 'month': last_date.month,
@@ -250,8 +253,7 @@ class MyComicsMixin(object):
 
     def get_month_url(self):
         try:
-            last_month = self.get_queryset().values_list(
-                'pub_date', flat=True).order_by('-pub_date')[0]
+            last_month = self._get_last_pub_date()
             return reverse('mycomics_month', kwargs={
                 'year': last_month.year,
                 'month': last_month.month,
@@ -465,34 +467,36 @@ class OneComicMixin(object):
     def get_latest_url(self):
         return reverse('comic_latest', kwargs={'comic_slug': self.comic.slug})
 
+    def _get_recent_pub_dates(self):
+        if not hasattr(self, '_recent_pub_dates'):
+            self._recent_pub_dates = self.get_queryset().values_list(
+                'pub_date', flat=True).order_by('-pub_date')[:2]
+        return self._recent_pub_dates
+
     def get_today_url(self):
-        recent_dates = self.get_queryset().values_list(
-            'pub_date', flat=True).order_by('-pub_date')[:2]
-        if datetime.date.today() in recent_dates:
+        if datetime.date.today() in self._get_recent_pub_dates():
             return reverse('comic_today',
                 kwargs={'comic_slug': self.comic.slug})
 
     def get_day_url(self):
         try:
-            last_date = self.get_queryset().values_list(
-                'pub_date', flat=True).order_by('-pub_date')[0]
+            last_pub_date = self._get_recent_pub_dates()[0]
             return reverse('comic_day', kwargs={
                 'comic_slug': self.comic.slug,
-                'year': last_date.year,
-                'month': last_date.month,
-                'day': last_date.day,
+                'year': last_pub_date.year,
+                'month': last_pub_date.month,
+                'day': last_pub_date.day,
             })
         except IndexError:
             pass
 
     def get_month_url(self):
         try:
-            last_month = self.get_queryset().values_list(
-                'pub_date', flat=True).order_by('-pub_date')[0]
+            last_pub_date = self._get_recent_pub_dates()[0]
             return reverse('comic_month', kwargs={
                 'comic_slug': self.comic.slug,
-                'year': last_month.year,
-                'month': last_month.month,
+                'year': last_pub_date.year,
+                'month': last_pub_date.month,
             })
         except IndexError:
             pass
@@ -541,14 +545,13 @@ class OneComicMixin(object):
 
     def get_last_url(self):
         try:
-            last_date = self.get_queryset().values_list(
-                'pub_date', flat=True).order_by('-pub_date')[0]
-            if last_date > self.get_current_day():
+            last_pub_date = self._get_recent_pub_dates()[0]
+            if last_pub_date > self.get_current_day():
                 return reverse('comic_day', kwargs={
                     'comic_slug': self.comic.slug,
-                    'year': last_date.year,
-                    'month': last_date.month,
-                    'day': last_date.day,
+                    'year': last_pub_date.year,
+                    'month': last_pub_date.month,
+                    'day': last_pub_date.day,
                 })
         except IndexError:
             pass
@@ -565,15 +568,13 @@ class OneComicLatestView(OneComicMixin, ReleaseLatestView):
 
     def get_current_day(self):
         try:
-            return self.get_queryset().values_list(
-                'pub_date', flat=True).order_by('-pub_date')[0]
+            return self._get_recent_pub_dates()[0]
         except IndexError:
             pass
 
     def get_previous_day(self, day):
         try:
-            return self.get_queryset().values_list(
-                'pub_date', flat=True).order_by('-pub_date')[1]
+            return self._get_recent_pub_dates()[1]
         except IndexError:
             pass
 
@@ -631,13 +632,12 @@ class OneComicMonthView(OneComicMixin, ReleaseMonthArchiveView):
 
     def get_last_url(self):
         try:
-            last_month = self.get_queryset().values_list(
-                'pub_date', flat=True).order_by('-pub_date')[0]
-            if last_month > self.context['month']:
+            last_pub_date = self._get_recent_pub_dates()[0]
+            if last_pub_date > self.context['month']:
                 return reverse('comic_month', kwargs={
                     'comic_slug': self.comic.slug,
-                    'year': last_month.year,
-                    'month': last_month.month,
+                    'year': last_pub_date.year,
+                    'month': last_pub_date.month,
                 })
         except IndexError:
             pass
