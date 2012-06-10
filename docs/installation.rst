@@ -9,6 +9,29 @@ talking about Django's database settings. Django got better docs for their
 database settings than we could ever write, so please refer to Django's docs.
 
 
+Get *comics*
+============
+
+You can get hold of *comics* in two ways:
+
+- Download the lastest release from http://github.com/jodal/comics/tags and
+  unpack it.
+
+- Clone the Git repository. You can do so by running::
+
+      git clone git://github.com/jodal/comics
+      cd comics/
+
+  You'll then find the current stable/maintenance version in the ``master``
+  branch::
+
+      git checkout master
+
+  And the current development version in the ``develop`` branch::
+
+      git checkout develop
+
+
 Software requirements
 =====================
 
@@ -56,19 +79,6 @@ There are also some additional requirements only needed for development, which
 are listed in the file ``requirements-dev.txt``:
 
 .. literalinclude:: ../requirements-dev.txt
-
-
-Get *comics*
-============
-
-You can get hold of *comics* in two ways:
-
-- Download the lastest release from http://github.com/jodal/comics/tags.
-
-- Get the latest development version of *comics* by cloning the Git
-  repository. You can do so by running::
-
-      git clone git://github.com/jodal/comics
 
 
 Run *comics*
