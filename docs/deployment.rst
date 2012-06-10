@@ -117,7 +117,7 @@ may look like this::
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'comics',
             'USER': 'comics',
-            'PASSWORD': 'euthahM7evei',
+            'PASSWORD': 'topsecret',
             'HOST': 'localhost',
             'PORT': '',
         }
