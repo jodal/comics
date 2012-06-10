@@ -137,16 +137,17 @@ v1.1 to v2.0 migration guide
 
 - Database changes:
 
-  - The field `Comic.number_of_sets` have been removed as it is no longer used.
-    If you would want to rollback from 2.x to 1.x the data in this field can be
-    regenerated, as it's only a denormalization of data available elsewhere.
+  - The field :attr:`Comic.number_of_sets` have been removed as it is no longer
+    used.  If you would want to rollback from 2.x to 1.x the data in this field
+    can be regenerated, as it's only a denormalization of data available
+    elsewhere.
 
-  - The datetime field `Comic.added` has been added. It is automatically
+  - The datetime field :attr:`Comic.added` has been added. It is automatically
     populated with a date in the far past upon database migration.
 
-  - Added two new database indexes to the ``Release`` model, which both help a
-    lot towards making comics browsing faster. They will be automatically
-    created on database migration.
+  - Added two new database indexes to the :class:`Release` model, which both
+    help a lot towards making comics browsing faster. They will be
+    automatically created on database migration.
 
   All of these changes can be automatically applied to your database. To do so,
   run::
