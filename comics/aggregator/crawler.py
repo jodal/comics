@@ -97,15 +97,15 @@ class CrawlerBase(object):
 
         try:
             results = self.crawl(pub_date)
-        except urllib2.HTTPError, error:
+        except urllib2.HTTPError as error:
             raise CrawlerHTTPError(release.identifier, error.code)
-        except urllib2.URLError, error:
+        except urllib2.URLError as error:
             raise CrawlerHTTPError(release.identifier, error.reason)
-        except httplib.BadStatusLine, error:
+        except httplib.BadStatusLine:
             raise CrawlerHTTPError(release.identifier, 'BadStatusLine')
-        except socket.error, error:
+        except socket.error as error:
             raise CrawlerHTTPError(release.identifier, error)
-        except xml.sax._exceptions.SAXException, error:
+        except xml.sax._exceptions.SAXException as error:
             raise CrawlerHTTPError(release.identifier, error.message)
 
         if not results:
