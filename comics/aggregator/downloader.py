@@ -53,15 +53,6 @@ class ImageDownloader(object):
         self.file_extension = None
         self.file_checksum = None
 
-    def download(self, crawler_image):
-        self._download_image(crawler_image.url, crawler_image.request_headers)
-        self._check_if_blacklisted(self.file_checksum)
-        existing_image = self._get_existing_image(self.file_checksum)
-        if existing_image is not None:
-            return existing_image
-        self._check_if_corrupt(self.file_handle)
-        return self._create_new_image(crawler_image.title, crawler_image.text)
-
     @property
     def identifier(self):
         identifier = '%s/%s' % (self.comic.slug, self.pub_date)
@@ -73,6 +64,15 @@ class ImageDownloader(object):
     def file_name(self):
         if self.file_checksum and self.file_extension:
             return '%s%s' % (self.file_checksum, self.file_extension)
+
+    def download(self, crawler_image):
+        self._download_image(crawler_image.url, crawler_image.request_headers)
+        self._check_if_blacklisted(self.file_checksum)
+        existing_image = self._get_existing_image(self.file_checksum)
+        if existing_image is not None:
+            return existing_image
+        self._check_if_corrupt(self.file_handle)
+        return self._create_new_image(crawler_image.title, crawler_image.text)
 
     def _download_image(self, url, request_headers):
         try:
