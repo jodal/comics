@@ -57,7 +57,7 @@ sure that the WSGI file and the cronjob activate the virtualenv.
 Minimum dependencies
 --------------------
 
-The absolute minimum requirements for getting *comics* up and running is
+The absolute minimum requirements for getting *comics* up and running are
 documented in the file ``requirements.txt``:
 
 .. literalinclude:: ../requirements.txt
@@ -102,12 +102,12 @@ directory in your checkout of the comics repo, where you'll find the file
     python manage.py syncdb --migrate --noinput
 
 Parts of the database is managed by the South database migrations tool.
-``--migrate`` makes syncdb also run a database migration. You can also run
-``python manage.py migrate`` as an independent step.
+:option:`--migrate` makes syncdb also run a database migration. You can also
+run ``python manage.py migrate`` as an independent step.
 
-``--noinput`` stops syncdb from asking you to create a superuser, as this will
-fail at this point. Instead, when syncdb has finished, create a superuser by
-running::
+:option:`--noinput` stops syncdb from asking you to create a superuser, as this
+will fail at this point. Instead, when syncdb has finished, create a superuser
+by running::
 
     python manage.py createsuperuser
 
@@ -129,9 +129,20 @@ Get some comic releases
 -----------------------
 
 Next, we need to get hold of some comic releases, so we will crawl the web for
-them::
+them. This will get today's releases for all added comics::
 
     python manage.py comics_getreleases
+
+To get the release for a specific added comics, you can filter with
+:option:`--comic` or :option:`-c`::
+
+    python manage.py comics_getreleases -c xkcd
+
+To get releases for a range of days, you can specify a date range with
+:option:`--from` or :option:`-f` and :option:`--to` or :option:`-t`. Both
+defaults to today, so you can leave the end of the range out::
+
+    python manage.py comics_getreleases -f 2011-11-11
 
 
 Development web server
@@ -140,7 +151,7 @@ Development web server
 Finally, to be able to browse the comic releases we have aggregated, start the
 Django development web server by running::
 
-    python manage.py runserver
+    python manage.py runserver --settings=comics.settings.dev
 
 If you now point your web browser at http://localhost:8000/ you will be able to
 browse all available comics. If you provided a username and password at the
@@ -151,7 +162,6 @@ administration tasks, like removing comics or releases.
 More options
 ------------
 
-All of these commands got more options available. I.e. ``comics_getreleases``
-can crawl specific comics, and arbitrary ranges of dates instead of just
-getting the latest release. Add the ``--help`` argument to any of the commands
-to get a full listing of the available options.
+All of the ``manage.py`` commands got more options available. Add the
+:option:`--help` argument to any of the commands to get a full listing of the
+available options.
