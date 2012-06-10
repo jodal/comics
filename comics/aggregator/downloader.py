@@ -1,3 +1,4 @@
+import contextlib
 import hashlib
 import httplib
 import mimetypes
@@ -76,13 +77,12 @@ class ImageDownloader(object):
     def _download_image(self, url, request_headers):
         try:
             request = urllib2.Request(url, None, request_headers)
-            http_file = urllib2.urlopen(request)
-            self._check_image_mime_type(http_file)
-            self.file_extension = self._get_file_extension(http_file)
-            self._check_known_image_type(self.file_extension)
-            self.file_handle = self._get_temporary_file(http_file)
-            self.file_checksum = self._get_sha256sum(self.file_handle)
-            http_file.close()
+            with contextlib.closing(urllib2.urlopen(request)) as http_file:
+                self._check_image_mime_type(http_file)
+                self.file_extension = self._get_file_extension(http_file)
+                self._check_known_image_type(self.file_extension)
+                self.file_handle = self._get_temporary_file(http_file)
+                self.file_checksum = self._get_sha256sum(self.file_handle)
         except urllib2.HTTPError as error:
             raise DownloaderHTTPError(self.identifier, error.code)
         except urllib2.URLError as error:
