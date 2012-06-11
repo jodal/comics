@@ -52,7 +52,7 @@ of *comics* is mostly unchanged since v1.1.
   - Reimplemented lots of crusty old code using Django's class-based generic
     views.
 
-  - Reimplement feeds using regular feeds instead of Django's feed abstraction
+  - Reimplement feeds using regular views instead of Django's feed abstraction
     to reduce the feed response time enough to not cause timeouts when using
     e.g. Netvibes to subscribe to feeds. (Fixes: :issue:`5`)
 
