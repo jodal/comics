@@ -12,10 +12,9 @@ How to contribute
 The easiest way to contribute to *comics* is to register as a user at GitHub,
 fork `the comics project <http://github.com/jodal/comics>`_, and start hacking.
 To get your changes back into *comics*' mainline, send a pull request to `jodal
-at GitHub <http://github.com/jodal>`_, or send a mail to `comics@jodal.no
-<mailto:comics@jodal.no>`_. Patches accompanied by tests and documentation
-gives +5 karma and kudos. When hacking on *comics*, please follow the code
-style and commit guidelines below.
+at GitHub <http://github.com/jodal>`_. Patches accompanied by tests and
+documentation gives +5 karma and kudos. When hacking on *comics*, please follow
+the code style and commit guidelines below.
 
 All contributions must be granted under the same license as *comics* itself.
 
