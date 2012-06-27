@@ -6,6 +6,14 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
+v2.0.1 (in development)
+=======================
+
+**Crawlers**
+
+- Update: ``mysticrevolution`` to be more robust.
+
+
 v2.0.0 (2012-06-11)
 ===================
 
