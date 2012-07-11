@@ -84,6 +84,7 @@ INSTALLED_APPS = (
     'invitation',
     'registration',
     'south',
+    'tastypie',
     'comics.core',
     'comics.accounts',
     'comics.aggregator',
