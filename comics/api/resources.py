@@ -1,3 +1,4 @@
+from tastypie.constants import ALL
 from tastypie.resources import ModelResource
 
 from comics.api.authentication import SecretKeyAuthentication
@@ -9,3 +10,9 @@ class ComicResource(ModelResource):
         queryset = Comic.objects.all()
         resource_name = 'comic'
         authentication = SecretKeyAuthentication()
+        filtering = {
+            'active': 'exact',
+            'language': 'exact',
+            'name': ALL,
+            'slug': ALL,
+        }
