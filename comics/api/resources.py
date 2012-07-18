@@ -6,10 +6,10 @@ from comics.api.authentication import SecretKeyAuthentication
 from comics.core.models import Comic, Release, Image
 
 
-class ComicResource(ModelResource):
+class ComicsResource(ModelResource):
     class Meta:
         queryset = Comic.objects.all()
-        resource_name = 'comic'
+        resource_name = 'comics'
         authentication = SecretKeyAuthentication()
         list_allowed_methods = ['get']
         detail_allowed_methods = ['get']
@@ -21,10 +21,10 @@ class ComicResource(ModelResource):
         }
 
 
-class ImageResource(ModelResource):
+class ImagesResource(ModelResource):
     class Meta:
         queryset = Image.objects.all()
-        resource_name = 'image'
+        resource_name = 'images'
         authentication = SecretKeyAuthentication()
         list_allowed_methods = ['get']
         detail_allowed_methods = ['get']
@@ -37,14 +37,14 @@ class ImageResource(ModelResource):
         }
 
 
-class ReleaseResource(ModelResource):
-    comic = fields.ToOneField(ComicResource, 'comic')
-    images = fields.ToManyField(ImageResource, 'images', full=True)
+class ReleasesResource(ModelResource):
+    comic = fields.ToOneField(ComicsResource, 'comic')
+    images = fields.ToManyField(ImagesResource, 'images', full=True)
 
     class Meta:
         queryset = Release.objects.select_related(depth=1
             ).order_by('-fetched')
-        resource_name = 'release'
+        resource_name = 'releases'
         authentication = SecretKeyAuthentication()
         list_allowed_methods = ['get']
         detail_allowed_methods = ['get']
