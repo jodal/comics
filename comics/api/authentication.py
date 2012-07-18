@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from tastypie.authentication import Authentication
 from tastypie.http import HttpUnauthorized
 
+
 class SecretKeyAuthentication(Authentication):
     def extract_credentials(self, request):
         if request.META.get('HTTP_AUTHORIZATION', '').lower().startswith(

@@ -1,9 +1,29 @@
+from django.contrib.auth.models import User
+
 from tastypie import fields
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from tastypie.resources import ModelResource
 
 from comics.api.authentication import SecretKeyAuthentication
 from comics.core.models import Comic, Release, Image
+
+
+class UserResource(ModelResource):
+    class Meta:
+        queryset = User.objects.all()
+        fields = ['email', 'date_joined', 'last_login']
+        resource_name = 'user'
+        authentication = SecretKeyAuthentication()
+        list_allowed_methods = ['get']
+        detail_allowed_methods = ['get']
+
+    def apply_authorization_limits(self, request, object_list):
+        return object_list.filter(pk=request.user.pk)
+
+    def dehydrate(self, bundle):
+        bundle.data['secret_key'] = \
+            bundle.request.user.comics_profile.secret_key
+        return bundle
 
 
 class ComicsResource(ModelResource):
