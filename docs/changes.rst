@@ -451,7 +451,7 @@ manually executing ``manage.py``::
     python manage.py getcomics
 
 If you use WSGI, the WSGI file must be modified to support ``virtualenv``. See
-:ref:`example-wsgi-file` for how the bundled WSGI file solves this.
+the source code for how the bundled WSGI file solves this.
 
 **New dependencies**
 
