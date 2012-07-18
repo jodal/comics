@@ -40,13 +40,11 @@ class ComicsResource(ModelResource):
             'slug': ALL,
         }
 
-    def apply_filters(self, request, applicable_filters):
-        query = super(ComicsResource, self).apply_filters(
-            request, applicable_filters)
+    def apply_authorization_limits(self, request, object_list):
         if request.GET.get('my') == 'true':
-            return query.filter(userprofile__user=request.user)
+            return object_list.filter(userprofile__user=request.user)
         else:
-            return query
+            return object_list
 
 
 class ImagesResource(ModelResource):
@@ -83,10 +81,8 @@ class ReleasesResource(ModelResource):
             'fetched': ALL,
         }
 
-    def apply_filters(self, request, applicable_filters):
-        query = super(ReleasesResource, self).apply_filters(
-            request, applicable_filters)
+    def apply_authorization_limits(self, request, object_list):
         if request.GET.get('my') == 'true':
-            return query.filter(comic__userprofile__user=request.user)
+            return object_list.filter(comic__userprofile__user=request.user)
         else:
-            return query
+            return object_list
