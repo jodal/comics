@@ -74,3 +74,19 @@ class ReleasesResource(ModelResource):
             'pub_date': ALL,
             'fetched': ALL,
         }
+
+
+class MyComicsResource(ComicsResource):
+    class Meta(ComicsResource.Meta):
+        resource_name = 'mycomics'
+
+    def apply_authorization_limits(self, request, object_list):
+        return object_list.filter(userprofile__user=request.user)
+
+
+class MyReleasesResource(ReleasesResource):
+    class Meta(ReleasesResource.Meta):
+        resource_name = 'myreleases'
+
+    def apply_authorization_limits(self, request, object_list):
+        return object_list.filter(comic__userprofile__user=request.user)
