@@ -12,6 +12,7 @@ v2.0.1 (in development)
 **Crawlers**
 
 - New: ``choppingblock``
+- New: ``dungeond``
 - Update: ``mysticrevolution`` to be more robust.
 
 
