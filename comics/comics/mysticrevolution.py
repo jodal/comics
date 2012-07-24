@@ -20,5 +20,5 @@ class Crawler(CrawlerBase):
         page = self.parse_page('http://mysticrevolution.keenspot.com/')
         url = page.src('#comicpage_ img')
         title = page.alt('#comicpage_ img')
-        if pub_date.strftime('%Y%m%d') in url:
+        if url and pub_date.strftime('%Y%m%d') in url:
             return CrawlerImage(url, title)
