@@ -11,6 +11,7 @@ v2.0.1 (in development)
 
 **Crawlers**
 
+- New: ``choppingblock``
 - Update: ``mysticrevolution`` to be more robust.
 
 
