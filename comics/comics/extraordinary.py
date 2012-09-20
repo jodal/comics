@@ -4,7 +4,7 @@ from comics.meta.base import MetaBase
 class Meta(MetaBase):
     name = 'Extra Ordinary'
     language = 'en'
-    url = 'http://www.extracomics.com/'
+    url = 'http://www.exocomics.com/'
     start_date = '2009-12-14'
     rights = 'Li Chen'
 
