@@ -9,6 +9,8 @@ versioned release.
 v2.0.1 (in development)
 =======================
 
+- Set sender of feedback emails to the email address of the logged in user.
+
 **Crawlers**
 
 - New: ``antics``
