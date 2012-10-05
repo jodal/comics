@@ -15,7 +15,7 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.exiern.com/?feed=rss2')
         for entry in feed.for_date(pub_date):
-            if 'To The Wild North' not in entry.tags:
+            if 'The Wild North' not in entry.tags:
                 continue
             url = entry.summary.src('img', allow_multiple=True)
             if url:

@@ -21,6 +21,7 @@ v2.0.1 (in development)
 - New: ``exiern``
 - New: ``pickles``
 - Update: ``boxerhockey`` after site change.
+- Update: ``exiern`` after site change.
 - Update: ``mysticrevolution`` to be more robust.
 
 
