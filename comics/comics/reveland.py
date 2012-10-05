@@ -14,6 +14,6 @@ class Crawler(CrawlerBase):
     time_zone = 1
 
     def crawl(self, pub_date):
-        url = 'http://reveland.nettserier.no/_striper/reveland-%s.jpg' % (
-            self.date_to_epoch(pub_date),)
+        epoch = self.date_to_epoch(pub_date, 'Europe/Oslo')
+        url = 'http://reveland.nettserier.no/_striper/reveland-%s.jpg' % epoch
         return CrawlerImage(url)

@@ -5,6 +5,8 @@ import time
 import urllib2
 import xml.sax._exceptions
 
+import pytz
+
 from django.conf import settings
 from django.utils import timezone
 
@@ -186,8 +188,11 @@ class CrawlerBase(object):
     def string_to_date(self, *args, **kwargs):
         return datetime.datetime.strptime(*args, **kwargs).date()
 
-    def date_to_epoch(self, date):
-        return int(time.mktime(date.timetuple()))
+    def date_to_epoch(self, date, tz_name):
+        midnight = datetime.datetime(date.year, date.month, date.day)
+        local_tz = pytz.timezone(tz_name)
+        local_midnight = local_tz.localize(midnight)
+        return int(time.mktime(local_midnight.utctimetuple()))
 
 
 class ArcaMaxCrawlerBase(CrawlerBase):

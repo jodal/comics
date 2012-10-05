@@ -1,5 +1,8 @@
 Django >= 1.4, < 1.5
 
+# For timezone travel
+pytz
+
 # For database migrations
 South >= 0.7, < 0.8
 

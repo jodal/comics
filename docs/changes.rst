@@ -9,6 +9,9 @@ versioned release.
 v2.0.1 (in development)
 =======================
 
+- Add dependency on ``pytz``.
+- Make conversion from publication date to epoch used by 11 crawlers aware of
+  the time zone.
 - Set sender of feedback emails to the email address of the logged in user.
 
 **Crawlers**
@@ -23,7 +26,10 @@ v2.0.1 (in development)
 - Update: ``boxerhockey`` after site change.
 - Update: ``exiern`` after site change.
 - Update: ``gregcomic`` schedule.
+- Update: ``havet`` with better time zone handling.
 - Update: ``mysticrevolution`` to be more robust.
+- Update: ``reveland`` with better time zone handling.
+- Update: ``walkoflife`` with better time zone handling.
 
 
 v2.0.0 (2012-06-11)
