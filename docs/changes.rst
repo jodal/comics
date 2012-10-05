@@ -22,6 +22,7 @@ v2.0.1 (in development)
 - New: ``pickles``
 - Update: ``boxerhockey`` after site change.
 - Update: ``exiern`` after site change.
+- Update: ``gregcomic`` schedule.
 - Update: ``mysticrevolution`` to be more robust.
 
 
