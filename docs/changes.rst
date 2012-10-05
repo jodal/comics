@@ -12,8 +12,10 @@ v2.0.1 (in development)
 **Crawlers**
 
 - New: ``antics``
+- New: ``beetlebailey``
 - New: ``choppingblock``
 - New: ``dungeond``
+- New: ``dustin``
 - New: ``exiern``
 - New: ``pickles``
 - Update: ``mysticrevolution`` to be more robust.

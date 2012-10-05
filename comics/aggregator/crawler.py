@@ -190,6 +190,20 @@ class CrawlerBase(object):
         return int(time.mktime(date.timetuple()))
 
 
+class ArcaMaxCrawlerBase(CrawlerBase):
+    """Base comic crawler for all comics hosted at arcamax.com"""
+
+    def crawl_helper(self, slug, pub_date):
+        page_url = 'http://www.arcamax.com/thefunnies/%s/' % slug
+        page = self.parse_page(page_url)
+        date_str = page.text('span.cur')
+        date = datetime.datetime.strptime(date_str, '%B %d, %Y').date()
+        if date != pub_date:
+            return
+        url = page.src('.comic img')
+        return CrawlerImage(url)
+
+
 class GoComicsComCrawlerBase(CrawlerBase):
     """Base comic crawler for all comics hosted at gocomics.com"""
 
