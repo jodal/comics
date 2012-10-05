@@ -32,6 +32,7 @@ v2.0.1 (in development)
 - Update: ``walkoflife`` with better time zone handling.
 - Update: ``whiteninja`` schedule.
 - Update: ``zelda`` schedule.
+- Update: ``zits`` after site change.
 
 
 v2.0.0 (2012-06-11)
