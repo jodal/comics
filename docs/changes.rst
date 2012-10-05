@@ -29,7 +29,9 @@ v2.0.1 (in development)
 - Update: ``havet`` with better time zone handling.
 - Update: ``mysticrevolution`` to be more robust.
 - Update: ``reveland`` with better time zone handling.
+- Update: ``virtualshackles`` schedule.
 - Update: ``walkoflife`` with better time zone handling.
+- Update: ``whattheduck`` schedule.
 - Update: ``whiteninja`` schedule.
 - Update: ``wulffmorgenthaler`` to fetch the previous day due to releases being
   delayed.
