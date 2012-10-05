@@ -11,6 +11,7 @@ v2.0.1 (in development)
 
 **Crawlers**
 
+- New: ``antics``
 - New: ``choppingblock``
 - New: ``dungeond``
 - New: ``exiern``
