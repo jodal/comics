@@ -17,7 +17,8 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
             result = []
-            for url in page.src('div.asset-body img', allow_multiple=True):
+            for url in page.src('div.asset-body img[src*="/comics/"]',
+                    allow_multiple=True):
                 result.append(CrawlerImage(url))
             if result:
                 result[0].title = entry.title

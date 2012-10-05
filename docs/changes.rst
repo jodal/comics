@@ -29,6 +29,7 @@ v2.0.1 (in development)
 - Update: ``havet`` with better time zone handling.
 - Update: ``mysticrevolution`` to be more robust.
 - Update: ``reveland`` with better time zone handling.
+- Update: ``spikedmath`` to only fetch the correct images.
 - Update: ``tehgladiators`` schedule.
 - Update: ``thegamercat`` to fetch full size images.
 - Update: ``virtualshackles`` schedule.
