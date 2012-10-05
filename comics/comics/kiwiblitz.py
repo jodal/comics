@@ -16,6 +16,6 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed('http://www.kiwiblitz.com/feed/')
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
-            url = page.src('img[src*="/comics/"]')
-            title = page.alt('img[src*="/comics/"]')
+            url = page.src('img[src*="/wp-content/uploads/"]')
+            title = page.alt('img[src*="/wp-content/uploads/"]')
             return CrawlerImage(url, title)
