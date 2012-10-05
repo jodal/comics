@@ -20,6 +20,7 @@ v2.0.1 (in development)
 - New: ``dustin``
 - New: ``exiern``
 - New: ``pickles``
+- Update: ``boxerhockey`` after site change.
 - Update: ``mysticrevolution`` to be more robust.
 
 
