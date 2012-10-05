@@ -31,6 +31,7 @@ v2.0.1 (in development)
 - Update: ``reveland`` with better time zone handling.
 - Update: ``walkoflife`` with better time zone handling.
 - Update: ``whiteninja`` schedule.
+- Update: ``yehudamoon`` after site change.
 - Update: ``zelda`` schedule.
 - Update: ``zits`` after site change.
 
