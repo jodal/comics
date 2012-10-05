@@ -2,8 +2,7 @@
 Development
 ***********
 
-*comics* development is coordinated through `GitHub <http://github.com/>`_ and
-the IRC channel ``#dailycomics`` at ``irc.freenode.net``.
+*comics* development is coordinated through `GitHub <http://github.com/>`_.
 
 
 How to contribute
