@@ -27,6 +27,7 @@ v2.0.1 (in development)
 - Update: ``exiern`` after site change.
 - Update: ``gregcomic`` schedule.
 - Update: ``havet`` with better time zone handling.
+- Update: ``misfile`` after site change.
 - Update: ``mysticrevolution`` to be more robust.
 - Update: ``reveland`` with better time zone handling.
 - Update: ``spikedmath`` to only fetch the correct images.

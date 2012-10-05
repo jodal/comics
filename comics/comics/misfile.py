@@ -16,7 +16,6 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.misfile.com/misfileRSS.php')
         for entry in feed.for_date(pub_date):
-            url = entry.link
-            url = url.replace('?', 'overlay.php?')
-            url = url.replace('page', 'pageCalled')
+            page = self.parse_page(entry.link)
+            url = page.src('.comic img')
             return CrawlerImage(url)
