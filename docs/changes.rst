@@ -14,6 +14,7 @@ v2.0.1 (in development)
 - New: ``choppingblock``
 - New: ``dungeond``
 - New: ``exiern``
+- New: ``pickles``
 - Update: ``mysticrevolution`` to be more robust.
 
 
