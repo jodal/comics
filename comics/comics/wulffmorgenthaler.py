@@ -1,3 +1,5 @@
+import datetime
+
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
@@ -14,6 +16,8 @@ class Crawler(CrawlerBase):
     time_zone = 1
 
     def crawl(self, pub_date):
+        # Releases are published with one day delay
+        pub_date -= datetime.timedelta(days=1)
         feed = self.parse_feed('http://feeds.feedburner.com/wulffmorgenthaler')
         for entry in feed.for_date(pub_date):
             url = entry.summary.src(
