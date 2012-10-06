@@ -2,11 +2,11 @@ from comics.aggregator.crawler import ArcaMaxCrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 class ComicData(ComicDataBase):
-    name = 'Zits'
+    name = 'Dustin'
     language = 'en'
-    url = 'http://www.arcamax.com/zits'
-    start_date = '1997-07-01'
-    rights = 'Jerry Scott and Jim Borgman'
+    url = 'http://www.arcamax.com/thefunnies/dustin/'
+    start_date = '2010-01-04'
+    rights = 'Steve Kelley & Jeff Parker'
 
 class Crawler(ArcaMaxCrawlerBase):
     history_capable_days = 0
@@ -14,4 +14,4 @@ class Crawler(ArcaMaxCrawlerBase):
     time_zone = -5
 
     def crawl(self, pub_date):
-        return self.crawl_helper('zits', pub_date)
+        return self.crawl_helper('dustin', pub_date)

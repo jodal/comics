@@ -6,15 +6,43 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
-v2.0.1 (in development)
-=======================
+v2.0.1 (2012-10-06)
+===================
+
+- Add dependency on ``pytz``.
+- Make conversion from publication date to epoch used by 11 crawlers aware of
+  the time zone.
+- Set sender of feedback emails to the email address of the logged in user.
 
 **Crawlers**
 
+- New: ``antics``
+- New: ``beetlebailey``
 - New: ``choppingblock``
 - New: ``dungeond``
+- New: ``dustin``
 - New: ``exiern``
+- New: ``pickles``
+- Update: ``boxerhockey`` after site change.
+- Update: ``exiern`` after site change.
+- Update: ``gregcomic`` schedule.
+- Update: ``havet`` with better time zone handling.
+- Update: ``kiwiblitz`` after site change.
+- Update: ``misfile`` after site change.
 - Update: ``mysticrevolution`` to be more robust.
+- Update: ``reveland`` with better time zone handling.
+- Update: ``spikedmath`` to only fetch the correct images.
+- Update: ``tehgladiators`` schedule.
+- Update: ``thegamercat`` to fetch full size images.
+- Update: ``virtualshackles`` schedule.
+- Update: ``walkoflife`` with better time zone handling.
+- Update: ``whattheduck`` schedule.
+- Update: ``whiteninja`` schedule.
+- Update: ``wulffmorgenthaler`` to fetch the previous day due to releases being
+  delayed.
+- Update: ``yehudamoon`` after site change.
+- Update: ``zelda`` schedule.
+- Update: ``zits`` after site change.
 
 
 v2.0.0 (2012-06-11)

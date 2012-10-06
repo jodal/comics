@@ -12,6 +12,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_days = 32
+    schedule = 'Mo,We'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/VirtualShackles')

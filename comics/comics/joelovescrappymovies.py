@@ -41,10 +41,10 @@ class Crawler(CrawlerBase):
                 # Make sure we strip off the leading '0' on %d: Joe doesn't
                 # include them.  We can't use a regex due to the speed
                 # penalty of ~500+ regex comparisons
-                    if the_date == pub_date.strftime('%B %d, %Y').replace(
-                            ' 0', ' ', 1):
-                        the_id = possible_id
-                        break
+                if the_date == pub_date.strftime('%B %d, %Y').replace(
+                        ' 0', ' ', 1):
+                    the_id = possible_id
+                    break
 
         # Make sure we got an ID...
         if the_id is None:

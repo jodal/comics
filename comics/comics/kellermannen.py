@@ -13,6 +13,7 @@ class Crawler(CrawlerBase):
     time_zone = 1
 
     def crawl(self, pub_date):
+        epoch = self.date_to_epoch(pub_date, 'Europe/Oslo')
         url = ('http://www.dagbladet.no/tegneserie/' +
-            'kellermannenarkiv/serve.php?%d' % self.date_to_epoch(pub_date))
+            'kellermannenarkiv/serve.php?%d' % epoch)
         return CrawlerImage(url)

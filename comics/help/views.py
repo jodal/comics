@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib import messages
-from django.core.mail import mail_admins
+from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -24,7 +24,6 @@ def feedback(request):
         form = FeedbackForm(request.POST)
         if form.is_valid():
             subject = 'Feedback from %s' % settings.COMICS_SITE_TITLE
-            message = form.cleaned_data['message']
 
             metadata = 'Client IP address: %s\n' % request.META['REMOTE_ADDR']
             metadata += 'User agent: %s\n' % request.META['HTTP_USER_AGENT']
@@ -33,9 +32,18 @@ def feedback(request):
                     request.user.username, request.user.email)
             else:
                 metadata += 'User: anonymous\n'
-            message = '%s\n\n-- \n%s' % (message, metadata)
 
-            mail_admins(subject, message)
+            message = '%s\n\n-- \n%s' % (
+                form.cleaned_data['message'], metadata)
+
+            if request.user.is_authenticated():
+                sender = request.user.email
+            else:
+                sender = 'noreply@localhost'
+
+            recipients = [email for name, email in settings.ADMINS]
+
+            send_mail(subject, message, sender, recipients)
 
             messages.info(request,
                 'Thank you for taking the time to help improve the site! :-)')
