@@ -6,8 +6,8 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
-v2.0.1 (in development)
-=======================
+v2.0.1 (2012-10-06)
+===================
 
 - Add dependency on ``pytz``.
 - Make conversion from publication date to epoch used by 11 crawlers aware of
