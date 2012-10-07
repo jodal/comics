@@ -10,7 +10,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_date = '2008-04-01'
-    time_zone = -8
+    time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
         page_url = 'http://www.crookedgremlins.com/%s' % (

@@ -8,7 +8,7 @@ class ComicData(RockyData):
 class Crawler(CrawlerBase):
     history_capable_days = 162
     schedule = 'Mo,Tu,We,Th,Fr,Sa'
-    time_zone = 1
+    time_zone = 'Europe/Oslo'
 
     def crawl(self, pub_date):
         url = 'http://www.bt.no/external/cartoon/rocky/%s.gif' % (

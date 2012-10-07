@@ -9,6 +9,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     schedule = 'We,Fr'
+    time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
         page = self.parse_page('http://thedreamercomic.com/comic.php')

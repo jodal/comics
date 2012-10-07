@@ -10,7 +10,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     schedule = 'Mo,We,Fr'
-    time_zone = -8
+    time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
         page = self.parse_page('http://www.gunnerkrigg.com/index2.php')

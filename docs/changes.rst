@@ -5,6 +5,20 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+v2.1.0 (in development)
+=======================
+
+- Proper time zone support for comics crawling. We now calculate the current
+  date at the location a comic is published using time zone aware datetime
+  objects for the current time, which are converted to the comic's local time
+  zone using ``pytz``.
+
+- Removed the setting ``COMICS_DEFAULT_TIME_ZONE``.
+
+- Updated time zone data for all crawlers. A lot of releases will now be
+  fetched an hour earlier during daylight savings time, which is now taken into
+  consideration when crawling.
+
 
 v2.0.1 (2012-10-06)
 ===================

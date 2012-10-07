@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 28
     schedule = None
-    time_zone = -6
+    time_zone = 'US/Central'
 
     def crawl(self, pub_date):
         feed_url = 'http://feeds.feedburner.com/hijinksensue'

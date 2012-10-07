@@ -10,7 +10,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = None
     schedule = None
-    time_zone = -5
+    time_zone = 'America/Toronto'
 
     def crawl(self, pub_date):
         page = self.parse_page('http://www.romanticallyapocalyptic.com/')

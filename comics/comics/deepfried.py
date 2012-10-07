@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 14
     schedule = None
-    time_zone = -5
+    time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.whatisdeepfried.com/feed/')

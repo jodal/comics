@@ -10,7 +10,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_days = 30
-    time_zone = -8
+    time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.exiern.com/?feed=rss2')

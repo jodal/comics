@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 60
     schedule = 'Tu'
-    time_zone = -8
+    time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://axecop.com/index.php/achome/rss_2.0/')

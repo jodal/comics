@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = '2000-07-25'
     schedule = 'We'
-    time_zone = -6
+    time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
         url = 'http://choppingblock.keenspot.com/comics/cb%s.jpg' % (

@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 90
     schedule = 'We'
-    time_zone = 1
+    time_zone = 'Europe/Belgrade'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.tehgladiators.com/rss.xml')

@@ -229,14 +229,6 @@ COMICS_IMAGE_BLACKLIST = (
 COMICS_LOG_FILENAME = os.path.abspath(
     os.path.join(PROJECT_DIR, '..', 'comics.log'))
 
-#: Time zone of the server's clock. Used for comic crawlers without a specified
-#: time zone, and to calculate the offset of other crawlers.
-#:
-#: Examples: UTC=0, CET=1, EST=-5, PST=-8.
-#:
-#: This should be replaced by Django 1.4's time zone support.
-COMICS_DEFAULT_TIME_ZONE = 1
-
 #: Google Analytics tracking code. Tracking code will be included on all pages
 #: if this is set.
 COMICS_GOOGLE_ANALYTICS_CODE = None

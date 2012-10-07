@@ -31,7 +31,7 @@ implementation itself.
     class Crawler(CrawlerBase):
         history_capable_days = 10
         schedule = 'Mo,We,Fr'
-        time_zone = -5
+        time_zone = 'US/Eastern'
 
         def crawl(self, pub_date):
             feed = self.parse_feed('http://www.xkcd.com/rss.xml')
@@ -112,10 +112,13 @@ The :class:`Crawler` class fields
 
     .. attribute:: time_zone
 
-        *Optional.* In approximately what time zone (in whole hours relative to
-        UTC, without regard to DST) the comic is published.
+        *Optional.* In approximately what time zone the comic is published.
 
-        Example: ``1`` for central Europe or ``-5`` for eastern U.S.
+        Example: ``Europe/Oslo`` or ``US/Eastern``.
+
+        See `the IANA timezone database
+        <http://en.wikipedia.org/wiki/List_of_tz_database_time_zones>`_ for a
+        list of possible values.
 
     .. attribute:: multiple_releases_per_day
 

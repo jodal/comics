@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = '2006-11-06'
     schedule = 'Mo,Th'
-    time_zone = -5
+    time_zone = 'America/Montreal'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/LookingForGroup')

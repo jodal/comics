@@ -6,12 +6,12 @@ class ComicData(ComicDataBase):
     language = 'en'
     url = 'http://www.girlgeniusonline.com/'
     start_date = '2002-11-04'
-    rights = 'Copyright 2000-2010 Studio Foglio, LLC'
+    rights = 'Studio Foglio, LLC'
 
 class Crawler(CrawlerBase):
     history_capable_date = '2002-11-04'
     schedule = 'Mo,We,Fr'
-    time_zone = -8
+    time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
         url = 'http://www.girlgeniusonline.com/ggmain/strips/ggmain%sb.jpg' % (

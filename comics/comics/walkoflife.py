@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = '2008-06-23'
     schedule = 'Tu,Fr'
-    time_zone = 1
+    time_zone = 'Europe/Oslo'
 
     def crawl(self, pub_date):
         epoch = self.date_to_epoch(pub_date, 'Europe/Oslo')

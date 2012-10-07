@@ -10,7 +10,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_days = 60
-    time_zone = -6
+    time_zone = 'America/Regina'
 
     def crawl(self, pub_date):
         feed = self.parse_feed(

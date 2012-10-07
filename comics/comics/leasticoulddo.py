@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = '2003-02-10'
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
-    time_zone = -5
+    time_zone = 'America/Montreal'
 
     def crawl(self, pub_date):
         url = 'http://www.leasticoulddo.com/comics/%s.gif' % (

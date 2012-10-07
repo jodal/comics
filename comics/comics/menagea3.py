@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = '2008-05-17'
     schedule = 'Tu,Th,Sa'
-    time_zone = -8
+    time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
         url = 'http://zii.menagea3.net/comics/mat%s.png' % (

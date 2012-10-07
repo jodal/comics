@@ -10,7 +10,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 14
     schedule = 'Mo,We,Fr'
-    time_zone = -5
+    time_zone = 'America/Montreal'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/TheGutters')

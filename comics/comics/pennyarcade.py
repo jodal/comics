@@ -11,6 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = '1998-11-18'
     schedule = 'Mo,We,Fr'
+    time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
         page_url = 'http://www.penny-arcade.com/comic/%s/' % (

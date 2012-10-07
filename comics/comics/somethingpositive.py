@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = '2001-12-19'
     schedule = 'Mo,Tu,We,Th,Fr'
-    time_zone = -6
+    time_zone = 'US/Central'
 
     def crawl(self, pub_date):
         url = 'http://www.somethingpositive.net/sp%s.png' % (

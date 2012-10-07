@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = '2006-05-29'
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
-    time_zone = -8
+    time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://yafgc.net/inc/feed.php')

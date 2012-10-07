@@ -10,7 +10,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 30
     schedule = None
-    time_zone = -4
+    time_zone = 'Europe/London'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://garfieldminusgarfield.tumblr.com/rss')

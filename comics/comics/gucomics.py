@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = '2000-07-10'
     schedule = 'Mo,Tu,We,Th,Fr'
-    time_zone = -8
+    time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.gucomics.com/rss.xml')

@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 7
     schedule = 'Mo,Tu,We,Th,Fr'
-    time_zone = -6
+    time_zone = 'US/Pacific'
 
     # Without User-Agent set, the server returns 403 Forbidden
     headers = {'User-Agent': 'Mozilla/4.0'}

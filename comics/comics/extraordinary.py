@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 90
     schedule = 'We'
-    time_zone = -7
+    time_zone = 'Pacific/Auckland'
 
     # Without Referer set, the server returns 403 Forbidden
     headers = {'Referer': 'http://www.exocomics.com/'}

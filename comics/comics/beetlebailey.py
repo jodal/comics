@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(ArcaMaxCrawlerBase):
     history_capable_days = 0
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
-    time_zone = -5
+    time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
         return self.crawl_helper('beetlebailey', pub_date)
