@@ -20,11 +20,13 @@ The web service is only available for users with an active user account on the
 secret key as is used to access comic feeds. The secret key can be provided in
 one of two ways:
 
-- Using a HTTP GET parameter named ``key``, i.e. as part of the URL. Example:
-  http://example.com/api/v1/user/?key=76acdcdf16ae4e12becb00d09a9d9456
+- Using a HTTP GET parameter named ``key``, i.e. as part of the URL. Example::
 
-- Using the ``Authorization`` HTTP header. Example: ``Authorization: Key
-  76acdcdf16ae4e12becb00d09a9d9456``
+      http://example.com/api/v1/user/?key=76acdcdf16ae4e12becb00d09a9d9456
+
+- Using the ``Authorization`` HTTP header. Example::
+
+      Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
 
 
 Response format
@@ -33,11 +35,47 @@ Response format
 You can specify the wanted response format in one of two ways:
 
 - Using a HTTP GET parameter named ``format``, i.e. as part of the URL.
-  Example: http://example.com/api/v1/?format=json
+  Examples::
 
-- Using the ``Accept`` HTTP header. Example:: ``Accept: application/json``
+      # Returns JSON
+      http://example.com/api/v1/?format=json
 
-JSON and JSONP is always supported. Other formats like XML, YAML, and Apple
+      # Returns JSONP with function name 'callback'
+      http://example.com/api/v1/?format=jsonp
+
+      # Returns JSONP with function name 'foo'
+      http://example.com/api/v1/?format=jsonp&callback=foo
+
+      # Returns JSONP with function name 'foo'
+      http://example.com/api/v1/?callback=foo
+
+      # Returns XML
+      http://example.com/api/v1/?format=xml
+
+      # Returns YAML
+      http://example.com/api/v1/?format=yaml
+
+      # Returns Apple binary plist
+      http://example.com/api/v1/?format=plist
+
+- Using the ``Accept`` HTTP header. Examples::
+
+      # Returns JSON
+      Accept: application/json
+
+      # Returns JSONP with function name 'callback'
+      Accept: text/javascript
+
+      # Returns XML
+      Accept: application/xml
+
+      # Returns YAML
+      Accept: text/yaml
+
+      # Returns Apple binary plist
+      Accept: application/x-plist
+
+JSON and JSONP are always supported. Other formats like XML, YAML, and Apple
 binary plists (bplist) may be available if the *comics* instance got the
 additional dependencies required by the format installed.
 
