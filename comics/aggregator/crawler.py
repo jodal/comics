@@ -184,10 +184,10 @@ class CrawlerBase(object):
     def string_to_date(self, *args, **kwargs):
         return datetime.datetime.strptime(*args, **kwargs).date()
 
-    def date_to_epoch(self, date, tz_name):
-        midnight = datetime.datetime(date.year, date.month, date.day)
-        local_tz = pytz.timezone(tz_name)
-        local_midnight = local_tz.localize(midnight)
+    def date_to_epoch(self, date):
+        """The UNIX time of midnight at ``date`` in the comic's time zone"""
+        naive_midnight = datetime.datetime(date.year, date.month, date.day)
+        local_midnight = pytz.timezone(self.time_zone).localize(naive_midnight)
         return int(time.mktime(local_midnight.utctimetuple()))
 
 
