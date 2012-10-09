@@ -313,6 +313,51 @@ Releases resource
     :statuscode 400: bad request, e.g. unknown filter used
     :statuscode 401: authorization failed
 
+.. http:get:: /api/v1/releases/(int: release_id)/
+
+    Show a specific release looked up by release ID.
+
+    **Example request**
+
+    .. sourcecode:: http
+
+        GET /api/v1/releases/147708/ HTTP/1.1
+        Host: example.com
+        Accept: application/json
+        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+
+    **Example response**
+
+    .. sourcecode:: http
+
+        HTTP/1.0 200 OK
+        Content-Type: application/json; charset=utf-8
+
+        {
+            comic: "/api/v1/comics/18/",
+            fetched: "2012-10-08T04:03:56.411028+00:00",
+            id: "147708",
+            images: [
+                {
+                    checksum: "605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12",
+                    fetched: "2012-10-08T04:03:56.406586+00:00",
+                    file: "https://static.example.com/media/xkcd/6/605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12.png",
+                    height: 365,
+                    id: "151937",
+                    resource_uri: "/api/v1/images/151937/",
+                    text: "Facebook, Apple, and Google all got away with their monopolist power grabs because they don't have any 'S's in their names for critics to snarkily replace with '$'s.",
+                    title: "Microsoft",
+                    width: 278
+                }
+            ],
+            pub_date: "2012-10-08",
+            resource_uri: "/api/v1/releases/147708/"
+        }
+
+    :statuscode 200: no error
+    :statuscode 401: authorization failed
+    :statuscode 404: release not found
+
 
 Images resource
 ===============
