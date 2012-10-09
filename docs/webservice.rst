@@ -188,6 +188,13 @@ Comics resource
         }
 
     :query my: only include comics in "my comics" if ``true``
+    :query active: only include active comics (``true``) or inactive comics
+        (``false``)
+    :query language: only include comics with the exact language, e.g. ``en``
+    :query name: only include comics with matching name. Queries like
+        ``name__startswith=Dilbert`` and ``name__iexact=XkcD`` are supported.
+    :query slug: only include comics with matching slug. Queries like
+        ``slug__contains=kc`` and ``slug__endswith=dbno`` are supported.
 
     :statuscode 200: no error
     :statuscode 400: bad request, e.g. unknown filter used
@@ -308,6 +315,15 @@ Releases resource
         }
 
     :query my: only include releases from "my comics" if ``true``
+    :query comic: only include releases with matching comic. All filters on the
+        comic resource may be used, e.g. ``comic__slug=xkcd``.
+    :query images: only include releases with matching image. All filters on
+        the image resource may be used, e.g. ``images__height__gt=1000``.
+    :query pub_date: only include releases with pub_date matching. Date range
+        queries, like ``pub_date__year=2011`` or
+        ``pub_date__gte=2011-01-01&pub_date__lte=2011-12-31``, are supported.
+    :query fetched: only include releases with fetched matching. Date range
+        queries are supported.
 
     :statuscode 200: no error
     :statuscode 400: bad request, e.g. unknown filter used
@@ -369,6 +385,17 @@ give the images referenced to by releases their own canonical URLs.
 .. http:get:: /api/v1/images/
 
     Lists all images.
+
+    :query fetched: only include images with fetched matching. Date range
+        queries are supported.
+    :query title: only include images with matching title. Queries like
+        ``title__icontains=cake`` are supported.
+    :query text: only include images with matching text. Queries like
+        ``text__icontains=lies`` are supported.
+    :query height: only include images with height matching. Integer range
+        queries, like ``height__gt=1000`` are supported.
+    :query width: only include images with width matching. Integer range
+        queries are supported.
 
     :statuscode 200: no error
     :statuscode 400: bad request, e.g. unknown filter used
