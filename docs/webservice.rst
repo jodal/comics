@@ -189,6 +189,10 @@ Comics resource
 
     :query my: only include comics in "my comics" if ``true``
 
+    :statuscode 200: no error
+    :statuscode 400: bad request, e.g. unknown filter used
+    :statuscode 401: authorization failed
+
 .. http:get:: /api/v1/comics/(int:comic_id)/
 
     Show a specific comic looked up by comic ID.
@@ -222,6 +226,10 @@ Comics resource
             start_date: "2005-05-29",
             url: "http://www.xkcd.com/"
         }
+
+    :statuscode 200: no error
+    :statuscode 401: authorization failed
+    :statuscode 404: comic not found
 
 
 Releases resource
@@ -301,6 +309,10 @@ Releases resource
 
     :query my: only include releases from "my comics" if ``true``
 
+    :statuscode 200: no error
+    :statuscode 400: bad request, e.g. unknown filter used
+    :statuscode 401: authorization failed
+
 
 Images resource
 ===============
@@ -313,6 +325,15 @@ give the images referenced to by releases their own canonical URLs.
 
     Lists all images.
 
+    :statuscode 200: no error
+    :statuscode 400: bad request, e.g. unknown filter used
+    :statuscode 401: authorization failed
+
+
 .. http:get:: /api/v1/images/(int:image_id)/
 
     Show a specific image looked up by image ID.
+
+    :statuscode 200: no error
+    :statuscode 401: authorization failed
+    :statuscode 404: image not found
