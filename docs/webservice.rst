@@ -85,12 +85,16 @@ formats, check out `Tastypie's serialization docs
 details on what you need to install.
 
 
-Resources
-=========
+Root resource
+==============
 
 .. http:get:: /api/v1/
 
     List all available resources, and URLs for their schemas.
+
+
+User resource
+=============
 
 .. http:get:: /api/v1/user/
 
@@ -134,6 +138,10 @@ Resources
     :statuscode 200: no error
     :statuscode 401: authorization failed
 
+
+Comics resource
+===============
+
 .. http:get:: /api/v1/comics/
 
     Lists all available comics.
@@ -142,15 +150,82 @@ Resources
 
     .. sourcecode:: http
 
-        TODO
+        GET /api/v1/comics/?slug=xkcd HTTP/1.1
+        Host: example.com
+        Accept: application/json
+        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
 
     **Example response**
 
     .. sourcecode:: http
 
-        TODO
+        HTTP/1.0 200 OK
+        Content-Type: application/json; charset=utf-8
+
+        {
+            meta: {
+                limit: 20,
+                next: null,
+                offset: 0,
+                previous: null,
+                total_count: 1
+            },
+            objects: [
+                {
+                    active: true,
+                    added: "0001-01-01T00:00:00+00:00",
+                    end_date: null,
+                    id: "18",
+                    language: "en",
+                    name: "xkcd",
+                    resource_uri: "/api/v1/comics/18/",
+                    rights: "Randall Munroe, CC BY-NC 2.5",
+                    slug: "xkcd",
+                    start_date: "2005-05-29",
+                    url: "http://www.xkcd.com/"
+                }
+            ]
+        }
 
     :query my: only include comics in "my comics" if ``true``
+
+.. http:get:: /api/v1/comics/(int:comic_id)/
+
+    Show a specific comic looked up by comic ID.
+
+    **Example request**
+
+    .. sourcecode:: http
+
+        GET /api/v1/comics/18/ HTTP/1.1
+        Host: example.com
+        Accept: application/json
+        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+
+    **Example response**
+
+    .. sourcecode:: http
+
+        HTTP/1.0 200 OK
+        Content-Type: application/json; charset=utf-8
+
+        {
+            active: true,
+            added: "0001-01-01T00:00:00+00:00",
+            end_date: null,
+            id: "18",
+            language: "en",
+            name: "xkcd",
+            resource_uri: "/api/v1/comics/18/",
+            rights: "Randall Munroe, CC BY-NC 2.5",
+            slug: "xkcd",
+            start_date: "2005-05-29",
+            url: "http://www.xkcd.com/"
+        }
+
+
+Releases resource
+=================
 
 .. http:get:: /api/v1/releases/
 
@@ -160,17 +235,84 @@ Resources
 
     .. sourcecode:: http
 
-        TODO
+        GET /api/v1/releases/?comic__slug=xkcd&limit=2 HTTP/1.1
+        Host: example.com
+        Accept: application/json
+        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
 
     **Example response**
 
     .. sourcecode:: http
 
-        TODO
+        HTTP/1.0 200 OK
+        Content-Type: application/json; charset=utf-8
+
+        {
+            meta: {
+                limit: 2,
+                next: "/api/v1/releases/?limit=2&key=76acdcdf16ae4e12becb00d09a9d9456&format=json&comic__slug=xkcd&offset=2",
+                offset: 0,
+                previous: null,
+                total_count: 1104
+            },
+            objects: [
+                {
+                    comic: "/api/v1/comics/18/",
+                    fetched: "2012-10-08T04:03:56.411028+00:00",
+                    id: "147708",
+                    images: [
+                        {
+                            checksum: "605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12",
+                            fetched: "2012-10-08T04:03:56.406586+00:00",
+                            file: "https://static.example.com/media/xkcd/6/605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12.png",
+                            height: 365,
+                            id: "151937",
+                            resource_uri: "/api/v1/images/151937/",
+                            text: "Facebook, Apple, and Google all got away with their monopolist power grabs because they don't have any 'S's in their names for critics to snarkily replace with '$'s.",
+                            title: "Microsoft",
+                            width: 278
+                        }
+                    ],
+                    pub_date: "2012-10-08",
+                    resource_uri: "/api/v1/releases/147708/"
+                },
+                {
+                    comic: "/api/v1/comics/18/",
+                    fetched: "2012-10-05T05:03:33.744355+00:00",
+                    id: "147172",
+                    images: [
+                        {
+                            checksum: "6d1b67d3dc00d362ddb5b5e8f1c3f174926d2998ca497e8737ff8b74e7100997",
+                            fetched: "2012-10-05T05:03:33.737231+00:00",
+                            file: "https://static.example.com/media/xkcd/6/6d1b67d3dc00d362ddb5b5e8f1c3f174926d2998ca497e8737ff8b74e7100997.png",
+                            height: 254,
+                            id: "151394",
+                            resource_uri: "/api/v1/images/151394/",
+                            text: "According to my mom, my first word was (looking up at the sky) 'Wow!'",
+                            title: "My Sky",
+                            width: 713
+                        }
+                    ],
+                    pub_date: "2012-10-05",
+                    resource_uri: "/api/v1/releases/147172/"
+                }
+            ]
+        }
 
     :query my: only include releases from "my comics" if ``true``
 
+
+Images resource
+===============
+
+You will probably not use the images resource, as the images are available
+through the ``releases`` resource as well. The images resource is included to
+give the images referenced to by releases their own canonical URLs.
+
 .. http:get:: /api/v1/images/
 
-    Lists all images. You'll probably not use this one, as the images are
-    available through the ``releases`` resource as well.
+    Lists all images.
+
+.. http:get:: /api/v1/images/(int:image_id)/
+
+    Show a specific image looked up by image ID.
