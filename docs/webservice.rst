@@ -85,16 +85,43 @@ formats, check out `Tastypie's serialization docs
 details on what you need to install.
 
 
+.. _pagination:
+
+Pagination
+==========
+
+All the resource collections support pagination. The pagination parameters that
+may be passed as :http:method:`GET` arguments are:
+
+- **limit** -- max number of returned resources per response. Defaults to 20.
+
+- **offset** -- offset into the full collection of resources. Defaults to 0.
+
+The ``meta`` section of the collection responses include the current pagination
+parameters, and--if available--links to the previous and next page, and the
+total count of resources matching the query:
+
+- **next** -- link to the next page of the collection, if available
+
+- **previous** -- link to the previous page of the collection, if available
+
+- **total_count** -- total number of resources in the collection, given the
+  current filters.
+
+
+Resources
+=========
+
 Root resource
-==============
+-------------
 
 .. http:get:: /api/v1/
 
-    List all available resources, and URLs for their schemas.
+    Lists all available resources, and URLs for their schemas.
 
 
 User resource
-=============
+-------------
 
 .. http:get:: /api/v1/user/
 
@@ -140,11 +167,11 @@ User resource
 
 
 Comics resource
-===============
+---------------
 
 .. http:get:: /api/v1/comics/
 
-    Lists all available comics.
+    Lists all available comics. Supports :ref:`pagination`.
 
     **Example request**
 
@@ -240,11 +267,12 @@ Comics resource
 
 
 Releases resource
-=================
+-----------------
 
 .. http:get:: /api/v1/releases/
 
-    Lists all available releases, last fetched first.
+    Lists all available releases, last fetched first. Supports
+    :ref:`pagination`.
 
     **Example request**
 
@@ -376,7 +404,7 @@ Releases resource
 
 
 Images resource
-===============
+---------------
 
 You will probably not use the images resource, as the images are available
 through the ``releases`` resource as well. The images resource is included to
@@ -384,7 +412,7 @@ give the images referenced to by releases their own canonical URLs.
 
 .. http:get:: /api/v1/images/
 
-    Lists all images.
+    Lists all images. Supports :ref:`pagination`.
 
     :query fetched: only include images with fetched matching. Date range
         queries are supported.
