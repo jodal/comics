@@ -261,6 +261,8 @@ Comics resource
             url: "http://www.xkcd.com/"
         }
 
+    :param comic_id: the comic ID
+
     :statuscode 200: no error
     :statuscode 401: authorization failed
     :statuscode 404: comic not found
@@ -398,6 +400,8 @@ Releases resource
             resource_uri: "/api/v1/releases/147708/"
         }
 
+    :param release_id: the release ID
+
     :statuscode 200: no error
     :statuscode 401: authorization failed
     :statuscode 404: release not found
@@ -433,6 +437,8 @@ give the images referenced to by releases their own canonical URLs.
 .. http:get:: /api/v1/images/(int:image_id)/
 
     Show a specific image looked up by image ID.
+
+    :param image_id: the image ID
 
     :statuscode 200: no error
     :statuscode 401: authorization failed
