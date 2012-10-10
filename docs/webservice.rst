@@ -221,7 +221,7 @@ Comics resource
     :query name: only include comics with matching name. Queries like
         ``name__startswith=Dilbert`` and ``name__iexact=XkcD`` are supported.
     :query slug: only include comics with matching slug. Queries like
-        ``slug__contains=kc`` and ``slug__endswith=dbno`` are supported.
+        ``slug__contains=kc`` and ``slug__endswith=db`` are supported.
 
     :statuscode 200: no error
     :statuscode 400: bad request, e.g. unknown filter used
