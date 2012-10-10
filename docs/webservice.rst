@@ -163,7 +163,7 @@ User resource
         }
 
     :statuscode 200: no error
-    :statuscode 401: authorization failed
+    :statuscode 401: authentication/authorization failed
 
 
 Comics resource
@@ -225,7 +225,7 @@ Comics resource
 
     :statuscode 200: no error
     :statuscode 400: bad request, e.g. unknown filter used
-    :statuscode 401: authorization failed
+    :statuscode 401: authentication/authorization failed
 
 .. http:get:: /api/v1/comics/(int:comic_id)/
 
@@ -264,7 +264,7 @@ Comics resource
     :param comic_id: the comic ID
 
     :statuscode 200: no error
-    :statuscode 401: authorization failed
+    :statuscode 401: authentication/authorization failed
     :statuscode 404: comic not found
 
 
@@ -357,7 +357,7 @@ Releases resource
 
     :statuscode 200: no error
     :statuscode 400: bad request, e.g. unknown filter used
-    :statuscode 401: authorization failed
+    :statuscode 401: authentication/authorization failed
 
 .. http:get:: /api/v1/releases/(int: release_id)/
 
@@ -403,7 +403,7 @@ Releases resource
     :param release_id: the release ID
 
     :statuscode 200: no error
-    :statuscode 401: authorization failed
+    :statuscode 401: authentication/authorization failed
     :statuscode 404: release not found
 
 
@@ -431,7 +431,7 @@ give the images referenced to by releases their own canonical URLs.
 
     :statuscode 200: no error
     :statuscode 400: bad request, e.g. unknown filter used
-    :statuscode 401: authorization failed
+    :statuscode 401: authentication/authorization failed
 
 
 .. http:get:: /api/v1/images/(int:image_id)/
@@ -441,5 +441,5 @@ give the images referenced to by releases their own canonical URLs.
     :param image_id: the image ID
 
     :statuscode 200: no error
-    :statuscode 401: authorization failed
+    :statuscode 401: authentication/authorization failed
     :statuscode 404: image not found
