@@ -45,6 +45,8 @@ class ComicsResource(ModelResource):
     def apply_authorization_limits(self, request, object_list):
         if request.GET.get('subscribed') == 'true':
             return object_list.filter(userprofile__user=request.user)
+        elif request.GET.get('subscribed') == 'false':
+            return object_list.exclude(userprofile__user=request.user)
         else:
             return object_list
 
@@ -86,6 +88,8 @@ class ReleasesResource(ModelResource):
     def apply_authorization_limits(self, request, object_list):
         if request.GET.get('subscribed') == 'true':
             return object_list.filter(comic__userprofile__user=request.user)
+        elif request.GET.get('subscribed') == 'false':
+            return object_list.exclude(comic__userprofile__user=request.user)
         else:
             return object_list
 
