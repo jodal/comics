@@ -10,7 +10,7 @@ from comics.core.models import Comic, Release, Image
 from comics.accounts.models import Subscription
 
 
-class UserResource(ModelResource):
+class UsersResource(ModelResource):
     class Meta:
         queryset = User.objects.all()
         fields = ['email', 'date_joined', 'last_login']
@@ -94,7 +94,7 @@ class ReleasesResource(ModelResource):
             return object_list
 
 
-class SubscriptionResource(ModelResource):
+class SubscriptionsResource(ModelResource):
     comic = fields.ToOneField(ComicsResource, 'comic')
 
     class Meta:
