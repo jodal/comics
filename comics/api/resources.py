@@ -14,7 +14,7 @@ class UserResource(ModelResource):
     class Meta:
         queryset = User.objects.all()
         fields = ['email', 'date_joined', 'last_login']
-        resource_name = 'user'
+        resource_name = 'users'
         authentication = SecretKeyAuthentication()
         list_allowed_methods = ['get']
         detail_allowed_methods = ['get']

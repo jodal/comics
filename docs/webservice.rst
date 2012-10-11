@@ -22,7 +22,7 @@ one of two ways:
 
 - Using a HTTP GET parameter named ``key``, i.e. as part of the URL. Example::
 
-      http://example.com/api/v1/user/?key=76acdcdf16ae4e12becb00d09a9d9456
+      http://example.com/api/v1/users/?key=76acdcdf16ae4e12becb00d09a9d9456
 
 - Using the ``Authorization`` HTTP header. Example::
 
@@ -120,18 +120,18 @@ Root resource
     Lists all available resources, and URLs for their schemas.
 
 
-User resource
--------------
+Users resource
+--------------
 
-.. http:get:: /api/v1/user/
+.. http:get:: /api/v1/users/
 
-    Get the authenticated user.
+    List of all authenticated users. Not surprisingly, it always has a single result.
 
     **Example request**
 
     .. sourcecode:: http
 
-        GET /api/v1/user/ HTTP/1.1
+        GET /api/v1/users/ HTTP/1.1
         Host: example.com
         Accept: application/json
         Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
@@ -156,7 +156,7 @@ User resource
                     date_joined: "2012-04-30T18:39:59+00:00",
                     email: "alice@example.com",
                     last_login: "2012-06-09T23:09:54.312109+00:00",
-                    resource_uri: "/api/v1/user/1/",
+                    resource_uri: "/api/v1/users/1/",
                     secret_key: "76acdcdf16ae4e12becb00d09a9d9456"
                 }
             ]
