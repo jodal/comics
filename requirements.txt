@@ -27,3 +27,6 @@ django-registration >= 0.8, < 0.9
 
 # For Twitter Bootstrap compatible Django forms
 django-bootstrap-form >= 2.0, < 2.1
+
+# For REST API
+django-tastypie >= 0.9, < 0.10

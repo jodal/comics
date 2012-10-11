@@ -8,6 +8,10 @@ versioned release.
 v2.1.0 (in development)
 =======================
 
+- Added a :doc:`webservice` interface to the *comics* instance's data to
+  enable the development of custom frontends to *comics* and apps for Android
+  and iOS.
+
 - Proper time zone support for comics crawling. We now calculate the current
   date at the location a comic is published using time zone aware datetime
   objects for the current time, which are converted to the comic's local time
