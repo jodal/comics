@@ -108,9 +108,6 @@ class SubscriptionResource(ModelResource):
             'comic': ALL_WITH_RELATIONS,
         }
 
-    def apply_authorization_limits(self, request, object_list):
-        return object_list.filter(userprofile__user=request.user)
-
     def obj_create(self, bundle, request=None, **kwargs):
         return super(SubscriptionResource, self).obj_create(bundle, request,
             userprofile=request.user.comics_profile)
