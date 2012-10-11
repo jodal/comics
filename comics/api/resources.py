@@ -1,10 +1,12 @@
 from django.contrib.auth.models import User
 
 from tastypie import fields
+from tastypie.authentication import BasicAuthentication
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from tastypie.resources import ModelResource
 
-from comics.api.authentication import SecretKeyAuthentication
+from comics.api.authentication import (SecretKeyAuthentication,
+    MultiAuthentication)
 from comics.api.authorization import SubscriptionAuthorization
 from comics.core.models import Comic, Release, Image
 from comics.accounts.models import Subscription
@@ -15,7 +17,9 @@ class UsersResource(ModelResource):
         queryset = User.objects.all()
         fields = ['email', 'date_joined', 'last_login']
         resource_name = 'users'
-        authentication = SecretKeyAuthentication()
+        authentication = MultiAuthentication(
+            BasicAuthentication(realm='Comics API'),
+            SecretKeyAuthentication())
         list_allowed_methods = ['get']
         detail_allowed_methods = ['get']
 

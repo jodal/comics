@@ -29,6 +29,32 @@ one of two ways:
       Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
 
 
+Get secret key using email and password
+---------------------------------------
+
+If it's inconvenient for the end user to enter the secret key in your user
+interface--on mobile phones copy-pasting the API key from the comics instance's
+account page is time consuming at best--you may retrieve the secret key on
+behalf of the end user by following steps:
+
+1. Ask the end user to provide:
+
+   - the comics instance base URL (e.g. ``example.com``)
+   - the email address the end user have registered on the comics instance
+   - the password the end user have registered on the comics instance
+
+2. Use the provided information to retrieve the :ref:`users-resource` from the
+   API. Authenticate using `Basic Authentication
+   <http://en.wikipedia.org/wiki/Basic_access_authentication>`_ with the email
+   address as username and the password as password. This does only work for
+   the :ref:`users-resource`.
+
+3. In the response from the :ref:`users-resource`, you'll find the end user's
+   secret key. You can cache the secret key in your application and use it for
+   all future requests to the API. The end user's email address and password
+   should be thrown away at this point.
+
+
 Response format
 ===============
 
@@ -120,6 +146,8 @@ Root resource
     Lists all available resources, and URLs for their schemas.
 
 
+.. _users-resource:
+
 Users resource
 --------------
 
@@ -127,7 +155,7 @@ Users resource
 
     List of all authenticated users. Not surprisingly, it always has a single result.
 
-    **Example request**
+    **Example request using secret key**
 
     .. sourcecode:: http
 
@@ -135,6 +163,19 @@ Users resource
         Host: example.com
         Accept: application/json
         Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+
+    **Example request using Basic Authentication**
+
+    This is the only resource that also accepts `Basic Authentication`_, using
+    the user's email address and password. Use the secret key from the response
+    for authenticating all future requests to the API.
+
+    .. sourcecode:: http
+
+        GET /api/v1/users/ HTTP/1.1
+        Host: example.com
+        Accept: application/json
+        Authorization: Basic YWxpY2VAZXhhbXBsZS5jb206c2VjcmV0
 
     **Example response**
 
