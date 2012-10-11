@@ -102,8 +102,8 @@ class SubscriptionResource(ModelResource):
         resource_name = 'subscriptions'
         authentication = SecretKeyAuthentication()
         authorization = SubscriptionAuthorization()
-        list_allowed_methods = ['get', 'post']
-        detail_allowed_methods = ['get', 'delete']
+        list_allowed_methods = ['get', 'post', 'patch']
+        detail_allowed_methods = ['get', 'delete', 'put']
         filtering = {
             'comic': ALL_WITH_RELATIONS,
         }
@@ -113,4 +113,4 @@ class SubscriptionResource(ModelResource):
 
     def obj_create(self, bundle, request=None, **kwargs):
         return super(SubscriptionResource, self).obj_create(bundle, request,
-                userprofile=request.user.comics_profile)
+            userprofile=request.user.comics_profile)

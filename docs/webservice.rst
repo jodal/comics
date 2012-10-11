@@ -528,6 +528,52 @@ Subscriptions resource
     :statuscode 500: if the request cannot be processed, e.g. because the
         subscription already exists
 
+.. http:patch:: /api/v1/subscriptions/
+
+    Do bulk updates of subscriptions: e.g. create and delete multiple
+    subscriptions with a single request.
+
+    If any part of the bulk update fails, all changes are rolled back.
+
+    **Example request**
+
+    .. sourcecode:: http
+
+        PATCH /api/v1/subscriptions/ HTTP/1.1
+        Host: example.com
+        Accept: application/json
+        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Content-Type: application/json
+
+        {
+            "objects": [
+                {
+                    "comic": "/api/v1/comics/19/"
+                },
+                {
+                    "comic": "/api/v1/comics/20/"
+                }
+            ],
+            "deleted_objects": [
+                "/api/v1/subscriptions/4/",
+                "/api/v1/subscriptions/5/"
+            ]
+        }
+
+    **Example response**
+
+    .. sourcecode:: http
+
+        HTTP/1.0 202 ACCEPTED
+        Content-Length: 0
+        Content-Type: text/html; charset=utf-8
+
+    :statuscode 202: no error, changes was accepted, use :http:method:`GET` to
+        see the changes
+    :statuscode 401: authentication/authorization failed
+    :statuscode 500: if the request cannot be processed, e.g. because a
+        subscription already exists
+
 .. http:get:: /api/v1/subscriptions/(int:subscription_id)/
 
     Show one of the authenticated user's comic subscriptions looked up by
