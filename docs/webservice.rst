@@ -166,147 +166,6 @@ User resource
     :statuscode 401: authentication/authorization failed
 
 
-Subscriptions resource
-----------------------
-
-.. http:get:: /api/v1/subscriptions/
-
-    List all the authenticated user's comic subscriptions.
-
-    **Example request**
-
-    .. sourcecode:: http
-
-        GET /api/v1/subscriptions/?comic__slug=xkcd HTTP/1.1
-        Host: example.com
-        Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
-
-    **Example response**
-
-    .. sourcecode:: http
-
-        HTTP/1.0 200 OK
-        Content-Type: application/json; charset=utf-8
-
-        {
-            meta: {
-                limit: 20,
-                next: null,
-                offset: 0,
-                previous: null,
-                total_count: 1
-            },
-            objects: [
-                {
-                    comic: "/api/v1/comics/18/",
-                    id: "2",
-                    resource_uri: "/api/v1/subscriptions/2/"
-                }
-            ]
-        }
-
-    :query comic: only include releases with matching comic. All filters on the
-        comic resource may be used, e.g. ``comic__slug=xkcd``.
-
-    :statuscode 200: no error
-    :statuscode 401: authentication/authorization failed
-
-.. http:post:: /api/v1/subscriptions/
-
-    Subscribe the authenticated user to the given comic.
-
-    **Example request**
-
-    Note that the request specifies the ``Content-Type`` since it includes a
-    body with JSON.
-
-    .. sourcecode:: http
-
-        POST /api/v1/subscriptions/ HTTP/1.1
-        Host: example.com
-        Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
-        Content-Type: application/json
-
-        {
-            "comic": "/api/v1/comics/18/"
-        }
-
-    **Example response**
-
-    .. sourcecode:: http
-
-        HTTP/1.0 201 CREATED
-        Content-Type: text/html; charset=utf-8
-        Location: https://example.com/api/v1/subscriptions/4/
-
-    :statuscode 201: no error, object was created, see ``Location`` header
-    :statuscode 401: authentication/authorization failed
-    :statuscode 500: if the request cannot be processed, e.g. because the
-        subscription already exists
-
-.. http:get:: /api/v1/subscriptions/(int: subscription_id)
-
-    Show one of the authenticated user's comic subscriptions looked up by
-    subscription ID.
-
-    **Example request**
-
-    .. sourcecode:: http
-
-        GET /api/v1/subscriptions/2/ HTTP/1.1
-        Host: example.com
-        Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
-
-    **Example response**
-
-    .. sourcecode:: http
-
-        HTTP/1.0 200 OK
-        Content-Type: application/json; charset=utf-8
-
-        {
-            comic: "/api/v1/comics/18/",
-            id: "2",
-            resource_uri: "/api/v1/subscriptions/2/"
-        }
-
-    :param subscription_id: the subscription ID
-
-    :statuscode 200: no error
-    :statuscode 401: authentication/authorization failed
-    :statuscode 404: subscription not found
-
-.. http:delete:: /api/v1/subscriptions/(int: subscription_id)
-
-    Unsubscribe the authenticated user from the given comic.
-
-    **Example request**
-
-    .. sourcecode:: http
-
-        DELETE /api/v1/subscriptions/17/ HTTP/1.1
-        Host: example.com
-        Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
-
-    **Example response**
-
-    .. sourcecode:: http
-
-        HTTP/1.0 204 NO CONTENT
-        Content-Length: 0
-        Content-Type: text/html; charset=utf-8
-
-    :param subscription_id: the subscription ID
-
-    :statuscode 204: no error, and no content returned
-    :statuscode 401: authentication/authorization failed
-    :statuscode 404: subscription not found
-
-
 Comics resource
 ---------------
 
@@ -502,7 +361,7 @@ Releases resource
     :statuscode 400: bad request, e.g. unknown filter used
     :statuscode 401: authentication/authorization failed
 
-.. http:get:: /api/v1/releases/(int: release_id)/
+.. http:get:: /api/v1/releases/(int:release_id)/
 
     Show a specific release looked up by release ID.
 
@@ -586,3 +445,145 @@ give the images referenced to by releases their own canonical URLs.
     :statuscode 200: no error
     :statuscode 401: authentication/authorization failed
     :statuscode 404: image not found
+
+
+Subscriptions resource
+----------------------
+
+.. http:get:: /api/v1/subscriptions/
+
+    List all the authenticated user's comic subscriptions. Supports
+    :ref:`pagination`.
+
+    **Example request**
+
+    .. sourcecode:: http
+
+        GET /api/v1/subscriptions/?comic__slug=xkcd HTTP/1.1
+        Host: example.com
+        Accept: application/json
+        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+
+    **Example response**
+
+    .. sourcecode:: http
+
+        HTTP/1.0 200 OK
+        Content-Type: application/json; charset=utf-8
+
+        {
+            meta: {
+                limit: 20,
+                next: null,
+                offset: 0,
+                previous: null,
+                total_count: 1
+            },
+            objects: [
+                {
+                    comic: "/api/v1/comics/18/",
+                    id: "2",
+                    resource_uri: "/api/v1/subscriptions/2/"
+                }
+            ]
+        }
+
+    :query comic: only include releases with matching comic. All filters on the
+        comic resource may be used, e.g. ``comic__slug=xkcd``.
+
+    :statuscode 200: no error
+    :statuscode 401: authentication/authorization failed
+
+.. http:post:: /api/v1/subscriptions/
+
+    Subscribe the authenticated user to the given comic.
+
+    **Example request**
+
+    Note that the request specifies the ``Content-Type`` since it includes a
+    body with JSON.
+
+    .. sourcecode:: http
+
+        POST /api/v1/subscriptions/ HTTP/1.1
+        Host: example.com
+        Accept: application/json
+        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Content-Type: application/json
+
+        {
+            "comic": "/api/v1/comics/18/"
+        }
+
+    **Example response**
+
+    .. sourcecode:: http
+
+        HTTP/1.0 201 CREATED
+        Content-Type: text/html; charset=utf-8
+        Location: https://example.com/api/v1/subscriptions/4/
+
+    :statuscode 201: no error, object was created, see ``Location`` header
+    :statuscode 401: authentication/authorization failed
+    :statuscode 500: if the request cannot be processed, e.g. because the
+        subscription already exists
+
+.. http:get:: /api/v1/subscriptions/(int:subscription_id)/
+
+    Show one of the authenticated user's comic subscriptions looked up by
+    subscription ID.
+
+    **Example request**
+
+    .. sourcecode:: http
+
+        GET /api/v1/subscriptions/2/ HTTP/1.1
+        Host: example.com
+        Accept: application/json
+        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+
+    **Example response**
+
+    .. sourcecode:: http
+
+        HTTP/1.0 200 OK
+        Content-Type: application/json; charset=utf-8
+
+        {
+            comic: "/api/v1/comics/18/",
+            id: "2",
+            resource_uri: "/api/v1/subscriptions/2/"
+        }
+
+    :param subscription_id: the subscription ID
+
+    :statuscode 200: no error
+    :statuscode 401: authentication/authorization failed
+    :statuscode 404: subscription not found
+
+.. http:delete:: /api/v1/subscriptions/(int:subscription_id)
+
+    Unsubscribe the authenticated user from the given comic.
+
+    **Example request**
+
+    .. sourcecode:: http
+
+        DELETE /api/v1/subscriptions/17/ HTTP/1.1
+        Host: example.com
+        Accept: application/json
+        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+
+    **Example response**
+
+    .. sourcecode:: http
+
+        HTTP/1.0 204 NO CONTENT
+        Content-Length: 0
+        Content-Type: text/html; charset=utf-8
+
+    :param subscription_id: the subscription ID
+
+    :statuscode 204: no error, and no content returned
+    :statuscode 401: authentication/authorization failed
+    :statuscode 404: subscription not found
