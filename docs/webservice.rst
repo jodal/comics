@@ -355,7 +355,8 @@ Comics resource
             ]
         }
 
-    :query my: only include comics in "my comics" if ``true``
+    :query subscribed: only include comics the authorized user is subscribed to
+        if ``true``
     :query active: only include active comics (``true``) or inactive comics
         (``false``)
     :query language: only include comics with the exact language, e.g. ``en``
@@ -485,7 +486,8 @@ Releases resource
             ]
         }
 
-    :query my: only include releases from "my comics" if ``true``
+    :query subscribed: only include releases the authorized user is subscribed
+        to if ``true``
     :query comic: only include releases with matching comic. All filters on the
         comic resource may be used, e.g. ``comic__slug=xkcd``.
     :query images: only include releases with matching image. All filters on
