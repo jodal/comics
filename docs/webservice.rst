@@ -3,13 +3,15 @@ Web service
 ***********
 
 *comics* comes with a web service that exposes all useful data about the
-current user, comics, comic releases, and comic images. The web service may be
-used to e.g. create iOS/Android apps or alternative comics browsers, while
-leaving the comics crawling job to a *comics* instance.
+current user, the user's comics subscriptions, comics, comic releases, and
+comic images. The web service may be used to e.g. create iOS/Android apps or
+alternative comics browsers, while leaving the comics crawling job to a
+*comics* instance.
 
 Please make any apps using this API generic, so that they can be used with any
-*comics* instance as the backend. In other words, please let the end user
-enter the hostname of the *comics* instance himself.
+*comics* instance as the backend. In other words, when starting your app, let
+the end user enter the hostname of the *comics* instance, in addition to his
+secret key or email/password pair.
 
 
 Authentication
@@ -17,8 +19,10 @@ Authentication
 
 The web service is only available for users with an active user account on the
 *comics* instance. The user must authenticate himself using the same
-secret key as is used to access comic feeds. The secret key can be provided in
-one of two ways:
+secret key as is used to access comic feeds. The key can be found in the
+account section of the *comics* instance.
+
+The secret key can be provided in one of two ways:
 
 - Using a HTTP GET parameter named ``key``, i.e. as part of the URL. Example::
 
@@ -33,15 +37,17 @@ Get secret key using email and password
 ---------------------------------------
 
 If it's inconvenient for the end user to enter the secret key in your user
-interface--on mobile phones copy-pasting the API key from the comics instance's
-account page is time consuming at best--you may retrieve the secret key on
-behalf of the end user by following steps:
+interface--on mobile phones copy-pasting the API key from the *comics*
+instance's account page is time consuming at best--you may retrieve the secret
+key on behalf of the end user by following steps:
 
 1. Ask the end user to provide:
 
-   - the comics instance base URL (e.g. ``example.com``)
-   - the email address the end user have registered on the comics instance
-   - the password the end user have registered on the comics instance
+   - the *comics* instance's base URL (e.g. ``example.com``)
+
+   - the email address the end user have registered on the *comics* instance
+
+   - the password the end user have registered on the *comics* instance
 
 2. Use the provided information to retrieve the :ref:`users-resource` from the
    API. Authenticate using `Basic Authentication
@@ -50,15 +56,15 @@ behalf of the end user by following steps:
    the :ref:`users-resource`.
 
 3. In the response from the :ref:`users-resource`, you'll find the end user's
-   secret key. You can cache the secret key in your application and use it for
-   all future requests to the API. The end user's email address and password
-   should be thrown away at this point.
+   secret key. You should cache the secret key in your application and use it
+   for all future requests to the API on behalf of this user. The end user's
+   password should be thrown away at this point.
 
 
 Response format
 ===============
 
-You can specify the wanted response format in one of two ways:
+You can specify what response format you prefer in one of two ways:
 
 - Using a HTTP GET parameter named ``format``, i.e. as part of the URL.
   Examples::
@@ -120,6 +126,7 @@ All the resource collections support pagination. The pagination parameters that
 may be passed as :http:method:`GET` arguments are:
 
 - **limit** -- max number of returned resources per response. Defaults to 20.
+  Use 0 to remove the limit and request all objects in a single response.
 
 - **offset** -- offset into the full collection of resources. Defaults to 0.
 
