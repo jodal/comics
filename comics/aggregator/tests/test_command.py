@@ -9,10 +9,14 @@ from comics.aggregator.exceptions import ComicsError
 from comics.core.models import Comic
 
 
-class AggregatorConfigTestCase(TestCase):
-    fixtures = ['test_comics.json']
+def create_comics():
+    Comic.objects.create(slug='xkcd')
+    Comic.objects.create(slug='sinfest')
 
+
+class AggregatorConfigTestCase(TestCase):
     def setUp(self):
+        create_comics()
         self.cc = command.AggregatorConfig()
 
     def test_init(self):
