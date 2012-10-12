@@ -1,7 +1,6 @@
 import os
 
-PROJECT_DIR = os.path.abspath(os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), '..'))
+BASE_PATH = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
 SECRET_KEY = ''
 
@@ -9,7 +8,7 @@ SECRET_KEY = ''
 #: Django docs for details.
 DATABASES = {
     'default': {
-        'NAME': os.path.abspath(os.path.join(PROJECT_DIR, '..', 'db.sqlite3')),
+        'NAME': os.path.join(BASE_PATH, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.sqlite3',
     }
 }
@@ -24,19 +23,19 @@ USE_L10N = False
 USE_TZ = True
 
 #: Path on disk to where downloaded media will be stored and served from
-MEDIA_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, '..', 'media'))
+MEDIA_ROOT = os.path.join(BASE_PATH, 'media')
 
 #: URL to where downloaded media will be stored and served from
 MEDIA_URL = '/media/'
 
 #: Path on disk to where static files will be served from
-STATIC_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, '..', 'static'))
+STATIC_ROOT = os.path.join(BASE_PATH, 'static')
 
 #: URL to where static files will be served from
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_DIR, 'static'),
+    os.path.join(BASE_PATH, 'comics', 'static'),
 )
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -227,8 +226,7 @@ COMICS_IMAGE_BLACKLIST = (
 )
 
 #: Comics log file path on disk
-COMICS_LOG_FILENAME = os.path.abspath(
-    os.path.join(PROJECT_DIR, '..', 'comics.log'))
+COMICS_LOG_FILENAME = os.path.join(BASE_PATH, 'comics.log')
 
 #: Google Analytics tracking code. Tracking code will be included on all pages
 #: if this is set.
