@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 
+from comics.accounts.models import Subscription
 from comics.core.models import Comic
 from comics.sets.models import Set
 
@@ -49,11 +50,15 @@ def mycomics_toggle_comic(request):
     comic = get_object_or_404(Comic, slug=request.POST['comic'])
 
     if 'add_comic' in request.POST:
-        request.user.comics_profile.comics.add(comic)
+        subscription = Subscription(
+            userprofile=request.user.comics_profile, comic=comic)
+        subscription.save()
         if not request.is_ajax():
             messages.info(request, 'Added "%s" to my comics' % comic.name)
     elif 'remove_comic' in request.POST:
-        request.user.comics_profile.comics.remove(comic)
+        subscriptions = Subscription.objects.filter(
+            userprofile=request.user.comics_profile, comic=comic)
+        subscriptions.delete()
         if not request.is_ajax():
             messages.info(request, 'Removed "%s" from my comics' % comic.name)
 
@@ -76,14 +81,18 @@ def mycomics_edit_comics(request):
 
     for comic in my_comics:
         if comic.slug not in request.POST:
-            request.user.comics_profile.comics.remove(comic)
+            subscriptions = Subscription.objects.filter(
+                userprofile=request.user.comics_profile, comic=comic)
+            subscriptions.delete()
             if not request.is_ajax():
                 messages.info(request,
                     'Removed "%s" from my comics' % comic.name)
 
     for comic in Comic.objects.all():
         if comic.slug in request.POST and comic not in my_comics:
-            request.user.comics_profile.comics.add(comic)
+            subscription = Subscription(
+                userprofile=request.user.comics_profile, comic=comic)
+            subscription.save()
             if not request.is_ajax():
                 messages.info(request, 'Added "%s" to my comics' % comic.name)
 
