@@ -5,4 +5,4 @@ import logging
 #
 # logging.NullHandler is new in Python 2.7, so we do this conditionally.
 if hasattr(logging, 'NullHandler'):
-    logging.getLogger().addHandler(logging.NullHandler())
+    logging.getLogger('comics').addHandler(logging.NullHandler())
