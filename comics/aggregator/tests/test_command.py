@@ -89,9 +89,8 @@ class AggregatorConfigTestCase(TestCase):
 
 
 class ComicAggregatorTestCase(TestCase):
-    fixtures = ['test_comics.json']
-
     def setUp(self):
+        create_comics()
         config = command.AggregatorConfig()
         config.set_comics_to_crawl(None)
         self.aggregator = command.Aggregator(config)
