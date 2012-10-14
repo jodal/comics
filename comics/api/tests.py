@@ -15,6 +15,12 @@ def create_user():
     user.comics_profile.save()
     return user
 
+def create_subscriptions(user):
+    Subscription.objects.create(userprofile=user.comics_profile,
+        comic=Comic.objects.get(slug='geekandpoke'))
+    Subscription.objects.create(userprofile=user.comics_profile,
+        comic=Comic.objects.get(slug='xkcd'))
+
 
 class RootResourceTestCase(TestCase):
     def setUp(self):
@@ -141,27 +147,26 @@ class ComicsResourceTestCase(TestCase):
         self.assertEquals(data['objects'][0]['slug'], 'xkcd')
 
     def test_subscribed_filter(self):
-        Subscription.objects.create(userprofile=self.user.comics_profile,
-            comic=Comic.objects.get(slug='xkcd'))
+        create_subscriptions(self.user)
 
         response = self.client.get('/api/v1/comics/',
             {'subscribed': 'true'},
             HTTP_AUTHORIZATION='Key s3cretk3y')
 
         data = json.loads(response.content)
-        self.assertEquals(len(data['objects']), 1)
-        self.assertEquals(data['objects'][0]['slug'], 'xkcd')
+        self.assertEquals(len(data['objects']), 2)
+        self.assertEquals(data['objects'][0]['slug'], 'geekandpoke')
+        self.assertEquals(data['objects'][1]['slug'], 'xkcd')
 
     def test_unsubscribed_filter(self):
-        Subscription.objects.create(userprofile=self.user.comics_profile,
-            comic=Comic.objects.get(slug='xkcd'))
+        create_subscriptions(self.user)
 
         response = self.client.get('/api/v1/comics/',
             {'subscribed': 'false'},
             HTTP_AUTHORIZATION='Key s3cretk3y')
 
         data = json.loads(response.content)
-        self.assertEquals(len(data['objects']), 9)
+        self.assertEquals(len(data['objects']), 8)
         self.assertEquals(data['objects'][0]['slug'], 'abstrusegoose')
 
     def test_details_view(self):
@@ -275,15 +280,14 @@ class ReleasesResourceTestCase(TestCase):
             '76a1407a2730b000d51ccf764c689c8930fdd3580e01f62f70cbe73d8be17e9c')
 
     def test_subscribed_filter(self):
-        Subscription.objects.create(userprofile=self.user.comics_profile,
-            comic=Comic.objects.get(slug='xkcd'))
+        create_subscriptions(self.user)
 
         response = self.client.get('/api/v1/releases/',
             {'subscribed': 'true'},
             HTTP_AUTHORIZATION='Key s3cretk3y')
 
         data = json.loads(response.content)
-        self.assertEquals(len(data['objects']), 4)
+        self.assertEquals(len(data['objects']), 6)
 
     def test_comic_filter(self):
         response = self.client.get('/api/v1/releases/',
