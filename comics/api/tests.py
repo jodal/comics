@@ -15,6 +15,7 @@ def create_user():
     user.comics_profile.save()
     return user
 
+
 def create_subscriptions(user):
     Subscription.objects.create(userprofile=user.comics_profile,
         comic=Comic.objects.get(slug='geekandpoke'))
