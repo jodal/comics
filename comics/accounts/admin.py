@@ -12,8 +12,12 @@ def email(obj):
     return obj.user.email
 
 
+def subscription_count(obj):
+    return obj.comics.count()
+
+
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', email, 'secret_key')
+    list_display = ('user', email, 'secret_key', subscription_count)
     inlines = [SubscriptionInline,]
     readonly_fields = ('user',)
 
