@@ -40,3 +40,7 @@ class Subscription(models.Model):
 
     class Meta:
         db_table = 'comics_user_profile_comics'
+
+    def __unicode__(self):
+        return u'Subscription for %s to %s' % (
+            self.userprofile.user.email, self.comic.slug)
