@@ -25,9 +25,17 @@ class ReleaseAdmin(admin.ModelAdmin):
         return False
 
 
+def text_preview(obj):
+    MAX_LENGTH = 60
+    if len(obj.text) < MAX_LENGTH:
+        return obj.text
+    else:
+        return obj.text[:MAX_LENGTH] + '...'
+
+
 class ImageAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'file', 'height', 'width', 'fetched',
-        'title', 'text')
+        'title', text_preview)
     list_filter = ['fetched', 'comic']
     date_hierarchy = 'fetched'
     readonly_fields = ('comic', 'file', 'checksum', 'height', 'width',
