@@ -19,6 +19,7 @@ class ReleaseAdmin(admin.ModelAdmin):
     list_filter = ['pub_date', 'fetched', 'comic']
     date_hierarchy = 'pub_date'
     exclude = ('images',)
+    readonly_fields = ('comic', 'pub_date', 'fetched')
 
     def has_add_permission(self, request):
         return False
