@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = '2008-01-22'
     schedule = 'Mo,Tu,We,Th,Fr'
-    time_zone = -5
+    time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
         page_url = 'http://www.yehudamoon.com/%s/' % (

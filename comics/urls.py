@@ -18,6 +18,9 @@ urlpatterns = patterns('',
     # User accounts management
     (r'^account/', include('comics.accounts.urls')),
 
+    # API
+    (r'^api/', include('comics.api.urls')),
+
     # Help, about and feedback
     (r'^help/', include('comics.help.urls')),
 

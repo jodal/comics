@@ -11,10 +11,10 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 14
     schedule = 'Mo,Tu,We,Th,Fr,Sa'
-    time_zone = 1
+    time_zone = 'Europe/Oslo'
 
     def crawl(self, pub_date):
-        epoch = self.date_to_epoch(pub_date, 'Europe/Oslo')
+        epoch = self.date_to_epoch(pub_date)
         url = 'http://www.dagbladet.no/tegneserie/nemiarkiv/serve.php?%s' % (
             epoch,)
         return CrawlerImage(url)

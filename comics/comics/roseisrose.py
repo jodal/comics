@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(GoComicsComCrawlerBase):
     history_capable_date = '1995-10-09'
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
-    time_zone = -5
+    time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
         return self.crawl_helper('Rose is Rose', pub_date)

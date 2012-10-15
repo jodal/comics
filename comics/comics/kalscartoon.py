@@ -11,6 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 7
     schedule = 'Sa'
+    time_zone = 'Europe/London'
 
     def crawl(self, pub_date):
         page = self.parse_page('http://www.economist.com/content/kallery')

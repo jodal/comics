@@ -55,7 +55,9 @@ email_re = re.compile(
 
 class AuthBackend(ModelBackend):
     """Authenticate using email only"""
-    def authenticate(self, email=None, password=None):
+    def authenticate(self, username=None, password=None, email=None):
+        if email is None:
+            email = username
         if email_re.search(email):
             user = User.objects.filter(email__iexact=email)
             if user.count() > 0:

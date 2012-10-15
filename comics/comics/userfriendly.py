@@ -9,9 +9,10 @@ class ComicData(ComicDataBase):
     rights = 'J.D. "Illiad" Frazer'
 
 class Crawler(CrawlerBase):
+    has_rerun_releases = True
     history_capable_date = '1997-11-17'
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
-    has_rerun_releases = True
+    time_zone = 'America/Vancouver'
 
     def crawl(self, pub_date):
         page_url = 'http://ars.userfriendly.org/cartoons/?id=%s' % (

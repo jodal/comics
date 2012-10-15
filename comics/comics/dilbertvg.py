@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 0
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
-    time_zone = 1
+    time_zone = 'Europe/Oslo'
 
     def crawl(self, pub_date):
         url = 'http://static.vg.no/dilbert/dilbert.gif'

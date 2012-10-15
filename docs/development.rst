@@ -123,4 +123,4 @@ improved tests for *comics*' functionality it will be greatly appreciated.
 
 To run unit tests::
 
-    python manage.py test --settings=comics.settings.testing
+    python manage.py test

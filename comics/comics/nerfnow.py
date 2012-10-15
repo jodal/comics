@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 14
     schedule = 'Tu,We,Th,Fr,Sa'
-    time_zone = -3
+    time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/nerfnow/full')

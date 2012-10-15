@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 10
     schedule = 'Mo,Tu,We,Th,Fr'
-    time_zone = -6
+    time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://pvponline.com/feed/')

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load cache humanize list_to_columns %}
+{% load cache list_to_columns %}
 {% load url from future %}
 
 
@@ -239,9 +239,7 @@
         <h3>
           <a href="{{ release.get_absolute_url }}">
             {{ release.comic.name }}
-            <small class="pub_date">
-              published {{ release.pub_date|naturalday }}
-            </small>
+            <small class="pub_date">{{ release.pub_date }}</small>
           </a>
         </h3>
 

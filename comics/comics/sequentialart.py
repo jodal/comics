@@ -9,7 +9,7 @@ class ComicData(ComicDataBase):
     rights = 'Phillip M. Jackson'
 
 class Crawler(CrawlerBase):
-    time_zone = 0
+    time_zone = 'Europe/London'
 
     def crawl(self, pub_date):
         page = self.parse_page(

@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = '2008-11-14'
     schedule = 'Mo,We,Fr'
-    time_zone = 1
+    time_zone = 'Europe/Oslo'
 
     def crawl(self, pub_date):
         url = ('http://pub.tv2.no/nettavisen/tegneserie/' +

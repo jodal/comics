@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 28
     schedule = 'Tu,Fr'
-    time_zone = -8
+    time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
         feed_url = 'http://feeds.feedburner.com/wondermark'

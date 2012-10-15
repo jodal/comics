@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 60
     schedule = None
-    time_zone = -8
+    time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds2.feedburner.com/Kukuburi')

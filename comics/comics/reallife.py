@@ -10,6 +10,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_date = '1999-11-15'
+    time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
         page_url = 'http://www.reallifecomics.com/archive/%s.html' % (

@@ -10,7 +10,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_days = 90
-    time_zone = -6
+    time_zone = 'US/Central'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://picturesforsadchildren.com/rss')

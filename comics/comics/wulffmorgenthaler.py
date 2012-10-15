@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 20
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
-    time_zone = 1
+    time_zone = 'Europe/Copenhagen'
 
     def crawl(self, pub_date):
         # Releases are published with one day delay

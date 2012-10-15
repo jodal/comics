@@ -10,7 +10,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_date = '1999-01-01'
-    time_zone = -5
+    time_zone = 'America/Merida'
 
     def crawl(self, pub_date):
         page_url = 'http://www.crfh.net/d2/%s.html' % (

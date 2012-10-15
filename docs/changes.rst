@@ -6,6 +6,31 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
+v2.1.0 (2012-10-15)
+===================
+
+- Added a :doc:`webservice` interface to the *comics* instance's data to
+  enable the development of custom frontends to *comics* and apps for Android
+  and iOS.
+
+- Improved admin interface. A lot of fields on the comic, release, and image
+  models are now read-only, as they are only intended to be changed by the
+  ``comics_addcomics`` and ``comics_getreleases`` commands. The comics admin
+  interface is mainly intended for browsing and deleting
+  comics/releases/images, not changing.
+
+- Proper time zone support for comics crawling. We now calculate the current
+  date at the location a comic is published using time zone aware datetime
+  objects for the current time, which are converted to the comic's local time
+  zone using ``pytz``.
+
+- Removed the setting ``COMICS_DEFAULT_TIME_ZONE``.
+
+- Updated time zone data for all crawlers. A lot of releases will now be
+  fetched an hour earlier during daylight savings time, which is now taken into
+  consideration when crawling.
+
+
 v2.0.1 (2012-10-06)
 ===================
 

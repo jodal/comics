@@ -12,7 +12,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_days = 90
-    time_zone = -5
+    time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
         page = self.parse_page('http://eatthattoast.com/')

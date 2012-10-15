@@ -18,7 +18,6 @@ from comics.aggregator.lxmlparser import LxmlParser
 # For testability
 now = timezone.now
 today = datetime.date.today
-utc_offset_in_s = time.timezone
 
 
 class CrawlerRelease(object):
@@ -67,9 +66,9 @@ class CrawlerBase(object):
     history_capable_days = None
     # On what weekdays the comic is published (example: "Mo,We,Fr")
     schedule = None
-    # In approximately what time zone (in whole hours relative to UTC, without
-    # regard to DST) the comic is published
-    time_zone = None
+    # In approximately what time zone the comic is published
+    # (example: "Europe/Oslo")
+    time_zone = 'UTC'
     # Whether to allow multiple releases per day
     multiple_releases_per_day = False
 
@@ -140,12 +139,9 @@ class CrawlerBase(object):
 
     @property
     def current_date(self):
-        if self.time_zone is None:
-            self.time_zone = settings.COMICS_DEFAULT_TIME_ZONE
-        local_time_zone = - utc_offset_in_s // 3600
-        hour_diff = local_time_zone - self.time_zone
-        current_time = now() - datetime.timedelta(hours=hour_diff)
-        return current_time.date()
+        tz = pytz.timezone(self.time_zone)
+        now_in_tz = tz.normalize(now().astimezone(tz))
+        return now_in_tz.date()
 
     @property
     def history_capable(self):
@@ -188,10 +184,10 @@ class CrawlerBase(object):
     def string_to_date(self, *args, **kwargs):
         return datetime.datetime.strptime(*args, **kwargs).date()
 
-    def date_to_epoch(self, date, tz_name):
-        midnight = datetime.datetime(date.year, date.month, date.day)
-        local_tz = pytz.timezone(tz_name)
-        local_midnight = local_tz.localize(midnight)
+    def date_to_epoch(self, date):
+        """The UNIX time of midnight at ``date`` in the comic's time zone"""
+        naive_midnight = datetime.datetime(date.year, date.month, date.day)
+        local_midnight = pytz.timezone(self.time_zone).localize(naive_midnight)
         return int(time.mktime(local_midnight.utctimetuple()))
 
 
@@ -232,7 +228,8 @@ class GoComicsComCrawlerBase(CrawlerBase):
 
 class PondusNoCrawlerBase(CrawlerBase):
     """Base comics crawling for all comics posted at pondus.no"""
-    time_zone = 1
+
+    time_zone = 'Europe/Oslo'
 
     def crawl_helper(self, url_id):
         page_url = 'http://www.pondus.no/?section=artikkel&id=%s' % url_id

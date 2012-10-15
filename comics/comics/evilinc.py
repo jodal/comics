@@ -11,6 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = '2005-05-30'
     schedule = 'Mo,Tu,We,Th,Fr,Sa'
+    time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
         page_url = 'http://www.evil-comic.com/archive/%s.html' % (

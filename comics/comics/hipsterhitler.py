@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 120
     schedule = None
-    time_zone = 0
+    time_zone = 'US/Central'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://hipsterhitler.com/feed/')

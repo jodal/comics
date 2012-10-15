@@ -9,8 +9,7 @@ class ComicData(ComicDataBase):
     rights = 'Humon'
 
 class Crawler(CrawlerBase):
-    schedule = None
-    time_zone = 1
+    time_zone = 'Europe/Copenhagen'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/satwcomic')

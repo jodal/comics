@@ -48,7 +48,7 @@ class Comic(models.Model):
         ordering = ['name']
 
     def __unicode__(self):
-        return u'%s [%s]' % (self.name, self.language)
+        return self.slug
 
     def get_absolute_url(self):
         return reverse('comic_latest', kwargs={'comic_slug': self.slug})
@@ -76,7 +76,7 @@ class Release(models.Model):
         get_latest_by = 'pub_date'
 
     def __unicode__(self):
-        return u'%s published %s' % (self.comic, self.pub_date)
+        return u'Release %s/%s' % (self.comic.slug, self.pub_date)
 
     def get_absolute_url(self):
         return reverse('comic_day', kwargs={
@@ -123,4 +123,4 @@ class Image(models.Model):
         db_table = 'comics_image'
 
     def __unicode__(self):
-        return u'%s image %s' % (self.comic, self.checksum)
+        return u'Image %s/%s...' % (self.comic.slug, self.checksum[:8])

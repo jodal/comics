@@ -10,7 +10,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_date = '2005-04-04'
-    time_zone = -5
+    time_zone = 'US/Eastern'
 
     # This crawler is pretty complicated because this dude does everything by
     # ID with only a loose date-mapping and re-using names (which you're not

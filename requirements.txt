@@ -15,7 +15,7 @@ feedparser >= 4.0, < 6
 lxml >= 2.0, < 3
 
 # For static resource compression
-django_compressor >= 1.1, < 1.2
+django_compressor >= 1.1, < 1.3
 cssmin >= 0.1, < 0.2
 jsmin >= 2.0, < 2.1
 
@@ -27,3 +27,6 @@ django-registration >= 0.8, < 0.9
 
 # For Twitter Bootstrap compatible Django forms
 django-bootstrap-form >= 2.0, < 2.1
+
+# For REST API
+django-tastypie >= 0.9, < 0.10

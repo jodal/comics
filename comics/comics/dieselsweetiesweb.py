@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = '2000-01-01'
     schedule = 'Mo,Tu,We,Th,Fr'
-    time_zone = -5
+    time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.dieselsweeties.com/ds-unifeed.xml')
