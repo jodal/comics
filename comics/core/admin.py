@@ -20,6 +20,9 @@ class ReleaseAdmin(admin.ModelAdmin):
     date_hierarchy = 'pub_date'
     exclude = ('images',)
 
+    def has_add_permission(self, request):
+        return False
+
 
 class ImageAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'file', 'height', 'width', 'fetched', 'title', 'text')
