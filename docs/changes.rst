@@ -5,8 +5,9 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
-v2.1.0 (in development)
-=======================
+
+v2.1.0 (2012-10-15)
+===================
 
 - Added a :doc:`webservice` interface to the *comics* instance's data to
   enable the development of custom frontends to *comics* and apps for Android
