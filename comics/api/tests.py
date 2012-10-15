@@ -339,8 +339,11 @@ class ReleasesResourceTestCase(TestCase):
 
 
 class SubscriptionsResourceTestCase(TestCase):
+    fixtures = ['comics.json']
+
     def setUp(self):
-        create_user()
+        self.user = create_user()
+        create_subscriptions(self.user)
         self.client = Client()
 
     def test_requires_authentication(self):
@@ -354,4 +357,73 @@ class SubscriptionsResourceTestCase(TestCase):
 
         self.assertEquals(response.status_code, 200)
 
-    # TODO
+    def test_list_subscriptions(self):
+        response = self.client.get('/api/v1/subscriptions/',
+            HTTP_AUTHORIZATION='Key s3cretk3y')
+
+        data = json.loads(response.content)
+        self.assertEquals(len(data['objects']), 2)
+
+        sub = data['objects'][0]
+        self.assertEquals(sub['resource_uri'], '/api/v1/subscriptions/1/')
+        self.assertEquals(sub['comic'], '/api/v1/comics/4/')
+
+    def test_comic_filter(self):
+        response = self.client.get('/api/v1/subscriptions/',
+            {'comic__slug': 'xkcd'},
+            HTTP_AUTHORIZATION='Key s3cretk3y')
+
+        data = json.loads(response.content)
+        self.assertEquals(len(data['objects']), 1)
+
+        sub = data['objects'][0]
+        self.assertEquals(sub['resource_uri'], '/api/v1/subscriptions/2/')
+        self.assertEquals(sub['comic'], '/api/v1/comics/9/')
+
+    def test_details_view(self):
+        response = self.client.get('/api/v1/subscriptions/',
+            HTTP_AUTHORIZATION='Key s3cretk3y')
+
+        data = json.loads(response.content)
+        sub = data['objects'][0]
+        self.assertEquals(sub['resource_uri'], '/api/v1/subscriptions/1/')
+
+        response = self.client.get(sub['resource_uri'],
+            HTTP_AUTHORIZATION='Key s3cretk3y')
+
+        data = json.loads(response.content)
+        self.assertEquals(data['comic'], '/api/v1/comics/4/')
+
+    def test_subscribe_to_comic(self):
+        comic = Comic.objects.get(slug='bunny')
+
+        data = json.dumps({'comic': '/api/v1/comics/%d/' % comic.pk})
+        response = self.client.post('/api/v1/subscriptions/',
+            data=data, content_type='application/json',
+            HTTP_AUTHORIZATION='Key s3cretk3y')
+
+        self.assertEquals(response.status_code, 201)
+        self.assertIn('/api/v1/subscriptions/3/', response['Location'])
+        self.assertEquals(response.content, '')
+
+    def test_unsubscribe_from_comic(self):
+        sub = Subscription.objects.get(comic__slug='xkcd')
+
+        self.assertEquals(2,
+            Subscription.objects.filter(userprofile__user=self.user).count())
+
+        response = self.client.delete('/api/v1/subscriptions/%d/' % sub.pk,
+            HTTP_AUTHORIZATION='Key s3cretk3y')
+
+        self.assertEquals(response.status_code, 204)
+        self.assertEquals(response.content, '')
+
+        self.assertEquals(1,
+            Subscription.objects.filter(userprofile__user=self.user).count())
+
+    def test_bulk_update(self):
+        # XXX: "PATCH /api/v1/subscriptions/" isn't tested as Django's test
+        # client doesn't support the PATCH method yet. See
+        # https://code.djangoproject.com/ticket/17797 to check if PATCH support
+        # has been added yet.
+        pass
