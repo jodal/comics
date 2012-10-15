@@ -655,7 +655,7 @@ Subscriptions resource
     :statuscode 401: authentication/authorization failed
     :statuscode 404: subscription not found
 
-.. http:delete:: /api/v1/subscriptions/(int:subscription_id)
+.. http:delete:: /api/v1/subscriptions/(int:subscription_id)/
 
     Unsubscribe the authenticated user from the given comic.
 
