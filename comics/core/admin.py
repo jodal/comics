@@ -3,6 +3,15 @@ from django.contrib import admin
 from comics.core import models
 
 
+class ReleaseImageInline(admin.TabularInline):
+    model = models.Release.images.through
+    readonly_fields = ('release', 'image')
+    extra = 0
+
+    def has_add_permission(self, request):
+        return False
+
+
 class ComicAdmin(admin.ModelAdmin):
     list_display = ('slug', 'name', 'language', 'url', 'rights', 'start_date',
         'end_date', 'active')
@@ -20,6 +29,7 @@ class ReleaseAdmin(admin.ModelAdmin):
     date_hierarchy = 'pub_date'
     exclude = ('images',)
     readonly_fields = ('comic', 'pub_date', 'fetched')
+    inlines = (ReleaseImageInline,)
 
     def has_add_permission(self, request):
         return False
@@ -41,6 +51,7 @@ class ImageAdmin(admin.ModelAdmin):
     date_hierarchy = 'fetched'
     readonly_fields = ('comic', 'file', 'checksum', 'height', 'width',
         'fetched')
+    inlines = (ReleaseImageInline,)
 
     def has_add_permission(self, request):
         return False
