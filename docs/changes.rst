@@ -12,6 +12,12 @@ v2.1.0 (in development)
   enable the development of custom frontends to *comics* and apps for Android
   and iOS.
 
+- Improved admin interface. A lot of fields on the comic, release, and image
+  models are now read-only, as they are only intended to be changed by the
+  ``comics_addcomics`` and ``comics_getreleases`` commands. The comics admin
+  interface is mainly intended for browsing and deleting
+  comics/releases/images, not changing.
+
 - Proper time zone support for comics crawling. We now calculate the current
   date at the location a comic is published using time zone aware datetime
   objects for the current time, which are converted to the comic's local time
