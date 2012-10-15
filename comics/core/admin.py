@@ -6,10 +6,9 @@ from comics.core import models
 class ComicAdmin(admin.ModelAdmin):
     list_display = ('slug', 'name', 'language', 'url', 'rights', 'start_date',
         'end_date', 'active')
-    prepopulated_fields = {
-        'slug': ('name',)
-    }
     list_filter = ['active', 'language']
+    readonly_fields = ('name', 'slug', 'language', 'url', 'rights',
+        'start_date', 'end_date', 'active')
 
     def has_add_permission(self, request):
         return False
