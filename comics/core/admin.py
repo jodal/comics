@@ -11,6 +11,9 @@ class ComicAdmin(admin.ModelAdmin):
     }
     list_filter = ['active', 'language']
 
+    def has_add_permission(self, request):
+        return False
+
 
 class ReleaseAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'comic', 'pub_date', 'fetched')
