@@ -15,6 +15,7 @@ def email(obj):
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = ('user', email, 'secret_key')
     inlines = [SubscriptionInline,]
+    readonly_fields = ('user',)
 
 
 admin.site.register(models.UserProfile, UserProfileAdmin)
