@@ -36,6 +36,7 @@ def text_preview(obj):
 class ImageAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'file', 'height', 'width', 'fetched',
         'title', text_preview)
+    list_editable = ('title',)
     list_filter = ['fetched', 'comic']
     date_hierarchy = 'fetched'
     readonly_fields = ('comic', 'file', 'checksum', 'height', 'width',
