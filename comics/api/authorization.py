@@ -1,7 +1,7 @@
 from tastypie.authorization import Authorization
 
 
-class SubscriptionAuthorization(Authorization):
+class SubscriptionsAuthorization(Authorization):
     def is_authorized(self, request, object=None):
         return True
 

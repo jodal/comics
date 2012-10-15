@@ -7,7 +7,7 @@ from tastypie.resources import ModelResource
 
 from comics.api.authentication import (SecretKeyAuthentication,
     MultiAuthentication)
-from comics.api.authorization import SubscriptionAuthorization
+from comics.api.authorization import SubscriptionsAuthorization
 from comics.core.models import Comic, Release, Image
 from comics.accounts.models import Subscription
 
@@ -105,7 +105,7 @@ class SubscriptionsResource(ModelResource):
         queryset = Subscription.objects.all()
         resource_name = 'subscriptions'
         authentication = SecretKeyAuthentication()
-        authorization = SubscriptionAuthorization()
+        authorization = SubscriptionsAuthorization()
         list_allowed_methods = ['get', 'post', 'patch']
         detail_allowed_methods = ['get', 'delete', 'put']
         filtering = {
