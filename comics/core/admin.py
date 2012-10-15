@@ -4,21 +4,21 @@ from comics.core import models
 
 
 class ComicAdmin(admin.ModelAdmin):
-    list_display = ('name', 'language', 'slug', 'url', 'rights')
+    list_display = ('slug', 'name', 'language', 'url', 'rights')
     prepopulated_fields = {
         'slug': ('name',)
     }
 
 
 class ReleaseAdmin(admin.ModelAdmin):
-    list_display = ('comic', 'pub_date', 'fetched')
+    list_display = ('__unicode__', 'comic', 'pub_date', 'fetched')
     list_filter = ['pub_date', 'fetched', 'comic']
     date_hierarchy = 'pub_date'
     exclude = ('images',)
 
 
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('file', 'height', 'width', 'fetched', 'title', 'text')
+    list_display = ('__unicode__', 'file', 'height', 'width', 'fetched', 'title', 'text')
     list_filter = ['fetched', 'comic']
     date_hierarchy = 'fetched'
 
