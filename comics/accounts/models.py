@@ -26,9 +26,10 @@ class UserProfile(models.Model):
 
     class Meta:
         db_table = 'comics_user_profile'
+        verbose_name = 'comics profile'
 
     def __unicode__(self):
-        return u'User profile for %s' % self.user
+        return u'Comics profile for %s' % self.user.email
 
     def generate_new_secret_key(self):
         self.secret_key = make_secret_key()
