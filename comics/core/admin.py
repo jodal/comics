@@ -4,7 +4,8 @@ from comics.core import models
 
 
 class ComicAdmin(admin.ModelAdmin):
-    list_display = ('slug', 'name', 'language', 'url', 'rights')
+    list_display = ('slug', 'name', 'language', 'url', 'rights', 'start_date',
+        'end_date', 'active')
     prepopulated_fields = {
         'slug': ('name',)
     }
