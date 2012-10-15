@@ -359,6 +359,8 @@ class SubscriptionsResourceTestCase(TestCase):
         self.assertEquals(response.status_code, 200)
 
     def test_list_subscriptions(self):
+        subscription = Subscription.objects.all()[0]
+
         response = self.client.get('/api/v1/subscriptions/',
             HTTP_AUTHORIZATION='Key s3cretk3y')
 
@@ -366,10 +368,14 @@ class SubscriptionsResourceTestCase(TestCase):
         self.assertEquals(len(data['objects']), 2)
 
         sub = data['objects'][0]
-        self.assertEquals(sub['resource_uri'], '/api/v1/subscriptions/1/')
-        self.assertEquals(sub['comic'], '/api/v1/comics/4/')
+        self.assertEquals(sub['resource_uri'],
+            '/api/v1/subscriptions/%d/' % subscription.pk)
+        self.assertEquals(sub['comic'],
+            '/api/v1/comics/%d/' % subscription.comic.pk)
 
     def test_comic_filter(self):
+        subscription = Subscription.objects.get(comic__slug='xkcd')
+
         response = self.client.get('/api/v1/subscriptions/',
             {'comic__slug': 'xkcd'},
             HTTP_AUTHORIZATION='Key s3cretk3y')
@@ -378,22 +384,27 @@ class SubscriptionsResourceTestCase(TestCase):
         self.assertEquals(len(data['objects']), 1)
 
         sub = data['objects'][0]
-        self.assertEquals(sub['resource_uri'], '/api/v1/subscriptions/2/')
+        self.assertEquals(sub['resource_uri'],
+            '/api/v1/subscriptions/%d/' % subscription.pk)
         self.assertEquals(sub['comic'], '/api/v1/comics/9/')
 
     def test_details_view(self):
+        subscription = Subscription.objects.all()[0]
+
         response = self.client.get('/api/v1/subscriptions/',
             HTTP_AUTHORIZATION='Key s3cretk3y')
 
         data = json.loads(response.content)
         sub = data['objects'][0]
-        self.assertEquals(sub['resource_uri'], '/api/v1/subscriptions/1/')
+        self.assertEquals(sub['resource_uri'],
+            '/api/v1/subscriptions/%d/' % subscription.pk)
 
         response = self.client.get(sub['resource_uri'],
             HTTP_AUTHORIZATION='Key s3cretk3y')
 
         data = json.loads(response.content)
-        self.assertEquals(data['comic'], '/api/v1/comics/4/')
+        self.assertEquals(data['comic'],
+            '/api/v1/comics/%d/' % subscription.comic.pk)
 
     def test_subscribe_to_comic(self):
         comic = Comic.objects.get(slug='bunny')
@@ -404,7 +415,12 @@ class SubscriptionsResourceTestCase(TestCase):
             HTTP_AUTHORIZATION='Key s3cretk3y')
 
         self.assertEquals(response.status_code, 201)
-        self.assertIn('/api/v1/subscriptions/3/', response['Location'])
+
+        subscription = Subscription.objects.get(
+            userprofile__user=self.user, comic=comic)
+        self.assertEquals(response['Location'],
+            'http://testserver/api/v1/subscriptions/%d/' % subscription.pk)
+
         self.assertEquals(response.content, '')
 
     def test_unsubscribe_from_comic(self):
