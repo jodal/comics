@@ -29,6 +29,9 @@ class ImageAdmin(admin.ModelAdmin):
     list_filter = ['fetched', 'comic']
     date_hierarchy = 'fetched'
 
+    def has_add_permission(self, request):
+        return False
+
 
 admin.site.register(models.Comic, ComicAdmin)
 admin.site.register(models.Release, ReleaseAdmin)
