@@ -8,8 +8,12 @@ class SubscriptionInline(admin.StackedInline):
     extra = 1
 
 
+def email(obj):
+    return obj.user.email
+
+
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'secret_key')
+    list_display = ('user', email, 'secret_key')
     inlines = [SubscriptionInline,]
 
 
