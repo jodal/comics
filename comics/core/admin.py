@@ -9,6 +9,7 @@ class ComicAdmin(admin.ModelAdmin):
     prepopulated_fields = {
         'slug': ('name',)
     }
+    list_filter = ['active', 'language']
 
 
 class ReleaseAdmin(admin.ModelAdmin):
