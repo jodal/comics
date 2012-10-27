@@ -9,9 +9,8 @@ class ComicData(ComicDataBase):
     rights = 'Patrick McDonnell'
 
 class Crawler(CrawlerBase):
-    #history_capable_days = 35
+    history_capable_date = '1994-09-11'
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
-    time_zone = 1
 
     def crawl(self, pub_date):
         url = 'http://muttscomics.com/art/images/daily/%s.gif' % (
