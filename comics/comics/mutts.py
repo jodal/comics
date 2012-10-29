@@ -11,6 +11,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = '1994-09-11'
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
+    time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
         url = 'http://muttscomics.com/art/images/daily/%s.gif' % (

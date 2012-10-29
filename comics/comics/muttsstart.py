@@ -9,7 +9,6 @@ class ComicData(ComicDataBase):
     rights = 'Patrick McDonnell'
 
 class Crawler(CrawlerBase):
-    
     history_capable_date = '2009-03-23'
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = 'Europe/Oslo'
