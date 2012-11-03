@@ -229,6 +229,8 @@ COMICS_IMAGE_BLACKLIST = (
     '60478320f08212249aefaa3ac647fa182dc7f0d7b70e5691c5f95f9859319bdf',
     # Least I Could Do
     '38eca900236617b2c38768c5e5fa410544fea7a3b79cc1e9bd45043623124dbf',
+    # tu.no
+    'e90e3718487c99190426b3b38639670d4a3ee39c1e7319b9b781740b0c7a53bf',
 )
 
 #: Comics log file path on disk
