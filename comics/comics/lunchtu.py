@@ -14,6 +14,9 @@ class Crawler(CrawlerBase):
     schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = 'Europe/Oslo'
 
+    # Without referer, the server returns a placeholder image
+    headers = {'Referer': 'http://www.tu.no/lunch/'}
+
     def crawl(self, pub_date):
         url = 'http://www1.tu.no/lunch/img/%s.png' % (
             pub_date.strftime('%y%m%d'))
