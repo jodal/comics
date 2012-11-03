@@ -11,6 +11,7 @@ class ComicData(ComicDataBase):
     rights = 'Børge Lund'
 
 class Crawler(CrawlerBase):
+    history_capable_date = '2012-06-15'
     schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = 'Europe/Oslo'
 
