@@ -6,6 +6,14 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
+v2.1.1 (in development)
+=======================
+
+**Crawlers**
+
+- New: ``lunchtu``
+
+
 v2.1.0 (2012-10-15)
 ===================
 
