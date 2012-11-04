@@ -12,6 +12,8 @@ v2.1.1 (in development)
 **Crawlers**
 
 - New: ``lunchtu``
+- New: ``mutts``
+- New: ``pelsogpoter``
 
 
 v2.1.0 (2012-10-15)
