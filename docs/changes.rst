@@ -12,8 +12,8 @@ v2.1.1 (in development)
 **Crawlers**
 
 - New: ``lunchtu``
-- New: ``mutts``
-- New: ``pelsogpoter``
+- New: ``mutts``. Contributed by Anders Birkenes.
+- New: ``pelsogpoter``. Contributed by Anders Birkenes.
 
 
 v2.1.0 (2012-10-15)
