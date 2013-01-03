@@ -15,6 +15,7 @@ v2.1.1 (in development)
 - New: ``mutts``. Contributed by Anders Birkenes.
 - New: ``pelsogpoter``. Contributed by Anders Birkenes.
 - New: ``yamac``
+- Updated: ``thegamercat`` to be more robust.
 
 
 v2.1.0 (2012-10-15)

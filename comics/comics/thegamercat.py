@@ -18,6 +18,8 @@ class Crawler(CrawlerBase):
             if 'Comics' not in entry.tags:
                 continue
             url = entry.content0.src('img')
+            if not url:
+                continue
             url = url.replace('/comics-rss/', '/comics/')
             title = entry.title
             text = '\n\n'.join(entry.content0.text(
