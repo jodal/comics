@@ -14,6 +14,7 @@ v2.1.1 (in development)
 - New: ``lunchtu``
 - New: ``mutts``. Contributed by Anders Birkenes.
 - New: ``pelsogpoter``. Contributed by Anders Birkenes.
+- New: ``stickygillybuns``
 - New: ``yamac``
 - Updated: ``thegamercat`` to be more robust.
 
