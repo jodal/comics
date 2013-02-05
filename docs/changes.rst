@@ -15,7 +15,7 @@ v2.1.1 (in development)
 - New: ``mutts``. Contributed by Anders Birkenes.
 - New: ``pelsogpoter``. Contributed by Anders Birkenes.
 - New: ``stickygillybuns``
-- New: ``undeclaredcomics``
+- New: ``undeclaredmajor``
 - New: ``yamac``
 - Updated: ``abstrusegoose`` after feed change.
 - Updated: ``bizarro`` after feed change.

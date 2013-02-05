@@ -2,7 +2,7 @@ from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
 class ComicData(ComicDataBase):
-    name = 'Undeclared Comics'
+    name = 'Undeclared Major'
     language = 'en'
     url = 'http://www.undeclaredcomics.com/'
     start_date = '2011-08-09'
