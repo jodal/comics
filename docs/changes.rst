@@ -16,6 +16,7 @@ v2.1.1 (in development)
 - New: ``pelsogpoter``. Contributed by Anders Birkenes.
 - New: ``stickygillybuns``
 - New: ``yamac``
+- Updated: ``abstrusegoose`` after feed change.
 - Updated: ``thegamercat`` to be more robust.
 
 

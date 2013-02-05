@@ -14,9 +14,9 @@ class Crawler(CrawlerBase):
     time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://abstrusegoose.com/feed/atom')
+        feed = self.parse_feed('http://abstrusegoose.com/atomfeed.xml')
         for entry in feed.for_date(pub_date):
-            url = entry.content0.src('img[src*="/strips/"]')
+            url = entry.summary.src('img[src*="/strips/"]')
             title = entry.title
-            text = entry.content0.title('img[src*="/strips/"]')
+            text = entry.summary.title('img[src*="/strips/"]')
             return CrawlerImage(url, title, text)
