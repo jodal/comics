@@ -19,6 +19,7 @@ v2.1.1 (in development)
 - New: ``yamac``
 - Updated: ``abstrusegoose`` after feed change.
 - Updated: ``bizarro`` after feed change.
+- Updated: ``lookingforgroup`` after feed change.
 - Updated: ``thegamercat`` to be more robust.
 
 

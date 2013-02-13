@@ -4,7 +4,7 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = 'Looking For Group'
     language = 'en'
-    url = 'http://lfgcomic.com/'
+    url = 'http://www.lfgcomic.com/'
     start_date = '2006-11-06'
     rights = 'Ryan Sohmer & Lar deSouza'
 
@@ -17,9 +17,11 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed('http://feeds.feedburner.com/LookingForGroup')
         images = []
         for entry in feed.for_date(pub_date):
-            if entry.title.startswith('LFG:'):
-                url = entry.summary.src('img[src*="lfgcomic.com"]')
-                title = entry.title.replace('LFG:', '').strip()
+            if entry.title.isdigit():
+                url = entry.summary.src('a[rel="bookmark"] img')
+                if url:
+                    url = url.replace('-150x150', '')
+                title = entry.title
                 images.append(CrawlerImage(url, title))
         if images:
             return images
