@@ -20,7 +20,7 @@ class Crawler(CrawlerBase):
             if entry.title.isdigit():
                 url = entry.summary.src('a[rel="bookmark"] img')
                 if url:
-                    url = url.replace('-150x150', '')
+                    url = url.replace('-210x300', '')
                 title = entry.title
                 images.append(CrawlerImage(url, title))
         if images:
