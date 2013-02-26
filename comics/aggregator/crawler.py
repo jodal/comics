@@ -106,7 +106,7 @@ class CrawlerBase(object):
         except socket.error as error:
             raise CrawlerHTTPError(release.identifier, error)
         except xml.sax._exceptions.SAXException as error:
-            raise CrawlerHTTPError(release.identifier, error.message)
+            raise CrawlerHTTPError(release.identifier, str(error))
 
         if not results:
             return
