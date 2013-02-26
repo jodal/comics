@@ -1,3 +1,4 @@
+import hashlib
 import os
 import random
 import datetime
@@ -5,7 +6,6 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django.utils.http import int_to_base36
-from django.utils.hashcompat import sha_constructor
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
@@ -45,8 +45,8 @@ class InvitationKeyManager(models.Manager):
         The key for the ``InvitationKey`` will be a SHA1 hash, generated 
         from a combination of the ``User``'s username and a random salt.
         """
-        salt = sha_constructor(str(random.random())).hexdigest()[:5]
-        key = sha_constructor("%s%s%s" % (timezone.now(), salt, user.username)).hexdigest()
+        salt = hashlib.sha1(str(random.random())).hexdigest()[:5]
+        key = hashlib.sha1("%s%s%s" % (timezone.now(), salt, user.username)).hexdigest()
         return self.create(from_user=user, key=key)
 
     def remaining_invitations_for_user(self, user):
