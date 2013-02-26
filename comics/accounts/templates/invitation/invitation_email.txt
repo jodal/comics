@@ -1,4 +1,3 @@
-{% load url from future %}
 Your have been invited by {{ invitation_key.from_user.email }} to join {{ site.name }}.
 
 Follow this link within {{ expiration_days }} day{{ expiration_days|pluralize }} to register your account:
