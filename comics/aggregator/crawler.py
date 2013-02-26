@@ -7,7 +7,6 @@ import xml.sax._exceptions
 
 import pytz
 
-from django.conf import settings
 from django.utils import timezone
 
 from comics.aggregator.exceptions import (CrawlerHTTPError, ImageURLNotFound,
