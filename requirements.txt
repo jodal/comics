@@ -29,4 +29,4 @@ django-registration >= 0.8, < 0.9
 django-bootstrap-form >= 2.0, < 2.1
 
 # For REST API
-django-tastypie >= 0.9, < 0.10
+django-tastypie >= 0.9.12, < 0.10
