@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.views.generic.simple import direct_to_template
+from django.views.generic.base import TemplateView
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -15,6 +15,16 @@ from invitation.backends import InvitationBackend
 is_key_valid = InvitationKey.objects.is_key_valid
 remaining_invitations_for_user = InvitationKey.objects.remaining_invitations_for_user
 
+class TemplateViewWithExtraContext(TemplateView):
+    extra_context = None
+
+    def get_context_data(self, **kwargs):
+        context = super(TemplateViewWithExtraContext, self
+            ).get_context_data(**kwargs)
+        if self.extra_context is not None:
+            context.update(self.extra_context)
+        return context
+
 def invited(request, invitation_key=None, extra_context=None):
     if getattr(settings, 'INVITE_MODE', False):
         if invitation_key and is_key_valid(invitation_key):
@@ -23,7 +33,8 @@ def invited(request, invitation_key=None, extra_context=None):
             template_name = 'invitation/wrong_invitation_key.html'
         extra_context = extra_context is not None and extra_context.copy() or {}
         extra_context.update({'invitation_key': invitation_key})
-        return direct_to_template(request, template_name, extra_context)
+        return TemplateViewWithExtraContext.as_view(
+            template_name=template_name, extra_context=extra_context)(request)
     else:
         return HttpResponseRedirect(reverse('registration_register'))
 
@@ -47,7 +58,9 @@ def register(request, backend, success_url=None,
                 extra_context.update({'invalid_key': True})
         else:
             extra_context.update({'no_key': True})
-        return direct_to_template(request, wrong_template_name, extra_context)
+        return TemplateViewWithExtraContext.as_view(
+            template_name=wrong_template_name,
+            extra_context=extra_context)(request)
     else:
         return registration_register(request, backend, success_url, form_class,
                                      disallowed_url, template_name, extra_context)
@@ -74,5 +87,6 @@ def invite(request, success_url=None,
             'form': form,
             'remaining_invitations': remaining_invitations,
         })
-    return direct_to_template(request, template_name, extra_context)
+    return TemplateViewWithExtraContext.as_view(
+        template_name=template_name, extra_context=extra_context)(request)
 invite = login_required(invite)

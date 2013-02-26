@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls.defaults import patterns, url
 from django.contrib.auth import views as auth_views
-from django.views.generic.simple import direct_to_template
+from django.views.generic.base import TemplateView
 
 from invitation import views as invitation_views
 from registration import views as reg_views
@@ -15,9 +15,9 @@ urlpatterns = patterns('',
     ### django-invitation
 
     url(r'^invite/complete/$',
-        direct_to_template,
+        TemplateView.as_view(
+            template_name='invitation/invitation_complete.html'),
         {
-            'template': 'invitation/invitation_complete.html',
             'extra_context': {'active': {
                 'account': True,
                 'invite': True,
@@ -58,17 +58,17 @@ urlpatterns = patterns('',
     #    },
     #    name='registration_register'),
     url(r'^register/complete/$',
-        direct_to_template,
-        {'template': 'registration/registration_complete.html'},
+        TemplateView.as_view(
+            template_name='registration/registration_complete.html'),
         name='registration_complete'),
     url(r'^register/closed/$',
-        direct_to_template,
-        {'template': 'registration/registration_closed.html'},
+        TemplateView.as_view(
+            template_name='registration/registration_closed.html'),
         name='registration_disallowed'),
 
     url(r'^activate/complete/$',
-        direct_to_template,
-        {'template': 'registration/activation_complete.html'},
+        TemplateView.as_view(
+            template_name='registration/activation_complete.html'),
         name='registration_activation_complete'),
     url(r'^activate/(?P<activation_key>\w+)/$',
         reg_views.activate,

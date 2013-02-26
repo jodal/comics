@@ -4,16 +4,14 @@ from django.conf import settings
 from django.conf.urls.defaults import include, patterns
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.views.generic.simple import direct_to_template
+from django.views.generic.base import TemplateView
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
     # Robots not welcome
-    (r'^robots\.txt$', direct_to_template, {
-        'template': 'robots.txt',
-        'mimetype': 'text/plain',
-    }),
+    (r'^robots\.txt$', TemplateView.as_view(
+        template_name='robots.txt', content_type='text/plain')),
 
     # User accounts management
     (r'^account/', include('comics.accounts.urls')),
