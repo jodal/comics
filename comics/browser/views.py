@@ -219,7 +219,7 @@ class MyComicsMixin(object):
     """Things common for all views of *my comics*"""
 
     def get_queryset(self):
-        return Release.objects.select_related(depth=1).filter(
+        return Release.objects.select_related().filter(
             comic__in=self.get_my_comics()).order_by('pub_date')
 
     def get_object_type(self):
@@ -455,7 +455,7 @@ class OneComicMixin(object):
     """Things common for all views of a single comic"""
 
     def get_queryset(self):
-        return Release.objects.select_related(depth=1).filter(comic=self.comic
+        return Release.objects.select_related().filter(comic=self.comic
             ).order_by('pub_date')
 
     def get_object_type(self):

@@ -76,8 +76,7 @@ class ReleasesResource(ModelResource):
     images = fields.ToManyField(ImagesResource, 'images', full=True)
 
     class Meta:
-        queryset = Release.objects.select_related(depth=1
-            ).order_by('-fetched')
+        queryset = Release.objects.select_related().order_by('-fetched')
         resource_name = 'releases'
         authentication = SecretKeyAuthentication()
         list_allowed_methods = ['get']

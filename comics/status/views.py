@@ -15,8 +15,7 @@ def status(request, days=21):
     last = datetime.date.today() - datetime.timedelta(days=days)
 
     releases = Release.objects.filter(pub_date__gte=last, comic__active=True)
-    releases = releases.select_related('comic__slug')
-    releases = releases.order_by('comic__slug').distinct()
+    releases = releases.select_related().order_by('comic__slug').distinct()
 
     for comic in Comic.objects.filter(active=True).order_by('slug'):
         schedule = get_comic_schedule(comic)
