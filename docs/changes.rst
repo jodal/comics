@@ -6,6 +6,14 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
+v2.2.0 (in development)
+=======================
+
+- Updated dependencies:
+
+  - Django >= 1.5, < 1.6
+
+
 v2.1.1 (2013-02-26)
 ===================
 
