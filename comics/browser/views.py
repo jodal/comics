@@ -266,7 +266,7 @@ class MyComicsMixin(object):
             self.get_user().comics_profile.secret_key)
 
     def get_feed_title(self):
-        return 'Comics for %s' % self.get_user().email
+        return 'Your comics'
 
 
 class MyComicsHome(LoginRequiredMixin, RedirectView):
