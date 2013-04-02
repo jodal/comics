@@ -15,6 +15,10 @@ v2.2.0 (in development)
 
   - django-tastypie >= 0.9.12, < 0.10
 
+**Crawlers**
+
+- Updated: ``extralife`` after feed change.
+
 
 v2.1.1 (2013-02-26)
 ===================

@@ -20,8 +20,6 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed(
             'http://www.myextralife.com/category/comic/feed/')
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src*="/comics"]')
-            if '/comics-rss/' in url:
-                url = url.replace('/comics-rss/', '/comics/')
+            url = entry.content0.src('img[src*="/wp-content/"]')
             title = entry.title
             return CrawlerImage(url, title)
