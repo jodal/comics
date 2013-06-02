@@ -5,16 +5,16 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = 'Dilbert (vg.no)'
     language = 'no'
-    url = 'http://www.vg.no/dilbert/'
+    url = 'http://heltnormalt.no/dilbert'
     start_date = '1989-04-16'
     rights = 'Scott Adams'
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 0
-    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
+    history_capable_date = '2013-02-01'
     time_zone = 'Europe/Oslo'
 
     def crawl(self, pub_date):
-        url = 'http://static.vg.no/dilbert/dilbert.gif'
+        url = 'http://heltnormalt.no/img/dilbert/%s.jpg' % (
+            pub_date.strftime('%Y/%m/%d'))
         return CrawlerImage(url)
