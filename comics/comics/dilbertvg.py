@@ -5,6 +5,7 @@ class ComicData(ComicDataBase):
     name = 'Dilbert (vg.no)'
     language = 'no'
     url = 'http://www.vg.no/dilbert/'
+    active = False
     start_date = '1989-04-16'
     rights = 'Scott Adams'
 
@@ -14,5 +15,4 @@ class Crawler(CrawlerBase):
     time_zone = 'Europe/Oslo'
 
     def crawl(self, pub_date):
-        url = 'http://static.vg.no/dilbert/dilbert.gif'
-        return CrawlerImage(url)
+        pass # Comic no longer published
