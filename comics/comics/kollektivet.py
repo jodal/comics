@@ -7,7 +7,7 @@ class ComicData(ComicDataBase):
     name = 'Kollektivet'
     language = 'no'
     url = 'http://heltnormalt.no/kollektivet'
-    rights = 'Torbjørn Lien '
+    rights = 'Torbjørn Lien'
 	
 class Crawler(CrawlerBase):
     history_capable_date='2013-05-01'
