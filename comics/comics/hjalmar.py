@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
@@ -17,3 +15,4 @@ class Crawler(CrawlerBase):
         url = 'http://heltnormalt.no/img/hjalmar/%s.jpg' % (
             pub_date.strftime('%Y/%m/%d'))
         return CrawlerImage(url)
+

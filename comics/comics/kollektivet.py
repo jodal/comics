@@ -17,3 +17,4 @@ class Crawler(CrawlerBase):
         url = 'http://heltnormalt.no/img/kollektivet/%s.jpg' % (
             pub_date.strftime('%Y/%m/%d'))
         return CrawlerImage(url)
+
