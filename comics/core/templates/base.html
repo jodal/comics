@@ -45,18 +45,18 @@
                 {% else %}
                   <li class="{{ active.login|yesno:"active," }}" >
                     <a href="{% url "auth_login" %}">
-                      <i class="icon-ok-sign"></i>
+                      <i class="icon-signin"></i>
                       Login</a>
                   </li>
                   <li class="{{ active.register|yesno:"active," }}" >
                     <a href="{% url "registration_register" %}">
-                      <i class="icon-plus-sign"></i>
+                      <i class="icon-plus"></i>
                       Register</a>
                   </li>
                 {% endif %}
                   <li class="{{ active.help|yesno:"active," }}" >
                     <a href="{% url "help_about" %}">
-                      <i class="icon-question-sign"></i>
+                      <i class="icon-question"></i>
                       Help</a>
                   </li>
                 </ul>
