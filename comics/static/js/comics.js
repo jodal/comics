@@ -3,7 +3,7 @@ var keyboardNavigation = (function () {
         var releasePosition = $release.position().top;
         var navbarHeight = $('.navbar').outerHeight();
         var spacer = 10;
-        return releasePosition - navbarHeight - spacer;
+        return Math.floor(releasePosition - navbarHeight - spacer);
     };
 
     var goToPreviousRelease = function () {
