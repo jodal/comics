@@ -9,11 +9,15 @@ versioned release.
 v2.2.0 (in development)
 =======================
 
-- Updated dependencies:
+- Dependencies with new minimum version:
 
   - Django >= 1.5, < 1.6
 
   - django-tastypie >= 0.9.12, < 0.10
+
+- Dependencies with new maximum version:
+
+  - Pillow >= 1.7, < 2.2
 
 **Crawlers**
 
