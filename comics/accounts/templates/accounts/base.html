@@ -4,7 +4,7 @@
 {% block content %}
 
   <div class="row">
-    <div class="span2">
+    <div class="span3">
       <ul class="nav nav-list">
         <li class="nav-header">Account</li>
         <li class="{{ active.account_details|yesno:"active," }}">
@@ -29,7 +29,7 @@
         <li><a href="{% url "auth_logout" %}">Logout</a>
       </ul>
     </div>
-    <div class="span10">
+    <div class="span9">
       {% block account_content %}{% endblock %}
     </div>
   </div>
