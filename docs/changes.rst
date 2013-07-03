@@ -11,6 +11,7 @@ v2.2.0 (in development)
 
 - New dependencies, and dependencies with new minimum versions:
 
+  - cssselect >= 0.8, < 0.9
   - Django >= 1.5, < 1.6
   - django-tastypie >= 0.9.13, < 0.10
   - lxml >= 3, < 4
