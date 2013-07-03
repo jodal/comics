@@ -9,13 +9,17 @@ versioned release.
 v2.2.0 (in development)
 =======================
 
-- Dependencies with new minimum version:
+- New dependencies, and dependencies with new minimum versions:
 
   - Django >= 1.5, < 1.6
 
-  - django-tastypie >= 0.9.12, < 0.10
+  - django-tastypie >= 0.9.13, < 0.10
 
-- Dependencies with new maximum version:
+  - lxml >= 3, < 4
+
+  - defusedxml >= 0.4, < 0.5
+
+- Dependencies with new maximum versions:
 
   - Pillow >= 1.7, < 2.2
 
