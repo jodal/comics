@@ -4,7 +4,7 @@ Django >= 1.5, < 1.6
 pytz
 
 # For database migrations
-South >= 0.7, < 0.8
+South >= 0.7, < 2.0
 
 # For image handling
 Pillow >= 1.7, < 2.2
