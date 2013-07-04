@@ -1,7 +1,10 @@
 var keyboardNavigation = (function () {
     var getPosition = function ($release) {
         var releasePosition = $release.position().top;
-        var navbarHeight = $('.navbar').outerHeight();
+        var navbarHeight = 0;
+        if ($('.navbar').css('position') === 'fixed') {
+          navbarHeight = $('.navbar').outerHeight();
+        }
         var spacer = 10;
         return Math.floor(releasePosition - navbarHeight - spacer);
     };
