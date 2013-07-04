@@ -5,11 +5,14 @@ from comics.core.models import Comic
 
 
 class Set(models.Model):
-    name = models.SlugField(max_length=100, unique=True,
+    name = models.SlugField(
+        max_length=100, unique=True,
         help_text='The set identifier')
-    add_new_comics = models.BooleanField(default=False,
+    add_new_comics = models.BooleanField(
+        default=False,
         help_text='Automatically add new comics to the set')
-    hide_empty_comics = models.BooleanField(default=False,
+    hide_empty_comics = models.BooleanField(
+        default=False,
         help_text='Hide comics without matching releases from view')
     created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField()
