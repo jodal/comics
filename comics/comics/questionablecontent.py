@@ -3,12 +3,14 @@ from comics.core.comic_data import ComicDataBase
 
 import re
 
+
 class ComicData(ComicDataBase):
     name = 'Questionable Content'
     language = 'en'
     url = 'http://questionablecontent.net/'
     start_date = '2003-08-01'
     rights = 'Jeph Jacques'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 0

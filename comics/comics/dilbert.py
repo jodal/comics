@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Dilbert'
     language = 'en'
     url = 'http://www.dilbert.com/'
     start_date = '1989-04-06'
     rights = 'Scott Adams'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 32

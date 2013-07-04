@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Bug'
     language = 'en'
     url = 'http://www.bugcomic.com/'
     start_date = '2009-10-19'
     rights = 'Adam Huber'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 15

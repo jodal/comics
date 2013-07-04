@@ -3,12 +3,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Optipess'
     language = 'en'
     url = 'http://www.optipess.com/'
     start_date = '2008-12-01'
     rights = 'Kristian Nygård'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 90

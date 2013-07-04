@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Dresden Codak'
     language = 'en'
     url = 'http://www.dresdencodak.com/'
     start_date = '2007-02-08'
     rights = 'Aaron Diaz'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 180

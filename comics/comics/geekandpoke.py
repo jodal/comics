@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Geek and Poke'
     language = 'en'
     url = 'http://www.geekandpoke.com/'
     start_date = '2006-08-22'
     rights = 'Oliver Widder, CC BY-ND 2.0'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 32

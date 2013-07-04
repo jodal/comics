@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'xkcd'
     language = 'en'
     url = 'http://www.xkcd.com/'
     start_date = '2005-05-29'
     rights = 'Randall Munroe, CC BY-NC 2.5'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 10

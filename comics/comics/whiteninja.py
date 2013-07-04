@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'White Ninja'
     language = 'en'
     url = 'http://www.whiteninjacomics.com/'
     start_date = '2002-01-01'
     rights = 'Scott Bevan & Kent Earle'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 60

@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Buttersafe'
     language = 'en'
     url = 'http://buttersafe.com/'
     start_date = '2007-04-03'
     rights = 'Alex Culang & Raynato Castro'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 90

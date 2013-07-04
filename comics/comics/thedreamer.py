@@ -1,11 +1,13 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'The Dreamer'
     language = 'en'
     url = 'http://thedreamercomic.com/'
     rights = 'Lora Innes'
+
 
 class Crawler(CrawlerBase):
     schedule = 'We,Fr'

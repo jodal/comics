@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Nemi (bt.no)'
     language = 'no'
     url = 'http://www.bt.no/bergenpuls/tegneserier/tegneserier_nemi/'
     start_date = '1997-01-01'
     rights = 'Lise Myhre'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 162

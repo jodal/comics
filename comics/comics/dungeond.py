@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Dungeons & Denizens'
     language = 'en'
     url = 'http://dungeond.com/'
     start_date = '2005-08-23'
     rights = 'Graveyard Greg'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 365

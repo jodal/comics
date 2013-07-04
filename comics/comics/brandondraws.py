@@ -1,6 +1,7 @@
 from comics.aggregator.crawler import CrawlerBase
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Brandon Draws'
     language = 'en'
@@ -9,6 +10,7 @@ class ComicData(ComicDataBase):
     active = False
     rights = 'Brandon B, CC BY-NC-SA 3.0'
 
+
 class Crawler(CrawlerBase):
     def crawl(self, pub_date):
-        pass # Comic no longer published
+        pass  # Comic no longer published

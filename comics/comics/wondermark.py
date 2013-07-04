@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Wondermark'
     language = 'en'
     url = 'http://wondermark.com/'
     start_date = '2003-04-25'
     rights = 'David Malki'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 28

@@ -3,12 +3,14 @@ import re
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Eat That Toast!'
     language = 'en'
     url = 'http://eatthattoast.com/'
     start_date = '2010-06-14'
     rights = 'Matt Czapiewski'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 90

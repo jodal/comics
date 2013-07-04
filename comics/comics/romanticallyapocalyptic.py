@@ -1,11 +1,13 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Romantically Apocalyptic'
     language = 'en'
     url = 'http://www.romanticallyapocalyptic.com/'
     rights = 'Vitaly S. Alexius'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = None

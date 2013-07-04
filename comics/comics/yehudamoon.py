@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Yehuda Moon'
     language = 'en'
     url = 'http://www.yehudamoon.com/'
     start_date = '2008-01-22'
     rights = 'Rick Smith'
+
 
 class Crawler(CrawlerBase):
     history_capable_date = '2008-01-22'

@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Zelda'
     language = 'no'
     url = 'http://www.dagbladet.no/tegneserie/zelda/'
     start_date = '2012-06-07'
     rights = 'Lina Neidestam'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 30

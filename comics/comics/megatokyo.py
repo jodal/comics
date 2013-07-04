@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'MegaTokyo'
     language = 'en'
     url = 'http://www.megatokyo.com/'
     start_date = '2000-08-14'
     rights = 'Fred Gallagher & Rodney Caston'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 30

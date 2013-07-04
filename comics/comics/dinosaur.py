@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Dinosaur Comics'
     language = 'en'
     url = 'http://www.qwantz.com/'
     start_date = '2003-02-01'
     rights = 'Ryan North'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 32

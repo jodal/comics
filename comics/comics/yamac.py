@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'you and me and cats'
     language = 'en'
     url = 'http://strawberry-pie.net/yamac/'
     start_date = '2009-07-01'
     rights = 'bubble'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 90

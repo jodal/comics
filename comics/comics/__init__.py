@@ -1,5 +1,6 @@
 import os
 
+
 def get_comic_module_names():
     module_files = os.listdir(os.path.dirname(__file__))
     module_names = []
@@ -8,9 +9,11 @@ def get_comic_module_names():
             module_names.append(file.replace('.py', ''))
     return sorted(module_names)
 
+
 def get_comic_module(comic_slug):
     module_name = '%s.%s' % (__package__, comic_slug)
     return _import_by_name(module_name)
+
 
 def _import_by_name(module_name):
     module = __import__(module_name)

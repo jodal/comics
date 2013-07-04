@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Looking For Group'
     language = 'en'
     url = 'http://www.lfgcomic.com/'
     start_date = '2006-11-06'
     rights = 'Ryan Sohmer & Lar deSouza'
+
 
 class Crawler(CrawlerBase):
     history_capable_date = '2006-11-06'

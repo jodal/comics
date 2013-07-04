@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'pictures for sad children'
     language = 'en'
     url = 'http://picturesforsadchildren.com/'
     start_date = '2007-01-01'
     rights = 'John Campbell'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 90

@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = "Daryl Cagle's Political Blog"
     language = 'en'
     url = 'http://www.cagle.com/'
     start_date = '2001-01-04'
     rights = 'Daryl Cagle'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 180

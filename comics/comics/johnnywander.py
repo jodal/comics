@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Johnny Wander'
     language = 'en'
     url = 'http://www.johnnywander.com/'
     start_date = '2008-09-30'
     rights = 'Yuko Ota & Ananth Panagariya'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 40

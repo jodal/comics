@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Time Trabble'
     language = 'en'
     url = 'http://timetrabble.com/'
     start_date = '2010-05-09'
     rights = 'Mikey Heller'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 90

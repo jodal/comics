@@ -1,6 +1,7 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Liberty Meadows'
     language = 'en'
@@ -8,6 +9,7 @@ class ComicData(ComicDataBase):
     start_date = '1997-03-30'
     end_date = '2001-12-31'
     rights = 'Frank Cho'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 19

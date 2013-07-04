@@ -6,12 +6,14 @@ import urllib
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Lunch'
     language = 'no'
     url = 'http://lunchstriper.lunddesign.no/'
     start_date = '2009-10-21'
     rights = 'Børge Lund'
+
 
 class Crawler(CrawlerBase):
     history_capable_date = '2009-04-01'
@@ -25,7 +27,8 @@ class Crawler(CrawlerBase):
         if not url:
             return
 
-        title = re.sub('^http://lunchstriper.lunddesign.no/comics/' +
+        title = re.sub(
+            '^http://lunchstriper.lunddesign.no/comics/' +
             '\d{4}-\d{2}-\d{2}(-LUNCH_\d+)?-?', '', url or '')
         title = re.sub('(_farger)?\.png$', '', title)
         title = urllib.unquote(title).encode('iso-8859-1').decode('utf-8')

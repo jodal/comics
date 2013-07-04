@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Subnormality'
     language = 'en'
     url = 'http://www.viruscomix.com/subnormality.html'
     start_date = '2007-01-01'
     rights = 'Winston Rowntree'
+
 
 class Crawler(CrawlerBase):
     history_capable_date = '2008-11-25'

@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Sticky Comics'
     language = 'en'
     url = 'http://www.stickycomics.com/'
     start_date = '2006-05-04'
     rights = 'Christiann MacAuley'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 60

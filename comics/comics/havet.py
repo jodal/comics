@@ -3,12 +3,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Havet'
     language = 'no'
     url = 'http://havet.nettserier.no/'
     start_date = '2007-09-27'
     rights = 'Øystein Ottesen'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 90

@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Scandinavia and the World'
     language = 'en'
     url = 'http://www.satwcomic.com/'
     start_date = '2009-06-01'
     rights = 'Humon'
+
 
 class Crawler(CrawlerBase):
     time_zone = 'Europe/Copenhagen'

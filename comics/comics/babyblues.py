@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Baby Blues'
     language = 'en'
     url = 'http://www.arcamax.com/babyblues'
     start_date = '1990-01-01'
     rights = 'Rick Kirkman and Jerry Scott, for King Features Syndicate, Inc.'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 1

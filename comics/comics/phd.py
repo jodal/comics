@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Piled Higher and Deeper'
     language = 'en'
     url = 'http://www.phdcomics.com/'
     start_date = '1997-10-27'
     rights = 'Jorge Cham'
+
 
 class Crawler(CrawlerBase):
     history_capable_date = '1997-10-27'

@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Spiked Math'
     language = 'en'
     url = 'http://www.spikedmath.com/'
     start_date = '2009-08-24'
     rights = 'Mike, CC BY-NC-SA 2.5'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 20
@@ -17,7 +19,8 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
             result = []
-            for url in page.src('div.asset-body img[src*="/comics/"]',
+            for url in page.src(
+                    'div.asset-body img[src*="/comics/"]',
                     allow_multiple=True):
                 result.append(CrawlerImage(url))
             if result:

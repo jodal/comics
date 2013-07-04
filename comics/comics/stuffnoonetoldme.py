@@ -1,5 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import CrawlerBase
 from comics.core.comic_data import ComicDataBase
+
 
 class ComicData(ComicDataBase):
     name = 'Stuff No One Told Me'
@@ -10,6 +11,7 @@ class ComicData(ComicDataBase):
     active = False
     rights = 'Alex Noriega'
 
+
 class Crawler(CrawlerBase):
     def crawl(self, pub_date):
-        pass # No longer published
+        pass  # No longer published

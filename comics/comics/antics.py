@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Antics'
     language = 'en'
     url = 'http://www.anticscomic.com/'
     start_date = '2008-10-25'
     rights = 'Fletcher'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 30

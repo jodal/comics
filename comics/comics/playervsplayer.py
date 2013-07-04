@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Player vs Player'
     language = 'en'
     url = 'http://pvponline.com/'
     start_date = '1998-05-04'
     rights = 'Scott R. Kurtz'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 10

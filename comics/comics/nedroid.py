@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Nedroid'
     language = 'en'
     url = 'http://www.nedroid.com/'
     start_date = '2006-04-24'
     rights = 'Anthony Clark'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 10

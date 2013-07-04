@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Exiern'
     language = 'en'
     url = 'http://www.exiern.com/'
     start_date = '2005-09-06'
     rights = 'Dan Standing'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 30

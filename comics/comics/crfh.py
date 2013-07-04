@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Colleges Roomies from Hell'
     language = 'en'
     url = 'http://www.crfh.net/'
     start_date = '1999-01-01'
     rights = 'Maritza Campos'
+
 
 class Crawler(CrawlerBase):
     history_capable_date = '1999-01-01'

@@ -1,11 +1,13 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Garfield minus Garfield'
     language = 'en'
     url = 'http://garfieldminusgarfield.tumblr.com/'
     rights = 'Travors'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 30

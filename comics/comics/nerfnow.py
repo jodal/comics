@@ -3,12 +3,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Nerf NOW!!'
     language = 'en'
     url = 'http://www.nerfnow.com/'
     start_date = '2009-09-02'
     rights = 'Josué Pereira'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 14

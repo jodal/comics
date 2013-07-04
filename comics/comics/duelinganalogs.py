@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Dueling Analogs'
     language = 'en'
     url = 'http://www.duelinganalogs.com/'
     start_date = '2005-11-17'
     rights = 'Steve Napierski'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 35

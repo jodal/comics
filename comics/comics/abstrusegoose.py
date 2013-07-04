@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Abstruse Goose'
     language = 'en'
     url = 'http://www.abstrusegoose.com/'
     start_date = '2008-02-01'
     rights = 'lcfr, CC BY-NC 3.0 US'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 10

@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'The Order of the Stick'
     language = 'en'
     url = 'http://www.giantitp.com/'
     start_date = '2003-09-30'
     rights = 'Rich Burlew'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 1

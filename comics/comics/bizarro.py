@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Bizarro'
     language = 'en'
     url = 'http://bizarrocomics.com/'
     start_date = '1985-01-01'
     rights = 'Dan Piraro'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 40

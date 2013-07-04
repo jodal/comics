@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import GoComicsComCrawlerBase
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'The Boondocks'
     language = 'en'
     url = 'http://www.gocomics.com/theboondocks'
     start_date = '1999-04-19'
     rights = 'Aaron McGruder'
+
 
 class Crawler(GoComicsComCrawlerBase):
     history_capable_date = '1999-04-19'

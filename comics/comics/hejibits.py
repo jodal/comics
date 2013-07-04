@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Hejibits'
     language = 'en'
     url = 'http://www.hejibits.com/'
     start_date = '2010-03-02'
     rights = 'John Kleckner'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 90

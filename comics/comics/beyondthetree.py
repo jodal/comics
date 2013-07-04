@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Beyond the Tree'
     language = 'en'
     url = 'http://beyondthetree.wordpress.com/'
     start_date = '2008-03-20'
     rights = 'Nhani'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 60

@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Deep Fried'
     language = 'en'
     url = 'http://www.whatisdeepfried.com/'
     start_date = '2001-09-16'
     rights = 'Jason Yungbluth'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 14

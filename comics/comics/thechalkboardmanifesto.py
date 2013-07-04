@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'The Chalkboard Manifesto'
     language = 'en'
     url = 'http://www.chalkboardmanifesto.com/'
     start_date = '2005-05-01'
     rights = 'Shawn McDonald'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 40

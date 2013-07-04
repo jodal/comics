@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Saturday Morning Breakfast Cereal'
     language = 'en'
     url = 'http://www.smbc-comics.com/'
     start_date = '2002-09-05'
     rights = 'Zach Weiner'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 10

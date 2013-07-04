@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'The PC Weenies'
     language = 'en'
     url = 'http://pcweenies.com/'
     start_date = '1998-10-21'
     rights = 'Krishna M. Sadasivam'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 14

@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'The Gamer Cat'
     language = 'en'
     url = 'http://thegamercat.com/'
     start_date = '2011-06-10'
     rights = 'Celesse'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 180

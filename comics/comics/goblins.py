@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Goblins'
     language = 'en'
     url = 'http://www.goblinscomic.com/'
     start_date = '2005-05-29'
     rights = 'Tarol Hunt'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 30

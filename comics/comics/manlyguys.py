@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'Manly Guys Doing Manly Things'
     language = 'en'
     url = 'http://thepunchlineismachismo.com/'
     start_date = '2005-05-29'
     rights = 'Kelly Turnbull, CC BY-NC-SA 3.0'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 60

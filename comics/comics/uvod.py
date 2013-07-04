@@ -1,11 +1,13 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'The Unspeakable Vault (of Doom)'
     language = 'en'
     url = 'http://www.goominet.com/unspeakable-vault/'
     rights = 'Francois Launet'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 180

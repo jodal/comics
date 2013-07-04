@@ -1,5 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import CrawlerBase
 from comics.core.comic_data import ComicDataBase
+
 
 class ComicData(ComicDataBase):
     name = 'Boy on a Stick and Slither'
@@ -10,6 +11,7 @@ class ComicData(ComicDataBase):
     active = False
     rights = 'Steven L. Cloud'
 
+
 class Crawler(CrawlerBase):
     def crawl(self, pub_date):
-        pass # Comic no longer published
+        pass  # Comic no longer published

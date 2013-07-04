@@ -1,6 +1,7 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'ExtraLife'
     language = 'en'
@@ -8,12 +9,13 @@ class ComicData(ComicDataBase):
     start_date = '2001-06-17'
     rights = 'Scott Johnson'
 
+
 class Crawler(CrawlerBase):
     history_capable_days = 32
     schedule = 'Mo'
     time_zone = 'US/Mountain'
 
-    # Without User-Agent set, the server returns empty responses
+     # Without User-Agent set, the server returns empty responses
     headers = {'User-Agent': 'Mozilla/4.0'}
 
     def crawl(self, pub_date):
