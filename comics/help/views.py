@@ -45,7 +45,8 @@ def feedback(request):
 
             send_mail(subject, message, sender, recipients)
 
-            messages.info(request,
+            messages.info(
+                request,
                 'Thank you for taking the time to help improve the site! :-)')
             return HttpResponseRedirect(reverse('help_feedback'))
     else:
