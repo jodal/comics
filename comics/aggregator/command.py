@@ -48,8 +48,8 @@ class Aggregator(object):
         from_date = self._get_valid_date(crawler, self.config.from_date)
         to_date = self._get_valid_date(crawler, self.config.to_date)
         if from_date != to_date:
-            logger.info('%s: Crawling from %s to %s',
-                comic.slug, from_date, to_date)
+            logger.info(
+                '%s: Crawling from %s to %s', comic.slug, from_date, to_date)
         pub_date = from_date
         while pub_date <= to_date:
             self.identifier = u'%s/%s' % (comic.slug, pub_date)
@@ -88,12 +88,14 @@ class Aggregator(object):
         if date is None:
             return crawler.current_date
         elif date < crawler.history_capable:
-            logger.info('%s: Adjusting date from %s to %s because of ' +
+            logger.info(
+                '%s: Adjusting date from %s to %s because of ' +
                 'limited history capability',
                 crawler.comic.slug, date, crawler.history_capable)
             return crawler.history_capable
         elif date > crawler.current_date:
-            logger.info('%s: Adjusting date from %s to %s because the given ' +
+            logger.info(
+                '%s: Adjusting date from %s to %s because the given ' +
                 "date is in the future in the comic's time zone",
                 crawler.comic.slug, date, crawler.current_date)
             return crawler.current_date

@@ -9,8 +9,9 @@ import pytz
 
 from django.utils import timezone
 
-from comics.aggregator.exceptions import (CrawlerHTTPError, ImageURLNotFound,
-    NotHistoryCapable, ReleaseAlreadyExists)
+from comics.aggregator.exceptions import (
+    CrawlerHTTPError, ImageURLNotFound, NotHistoryCapable,
+    ReleaseAlreadyExists)
 from comics.aggregator.feedparser import FeedParser
 from comics.aggregator.lxmlparser import LxmlParser
 
@@ -92,8 +93,8 @@ class CrawlerBase(object):
         """Get meta data for release at pub_date, or the latest release"""
 
         pub_date = self._get_date_to_crawl(pub_date)
-        release = CrawlerRelease(self.comic, pub_date,
-            has_rerun_releases=self.has_rerun_releases)
+        release = CrawlerRelease(
+            self.comic, pub_date, has_rerun_releases=self.has_rerun_releases)
 
         try:
             results = self.crawl(pub_date)
@@ -210,9 +211,10 @@ class GoComicsComCrawlerBase(CrawlerBase):
     # It doesn't want us getting comics because of a User-Agent check.
     # Look! I'm a nice, normal Internet Explorer machine!
     headers = {
-        'User-Agent': 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; '
+        'User-Agent': (
+            'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; '
             'Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; '
-            '.NET CLR 3.0.4506.2152; .NET CLR 3.5.30729',
+            '.NET CLR 3.0.4506.2152; .NET CLR 3.5.30729'),
     }
 
     def crawl_helper(self, short_name, pub_date, url_name=None):

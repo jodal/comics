@@ -25,8 +25,8 @@ class AggregatorConfigTestCase(TestCase):
         self.assertEquals(None, self.cc.to_date)
 
     def test_init_invalid(self):
-        self.assertRaises(AttributeError,
-            command.AggregatorConfig, options=True)
+        self.assertRaises(
+            AttributeError, command.AggregatorConfig, options=True)
 
     def test_set_from_date(self):
         from_date = datetime.date(2008, 3, 11)
@@ -103,8 +103,7 @@ class ComicAggregatorTestCase(TestCase):
         self.downloader_mock = mock.Mock()
 
     def test_init(self):
-        self.assert_(isinstance(self.aggregator.config,
-            command.AggregatorConfig))
+        self.assertInstance(self.aggregator.config, command.AggregatorConfig)
 
     def test_init_optparse_config(self):
         optparse_options_mock = mock.Mock()
@@ -115,12 +114,12 @@ class ComicAggregatorTestCase(TestCase):
 
         result = command.Aggregator(optparse_options=optparse_options_mock)
 
-        self.assertEquals(len(self.aggregator.config.comics),
-            len(result.config.comics))
-        self.assertEquals(self.aggregator.config.from_date,
-            result.config.from_date)
-        self.assertEquals(self.aggregator.config.to_date,
-            result.config.to_date)
+        self.assertEquals(
+            len(self.aggregator.config.comics), len(result.config.comics))
+        self.assertEquals(
+            self.aggregator.config.from_date, result.config.from_date)
+        self.assertEquals(
+            self.aggregator.config.to_date, result.config.to_date)
 
     def test_init_invalid_config(self):
         self.assertRaises(AssertionError, command.Aggregator)

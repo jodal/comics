@@ -20,10 +20,10 @@ class FeedParser(object):
             warnings.simplefilter('ignore')
             return [
                 Entry(e, self.encoding) for e in self.raw_feed.entries
-                if hasattr(e, 'published_parsed') and e.published_parsed and
-                    datetime.date(*e.published_parsed[:3]) == date
-                or hasattr(e, 'updated_parsed') and e.updated_parsed and
-                    datetime.date(*e.updated_parsed[:3]) == date
+                if (hasattr(e, 'published_parsed') and e.published_parsed and
+                    datetime.date(*e.published_parsed[:3]) == date)
+                or (hasattr(e, 'updated_parsed') and e.updated_parsed and
+                    datetime.date(*e.updated_parsed[:3]) == date)
             ]
 
     def all(self):
