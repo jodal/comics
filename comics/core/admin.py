@@ -13,11 +13,13 @@ class ReleaseImageInline(admin.TabularInline):
 
 
 class ComicAdmin(admin.ModelAdmin):
-    list_display = ('slug', 'name', 'language', 'url', 'rights', 'start_date',
-        'end_date', 'active')
+    list_display = (
+        'slug', 'name', 'language', 'url', 'rights', 'start_date', 'end_date',
+        'active')
     list_filter = ['active', 'language']
-    readonly_fields = ('name', 'slug', 'language', 'url', 'rights',
-        'start_date', 'end_date', 'active')
+    readonly_fields = (
+        'name', 'slug', 'language', 'url', 'rights', 'start_date', 'end_date',
+        'active')
 
     def has_add_permission(self, request):
         return False
@@ -44,13 +46,14 @@ def text_preview(obj):
 
 
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'file', 'height', 'width', 'fetched',
-        'title', text_preview)
+    list_display = (
+        '__unicode__', 'file', 'height', 'width', 'fetched', 'title',
+        text_preview)
     list_editable = ('title',)
     list_filter = ['fetched', 'comic']
     date_hierarchy = 'fetched'
-    readonly_fields = ('comic', 'file', 'checksum', 'height', 'width',
-        'fetched')
+    readonly_fields = (
+        'comic', 'file', 'checksum', 'height', 'width', 'fetched')
     inlines = (ReleaseImageInline,)
 
     def has_add_permission(self, request):

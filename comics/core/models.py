@@ -17,28 +17,37 @@ class Comic(models.Model):
     )
 
     # Required fields
-    name = models.CharField(max_length=100,
+    name = models.CharField(
+        max_length=100,
         help_text='Name of the comic')
-    slug = models.SlugField(max_length=100, unique=True,
+    slug = models.SlugField(
+        max_length=100, unique=True,
         verbose_name='Short name',
         help_text='For file paths and URLs')
-    language = models.CharField(max_length=2, choices=LANGUAGES,
+    language = models.CharField(
+        max_length=2, choices=LANGUAGES,
         help_text='The language of the comic')
 
     # Optional fields
-    url = models.URLField(verbose_name='URL', blank=True,
+    url = models.URLField(
+        verbose_name='URL', blank=True,
         help_text='URL to the official website')
-    active = models.BooleanField(default=True,
+    active = models.BooleanField(
+        default=True,
         help_text='Wheter the comic is still being crawled')
-    start_date = models.DateField(blank=True, null=True,
+    start_date = models.DateField(
+        blank=True, null=True,
         help_text='First published at')
-    end_date = models.DateField(blank=True, null=True,
+    end_date = models.DateField(
+        blank=True, null=True,
         help_text='Last published at, if comic has been cancelled')
-    rights = models.CharField(max_length=100, blank=True,
+    rights = models.CharField(
+        max_length=100, blank=True,
         help_text='Author, copyright, and/or licensing information')
 
     # Automatically populated fields
-    added = models.DateTimeField(auto_now_add=True,
+    added = models.DateTimeField(
+        auto_now_add=True,
         help_text='Time the comic was added to the site')
 
     objects = ComicManager()
@@ -106,7 +115,8 @@ def image_file_path(instance, filename):
 class Image(models.Model):
     # Required fields
     comic = models.ForeignKey(Comic)
-    file = models.ImageField(storage=image_storage, upload_to=image_file_path,
+    file = models.ImageField(
+        storage=image_storage, upload_to=image_file_path,
         height_field='height', width_field='width')
     checksum = models.CharField(max_length=64, db_index=True)
 

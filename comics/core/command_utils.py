@@ -12,12 +12,14 @@ CONSOLE_LOG_FORMAT = '%(levelname)-8s %(message)s'
 
 class ComicsBaseCommand(BaseCommand):
     if not [option for option in BaseCommand.option_list
-        if option.dest == 'verbosity']:
+            if option.dest == 'verbosity']:
         option_list = BaseCommand.option_list + (
-            make_option('-v', '--verbosity', action='store', dest='verbosity',
+            make_option(
+                '-v', '--verbosity', action='store', dest='verbosity',
                 default='1', type='choice', choices=['0', '1', '2'],
-                help='Verbosity level; 0=minimal output, 1=normal output, '
-                    '2=all output'),
+                help=(
+                    'Verbosity level; 0=minimal output, 1=normal output, '
+                    '2=all output')),
         )
 
     def handle(self, *args, **options):

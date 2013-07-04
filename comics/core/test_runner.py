@@ -12,7 +12,7 @@ And (new in this updated version), if you give it a single dotted path to a
 package, and that package does not itself directly contain any tests, it'll do
 test discovery in all sub-modules of that package.
 
-This code doesn't modify the default unittest2 test discovery behavior, which 
+This code doesn't modify the default unittest2 test discovery behavior, which
 only searches for tests in files named "test*.py".
 
 """
