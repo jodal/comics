@@ -8,7 +8,9 @@ from django.views.generic.base import TemplateView
 
 admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
+
     # Robots not welcome
     (r'^robots\.txt$', TemplateView.as_view(
         template_name='robots.txt', content_type='text/plain')),
@@ -35,7 +37,8 @@ urlpatterns = patterns('',
 
 # Let Django host media if doing local development on runserver
 if not settings.MEDIA_URL.startswith('http'):
-    urlpatterns += patterns('',
+    urlpatterns += patterns(
+        '',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve',
             {'document_root': settings.MEDIA_ROOT}),
     )
