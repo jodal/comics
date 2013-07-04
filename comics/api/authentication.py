@@ -8,7 +8,8 @@ class SecretKeyAuthentication(Authentication):
     def extract_credentials(self, request):
         if request.META.get('HTTP_AUTHORIZATION', '').lower().startswith(
                 'key '):
-            (auth_type, secret_key) = request.META['HTTP_AUTHORIZATION'].split()
+            (auth_type, secret_key) = (
+                request.META['HTTP_AUTHORIZATION'].split())
 
             if auth_type.lower() != 'key':
                 raise ValueError("Incorrect authorization header.")
@@ -27,8 +28,8 @@ class SecretKeyAuthentication(Authentication):
             return HttpUnauthorized()
 
         try:
-            user = User.objects.get(comics_profile__secret_key=secret_key,
-                is_active=True)
+            user = User.objects.get(
+                comics_profile__secret_key=secret_key, is_active=True)
         except (User.DoesNotExist, User.MultipleObjectsReturned):
             return HttpUnauthorized()
 

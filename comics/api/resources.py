@@ -5,8 +5,8 @@ from tastypie.authentication import BasicAuthentication
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from tastypie.resources import ModelResource
 
-from comics.api.authentication import (SecretKeyAuthentication,
-    MultiAuthentication)
+from comics.api.authentication import (
+    SecretKeyAuthentication, MultiAuthentication)
 from comics.api.authorization import SubscriptionsAuthorization
 from comics.core.models import Comic, Release, Image
 from comics.accounts.models import Subscription
@@ -112,5 +112,5 @@ class SubscriptionsResource(ModelResource):
         }
 
     def obj_create(self, bundle, request=None, **kwargs):
-        return super(SubscriptionsResource, self).obj_create(bundle, request,
-            userprofile=request.user.comics_profile)
+        return super(SubscriptionsResource, self).obj_create(
+            bundle, request, userprofile=request.user.comics_profile)

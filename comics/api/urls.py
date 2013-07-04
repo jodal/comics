@@ -13,6 +13,7 @@ v1_api.register(ImagesResource())
 v1_api.register(ReleasesResource())
 v1_api.register(SubscriptionsResource())
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     (r'', include(v1_api.urls)),
 )
