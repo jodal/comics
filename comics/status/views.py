@@ -37,7 +37,8 @@ def status(request, days=21):
         timeline[release.comic][day][0].add('fetched')
         timeline[release.comic][day][2] = release
 
-    days = [datetime.date.today() - datetime.timedelta(days=i)
+    days = [
+        datetime.date.today() - datetime.timedelta(days=i)
         for i in range(-1, 22)]
 
     return render(request, 'status/status.html', {
