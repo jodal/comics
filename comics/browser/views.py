@@ -194,11 +194,12 @@ class ReleaseFeedView(ComicMixin, ListView):
         return context
 
     def render_to_response(self, context, **kwargs):
-        return super(ReleaseFeedView, self).render_to_response(context,
-            content_type='application/xml', **kwargs)
+        return super(ReleaseFeedView, self).render_to_response(
+            context, content_type='application/xml', **kwargs)
 
     def get_user(self):
-        return get_object_or_404(User,
+        return get_object_or_404(
+            User,
             comics_profile__secret_key=self.request.GET.get('key', None),
             is_active=True)
 
@@ -262,7 +263,8 @@ class MyComicsMixin(object):
             pass
 
     def get_feed_url(self):
-        return '%s?key=%s' % (reverse('mycomics_feed'),
+        return '%s?key=%s' % (
+            reverse('mycomics_feed'),
             self.get_user().comics_profile.secret_key)
 
     def get_feed_title(self):
@@ -288,19 +290,22 @@ class MyComicsLatestView(MyComicsMixin, ReleaseLatestView):
     def get_first_url(self):
         page = self.context['page_obj']
         if page.number != page.paginator.num_pages:
-            return reverse('mycomics_latest_page_n',
+            return reverse(
+                'mycomics_latest_page_n',
                 kwargs={'page': page.paginator.num_pages})
 
     def get_prev_url(self):
         page = self.context['page_obj']
         if page.has_next():
-            return reverse('mycomics_latest_page_n',
+            return reverse(
+                'mycomics_latest_page_n',
                 kwargs={'page': page.next_page_number()})
 
     def get_next_url(self):
         page = self.context['page_obj']
         if page.has_previous():
-            return reverse('mycomics_latest_page_n',
+            return reverse(
+                'mycomics_latest_page_n',
                 kwargs={'page': page.previous_page_number()})
 
     def get_last_url(self):
@@ -455,8 +460,10 @@ class OneComicMixin(object):
     """Things common for all views of a single comic"""
 
     def get_queryset(self):
-        return Release.objects.select_related().filter(comic=self.comic
-            ).order_by('pub_date')
+        return (
+            Release.objects.select_related()
+            .filter(comic=self.comic)
+            .order_by('pub_date'))
 
     def get_object_type(self):
         return 'onecomic'
@@ -475,7 +482,8 @@ class OneComicMixin(object):
 
     def get_today_url(self):
         if datetime.date.today() in self._get_recent_pub_dates():
-            return reverse('comic_today',
+            return reverse(
+                'comic_today',
                 kwargs={'comic_slug': self.comic.slug})
 
     def get_day_url(self):

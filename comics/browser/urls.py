@@ -9,7 +9,9 @@ DAY = r'(?P<day>(0*[1-9]|[1-2]\d|3[0-1]))'         # 1-31
 DAYS = r'\+(?P<days>\d+)'
 COMIC = r'(?P<comic_slug>[0-9a-z-_]+)'
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
+
     url(r'^$',
         views.MyComicsHome.as_view(),
         name='home'),
