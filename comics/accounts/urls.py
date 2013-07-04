@@ -6,11 +6,12 @@ from django.views.generic.base import TemplateView
 from invitation import views as invitation_views
 from registration import views as reg_views
 
-from comics.accounts.forms import (AuthenticationForm, PasswordResetForm,
-    RegistrationForm)
+from comics.accounts.forms import (
+    AuthenticationForm, PasswordResetForm, RegistrationForm)
 from comics.accounts import views as account_views
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
 
     ### django-invitation
 
@@ -143,7 +144,8 @@ urlpatterns = patterns('',
 )
 
 if 'comics.sets' in settings.INSTALLED_APPS:
-    urlpatterns += patterns('',
+    urlpatterns += patterns(
+        '',
         url(r'^import-set/$',
             account_views.mycomics_import_named_set, name='import_named_set'),
     )

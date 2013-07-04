@@ -85,8 +85,8 @@ def mycomics_edit_comics(request):
                 userprofile=request.user.comics_profile, comic=comic)
             subscriptions.delete()
             if not request.is_ajax():
-                messages.info(request,
-                    'Removed "%s" from my comics' % comic.name)
+                messages.info(
+                    request, 'Removed "%s" from my comics' % comic.name)
 
     for comic in Comic.objects.all():
         if comic.slug in request.POST and comic not in my_comics:
@@ -112,15 +112,17 @@ def mycomics_import_named_set(request):
         try:
             named_set = Set.objects.get(name=request.POST['namedset'])
         except Set.DoesNotExist:
-            messages.error(request, 'No comic set named "%s" found.' %
-                request.POST['namedset'])
+            messages.error(
+                request,
+                'No comic set named "%s" found.' % request.POST['namedset'])
             return HttpResponseRedirect(reverse('import_named_set'))
 
         count_before = len(request.user.comics_profile.comics.all())
         request.user.comics_profile.comics.add(*named_set.comics.all())
         count_after = len(request.user.comics_profile.comics.all())
         count_added = count_after - count_before
-        messages.info(request,
+        messages.info(
+            request,
             '%d comic(s) was added to your comics selection.' % count_added)
         if count_added > 0:
             return HttpResponseRedirect(reverse('mycomics_latest'))
