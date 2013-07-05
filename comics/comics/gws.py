@@ -11,21 +11,15 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
+    history_capable_days = 30
     schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
-        page = self.parse_page('http://www.girlswithslingshots.com/')
-        url = page.src('div#comic img')
-        title = page.title('div#comic img')
-
-        try:
-            all_post_ids = page.id('div#blog div.post', allow_multiple=True)
-            blog_post_id = all_post_ids[0]
-            blog_paragraphs = page.text(
-                'div#%s div.entry p' % blog_post_id, allow_multiple=True)
-            text = '\n\n'.join(blog_paragraphs)
-        except StandardError:
-            text = None
-
-        return CrawlerImage(url, title, text)
+        feed = self.parse_feed('http://www.girlswithslingshots.com/feed/')
+        for entry in feed.for_date(pub_date):
+            page = self.parse_page(entry.link)
+            url = page.src('img#comic')
+            title = entry.title.replace('Girls with Slingshots - ', '')
+            text = page.title('img#comic')
+            return CrawlerImage(url, title, text)
