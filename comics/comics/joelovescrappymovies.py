@@ -38,7 +38,7 @@ class Crawler(CrawlerBase):
              # that we get the real value first, then the title, so we're just
              # going to parse it again later.
             possible_date_and_title = date_to_index_page.text(
-                'option[value=%s]' % possible_id, allow_multiple=True)
+                'option[value="%s"]' % possible_id, allow_multiple=True)
             for the_date in possible_date_and_title:
                  # Make sure we strip off the leading '0' on %d: Joe doesn't
                  # include them.  We can't use a regex due to the speed
