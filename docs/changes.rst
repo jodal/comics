@@ -28,6 +28,7 @@ v2.2.0 (in development)
 - Updated: ``eatthattoast`` to not throw exception when the site is broken.
 - Updated: ``evilinc`` to be more robust.
 - Updated: ``extralife`` after feed change.
+- Updated: ``leasticoulddo`` after site change.
 - Updated: ``perrybiblefellowship`` to be an active crawler again.
 - Updated: ``wulffmorgenthaler`` to work after site change.
 - Updated: ``wulffmorgenthalerap`` is no longer active.
