@@ -23,6 +23,8 @@ v2.2.0 (in development)
   - Pillow >= 1.7, < 2.2
   - South >= 0.7, < 2.0
 
+- Fix crash in importing of old comic sets, which has been broken since v2.1.0.
+
 **Crawlers**
 
 - Updated: ``eatthattoast`` to not throw exception when the site is broken.

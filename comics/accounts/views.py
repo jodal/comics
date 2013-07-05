@@ -118,7 +118,10 @@ def mycomics_import_named_set(request):
             return HttpResponseRedirect(reverse('import_named_set'))
 
         count_before = len(request.user.comics_profile.comics.all())
-        request.user.comics_profile.comics.add(*named_set.comics.all())
+        for comic in named_set.comics.all():
+            Subscription.objects.get_or_create(
+                userprofile=request.user.comics_profile,
+                comic=comic)
         count_after = len(request.user.comics_profile.comics.all())
         count_added = count_after - count_before
         messages.info(
