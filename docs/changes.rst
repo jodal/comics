@@ -29,6 +29,7 @@ v2.2.0 (in development)
 - Updated: ``evilinc`` to be more robust.
 - Updated: ``extralife`` after feed change.
 - Updated: ``perrybiblefellowship`` to be an active crawler again.
+- Updated: ``wumo`` to work after site change.
 
 
 v2.1.1 (2013-02-26)
