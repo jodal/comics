@@ -23,9 +23,9 @@ class Crawler(CrawlerBase):
         url = page.src('#ei_strip')
         title = page.text('#seriesselect option[selected]')
 
-         # Page does not generate 404, redirects to archive page for future
-         # comics, and to / for current comic.
-        if pub_date.strftime('%Y%m%d') not in url:
+        # Page does not generate 404, redirects to archive page for future
+        # comics, and to / for current comic.
+        if not url or pub_date.strftime('%Y%m%d') not in url:
             return
 
         return CrawlerImage(url, title)

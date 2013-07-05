@@ -26,6 +26,7 @@ v2.2.0 (in development)
 **Crawlers**
 
 - Updated: ``eatthattoast`` to not throw exception when the site is broken.
+- Updated: ``evilinc`` to be more robust.
 - Updated: ``extralife`` after feed change.
 
 
