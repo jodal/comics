@@ -21,5 +21,5 @@ class Crawler(CrawlerBase):
             entry = feed.all()[0]
             url = entry.link.replace('.htm', '.gif')
             title = entry.title
-            text = entry.summary.text('')
+            text = entry.summary.root.text
             return CrawlerImage(url, title, text)
