@@ -32,6 +32,9 @@ h3 {
 h3 a:hover {
     text-decoration: none;
 }
+h3 small {
+    color: #999;
+}
 
 h4 {
     margin-bottom: 10px;
