@@ -30,6 +30,7 @@ v2.2.0 (in development)
 - Updated: ``extralife`` after feed change.
 - Updated: ``perrybiblefellowship`` to be an active crawler again.
 - Updated: ``wulffmorgenthaler`` to work after site change.
+- Updated: ``wulffmorgenthalerap`` is no longer active.
 
 
 v2.1.1 (2013-02-26)

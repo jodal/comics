@@ -7,14 +7,10 @@ class ComicData(ComicDataBase):
     language = 'no'
     url = 'http://www.aftenposten.no/tegneserier/'
     start_date = '2001-01-01'
+    active = False
     rights = 'Mikael Wulff & Anders Morgenthaler'
 
 
 class Crawler(CrawlerBase):
-    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
-    time_zone = 'Europe/Oslo'
-
     def crawl(self, pub_date):
-        page = self.parse_page('http://www.aftenposten.no/tegneserier/')
-        url = page.src('img.originalImage')
-        return CrawlerImage(url)
+        pass  # Comic no longer published
