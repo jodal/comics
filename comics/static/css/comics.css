@@ -99,15 +99,18 @@ h4 {
 }
 #status .scheduled,
 #status_legend .scheduled {
-    background: #fcc;
+    background: #cd0200;
+    color: #fff;
 }
 #status .fetched,
 #status_legend .fetched {
-    background: #fff7cc;
+    background: #d47500;
+    color: #fff;
 }
 #status .fetched.scheduled,
 #status_legend .fetched.scheduled {
-    background: #efc;
+    background: #3cb521;
+    color: #fff;
 }
 #status_legend {
     width: auto;
