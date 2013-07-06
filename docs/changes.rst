@@ -40,6 +40,7 @@ v2.2.0 (in development)
 - Update: ``chainsawsuit`` after feed change.
 - Update: ``choppingblock`` is no longer published.
 - Update: ``dilbertvg`` after move to new site.
+- Update: ``darylcagle`` after feed change.
 - Update: ``eatthattoast`` to not throw exception when the site is broken.
 - Update: ``evilinc`` to be more robust.
 - Update: ``extralife`` after feed change.

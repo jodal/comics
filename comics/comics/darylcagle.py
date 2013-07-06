@@ -11,13 +11,13 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 180
+    history_capable_days = 365
     time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.cagle.com/author/daryl-cagle/feed/')
         for entry in feed.for_date(pub_date):
-            if 'cartoon' not in entry.tags:
+            if 'Cartoons' not in entry.tags:
                 continue
             url = entry.summary.src('img')
             title = entry.title
