@@ -7,15 +7,11 @@ class ComicData(ComicDataBase):
     language = 'en'
     url = 'http://choppingblock.keenspot.com/'
     start_date = '2000-07-25'
+    end_date = '2012-08-22'
+    active = False
     rights = 'Lee Adam Herold'
 
 
 class Crawler(CrawlerBase):
-    history_capable_date = '2000-07-25'
-    schedule = 'We'
-    time_zone = 'US/Pacific'
-
     def crawl(self, pub_date):
-        url = 'http://choppingblock.keenspot.com/comics/cb%s.jpg' % (
-            pub_date.strftime('%Y%m%d'))
-        return CrawlerImage(url)
+        pass  # Comic no longer published
