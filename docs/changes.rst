@@ -37,6 +37,7 @@ v2.2.0 (in development)
 - Update: ``amazingsuperpowers`` after feed change.
 - Update: ``antics`` after feed change.
 - Update: ``beyondthetree`` is no longer published.
+- Update: ``chainsawsuit`` after feed change.
 - Update: ``dilbertvg`` after move to new site.
 - Update: ``eatthattoast`` to not throw exception when the site is broken.
 - Update: ``evilinc`` to be more robust.
