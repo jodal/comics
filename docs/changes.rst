@@ -27,6 +27,7 @@ v2.2.0 (in development)
 
 **Crawlers**
 
+- New: ``completelyseriouscomics``
 - New: ``hjalmar``
 - New: ``kollektivet``
 - New: ``tommyogtigern``
