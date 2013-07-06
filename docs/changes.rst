@@ -36,6 +36,7 @@ v2.2.0 (in development)
 - Update: ``veslemoy`` is no longer published.
 - Update: ``wulffmorgenthaler`` to work after site change.
 - Update: ``wulffmorgenthalerap`` is no longer active.
+- Update: ``zofiesverden`` is no longer published.
 
 
 v2.1.1 (2013-02-26)
