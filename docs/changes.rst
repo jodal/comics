@@ -33,6 +33,7 @@ v2.2.0 (in development)
 - Update: ``gws`` after site change.
 - Update: ``leasticoulddo`` after site change.
 - Update: ``perrybiblefellowship`` to be an active crawler again.
+- Update: ``utensokker`` is published again.
 - Update: ``veslemoy`` is no longer published.
 - Update: ``wulffmorgenthaler`` to work after site change.
 - Update: ``wulffmorgenthalerap`` is no longer active.
