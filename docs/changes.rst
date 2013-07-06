@@ -27,14 +27,14 @@ v2.2.0 (in development)
 
 **Crawlers**
 
-- Updated: ``eatthattoast`` to not throw exception when the site is broken.
-- Updated: ``evilinc`` to be more robust.
-- Updated: ``extralife`` after feed change.
-- Updated: ``gws`` after site change.
-- Updated: ``leasticoulddo`` after site change.
-- Updated: ``perrybiblefellowship`` to be an active crawler again.
-- Updated: ``wulffmorgenthaler`` to work after site change.
-- Updated: ``wulffmorgenthalerap`` is no longer active.
+- Update: ``eatthattoast`` to not throw exception when the site is broken.
+- Update: ``evilinc`` to be more robust.
+- Update: ``extralife`` after feed change.
+- Update: ``gws`` after site change.
+- Update: ``leasticoulddo`` after site change.
+- Update: ``perrybiblefellowship`` to be an active crawler again.
+- Update: ``wulffmorgenthaler`` to work after site change.
+- Update: ``wulffmorgenthalerap`` is no longer active.
 
 
 v2.1.1 (2013-02-26)
@@ -48,11 +48,11 @@ v2.1.1 (2013-02-26)
 - New: ``stickygillybuns``
 - New: ``undeclaredmajor``
 - New: ``yamac``
-- Updated: ``abstrusegoose`` after feed change.
-- Updated: ``bizarro`` after feed change.
-- Updated: ``joyoftech`` after site change.
-- Updated: ``lookingforgroup`` after feed change.
-- Updated: ``thegamercat`` to be more robust.
+- Update: ``abstrusegoose`` after feed change.
+- Update: ``bizarro`` after feed change.
+- Update: ``joyoftech`` after site change.
+- Update: ``lookingforgroup`` after feed change.
+- Update: ``thegamercat`` to be more robust.
 
 
 v2.1.0 (2012-10-15)
