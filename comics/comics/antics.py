@@ -21,7 +21,7 @@ class Crawler(CrawlerBase):
             if 'comic' not in entry.tags:
                 continue
             image_url = pub_date.strftime('/comics/%Y-%m-%d.jpg')
-            url = entry.content0.src('img[src$="%s"]' % image_url)
+            url = entry.summary.src('img[src$="%s"]' % image_url)
             title = entry.title
-            text = entry.content0.title('img[src*="%s"]' % image_url)
+            text = entry.summary.title('img[src*="%s"]' % image_url)
             return CrawlerImage(url, title, text)
