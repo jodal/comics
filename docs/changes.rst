@@ -27,6 +27,7 @@ v2.2.0 (in development)
 
 **Crawlers**
 
+- New: ``hjalmar``
 - Update: ``dilbertvg`` after move to new site.
 - Update: ``eatthattoast`` to not throw exception when the site is broken.
 - Update: ``evilinc`` to be more robust.
