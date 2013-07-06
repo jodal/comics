@@ -7,19 +7,11 @@ class ComicData(ComicDataBase):
     language = 'en'
     url = 'http://beyondthetree.wordpress.com/'
     start_date = '2008-03-20'
+    end_date = '2012-03-18'
+    active = False
     rights = 'Nhani'
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 60
-    schedule = 'Th,Su'
-    time_zone = 'US/Eastern'
-
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://beyondthetree.wordpress.com/feed/')
-        for entry in feed.for_date(pub_date):
-            if 'Comic' not in entry.tags:
-                continue
-            url = entry.content0.src('img[src*="/btt-"]')
-            title = entry.title
-            return CrawlerImage(url, title)
+        pass  # Comic no longer published
