@@ -16,9 +16,9 @@ class Crawler(CrawlerBase):
     time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://feedburner.com/amazingsuperpowers')
+        feed = self.parse_feed('http://feeds.feedburner.com/amazingsuperpowers')
         for entry in feed.for_date(pub_date):
-            url = entry.content0.src('img')
+            url = entry.content0.src('img[src*="/comics/"]')
             title = entry.title.split(' (')[0]
-            text = entry.content0.title('img')
+            text = entry.content0.title('img[src*="/comics/"]')
             return CrawlerImage(url, title, text)
