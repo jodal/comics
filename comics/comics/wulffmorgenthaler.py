@@ -1,11 +1,9 @@
-import datetime
-
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
 
 class ComicData(ComicDataBase):
-    name = 'Wulffmorgenthaler'
+    name = 'Wumo'
     language = 'en'
     url = 'http://www.wumo.com/'
     start_date = '2001-01-01'
