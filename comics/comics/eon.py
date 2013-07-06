@@ -7,11 +7,10 @@ class ComicData(ComicDataBase):
     language = 'no'
     url = 'http://www.pondus.no/'
     start_date = '2008-11-19'
+    active = False
     rights = 'Lars Lauvik'
 
 
 class Crawler(PondusNoCrawlerBase):
-    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
-
     def crawl(self, pub_date):
-        return self.crawl_helper('20058')
+        pass  # Comic no longer published

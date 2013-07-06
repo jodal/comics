@@ -43,6 +43,7 @@ v2.2.0 (in development)
 - Update: ``dilbert`` after removal of feed.
 - Update: ``dilbertvg`` after move to new site.
 - Update: ``eatthattoast`` to not throw exception when the site is broken.
+- Update: ``eon`` is no longer published.
 - Update: ``evilinc`` to be more robust.
 - Update: ``extralife`` after feed change.
 - Update: ``gws`` after site change.
