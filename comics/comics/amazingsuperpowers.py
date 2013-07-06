@@ -11,15 +11,14 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 21
+    history_capable_days = 14
     schedule = 'Mo,We,Fr'
     time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed(
-            'http://www.amazingsuperpowers.com/category/comics/feed/')
+        feed = self.parse_feed('http://feedburner.com/amazingsuperpowers')
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img')
-            title = entry.title
-            text = entry.summary.title('img')
+            url = entry.content0.src('img')
+            title = entry.title.split(' (')[0]
+            text = entry.content0.title('img')
             return CrawlerImage(url, title, text)

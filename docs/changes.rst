@@ -34,6 +34,7 @@ v2.2.0 (in development)
 - New: ``tommyogtigern``
 - New: ``truthfacts``
 - New: ``wumovg``
+- Update: ``amazingsuperpowers`` after feed change.
 - Update: ``dilbertvg`` after move to new site.
 - Update: ``eatthattoast`` to not throw exception when the site is broken.
 - Update: ``evilinc`` to be more robust.
