@@ -47,6 +47,7 @@ v2.2.0 (in development)
 - Update: ``evilinc`` to be more robust.
 - Update: ``extralife`` after feed change.
 - Update: ``extraordinary`` after site change.
+- Update: ``fagprat`` after site change.
 - Update: ``gws`` after site change.
 - Update: ``leasticoulddo`` after site change.
 - Update: ``perrybiblefellowship`` to be an active crawler again.
