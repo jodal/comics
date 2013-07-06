@@ -15,7 +15,7 @@ class Crawler(CrawlerBase):
     schedule = 'We'
     time_zone = 'Pacific/Auckland'
 
-     # Without Referer set, the server returns 403 Forbidden
+    # Without Referer set, the server returns 403 Forbidden
     headers = {'Referer': 'http://www.exocomics.com/'}
 
     def crawl(self, pub_date):
@@ -23,6 +23,6 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             title = entry.title
             page = self.parse_page(entry.link)
-            url = page.src('img.comic-item')
-            text = page.title('img.comic-item')
+            url = page.src('.comic img')
+            text = page.title('.comic img')
             return CrawlerImage(url, title, text)

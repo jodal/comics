@@ -46,6 +46,7 @@ v2.2.0 (in development)
 - Update: ``eon`` is no longer published.
 - Update: ``evilinc`` to be more robust.
 - Update: ``extralife`` after feed change.
+- Update: ``extraordinary`` after site change.
 - Update: ``gws`` after site change.
 - Update: ``leasticoulddo`` after site change.
 - Update: ``perrybiblefellowship`` to be an active crawler again.
