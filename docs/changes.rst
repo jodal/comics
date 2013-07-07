@@ -64,6 +64,7 @@ v2.2.0 (in development)
 - Update: ``perrybiblefellowship`` to be an active crawler again.
 - Update: ``picturesforsadchildren`` is no longer published.
 - Update: ``pidjin`` to ignore repeated non-comic image.
+- Update: ``reallife`` after site change.
 - Update: ``utensokker`` is published again.
 - Update: ``veslemoy`` is no longer published.
 - Update: ``wulffmorgenthaler`` to work after site change.

@@ -11,12 +11,14 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_date = '1999-11-15'
+    history_capable_days = 30
     time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
-        page_url = 'http://www.reallifecomics.com/archive/%s.html' % (
-            pub_date.strftime('%y%m%d'),)
-        page = self.parse_page(page_url)
-        url = page.src('img[alt^="strip for"]')
-        return CrawlerImage(url)
+        feed = self.parse_feed('http://reallifecomics.com/rss.php?feed=rss2')
+        for entry in feed.for_date(pub_date):
+            url = entry.summary.src('img')
+            if url is None:
+                continue
+            url = url.replace('-150x150', '')
+            return CrawlerImage(url)
