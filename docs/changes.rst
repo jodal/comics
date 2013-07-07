@@ -52,6 +52,7 @@ v2.2.0 (in development)
 - Update: ``harkavagrant`` schedule.
 - Update: ``havet`` is no longer published.
 - Update: ``hejibits`` schedule.
+- Update: ``heltnils`` is no longer published.
 - Update: ``hipsterhitler`` is no longer published.
 - Update: ``kiwiblitz`` schedule.
 - Update: ``leasticoulddo`` after site change.
