@@ -80,6 +80,7 @@ v2.2.0 (in development)
 - Update: ``whiteninja`` is no longer published.
 - Update: ``wulffmorgenthaler`` to work after site change.
 - Update: ``wulffmorgenthalerap`` is no longer active.
+- Update: ``yehudamoon`` is no longer published.
 - Update: ``zofiesverden`` is no longer published.
 
 
