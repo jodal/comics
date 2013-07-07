@@ -49,6 +49,7 @@ v2.2.0 (in development)
 - Update: ``extralife`` after feed change.
 - Update: ``extraordinary`` after site change.
 - Update: ``fagprat`` after site change.
+- Update: ``geekandpoke`` after feed change.
 - Update: ``gws`` after site change.
 - Update: ``harkavagrant`` schedule.
 - Update: ``havet`` is no longer published.
