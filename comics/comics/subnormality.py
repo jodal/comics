@@ -20,4 +20,5 @@ class Crawler(CrawlerBase):
             page = self.parse_page(entry.link)
             url = page.src('body > img[src$=".jpg"]')
             title = page.text('title')
-            return CrawlerImage(url, title)
+            text = page.title('body > img[src$=".jpg"]')
+            return CrawlerImage(url, title, text)
