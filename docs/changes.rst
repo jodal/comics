@@ -52,6 +52,7 @@ v2.2.0 (in development)
 - Update: ``harkavagrant`` schedule.
 - Update: ``havet`` is no longer published.
 - Update: ``hejibits`` schedule.
+- Update: ``hipsterhitler`` is no longer published.
 - Update: ``leasticoulddo`` after site change.
 - Update: ``perrybiblefellowship`` to be an active crawler again.
 - Update: ``utensokker`` is published again.
