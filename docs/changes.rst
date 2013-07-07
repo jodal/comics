@@ -45,6 +45,7 @@ v2.2.0 (in development)
 - Update: ``eatthattoast`` to not throw exception when the site is broken.
 - Update: ``eon`` is no longer published.
 - Update: ``evilinc`` to be more robust.
+- Update: ``exiern`` to track new storyline.
 - Update: ``extralife`` after feed change.
 - Update: ``extraordinary`` after site change.
 - Update: ``fagprat`` after site change.
