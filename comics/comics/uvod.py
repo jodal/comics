@@ -18,7 +18,6 @@ class Crawler(CrawlerBase):
             'http://www.goominet.com/unspeakable-vault/'
             '?type=103&ecorss[clear_cache]=1')
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img')
+            url = entry.summary.src('img[src*="/tx_cenostripviewer/"]')
             title = entry.title
-            text = entry.summary.text('.bodytext')
-            return CrawlerImage(url, title, text)
+            return CrawlerImage(url, title)
