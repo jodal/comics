@@ -7,11 +7,11 @@ class ComicData(ComicDataBase):
     language = 'en'
     url = 'http://www.arcamax.com/babyblues'
     start_date = '1990-01-01'
-    rights = 'Rick Kirkman and Jerry Scott, for King Features Syndicate, Inc.'
+    rights = 'Rick Kirkman and Jerry Scott'
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 1
+    history_capable_days = 0
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = 'US/Eastern'
 
