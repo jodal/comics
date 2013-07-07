@@ -57,6 +57,7 @@ v2.2.0 (in development)
 - Update: ``kiwiblitz`` schedule.
 - Update: ``kukuburi`` is no longer published.
 - Update: ``leasticoulddo`` after site change.
+- Update: ``manalanextdoor`` is no longer published.
 - Update: ``perrybiblefellowship`` to be an active crawler again.
 - Update: ``utensokker`` is published again.
 - Update: ``veslemoy`` is no longer published.
