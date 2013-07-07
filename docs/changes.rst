@@ -62,6 +62,7 @@ v2.2.0 (in development)
 - Update: ``orneryboy`` is no longer published.
 - Update: ``overcompensating`` is no longer published.
 - Update: ``perrybiblefellowship`` to be an active crawler again.
+- Update: ``picturesforsadchildren`` is no longer published.
 - Update: ``utensokker`` is published again.
 - Update: ``veslemoy`` is no longer published.
 - Update: ``wulffmorgenthaler`` to work after site change.
