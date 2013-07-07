@@ -43,6 +43,9 @@ h4 {
 .new-releases-alert {
     display: none;
 }
+.alert-info a {
+    color: #ddd;
+}
 
 .release h3,
 .release form {
