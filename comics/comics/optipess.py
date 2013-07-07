@@ -18,9 +18,10 @@ class Crawler(CrawlerBase):
     time_zone = 'Europe/Oslo'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed(
-            'http://feeds.feedburner.com/Optipess?format=xml')
+        feed = self.parse_feed('http://feeds.feedburner.com/Optipess')
         for entry in feed.for_date(pub_date):
+            if 'Comic' not in entry.tags:
+                continue
             url = entry.summary.src('img[src*="/comics/"]')
             title = entry.title
             return CrawlerImage(url, title)
