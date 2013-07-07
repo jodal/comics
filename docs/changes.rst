@@ -50,6 +50,7 @@ v2.2.0 (in development)
 - Update: ``fagprat`` after site change.
 - Update: ``gws`` after site change.
 - Update: ``harkavagrant`` schedule.
+- Update: ``havet`` is no longer published.
 - Update: ``leasticoulddo`` after site change.
 - Update: ``perrybiblefellowship`` to be an active crawler again.
 - Update: ``utensokker`` is published again.
