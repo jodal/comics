@@ -70,6 +70,7 @@ v2.2.0 (in development)
 - Update: ``smbc`` after site change.
 - Update: ``somethingofthatilk`` schedule.
 - Update: ``subnormality`` to include title text.
+- Update: ``thechalkboardmanifesto`` schedule.
 - Update: ``utensokker`` is published again.
 - Update: ``veslemoy`` is no longer published.
 - Update: ``wulffmorgenthaler`` to work after site change.
