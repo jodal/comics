@@ -15,11 +15,14 @@ class Crawler(CrawlerBase):
     time_zone = 'Europe/Dublin'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://feeds.feedburner.com/SpaceAvalanche1')
+        feed = self.parse_feed('http://feeds.feedburner.com/SpaceAvalanche')
         for entry in feed.for_date(pub_date):
+            if 'COMIC ARCHIVE' not in entry.tags:
+                continue
             urls = entry.content0.src(
-                'img[src*="/wp-content/"]', allow_multiple=True)
-            if urls:
-                url = urls[0]
-                title = entry.title
-                return CrawlerImage(url, title)
+                'img[src*="/wp-content/uploads/"]', allow_multiple=True)
+            if not urls:
+                continue
+            url = urls[0]
+            title = entry.title
+            return CrawlerImage(url, title)
