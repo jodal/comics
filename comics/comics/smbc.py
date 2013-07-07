@@ -16,8 +16,8 @@ class Crawler(CrawlerBase):
     time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://www.smbc-comics.com/rss.php')
+        feed = self.parse_feed('http://feeds.feedburner.com/smbc-comics/PvLb')
         for entry in feed.for_date(pub_date):
             url_1 = entry.summary.src('img[src*="/comics/"]')
-            url_2 = url_1.replace('.gif', 'after.gif')
+            url_2 = url_1.replace('.png', 'after.gif')
             return [CrawlerImage(url_1), CrawlerImage(url_2)]
