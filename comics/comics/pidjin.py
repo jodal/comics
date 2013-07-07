@@ -21,5 +21,6 @@ class Crawler(CrawlerBase):
             urls = entry.content0.src(
                 'img[src*="/wp-content/uploads/"]', allow_multiple=True)
             for url in urls:
-                result.append(CrawlerImage(url))
+                if 'clueful-ad-rss' not in url:
+                    result.append(CrawlerImage(url))
             return result
