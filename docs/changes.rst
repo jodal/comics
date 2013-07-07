@@ -49,6 +49,7 @@ v2.2.0 (in development)
 - Update: ``extraordinary`` after site change.
 - Update: ``fagprat`` after site change.
 - Update: ``gws`` after site change.
+- Update: ``harkavagrant`` schedule.
 - Update: ``leasticoulddo`` after site change.
 - Update: ``perrybiblefellowship`` to be an active crawler again.
 - Update: ``utensokker`` is published again.
