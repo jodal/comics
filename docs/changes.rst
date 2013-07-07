@@ -59,6 +59,7 @@ v2.2.0 (in development)
 - Update: ``leasticoulddo`` after site change.
 - Update: ``manalanextdoor`` is no longer published.
 - Update: ``manlyguys`` after feed change.
+- Update: ``orneryboy`` is no longer published.
 - Update: ``perrybiblefellowship`` to be an active crawler again.
 - Update: ``utensokker`` is published again.
 - Update: ``veslemoy`` is no longer published.
