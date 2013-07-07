@@ -77,6 +77,7 @@ v2.2.0 (in development)
 - Update: ``utensokker`` is published again.
 - Update: ``uvod`` after feed change.
 - Update: ``veslemoy`` is no longer published.
+- Update: ``whiteninja`` is no longer published.
 - Update: ``wulffmorgenthaler`` to work after site change.
 - Update: ``wulffmorgenthalerap`` is no longer active.
 - Update: ``zofiesverden`` is no longer published.
