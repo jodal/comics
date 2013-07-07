@@ -73,6 +73,7 @@ v2.2.0 (in development)
 - Update: ``thechalkboardmanifesto`` schedule.
 - Update: ``thegamercat`` after feed change.
 - Update: ``theidlestate`` is no longer published.
+- Update: ``undeclaredmajor`` is no longer published.
 - Update: ``utensokker`` is published again.
 - Update: ``veslemoy`` is no longer published.
 - Update: ``wulffmorgenthaler`` to work after site change.
