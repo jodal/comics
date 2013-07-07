@@ -55,6 +55,7 @@ v2.2.0 (in development)
 - Update: ``heltnils`` is no longer published.
 - Update: ``hipsterhitler`` is no longer published.
 - Update: ``kiwiblitz`` schedule.
+- Update: ``kukuburi`` is no longer published.
 - Update: ``leasticoulddo`` after site change.
 - Update: ``perrybiblefellowship`` to be an active crawler again.
 - Update: ``utensokker`` is published again.
