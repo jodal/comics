@@ -19,6 +19,7 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed('http://thepunchlineismachismo.com/feed')
         for entry in feed.for_date(pub_date):
             url = entry.summary.src('img[src*="/wp-content/uploads/"]')
-            url = url.replace('-150x150', '')
-            title = entry.title
-            return CrawlerImage(url, title)
+            if url is not None:
+                url = url.replace('-150x150', '')
+                title = entry.title
+                return CrawlerImage(url, title)
