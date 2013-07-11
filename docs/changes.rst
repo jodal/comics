@@ -11,6 +11,7 @@ v2.2.1 (UNRELEASED)
 **Crawlers**
 
 - Update: ``menagea3`` after site change.
+- Update: ``stickydillybuns`` to use site feed and include title.
 
 
 v2.2.0 (2013-07-07)
