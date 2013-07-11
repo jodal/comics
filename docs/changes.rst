@@ -5,6 +5,13 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+v2.2.1 (UNRELEASED)
+===================
+
+**Crawlers**
+
+- Update: ``menagea3`` after site change.
+
 
 v2.2.0 (2013-07-07)
 ===================
