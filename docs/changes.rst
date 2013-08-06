@@ -8,6 +8,12 @@ versioned release.
 v2.2.1 (UNRELEASED)
 ===================
 
+**Security**
+
+- Disabled the GZip middleware to help prevent the BREACH attack. See
+  https://www.djangoproject.com/weblog/2013/aug/06/breach-and-django/ for
+  details.
+
 **Crawlers**
 
 - Update: ``menagea3`` after site change.
