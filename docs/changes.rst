@@ -16,6 +16,7 @@ v2.2.1 (UNRELEASED)
 
 **Crawlers**
 
+- Update: ``axecop`` after feed change.
 - Update: ``menagea3`` after site change.
 - Update: ``stickydillybuns`` to use site feed and include title.
 
