@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 7
+    history_capable_days = 0
     schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = 'US/Pacific'
 
@@ -20,7 +20,6 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         page = self.parse_page('http://mysticrevolution.keenspot.com/')
-        url = page.src('#comicpage_ img')
-        title = page.alt('#comicpage_ img')
-        if url and pub_date.strftime('%Y%m%d') in url:
-            return CrawlerImage(url, title)
+        url = page.src('img[class="ksc"]')
+        title = page.alt('img[class="ksc"]')
+        return CrawlerImage(url, title)
