@@ -18,6 +18,6 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         page_url = 'http://kindofnormal.com/wumo/' + pub_date.strftime('%Y/%m/%d')
         page = self.parse_page(page_url)
-        url = 'http://kindofnormal.com/img/wumo/' + pub_date.strftime('%Y/%m/%d') + '.png'
+        url = page.href('link', allow_multiple=True)[0]
         title = page.alt('img[src="' + url + '"]')
         return CrawlerImage(url, title)
