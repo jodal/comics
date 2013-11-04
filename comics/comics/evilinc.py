@@ -12,20 +12,19 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_date = '2005-05-30'
-    schedule = 'Mo,Tu,We,Th,Fr,Sa'
+    schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
-        page_url = 'http://www.evil-comic.com/archive/%s.html' % (
-            pub_date.strftime('%Y%m%d'))
+        page_url = 'http://www.evil-inc.com/%s/?post_type=comic' % (
+            pub_date.strftime('%Y/%m/%d'))
 
         page = self.parse_page(page_url)
-        url = page.src('#ei_strip')
-        title = page.text('#seriesselect option[selected]')
 
-        # Page does not generate 404, redirects to archive page for future
-        # comics, and to / for current comic.
-        if not url or pub_date.strftime('%Y%m%d') not in url:
+        url = page.src('img[class="attachment-large wp-post-image"]')
+        if not url:
             return
 
+        url = url.replace('?fit=1024%2C1024', '')
+        title = page.text('.post-title')
         return CrawlerImage(url, title)

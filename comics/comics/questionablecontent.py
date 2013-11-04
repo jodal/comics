@@ -16,6 +16,7 @@ class Crawler(CrawlerBase):
     history_capable_days = 0
     schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = 'US/Eastern'
+    headers = {'User-Agent': 'Mozilla/4.0'}
 
     def crawl(self, pub_date):
         page = self.parse_page('http://www.questionablecontent.net/')
