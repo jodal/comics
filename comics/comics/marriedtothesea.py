@@ -19,7 +19,7 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         page_url = 'http://www.marriedtothesea.com/index.php?date=' + pub_date.strftime('%m%d%y')
         page = self.parse_page(page_url)
-        url = page.src('img[style*="border:10px solid black"]')
+        url = page.src('#butts img', allow_multiple=True)[0]
         title = page.text('div[class="headertext"]', allow_multiple=True)
         title = title[0]
         title = title[title.find(':')+1:].strip()
