@@ -12,22 +12,22 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_date = '2000-07-10'
-    schedule = 'Mo,We,Fr' #Usually published these days, but not always
+    schedule = 'Mo,We,Fr'
     time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
-        page_url = 'http://www.gucomics.com/'+pub_date.strftime('%Y%m%d')
+        page_url = 'http://www.gucomics.com/' + pub_date.strftime('%Y%m%d')
         page = self.parse_page(page_url)
 
         title = page.text('span[style="font-size:24px;color:#F90;"]')
-        title = title.replace('"','')
+        title = title.replace('"', '')
         title = title.strip()
 
         text = page.text('font[class="main"]')
-        #If there is a --- the text after is not about the comic
+        #  If there is a --- the text after is not about the comic
         text = text[:text.find('---')]
         text = text.strip()
 
-        url = 'http://www.gucomics.com/comics/'+pub_date.strftime('%Y/gu_%Y%m%d')+'.jpg'
+        url = 'http://www.gucomics.com/comics/' + pub_date.strftime('%Y/gu_%Y%m%d')+'.jpg'
 
         return CrawlerImage(url, title, text)
