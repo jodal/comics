@@ -26,5 +26,5 @@ class Crawler(CrawlerBase):
             return
 
         url = url.replace('?fit=1024%2C1024', '')
-        title= page.text('h2[class="post-title"]')
+        title = page.text('.post-title')
         return CrawlerImage(url, title)
