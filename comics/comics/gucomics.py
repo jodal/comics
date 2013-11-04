@@ -28,6 +28,6 @@ class Crawler(CrawlerBase):
         text = text[:text.find('---')]
         text = text.strip()
 
-        url = 'http://www.gucomics.com/comics/' + pub_date.strftime('%Y/gu_%Y%m%d')+'.jpg'
-
+        url = 'http://www.gucomics.com/comics/' + pub_date.strftime(
+            '%Y/gu_%Y%m%d')+'.jpg'
         return CrawlerImage(url, title, text)
