@@ -11,7 +11,6 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 0
     schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = 'US/Pacific'
 
