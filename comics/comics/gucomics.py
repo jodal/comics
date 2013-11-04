@@ -19,7 +19,7 @@ class Crawler(CrawlerBase):
         page_url = 'http://www.gucomics.com/' + pub_date.strftime('%Y%m%d')
         page = self.parse_page(page_url)
 
-        title = page.text('span[style="font-size:24px;color:#F90;"]')
+        title = page.text('b')
         title = title.replace('"', '')
         title = title.strip()
 
