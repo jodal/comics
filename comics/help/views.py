@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib import messages
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -36,14 +36,15 @@ def feedback(request):
             message = '%s\n\n-- \n%s' % (
                 form.cleaned_data['message'], metadata)
 
+            headers = {}
             if request.user.is_authenticated():
-                sender = request.user.email
-            else:
-                sender = 'noreply@localhost'
+                headers['Reply-To'] = request.user.email
 
-            recipients = [email for name, email in settings.ADMINS]
-
-            send_mail(subject, message, sender, recipients)
+            mail = EmailMessage(
+                subject=subject, body=message,
+                to=[email for name, email in settings.ADMINS],
+                headers=headers)
+            mail.send()
 
             messages.info(
                 request,

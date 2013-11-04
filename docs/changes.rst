@@ -14,6 +14,13 @@ v2.2.1 (UNRELEASED)
   https://www.djangoproject.com/weblog/2013/aug/06/breach-and-django/ for
   details.
 
+**Changes**
+
+- The feedback form no longer uses the logged in user's email address as the
+  sender address as this can cause the mail to be rejected due to sender
+  validation and similar anti spam measures. The user's email is still in the
+  email signature and is now also in the mail's ``Reply-To`` header.
+
 **Crawlers**
 
 - Update: ``axecop`` after feed change.
