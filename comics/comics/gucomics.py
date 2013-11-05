@@ -1,3 +1,5 @@
+import re
+
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
@@ -16,18 +18,23 @@ class Crawler(CrawlerBase):
     time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
-        page_url = 'http://www.gucomics.com/' + pub_date.strftime('%Y%m%d')
+        page_url = 'http://www.gucomics.com/%s' % pub_date.strftime('%Y%m%d')
         page = self.parse_page(page_url)
 
         title = page.text('b', allow_multiple=True)[0]
         title = title.replace('"', '')
         title = title.strip()
 
-        text = page.text('font[class="main"]')
-        #  If there is a --- the text after is not about the comic
-        text = text[:text.find('---')]
-        text = text.strip()
+        text = page.text('.main')
 
-        url = 'http://www.gucomics.com/comics/' + pub_date.strftime(
-            '%Y/gu_%Y%m%d')+'.jpg'
+        #  If there is a "---", the text after is not about the comic
+        text = text[:text.find('---')]
+        # If there is a "[ ", the text after is not part of the text
+        text = text[:text.find('[ ')]
+        text = text.strip()
+        # Reduce any amount of newlines down to two newlines
+        text = text.replace('\r', '')
+        text = re.sub('\s*\n\n\s*', '\n\n', text)
+
+        url = page.src('img[alt^="Comic for"]')
         return CrawlerImage(url, title, text)
