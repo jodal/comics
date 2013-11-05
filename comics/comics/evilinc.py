@@ -21,10 +21,9 @@ class Crawler(CrawlerBase):
 
         page = self.parse_page(page_url)
 
-        url = page.src('img[class="attachment-large wp-post-image"]')
+        url = page.src('img.attachment-large.wp-post-image')
         if not url:
             return
-
         url = url.replace('?fit=1024%2C1024', '')
         title = page.text('.post-title')
         return CrawlerImage(url, title)
