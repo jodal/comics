@@ -16,6 +16,8 @@ class Crawler(CrawlerBase):
     history_capable_days = 0
     schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = 'US/Eastern'
+
+    # Without User-Agent set, the server returns 403 Forbidden
     headers = {'User-Agent': 'Mozilla/4.0'}
 
     def crawl(self, pub_date):

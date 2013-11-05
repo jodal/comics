@@ -15,6 +15,7 @@ class Crawler(CrawlerBase):
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = 'US/Eastern'
 
+    # Without User-Agent set, the server returns empty pages
     headers = {'User-Agent': 'Mozilla/4.0'}
 
     def crawl(self, pub_date):
