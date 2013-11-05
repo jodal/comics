@@ -14,13 +14,21 @@ class Crawler(CrawlerBase):
     history_capable_date = '2006-02-13'
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = 'US/Eastern'
+
     headers = {'User-Agent': 'Mozilla/4.0'}
 
     def crawl(self, pub_date):
-        page_url = 'http://www.marriedtothesea.com/index.php?date=' + pub_date.strftime('%m%d%y')
+        page_url = 'http://www.marriedtothesea.com/%s' % (
+            pub_date.strftime('%m%d%y'))
         page = self.parse_page(page_url)
-        url = page.src('#butts img', allow_multiple=True)[0]
-        title = page.text('div[class="headertext"]', allow_multiple=True)
-        title = title[0]
+
+        url = page.src('#butts img', allow_multiple=True)
+        url = url and url[0]
+        if not url:
+            return
+
+        title = page.text('div.headertext', allow_multiple=True)[0]
+        title = title and title[0] or ''
         title = title[title.find(':')+1:].strip()
+
         return CrawlerImage(url, title)
