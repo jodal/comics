@@ -24,8 +24,15 @@ v2.2.1 (UNRELEASED)
 **Crawlers**
 
 - Update: ``axecop`` after feed change.
+- Update: ``bugcomic`` after site change.
+- Update: ``evilinc`` after site change.
+- Update: ``gucomics`` after feed change.
+- Update: ``marriedtothesea`` after feed change.
 - Update: ``menagea3`` after site change.
+- Update: ``mysticrevolution`` after site change.
+- Update: ``questionablecontent`` after site change.
 - Update: ``stickydillybuns`` to use site feed and include title.
+- Update: ``wulffmorgenthaler`` after site change.
 
 
 v2.2.0 (2013-07-07)

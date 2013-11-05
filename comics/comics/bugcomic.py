@@ -3,9 +3,9 @@ from comics.core.comic_data import ComicDataBase
 
 
 class ComicData(ComicDataBase):
-    name = 'Bug'
+    name = 'Bug Martini'
     language = 'en'
-    url = 'http://www.bugcomic.com/'
+    url = 'http://www.bugmartini.com/'
     start_date = '2009-10-19'
     rights = 'Adam Huber'
 
@@ -16,10 +16,9 @@ class Crawler(CrawlerBase):
     time_zone = 'US/Mountain'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://www.bugcomic.com/feed/')
+        feed = self.parse_feed('http://www.bugmartini.com/feed/')
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[class="comicthumbnail"]')
             title = entry.title
-            if url is None:
-                return
+            url = entry.summary.src('img[src*="/wp-content/uploads/"]')
+            url = url.replace('?resize=520%2C280', '')
             return CrawlerImage(url, title)
