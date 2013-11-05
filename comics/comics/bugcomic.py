@@ -20,5 +20,6 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             title = entry.title
             url = entry.summary.src('img[src*="/wp-content/uploads/"]')
-            url = url.replace('?resize=520%2C280', '')
+            if url:
+                url = url.replace('?resize=520%2C280', '')
             return CrawlerImage(url, title)
