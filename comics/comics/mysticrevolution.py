@@ -11,14 +11,16 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
+    # Not history capable, just a workaround for time zone bug in comics:
+    history_capable_days = 1
     schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = 'US/Pacific'
 
-     # Without User-Agent set, the server returns 403 Forbidden
+    # Without User-Agent set, the server returns 403 Forbidden
     headers = {'User-Agent': 'Mozilla/4.0'}
 
     def crawl(self, pub_date):
         page = self.parse_page('http://mysticrevolution.keenspot.com/')
-        url = page.src('img[class="ksc"]')
-        title = page.alt('img[class="ksc"]')
+        url = page.src('img.ksc')
+        title = page.title('img.ksc')
         return CrawlerImage(url, title)
