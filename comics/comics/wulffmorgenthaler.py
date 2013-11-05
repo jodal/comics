@@ -16,8 +16,9 @@ class Crawler(CrawlerBase):
     time_zone = 'Europe/Copenhagen'
 
     def crawl(self, pub_date):
-        page_url = 'http://kindofnormal.com/wumo/' + pub_date.strftime('%Y/%m/%d')
+        page_url = 'http://kindofnormal.com/wumo/%s' % (
+            pub_date.strftime('%Y/%m/%d'))
         page = self.parse_page(page_url)
-        url = page.href('link', allow_multiple=True)[0]
-        title = page.alt('img[src="' + url + '"]')
+        url = page.href('link[rel="image_src"]')
+        title = page.alt('img[src="%s"]' % url)
         return CrawlerImage(url, title)
