@@ -1,3 +1,5 @@
+import re
+
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
@@ -15,9 +17,15 @@ class Crawler(CrawlerBase):
     time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://feed.feedburner.com/blogspot/zumUM')
+        feed = self.parse_feed('http://feeds.feedburner.com/blogspot/zumUM')
         for entry in feed.for_date(pub_date):
-            url = entry.sunnary.src('img[src*="/comics/"]')
-            title = entry.title
-            text = entry.summary.alt('img[src*="/comics/"]')
-            return CrawlerImage(url, title, text)
+            results = []
+
+            for url in entry.summary.src('img', allow_multiple=True):
+                # Look for NN-*.jpg to differentiate comics from other images
+                if re.match('.*\/\d\d-.*\.jpg', url) is not None:
+                    results.append(CrawlerImage(url))
+
+            if results:
+                results[0].title = entry.title
+                return results
