@@ -3,7 +3,7 @@ from comics.core.comic_data import ComicDataBase
 
 
 class ComicData(ComicDataBase):
-    name = 'Red meat'
+    name = 'Red Meat'
     language = 'en'
     url = 'http://www.redmeat.com/'
     start_date = '1996-06-10'
@@ -16,12 +16,9 @@ class Crawler(CrawlerBase):
     time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
-        page_url = 'http://www.redmeat.com/redmeat/%s/index.html' % (
+        page_url = 'http://www.redmeat.com/redmeat/%s/' % (
             pub_date.strftime('%Y-%m-%d'))
-
         page = self.parse_page(page_url)
-
-        url = page.src('img', allow_multiple=True)[0]
-        title = page.alt('img', allow_multiple=True)[0]
-
+        url = page.src('#weeklyStrip img')
+        title = page.alt('#weeklyStrip img')
         return CrawlerImage(url, title)
