@@ -9,10 +9,10 @@ from comics.aggregator.utils import get_comic_schedule
 
 
 @login_required
-def status(request, days=21):
+def status(request, num_days=21):
     timeline = SortedDict()
     first = datetime.date.today() + datetime.timedelta(days=1)
-    last = datetime.date.today() - datetime.timedelta(days=days)
+    last = datetime.date.today() - datetime.timedelta(days=num_days)
 
     releases = Release.objects.filter(pub_date__gte=last, comic__active=True)
     releases = releases.select_related().order_by('comic__slug').distinct()
@@ -21,7 +21,7 @@ def status(request, days=21):
         schedule = get_comic_schedule(comic)
         timeline[comic] = []
 
-        for i in range(days + 2):
+        for i in range(num_days + 2):
             day = first - datetime.timedelta(days=i)
             classes = set()
 
@@ -39,7 +39,7 @@ def status(request, days=21):
 
     days = [
         datetime.date.today() - datetime.timedelta(days=i)
-        for i in range(-1, 22)]
+        for i in range(-1, num_days + 1)]
 
     return render(request, 'status/status.html', {
         'days': days,
