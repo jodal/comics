@@ -27,6 +27,7 @@ v2.2.1 (UNRELEASED)
 - New: ``poledancingadventures``
 - New: ``redmeat``
 - New: ``seemikedraw``
+- Update: ``amazingsuperpowers`` after feed change.
 - Update: ``axecop`` after feed change.
 - Update: ``bugcomic`` after site change.
 - Update: ``evilinc`` after site change.
