@@ -32,6 +32,7 @@ v2.2.1 (UNRELEASED)
 - Update: ``bugcomic`` after site change.
 - Update: ``chainsawsuit`` after feed change.
 - Update: ``crookedgremlins`` after site change.
+- Update: ``cyanideandhappiness`` schedule.
 - Update: ``evilinc`` after site change.
 - Update: ``gucomics`` after feed change.
 - Update: ``marriedtothesea`` after feed change.
