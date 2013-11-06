@@ -23,6 +23,8 @@ v2.2.1 (UNRELEASED)
 
 **Crawlers**
 
+- New: ``pinkparts``
+- New: ``poledancingadventures``
 - Update: ``axecop`` after feed change.
 - Update: ``bugcomic`` after site change.
 - Update: ``evilinc`` after site change.
