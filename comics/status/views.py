@@ -1,6 +1,7 @@
 import datetime
 
 from django.contrib.auth.decorators import login_required
+from django.db.models import Max
 from django.shortcuts import render
 from django.utils.datastructures import SortedDict
 
@@ -17,7 +18,13 @@ def status(request, num_days=21):
     releases = Release.objects.filter(pub_date__gte=last, comic__active=True)
     releases = releases.select_related().order_by('comic__slug').distinct()
 
-    for comic in Comic.objects.filter(active=True).order_by('slug'):
+    comics = Comic.objects.filter(active=True)
+    comics = comics.annotate(last_pub_date=Max('release__pub_date'))
+    comics = comics.order_by('last_pub_date')
+
+    for comic in comics:
+        comic.days_since_last_release = (today - comic.last_pub_date).days
+
         schedule = get_comic_schedule(comic)
         timeline[comic] = []
 
