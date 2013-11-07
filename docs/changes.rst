@@ -46,7 +46,7 @@ v2.2.1 (UNRELEASED)
 - Update: ``kiwiblitz`` after feed change.
 - Update: ``lunch`` to use feed.
 - Update: ``marriedtothesea`` after feed change.
-- Update: ``menagea3`` after site change.
+- Update: ``menagea3`` after site change and delayed feed update.
 - Update: ``mysticrevolution`` after site change.
 - Update: ``nedroid`` after feed change.
 - Update: ``optipess`` to add related text.
