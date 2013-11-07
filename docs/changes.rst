@@ -58,6 +58,7 @@ v2.2.1 (UNRELEASED)
 - Update: ``thegutters`` after feed change.
 - Update: ``wulffmorgenthaler`` after site change.
 - Inactive: ``picturesforsadchildren``
+- Inactive: ``radiogaga``
 - Inactive: ``reveland``
 
 
