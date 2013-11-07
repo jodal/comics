@@ -40,6 +40,7 @@ v2.2.1 (UNRELEASED)
 - Update: ``harkavagrant`` after feed change.
 - Update: ``heijibits`` after addition of User-Agent check.
 - Update: ``joyoftech`` after feed change.
+- Update: ``icanbarelydraw`` after addition of User-Agent check.
 - Update: ``lunch`` to use feed.
 - Update: ``marriedtothesea`` after feed change.
 - Update: ``menagea3`` after site change.
