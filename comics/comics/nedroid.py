@@ -11,14 +11,21 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 10
+    history_capable_days = 180
     time_zone = 'US/Eastern'
+
+    # Without User-Agent set, the server returns 403 Forbidden
+    headers = {'User-Agent': 'Mozilla/4.0'}
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://nedroid.com/feed/')
         for entry in feed.for_date(pub_date):
-            if 'Comic' in entry.tags:
-                title = entry.title
-                url = entry.summary.src('img')
-                text = entry.summary.title('img')
-                return CrawlerImage(url, title, text)
+            if 'Comic' not in entry.tags:
+                continue
+            url = entry.summary.src('img')
+            if url is None:
+                continue
+            url = url.replace('/comic/comics-rss/', '/comics/')
+            title = entry.title
+            text = entry.summary.title('img')
+            return CrawlerImage(url, title, text)
