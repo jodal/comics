@@ -43,6 +43,7 @@ v2.2.1 (UNRELEASED)
 - Update: ``menagea3`` after site change.
 - Update: ``mysticrevolution`` after site change.
 - Update: ``optipess`` to add related text.
+- Update: ``pidjin`` after site change.
 - Update: ``questionablecontent`` after site change.
 - Update: ``sheldon`` after site change.
 - Update: ``stickydillybuns`` to use site feed and include title.
