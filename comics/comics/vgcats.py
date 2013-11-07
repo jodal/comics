@@ -16,7 +16,7 @@ class Crawler(CrawlerBase):
     history_capable_date = '2001-09-09'
     time_zone = 'US/Eastern'
 
-     # Without User-Agent set, the server returns empty responses
+    # Without User-Agent set, the server returns empty responses
     headers = {'User-Agent': 'Mozilla/4.0'}
 
     def crawl(self, pub_date):

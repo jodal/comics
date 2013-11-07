@@ -38,6 +38,7 @@ v2.2.1 (UNRELEASED)
 - Update: ``gregcomic`` after site change.
 - Update: ``gucomics`` after feed change.
 - Update: ``harkavagrant`` after feed change.
+- Update: ``heijibits`` after addition of User-Agent check.
 - Update: ``joyoftech`` after feed change.
 - Update: ``lunch`` to use feed.
 - Update: ``marriedtothesea`` after feed change.
