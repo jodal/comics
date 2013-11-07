@@ -12,21 +12,16 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     schedule = 'Mo,Tu,We,Th,Fr'
+    history_capable_days = 32
     time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
-        page = self.parse_page('http://www.shortpacked.com/')
-        url = page.src('div.comicpane img')
-        title = page.title('div.comicpane img')
-
-        try:
-            all_post_classes = page._get(
-                'class', 'div[class*="post"]', allow_multiple=True)
-            post_id = all_post_classes[0].split(' ')[0]
-            all_paragraphs = page.text(
-                'div[class*="%s"] p' % post_id, allow_multiple=True)
-            text = '\n\n'.join(all_paragraphs)
-        except StandardError:
-            text = None
-
-        return CrawlerImage(url, title, text)
+        feed = self.parse_feed('http://www.shortpacked.com/rss.php')
+        for entry in feed.for_date(pub_date):
+            if 'blog.php' in entry.link:
+                continue
+            page = self.parse_page(entry.link)
+            url = page.src('img#comic')
+            title = entry.title.replace('Shortpacked! - ', '')
+            text = page.title('img#comic')
+            return CrawlerImage(url, title, text)
