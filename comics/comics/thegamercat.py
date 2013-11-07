@@ -14,6 +14,9 @@ class Crawler(CrawlerBase):
     history_capable_days = 180
     time_zone = 'US/Central'
 
+    # Without User-Agent set, the server returns 403 Forbidden
+    headers = {'User-Agent': 'Mozilla/4.0'}
+
     def crawl(self, pub_date):
         feed = self.parse_feed('http://thegamercat.com/feed/')
         for entry in feed.for_date(pub_date):

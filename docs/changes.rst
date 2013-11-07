@@ -47,6 +47,7 @@ v2.2.1 (UNRELEASED)
 - Update: ``questionablecontent`` after site change.
 - Update: ``sheldon`` after site change.
 - Update: ``stickydillybuns`` to use site feed and include title.
+- Update: ``thegamercat`` after addition of User-Agent check.
 - Update: ``thegutters`` after feed change.
 - Update: ``wulffmorgenthaler`` after site change.
 - Inactive: ``picturesforsadchildren``
