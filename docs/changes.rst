@@ -34,6 +34,7 @@ v2.2.1 (UNRELEASED)
 - Update: ``crookedgremlins`` after site change.
 - Update: ``cyanideandhappiness`` schedule.
 - Update: ``evilinc`` after site change.
+- Update: ``fanboys`` after feed change.
 - Update: ``gregcomic`` after site change.
 - Update: ``gucomics`` after feed change.
 - Update: ``marriedtothesea`` after feed change.
