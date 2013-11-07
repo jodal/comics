@@ -11,12 +11,14 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_date = ComicData.start_date
+    history_capable_days = 14
+    schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
-        page_url = 'http://www.sheldoncomics.com/archive/%s.html' % (
-            pub_date.strftime('%y%m%d'),)
-        page = self.parse_page(page_url)
-        url = page.src('img[alt^="strip for"]')
-        return CrawlerImage(url)
+        feed = self.parse_feed('http://cdn.sheldoncomics.com/rss.xml')
+        for entry in feed.for_date(pub_date):
+            if 'Comic' not in entry.tags:
+                continue
+            url = entry.content0.src('img[src*="/strips/"]')
+            return CrawlerImage(url)

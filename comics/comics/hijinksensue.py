@@ -12,18 +12,17 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_days = 28
-    schedule = None
     time_zone = 'US/Central'
 
     def crawl(self, pub_date):
-        feed_url = 'http://feeds.feedburner.com/hijinksensue'
-        feed = self.parse_feed(feed_url)
+        feed = self.parse_feed('http://feeds.feedburner.com/hijinksensue')
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src(
-                'img[src*="/comics-rss/%s"]' % pub_date.strftime('%Y'))
+            if 'Comics' not in entry.tags:
+                continue
+            url = entry.summary.src('img[src*="/comics-rss/"]')
             if url is None:
-                 # Weed out the blog posts without images
-                return
-            url = url.replace('-rss', '')
+                continue
+            url = url.replace('/comics-rss/', '/comics/')
             title = entry.title
-            return CrawlerImage(url, title)
+            text = entry.summary.alt('img[src*="/comics-rss/"]')
+            return CrawlerImage(url, title, text)

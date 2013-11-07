@@ -12,14 +12,12 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_days = 30
-    schedule = 'Mo,Tu,We,Th'
+    schedule = 'Mo,We,Fr'
     time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://chainsawsuit.com/feed/')
         for entry in feed.for_date(pub_date):
-            if 'comic' not in entry.tags:
-                continue
-            url = entry.summary.src('img[src*="/comics/"]')
-            title = entry.summary.title('img[src*="/comics/"]')
+            url = entry.summary.src('img[src*="/wp-content/uploads/"]')
+            title = entry.title
             return CrawlerImage(url, title)

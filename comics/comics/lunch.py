@@ -21,20 +21,8 @@ class Crawler(CrawlerBase):
     time_zone = 'Europe/Oslo'
 
     def crawl(self, pub_date):
-        page = self.parse_page('http://lunchstriper.lunddesign.no/comics/')
-        url = page.href('a[href*="comics/%s"]' % pub_date.strftime('%Y-%m-%d'))
-
-        if not url:
-            return
-
-        title = re.sub(
-            '^http://lunchstriper.lunddesign.no/comics/' +
-            '\d{4}-\d{2}-\d{2}(-LUNCH_\d+)?-?', '', url or '')
-        title = re.sub('(_farger)?\.png$', '', title)
-        title = urllib.unquote(title).encode('iso-8859-1').decode('utf-8')
-        title = title.replace('_', ' ').strip()
-
-        if title:
-            title = title[0].upper() + title[1:]
-
-        return CrawlerImage(url, title or None)
+        feed = self.parse_feed('http://lunchstriper.lunddesign.no/?feed=rss2')
+        for entry in feed.for_date(pub_date):
+            url = entry.summary.src('img[src*="/comics/"]')
+            title = entry.title
+            return CrawlerImage(url, title)

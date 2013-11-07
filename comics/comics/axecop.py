@@ -15,9 +15,12 @@ class Crawler(CrawlerBase):
     schedule = 'Tu'
     time_zone = 'US/Pacific'
 
+    headers = {'User-Agent': 'Mozilla/4.0'}
+
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://axecop.com/index.php/achome/rss_2.0/')
+        feed = self.parse_feed('http://axecop.com/feed/')
         for entry in feed.for_date(pub_date):
-            page = self.parse_page(entry.link)
-            url = page.src('img[src*="/images/uploads/axecop"]')
-            return CrawlerImage(url)
+            title = entry.title
+            url = entry.summary.src('img[src*="/wp-content/uploads/"]')
+            url = url.replace('-150x150', '')
+            return CrawlerImage(url, title)

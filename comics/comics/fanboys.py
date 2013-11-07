@@ -16,13 +16,12 @@ class Crawler(CrawlerBase):
     time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://www.fanboys-online.com/?feed=rss2')
+        feed = self.parse_feed('http://www.fanboys-online.com/rss.php')
         for entry in feed.for_date(pub_date):
-            if 'Comics' not in entry.tags:
-                continue
-            url = entry.summary.src('img.comicthumbnail')
+            title = entry.title.replace('Fanboys - ', '')
+            page = self.parse_page(entry.link)
+            url = page.src('img#comic')
             if not url:
                 continue
-            url = url.replace('comics-rss', 'comics')
-            title = entry.title
+            url = url.replace(' ', '%20')
             return CrawlerImage(url, title)

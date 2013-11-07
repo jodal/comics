@@ -11,25 +11,17 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_date = '2011-06-01'
-    schedule = 'Mo,We,Fr'
+    history_capable_days = 180
     time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
-
-         # First, pick up any posts on this date...
-        page_url = 'http://gregcomic.com/%s' % \
-            pub_date.strftime('%Y/%m/%d')
-        page = self.parse_page(page_url)
-        test_urls = page.href('td.archive-title a', allow_multiple=True)
-
-         # ... then, comb posts looking for a comic (and not a blog entry)
-        for test_url in test_urls:
-            try:
-                test_page = self.parse_page(test_url)
-                url = test_page.src('div.comicpane img')
-                title = test_page.alt('div.comicpane img')
-                if url is not None:
-                    return CrawlerImage(url, title)
-            except StandardError:
+        feed = self.parse_feed('http://gregcomic.com/feed/')
+        for entry in feed.for_date(pub_date):
+            if 'Comics' not in entry.tags:
                 continue
+            title = entry.title
+            url = entry.summary.src('img[src*="/comics-rss/"]')
+            if not url:
+                continue
+            url = url.replace('-rss', '')
+            return CrawlerImage(url, title)

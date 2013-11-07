@@ -17,8 +17,5 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://reallifecomics.com/rss.php?feed=rss2')
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img')
-            if url is None:
-                continue
-            url = url.replace('-150x150', '')
+            url = entry.summary.src('img[src*="/wp-content/uploads/"]')
             return CrawlerImage(url)

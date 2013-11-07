@@ -5,6 +5,64 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+v2.2.1 (2013-11-08)
+===================
+
+- **Security:** Disabled the GZip middleware to help prevent the BREACH attack.
+  See https://www.djangoproject.com/weblog/2013/aug/06/breach-and-django/ for
+  details.
+
+- The feedback form no longer uses the logged in user's email address as the
+  sender address as this can cause the mail to be rejected due to sender
+  validation and similar anti spam measures. The user's email is still in the
+  email signature and is now also in the mail's ``Reply-To`` header.
+
+- The status page now sorts comics by the number of days since the last
+  release, moving the comics most in need of maintenance to the top of the
+  page.
+
+**Crawlers**
+
+- New: ``pinkparts``
+- New: ``poledancingadventures``
+- New: ``redmeat``
+- New: ``seemikedraw``
+- Update: ``amazingsuperpowers`` after feed change.
+- Update: ``axecop`` after feed change.
+- Update: ``bugcomic`` after site change.
+- Update: ``chainsawsuit`` after feed change.
+- Update: ``crookedgremlins`` after site change.
+- Update: ``cyanideandhappiness`` schedule.
+- Update: ``evilinc`` after site change.
+- Update: ``fanboys`` after feed change.
+- Update: ``gregcomic`` after site change.
+- Update: ``gucomics`` after feed change.
+- Update: ``harkavagrant`` after feed change.
+- Update: ``heijibits`` after addition of User-Agent check.
+- Update: ``hjinksensue`` after feed change.
+- Update: ``joyoftech`` after feed change.
+- Update: ``icanbarelydraw`` after addition of User-Agent check.
+- Update: ``kalscartoon`` after addition of User-Agent check.
+- Update: ``kiwiblitz`` after feed change.
+- Update: ``lunch`` to use feed.
+- Update: ``marriedtothesea`` after feed change.
+- Update: ``menagea3`` after site change and delayed feed update.
+- Update: ``mysticrevolution`` after site change.
+- Update: ``nedroid`` after feed change.
+- Update: ``optipess`` to add related text.
+- Update: ``pidjin`` after site change.
+- Update: ``questionablecontent`` after site change.
+- Update: ``reallife`` after feed change.
+- Update: ``sheldon`` after site change.
+- Update: ``shortpacked`` after site change.
+- Update: ``stickydillybuns`` to use site feed and include title.
+- Update: ``thegamercat`` after addition of User-Agent check.
+- Update: ``thegutters`` after feed change.
+- Update: ``wulffmorgenthaler`` after site change.
+- Inactive: ``picturesforsadchildren``
+- Inactive: ``radiogaga``
+- Inactive: ``reveland``
+
 
 v2.2.0 (2013-07-07)
 ===================

@@ -15,6 +15,9 @@ class Crawler(CrawlerBase):
     schedule = 'Mo,We,Fr'
     time_zone = 'US/Eastern'
 
+    # Without User-Agent set, the server returns 403 Forbidden
+    headers = {'User-Agent': 'Mozilla/4.0'}
+
     def crawl(self, pub_date):
         feed = self.parse_feed(
             'http://www.joyoftech.com/joyoftech/jotblog/atom.xml')
@@ -23,6 +26,7 @@ class Crawler(CrawlerBase):
             if not title.startswith('JoT'):
                 continue
             url = entry.content0.src('img')
-            if url:
-                url = url.replace('superthumb', '')
+            if not url:
+                continue
+            url = url.replace('joy300thumb', '').replace('.gif', '.jpg')
             return CrawlerImage(url, title)
