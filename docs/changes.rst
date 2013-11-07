@@ -43,6 +43,7 @@ v2.2.1 (UNRELEASED)
 - Update: ``stickydillybuns`` to use site feed and include title.
 - Update: ``wulffmorgenthaler`` after site change.
 - Inactive: ``picturesforsadchildren``
+- Inactive: ``reveland``
 
 
 v2.2.0 (2013-07-07)
