@@ -1,3 +1,5 @@
+import re
+
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
@@ -10,13 +12,16 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 14
-    schedule = 'Mo,We,Fr'
+    history_capable_days = 180
+    schedule = 'Tu,Fr'
     time_zone = 'America/Montreal'
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/TheGutters')
         for entry in feed.for_date(pub_date):
-            url = entry.html(entry.description).src('img[src*="/comics/"]')
-            title = entry.title.replace('Gutters: ', '')
+            title = entry.title
+            url = entry.summary.src('img[src*="/wp-content/uploads/"]')
+            if not url:
+                continue
+            url = re.sub('-\d+x\d+.jpg', '.jpg', url)
             return CrawlerImage(url, title)

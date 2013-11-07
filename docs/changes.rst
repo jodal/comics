@@ -42,6 +42,7 @@ v2.2.1 (UNRELEASED)
 - Update: ``mysticrevolution`` after site change.
 - Update: ``questionablecontent`` after site change.
 - Update: ``stickydillybuns`` to use site feed and include title.
+- Update: ``thegutters`` after feed change.
 - Update: ``wulffmorgenthaler`` after site change.
 - Inactive: ``picturesforsadchildren``
 - Inactive: ``reveland``
