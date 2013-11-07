@@ -39,6 +39,7 @@ v2.2.1 (UNRELEASED)
 - Update: ``gucomics`` after feed change.
 - Update: ``harkavagrant`` after feed change.
 - Update: ``heijibits`` after addition of User-Agent check.
+- Update: ``hjinksensue`` after feed change.
 - Update: ``joyoftech`` after feed change.
 - Update: ``icanbarelydraw`` after addition of User-Agent check.
 - Update: ``kalscartoon`` after addition of User-Agent check.
