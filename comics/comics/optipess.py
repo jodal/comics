@@ -24,4 +24,5 @@ class Crawler(CrawlerBase):
                 continue
             url = entry.summary.src('img[src*="/comics/"]')
             title = entry.title
-            return CrawlerImage(url, title)
+            text = entry.summary.title('img[src*="/comics/"]')
+            return CrawlerImage(url, title, text)
