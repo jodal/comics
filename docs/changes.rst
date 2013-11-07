@@ -37,6 +37,7 @@ v2.2.1 (UNRELEASED)
 - Update: ``fanboys`` after feed change.
 - Update: ``gregcomic`` after site change.
 - Update: ``gucomics`` after feed change.
+- Update: ``harkavagrant`` after feed change.
 - Update: ``marriedtothesea`` after feed change.
 - Update: ``menagea3`` after site change.
 - Update: ``mysticrevolution`` after site change.

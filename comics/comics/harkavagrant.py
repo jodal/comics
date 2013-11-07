@@ -17,6 +17,8 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.rsspect.com/rss/vagrant.xml')
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src*="/history/"]')
-            title = entry.summary.title('img[src*="/history/"]')
-            return CrawlerImage(url, title)
+            title = entry.title.replace('Hark, a Vagrant: ', '')
+            urls = entry.summary.src('img', allow_multiple=True)
+            for url in urls:
+                if '/history/' in url or '/nonsense/' in url:
+                    return CrawlerImage(url, title)
