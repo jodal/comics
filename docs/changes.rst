@@ -43,6 +43,7 @@ v2.2.1 (UNRELEASED)
 - Update: ``joyoftech`` after feed change.
 - Update: ``icanbarelydraw`` after addition of User-Agent check.
 - Update: ``kalscartoon`` after addition of User-Agent check.
+- Update: ``kiwiblitz`` after feed change.
 - Update: ``lunch`` to use feed.
 - Update: ``marriedtothesea`` after feed change.
 - Update: ``menagea3`` after site change.

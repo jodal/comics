@@ -18,7 +18,9 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.kiwiblitz.com/feed/')
         for entry in feed.for_date(pub_date):
-            page = self.parse_page(entry.link)
-            url = page.src('img[src*="/wp-content/uploads/"]')
-            title = page.alt('img[src*="/wp-content/uploads/"]')
+            url = entry.summary.src('img[src*="/wp-content/uploads/"]')
+            if not url:
+                continue
+            url = url.replace('-150x150', '')
+            title = entry.title
             return CrawlerImage(url, title)
