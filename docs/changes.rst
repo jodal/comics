@@ -5,6 +5,14 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+v2.2.2 (UNRELEASED)
+===================
+
+**Crawlers**
+
+- Update many comic schedules
+- Update: ``toothpastefordinner`` after feed change.
+
 v2.2.1 (2013-11-08)
 ===================
 
