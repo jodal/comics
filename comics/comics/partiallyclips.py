@@ -19,5 +19,8 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed('http://partiallyclips.com/feed/')
         for entry in feed.for_date(pub_date):
             url = entry.summary.src('img')
+            if not url:
+                continue
+            url = url.replace('comics-rss', 'comics')
             title = entry.title.split(' - ')[0]
             return CrawlerImage(url, title)

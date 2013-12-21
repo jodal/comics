@@ -11,20 +11,16 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 14
-    schedule = 'Mo,Tu,We,Th,Fr'
+    history_capable_days = 40
     time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed(
-            'http://feeds.feedburner.com/ScenesFromAMultiverse')
-
+        feed = self.parse_feed('http://amultiverse.com/feed/')
         for entry in feed.for_date(pub_date):
-            description = entry.html(entry.description)
-            url = description.src('img[src*="comics-rss"]')
+            url = entry.content0.src('a[rel="bookmark"] img')
             title = entry.title
 
-             # Text comes in multiple paragraphs: parse out all the text
+            # Text comes in multiple paragraphs: parse out all the text
             text = ''
             for paragraph in entry.content0.text('p', allow_multiple=True):
                 text += paragraph + '\n\n'

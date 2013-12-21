@@ -5,6 +5,17 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+v2.2.2 (2013-12-21)
+===================
+
+**Crawlers**
+
+- Update many comic schedules
+- Update: ``hijinksensue`` after feed change.
+- Update: ``partiallyclips`` to save larger image.
+- Update: ``scenesfromamultiverse`` after feed change.
+- Update: ``toothpastefordinner`` after feed change.
+
 v2.2.1 (2013-11-08)
 ===================
 
