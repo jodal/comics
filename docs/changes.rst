@@ -12,6 +12,7 @@ v2.2.2 (UNRELEASED)
 
 - Update many comic schedules
 - Update: ``hijinksensue`` after feed change.
+- Update: ``partiallyclips`` to save larger image.
 - Update: ``scenesfromamultiverse`` after feed change.
 - Update: ``toothpastefordinner`` after feed change.
 
