@@ -11,6 +11,7 @@ v2.2.2 (UNRELEASED)
 **Crawlers**
 
 - Update many comic schedules
+- Update: ``hijinksensue`` after feed change.
 - Update: ``scenesfromamultiverse`` after feed change.
 - Update: ``toothpastefordinner`` after feed change.
 
