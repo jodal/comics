@@ -5,7 +5,7 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
-v2.2.2 (UNRELEASED)
+v2.2.2 (2013-12-21)
 ===================
 
 **Crawlers**
