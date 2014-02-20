@@ -11,6 +11,7 @@ v2.2.3 (UNRELEASED)
 **Crawlers**
 
 - Update: ``lookingforgroup`` after feed change.
+- Update: ``pennyarcade`` after site change.
 
 v2.2.2 (2013-12-21)
 ===================
