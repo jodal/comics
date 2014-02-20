@@ -10,6 +10,7 @@ v2.2.3 (UNRELEASED)
 
 **Crawlers**
 
+- New: ``adam4d``
 - Update: ``lookingforgroup`` after feed change.
 - Update: ``pennyarcade`` after site change.
 - Update: ``satw`` to include description text.
