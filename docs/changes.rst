@@ -8,6 +8,9 @@ versioned release.
 v2.2.3 (UNRELEASED)
 ===================
 
+- Make ``num_releases_since/:id`` view return 404 instead of 500 for unknown
+  release IDs.
+
 **Crawlers**
 
 - New: ``adam4d``
