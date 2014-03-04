@@ -16,6 +16,7 @@ v2.2.3 (UNRELEASED)
 - New: ``adam4d``
 - Update: ``lookingforgroup`` after feed change.
 - Update: ``pennyarcade`` after site change.
+- Update: ``questionablecontent`` after site change.
 - Update: ``satw`` to include description text.
 
 v2.2.2 (2013-12-21)

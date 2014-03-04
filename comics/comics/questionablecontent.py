@@ -22,9 +22,10 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         page = self.parse_page('http://www.questionablecontent.net/')
-        url = page.src('img#strip')
+        url = page.src('#comic img')
         title = None
-        text = page.text('div#news')
+        page.remove('#news p, #news script')
+        text = page.text('#news')
         if text:
             text = re.sub(r'\s{2,}', '\n\n', text).strip()
         return CrawlerImage(url, title, text)
