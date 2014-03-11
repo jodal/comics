@@ -14,6 +14,7 @@ v2.2.3 (UNRELEASED)
 **Crawlers**
 
 - New: ``adam4d``
+- New: ``poorlydrawnlines``
 - Update: ``lookingforgroup`` after feed change.
 - Update: ``pennyarcade`` after site change.
 - Update: ``questionablecontent`` after site change.
