@@ -81,12 +81,6 @@ class AuthenticationForm(forms.Form):
             elif not self.user_cache.is_active:
                 raise forms.ValidationError(_("This account is inactive."))
 
-        if self.request:
-            if not self.request.session.test_cookie_worked():
-                raise forms.ValidationError(_(
-                    "Your Web browser doesn't appear to have cookies enabled. "
-                    "Cookies are required for logging in."))
-
         return self.cleaned_data
 
     def get_user_id(self):
