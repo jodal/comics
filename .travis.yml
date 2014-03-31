@@ -3,5 +3,8 @@ language: python
 install:
   - "pip install -r requirements.txt"
 
+before_script:
+  - 'echo "SECRET_KEY = \"test\"" > comics/settings/local.py'
+
 script:
   - "python manage.py test"
