@@ -16,6 +16,7 @@ v2.3.0 (UNRELEASED)
 
   - cssmin >= 0.1, < 0.3
   - cssselector >= 0.8, < 0.10
+  - django-tastypie >= 0.9.13, < 0.12
   - Pillow >= 1.7, < 2.4
 
 

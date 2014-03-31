@@ -31,5 +31,5 @@ django-registration >= 0.8, < 0.9
 django-bootstrap-form >= 2.0, < 2.1
 
 # For REST API
-django-tastypie >= 0.9.13, < 0.10
+django-tastypie >= 0.9.13, < 0.12
 defusedxml >= 0.4, < 0.5
