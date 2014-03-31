@@ -101,6 +101,8 @@ class UsersResourceTestCase(TestCase):
         self.assertEquals(response.status_code, 200)
 
     def test_response_returns_a_single_user_object(self):
+        User.objects.create_user('bob', 'bob@example.com', 'topsecret')
+
         response = self.client.get(
             '/api/v1/users/', HTTP_AUTHORIZATION='Key s3cretk3y')
 

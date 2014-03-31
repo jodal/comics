@@ -2,14 +2,19 @@ from django.contrib.auth.models import User
 
 from tastypie import fields
 from tastypie.authentication import BasicAuthentication
+from tastypie.authorization import Authorization, ReadOnlyAuthorization
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from tastypie.resources import ModelResource
 
 from comics.api.authentication import (
     SecretKeyAuthentication, MultiAuthentication)
-from comics.api.authorization import SubscriptionsAuthorization
 from comics.core.models import Comic, Release, Image
 from comics.accounts.models import Subscription
+
+
+class UsersAuthorization(ReadOnlyAuthorization):
+    def read_list(self, object_list, bundle):
+        return object_list.filter(pk=bundle.request.user.pk)
 
 
 class UsersResource(ModelResource):
@@ -20,11 +25,9 @@ class UsersResource(ModelResource):
         authentication = MultiAuthentication(
             BasicAuthentication(realm='Comics API'),
             SecretKeyAuthentication())
+        authorization = UsersAuthorization()
         list_allowed_methods = ['get']
         detail_allowed_methods = ['get']
-
-    def apply_authorization_limits(self, request, object_list):
-        return object_list.filter(pk=request.user.pk)
 
     def dehydrate(self, bundle):
         bundle.data['secret_key'] = \
@@ -32,11 +35,22 @@ class UsersResource(ModelResource):
         return bundle
 
 
+class ComicsAuthorization(ReadOnlyAuthorization):
+    def read_list(self, object_list, bundle):
+        if bundle.request.GET.get('subscribed') == 'true':
+            return object_list.filter(userprofile__user=bundle.request.user)
+        elif bundle.request.GET.get('subscribed') == 'false':
+            return object_list.exclude(userprofile__user=bundle.request.user)
+        else:
+            return object_list
+
+
 class ComicsResource(ModelResource):
     class Meta:
         queryset = Comic.objects.all()
         resource_name = 'comics'
         authentication = SecretKeyAuthentication()
+        authorization = ComicsAuthorization()
         list_allowed_methods = ['get']
         detail_allowed_methods = ['get']
         filtering = {
@@ -45,14 +59,6 @@ class ComicsResource(ModelResource):
             'name': ALL,
             'slug': ALL,
         }
-
-    def apply_authorization_limits(self, request, object_list):
-        if request.GET.get('subscribed') == 'true':
-            return object_list.filter(userprofile__user=request.user)
-        elif request.GET.get('subscribed') == 'false':
-            return object_list.exclude(userprofile__user=request.user)
-        else:
-            return object_list
 
 
 class ImagesResource(ModelResource):
@@ -71,6 +77,18 @@ class ImagesResource(ModelResource):
         }
 
 
+class ReleasesAuthorization(ReadOnlyAuthorization):
+    def read_list(self, object_list, bundle):
+        if bundle.request.GET.get('subscribed') == 'true':
+            return object_list.filter(
+                comic__userprofile__user=bundle.request.user)
+        elif bundle.request.GET.get('subscribed') == 'false':
+            return object_list.exclude(
+                comic__userprofile__user=bundle.request.user)
+        else:
+            return object_list
+
+
 class ReleasesResource(ModelResource):
     comic = fields.ToOneField(ComicsResource, 'comic')
     images = fields.ToManyField(ImagesResource, 'images', full=True)
@@ -79,6 +97,7 @@ class ReleasesResource(ModelResource):
         queryset = Release.objects.select_related().order_by('-fetched')
         resource_name = 'releases'
         authentication = SecretKeyAuthentication()
+        authorization = ReleasesAuthorization()
         list_allowed_methods = ['get']
         detail_allowed_methods = ['get']
         filtering = {
@@ -88,13 +107,10 @@ class ReleasesResource(ModelResource):
             'fetched': ALL,
         }
 
-    def apply_authorization_limits(self, request, object_list):
-        if request.GET.get('subscribed') == 'true':
-            return object_list.filter(comic__userprofile__user=request.user)
-        elif request.GET.get('subscribed') == 'false':
-            return object_list.exclude(comic__userprofile__user=request.user)
-        else:
-            return object_list
+
+class SubscriptionAuthorization(Authorization):
+    def read_list(self, object_list, bundle):
+        return object_list.filter(userprofile__user=bundle.request.user)
 
 
 class SubscriptionsResource(ModelResource):
@@ -104,7 +120,7 @@ class SubscriptionsResource(ModelResource):
         queryset = Subscription.objects.all()
         resource_name = 'subscriptions'
         authentication = SecretKeyAuthentication()
-        authorization = SubscriptionsAuthorization()
+        authorization = SubscriptionAuthorization()
         list_allowed_methods = ['get', 'post', 'patch']
         detail_allowed_methods = ['get', 'delete', 'put']
         filtering = {

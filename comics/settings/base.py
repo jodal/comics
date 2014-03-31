@@ -194,6 +194,11 @@ ACCOUNT_INVITATION_DAYS = 7
 INVITATIONS_PER_USER = 10
 
 
+### Tastypie settings
+
+TASTYPIE_DEFAULT_FORMATS = ['json', 'jsonp', 'xml', 'yaml', 'html', 'plist']
+
+
 ### comics settings
 
 #: Name of the site. Used in page header, page title, feed titles, etc.
