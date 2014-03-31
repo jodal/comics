@@ -5,7 +5,7 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
-v2.2.3 (UNRELEASED)
+v2.2.3 (2014-03-31)
 ===================
 
 - Make ``num_releases_since/:id`` view return 404 instead of 500 for unknown
