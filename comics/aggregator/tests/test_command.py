@@ -103,7 +103,7 @@ class ComicAggregatorTestCase(TestCase):
         self.downloader_mock = mock.Mock()
 
     def test_init(self):
-        self.assertInstance(self.aggregator.config, command.AggregatorConfig)
+        self.assertIsInstance(self.aggregator.config, command.AggregatorConfig)
 
     def test_init_optparse_config(self):
         optparse_options_mock = mock.Mock()
