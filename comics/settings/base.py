@@ -172,12 +172,6 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
-### Testing settings
-
-TEST_DISCOVERY_ROOT = os.path.join(BASE_PATH, 'comics')
-TEST_RUNNER = 'comics.core.test_runner.DiscoveryRunner'
-
-
 ### django-registration settings
 
 #: Number of days an the account activation link will work
