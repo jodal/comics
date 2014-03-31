@@ -38,7 +38,7 @@ class ReleaseDownloader(object):
         image_downloader = ImageDownloader(crawler_release)
         return map(image_downloader.download, crawler_release.images)
 
-    @transaction.commit_on_success
+    @transaction.atomic
     def _create_new_release(self, comic, pub_date, images):
         release = Release(comic=comic, pub_date=pub_date)
         release.save()
@@ -142,7 +142,7 @@ class ImageDownloader(object):
         if checksum and extension:
             return '%s%s' % (checksum, extension)
 
-    @transaction.commit_on_success
+    @transaction.atomic
     def _create_new_image(
             self, comic, title, text, image_file, file_name, checksum):
         image = Image(comic=comic, checksum=checksum)
