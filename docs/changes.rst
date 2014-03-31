@@ -5,6 +5,18 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+v2.3.0 (UNRELEASED)
+===================
+
+- New dependencies, and dependencies with new minimum versions:
+
+  - (none)
+
+- Dependencies with new maximum versions:
+
+  - cssmin >= 0.1, < 0.3
+
+
 v2.2.3 (2014-03-31)
 ===================
 

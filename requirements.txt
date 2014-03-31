@@ -18,7 +18,7 @@ cssselect >= 0.8, < 0.9
 
 # For static resource compression
 django_compressor >= 1.1, < 1.4
-cssmin >= 0.1, < 0.2
+cssmin >= 0.1, < 0.3
 jsmin >= 2.0, < 2.1
 
 # For user registration with email verification
