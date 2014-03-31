@@ -10,7 +10,7 @@ v2.3.0 (UNRELEASED)
 
 - New dependencies, and dependencies with new minimum versions:
 
-  - (none)
+  - Django >= 1.6, < 1.7
 
 - Dependencies with new maximum versions:
 
