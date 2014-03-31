@@ -14,7 +14,7 @@ lxml >= 3, < 4
 
 # For crawling comics
 feedparser >= 4.0, < 6
-cssselect >= 0.8, < 0.9
+cssselect >= 0.8, < 0.10
 
 # For static resource compression
 django_compressor >= 1.1, < 1.4
