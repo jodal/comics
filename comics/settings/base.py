@@ -163,8 +163,8 @@ COMPRESS_HTML = True
 
 ### django.contrib.auth settings
 
-LOGIN_URL = 'auth_login'
-LOGOUT_URL = 'auth_logout'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
 AUTH_PROFILE_MODULE = 'accounts.UserProfile'
 AUTHENTICATION_BACKENDS = (
     'comics.accounts.backends.AuthBackend',

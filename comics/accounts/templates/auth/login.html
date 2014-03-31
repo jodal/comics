@@ -11,7 +11,7 @@
     <h1>Login <small>to your account</small></h1>
   </div>
 
-  <form method="post" action="{% url "auth_login" %}" class="form-horizontal">
+  <form method="post" action="{% url "login" %}" class="form-horizontal">
     {% csrf_token %}
     <input type="hidden" name="next" value="{{ next }}">
 
@@ -23,7 +23,7 @@
         Login
       </button>
       &nbsp;
-      <a href="{% url "auth_password_reset" %}" class="btn">
+      <a href="{% url "password_reset" %}" class="btn">
         <i class="icon-refresh"></i>
         Reset password
       </a>
