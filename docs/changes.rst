@@ -16,6 +16,7 @@ v2.3.0 (UNRELEASED)
 
   - cssmin >= 0.1, < 0.3
   - cssselector >= 0.8, < 0.10
+  - Pillow >= 1.7, < 2.4
 
 
 v2.2.3 (2014-03-31)
