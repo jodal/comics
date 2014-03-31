@@ -111,6 +111,6 @@ class SubscriptionsResource(ModelResource):
             'comic': ALL_WITH_RELATIONS,
         }
 
-    def obj_create(self, bundle, request=None, **kwargs):
+    def obj_create(self, bundle, **kwargs):
         return super(SubscriptionsResource, self).obj_create(
-            bundle, request, userprofile=request.user.comics_profile)
+            bundle, userprofile=bundle.request.user.comics_profile)
