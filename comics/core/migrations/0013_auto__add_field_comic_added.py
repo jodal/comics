@@ -2,15 +2,16 @@
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
-from django.db import models
+from django.utils.timezone import utc
 
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding field 'Comic.added'
+        default = datetime.datetime(1, 1, 1, 0, 0).replace(tzinfo=utc)
         db.add_column('comics_comic', 'added',
-                      self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, default=datetime.datetime(1, 1, 1, 0, 0), blank=True),
+                      self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, default=default, blank=True),
                       keep_default=False)
 
 

@@ -1,13 +1,12 @@
-import datetime
-
 from south.db import db
 from django.db import models
+from django.utils import timezone
 from comics.core.models import *
 
 class Migration:
     def forwards(self, orm):
         # Adding field 'Release.fetched'
-        db.add_column('comics_release', 'fetched', models.DateTimeField(auto_now_add=True, default=datetime.datetime.now), keep_default=False)
+        db.add_column('comics_release', 'fetched', models.DateTimeField(auto_now_add=True, default=timezone.now), keep_default=False)
         # Fix for South bug #316 in sqlite3 backend
         if hasattr(db, '_populate_current_structure'):
             db._populate_current_structure('comics_release', force=True)
