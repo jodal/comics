@@ -1,10 +1,6 @@
 # Mocking in unit tests
 mock
 
-# Documentation generation
-sphinx
-sphinxcontrib-httpdomain
-
 # Debugging of database queries, etc.
 django-debug-toolbar
 
