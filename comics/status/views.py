@@ -23,7 +23,10 @@ def status(request, num_days=21):
     comics = comics.order_by('last_pub_date')
 
     for comic in comics:
-        comic.days_since_last_release = (today - comic.last_pub_date).days
+        if comic.last_pub_date:
+            comic.days_since_last_release = (today - comic.last_pub_date).days
+        else:
+            comic.days_since_last_release = 1000
 
         schedule = get_comic_schedule(comic)
         timeline[comic] = []
