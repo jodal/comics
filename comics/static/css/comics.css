@@ -2,49 +2,8 @@ html {
     overflow-y: scroll;
 }
 
-body {
-    padding-top: 60px;
-}
-
-.navbar .nav > li > a.disabled,
-.navbar .nav > li > a.disabled:hover {
-    color: #000 !important;
-    opacity: 0.3;
-}
-.navbar .nav .active > a,
-.navbar .nav .active > a:hover{
-    background: #e9e9e9;
-}
-.navbar .pull-right .btn-group:last-child {
-    padding-right: 0;
-}
-.navbar .btn-toolbar {
-    margin: 0;
-    margin-bottom: -3px;
-}
-
-h3 {
-    margin: 20px 0 10px;
-}
-.modal h3 {
-    margin: 0;
-}
-h3 a:hover {
-    text-decoration: none;
-}
-h3 small {
-    color: #999;
-}
-
-h4 {
-    margin-bottom: 10px;
-}
-
 .new-releases-alert {
     display: none;
-}
-.alert-info a {
-    color: #ddd;
 }
 
 .release h3,

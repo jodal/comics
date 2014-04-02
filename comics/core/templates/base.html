@@ -16,54 +16,55 @@
   </head>
 
   <body>
-    <div class="container">
+    {% block body %}
 
-      {% block body %}
-
-        <div class="navbar navbar-fixed-top">
-          <div class="navbar-inner">
-            <div class="container">
-              {% if user.is_authenticated %}
-                <a class="brand" href="{% url "mycomics_latest" %}">{{ site_title }}</a>
-              {% else %}
-                <a class="brand" href="{% url "home" %}">{{ site_title }}</a>
-              {% endif %}
-              {% block site_menu %}
-                <ul class="nav">
-                {% if user.is_authenticated %}
-                  <li class="{{ active.comics|yesno:"active," }}" >
-                    <a href="{% url "mycomics_latest" %}">
-                      <i class="icon-th-large"></i>
-                      Comics</a>
-                  </li>
-                  <li class="{{ active.account|yesno:"active," }}" >
-                    <a href="{% url "account" %}">
-                      <i class="icon-user"></i>
-                      Account</a>
-                  </li>
-                {% else %}
-                  <li class="{{ active.login|yesno:"active," }}" >
-                    <a href="{% url "login" %}">
-                      <i class="icon-signin"></i>
-                      Login</a>
-                  </li>
-                  <li class="{{ active.register|yesno:"active," }}" >
-                    <a href="{% url "registration_register" %}">
-                      <i class="icon-plus"></i>
-                      Register</a>
-                  </li>
-                {% endif %}
-                  <li class="{{ active.help|yesno:"active," }}" >
-                    <a href="{% url "help_about" %}">
-                      <i class="icon-question"></i>
-                      Help</a>
-                  </li>
-                </ul>
-              {% endblock site_menu %}
-              {% block top_menu %}{% endblock top_menu %}
-            </div>
+      <div class="navbar navbar-default navbar-static-top">
+        <div class="container">
+          <div class="navbar-header">
+            {% if user.is_authenticated %}
+              <a class="navbar-brand" href="{% url "mycomics_latest" %}">{{ site_title }}</a>
+            {% else %}
+              <a class="navbar-brand" href="{% url "home" %}">{{ site_title }}</a>
+            {% endif %}
           </div>
+
+          {% block site_menu %}
+            <ul class="nav navbar-nav">
+            {% if user.is_authenticated %}
+              <li class="{{ active.comics|yesno:"active," }}" >
+                <a href="{% url "mycomics_latest" %}">
+                  <i class="icon-th-large"></i>
+                  Comics</a>
+              </li>
+              <li class="{{ active.account|yesno:"active," }}" >
+                <a href="{% url "account" %}">
+                  <i class="icon-user"></i>
+                  Account</a>
+              </li>
+            {% else %}
+              <li class="{{ active.login|yesno:"active," }}" >
+                <a href="{% url "login" %}">
+                  <i class="icon-signin"></i>
+                  Login</a>
+              </li>
+              <li class="{{ active.register|yesno:"active," }}" >
+                <a href="{% url "registration_register" %}">
+                  <i class="icon-plus"></i>
+                  Register</a>
+              </li>
+            {% endif %}
+              <li class="{{ active.help|yesno:"active," }}" >
+                <a href="{% url "help_about" %}">
+                  <i class="icon-question"></i>
+                  Help</a>
+              </li>
+            </ul>
+          {% endblock site_menu %}
+          {% block top_menu %}{% endblock top_menu %}
         </div>
+      </div>
+
+      <div class="container">
 
         <div id="bd">
           {% if messages %}
@@ -82,9 +83,9 @@
           {% block cloud %}{% endblock %}
         </div>
 
-      {% endblock body %}
+      </div>
 
-    </div>
+    {% endblock body %}
 
     <div class="keyboard-shortcuts modal hide">
       <div class="modal-header">
