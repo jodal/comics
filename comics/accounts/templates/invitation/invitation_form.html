@@ -34,13 +34,15 @@
     <form action="" method="post" class="form-horizontal">
       {% csrf_token %}
 
-      {{ form|bootstrap }}
+      {{ form|bootstrap_horizontal }}
 
-      <div class="form-actions">
-        <button type="submit" class="btn btn-primary">
-          <i class="icon-share icon-white"></i>
-          Invite friend
-        </button>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary">
+            <i class="icon-share icon-white"></i>
+            Invite friend
+          </button>
+        </div>
       </div>
     </form>
 
@@ -50,7 +52,7 @@
 
     <h2>Sent invitations</h2>
 
-    <table class="table table-bordered table-striped">
+    <table class="table table-hover">
       <thead>
         <tr>
           <th>Date sent</th>

@@ -15,13 +15,15 @@
     {% csrf_token %}
     <input type="hidden" name="invitation_key" value="{{ invitation_key }}">
 
-    {{ form|bootstrap }}
+    {{ form|bootstrap_horizontal }}
 
-    <div class="form-actions">
-      <button type="submit" class="btn btn-primary">
-        <i class="icon-plus icon-white"></i>
-        Register
-      </button>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">
+          <i class="icon-plus icon-white"></i>
+          Register
+        </button>
+      </div>
     </div>
   </form>
 

@@ -10,48 +10,63 @@
     <h1>Account details</h1>
   </div>
 
-  <div class="row">
-    <div class="span6">
+  <form class="form form-horizontal">
 
-      <table class="table table-striped">
-        <tbody>
-          <tr>
-            <th>Email</th>
-            <td>{{ user.email }}</td>
-          </tr>
-          <tr>
-            <th>Last login</th>
-            <td>{{ user.last_login|date }}</td>
-          </tr>
-          <tr>
-            <th>Date joined</th>
-            <td>{{ user.date_joined|date }}</td>
-          </tr>
-          {% for invitation in user.invitations_used.all %}
-            <tr>
-              <th>Invited by</th>
-              <td>{{ invitation.from_user.email }}</td>
-            </tr>
-          {% endfor %}
-          <tr>
-            <th>Invitations sent</th>
-            <td>
-              {{ user.invitations_sent.count }}
-
-              <div class="pull-right">
-                <a href="{% url "invitation_invite" %}" class="btn btn-mini">
-                  Invite more friends</a>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <th>Selected comics</th>
-            <td>{{ user.comics_profile.comics.count }} / {{ all_comics.count }}</td>
-          </tr>
-        </tbody>
-      </table>
-
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Email</label>
+      <div class="col-sm-10">
+        <p class="form-control-static">{{ user.email }}</p>
+      </div>
     </div>
-  </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Last login</label>
+      <div class="col-sm-3">
+        <p class="form-control-static">{{ user.last_login|date }}</p>
+      </div>
+      <div class="col-sm-7">
+        <a href="{% url "logout" %}" class="btn btn-danger btn-xs">
+          Logout now</a>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Date joined</label>
+      <div class="col-sm-10">
+        <p class="form-control-static">{{ user.date_joined|date }}</p>
+      </div>
+    </div>
+
+    {% for invitation in user.invitations_used.all %}
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Invited by</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">{{ invitation.from_user.email }}</p>
+        </div>
+      </div>
+    {% endfor %}
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Invitations sent</label>
+      <div class="col-sm-3">
+        <p class="form-control-static">{{ user.invitations_sent.count }}</p>
+      </div>
+      <div class="col-sm-7">
+        <a href="{% url "invitation_invite" %}"
+          class="btn btn-primary btn-xs">
+          Invite more friends</a>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Subscribed comics</label>
+      <div class="col-sm-10">
+        <p class="form-control-static">
+          {{ user.comics_profile.comics.count }} / {{ all_comics.count }}
+        </p>
+      </div>
+    </div>
+
+  </form>
 
 {% endblock %}
