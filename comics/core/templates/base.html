@@ -21,6 +21,12 @@
       <div class="navbar navbar-default navbar-static-top">
         <div class="container">
           <div class="navbar-header">
+            <button class="navbar-toggle"
+              data-toggle="collapse" data-target="#site-menu">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
             {% if user.is_authenticated %}
               <a class="navbar-brand" href="{% url "mycomics_latest" %}">{{ site_title }}</a>
             {% else %}
@@ -29,75 +35,77 @@
           </div>
 
           {% block site_menu %}
-            <ul class="nav navbar-nav">
-            {% if user.is_authenticated %}
-              <li class="{{ active.comics|yesno:"active," }}" >
-                <a href="{% url "mycomics_latest" %}">
-                  <i class="icon-th-large"></i>
-                  Comics</a>
-              </li>
-              <li class="{{ active.account|yesno:"active," }}" >
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="icon-user"></i>
-                  Account
-                  <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                  <li class="{{ active.account_details|yesno:"active," }}">
-                    <a href="{% url "account" %}">Account details</a>
-                  </li>
-                  <li class="{{ active.password_change|yesno:"active," }}">
-                    <a href="{% url "password_change" %}">Change password</a>
-                  </li>
-                  <li class="{{ active.secret_key|yesno:"active," }}">
-                    <a href="{% url "secret_key" %}">Secret key</a>
-                  </li>
-                  {% url "import_named_set" as import_named_set_url %}
-                  {% if import_named_set_url %}
-                    <li class="{{ active.import_named_set|yesno:"active," }}">
-                      <a href="{{ import_named_set_url }}">Import comic set</a>
+            <div class="collapse navbar-collapse" id="site-menu">
+              <ul class="nav navbar-nav">
+              {% if user.is_authenticated %}
+                <li class="{{ active.comics|yesno:"active," }}" >
+                  <a href="{% url "mycomics_latest" %}">
+                    <i class="icon-th-large"></i>
+                    Comics</a>
+                </li>
+                <li class="{{ active.account|yesno:"active," }}" >
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="icon-user"></i>
+                    Account
+                    <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li class="{{ active.account_details|yesno:"active," }}">
+                      <a href="{% url "account" %}">Account details</a>
                     </li>
-                  {% endif %}
-                  <li class="{{ active.invite|yesno:"active," }}">
-                    <a href="{% url "invitation_invite" %}">Invite a friend</a>
-                  </li>
-                  <li class="divider"></li>
-                  <li>
-                    <a href="{% url "logout" %}">Logout</a>
-                  </li>
-                </ul>
-              </li>
-            {% else %}
-              <li class="{{ active.login|yesno:"active," }}" >
-                <a href="{% url "login" %}">
-                  <i class="icon-signin"></i>
-                  Login</a>
-              </li>
-              <li class="{{ active.register|yesno:"active," }}" >
-                <a href="{% url "registration_register" %}">
-                  <i class="icon-plus"></i>
-                  Register</a>
-              </li>
-            {% endif %}
-              <li class="{{ active.help|yesno:"active," }}" >
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="icon-question"></i>
-                  Help
-                  <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                  <li class="{{ active.about|yesno:"active," }}">
-                    <a href="{% url "help_about" %}">About the project</a>
-                  </li>
-                  <li class="{{ active.feedback|yesno:"active," }}">
-                    <a href="{% url "help_feedback" %}">Feedback to site admin</a>
-                  </li>
-                  <li class="{{ active.keyboard|yesno:"active," }}">
-                    <a href="{% url "help_keyboard" %}">Keyboard shortcuts</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
+                    <li class="{{ active.password_change|yesno:"active," }}">
+                      <a href="{% url "password_change" %}">Change password</a>
+                    </li>
+                    <li class="{{ active.secret_key|yesno:"active," }}">
+                      <a href="{% url "secret_key" %}">Secret key</a>
+                    </li>
+                    {% url "import_named_set" as import_named_set_url %}
+                    {% if import_named_set_url %}
+                      <li class="{{ active.import_named_set|yesno:"active," }}">
+                        <a href="{{ import_named_set_url }}">Import comic set</a>
+                      </li>
+                    {% endif %}
+                    <li class="{{ active.invite|yesno:"active," }}">
+                      <a href="{% url "invitation_invite" %}">Invite a friend</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                      <a href="{% url "logout" %}">Logout</a>
+                    </li>
+                  </ul>
+                </li>
+              {% else %}
+                <li class="{{ active.login|yesno:"active," }}" >
+                  <a href="{% url "login" %}">
+                    <i class="icon-signin"></i>
+                    Login</a>
+                </li>
+                <li class="{{ active.register|yesno:"active," }}" >
+                  <a href="{% url "registration_register" %}">
+                    <i class="icon-plus"></i>
+                    Register</a>
+                </li>
+              {% endif %}
+                <li class="{{ active.help|yesno:"active," }}" >
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="icon-question"></i>
+                    Help
+                    <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li class="{{ active.about|yesno:"active," }}">
+                      <a href="{% url "help_about" %}">About the project</a>
+                    </li>
+                    <li class="{{ active.feedback|yesno:"active," }}">
+                      <a href="{% url "help_feedback" %}">Feedback to site admin</a>
+                    </li>
+                    <li class="{{ active.keyboard|yesno:"active," }}">
+                      <a href="{% url "help_keyboard" %}">Keyboard shortcuts</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
           {% endblock site_menu %}
         </div>
       </div>
