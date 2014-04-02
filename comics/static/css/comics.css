@@ -6,39 +6,41 @@ html {
     display: none;
 }
 
-.release h3,
-.release form {
-    margin: 0 0 12px;
-}
-.release .image img {
-    height: auto;
-    max-width: 100%;
-}
-.release .meta {
-    margin: 0;
-}
-
 .btn .confirmation,
 .btn .success {
     display: none;
 }
 
+.release h3 {
+    margin-top: 0;
+}
+.release blockquote {
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.mycomics-toggle {
+    margin-left: 15px;
+}
+
+.meta {
+    margin-bottom: 0;
+}
+
 #cloud {
     margin-bottom: 50px;
-}
-#cloud .page-header {
-    margin-top: 40px;
-    padding-bottom: 5px;
 }
 #cloud a {
     color: #404040;
 }
 #cloud li {
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid #eee;
     padding: 3px 0;
 }
 #cloud label {
+    font-weight: normal;
     margin-bottom: 0;
+    margin-top: 0;
 }
 #cloud .label {
     margin-left: 3px;

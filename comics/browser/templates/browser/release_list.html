@@ -35,30 +35,36 @@
     <div class="btn-group">
       {% if latest_url %}
         <a href="{{ latest_url }}"
-          class="btn {% ifequal view_type 'latest' %}btn-primary active{% endifequal %}">
+          class="
+            btn navbar-btn
+            {% ifequal view_type 'latest' %}
+              btn-primary active
+            {% else %}
+              btn-default
+            {% endifequal %}">
           Latest</a>
       {% else %}
-        <a class="btn disabled">Latest</a>
+        <a class="btn navbar-btn btn-default disabled">Latest</a>
       {% endif %}
 
       {% ifequal view_type 'latest' %}
         <a {% if first_url %}href="{{ first_url }}"{% endif %}
-          class="btn btn-primary {% if not first_url %}disabled{% endif %}"
+          class="btn navbar-btn btn-primary {% if not first_url %}disabled{% endif %}"
           id="first" title="First">
         <i class="icon-step-backward icon-white"></i></a>
 
         <a {% if prev_url %}href="{{ prev_url }}"{% endif %}
-          class="btn btn-primary {% if not prev_url %}disabled{% endif %}"
+          class="btn navbar-btn btn-primary {% if not prev_url %}disabled{% endif %}"
           id="prev" title="Previous">
         <i class="icon-backward icon-white"></i></a>
 
         <a {% if next_url %}href="{{ next_url }}"{% endif %}
-          class="btn btn-primary {% if not next_url %}disabled{% endif %}"
+          class="btn navbar-btn btn-primary {% if not next_url %}disabled{% endif %}"
           id="next" title="Next">
         <i class="icon-forward icon-white"></i></a>
 
         <a {% if last_url %}href="{{ last_url }}"{% endif %}
-          class="btn btn-primary {% if not last_url %}disabled{% endif %}"
+          class="btn navbar-btn btn-primary {% if not last_url %}disabled{% endif %}"
           id="last" title="Last">
         <i class="icon-step-forward icon-white"></i></a>
       {% endifequal %}
@@ -67,30 +73,36 @@
     <div class="btn-group">
       {% if today_url %}
         <a href="{{ today_url }}"
-          class="btn {% ifequal view_type 'today' %}btn-primary active{% endifequal %}">
+          class="
+            btn navbar-btn
+            {% ifequal view_type 'today' %}
+              btn-primary active
+            {% else %}
+              btn-default
+            {% endifequal %}">
           Today</a>
       {% else %}
-        <a class="btn disabled">Today</a>
+        <a class="btn navbar-btn btn-default disabled">Today</a>
       {% endif %}
 
       {% ifequal view_type 'today' %}
         <a {% if first_url %}href="{{ first_url }}"{% endif %}
-          class="btn btn-primary {% if not first_url %}disabled{% endif %}"
+          class="btn navbar-btn btn-primary {% if not first_url %}disabled{% endif %}"
           id="first" title="First">
         <i class="icon-step-backward icon-white"></i></a>
 
         <a {% if prev_url %}href="{{ prev_url }}"{% endif %}
-          class="btn btn-primary {% if not prev_url %}disabled{% endif %}"
+          class="btn navbar-btn btn-primary {% if not prev_url %}disabled{% endif %}"
           id="prev" title="Previous">
         <i class="icon-backward icon-white"></i></a>
 
         <a {% if next_url %}href="{{ next_url }}"{% endif %}
-          class="btn btn-primary {% if not next_url %}disabled{% endif %}"
+          class="btn navbar-btn btn-primary {% if not next_url %}disabled{% endif %}"
           id="next" title="Next">
         <i class="icon-forward icon-white"></i></a>
 
         <a {% if last_url %}href="{{ last_url }}"{% endif %}
-          class="btn btn-primary {% if not last_url %}disabled{% endif %}"
+          class="btn navbar-btn btn-primary {% if not last_url %}disabled{% endif %}"
           id="last" title="Last">
         <i class="icon-step-forward icon-white"></i></a>
       {% endifequal %}
@@ -99,30 +111,36 @@
     <div class="btn-group">
       {% if day_url %}
         <a href="{{ day_url }}"
-          class="btn {% ifequal view_type 'day' %}btn-primary active{% endifequal %}">
+          class="
+            btn navbar-btn
+            {% ifequal view_type 'day' %}
+              btn-primary active
+            {% else %}
+              btn-default
+            {% endifequal %}">
           By day</a>
       {% else %}
-        <a class="btn disabled">By day</a>
+        <a class="btn navbar-btn btn-default disabled">By day</a>
       {% endif %}
 
       {% ifequal view_type 'day' %}
         <a {% if first_url %}href="{{ first_url }}"{% endif %}
-          class="btn btn-primary {% if not first_url %}disabled{% endif %}"
+          class="btn navbar-btn btn-primary {% if not first_url %}disabled{% endif %}"
           id="first" title="First">
         <i class="icon-step-backward icon-white"></i></a>
 
         <a {% if prev_url %}href="{{ prev_url }}"{% endif %}
-          class="btn btn-primary {% if not prev_url %}disabled{% endif %}"
+          class="btn navbar-btn btn-primary {% if not prev_url %}disabled{% endif %}"
           id="prev" title="Previous">
         <i class="icon-backward icon-white"></i></a>
 
         <a {% if next_url %}href="{{ next_url }}"{% endif %}
-          class="btn btn-primary {% if not next_url %}disabled{% endif %}"
+          class="btn navbar-btn btn-primary {% if not next_url %}disabled{% endif %}"
           id="next" title="Next">
         <i class="icon-forward icon-white"></i></a>
 
         <a {% if last_url %}href="{{ last_url }}"{% endif %}
-          class="btn btn-primary {% if not last_url %}disabled{% endif %}"
+          class="btn navbar-btn btn-primary {% if not last_url %}disabled{% endif %}"
           id="last" title="Last">
         <i class="icon-step-forward icon-white"></i></a>
       {% endifequal %}
@@ -131,30 +149,36 @@
     <div class="btn-group">
       {% if month_url %}
         <a href="{{ month_url }}"
-          class="btn {% ifequal view_type 'month' %}btn-primary active{% endifequal %}">
+          class="
+            btn navbar-btn
+            {% ifequal view_type 'month' %}
+              btn-primary active
+            {% else %}
+              btn-default
+            {% endifequal %}">
           By month</a>
       {% else %}
-        <a class="btn disabled">By month</a>
+        <a class="btn navbar-btn btn-default disabled">By month</a>
       {% endif %}
 
       {% ifequal view_type 'month' %}
         <a {% if first_url %}href="{{ first_url }}"{% endif %}
-          class="btn btn-primary {% if not first_url %}disabled{% endif %}"
+          class="btn navbar-btn btn-primary {% if not first_url %}disabled{% endif %}"
           id="first" title="First">
         <i class="icon-step-backward icon-white"></i></a>
 
         <a {% if prev_url %}href="{{ prev_url }}"{% endif %}
-          class="btn btn-primary {% if not prev_url %}disabled{% endif %}"
+          class="btn navbar-btn btn-primary {% if not prev_url %}disabled{% endif %}"
           id="prev" title="Previous">
         <i class="icon-backward icon-white"></i></a>
 
         <a {% if next_url %}href="{{ next_url }}"{% endif %}
-          class="btn btn-primary {% if not next_url %}disabled{% endif %}"
+          class="btn navbar-btn btn-primary {% if not next_url %}disabled{% endif %}"
           id="next" title="Next">
         <i class="icon-forward icon-white"></i></a>
 
         <a {% if last_url %}href="{{ last_url }}"{% endif %}
-          class="btn btn-primary {% if not last_url %}disabled{% endif %}"
+          class="btn navbar-btn btn-primary {% if not last_url %}disabled{% endif %}"
           id="last" title="Last">
         <i class="icon-step-forward icon-white"></i></a>
       {% endifequal %}
@@ -170,7 +194,7 @@
       {% if feed_url %}
         <div class="btn-group">
           <a href="{{ feed_url }}"
-            title="{{ feed_title }}" class="btn">
+            title="{{ feed_title }}" class="btn btn-default">
             <i class="icon-rss"></i> Feed</a>
         </div>
       {% endif %}
@@ -196,55 +220,45 @@
   <div id="releases">
     {% for release in release_list %}
 
-      <div class="release well" data-comic="{{ release.comic.slug }}" data-release-id="{{ release.id }}">
-        <form action="{% url "toggle_comic" %}" method="post"
-          class="pull-right mycomics-toggle">
-          {% csrf_token %}
-          <input type="hidden" name="comic" value="{{ release.comic.slug }}">
-{% comment %}
-          <button type="submit" name="remove_comic"
-            title="Remove from my comics"
-            class="btn btn-small mycomics-remove
-              {% if release.comic not in my_comics %}hidden{% endif %}">
-            <span class="action">
-              <i class="icon-remove"></i>
-              Remove
-            </span>
-            <span class="confirmation">
-              <i class="icon-warning-sign icon-white"></i>
-              Click again to remove from my comics
-            </span>
-            <span class="success">
-              <i class="icon-ok icon-white"></i>
-              Removed
-            </span>
-          </button>
-{% endcomment %}
-          <button type="submit" name="add_comic"
-            title="Add to my comics"
-            class="btn mycomics-add
-              {% if release.comic in my_comics %}hidden{% endif %}">
-            <span class="action">
-              <i class="icon-plus"></i>
-              Add to my comics
-            </span>
-            <span class="success">
-              <i class="icon-ok icon-white"></i>
-              Added to my comics
-            </span>
-          </button>
-        </form>
+      <div class="release panel panel-default"
+        data-comic="{{ release.comic.slug }}" data-release-id="{{ release.id }}">
+        <div class="panel-heading">
+          <div class="pull-right">
+            <span class="pub_date">{{ release.pub_date }}</span>
 
-        <h3>
-          <a href="{{ release.get_absolute_url }}">
-            {{ release.comic.name }}
-            <small class="pub_date">{{ release.pub_date }}</small>
-          </a>
-        </h3>
+            {% if release.comic not in my_comics %}
+              <form action="{% url "toggle_comic" %}" method="post"
+                class="mycomics-toggle pull-right">
+                {% csrf_token %}
+                <input type="hidden" name="comic"
+                  value="{{ release.comic.slug }}">
+                <button type="submit" name="add_comic"
+                  title="Add to my comics"
+                  class="btn btn-default btn-xs mycomics-add">
+                  <span class="action">
+                    <i class="icon-plus"></i>
+                    Add to my comics
+                  </span>
+                  <span class="success">
+                    <i class="icon-ok icon-white"></i>
+                    Added to my comics
+                  </span>
+                </button>
+              </form>
+            {% endif %}
+          </div>
+
+          <h2 class="panel-title float-left">
+            <a href="{{ release.get_absolute_url }}">
+              {{ release.comic.name }}
+            </a>
+          </h2>
+        </div>
 
         {% cache 3600 'release' release.id %}
           {% include "browser/release_content.html" %}
         {% endcache %}
+
       </div>
 
     {% empty %}
@@ -268,7 +282,7 @@
         </div>
 
         {% if user.is_superuser %}
-          <div class="alert alert-error">
+          <div class="alert alert-danger">
             <strong>To the site admin:</strong>
             You can fetch releases by running:
             <code>python manage.py comics_getreleases</code>
@@ -289,13 +303,13 @@
     <div class="page-header">
       <div class="pull-right">
         <div class="show-view">
-          <button type="button" class="btn mycomics-edit">
+          <button type="button" class="btn btn-default mycomics-edit">
             <i class="icon-pencil"></i>
             Change subscriptions
           </button>
         </div>
         <div class="edit-view hide">
-          <button type="reset" class="btn mycomics-cancel">
+          <button type="reset" class="btn btn-default mycomics-cancel">
             Cancel
           </button>
           &nbsp;
@@ -313,13 +327,13 @@
       <div class="row">
 
         {% for comic_column in comic_columns %}
-          <div class="span3">
-            <ul class="unstyled">
+          <div class="col-md-3">
+            <ul class="list-unstyled">
               {% for comic in comic_column %}
                 <li class="{% if not comic.active %}inactive{% endif %}{% if comic in my_comics %} subscribed{% endif %}">
                   <div class="pull-right">
                     {% if not comic.active %}
-                      <span class="label">Inactive</span>
+                      <span class="label label-default">Inactive</span>
                     {% endif %}
                     {% if comic.is_new %}
                       <span class="label label-info">New</span>
@@ -350,8 +364,9 @@
       <div class="alert alert-info">
         <strong>No comics found in the database.</strong>
       </div>
+
       {% if user.is_superuser %}
-        <div class="alert alert-error">
+        <div class="alert alert-danger">
           <strong>To the site admin:</strong>
           You can add comics to the site by running:
           <code>python manage.py comics_addcomics -c ...</code>
