@@ -19,6 +19,9 @@ v2.3.0 (UNRELEASED)
   - django-tastypie >= 0.9.13, < 0.12
   - Pillow >= 1.7, < 2.5
 
+- IE6/7/8 is no longer supported. IE9 is the oldest IE version you can expect
+  to work with *comics*.
+
 
 v2.2.3 (2014-03-31)
 ===================
