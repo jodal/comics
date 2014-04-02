@@ -53,10 +53,6 @@ html {
     opacity: 0.4;
 }
 
-#feedback textarea {
-    width: 40em;
-}
-
 #status td,
 #status_legend td {
     text-align: center;
