@@ -1,0 +1,163 @@
+<div class="btn-toolbar">
+
+  <div class="btn-group">
+    {% if latest_url %}
+      <a href="{{ latest_url }}"
+        class="
+          btn
+          {% ifequal view_type 'latest' %}
+            btn-primary active
+          {% else %}
+            btn-default
+          {% endifequal %}">
+        Latest</a>
+    {% else %}
+      <a class="btn btn-default disabled">Latest</a>
+    {% endif %}
+
+    {% ifequal view_type 'latest' %}
+      <a {% if first_url %}href="{{ first_url }}"{% endif %}
+        class="btn btn-primary {% if not first_url %}disabled{% endif %}"
+        id="first" title="First">
+      <i class="icon-step-backward icon-white"></i></a>
+
+      <a {% if prev_url %}href="{{ prev_url }}"{% endif %}
+        class="btn btn-primary {% if not prev_url %}disabled{% endif %}"
+        id="prev" title="Previous">
+      <i class="icon-backward icon-white"></i></a>
+
+      <a {% if next_url %}href="{{ next_url }}"{% endif %}
+        class="btn btn-primary {% if not next_url %}disabled{% endif %}"
+        id="next" title="Next">
+      <i class="icon-forward icon-white"></i></a>
+
+      <a {% if last_url %}href="{{ last_url }}"{% endif %}
+        class="btn btn-primary {% if not last_url %}disabled{% endif %}"
+        id="last" title="Last">
+      <i class="icon-step-forward icon-white"></i></a>
+    {% endifequal %}
+  </div>
+
+  <div class="btn-group">
+    {% if today_url %}
+      <a href="{{ today_url }}"
+        class="
+          btn
+          {% ifequal view_type 'today' %}
+            btn-primary active
+          {% else %}
+            btn-default
+          {% endifequal %}">
+        Today</a>
+    {% else %}
+      <a class="btn btn-default disabled">Today</a>
+    {% endif %}
+
+    {% ifequal view_type 'today' %}
+      <a {% if first_url %}href="{{ first_url }}"{% endif %}
+        class="btn btn-primary {% if not first_url %}disabled{% endif %}"
+        id="first" title="First">
+      <i class="icon-step-backward icon-white"></i></a>
+
+      <a {% if prev_url %}href="{{ prev_url }}"{% endif %}
+        class="btn btn-primary {% if not prev_url %}disabled{% endif %}"
+        id="prev" title="Previous">
+      <i class="icon-backward icon-white"></i></a>
+
+      <a {% if next_url %}href="{{ next_url }}"{% endif %}
+        class="btn btn-primary {% if not next_url %}disabled{% endif %}"
+        id="next" title="Next">
+      <i class="icon-forward icon-white"></i></a>
+
+      <a {% if last_url %}href="{{ last_url }}"{% endif %}
+        class="btn btn-primary {% if not last_url %}disabled{% endif %}"
+        id="last" title="Last">
+      <i class="icon-step-forward icon-white"></i></a>
+    {% endifequal %}
+  </div>
+
+  <div class="btn-group">
+    {% if day_url %}
+      <a href="{{ day_url }}"
+        class="
+          btn
+          {% ifequal view_type 'day' %}
+            btn-primary active
+          {% else %}
+            btn-default
+          {% endifequal %}">
+        By day</a>
+    {% else %}
+      <a class="btn btn-default disabled">By day</a>
+    {% endif %}
+
+    {% ifequal view_type 'day' %}
+      <a {% if first_url %}href="{{ first_url }}"{% endif %}
+        class="btn btn-primary {% if not first_url %}disabled{% endif %}"
+        id="first" title="First">
+      <i class="icon-step-backward icon-white"></i></a>
+
+      <a {% if prev_url %}href="{{ prev_url }}"{% endif %}
+        class="btn btn-primary {% if not prev_url %}disabled{% endif %}"
+        id="prev" title="Previous">
+      <i class="icon-backward icon-white"></i></a>
+
+      <a {% if next_url %}href="{{ next_url }}"{% endif %}
+        class="btn btn-primary {% if not next_url %}disabled{% endif %}"
+        id="next" title="Next">
+      <i class="icon-forward icon-white"></i></a>
+
+      <a {% if last_url %}href="{{ last_url }}"{% endif %}
+        class="btn btn-primary {% if not last_url %}disabled{% endif %}"
+        id="last" title="Last">
+      <i class="icon-step-forward icon-white"></i></a>
+    {% endifequal %}
+  </div>
+
+  <div class="btn-group">
+    {% if month_url %}
+      <a href="{{ month_url }}"
+        class="
+          btn
+          {% ifequal view_type 'month' %}
+            btn-primary active
+          {% else %}
+            btn-default
+          {% endifequal %}">
+        By month</a>
+    {% else %}
+      <a class="btn btn-default disabled">By month</a>
+    {% endif %}
+
+    {% ifequal view_type 'month' %}
+      <a {% if first_url %}href="{{ first_url }}"{% endif %}
+        class="btn btn-primary {% if not first_url %}disabled{% endif %}"
+        id="first" title="First">
+      <i class="icon-step-backward icon-white"></i></a>
+
+      <a {% if prev_url %}href="{{ prev_url }}"{% endif %}
+        class="btn btn-primary {% if not prev_url %}disabled{% endif %}"
+        id="prev" title="Previous">
+      <i class="icon-backward icon-white"></i></a>
+
+      <a {% if next_url %}href="{{ next_url }}"{% endif %}
+        class="btn btn-primary {% if not next_url %}disabled{% endif %}"
+        id="next" title="Next">
+      <i class="icon-forward icon-white"></i></a>
+
+      <a {% if last_url %}href="{{ last_url }}"{% endif %}
+        class="btn btn-primary {% if not last_url %}disabled{% endif %}"
+        id="last" title="Last">
+      <i class="icon-step-forward icon-white"></i></a>
+    {% endifequal %}
+  </div>
+
+  {% if feed_url %}
+    <div class="btn-group">
+      <a href="{{ feed_url }}"
+        title="{{ feed_title }}" class="btn btn-default">
+        <i class="icon-rss"></i> Feed</a>
+    </div>
+  {% endif %}
+
+</div>
