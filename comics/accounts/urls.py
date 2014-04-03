@@ -115,7 +115,7 @@ urlpatterns = patterns(
             'password_reset_form': PasswordResetForm,
         },
         name='password_reset'),
-    url(r'^password/reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
+    url(r'^password/reset/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
         auth_views.password_reset_confirm,
         {'template_name': 'auth/password_reset_confirm.html'},
         name='password_reset_confirm'),
