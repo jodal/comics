@@ -37,7 +37,12 @@
 <div class="panel-footer">
   <p class="meta small text-muted">
     Credits: {{ release.comic.rights }}.
-    Fetched at {{ release.fetched|date:"Y-m-d H:i e" }} from
+    Fetched
+    <time datetime="{{ release.fetched|date:"c" }}"
+      title="{{ release.fetched|date:"Y-m-d H:i e" }}">
+      {{ release.fetched|date:"Y-m-d H:i e" }}
+    </time>
+    from
     <a href="{{ release.comic.get_redirect_url }}">{{ release.comic.url }}</a>.
   </p>
 </div>

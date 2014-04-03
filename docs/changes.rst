@@ -28,6 +28,9 @@ v2.3.0 (UNRELEASED)
 
 - Moved comics list from bottom of each page to its own page in the top menu.
 
+- Use Moment.js to show time since fetched timestamp in release meta data.
+  This can't be done on the server side due to heavy caching.
+
 
 v2.2.3 (2014-03-31)
 ===================

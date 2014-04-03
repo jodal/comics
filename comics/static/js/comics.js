@@ -149,6 +149,11 @@ var fullSizeToggler = function (event) {
     }
 };
 
+$.fn.momentify = function () {
+  this.text(moment(this.attr('datetime')).fromNow());
+  return this;
+};
+
 var newReleaseCheck = (function () {
     var secondsBeforeFirstCheck = 60;
 
@@ -202,5 +207,6 @@ $(function () {
     $('.mycomics-edit').click(mycomicsEditor.edit);
     $('.mycomics-cancel').click(mycomicsEditor.cancel);
     $('.release .image a').click(fullSizeToggler);
+    $('.release time').momentify();
     newReleaseCheck();
 });
