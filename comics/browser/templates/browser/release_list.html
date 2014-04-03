@@ -33,9 +33,13 @@
 {% block content %}
 
   <div class="page-header">
-    <div class="pull-right">
-      {% include "browser/menu.html" %}
-    </div>
+    {% if feed_url %}
+      <div class="btn-group pull-right">
+        <a href="{{ feed_url }}"
+          title="{{ feed_title }}" class="btn btn-default navbar-btn">
+          <i class="icon-rss"></i> Feed</a>
+      </div>
+    {% endif %}
 
     <h1>
       {{ title|safe }}
@@ -43,6 +47,10 @@
         <small>{{ subtitle|safe }}</small>
       {% endif %}
     </h1>
+  </div>
+
+  <div class="browser-menu">
+    {% include "browser/menu.html" %}
   </div>
 
   {% ifequal object_type 'mycomics' %}
@@ -140,17 +148,17 @@
     <div class="page-header">
       <div class="pull-right">
         <div class="show-view">
-          <button type="button" class="btn btn-default mycomics-edit">
+          <button type="button" class="btn btn-default navbar-btn mycomics-edit">
             <i class="icon-pencil"></i>
             Change subscriptions
           </button>
         </div>
         <div class="edit-view hide">
-          <button type="reset" class="btn btn-default mycomics-cancel">
+          <button type="reset" class="btn btn-default navbar-btn mycomics-cancel">
             Cancel
           </button>
           &nbsp;
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" class="btn btn-primary navbar-btn">
             <i class="icon-ok icon-white"></i>
             Save changes
           </button>

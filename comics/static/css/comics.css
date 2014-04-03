@@ -2,6 +2,13 @@ html {
     overflow-y: scroll;
 }
 
+.browser-menu {
+    margin-bottom: 10px;
+}
+.browser-menu .btn-group {
+    margin-bottom: 10px;
+}
+
 .new-releases-alert {
     display: none;
 }
