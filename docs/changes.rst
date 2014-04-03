@@ -20,12 +20,13 @@ v2.3.0 (UNRELEASED)
   - django-tastypie >= 0.9.13, < 0.12
   - Pillow >= 1.7, < 2.5
 
-- Refreshed design.
-
-- Upgraded to Bootstrap 3.
+- Upgraded to Bootstrap 3, which gives way for a refreshed and more
+  responsive/mobile friendly design.
 
 - IE6/7/8 is no longer supported. IE9 is the oldest IE version you can expect
   to work with *comics*.
+
+- Moved comics list from bottom of each page to its own page in the top menu.
 
 
 v2.2.3 (2014-03-31)
