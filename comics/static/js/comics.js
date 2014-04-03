@@ -150,8 +150,9 @@ var fullSizeToggler = function (event) {
 };
 
 $.fn.momentify = function () {
-  this.text(moment(this.attr('datetime')).fromNow());
-  return this;
+  return this.each(function () {
+    $(this).text(moment($(this).attr('datetime')).fromNow());
+  });
 };
 
 var newReleaseCheck = (function () {
