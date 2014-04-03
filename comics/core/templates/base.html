@@ -44,6 +44,11 @@
                     <i class="icon-th-large"></i>
                     Comics</a>
                 </li>
+                <li class="{{ active.comics_list|yesno:"active," }}" >
+                  <a href="{% url "comics_list" %}">
+                    <i class="icon-list"></i>
+                    All comics</a>
+                </li>
                 <li class="{{ active.account|yesno:"active," }}" >
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="icon-user"></i>
@@ -113,22 +118,16 @@
 
       <div class="container">
 
-        <div id="bd">
-          {% if messages %}
-            {% for message in messages %}
-              <div class="alert alert-{{ message.tags }}">
-                <a class="close" data-dismiss="alert">×</a>
-                {{ message }}
-              </div>
-            {% endfor %}
-          {% endif %}
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+              <a class="close" data-dismiss="alert">×</a>
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
 
-          {% block content %}{% endblock content %}
-        </div>
-
-        <div id="cloud">
-          {% block cloud %}{% endblock %}
-        </div>
+        {% block content %}{% endblock content %}
 
       </div>
 

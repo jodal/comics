@@ -16,6 +16,10 @@ urlpatterns = patterns(
         views.MyComicsHome.as_view(),
         name='home'),
 
+    url(r'^all/$',
+        views.comics_list,
+        name='comics_list'),
+
     # Views of my comics selection
     url(r'^my/$',
         views.MyComicsLatestView.as_view(),

@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views.generic import (
@@ -14,6 +14,14 @@ from django.views.generic import (
     DayArchiveView, TodayArchiveView, MonthArchiveView)
 
 from comics.core.models import Comic, Release
+
+
+@login_required
+def comics_list(request):
+    return render(request, 'browser/comics_list.html', {
+        'active': {'comics_list': True},
+        'my_comics': request.user.comics_profile.comics.all(),
+    })
 
 
 class LoginRequiredMixin(object):

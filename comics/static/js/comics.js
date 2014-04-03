@@ -130,12 +130,12 @@ var mycomicsEditor = (function () {
     return {
         edit: function (event) {
             event.preventDefault();
-            $('#cloud .edit-view').removeClass('hide');
-            $('#cloud .show-view').addClass('hide');
+            $('.comics-list .edit-view').removeClass('hide');
+            $('.comics-list .show-view').addClass('hide');
         },
         cancel: function (event) {
-            $('#cloud .show-view').removeClass('hide');
-            $('#cloud .edit-view').addClass('hide');
+            $('.comics-list .show-view').removeClass('hide');
+            $('.comics-list .edit-view').addClass('hide');
         }
     };
 })();

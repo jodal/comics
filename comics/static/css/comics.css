@@ -34,29 +34,29 @@ html {
     margin-bottom: 0;
 }
 
-#cloud {
-    margin-bottom: 50px;
+.comics-list {
+    margin-bottom: 20px;
 }
-#cloud a {
+.comics-list a {
     color: #404040;
 }
-#cloud li {
+.comics-list li {
     border-bottom: 1px solid #eee;
     padding: 3px 0;
 }
-#cloud label {
+.comics-list label {
     font-weight: normal;
     margin-bottom: 0;
     margin-top: 0;
 }
-#cloud .label {
+.comics-list .label {
     margin-left: 3px;
 }
-#cloud .subscribed,
-#cloud .subscribed label {
+.comics-list .subscribed,
+.comics-list .subscribed label {
     font-weight: bold;
 }
-#cloud .inactive {
+.comics-list .inactive {
     opacity: 0.4;
 }
 

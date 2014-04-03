@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load list_to_columns %}
+
+
+{% block title %}
+  All comics
+{% endblock %}
+
+
+{% block content %}
+
+  <form action="{% url "edit_comics" %}" method="post" class="comics-list">
+    {% csrf_token %}
+
+    <div class="page-header">
+      <div class="pull-right">
+        <div class="show-view">
+          <button type="button" class="btn btn-default navbar-btn mycomics-edit">
+            <i class="icon-pencil"></i>
+            Change subscriptions
+          </button>
+        </div>
+        <div class="edit-view hide">
+          <button type="reset" class="btn btn-default navbar-btn mycomics-cancel">
+            Cancel
+          </button>
+          &nbsp;
+          <button type="submit" class="btn btn-primary navbar-btn">
+            <i class="icon-ok icon-white"></i>
+            Save changes
+          </button>
+        </div>
+      </div>
+
+      <h1>All comics <small>aggregated by {{ site_title }}</small></h1>
+    </div>
+
+    {% if all_comics %}
+      {% list_to_columns all_comics as comic_columns 4 %}
+      <div class="row">
+
+        {% for comic_column in comic_columns %}
+          <div class="col-md-3">
+            <ul class="list-unstyled">
+              {% for comic in comic_column %}
+                <li class="{% if not comic.active %}inactive{% endif %}{% if comic in my_comics %} subscribed{% endif %}">
+                  <div class="pull-right">
+                    {% if not comic.active %}
+                      <span class="label label-default">Inactive</span>
+                    {% endif %}
+                    {% if comic.is_new %}
+                      <span class="label label-info">New</span>
+                    {% endif %}
+                    {% if comic in my_comics %}
+                      <span class="label label-inverse">Subscribed</span>
+                    {% endif %}
+                  </div>
+                  <div class="show-view">
+                    <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
+                  </div>
+                  <div class="edit-view hide">
+                    <label class="checkbox">
+                      <input type="checkbox" name="{{ comic.slug }}"
+                        {% if comic in my_comics %}checked="checked"{% endif %}>
+                      {{ comic.name }}
+                    </label>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endfor %}
+
+      </div>
+    {% else %}
+
+      <div class="alert alert-info">
+        <strong>No comics found in the database.</strong>
+      </div>
+
+      {% if user.is_superuser %}
+        <div class="alert alert-danger">
+          <strong>To the site admin:</strong>
+          You can add comics to the site by running:
+          <code>python manage.py comics_addcomics -c ...</code>
+        </div>
+      {% endif %}
+
+    {% endif %}
+  </form>
+
+{% endblock %}
