@@ -49,6 +49,40 @@
                     <i class="icon-list"></i>
                     All comics</a>
                 </li>
+              {% else %}
+                <li class="{{ active.login|yesno:"active," }}" >
+                  <a href="{% url "login" %}">
+                    <i class="icon-signin"></i>
+                    Login</a>
+                </li>
+                <li class="{{ active.register|yesno:"active," }}" >
+                  <a href="{% url "registration_register" %}">
+                    <i class="icon-plus"></i>
+                    Register</a>
+                </li>
+              {% endif %}
+                <li class="{{ active.help|yesno:"active," }}" >
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="icon-question"></i>
+                    Help
+                    <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li class="{{ active.about|yesno:"active," }}">
+                      <a href="{% url "help_about" %}">About the project</a>
+                    </li>
+                    <li class="{{ active.feedback|yesno:"active," }}">
+                      <a href="{% url "help_feedback" %}">Feedback to site admin</a>
+                    </li>
+                    <li class="{{ active.keyboard|yesno:"active," }}">
+                      <a href="{% url "help_keyboard" %}">Keyboard shortcuts</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+
+              <ul class="nav navbar-nav navbar-right">
+              {% if user.is_authenticated %}
                 <li class="{{ active.account|yesno:"active," }}" >
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="icon-user"></i>
@@ -80,36 +114,7 @@
                     </li>
                   </ul>
                 </li>
-              {% else %}
-                <li class="{{ active.login|yesno:"active," }}" >
-                  <a href="{% url "login" %}">
-                    <i class="icon-signin"></i>
-                    Login</a>
-                </li>
-                <li class="{{ active.register|yesno:"active," }}" >
-                  <a href="{% url "registration_register" %}">
-                    <i class="icon-plus"></i>
-                    Register</a>
-                </li>
               {% endif %}
-                <li class="{{ active.help|yesno:"active," }}" >
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="icon-question"></i>
-                    Help
-                    <b class="caret"></b>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li class="{{ active.about|yesno:"active," }}">
-                      <a href="{% url "help_about" %}">About the project</a>
-                    </li>
-                    <li class="{{ active.feedback|yesno:"active," }}">
-                      <a href="{% url "help_feedback" %}">Feedback to site admin</a>
-                    </li>
-                    <li class="{{ active.keyboard|yesno:"active," }}">
-                      <a href="{% url "help_keyboard" %}">Keyboard shortcuts</a>
-                    </li>
-                  </ul>
-                </li>
               </ul>
             </div>
           {% endblock site_menu %}
