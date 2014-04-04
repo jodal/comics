@@ -61,24 +61,6 @@
                     Register</a>
                 </li>
               {% endif %}
-                <li class="{{ active.help|yesno:"active," }}" >
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="icon-question"></i>
-                    Help
-                    <b class="caret"></b>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li class="{{ active.about|yesno:"active," }}">
-                      <a href="{% url "help_about" %}">About the project</a>
-                    </li>
-                    <li class="{{ active.feedback|yesno:"active," }}">
-                      <a href="{% url "help_feedback" %}">Feedback to site admin</a>
-                    </li>
-                    <li class="{{ active.keyboard|yesno:"active," }}">
-                      <a href="{% url "help_keyboard" %}">Keyboard shortcuts</a>
-                    </li>
-                  </ul>
-                </li>
               </ul>
 
               <ul class="nav navbar-nav navbar-right">
@@ -137,6 +119,16 @@
 
         {% block content %}{% endblock content %}
 
+      </div>
+
+      <div class="footer">
+        <div class="container">
+          <ul class="list-inline">
+            <li><a href="{% url "help_about" %}">About</a></li>
+            <li><a href="{% url "help_feedback" %}">Contact</a></li>
+            <li><a href="{% url "help_keyboard" %}">Keyboard shortcuts</a></li>
+          </ul>
+        </div>
       </div>
 
     {% endblock body %}
