@@ -20,7 +20,6 @@ urlpatterns = patterns(
             template_name='invitation/invitation_complete.html'),
         {
             'extra_context': {'active': {
-                'account': True,
                 'invite': True,
             }},
         },
@@ -29,7 +28,6 @@ urlpatterns = patterns(
         invitation_views.invite,
         {
             'extra_context': {'active': {
-                'account': True,
                 'invite': True,
             }},
         },

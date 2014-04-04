@@ -83,6 +83,12 @@
 
               <ul class="nav navbar-nav navbar-right">
               {% if user.is_authenticated %}
+                <li class="{{ active.invite|yesno:"active," }}">
+                  <a href="{% url "invitation_invite" %}">
+                    <i class="icon-heart"></i>
+                    Invite
+                  </a>
+                </li>
                 <li class="{{ active.account|yesno:"active," }}" >
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="icon-user"></i>
@@ -105,9 +111,6 @@
                         <a href="{{ import_named_set_url }}">Import comic set</a>
                       </li>
                     {% endif %}
-                    <li class="{{ active.invite|yesno:"active," }}">
-                      <a href="{% url "invitation_invite" %}">Invite a friend</a>
-                    </li>
                     <li class="divider"></li>
                     <li>
                       <a href="{% url "logout" %}">Logout</a>
