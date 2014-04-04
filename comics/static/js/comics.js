@@ -173,7 +173,8 @@ var newReleaseCheck = (function () {
 
     var showNewReleaseNotification = function (numReleases) {
         var $el = $('.new-releases-alert');
-        $el.find('.new-release-count').html(numReleases);
+        $el.find('a').text(numReleases + (
+            numReleases == 1 ? ' new release' : ' new releases'));
         $el.slideDown();
     };
 
