@@ -10,7 +10,7 @@
     <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}">
     {% compress css %}
       <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-3.1.1.min.css' %}">
-      <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome-3.2.1.min.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome-4.0.3.min.css' %}">
       <link rel="stylesheet" type="text/css" href="{% static 'css/comics.css' %}">
     {% endcompress %}
     {% block extra_head %}{% endblock %}
@@ -41,23 +41,23 @@
               {% if user.is_authenticated %}
                 <li class="{{ active.comics|yesno:"active," }}" >
                   <a href="{% url "mycomics_latest" %}">
-                    <i class="icon-th-large"></i>
+                    <i class="fa fa-th-large"></i>
                     Comics</a>
                 </li>
                 <li class="{{ active.comics_list|yesno:"active," }}" >
                   <a href="{% url "comics_list" %}">
-                    <i class="icon-list"></i>
+                    <i class="fa fa-list"></i>
                     All comics</a>
                 </li>
               {% else %}
                 <li class="{{ active.login|yesno:"active," }}" >
                   <a href="{% url "login" %}">
-                    <i class="icon-signin"></i>
+                    <i class="fa fa-sign-in"></i>
                     Login</a>
                 </li>
                 <li class="{{ active.register|yesno:"active," }}" >
                   <a href="{% url "registration_register" %}">
-                    <i class="icon-plus"></i>
+                    <i class="fa fa-plus"></i>
                     Register</a>
                 </li>
               {% endif %}
@@ -67,13 +67,13 @@
               {% if user.is_authenticated %}
                 <li class="{{ active.invite|yesno:"active," }}">
                   <a href="{% url "invitation_invite" %}">
-                    <i class="icon-heart"></i>
+                    <i class="fa fa-heart"></i>
                     Invite
                   </a>
                 </li>
                 <li class="{{ active.account|yesno:"active," }}" >
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="icon-user"></i>
+                    <i class="fa fa-user"></i>
                     Me
                     <b class="caret"></b>
                   </a>

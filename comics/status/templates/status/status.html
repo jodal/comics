@@ -28,7 +28,7 @@
       <tr>
         <th><a href="{{ comic.get_absolute_url }}">{{ comic.slug }}</a></th>
         <td><a href="{{ comic.get_redirect_url }}">
-            <i class="icon-external-link" title="Website"></i></a></td>
+            <i class="fa fa-external-link" title="Website"></i></a></td>
         <td>{{ comic.days_since_last_release }}d</td>
         {% for classes, day, release in days %}
           <td title="{{ day|date }}"{% if classes %} class="{{ classes|join:" " }}"{% endif %}>

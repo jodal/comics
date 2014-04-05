@@ -23,6 +23,8 @@ v2.3.0 (UNRELEASED)
 - Upgraded to Bootstrap 3, which gives way for a refreshed and more
   responsive/mobile friendly design.
 
+- Upgraded to Font Awesome 4.
+
 - Upgraded to JQUery 2. IE6/7/8 is no longer supported. IE9 is the oldest IE
   version you can expect to work with *comics*.
 
