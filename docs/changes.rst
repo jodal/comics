@@ -23,10 +23,13 @@ v2.3.0 (UNRELEASED)
 - Upgraded to Bootstrap 3, which gives way for a refreshed and more
   responsive/mobile friendly design.
 
-- IE6/7/8 is no longer supported. IE9 is the oldest IE version you can expect
-  to work with *comics*.
+- Upgraded to JQUery 2. IE6/7/8 is no longer supported. IE9 is the oldest IE
+  version you can expect to work with *comics*.
 
 - Moved comics list from bottom of each page to its own page in the top menu.
+  This makes it more available on mobile clients, as well as to new users that
+  don't know where to find the list after they've subscribed to their first
+  comic.
 
 - Use Moment.js to show time since fetched timestamp in release meta data.
   This can't be done on the server side due to heavy caching.
