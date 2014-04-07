@@ -8,7 +8,7 @@ versioned release.
 v2.3.0 (UNRELEASED)
 ===================
 
-- New dependencies, and dependencies with new minimum versions:
+- Dependencies with new minimum versions:
 
   - Django >= 1.6, < 1.7
   - django-boostrap-form >= 3.1, < 3.2
