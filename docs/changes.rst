@@ -25,7 +25,7 @@ v2.3.0 (2014-01-05)
 
 - Upgraded to Font Awesome 4.
 
-- Upgraded to JQUery 2. IE6/7/8 is no longer supported. IE9 is the oldest IE
+- Upgraded to JQuery 2. IE6/7/8 is no longer supported. IE9 is the oldest IE
   version you can expect to work with *comics*.
 
 - Moved comics list from bottom of each page to its own page in the top menu.
