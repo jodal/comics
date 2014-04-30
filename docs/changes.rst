@@ -5,7 +5,7 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
-v2.3.0 (2014-01-05)
+v2.3.0 (2014-04-07)
 ===================
 
 - Dependencies with new minimum versions:
