@@ -20,7 +20,7 @@ class Crawler(CrawlerBase):
         images = []
         for entry in feed.for_date(pub_date):
             if entry.title.isdigit():
-                url = entry.content0.src('a[rel="bookmark"] img')
+                url = entry.summary.src('a[rel="bookmark"] img')
                 if url:
                     url = url.replace('-210x300', '')
                 title = entry.title

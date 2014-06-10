@@ -10,6 +10,11 @@ v2.3.1 (UNRELEASED)
 
 - Display error message instead of crashing if a password reset link is reused.
 
+**Crawlers**
+
+- Update: ``lookingforgroup`` after feed change.
+
+
 v2.3.0 (2014-04-07)
 ===================
 
