@@ -16,6 +16,7 @@ v2.3.1 (UNRELEASED)
 - Update: ``lookingforgroup`` after feed change.
 - Update: ``phd`` after feed change.
 - Update: ``poledancingadventures`` after site change.
+- Update: ``pcweenies`` after feed change.
 - Update: ``yamac`` after site change.
 - Inactive: ``boxerhockey``
 - Inactive: ``eatthattoast``

@@ -17,6 +17,9 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://pcweenies.com/feed/')
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src(u'img[src*="/comics/"]')
+            url = entry.summary.src(u'img[src*="/wp-content/uploads/"]')
+            if not url:
+                continue
+            url = url.replace('-300x120', '')
             title = entry.title
             return CrawlerImage(url, title)
