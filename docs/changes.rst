@@ -27,6 +27,7 @@ v2.3.1 (UNRELEASED)
 - Inactive: ``eatthattoast``
 - Inactive: ``gregcomic``
 - Inactive: ``lunch``
+- Inactive: ``pinkparts``
 - Inactive: ``somethingofthatilk``
 - Inactive: ``thechalkboardmanifesto``
 
