@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 10
+    history_capable_days = 14
     schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = 'US/Eastern'
 
@@ -21,7 +21,8 @@ class Crawler(CrawlerBase):
             if not entry.title.startswith('Comic:'):
                 continue
             page = self.parse_page(entry.link)
-            url = page.src('.post img[src*="/comic/"]')
+            url = page.src('.comic-art img[src*="/comic/"]')
+            if not url:
+                continue
             title = entry.title.replace('Comic: ', '')
-            if url is not None:
-                return CrawlerImage(url, title)
+            return CrawlerImage(url, title)
