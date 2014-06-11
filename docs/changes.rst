@@ -6,7 +6,7 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
-v2.3.1 (UNRELEASED)
+v2.3.1 (2014-06-11)
 ===================
 
 - Display error message instead of crashing if a password reset link is reused.
