@@ -15,6 +15,7 @@ v2.3.1 (UNRELEASED)
 - New: ``iamarg``
 - Update: ``lookingforgroup`` after feed change.
 - Update: ``phd`` after feed change.
+- Update: ``yamac`` after site change.
 - Inactive: ``boxerhockey``
 - Inactive: ``lunch``
 - Inactive: ``somethingofthatilk``
