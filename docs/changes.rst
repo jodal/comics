@@ -17,6 +17,7 @@ v2.3.1 (UNRELEASED)
 - Update: ``phd`` after feed change.
 - Update: ``yamac`` after site change.
 - Inactive: ``boxerhockey``
+- Inactive: ``eatthattoast``
 - Inactive: ``lunch``
 - Inactive: ``somethingofthatilk``
 - Inactive: ``thechalkboardmanifesto``
