@@ -16,6 +16,6 @@ class Crawler(CrawlerBase):
     time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
-        url = 'http://www.sinfest.net/comikaze/comics/%s.gif' % (
+        url = 'http://www.sinfest.net/btphp/comics/%s.gif' % (
             pub_date.strftime('%Y-%m-%d'),)
         return CrawlerImage(url)

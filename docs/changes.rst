@@ -23,6 +23,7 @@ v2.3.1 (UNRELEASED)
 - Update: ``poledancingadventures`` after site change.
 - Update: ``pcweenies`` after feed change.
 - Update: ``playervsplayer`` after site change.
+- Update: ``sinfest`` after site change.
 - Update: ``stickydillybuns`` after delayed feed update.
 - Update: ``yamac`` after site change.
 - Inactive: ``antics``
