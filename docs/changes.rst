@@ -12,6 +12,7 @@ v2.3.1 (UNRELEASED)
 
 **Crawlers**
 
+- New: ``iamarg``
 - Update: ``lookingforgroup`` after feed change.
 - Update: ``phd`` after feed change.
 
