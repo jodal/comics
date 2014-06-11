@@ -13,6 +13,7 @@ v2.3.1 (UNRELEASED)
 **Crawlers**
 
 - Update: ``lookingforgroup`` after feed change.
+- Update: ``phd`` after feed change.
 
 
 v2.3.0 (2014-04-07)
