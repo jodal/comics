@@ -20,6 +20,7 @@ v2.3.1 (UNRELEASED)
 - Update: ``yamac`` after site change.
 - Inactive: ``boxerhockey``
 - Inactive: ``eatthattoast``
+- Inactive: ``gregcomic``
 - Inactive: ``lunch``
 - Inactive: ``somethingofthatilk``
 - Inactive: ``thechalkboardmanifesto``
