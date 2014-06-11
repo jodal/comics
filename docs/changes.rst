@@ -15,6 +15,7 @@ v2.3.1 (UNRELEASED)
 - New: ``iamarg``
 - Update: ``asofterworld`` after feed breakage.
 - Update: ``crookedgremlins`` after feed removal.
+- Update: ``darklegacy`` after site change.
 - Update: ``hijinksensue`` after feed change.
 - Update: ``lookingforgroup`` after feed change.
 - Update: ``mutts`` after site change.

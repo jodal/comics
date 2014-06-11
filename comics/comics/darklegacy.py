@@ -18,5 +18,6 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed('http://www.darklegacycomics.com/feed.xml')
         for entry in feed.for_date(pub_date):
             title = entry.title
-            url = entry.link.replace('.html', '.jpg')
+            page = self.parse_page(entry.link)
+            url = page.src('img.comic-image')
             return CrawlerImage(url, title)
