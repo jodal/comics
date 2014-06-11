@@ -7,21 +7,11 @@ class ComicData(ComicDataBase):
     language = 'en'
     url = 'http://dungeond.com/'
     start_date = '2005-08-23'
+    end_date = '2014-03-05'
+    active = False
     rights = 'Graveyard Greg'
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 365
-    schedule = 'Tu'
-    time_zone = 'US/Pacific'
-
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://dungeond.com/feed/')
-        for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img')
-            if url:
-                url = url.replace('comics-rss', 'comics')
-            title = entry.title
-            paragraphs = entry.content0.text('p', allow_multiple=True)
-            text = '\n\n'.join(paragraphs)
-            return CrawlerImage(url, title, text)
+        pass  # Comic no longer published

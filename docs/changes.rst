@@ -24,6 +24,7 @@ v2.3.1 (UNRELEASED)
 - Update: ``yamac`` after site change.
 - Inactive: ``antics``
 - Inactive: ``boxerhockey``
+- Inactive: ``dungeond``
 - Inactive: ``eatthattoast``
 - Inactive: ``gregcomic``
 - Inactive: ``lunch``
