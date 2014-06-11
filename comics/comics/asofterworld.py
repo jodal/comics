@@ -18,16 +18,9 @@ class Crawler(CrawlerBase):
     time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://www.rsspect.com/rss/asw.xml')
-        for entry in feed.for_date(pub_date):
-            if entry.title == 'A Softer World':
-                urls = entry.summary.src(
-                    'img[src*="/clean/"]', allow_multiple=True)
-                if not urls:
-                    continue
-                url = urls[0]
-                asw_id = re.findall('(\d+)$', entry.link)[0]
-                title = '%s: %s' % (entry.title, asw_id)
-                text = entry.summary.title(
-                    'img[src*="/clean/"]', allow_multiple=True)[0]
-                return CrawlerImage(url, title, text)
+        page = self.parse_page('http://www.asofterworld.com/')
+        url = page.src('#thecomic img')
+        asw_id = re.findall('(\d+).jpg$', url)[0]
+        title = 'A Softer World: %s' % asw_id
+        text = page.title('#thecomic img')
+        return CrawlerImage(url, title, text)
