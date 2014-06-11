@@ -5,6 +5,7 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+
 v2.3.1 (UNRELEASED)
 ===================
 
@@ -84,6 +85,7 @@ v2.2.3 (2014-03-31)
 - Update: ``questionablecontent`` after site change.
 - Update: ``satw`` to include description text.
 
+
 v2.2.2 (2013-12-21)
 ===================
 
@@ -94,6 +96,7 @@ v2.2.2 (2013-12-21)
 - Update: ``partiallyclips`` to save larger image.
 - Update: ``scenesfromamultiverse`` after feed change.
 - Update: ``toothpastefordinner`` after feed change.
+
 
 v2.2.1 (2013-11-08)
 ===================
