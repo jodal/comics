@@ -7,7 +7,7 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = 'Pole Dancing Adventures'
     language = 'en'
-    url = 'http://pole-dancing-adventures.blogspot.com/'
+    url = 'http://poledancingadventures.com/'
     start_date = '2010-01-28'
     rights = 'Leen Isabel'
 
@@ -17,13 +17,14 @@ class Crawler(CrawlerBase):
     time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://feeds.feedburner.com/blogspot/zumUM')
+        feed = self.parse_feed(
+            'http://poledancingadventures.com/category/comics/feed')
         for entry in feed.for_date(pub_date):
             results = []
 
-            for url in entry.summary.src('img', allow_multiple=True):
-                # Look for NN-*.jpg to differentiate comics from other images
-                if re.match('.*\/\d\d-.*\.jpg', url) is not None:
+            for url in entry.content0.src('img', allow_multiple=True):
+                # Look for NNN-*.jpg to differentiate comics from other images
+                if re.match('.*\/\d\d\d-.*\.jpg', url) is not None:
                     results.append(CrawlerImage(url))
 
             if results:
