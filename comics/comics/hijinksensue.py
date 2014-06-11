@@ -17,12 +17,11 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://hijinksensue.com/feed/')
         for entry in feed.for_date(pub_date):
-            if 'Comics' not in entry.tags:
+            if '/comic/' not in entry.link:
                 continue
-            url = entry.summary.src('img[src*="/comics-rss/"]')
-            if url is None:
+            url = entry.content0.src('img.wp-post-image')
+            if not url:
                 continue
-            url = url.replace('/comics-rss/', '/comics/')
+            url = url.replace('-183x300', '')
             title = entry.title
-            text = entry.summary.alt('img[src*="/comics-rss/"]')
-            return CrawlerImage(url, title, text)
+            return CrawlerImage(url, title)
