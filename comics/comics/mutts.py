@@ -16,6 +16,6 @@ class Crawler(CrawlerBase):
     time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
-        url = 'http://muttscomics.com/art/images/daily/%s.gif' % (
+        url = 'https://muttscomics.com/sites/default/files/strips/%s.gif' % (
             pub_date.strftime('%m%d%y'),)
         return CrawlerImage(url)

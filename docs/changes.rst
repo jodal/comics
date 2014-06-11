@@ -15,6 +15,7 @@ v2.3.1 (UNRELEASED)
 - New: ``iamarg``
 - Update: ``hijinksensue`` after feed change.
 - Update: ``lookingforgroup`` after feed change.
+- Update: ``mutts`` after site change.
 - Update: ``phd`` after feed change.
 - Update: ``poledancingadventures`` after site change.
 - Update: ``pcweenies`` after feed change.
