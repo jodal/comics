@@ -17,6 +17,7 @@ v2.3.1 (UNRELEASED)
 - Update: ``phd`` after feed change.
 - Inactive: ``boxerhockey``
 - Inactive: ``lunch``
+- Inactive: ``thechalkboardmanifesto``
 
 
 v2.3.0 (2014-04-07)
