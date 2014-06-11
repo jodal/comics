@@ -13,6 +13,7 @@ v2.3.1 (UNRELEASED)
 **Crawlers**
 
 - New: ``iamarg``
+- Update: ``crookedgremlins`` after feed removal.
 - Update: ``hijinksensue`` after feed change.
 - Update: ``lookingforgroup`` after feed change.
 - Update: ``mutts`` after site change.
