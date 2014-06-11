@@ -7,14 +7,11 @@ class ComicData(ComicDataBase):
     language = 'en'
     url = 'http://www.somethingofthatilk.com/'
     start_date = '2011-02-19'
+    end_date = '2013-11-06'
+    active = False
     rights = 'Ty Devries'
 
 
 class Crawler(CrawlerBase):
-    time_zone = 'US/Eastern'
-
     def crawl(self, pub_date):
-        page = self.parse_page('http://www.somethingofthatilk.com/')
-        url = page.src('img[src*="/comics/"]')
-        title = page.alt('img[src*="/comics/"]')
-        return CrawlerImage(url, title)
+        pass  # Comic no longer published
