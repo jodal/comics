@@ -5,6 +5,11 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+v2.3.2 (UNRELEASED)
+===================
+
+- New: ``cardboardcrack``
+
 
 v2.3.1 (2014-06-11)
 ===================
