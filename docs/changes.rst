@@ -8,6 +8,12 @@ versioned release.
 v2.3.2 (UNRELEASED)
 ===================
 
+- Dependencies with new maximum versions:
+
+  - Pillow >= 1.7, < 2.6
+
+**Crawlers**
+
 - New: ``cardboardcrack``
 
 
