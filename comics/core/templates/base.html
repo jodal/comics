@@ -49,6 +49,11 @@
                     <i class="fa fa-list"></i>
                     All comics</a>
                 </li>
+                <li class="{{ active.status|yesno:"active," }}" >
+                  <a href="{% url "status" %}">
+                    <i class="fa fa-download"></i>
+                    Crawler status</a>
+                </li>
               {% else %}
                 <li class="{{ active.login|yesno:"active," }}" >
                   <a href="{% url "login" %}">

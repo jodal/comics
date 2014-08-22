@@ -13,6 +13,8 @@ v2.3.2 (UNRELEASED)
   - django_compressor >= 1.1, < 1.5
   - Pillow >= 1.7, < 2.6
 
+- Add crawler status page to the menu.
+
 **Crawlers**
 
 - New: ``cardboardcrack``

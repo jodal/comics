@@ -52,6 +52,7 @@ def status(request, num_days=21):
         for i in range(num_days + 1)]
 
     return render(request, 'status/status.html', {
+        'active': {'status': True},
         'days': days,
         'timeline': timeline,
     })
