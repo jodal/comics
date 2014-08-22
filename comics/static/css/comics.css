@@ -83,23 +83,22 @@ body {
     text-align: center;
 }
 #status .scheduled,
+#status .scheduled a,
 #status_legend .scheduled {
-    background: #cd0200;
-    color: #fff;
+    background: #f2dede;
+    color: #a94442;
 }
 #status .fetched,
+#status .fetched a,
 #status_legend .fetched {
-    background: #d47500;
-    color: #fff;
+    background: #fcf8e3;
+    color: #8a6d3b;
 }
 #status .fetched.scheduled,
+#status .fetched.scheduled a,
 #status_legend .fetched.scheduled {
-    background: #3cb521;
-    color: #fff;
-}
-#status .fetched a,
-#status .scheduled a {
-    color: #fff;
+    background: #dff0d8;
+    color: #3c763d;
 }
 #status_legend {
     width: auto;
