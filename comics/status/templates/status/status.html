@@ -12,6 +12,18 @@
     <h1>Crawler status</h1>
   </div>
 
+  <table id="status_legend" class="table table-bordered">
+    <tbody>
+      <tr>
+        <th>Legend:</th>
+        <td class="scheduled fetched">Scheduled and fetched</td>
+        <td class="fetched">Fetched</td>
+        <td class="scheduled">Scheduled</td>
+        <td>Neither</td>
+      </tr>
+    </tbody>
+  </table>
+
   <table id="status" class="table table-condensed table-bordered table-striped">
     <thead>
       <tr>
@@ -41,19 +53,6 @@
         {% endfor %}
       </tr>
     {% endfor %}
-    </tbody>
-  </table>
-
-  <h3>Legend</h3>
-
-  <table id="status_legend" class="table table-bordered">
-    <tbody>
-      <tr>
-        <td class="scheduled fetched">Scheduled and fetched</td>
-        <td class="fetched">Fetched</td>
-        <td class="scheduled">Scheduled</td>
-        <td>Neither</td>
-      </tr>
     </tbody>
   </table>
 
