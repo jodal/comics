@@ -68,36 +68,43 @@
       <div class="release panel panel-default"
         data-comic="{{ release.comic.slug }}" data-release-id="{{ release.id }}">
         <div class="panel-heading">
-          <div class="pull-right">
-            <span class="pub_date">{{ release.pub_date }}</span>
+          <div class="row">
+            <div class="col-md-8">
 
-            {% if release.comic not in my_comics %}
-              <form action="{% url "toggle_comic" %}" method="post"
-                class="mycomics-toggle pull-right">
-                {% csrf_token %}
-                <input type="hidden" name="comic"
-                  value="{{ release.comic.slug }}">
-                <button type="submit" name="add_comic"
-                  title="Add to my comics"
-                  class="btn btn-default btn-xs mycomics-add">
-                  <span class="action">
-                    <i class="fa fa-plus"></i>
-                    Add to my comics
-                  </span>
-                  <span class="success">
-                    <i class="fa fa-check"></i>
-                    Added to my comics
-                  </span>
-                </button>
-              </form>
-            {% endif %}
+              <h2 class="panel-title float-left">
+                <a href="{{ release.get_absolute_url }}">
+                  {{ release.comic.name }}
+                </a>
+              </h2>
+
+            </div>
+            <div class="col-md-4 text-right">
+
+              {% if release.comic not in my_comics %}
+                <form action="{% url "toggle_comic" %}" method="post"
+                  class="mycomics-toggle pull-right">
+                  {% csrf_token %}
+                  <input type="hidden" name="comic"
+                    value="{{ release.comic.slug }}">
+                  <button type="submit" name="add_comic"
+                    title="Add to my comics"
+                    class="btn btn-default btn-xs mycomics-add">
+                    <span class="action">
+                      <i class="fa fa-plus"></i>
+                      Add to my comics
+                    </span>
+                    <span class="success">
+                      <i class="fa fa-check"></i>
+                      Added to my comics
+                    </span>
+                  </button>
+                </form>
+              {% endif %}
+
+              <span class="pub_date">{{ release.pub_date }}</span>
+
+            </div>
           </div>
-
-          <h2 class="panel-title float-left">
-            <a href="{{ release.get_absolute_url }}">
-              {{ release.comic.name }}
-            </a>
-          </h2>
         </div>
 
         {% cache 3600 'release' release.id %}

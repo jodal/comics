@@ -15,6 +15,8 @@ v2.3.2 (UNRELEASED)
 
 - Add crawler status page to the menu.
 
+- Fix position of "Add to my comics" button.
+
 **Crawlers**
 
 - New: ``cardboardcrack``
