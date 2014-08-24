@@ -20,6 +20,7 @@ v2.3.2 (UNRELEASED)
 **Crawlers**
 
 - New: ``cardboardcrack``
+- Update: ``thegamercat`` after feed change.
 
 
 v2.3.1 (2014-06-11)

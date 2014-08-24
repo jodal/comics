@@ -20,12 +20,10 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://thegamercat.com/feed/')
         for entry in feed.for_date(pub_date):
-            if 'Comics' not in entry.tags:
-                continue
             url = entry.summary.src('img')
             if not url:
                 continue
-            url = url.replace('/comics-rss/', '/comics/')
+            url = url.replace('-200x142', '')
             title = entry.title
             text = '\n\n'.join(entry.content0.text(
                 'p', allow_multiple=True)).strip()
