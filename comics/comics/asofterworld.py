@@ -20,7 +20,6 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         page = self.parse_page('http://www.asofterworld.com/')
         url = page.src('#thecomic img')
-        asw_id = re.findall('(\d+).jpg$', url)[0]
-        title = 'A Softer World: %s' % asw_id
+        title = page.text('title')
         text = page.title('#thecomic img')
         return CrawlerImage(url, title, text)

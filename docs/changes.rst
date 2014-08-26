@@ -20,6 +20,7 @@ v2.3.2 (UNRELEASED)
 **Crawlers**
 
 - New: ``cardboardcrack``
+- Update: ``asofterworld`` after site change.
 - Update: ``seemikedraw`` after site move.
 - Update: ``thegamercat`` after feed change.
 
