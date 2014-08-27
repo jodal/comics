@@ -21,6 +21,7 @@ v2.3.2 (UNRELEASED)
 
 - New: ``cardboardcrack``
 - Update: ``asofterworld`` after site change.
+- Update: ``kiwiblitz`` after site change.
 - Update: ``seemikedraw`` after site move.
 - Update: ``thegamercat`` after feed change.
 

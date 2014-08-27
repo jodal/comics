@@ -3,7 +3,7 @@ from comics.core.comic_data import ComicDataBase
 
 
 class ComicData(ComicDataBase):
-    name = 'Kiwiblitz'
+    name = 'Kiwi Blitz'
     language = 'en'
     url = 'http://www.kiwiblitz.com/'
     start_date = '2009-04-18'
@@ -11,16 +11,14 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 32
-    schedule = 'We,Fr'
+    history_capable_days = 180
+    schedule = 'Th'
     time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://www.kiwiblitz.com/feed/')
+        feed = self.parse_feed('http://www.kiwiblitz.com/rss.php')
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src*="/wp-content/uploads/"]')
-            if not url:
-                continue
-            url = url.replace('-150x150', '')
-            title = entry.title
+            page = self.parse_page(entry.link)
+            url = page.src('#comicbody img')
+            title = entry.title.strip().replace('Kiwi Blitz - ', '')
             return CrawlerImage(url, title)
