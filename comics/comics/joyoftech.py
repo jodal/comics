@@ -28,5 +28,5 @@ class Crawler(CrawlerBase):
             url = entry.content0.src('img')
             if not url:
                 continue
-            url = url.replace('joy300thumb', '').replace('.gif', '.jpg')
+            url = url.replace('joy300thumb', '')
             return CrawlerImage(url, title)
