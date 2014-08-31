@@ -19,7 +19,7 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed(
             'http://feeds.feedburner.com/thedoghousediaries/feed')
         for entry in feed.for_date(pub_date):
-            url = entry.content0.src('img[src*="/comics/"]')
-            title = entry.content0.alt('img[src*="/comics/"]')
-            text = entry.content0.title('img[src*="/comics/"]')
+            url = entry.content0.src('img.comic-item')
+            title = entry.content0.alt('img.comic-item')
+            text = entry.content0.title('img.comic-item')
             return CrawlerImage(url, title, text)
