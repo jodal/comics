@@ -26,6 +26,7 @@ v2.3.2 (UNRELEASED)
 - Update: ``kiwiblitz`` after site change.
 - Update: ``seemikedraw`` after site move.
 - Update: ``thegamercat`` after feed change.
+- Update: ``walkoflife`` is no longer published.
 
 
 v2.3.1 (2014-06-11)
