@@ -21,6 +21,7 @@ v2.3.2 (UNRELEASED)
 
 - New: ``blasternation``
 - New: ``cardboardcrack``
+- New: ``lunche24``
 - Update: ``asofterworld`` after site change.
 - Update: ``doghouse`` after feed change.
 - Update: ``joyoftech`` after site change.
