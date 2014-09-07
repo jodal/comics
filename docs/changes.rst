@@ -19,6 +19,7 @@ v2.3.2 (UNRELEASED)
 
 **Crawlers**
 
+- New: ``blasternation``
 - New: ``cardboardcrack``
 - Update: ``asofterworld`` after site change.
 - Update: ``doghouse`` after feed change.
