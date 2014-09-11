@@ -21,6 +21,7 @@ v2.3.2 (UNRELEASED)
 
 - New: ``blasternation``
 - New: ``cardboardcrack``
+- New: ``committstrip``
 - New: ``lunche24``
 - New: ``q2qcomics``
 - Update: ``asofterworld`` after site change.
