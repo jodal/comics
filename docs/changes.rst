@@ -17,6 +17,9 @@ v2.3.2 (UNRELEASED)
 
 - Fix position of "Add to my comics" button.
 
+- Make an attempt at fixing downloading of image URLs with non-ASCII chars in
+  the URL.
+
 **Crawlers**
 
 - New: ``blasternation``
