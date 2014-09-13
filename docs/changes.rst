@@ -5,6 +5,14 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+v2.3.3 (UNRELEASED)
+===================
+
+**Crawlers**
+
+- Update: ``hijinksensue`` to fetch large images.
+
+
 v2.3.2 (2014-09-11)
 ===================
 
