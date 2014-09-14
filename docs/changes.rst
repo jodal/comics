@@ -11,6 +11,7 @@ v2.3.3 (UNRELEASED)
 **Crawlers**
 
 - Update: ``hijinksensue`` to fetch large images.
+- Inactive: ``threewordphrase``
 
 
 v2.3.2 (2014-09-11)
