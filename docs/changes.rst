@@ -11,6 +11,7 @@ v2.3.3 (UNRELEASED)
 **Crawlers**
 
 - Update: ``hijinksensue`` to fetch large images.
+- Update: ``pennyarcade`` to work around User-Agent check.
 - Inactive: ``threewordphrase``
 
 
