@@ -16,6 +16,7 @@ v2.3.3 (UNRELEASED)
 - Inactive: ``marriedtothesea``
 - Inactive: ``pelsogpoter``
 - Inactive: ``threewordphrase``
+- Inactive: ``toothpastefordinner``
 
 
 v2.3.2 (2014-09-11)
