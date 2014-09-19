@@ -10,6 +10,7 @@ v2.3.3 (UNRELEASED)
 
 **Crawlers**
 
+- Update lots of comic release schedules.
 - Update: ``hijinksensue`` to fetch large images.
 - Update: ``pennyarcade`` to work around User-Agent check.
 - Inactive: ``threewordphrase``
