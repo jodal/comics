@@ -13,6 +13,7 @@ v2.3.3 (UNRELEASED)
 - Update lots of comic release schedules.
 - Update: ``hijinksensue`` to fetch large images.
 - Update: ``pennyarcade`` to work around User-Agent check.
+- Inactive: ``pelsogpoter``
 - Inactive: ``threewordphrase``
 
 
