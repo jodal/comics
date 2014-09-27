@@ -21,7 +21,7 @@ class Crawler(CrawlerBase):
             urls = entry.content0.src(
                 'img[src*="/wp-content/uploads/"]', allow_multiple=True)
             for url in urls:
-                if 'ad-RSS' in url or 'reddit-txt' in url:
+                if 'ad-RSS' in url or 'ad5RSS' in url or 'reddit-txt' in url:
                     continue
                 text = entry.content0.alt('img[src="%s"]' % url)
                 result.append(CrawlerImage(url, None, text))
