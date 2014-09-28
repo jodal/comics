@@ -20,6 +20,7 @@ v2.3.3 (UNRELEASED)
 - Inactive: ``pelsogpoter``
 - Inactive: ``threewordphrase``
 - Inactive: ``toothpastefordinner``
+- Inactive: ``virtualshackles``
 
 
 v2.3.2 (2014-09-11)
