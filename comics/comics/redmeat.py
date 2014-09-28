@@ -11,14 +11,13 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_date = '1996-06-10'
     schedule = 'Tu'
     time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
-        page_url = 'http://www.redmeat.com/redmeat/%s/' % (
-            pub_date.strftime('%Y-%m-%d'))
-        page = self.parse_page(page_url)
-        url = page.src('#weeklyStrip img')
-        title = page.alt('#weeklyStrip img')
+        page = self.parse_page('http://www.redmeat.com/max-cannon/FreshMeat')
+        url = page.src('.comicStrip img')
+        title = page.alt('.comicStrip img')
+        if pub_date.strftime('%Y-%m-%d') not in url:
+            return
         return CrawlerImage(url, title)

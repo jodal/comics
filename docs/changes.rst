@@ -14,6 +14,7 @@ v2.3.3 (UNRELEASED)
 - Update: ``hijinksensue`` to fetch large images.
 - Update: ``pennyarcade`` to work around User-Agent check.
 - Update: ``pidjin`` to ignore repeated image.
+- Update: ``redmeat`` after site change.
 - Inactive: ``marriedtothesea``
 - Inactive: ``pelsogpoter``
 - Inactive: ``threewordphrase``
