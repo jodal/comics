@@ -11,6 +11,7 @@ v2.3.3 (UNRELEASED)
 **Crawlers**
 
 - Update lots of comic release schedules.
+- Update: ``drmcninja`` after feed change.
 - Update: ``harkavagrant`` after site change.
 - Update: ``hijinksensue`` to fetch large images.
 - Update: ``pennyarcade`` to work around User-Agent check.
