@@ -14,6 +14,7 @@ v2.3.3 (UNRELEASED)
 - Update: ``drmcninja`` after feed change.
 - Update: ``harkavagrant`` after site change.
 - Update: ``hijinksensue`` to fetch large images.
+- Update: ``nedroid`` after feed change.
 - Update: ``pennyarcade`` to work around User-Agent check.
 - Update: ``pidjin`` to ignore repeated image.
 - Update: ``redmeat`` after site change.

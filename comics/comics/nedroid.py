@@ -22,10 +22,8 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             if 'Comic' not in entry.tags:
                 continue
-            url = entry.summary.src('img')
-            if url is None:
-                continue
-            url = url.replace('/comic/comics-rss/', '/comics/')
+            page = self.parse_page(entry.link)
+            url = page.src('#comic img')
             title = entry.title
-            text = entry.summary.title('img')
+            text = page.title('#comic img')
             return CrawlerImage(url, title, text)
