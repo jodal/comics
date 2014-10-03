@@ -10,6 +10,7 @@ v2.3.3 (UNRELEASED)
 
 **Crawlers**
 
+- New: ``nerdrage``
 - Update lots of comic release schedules.
 - Update: ``drmcninja`` after feed change.
 - Update: ``harkavagrant`` after site change.
