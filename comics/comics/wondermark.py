@@ -19,8 +19,9 @@ class Crawler(CrawlerBase):
         feed_url = 'http://feeds.feedburner.com/wondermark'
         feed = self.parse_feed(feed_url)
         for entry in feed.for_date(pub_date):
-            url = entry.content0.src('img[src*="/c/"]')
+            url = entry.summary.src('img[src*="/c/"]')
+            if url is None:
+                continue
             title = entry.title
-            text = entry.content0.alt('img[src*="/c/"]')
-            if url is not None:
-                return CrawlerImage(url, title, text)
+            text = entry.summary.alt('img[src*="/c/"]')
+            return CrawlerImage(url, title, text)

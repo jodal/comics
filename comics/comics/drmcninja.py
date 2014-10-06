@@ -20,8 +20,8 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             if not '/comic/' in entry.link:
                 continue
-            url = entry.summary.src('img[src*="/comics-rss/"]')
-            url = url.replace('comics-rss', 'comics')
+            page = self.parse_page(entry.link)
+            url = page.src('#comic img')
             title = entry.title
-            text = entry.summary.title('img[src*="/comics-rss/"]')
+            text = page.title('#comic img')
             return CrawlerImage(url, title, text)

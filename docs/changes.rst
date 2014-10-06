@@ -5,6 +5,30 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+v2.3.3 (2014-10-06)
+===================
+
+**Crawlers**
+
+- New: ``nerdrage``
+- Update lots of comic release schedules.
+- Update: ``drmcninja`` after feed change.
+- Update: ``harkavagrant`` after site change.
+- Update: ``hijinksensue`` to fetch large images.
+- Update: ``lookingforgroup`` to not fetch unrelated comics.
+- Update: ``nedroid`` after feed change.
+- Update: ``pennyarcade`` to work around User-Agent check.
+- Update: ``pidjin`` to ignore repeated image.
+- Update: ``redmeat`` after site change.
+- Update: ``subnormality`` after page change.
+- Update: ``wondermark`` after feed change.
+- Inactive: ``marriedtothesea``
+- Inactive: ``pelsogpoter``
+- Inactive: ``threewordphrase``
+- Inactive: ``toothpastefordinner``
+- Inactive: ``virtualshackles``
+
+
 v2.3.2 (2014-09-11)
 ===================
 

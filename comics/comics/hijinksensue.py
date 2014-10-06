@@ -22,6 +22,6 @@ class Crawler(CrawlerBase):
             url = entry.content0.src('img.wp-post-image')
             if not url:
                 continue
-            url = url.replace('-183x300', '')
+            url = url.replace('-300x120', '')
             title = entry.title
             return CrawlerImage(url, title)
