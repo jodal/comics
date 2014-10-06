@@ -19,7 +19,7 @@ You can get hold of *comics* in two ways:
 
 - Clone the Git repository. You can do so by running::
 
-      git clone git://github.com/jodal/comics
+      git clone https://github.com/jodal/comics.git
       cd comics/
 
   You'll then find the current stable/maintenance version in the ``master``
