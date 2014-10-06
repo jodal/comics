@@ -7,7 +7,7 @@ pytz
 South >= 0.7, < 2.0
 
 # For image handling
-Pillow >= 1.7, < 2.6
+Pillow >= 1.7, < 2.7
 
 # For crawling comics and the REST API
 lxml >= 3, < 4
