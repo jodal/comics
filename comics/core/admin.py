@@ -12,6 +12,7 @@ class ReleaseImageInline(admin.TabularInline):
         return False
 
 
+@admin.register(models.Comic)
 class ComicAdmin(admin.ModelAdmin):
     list_display = (
         'slug', 'name', 'language', 'url', 'rights', 'start_date', 'end_date',
@@ -25,6 +26,7 @@ class ComicAdmin(admin.ModelAdmin):
         return False
 
 
+@admin.register(models.Release)
 class ReleaseAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'comic', 'pub_date', 'fetched')
     list_filter = ['pub_date', 'fetched', 'comic']
@@ -45,6 +47,7 @@ def text_preview(obj):
         return obj.text[:MAX_LENGTH] + '...'
 
 
+@admin.register(models.Image)
 class ImageAdmin(admin.ModelAdmin):
     list_display = (
         '__unicode__', 'file', 'height', 'width', 'fetched', 'title',
@@ -58,8 +61,3 @@ class ImageAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return False
-
-
-admin.site.register(models.Comic, ComicAdmin)
-admin.site.register(models.Release, ReleaseAdmin)
-admin.site.register(models.Image, ImageAdmin)
