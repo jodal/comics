@@ -10,11 +10,13 @@ v2.4.0 (UNRELEASED)
 
 - Dependencies with new minimum versions:
 
+  - Django >= 1.7, < 1.8
   - django-tastypie >= 0.12, < 0.13
 
 - Dependencies with new maximum versions:
 
   - Pillow >= 1.7, < 2.7
+
 
 v2.3.3 (2014-10-06)
 ===================
