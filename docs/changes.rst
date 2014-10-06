@@ -8,6 +8,10 @@ versioned release.
 v2.4.0 (UNRELEASED)
 ===================
 
+- Dependencies with new minimum versions:
+
+  - django-tastypie >= 0.12, < 0.13
+
 - Dependencies with new maximum versions:
 
   - Pillow >= 1.7, < 2.7
