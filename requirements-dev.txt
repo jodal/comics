@@ -1,3 +1,6 @@
+# Automate tasks
+invoke
+
 # Mocking in unit tests
 mock
 
