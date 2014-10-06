@@ -3,9 +3,6 @@ Django >= 1.7, < 1.8
 # For timezone travel
 pytz
 
-# For database migrations
-South >= 0.7, < 2.0
-
 # For image handling
 Pillow >= 1.7, < 2.7
 

@@ -99,11 +99,7 @@ To create the database and database schema, open a terminal, go to top level
 directory in your checkout of the comics repo, where you'll find the file
 ``manage.py``, and run::
 
-    python manage.py syncdb --migrate --noinput
-
-Parts of the database is managed by the South database migrations tool.
-:option:`--migrate` makes syncdb also run a database migration. You can also
-run ``python manage.py migrate`` as an independent step.
+    python manage.py migrate --noinput
 
 :option:`--noinput` stops syncdb from asking you to create a superuser, as this
 will fail at this point. Instead, when syncdb has finished, create a superuser

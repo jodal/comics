@@ -85,7 +85,6 @@ INSTALLED_APPS = (
     'compressor',
     'invitation',
     'registration',
-    'south',
     'tastypie',
     'comics.core',
     'comics.accounts',

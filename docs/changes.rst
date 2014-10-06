@@ -17,6 +17,16 @@ v2.4.0 (UNRELEASED)
 
   - Pillow >= 1.7, < 2.7
 
+- Removed dependencies:
+
+  - South
+
+- Switched the database migrations from using South to the builtin tool in
+  Django 1.7. Due to this, all old database migrations have been thrown away.
+  If you're running an old version of *comics*, please upgrade to the latest
+  v2.3.x release first to get your database entirely up to date, then upgrade
+  to v2.4.x. There are no database changes between v2.3.x and v2.4.x.
+
 
 v2.3.3 (2014-10-06)
 ===================
