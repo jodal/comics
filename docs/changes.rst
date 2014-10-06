@@ -20,6 +20,7 @@ v2.3.3 (UNRELEASED)
 - Update: ``pennyarcade`` to work around User-Agent check.
 - Update: ``pidjin`` to ignore repeated image.
 - Update: ``redmeat`` after site change.
+- Update: ``subnormality`` after page change.
 - Update: ``wondermark`` after feed change.
 - Inactive: ``marriedtothesea``
 - Inactive: ``pelsogpoter``

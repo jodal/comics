@@ -20,12 +20,16 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed('http://www.viruscomix.com/rss.xml')
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
-            els = filter(lambda el: el.attrib['src'].endswith('.jpg'),
-                    page.root.find('body').findall('img'))
-            els.sort(key=lambda el: int(
+            elements = [
+                el
+                for el in page.root.find('body').findall('img')
+                if el.attrib['src'].endswith('.jpg')]
+            elements.sort(key=lambda el: int(
                 re.match(r'.*top:\s*(\d+).*', el.attrib['style']).group(1)))
-            result = [CrawlerImage(el.attrib['src'], None, el.attrib.get('title', None))
-                    for el in els]
+            result = [
+                CrawlerImage(
+                    el.attrib['src'], None, el.attrib.get('title', None))
+                for el in elements]
             if result:
                 result[0].title = page.text('title')
             return result
