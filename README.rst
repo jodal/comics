@@ -19,3 +19,7 @@ Public License version 3.
 - `Documentation <http://comics.readthedocs.org/>`_
 - Feedback? Requests? `Create an issue <http://github.com/jodal/comics/issues>`_
 - `Contributors <https://github.com/jodal/comics/contributors>`_
+
+.. image:: https://img.shields.io/travis/jodal/comics/develop.svg?style=flat
+    :target: https://travis-ci.org/jodal/comics
+    :alt: Travis CI build status
