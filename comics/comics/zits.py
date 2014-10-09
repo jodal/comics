@@ -17,8 +17,8 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         date = pub_date.strftime('%B-')
-        date = date + pub_date.strftime('%d').lstrip('0')
-        date = date + pub_date.strftime('-%Y')
+        date += pub_date.strftime('%d').lstrip('0')
+        date += pub_date.strftime('-%Y')
         page_url = 'http://zitscomics.com/comics/' + date
         page = self.parse_page(page_url)
 
