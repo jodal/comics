@@ -5,6 +5,7 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+
 v2.4.0 (UNRELEASED)
 ===================
 
@@ -26,6 +27,14 @@ v2.4.0 (UNRELEASED)
   If you're running an old version of *comics*, please upgrade to the latest
   v2.3.x release first to get your database entirely up to date, then upgrade
   to v2.4.x. There are no database changes between v2.3.x and v2.4.x.
+
+
+v2.3.4 (UNRELEASED)
+===================
+
+**Crawlers**
+
+- Update ``zits`` to fetch from better source.
 
 
 v2.3.3 (2014-10-06)
