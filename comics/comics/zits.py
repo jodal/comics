@@ -21,7 +21,5 @@ class Crawler(CrawlerBase):
         date += pub_date.strftime('-%Y')
         page_url = 'http://zitscomics.com/comics/' + date
         page = self.parse_page(page_url)
-
         url = page.src('img[src*="safr.kingfeatures.com"]')
-
         return CrawlerImage(url)
