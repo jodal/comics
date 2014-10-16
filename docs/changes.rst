@@ -34,6 +34,7 @@ v2.3.4 (UNRELEASED)
 
 **Crawlers**
 
+- New: ``lunarbaboon``
 - Update ``zits`` to fetch from better source.
 
 
