@@ -12,6 +12,7 @@ v2.3.4 (UNRELEASED)
 
 - New: ``lunarbaboon``
 - Update ``zits`` to fetch from better source.
+- Update ``nerfnow`` after image format change.
 
 
 v2.3.3 (2014-10-06)
