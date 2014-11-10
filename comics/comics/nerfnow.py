@@ -23,9 +23,9 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/nerfnow/full')
         for entry in feed.for_date(pub_date):
-            url = entry.content0.src('img[src*="/comic/"]')
+            url = entry.content0.src('img[src*="/img/"]')
             if url is None:
                 continue
-            url = url.replace('thumb', 'image').replace('/large.jpg', '.png')
+            url = url.replace('/large.jpg', '.png')
             title = entry.title
             return CrawlerImage(url, title)
