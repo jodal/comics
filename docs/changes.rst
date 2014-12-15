@@ -10,6 +10,7 @@ v2.3.4 (UNRELEASED)
 
 **Crawlers**
 
+- New: ``lizclimo``
 - New: ``lunarbaboon``
 - Update ``zits`` to fetch from better source.
 - Update ``nerfnow`` after feed change.
