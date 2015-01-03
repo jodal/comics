@@ -34,6 +34,8 @@ v2.3.4 (UNRELEASED)
 
 **Crawlers**
 
+- New: ``awkwardzombie``
+- New: ``fatawesome``
 - New: ``lizclimo``
 - New: ``lunarbaboon``
 - Update ``zits`` to fetch from better source.
