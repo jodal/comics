@@ -160,9 +160,9 @@ Example cronjob
 ===============
 
 To get new comics, you should run ``comics_getreleases`` regularly. In
-addition, you should run ``cleanup`` once in a while to remove expired user
-sessions from the database, and ``cleanupinvitation`` to remove expired user
-invitations. One way is to use ``cron`` e.g. by placing the following in
+addition, you should run ``cleanupinvitation`` once in a while to remove
+expired user invitations and ``cleanupregistration`` to delete expired users.
+One way is to use ``cron`` e.g. by placing the following in
 ``/etc/cron.d/comics``:
 
 .. code-block:: sh
@@ -170,7 +170,6 @@ invitations. One way is to use ``cron`` e.g. by placing the following in
     MAILTO=comics@example.com
     PYTHONPATH=/path/to/comics
     1 * * * * comics-user python /path/to/comics/manage.py comics_getreleases -v0
-    0 3 * * * comics-user python /path/to/comics/manage.py cleanup -v0
     1 3 * * * comics-user python /path/to/comics/manage.py cleanupinvitation -v0
     2 3 * * * comics-user python /path/to/comics/manage.py cleanupregistration -v0
 
@@ -183,7 +182,6 @@ using the ``python`` interpreter from the virtualenv:
     MAILTO=comics@example.com
     PYTHONPATH=/path/to/comics
     1 * * * * comics-user /path/to/comics-virtualenv/bin/python /path/to/comics/manage.py comics_getreleases -v0
-    0 3 * * * comics-user /path/to/comics-virtualenv/bin/python /path/to/comics/manage.py cleanup -v0
     1 3 * * * comics-user /path/to/comics-virtualenv/bin/python /path/to/comics/manage.py cleanupinvitation -v0
     2 3 * * * comics-user /path/to/comics-virtualenv/bin/python /path/to/comics/manage.py cleanupregistration -v0
 

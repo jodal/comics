@@ -99,9 +99,9 @@ Django's user model, including a mapping from the user to her preferred comics.
    <comics.sets.models.Set>`. This model is deprecated and replaced by
    :class:`UserProfile <comics.accounts.models.UserProfile>`.
 
-Changes to the data model are managed using `South
-<http://south.aeracode.org/>`_ database migrations. If you need to change the
-models, please provide the needed migrations.
+Changes to the data model are managed using Django's built-in database
+migrations. If you need to change the models, please provide the needed
+migrations.
 
 .. image:: _static/data_model.png
 

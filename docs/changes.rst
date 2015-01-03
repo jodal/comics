@@ -5,6 +5,30 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+
+v2.4.0 (2015-01-03)
+===================
+
+- Dependencies with new minimum versions:
+
+  - Django >= 1.7, < 1.8
+  - django-tastypie >= 0.12, < 0.13
+
+- Dependencies with new maximum versions:
+
+  - Pillow >= 1.7, < 2.8
+
+- Removed dependencies:
+
+  - South
+
+- Switched the database migrations from using South to the builtin tool in
+  Django 1.7. Due to this, all old database migrations have been thrown away.
+  If you're running an old version of *comics*, please upgrade to the latest
+  v2.3.x release first to get your database entirely up to date, then upgrade
+  to v2.4.x. There are no database changes between v2.3.x and v2.4.x.
+
+
 v2.3.4 (2015-01-03)
 ===================
 

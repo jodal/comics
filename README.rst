@@ -15,7 +15,11 @@ crawling web sites and feeds.
 *comics* runs on Python and Django. It is licensed under the GNU Affero General
 Public License version 3.
 
-- `Source code <http://github.com/jodal/comics>`_
+- `Source code <https://github.com/jodal/comics>`_
 - `Documentation <http://comics.readthedocs.org/>`_
-- Feedback? Requests? `Create an issue <http://github.com/jodal/comics/issues>`_
+- `Issues <https://github.com/jodal/comics/issues>`_
 - `Contributors <https://github.com/jodal/comics/contributors>`_
+
+.. image:: https://img.shields.io/travis/jodal/comics/develop.svg?style=flat
+    :target: https://travis-ci.org/jodal/comics
+    :alt: Travis CI build status

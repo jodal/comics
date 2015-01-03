@@ -85,7 +85,6 @@ INSTALLED_APPS = (
     'compressor',
     'invitation',
     'registration',
-    'south',
     'tastypie',
     'comics.core',
     'comics.accounts',
@@ -140,6 +139,8 @@ TIME_FORMAT = 'H:i'
 
 #: Time the user session cookies will be valid. 1 year by default.
 SESSION_COOKIE_AGE = 86400 * 365
+
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 WSGI_APPLICATION = 'comics.wsgi.application'
 
