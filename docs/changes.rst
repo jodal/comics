@@ -16,7 +16,7 @@ v2.4.0 (UNRELEASED)
 
 - Dependencies with new maximum versions:
 
-  - Pillow >= 1.7, < 2.7
+  - Pillow >= 1.7, < 2.8
 
 - Removed dependencies:
 
