@@ -29,7 +29,7 @@ v2.4.0 (UNRELEASED)
   to v2.4.x. There are no database changes between v2.3.x and v2.4.x.
 
 
-v2.3.4 (UNRELEASED)
+v2.3.4 (2015-01-03)
 ===================
 
 **Crawlers**
