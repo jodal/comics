@@ -6,6 +6,14 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
+v2.4.1 (UNRELEASED)
+===================
+
+**Crawlers**
+
+- New: ``criticalmiss``
+
+
 v2.4.0 (2015-01-03)
 ===================
 
