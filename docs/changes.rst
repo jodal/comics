@@ -12,6 +12,7 @@ v2.4.1 (UNRELEASED)
 **Crawlers**
 
 - New: ``criticalmiss``
+- Update: ``cyanideandhappiness`` after site change.
 
 
 v2.4.0 (2015-01-03)

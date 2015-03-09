@@ -19,6 +19,5 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed('http://feeds.feedburner.com/Explosm')
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
-            url = page.src(
-                'img[alt="Cyanide and Happiness, a daily webcomic"]')
+            url = page.src('img#main-comic')
             return CrawlerImage(url)
