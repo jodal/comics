@@ -13,6 +13,7 @@ v2.4.1 (UNRELEASED)
 
 - New: ``criticalmiss``
 - Update: ``cyanideandhappiness`` after site change.
+- Update: ``smbc`` after feed change.
 
 
 v2.4.0 (2015-01-03)

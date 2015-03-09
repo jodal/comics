@@ -11,13 +11,14 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 10
+    history_capable_days = 30
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://feeds.feedburner.com/smbc-comics/PvLb')
+        feed = self.parse_feed('http://www.smbc-comics.com/rss.php')
         for entry in feed.for_date(pub_date):
-            url_1 = entry.summary.src('img[src*="/comics/"]')
-            url_2 = url_1.replace('.png', 'after.gif')
-            return [CrawlerImage(url_1), CrawlerImage(url_2)]
+            url = entry.summary.src('img[src*="/comics/"]')
+            title = entry.title.replace(
+                'Saturday Morning Breakfast Cereal - ', '')
+            return CrawlerImage(url, title)
