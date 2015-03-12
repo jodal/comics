@@ -18,7 +18,12 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.smbc-comics.com/rss.php')
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src*="/comics/"]')
             title = entry.title.replace(
                 'Saturday Morning Breakfast Cereal - ', '')
-            return CrawlerImage(url, title)
+
+            url_1 = entry.summary.src('img[src*="/comics/"]')
+
+            page = self.parse_page(entry.link)
+            url_2 = page.src('#aftercomic img')
+
+            return [CrawlerImage(url_1, title), CrawlerImage(url_2)]
