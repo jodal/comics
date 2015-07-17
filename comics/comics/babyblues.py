@@ -17,5 +17,5 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         page = self.parse_page('http://www.arcamax.com/babyblues')
-        url = page.src('img[alt^="Baby Blues Cartoon"]')
+        url = page.src('img[id^="comic-zoom"]')
         return CrawlerImage(url)
