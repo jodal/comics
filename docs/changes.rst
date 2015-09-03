@@ -17,6 +17,7 @@ v2.4.1 (UNRELEASED)
 - New: ``criticalmiss``
 - New: ``dumbingofage``
 - New: ``fowllanguage``
+- New: ``jesusandmo``
 - New: ``ssss``
 - Update: ``babyblues`` after site change.
 - Update: ``beetlebailey`` after site change.
