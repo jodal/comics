@@ -67,8 +67,7 @@ efficient static media serving and caching, you should probably enable
         WSGIProcessGroup comics
         WSGIScriptAlias / /path/to/comics/comics/wsgi/__init__.py
         <Directory /path/to/comics/comics/wsgi>
-            Order deny,allow
-            Allow from all
+            Require all granted
         </Directory>
     </VirtualHost>
 
