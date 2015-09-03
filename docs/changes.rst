@@ -12,7 +12,11 @@ v2.4.1 (UNRELEASED)
 **Crawlers**
 
 - New: ``criticalmiss``
+- Update: ``babyblues`` after site change.
+- Update: ``beetlebailey`` after site change.
 - Update: ``cyanideandhappiness`` after site change.
+- Update: ``dilbert`` after site change.
+- Update: ``dustin`` after site change.
 - Update: ``smbc`` after feed change.
 
 
