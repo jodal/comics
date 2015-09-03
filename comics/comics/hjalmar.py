@@ -15,6 +15,8 @@ class Crawler(CrawlerBase):
     time_zone = 'Europe/Oslo'
 
     def crawl(self, pub_date):
-        url = 'http://heltnormalt.no/img/hjalmar/%s.jpg' % (
-            pub_date.strftime('%Y/%m/%d'))
+        date_string = pub_date.strftime('%Y/%m/%d')
+        page_url = 'http://heltnormalt.no/hjalmar/%s' % date_string
+        page = self.parse_page(page_url)
+        url = page.src('img[src*="/img/hjalmar/%s"]' % date_string)
         return CrawlerImage(url)
