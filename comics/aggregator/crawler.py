@@ -227,7 +227,7 @@ class GoComicsComCrawlerBase(CrawlerBase):
 
 
 class PondusNoCrawlerBase(CrawlerBase):
-    """Base comics crawling for all comics posted at pondus.no"""
+    """Base comics crawler for all comics posted at pondus.no"""
 
     time_zone = 'Europe/Oslo'
 
@@ -235,4 +235,17 @@ class PondusNoCrawlerBase(CrawlerBase):
         page_url = 'http://www.pondus.no/?section=artikkel&id=%s' % url_id
         page = self.parse_page(page_url)
         url = page.src('.imagegallery img')
+        return CrawlerImage(url)
+
+
+class HeltNormaltCrawlerBase(CrawlerBase):
+    """Base comics crawler for all comics posted at heltnormalt.no"""
+
+    time_zone = 'Europe/Oslo'
+
+    def crawl_helper(self, short_name, pub_date):
+        date_string = pub_date.strftime('%Y/%m/%d')
+        page_url = 'http://heltnormalt.no/%s/%s' % (short_name, date_string)
+        page = self.parse_page(page_url)
+        url = page.src('img[src*="/img/%s/%s"]' % (short_name, date_string))
         return CrawlerImage(url)
