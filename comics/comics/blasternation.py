@@ -19,6 +19,6 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed('http://www.blasternation.com/rss.php')
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
-            url = page.src('img#comic')
-            title = entry.title.replace('Blasternation - ', '')
+            url = page.src('img#cc-comic')
+            title = entry.title.replace('Blaster Nation - ', '')
             return CrawlerImage(url, title)

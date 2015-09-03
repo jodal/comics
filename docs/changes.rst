@@ -22,6 +22,7 @@ v2.4.1 (UNRELEASED)
 - Update: ``adam4d`` after site change.
 - Update: ``babyblues`` after site change.
 - Update: ``beetlebailey`` after site change.
+- Update: ``blasternation`` after feed change.
 - Update: ``cyanideandhappiness`` after site change.
 - Update: ``dilbert`` after site change.
 - Update: ``dustin`` after site change.
