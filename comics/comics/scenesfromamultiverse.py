@@ -15,6 +15,9 @@ class Crawler(CrawlerBase):
     schedule = 'Mo,We,Fr'
     time_zone = 'US/Eastern'
 
+    # Without User-Agent set, the server returns 403 Forbidden
+    headers = {'User-Agent': 'Mozilla/4.0'}
+
     def crawl(self, pub_date):
         feed = self.parse_feed('http://amultiverse.com/feed/')
         for entry in feed.for_date(pub_date):

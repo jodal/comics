@@ -36,6 +36,7 @@ v2.4.1 (UNRELEASED)
 - Update: ``nerfnow`` to include text.
 - Update: ``pidjin`` after feed change.
 - Update: ``satw`` after site change.
+- Update: ``scenesfromamultiverse`` to include User-Agent in request.
 - Update: ``smbc`` after feed change.
 - Update: ``thegamercat`` after feed change.
 - Update: ``threepanelsoul`` after feed change.
