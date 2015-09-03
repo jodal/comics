@@ -19,6 +19,7 @@ v2.4.1 (UNRELEASED)
 - New: ``fowllanguage``
 - New: ``jesusandmo``
 - New: ``ssss``
+- Update: ``adam4d`` after site change.
 - Update: ``babyblues`` after site change.
 - Update: ``beetlebailey`` after site change.
 - Update: ``cyanideandhappiness`` after site change.
