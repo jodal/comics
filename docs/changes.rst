@@ -28,6 +28,7 @@ v2.4.1 (UNRELEASED)
 - Update: ``satw`` after site change.
 - Update: ``smbc`` after feed change.
 - Update: ``thegamercat`` after feed change.
+- Update: ``threepanelsoul`` after feed change.
 
 
 v2.4.0 (2015-01-03)

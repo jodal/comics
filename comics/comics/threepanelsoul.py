@@ -16,10 +16,11 @@ class Crawler(CrawlerBase):
     time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://threepanelsoul.com/feed/')
+        feed = self.parse_feed('http://www.threepanelsoul.com/rss.php')
         for entry in feed.for_date(pub_date):
-            title = entry.title
-            url = entry.content0.src('img[src*="/comics-rss/"]')
-            if url is not None:
-                url = url.replace('-rss', '')
-                return CrawlerImage(url, title)
+            page = self.parse_page(entry.link)
+            url = page.src('img#cc-comic')
+            if url is None:
+                continue
+            title = page.text('#comictitle')
+            return CrawlerImage(url, title)
