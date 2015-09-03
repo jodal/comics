@@ -9,6 +9,9 @@ versioned release.
 v2.4.1 (UNRELEASED)
 ===================
 
+- Fix references to comics list "below". It was moved to its own page in
+  v2.3.0.
+
 **Crawlers**
 
 - New: ``criticalmiss``

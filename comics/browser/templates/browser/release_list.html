@@ -118,7 +118,7 @@
       {% ifequal object_type 'mycomics' %}
         <div class="alert alert-info">
           <strong>No comics found in my comics.</strong>
-          You can browse available comics below.
+          You can <a href="{% url "comics_list" %}">browse available comics</a>.
           {% url "import_named_set" as import_named_set_url %}
           {% if import_named_set_url %}
             Alternatively, you can
@@ -130,7 +130,7 @@
       {% ifequal object_type 'onecomic' %}
         <div class="alert alert-info">
           <strong>No releases found for this comic.</strong>
-          You can browse other available comics below.
+          You can <a href="{% url "comics_list" %}">browse available comics</a>.
         </div>
 
         {% if user.is_superuser %}
