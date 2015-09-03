@@ -191,17 +191,16 @@ class CrawlerBase(object):
         return int(time.mktime(local_midnight.utctimetuple()))
 
 
-class ArcaMaxCrawlerBase(CrawlerBase):
-    """Base comic crawler for all comics hosted at arcamax.com"""
+class KingFeaturesCrawlerBase(CrawlerBase):
+    """Base comic crawler for King Features comics"""
 
-    def crawl_helper(self, slug, pub_date):
-        page_url = 'http://www.arcamax.com/thefunnies/%s/' % slug
+    def crawl_helper(self, domain, pub_date):
+        date = pub_date.strftime('%B-')
+        date += pub_date.strftime('%d').lstrip('0')
+        date += pub_date.strftime('-%Y')
+        page_url = 'http://%s/comics/%s' % (domain, date)
         page = self.parse_page(page_url)
-        date_str = page.text('span.cur')
-        date = datetime.datetime.strptime(date_str, '%B %d, %Y').date()
-        if date != pub_date:
-            return
-        url = page.src('.comic img')
+        url = page.src('img[src*="safr.kingfeatures.com"]')
         return CrawlerImage(url)
 
 
