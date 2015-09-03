@@ -31,6 +31,7 @@ v2.4.1 (UNRELEASED)
 - Update: ``hjalmar`` after file format change.
 - Update: ``joyoftech`` after feed change.
 - Update: ``kiwiblitz`` after site change.
+- Update: ``lizclimo`` after feed change.
 - Update: ``nerfnow`` to include text.
 - Update: ``pidjin`` after feed change.
 - Update: ``satw`` after site change.

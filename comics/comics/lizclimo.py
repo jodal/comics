@@ -17,8 +17,6 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://lizclimo.tumblr.com/rss')
         for entry in feed.for_date(pub_date):
-            if not 'comics' in entry.tags:
-                continue
             url = entry.summary.src('img')
             if not url:
                 continue
