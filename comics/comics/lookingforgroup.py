@@ -17,15 +17,12 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         feed = self.parse_feed('http://feeds.feedburner.com/LookingForGroup')
-        images = []
         for entry in feed.for_date(pub_date):
             if not entry.title.isdigit():
                 continue
-            url = entry.summary.src(
-                'a[rel="bookmark"] img[src*="lfgcomic.com/wp-content/"]')
-            if url:
-                url = url.replace('-210x300', '')
+            page = self.parse_page(entry.link)
+            if not page.text('title').startswith('Looking For Group'):
+                continue
+            url = page.src('#comic img')
             title = entry.title
-            images.append(CrawlerImage(url, title))
-        if images:
-            return images
+            return CrawlerImage(url, title)
