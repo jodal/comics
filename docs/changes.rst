@@ -6,7 +6,7 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
-v2.4.1 (UNRELEASED)
+v2.4.1 (2015-09-04)
 ===================
 
 - Fix references to comics list "below". It was moved to its own page in
