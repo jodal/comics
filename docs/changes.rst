@@ -12,6 +12,7 @@ v2.4.1 (UNRELEASED)
 **Crawlers**
 
 - New: ``criticalmiss``
+- New: ``dumbingofage``
 - New: ``fowllanguage``
 - Update: ``babyblues`` after site change.
 - Update: ``beetlebailey`` after site change.
