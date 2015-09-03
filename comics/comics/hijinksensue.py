@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 40
+    history_capable_days = 180
     time_zone = 'US/Central'
 
     def crawl(self, pub_date):
@@ -19,7 +19,7 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             if '/comic/' not in entry.link:
                 continue
-            url = entry.content0.src('img.wp-post-image')
+            url = entry.content0.src('img[src*="-300x120"]')
             if not url:
                 continue
             url = url.replace('-300x120', '')
