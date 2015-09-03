@@ -20,6 +20,7 @@ v2.4.1 (UNRELEASED)
 - New: ``jesusandmo``
 - New: ``ssss``
 - Update: ``adam4d`` after site change.
+- Update: ``asofterworld`` after site change.
 - Update: ``babyblues`` after site change.
 - Update: ``beetlebailey`` after site change.
 - Update: ``blasternation`` after feed change.

@@ -13,13 +13,11 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_date = '2003-02-07'
     schedule = None
     time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
         page = self.parse_page('http://www.asofterworld.com/')
-        url = page.src('#thecomic img')
-        title = page.text('title')
-        text = page.title('#thecomic img')
-        return CrawlerImage(url, title, text)
+        url = page.src('#comicimg img')
+        text = page.title('#comicimg img')
+        return CrawlerImage(url, None, text)
