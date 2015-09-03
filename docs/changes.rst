@@ -18,6 +18,7 @@ v2.4.1 (UNRELEASED)
 - Update: ``dilbert`` after site change.
 - Update: ``dustin`` after site change.
 - Update: ``smbc`` after feed change.
+- Update: ``thegamercat`` after feed change.
 
 
 v2.4.0 (2015-01-03)

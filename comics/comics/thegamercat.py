@@ -23,7 +23,7 @@ class Crawler(CrawlerBase):
             url = entry.summary.src('img')
             if not url:
                 continue
-            url = url.replace('-200x142', '')
+            url = url.replace('-200x143', '')
             title = entry.title
             text = '\n\n'.join(entry.content0.text(
                 'p', allow_multiple=True)).strip()
