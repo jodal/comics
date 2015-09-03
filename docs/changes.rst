@@ -41,6 +41,7 @@ v2.4.1 (UNRELEASED)
 - Update: ``thegamercat`` after feed change.
 - Update: ``threepanelsoul`` after feed change.
 - Update: ``wumovg`` after file format change.
+- Update: ``yafgc`` after feed change.
 
 
 v2.4.0 (2015-01-03)
