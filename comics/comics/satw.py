@@ -18,9 +18,7 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed('http://feeds.feedburner.com/satwcomic')
         for entry in feed.all():
             page = self.parse_page(entry.link)
-            url = page.src('.comicmid img[src*="/art/"]')
+            url = page.src('img[itemprop="image"]')
             title = entry.title
-            page.remove('.comicdesc .stand_high h1')
-            page.remove('.comicdesc .stand_high small')
-            text = page.text('.comicdesc .stand_high').strip()
+            text = page.text('span[itemprop="articleBody"]').strip()
             return CrawlerImage(url, title, text)

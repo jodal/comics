@@ -17,6 +17,7 @@ v2.4.1 (UNRELEASED)
 - Update: ``cyanideandhappiness`` after site change.
 - Update: ``dilbert`` after site change.
 - Update: ``dustin`` after site change.
+- Update: ``satw`` after site change.
 - Update: ``smbc`` after feed change.
 - Update: ``thegamercat`` after feed change.
 
