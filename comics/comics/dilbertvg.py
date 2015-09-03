@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import HeltNormaltCrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -10,12 +10,9 @@ class ComicData(ComicDataBase):
     rights = 'Scott Adams'
 
 
-class Crawler(CrawlerBase):
+class Crawler(HeltNormaltCrawlerBase):
     history_capable_date = '2013-02-01'
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
-    time_zone = 'Europe/Oslo'
 
     def crawl(self, pub_date):
-        url = 'http://heltnormalt.no/img/dilbert/%s.jpg' % (
-            pub_date.strftime('%Y/%m/%d'))
-        return CrawlerImage(url)
+        return self.crawl_helper('dilbert', pub_date)
