@@ -1,3 +1,5 @@
+import re
+
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
@@ -23,10 +25,14 @@ class Crawler(CrawlerBase):
             'http://www.joyoftech.com/joyoftech/jotblog/atom.xml')
         for entry in feed.for_date(pub_date):
             title = entry.title
-            if not title.startswith('JoT'):
+
+            matches = re.match('^JoT (\d+)', title)
+            if matches is None:
                 continue
-            url = entry.content0.src('img')
+            num = matches.group(1)
+
+            page = self.parse_page(entry.link)
+            url = page.src('img[src*="/joyimages/%s"]' % num)
             if not url:
                 continue
-            url = url.replace('joy300thumb', '')
             return CrawlerImage(url, title)

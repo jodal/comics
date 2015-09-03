@@ -25,6 +25,7 @@ v2.4.1 (UNRELEASED)
 - Update: ``dilbert`` after site change.
 - Update: ``dustin`` after site change.
 - Update: ``hjalmar`` after file format change.
+- Update: ``joyoftech`` after feed change.
 - Update: ``nerfnow`` to include text.
 - Update: ``satw`` after site change.
 - Update: ``smbc`` after feed change.
