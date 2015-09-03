@@ -28,4 +28,12 @@ class Crawler(CrawlerBase):
                 continue
             url = url.replace('/large.jpg', '.png')
             title = entry.title
-            return CrawlerImage(url, title)
+
+            # Put together text from multiple paragraphs
+            text_paragraphs = entry.content0.text('p', allow_multiple=True)
+            if text_paragraphs is not None:
+                text = '\n\n'.join(text_paragraphs)
+            else:
+                text = None
+
+            return CrawlerImage(url, title, text)
