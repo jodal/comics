@@ -14,4 +14,4 @@ class Crawler(HeltNormaltCrawlerBase):
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
 
     def crawl(self, pub_date):
-        return self.crawler_helper('hjalmar', pub_date)
+        return self.crawl_helper('hjalmar', pub_date)

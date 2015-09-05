@@ -5,6 +5,13 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+v2.4.2 (UNRELEASED)
+===================
+
+**Crawlers**
+
+- Update: ``hjalmar`` to fix crash.
+
 
 v2.4.1 (2015-09-04)
 ===================
