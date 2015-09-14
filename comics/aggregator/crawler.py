@@ -216,13 +216,12 @@ class GoComicsComCrawlerBase(CrawlerBase):
             '.NET CLR 3.0.4506.2152; .NET CLR 3.5.30729'),
     }
 
-    def crawl_helper(self, short_name, pub_date, url_name=None):
-        if url_name is None:
-            url_name = short_name
+    def crawl_helper(self, url_name, pub_date):
         page_url = 'http://www.gocomics.com/%s/%s' % (
-            url_name.lower().replace(' ', ''), pub_date.strftime('%Y/%m/%d/'))
+            url_name, pub_date.strftime('%Y/%m/%d/'))
         page = self.parse_page(page_url)
-        url = page.src('img.strip[alt="%s"]' % short_name)
+        page.remove('.feature_item')
+        url = page.src('img.strip')
         return CrawlerImage(url)
 
 

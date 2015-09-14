@@ -8,6 +8,8 @@ versioned release.
 v2.4.2 (UNRELEASED)
 ===================
 
+- Get larger images for all GoComics.com comics.
+
 **Crawlers**
 
 - New: ``bloomcounty2015``

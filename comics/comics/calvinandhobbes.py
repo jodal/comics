@@ -17,4 +17,4 @@ class Crawler(GoComicsComCrawlerBase):
     time_zone = 'US/Mountain'
 
     def crawl(self, pub_date):
-        return self.crawl_helper('Calvin and Hobbes', pub_date)
+        return self.crawl_helper('calvinandhobbes', pub_date)
