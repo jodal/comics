@@ -13,6 +13,7 @@ v2.4.2 (UNRELEASED)
 **Crawlers**
 
 - New: ``bloomcounty2015``
+- New: ``unsounded``
 - Update: ``hjalmar`` to fix crash.
 
 
