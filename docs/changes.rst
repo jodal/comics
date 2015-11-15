@@ -13,6 +13,7 @@ v2.4.2 (UNRELEASED)
 **Crawlers**
 
 - New: ``bloomcounty2015``
+- New: ``sarahcandersen``
 - New: ``unsounded``
 - Update: ``hjalmar`` to fix crash.
 - Update: ``mutts`` to use new domain.
