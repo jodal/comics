@@ -240,6 +240,7 @@ class PondusNoCrawlerBase(CrawlerBase):
 class HeltNormaltCrawlerBase(CrawlerBase):
     """Base comics crawler for all comics posted at heltnormalt.no"""
 
+    headers = {'User-Agent': 'Mozilla/5.0'}
     time_zone = 'Europe/Oslo'
 
     def crawl_helper(self, short_name, pub_date):

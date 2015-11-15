@@ -16,6 +16,7 @@ v2.4.2 (UNRELEASED)
 - New: ``unsounded``
 - Update: ``hjalmar`` to fix crash.
 - Update: ``mutts`` to use new domain.
+- Update: All HeltNormalt.no comic crawlers to set a User-Agent header.
 
 
 v2.4.1 (2015-09-04)
