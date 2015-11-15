@@ -14,6 +14,7 @@ v2.4.2 (UNRELEASED)
 
 - New: ``bloomcounty2015``
 - New: ``sarahcandersen``
+- New: ``thedanemen``
 - New: ``unsounded``
 - Update: ``hjalmar`` to fix crash.
 - Update: ``mutts`` to use new domain.
