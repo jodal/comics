@@ -5,7 +5,7 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = 'Mutts'
     language = 'en'
-    url = 'http://muttscomics.com'
+    url = 'http://www.mutts.com'
     start_date = '1994-01-01'
     rights = 'Patrick McDonnell'
 
@@ -16,6 +16,6 @@ class Crawler(CrawlerBase):
     time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
-        url = 'https://muttscomics.com/sites/default/files/strips/%s.gif' % (
+        url = 'http://www.mutts.com/sites/default/files/strips/%s.gif' % (
             pub_date.strftime('%m%d%y'),)
         return CrawlerImage(url)

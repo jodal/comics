@@ -15,6 +15,7 @@ v2.4.2 (UNRELEASED)
 - New: ``bloomcounty2015``
 - New: ``unsounded``
 - Update: ``hjalmar`` to fix crash.
+- Update: ``mutts`` to use new domain.
 
 
 v2.4.1 (2015-09-04)
