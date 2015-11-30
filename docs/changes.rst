@@ -17,6 +17,7 @@ v2.4.2 (UNRELEASED)
 - New: ``thedanemen``
 - New: ``unsounded``
 - Update: ``hjalmar`` to fix crash.
+- Update: ``leasticoulddo`` to fix image format.
 - Update: ``mutts`` to use new domain.
 - Update: All HeltNormalt.no comic crawlers to set a User-Agent header.
 
