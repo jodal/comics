@@ -16,6 +16,6 @@ class Crawler(CrawlerBase):
     time_zone = 'America/Montreal'
 
     def crawl(self, pub_date):
-        url = 'http://leasticoulddo.com/wp-content/uploads/%s.gif' % (
+        url = 'http://leasticoulddo.com/wp-content/uploads/%s.jpg' % (
             pub_date.strftime('%Y/%m/%Y%m%d'),)
         return CrawlerImage(url)
