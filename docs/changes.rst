@@ -13,6 +13,7 @@ v2.4.2 (UNRELEASED)
 **Crawlers**
 
 - New: ``bloomcounty2015``
+- New: ``marydeath``
 - New: ``sarahcandersen``
 - New: ``thedanemen``
 - New: ``unsounded``
