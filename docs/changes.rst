@@ -5,7 +5,7 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
-v2.4.2 (UNRELEASED)
+v2.4.2 (2016-01-19)
 ===================
 
 - Get larger images for all GoComics.com comics.
