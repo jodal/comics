@@ -10,6 +10,7 @@ v2.5.0 (UNRELEASED)
 
 - Dependencies with new maximum versions:
 
+  - django_compressor >= 1.1, < 2.0
   - jsmin >= 2.0, < 2.3
   - Pillow >= 1.7, < 3.2
 
