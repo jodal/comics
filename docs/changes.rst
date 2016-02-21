@@ -11,6 +11,7 @@ v2.5.0 (UNRELEASED)
 - Dependencies with new maximum versions:
 
   - Pillow >= 1.7, < 3.2
+  - django-bootstrap-form >= 3.1, < 3.3
   - django-tastypie >= 0.12, < 0.14
   - django_compressor >= 1.1, < 2.0
   - jsmin >= 2.0, < 2.3

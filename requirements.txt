@@ -25,7 +25,7 @@ django-registration >= 0.8, < 0.9
 -e ./django-invitation
 
 # For Twitter Bootstrap compatible Django forms
-django-bootstrap-form >= 3.1, < 3.2
+django-bootstrap-form >= 3.1, < 3.3
 
 # For REST API
 django-tastypie >= 0.12, < 0.14
