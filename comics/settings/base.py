@@ -197,7 +197,7 @@ INVITATIONS_PER_USER = 10
 
 ### Tastypie settings
 
-TASTYPIE_DEFAULT_FORMATS = ['json', 'jsonp', 'xml', 'yaml', 'html', 'plist']
+TASTYPIE_DEFAULT_FORMATS = ['json', 'jsonp', 'xml', 'yaml', 'plist']
 
 
 ### comics settings
