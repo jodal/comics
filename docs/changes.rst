@@ -10,6 +10,7 @@ v2.5.0 (UNRELEASED)
 
 - Dependencies with new maximum versions:
 
+  - jsmin >= 2.0, < 2.3
   - Pillow >= 1.7, < 3.2
 
 
