@@ -5,6 +5,14 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+v2.5.0 (UNRELEASED)
+===================
+
+- Dependencies with new maximum versions:
+
+  - Pillow >= 1.7, < 3.2
+
+
 v2.4.2 (2016-01-19)
 ===================
 
