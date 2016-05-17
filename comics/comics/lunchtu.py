@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_date = '2012-06-15'
+    history_capable_days = 20
     schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = 'Europe/Oslo'
 
@@ -21,6 +21,6 @@ class Crawler(CrawlerBase):
     headers = {'Referer': 'http://www.tu.no/lunch/'}
 
     def crawl(self, pub_date):
-        url = 'http://www1.tu.no/lunch/img/%s.png' % (
-            pub_date.strftime('%y%m%d'))
+        url = 'http://www.tu.no/?module=TekComics&service=image&id=lunch&key=%s' % (
+            pub_date.strftime('%Y-%m-%d'))
         return CrawlerImage(url)
