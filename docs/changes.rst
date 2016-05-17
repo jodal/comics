@@ -13,7 +13,7 @@ v2.4.3 (UNRELEASED)
 **Crawlers**
 
 - New: ``firekanta``
-- New: ``truthfacts-gocomics``
+- New: ``truthfactsgo``
 - Update: ``lunchtu`` after site change
 
 v2.4.2 (2016-01-19)
