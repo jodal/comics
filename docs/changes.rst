@@ -14,6 +14,7 @@ v2.4.3 (UNRELEASED)
 
 - New: ``firekanta``
 - New: ``truthfactsgo``
+- New: ``wyyrd``
 - Update: ``lunchtu`` after site change
 
 v2.4.2 (2016-01-19)
