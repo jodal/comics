@@ -13,6 +13,7 @@ v2.4.3 (UNRELEASED)
 **Crawlers**
 
 - New: ``firekanta``
+- New: ``mollybeans``
 - New: ``truthfactsgo``
 - New: ``wyyrd``
 - Update: ``lunchtu`` after site change
