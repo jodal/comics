@@ -13,6 +13,7 @@ v2.4.3 (UNRELEASED)
 **Crawlers**
 
 - New: ``businesscat``
+- New: ``donthitsave``
 - New: ``firekanta``
 - New: ``mollybeans``
 - New: ``truthfactsgo``
