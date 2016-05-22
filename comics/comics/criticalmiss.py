@@ -18,10 +18,8 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://rss.escapistmagazine.com/articles/comicsandcosplay/comics/critical-miss')
         for entry in feed.for_date(pub_date):
-            print entry.link
             page = self.parse_page(entry.link)
             url = page.src('.body img[src$=".png"]')
-            print url
             title = entry.title
             if title is not None:
                 title = title.replace('Critical Miss: ', '')
