@@ -12,22 +12,13 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_days = 40
-    schedule = 'We,Sa'
+    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = 'US/Eastern'
 
+
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://bizarrocomics.com/feed/')
-
-        for entry in feed.for_date(pub_date):
-            if 'daily Bizarros' not in entry.tags:
-                continue
-
-            page = self.parse_page(entry.link)
-
-            results = []
-            for url in page.src('img.size-full', allow_multiple=True):
-                results.append(CrawlerImage(url))
-
-            if results:
-                results[0].title = entry.title
-                return results
+        dom = pub_date.strftime('%B-')+pub_date.strftime('%d-').lstrip("0")+pub_date.strftime("%Y")
+        page_url = 'http://bizarro.com/comics/' + dom + '/'
+        page = self.parse_page(page_url)
+        url = page.src('img[src^="https://safr.kingfeatures.com/"]')
+        return CrawlerImage(url)
