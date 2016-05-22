@@ -21,4 +21,5 @@ class Crawler(CrawlerBase):
             pub_date.strftime('%Y/%m/%d'),)
         page = self.parse_page(page_url)
         url = page.href('link[rel="image_src"]')
-        return CrawlerImage(url)
+        title = page.alt('img[src*="%s"]' % url)
+        return CrawlerImage(url, title)
