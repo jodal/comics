@@ -18,5 +18,5 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         page = self.parse_page(
             pub_date.strftime('http://dilbert.com/strip/%Y-%m-%d'))
-        url = page.src('img[alt$="Dilbert by Scott Adams"]')
+        url = page.src('img[class*="img-comic"]')
         return CrawlerImage(url)
