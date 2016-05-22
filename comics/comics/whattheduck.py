@@ -11,14 +11,11 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 7
+    history_capable_days = 28
     time_zone = 'US/Central'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://www.whattheduck.net/strip/rss.xml')
+        feed = self.parse_feed('http://www.whattheduck.net/rss')
         for entry in feed.for_date(pub_date):
-            if (entry.enclosures[0].type.startswith('image')
-                    and entry.title.startswith('WTD')):
-                url = entry.enclosures[0].href
-                title = entry.title
-                return CrawlerImage(url, title)
+            url = entry.summary.src('img[src$=".gif"]')
+            return CrawlerImage(url)
