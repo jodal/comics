@@ -21,7 +21,6 @@ class Crawler(CrawlerBase):
             print entry.link
             page = self.parse_page(entry.link)
             url = page.src('.body img[src$=".png"]')
-            print url
             title = entry.title
             if title is not None:
                 title = title.replace('Critical Miss: ', '')
