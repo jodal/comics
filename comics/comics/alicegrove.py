@@ -18,6 +18,6 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.alicegrove.com/rss')
         for entry in feed.for_date(pub_date):
-            url = entry.description.src('img[src*="media.tumblr.com"]')
+            url = entry.summary.src('img')
             title = entry.title
             return CrawlerImage(url, title)
