@@ -21,9 +21,8 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://www.icanbarelydraw.com/comic/feed')
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src*="/comics-rss/"]')
+            url = entry.summary.src('img[class="comicthumbnail"]')
             if url is None:
                 continue
-            url = url.replace('/comics-rss/', '/comics/')
-            title = entry.title
+            title = entry.summary.alt('img[class="comicthumbnail"]')
             return CrawlerImage(url, title)
