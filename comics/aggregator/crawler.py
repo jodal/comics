@@ -245,7 +245,8 @@ class HeltNormaltCrawlerBase(CrawlerBase):
 
     def crawl_helper(self, short_name, pub_date):
         date_string = pub_date.strftime('%Y/%m/%d')
-        page_url = 'http://heltnormalt.no/%s/%s' % (short_name, date_string)
+        short_name2 = short_name.replace('_', '')
+        page_url = 'http://heltnormalt.no/%s/%s' % (short_name2, date_string)
         page = self.parse_page(page_url)
         url = page.src('img[src*="/img/%s/%s"]' % (short_name, date_string))
         return CrawlerImage(url)
