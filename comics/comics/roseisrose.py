@@ -1,6 +1,5 @@
-from comics.aggregator.crawler import GoComicsComCrawlerBase
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
-
 
 class ComicData(ComicDataBase):
     name = 'Rose Is Rose'
@@ -10,10 +9,15 @@ class ComicData(ComicDataBase):
     rights = 'Pat Brady'
 
 
-class Crawler(GoComicsComCrawlerBase):
+class Crawler(CrawlerBase):
     history_capable_date = '1995-10-09'
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
-        return self.crawl_helper('soseisrose', pub_date)
+        headers = {'Referer': 'http://www.gocomics.com/roseisrose'}
+        pageurl = 'http://www.gocomics.com/roseisrose/%s' % (pub_date.strftime('%Y/%m/%d'),)
+        page = self.parse_page(pageurl)
+        url = page.src('img[alt="Rose is Rose"]')
+        print url
+        return CrawlerImage(url)

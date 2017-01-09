@@ -23,7 +23,6 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         
         pageurl = 'http://piranhaclubcomics.com/comics/%s/' % (pub_date.strftime('%B-%-d-%Y'),)
-        print pageurl
         page = self.parse_page(pageurl)
         url = page.src('img[src^="https://safr.kingfeatures.com/idn/cnfeed/zone/js/content.php?file="]')
         return CrawlerImage(url)
