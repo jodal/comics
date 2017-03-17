@@ -7,6 +7,7 @@ class ComicData(ComicDataBase):
     language = 'en'
     url = 'http://www.economist.com/'
     start_date = '2006-01-05'
+    active = False
     rights = 'Kevin Kallaugher'
 
 
