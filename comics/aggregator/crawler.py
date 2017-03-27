@@ -252,12 +252,14 @@ class HeltNormaltCrawlerBase(CrawlerBase):
         return CrawlerImage(url)
 
 class DagbladetCrawlerBase(CrawlerBase):
-    """Base comics crawler for all comics posted at heltnormalt.no"""
+    """Base comics crawler for all comics posted at dagbladet.no"""
 
     headers = {'User-Agent': 'Mozilla/5.0'}
     time_zone = 'Europe/Oslo'
 
     def crawl_helper(self, short_name, pub_date):
         epoch = self.date_to_epoch(pub_date)
-        url = 'http://www.dagbladet.no/tegneserie/serveconfig.php?strip=%s&date=%s' % (short_name,epoch)
-        return CrawlerImage(url)
+        page_url = 'http://www.dagbladet.no/tegneserie/%s' % (short_name)
+        page = self.parse_page(page_url)
+        url = page.src('img[class^="image_comic"]',allow_multiple = True)
+        return CrawlerImage(url[0])
