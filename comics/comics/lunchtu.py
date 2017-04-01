@@ -21,6 +21,8 @@ class Crawler(CrawlerBase):
     headers = {'Referer': 'http://www.tu.no/lunch/'}
 
     def crawl(self, pub_date):
-        url = 'http://www.tu.no/?module=TekComics&service=image&id=lunch&key=%s' % (
-            pub_date.strftime('%Y-%m-%d'))
+        url = (
+            'http://www.tu.no/'
+            '?module=TekComics&service=image&id=lunch&key=%s'
+        ) % pub_date.strftime('%Y-%m-%d')
         return CrawlerImage(url)
