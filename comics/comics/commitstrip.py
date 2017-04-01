@@ -1,12 +1,14 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
+
 class ComicData(ComicDataBase):
     name = 'CommitStrip'
     language = 'en'
     url = 'http://www.commitstrip.com/en/'
     start_date = '2012-02-22'
     rights = 'Etienne Issartial'
+
 
 class Crawler(CrawlerBase):
     history_capable_days = 30

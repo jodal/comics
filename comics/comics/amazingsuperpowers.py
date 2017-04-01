@@ -19,7 +19,8 @@ class Crawler(CrawlerBase):
     headers = {'User-Agent': 'Mozilla/4.0'}
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://feeds.feedburner.com/amazingsuperpowers')
+        feed = self.parse_feed(
+            'http://feeds.feedburner.com/amazingsuperpowers')
         for entry in feed.for_date(pub_date):
             url = entry.content0.src('img[src*="/comics/"]')
             title = entry.title

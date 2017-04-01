@@ -4,16 +4,18 @@ from django.contrib.auth import views as auth_views
 from django.views.generic.base import TemplateView
 
 from invitation import views as invitation_views
+
 from registration import views as reg_views
 
+from comics.accounts import views as account_views
 from comics.accounts.forms import (
     AuthenticationForm, PasswordResetForm, RegistrationForm)
-from comics.accounts import views as account_views
+
 
 urlpatterns = patterns(
     '',
 
-    ### django-invitation
+    # django-invitation
 
     url(r'^invite/complete/$',
         TemplateView.as_view(
@@ -47,15 +49,15 @@ urlpatterns = patterns(
         },
         name='registration_register'),
 
-    ### django-registration
+    # django-registration
 
-    #url(r'^register/$',
-    #    reg_views.register,
-    #    {
-    #        'backend': 'comics.accounts.backends.RegistrationBackend',
-    #        'extra_context': {'active': {'register': True}},
-    #    },
-    #    name='registration_register'),
+    # url(r'^register/$',
+    #     reg_views.register,
+    #     {
+    #         'backend': 'comics.accounts.backends.RegistrationBackend',
+    #         'extra_context': {'active': {'register': True}},
+    #     },
+    #     name='registration_register'),
     url(r'^register/complete/$',
         TemplateView.as_view(
             template_name='registration/registration_complete.html'),
@@ -74,7 +76,7 @@ urlpatterns = patterns(
         {'backend': 'comics.accounts.backends.RegistrationBackend'},
         name='registration_activate'),
 
-    ### django.contrib.auth
+    # django.contrib.auth
 
     url(r'^login/$',
         auth_views.login,
@@ -126,7 +128,7 @@ urlpatterns = patterns(
         {'template_name': 'auth/password_reset_done.html'},
         name='password_reset_done'),
 
-    ### comics.accounts
+    # comics.accounts
 
     url(r'^$',
         account_views.account_details, name='account'),

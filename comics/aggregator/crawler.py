@@ -5,9 +5,9 @@ import time
 import urllib2
 import xml.sax._exceptions
 
-import pytz
-
 from django.utils import timezone
+
+import pytz
 
 from comics.aggregator.exceptions import (
     CrawlerHTTPError, ImageURLNotFound, NotHistoryCapable,
@@ -59,7 +59,7 @@ class CrawlerImage(object):
 
 
 class CrawlerBase(object):
-    ### Crawler settings
+    # ### Crawler settings
     # Date of oldest release available for crawling
     history_capable_date = None
     # Number of days a release is available for crawling
@@ -72,11 +72,11 @@ class CrawlerBase(object):
     # Whether to allow multiple releases per day
     multiple_releases_per_day = False
 
-    ### Downloader settings
+    # ### Downloader settings
     # Whether the comic reruns old images as new releases
     has_rerun_releases = False
 
-    ### Settings used for both crawling and downloading
+    # ### Settings used for both crawling and downloading
     # Dictionary of HTTP headers to send when retrieving items from the site
     headers = {}
 
@@ -169,7 +169,7 @@ class CrawlerBase(object):
 
         raise NotImplementedError
 
-    ### Helpers for the crawl() implementations
+    # ### Helpers for the crawl() implementations
 
     def parse_feed(self, feed_url):
         if self.feed is None:

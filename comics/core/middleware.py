@@ -1,7 +1,8 @@
 import re
 
-from django.utils.html import strip_spaces_between_tags
 from django.conf import settings
+from django.utils.html import strip_spaces_between_tags
+
 
 RE_MULTISPACE = re.compile(r'\s{2,}')
 RE_NEWLINE = re.compile(r'\n')

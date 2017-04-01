@@ -1,8 +1,8 @@
 import datetime
 
-import pytz
-
 from django.utils import unittest
+
+import pytz
 
 from comics.aggregator import crawler
 

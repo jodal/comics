@@ -5,8 +5,8 @@ import logging
 import socket
 
 from comics.aggregator.downloader import ReleaseDownloader
-from comics.core.exceptions import ComicsError
 from comics.comics import get_comic_module
+from comics.core.exceptions import ComicsError
 
 logger = logging.getLogger('comics.aggregator.command')
 socket.setdefaulttimeout(10)

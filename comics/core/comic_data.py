@@ -1,7 +1,10 @@
 import datetime
 import logging
 
-from comics.comics import get_comic_module_names, get_comic_module
+from comics.comics import (
+    get_comic_module,
+    get_comic_module_names,
+)
 from comics.core.exceptions import ComicDataError
 from comics.core.models import Comic
 

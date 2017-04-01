@@ -7,12 +7,12 @@ from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
 from django.contrib.sites.models import RequestSite, Site
 
-from registration import signals
-from registration.models import RegistrationProfile
+from forms import RegistrationForm
 
 from invitation.backends import InvitationBackend
 
-from forms import RegistrationForm
+from registration import signals
+from registration.models import RegistrationProfile
 
 
 class RegistrationBackend(InvitationBackend):

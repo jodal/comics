@@ -18,7 +18,7 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed('http://drmcninja.com/feed')
         for entry in feed.for_date(pub_date):
-            if not '/comic/' in entry.link:
+            if '/comic/' not in entry.link:
                 continue
             page = self.parse_page(entry.link)
             url = page.src('#comic img')

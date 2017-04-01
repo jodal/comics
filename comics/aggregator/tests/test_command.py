@@ -1,7 +1,8 @@
 import datetime
-import mock
 
 from django.test import TestCase
+
+import mock
 
 from comics.aggregator import command
 from comics.aggregator.crawler import CrawlerRelease

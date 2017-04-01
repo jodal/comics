@@ -1,9 +1,9 @@
 # Based on https://bitbucket.org/jokull/django-email-login/
 
+from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth import forms as auth_forms
 from django.contrib.auth.models import User
-from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 attrs_dict = {'class': 'required'}
@@ -12,13 +12,13 @@ attrs_dict = {'class': 'required'}
 class RegistrationForm(forms.Form):
     email = forms.EmailField(
         widget=forms.TextInput(attrs=dict(attrs_dict, maxlength=75)),
-        label=_("Email"))
+        label=_('Email'))
     password1 = forms.CharField(
         widget=forms.PasswordInput(attrs=attrs_dict, render_value=False),
-        label=_("Password"))
+        label=_('Password'))
     password2 = forms.CharField(
         widget=forms.PasswordInput(attrs=attrs_dict, render_value=False),
-        label=_("Password (again)"))
+        label=_('Password (again)'))
 
     def clean(self):
         """
@@ -44,8 +44,8 @@ class RegistrationForm(forms.Form):
         """
         if User.objects.filter(email__iexact=self.cleaned_data['email']):
             raise forms.ValidationError(_(
-                "This email address is already in use. "
-                "Please supply a different email address."))
+                'This email address is already in use. '
+                'Please supply a different email address.'))
         return self.cleaned_data['email']
 
 
@@ -54,8 +54,8 @@ class AuthenticationForm(forms.Form):
     Base class for authenticating users. Extend this to get a form that accepts
     username/password logins.
     """
-    email = forms.EmailField(label=_("Email"), max_length=75)
-    password = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
+    email = forms.EmailField(label=_('Email'), max_length=75)
+    password = forms.CharField(label=_('Password'), widget=forms.PasswordInput)
 
     def __init__(self, request=None, *args, **kwargs):
         """
@@ -76,10 +76,10 @@ class AuthenticationForm(forms.Form):
             self.user_cache = authenticate(email=email, password=password)
             if self.user_cache is None:
                 raise forms.ValidationError(_(
-                    "Please enter a correct username and password. "
-                    "Note that both fields are case-sensitive."))
+                    'Please enter a correct username and password. '
+                    'Note that both fields are case-sensitive.'))
             elif not self.user_cache.is_active:
-                raise forms.ValidationError(_("This account is inactive."))
+                raise forms.ValidationError(_('This account is inactive.'))
 
         return self.cleaned_data
 

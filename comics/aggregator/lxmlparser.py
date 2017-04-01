@@ -1,5 +1,6 @@
-from lxml.html import fromstring
 import urllib2
+
+from lxml.html import fromstring
 
 from comics.aggregator.exceptions import CrawlerError
 

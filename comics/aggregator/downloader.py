@@ -15,9 +15,13 @@ from django.core.files import File
 from django.db import transaction
 
 from comics.aggregator.exceptions import (
-    DownloaderHTTPError, ImageTypeError, ImageIsCorrupt, ImageAlreadyExists,
-    ImageIsBlacklisted)
-from comics.core.models import Release, Image
+    DownloaderHTTPError,
+    ImageAlreadyExists,
+    ImageIsBlacklisted,
+    ImageIsCorrupt,
+    ImageTypeError,
+)
+from comics.core.models import Image, Release
 
 
 # Image types we accept, and the file extension they are saved with

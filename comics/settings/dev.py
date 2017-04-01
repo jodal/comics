@@ -13,14 +13,15 @@ TEMPLATE_LOADERS = (
 )
 
 try:
-    import debug_toolbar  # NOQA
-    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
-    INSTALLED_APPS += ('debug_toolbar',)
+    import debug_toolbar  # noqa
+    MIDDLEWARE_CLASSES += (  # noqa
+        'debug_toolbar.middleware.DebugToolbarMiddleware',)
+    INSTALLED_APPS += ('debug_toolbar',)  # noqa
 except ImportError:
     pass
 
 try:
-    import django_extensions  # NOQA
+    import django_extensions  # noqa
     INSTALLED_APPS += ('django_extensions',)
 except ImportError:
     pass

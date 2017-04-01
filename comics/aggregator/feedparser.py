@@ -1,8 +1,9 @@
 from __future__ import absolute_import
 
 import datetime
-import feedparser
 import warnings
+
+import feedparser
 
 from comics.aggregator.lxmlparser import LxmlParser
 
@@ -52,6 +53,6 @@ class Entry(object):
 
     @property
     def tags(self):
-        if not 'tags' in self.raw_entry:
+        if 'tags' not in self.raw_entry:
             return []
         return [tag.term for tag in self.raw_entry.tags]

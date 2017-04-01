@@ -1,11 +1,13 @@
 import os
 import sys
 
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'comics.settings')
 
 root_path = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.insert(0, root_path)
+
 
 VIRTUALENV_ROOT = None
 
@@ -26,5 +28,6 @@ if VIRTUALENV_ROOT:
     import django
     django = reload(django)
 
-from django.core.wsgi import get_wsgi_application
+
+from django.core.wsgi import get_wsgi_application  # noqa
 application = get_wsgi_application()

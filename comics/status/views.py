@@ -5,8 +5,8 @@ from django.db.models import Max
 from django.shortcuts import render
 from django.utils.datastructures import SortedDict
 
-from comics.core.models import Comic, Release
 from comics.aggregator.utils import get_comic_schedule
+from comics.core.models import Comic, Release
 
 
 @login_required

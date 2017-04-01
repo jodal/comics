@@ -6,10 +6,12 @@ from tastypie.authorization import Authorization, ReadOnlyAuthorization
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from tastypie.resources import ModelResource
 
-from comics.api.authentication import (
-    SecretKeyAuthentication, MultiAuthentication)
-from comics.core.models import Comic, Release, Image
 from comics.accounts.models import Subscription
+from comics.api.authentication import (
+    MultiAuthentication,
+    SecretKeyAuthentication,
+)
+from comics.core.models import Comic, Image, Release
 
 
 class UsersAuthorization(ReadOnlyAuthorization):

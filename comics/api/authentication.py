@@ -12,7 +12,7 @@ class SecretKeyAuthentication(Authentication):
                 request.META['HTTP_AUTHORIZATION'].split())
 
             if auth_type.lower() != 'key':
-                raise ValueError("Incorrect authorization header.")
+                raise ValueError('Incorrect authorization header.')
         else:
             secret_key = request.GET.get('key') or request.POST.get('key')
 

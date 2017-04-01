@@ -10,8 +10,13 @@ from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views.generic import (
-    TemplateView, ListView, RedirectView,
-    DayArchiveView, TodayArchiveView, MonthArchiveView)
+    DayArchiveView,
+    ListView,
+    MonthArchiveView,
+    RedirectView,
+    TemplateView,
+    TodayArchiveView,
+)
 
 from comics.core.models import Comic, Release
 

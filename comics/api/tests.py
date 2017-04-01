@@ -2,8 +2,8 @@ import base64
 import json
 
 from django.contrib.auth.models import User
-from django.test.client import Client
 from django.test import TestCase
+from django.test.client import Client
 
 from comics.accounts.models import Subscription
 from comics.core.models import Comic

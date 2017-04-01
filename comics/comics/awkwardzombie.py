@@ -31,8 +31,6 @@ class Crawler(CrawlerBase):
         if page_date != pub_date:
             return
 
-        urls = page.src('#comic img', allow_multiple=True)
-        title = page.text('.title')
         result = [
             CrawlerImage(url)
             for url in page.src('#comic img', allow_multiple=True)]

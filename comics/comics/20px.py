@@ -19,7 +19,8 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             if 'Comic' not in entry.tags:
                 continue
-            selector = 'img[src*="/wp-content/uploads/"]:not(img[src$="_sq.jpg"])'
+            selector = (
+                'img[src*="/wp-content/uploads/"]:not(img[src$="_sq.jpg"])')
             results = []
 
             for url in entry.content0.src(selector, allow_multiple=True):

@@ -62,7 +62,7 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     # Disabled to prevent BREACH attack, ref.
     # https://www.djangoproject.com/weblog/2013/aug/06/breach-and-django/
-    #'django.middleware.gzip.GZipMiddleware',
+    # 'django.middleware.gzip.GZipMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -145,7 +145,7 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 WSGI_APPLICATION = 'comics.wsgi.application'
 
 
-### django_compressor settings
+# ### django_compressor settings
 
 # Explicitly use HtmlParser to avoid depending on BeautifulSoup through the use
 # of LxmlParser
@@ -162,7 +162,7 @@ COMPRESS_CSS_FILTERS = [
 COMPRESS_HTML = True
 
 
-### django.contrib.auth settings
+# ### django.contrib.auth settings
 
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
@@ -173,7 +173,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
-### django-registration settings
+# ### django-registration settings
 
 #: Number of days an the account activation link will work
 ACCOUNT_ACTIVATION_DAYS = 7
@@ -182,7 +182,7 @@ LOGIN_REDIRECT_URL = '/'
 REGISTRATION_BACKEND = 'comics.accounts.backends.RegistrationBackend'
 
 
-### django-invitation settings
+# ### django-invitation settings
 
 #: Turn invitations off by default, leaving the site open for user
 #: registrations
@@ -195,12 +195,12 @@ ACCOUNT_INVITATION_DAYS = 7
 INVITATIONS_PER_USER = 10
 
 
-### Tastypie settings
+# ### Tastypie settings
 
 TASTYPIE_DEFAULT_FORMATS = ['json', 'jsonp', 'xml', 'yaml', 'plist']
 
 
-### comics settings
+# ### comics settings
 
 #: Name of the site. Used in page header, page title, feed titles, etc.
 COMICS_SITE_TITLE = 'example.com'

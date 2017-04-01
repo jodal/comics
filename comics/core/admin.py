@@ -40,11 +40,11 @@ class ReleaseAdmin(admin.ModelAdmin):
 
 
 def text_preview(obj):
-    MAX_LENGTH = 60
-    if len(obj.text) < MAX_LENGTH:
+    max_length = 60
+    if len(obj.text) < max_length:
         return obj.text
     else:
-        return obj.text[:MAX_LENGTH] + '...'
+        return obj.text[:max_length] + '...'
 
 
 @admin.register(models.Image)
