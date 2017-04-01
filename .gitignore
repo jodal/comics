@@ -4,6 +4,7 @@
 *.log.*
 *.pyc
 *.sw[po]
+.eggs
 /comics/settings/local.py
 /comics/wsgi/local.py
 /db.sqlite3
