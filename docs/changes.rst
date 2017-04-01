@@ -5,6 +5,7 @@ Changes
 This change log is used to track all major changes to *comics* after the first
 versioned release.
 
+
 v2.5.0 (UNRELEASED)
 ===================
 
@@ -15,6 +16,23 @@ v2.5.0 (UNRELEASED)
   - django-tastypie >= 0.12, < 0.14
   - django_compressor >= 1.1, < 2.0
   - jsmin >= 2.0, < 2.3
+
+
+v2.4.3 (2017-04-01)
+===================
+
+- Update all crawlers based on ``HeltNormaltCrawlerBase`` after site change.
+
+**Crawlers**
+
+- New: ``businesscat``
+- New: ``donthitsave``
+- New: ``firekanta``
+- New: ``mollybeans``
+- New: ``truthfactsgo``
+- New: ``wyyrd``
+- Update: ``lunchtu`` after site change.
+- Update: ``thegamercat`` after feed change.
 
 
 v2.4.2 (2016-01-19)

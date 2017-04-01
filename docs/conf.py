@@ -22,7 +22,7 @@ project = u'comics'
 copyright = u'2009-2015, Stein Magnus Jodal'
 
 version = '2.4'
-release = '2.4.2'
+release = '2.4.3'
 
 exclude_trees = ['_build']
 
