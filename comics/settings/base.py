@@ -2,7 +2,7 @@ import os
 
 BASE_PATH = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
-SECRET_KEY = ''
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
 
 #: Database settings. You will want to change this for production. See the
 #: Django docs for details.
