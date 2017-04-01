@@ -9,6 +9,9 @@ v2.4.3 (UNRELEASED)
 ===================
 
 - Update all crawlers based on ``HeltNormaltCrawlerBase`` after site change.
+- Update ``GoComicsComCrawlerBase`` after site change.
+- Added ``DagbladetCrawlerBase``
+- Added ``NettserierCrawlerBase``
 
 **Crawlers**
 
@@ -18,6 +21,7 @@ v2.4.3 (UNRELEASED)
 - New: ``mollybeans``
 - New: ``truthfactsgo``
 - New: ``wyyrd``
+- New: ``dunce``
 - Update: ``lunchtu`` after site change.
 - Update: ``thegamercat`` after feed change.
 
