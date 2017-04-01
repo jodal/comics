@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(DagbladetCrawlerBase):
-    history_capable_days = 6
+    history_capable_days = 14
     schedule = 'Mo,Tu,We,Th,Fr,Sa'
     time_zone = 'Europe/Oslo'
 
