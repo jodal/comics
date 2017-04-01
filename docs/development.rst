@@ -66,6 +66,8 @@ Code style
 - Take a look at :pep:`20` for a nice peek into a general mindset useful for
   Python coding.
 
+You can run ``flake8`` to lint the code for any style issues.
+
 
 Commit guidelines
 -----------------
@@ -123,4 +125,4 @@ improved tests for *comics*' functionality it will be greatly appreciated.
 
 To run unit tests::
 
-    python manage.py test
+    tox
