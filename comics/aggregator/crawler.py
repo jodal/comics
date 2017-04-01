@@ -274,3 +274,28 @@ class DagbladetCrawlerBase(CrawlerBase):
         image = article.find('.//img').get('src')
 
         return CrawlerImage(image)
+
+
+class NettserierCrawlerBase(CrawlerBase):
+    """Base comics crawler for all comics posted at nettserier.no"""
+    time_zone = 'Europe/Oslo'
+
+    def crawl_helper(self, short_name, pub_date):
+        page_url = 'https://nettserier.no/%s/' % (short_name)
+        page = self.parse_page(page_url)
+        url = page.src('img[src*="/_ns/files"]')
+
+        comic_text = page.root.xpath('//div[@class="comic-text"]')[0]
+        title = comic_text.find('h4').text
+        text = comic_text.find('p').text
+
+        # Check the published date
+        pub_date_check = page.text('p[class="comic-pubtime"]')
+        date_start_pos = pub_date_check.find(' ')+1
+        date_end_pos = pub_date_check.find(' ', date_start_pos)
+        pub_date_check = pub_date_check[date_start_pos:date_end_pos]
+        if pub_date.strftime('%Y-%m-%d') == pub_date_check:
+            return CrawlerImage(url, title, text)
+        # print pub_date_check
+        # print pub_date.strftime('%Y-%m-%d')
+        return
