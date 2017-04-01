@@ -4,11 +4,8 @@
 # Code linting
 -rrequirements-flake8.txt
 
-# Test runner
+# Task runner
 tox
-
-# Automate tasks
-invoke
 
 # Mocking in unit tests
 mock
