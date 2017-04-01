@@ -113,7 +113,7 @@ additional dependencies required by the format installed.
 
 If you run a *comics* instance yourself, and want support for more response
 formats, check out `Tastypie's serialization docs
-<http://django-tastypie.readthedocs.org/en/latest/serialization.html>`_ for
+<https://django-tastypie.readthedocs.io/en/latest/serialization.html>`_ for
 details on what you need to install.
 
 

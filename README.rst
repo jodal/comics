@@ -16,7 +16,7 @@ crawling web sites and feeds.
 Public License version 3.
 
 - `Source code <https://github.com/jodal/comics>`_
-- `Documentation <http://comics.readthedocs.org/>`_
+- `Documentation <https://comics.readthedocs.io/>`_
 - `Issues <https://github.com/jodal/comics/issues>`_
 - `Contributors <https://github.com/jodal/comics/contributors>`_
 
