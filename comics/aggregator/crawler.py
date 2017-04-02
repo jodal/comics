@@ -258,7 +258,6 @@ class DagbladetCrawlerBase(CrawlerBase):
     time_zone = 'Europe/Oslo'
 
     def crawl_helper(self, short_name, pub_date):
-        epoch = self.date_to_epoch(pub_date)
         page_url = 'http://www.dagbladet.no/tegneserie/%s' % short_name
         page = self.parse_page(page_url)
 
