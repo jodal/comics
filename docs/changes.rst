@@ -32,6 +32,8 @@ v2.5.0 (UNRELEASED)
   environment variable for specifying the path to the virtualenv the WSGI app
   should activate when starting.
 
+- Upgraded jQuery, Bootstrap, Font Awesome and Moment.js to latest versions.
+
 
 v2.4.3 (2017-04-01)
 ===================
