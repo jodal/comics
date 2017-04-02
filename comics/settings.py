@@ -115,8 +115,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrapform',
     'compressor',
-    'invitation',
-    'registration',
     'tastypie',
     'comics.core',
     'comics.accounts',
@@ -239,26 +237,9 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
-# ### django-registration settings
-
-#: Number of days an the account activation link will work
-ACCOUNT_ACTIVATION_DAYS = 7
+# ### auth settings
 
 LOGIN_REDIRECT_URL = '/'
-REGISTRATION_BACKEND = 'comics.accounts.backends.RegistrationBackend'
-
-
-# ### django-invitation settings
-
-#: Turn invitations off by default, leaving the site open for user
-#: registrations
-INVITE_MODE = os.environ.get('COMICS_INVITE_MODE') == 'true'
-
-#: Number of days an invitation will be valid
-ACCOUNT_INVITATION_DAYS = 7
-
-#: Number of invitations each existing user can send
-INVITATIONS_PER_USER = 10
 
 
 # ### Tastypie settings

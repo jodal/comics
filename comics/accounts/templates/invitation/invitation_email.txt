@@ -1,7 +1,0 @@
-Your have been invited by {{ invitation_key.from_user.email }} to join {{ site.name }}.
-
-Follow this link within {{ expiration_days }} day{{ expiration_days|pluralize }} to register your account:
-
-http://{{ site.domain }}{% url "invitation_invited" invitation_key.key %}
-
-If you don't know what this is about, you can safely ignore this email.

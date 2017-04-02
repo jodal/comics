@@ -60,22 +60,11 @@
                     <i class="fa fa-sign-in"></i>
                     Login</a>
                 </li>
-                <li class="{{ active.register|yesno:"active," }}" >
-                  <a href="{% url "registration_register" %}">
-                    <i class="fa fa-plus"></i>
-                    Register</a>
-                </li>
               {% endif %}
               </ul>
 
               <ul class="nav navbar-nav navbar-right">
               {% if user.is_authenticated %}
-                <li class="{{ active.invite|yesno:"active," }}">
-                  <a href="{% url "invitation_invite" %}">
-                    <i class="fa fa-heart"></i>
-                    Invite
-                  </a>
-                </li>
                 <li class="{{ active.account|yesno:"active," }}" >
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-user"></i>

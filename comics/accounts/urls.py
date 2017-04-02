@@ -1,79 +1,12 @@
 from django.conf.urls import patterns, url
 from django.contrib.auth import views as auth_views
-from django.views.generic.base import TemplateView
-
-from invitation import views as invitation_views
-
-from registration import views as reg_views
 
 from comics.accounts import views as account_views
-from comics.accounts.forms import (
-    AuthenticationForm, PasswordResetForm, RegistrationForm)
+from comics.accounts.forms import AuthenticationForm, PasswordResetForm
 
 
 urlpatterns = patterns(
     '',
-
-    # django-invitation
-
-    url(r'^invite/complete/$',
-        TemplateView.as_view(
-            template_name='invitation/invitation_complete.html'),
-        {
-            'extra_context': {'active': {
-                'invite': True,
-            }},
-        },
-        name='invitation_complete'),
-    url(r'^invite/$',
-        invitation_views.invite,
-        {
-            'extra_context': {'active': {
-                'invite': True,
-            }},
-        },
-        name='invitation_invite'),
-    url(r'^invited/(?P<invitation_key>\w+)/$',
-        invitation_views.invited,
-        {
-            'extra_context': {'active': {'register': True}},
-        },
-        name='invitation_invited'),
-    url(r'^register/$',
-        invitation_views.register,
-        {
-            'backend': 'comics.accounts.backends.RegistrationBackend',
-            'form_class': RegistrationForm,
-            'extra_context': {'active': {'register': True}},
-        },
-        name='registration_register'),
-
-    # django-registration
-
-    # url(r'^register/$',
-    #     reg_views.register,
-    #     {
-    #         'backend': 'comics.accounts.backends.RegistrationBackend',
-    #         'extra_context': {'active': {'register': True}},
-    #     },
-    #     name='registration_register'),
-    url(r'^register/complete/$',
-        TemplateView.as_view(
-            template_name='registration/registration_complete.html'),
-        name='registration_complete'),
-    url(r'^register/closed/$',
-        TemplateView.as_view(
-            template_name='registration/registration_closed.html'),
-        name='registration_disallowed'),
-
-    url(r'^activate/complete/$',
-        TemplateView.as_view(
-            template_name='registration/activation_complete.html'),
-        name='registration_activation_complete'),
-    url(r'^activate/(?P<activation_key>\w+)/$',
-        reg_views.activate,
-        {'backend': 'comics.accounts.backends.RegistrationBackend'},
-        name='registration_activate'),
 
     # django.contrib.auth
 

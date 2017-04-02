@@ -1,46 +1,9 @@
 # Based on https://bitbucket.org/jokull/django-email-login/
 
 import re
-from uuid import uuid4
 
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.models import User
-from django.contrib.sites.models import RequestSite, Site
-
-from forms import RegistrationForm
-
-from invitation.backends import InvitationBackend
-
-from registration import signals
-from registration.models import RegistrationProfile
-
-
-class RegistrationBackend(InvitationBackend):
-    """
-    Does not require the user to pick a username. Sets the username to a random
-    string behind the scenes.
-
-    """
-
-    def register(self, request, **kwargs):
-        email, password = kwargs['email'], kwargs['password1']
-
-        if Site._meta.installed:
-            site = Site.objects.get_current()
-        else:
-            site = RequestSite(request)
-        new_user = RegistrationProfile.objects.create_inactive_user(
-            uuid4().get_hex()[:10], email, password, site)
-        signals.user_registered.send(
-            sender=self.__class__, user=new_user, request=request)
-        return new_user
-
-    def get_form_class(self, request):
-        """
-        Return the default form class used for user registration.
-
-        """
-        return RegistrationForm
 
 
 email_re = re.compile(
