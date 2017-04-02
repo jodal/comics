@@ -5,16 +5,16 @@ from comics.core.comic_data import ComicDataBase
 
 
 class ComicData(ComicDataBase):
-    name = 'Fagprat (db.no)'
+    name = 'Dunce'
     language = 'no'
-    url = 'http://www.dagbladet.no/tegneserie/fagprat'
-    rights = 'Flu Hartberg'
+    url = 'http://www.dagbladet.no/tegneserie/dunce'
+    rights = 'Jens K. Styve'
 
 
 class Crawler(DagbladetCrawlerBase):
-    history_capable_date = '2010-11-15'
-    schedule = 'Tu,Th,Sa'
+    history_capable_days = 9
+    schedule = 'Mo,Tu,We,Th,Fr'
     time_zone = 'Europe/Oslo'
 
     def crawl(self, pub_date):
-        return self.crawl_helper('fagprat',pub_date)
+        return self.crawl_helper('dunce',pub_date)

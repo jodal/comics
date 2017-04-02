@@ -208,20 +208,16 @@ class GoComicsComCrawlerBase(CrawlerBase):
     """Base comic crawler for all comics hosted at gocomics.com"""
 
     # It doesn't want us getting comics because of a User-Agent check.
-    # Look! I'm a nice, normal Internet Explorer machine!
+    # Look! I'm a nice, normal Google Chrome machine!
     headers = {
-        'User-Agent': (
-            'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; '
-            'Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; '
-            '.NET CLR 3.0.4506.2152; .NET CLR 3.5.30729'),
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
     }
 
     def crawl_helper(self, url_name, pub_date):
         page_url = 'http://www.gocomics.com/%s/%s' % (
             url_name, pub_date.strftime('%Y/%m/%d/'))
         page = self.parse_page(page_url)
-        page.remove('.feature_item')
-        url = page.src('img.strip')
+        url = page._get('content', '[property="og:image"]')
         return CrawlerImage(url)
 
 
@@ -250,3 +246,50 @@ class HeltNormaltCrawlerBase(CrawlerBase):
         page = self.parse_page(page_url)
         url = page.src('img[src*="/img/%s/%s"]' % (short_name, date_string))
         return CrawlerImage(url)
+
+
+class DagbladetCrawlerBase(CrawlerBase):
+    """Base comics crawler for all comics posted at dagbladet.no"""
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    time_zone = 'Europe/Oslo'
+
+    def crawl_helper(self, short_name, pub_date):
+        epoch = self.date_to_epoch(pub_date)
+        page_url = 'http://www.dagbladet.no/tegneserie/%s' % (short_name)
+        page = self.parse_page(page_url)
+        # Find the strip for the wanted date
+        date_string = pub_date.strftime('%Y-%m-%dT00:00:00+02:00')
+        time = page.root.xpath('//time[@datetime="%s"]' % (date_string))
+        # No release that date
+        if not time:
+            return
+        # Get the image
+        article = time[0].getparent().getparent()
+        image = article.find('.//img').get('src')
+
+        return CrawlerImage(image)
+
+
+class NettserierCrawlerBase(CrawlerBase):
+    """Base comics crawler for all comics posted at nettserier.no"""
+    time_zone = 'Europe/Oslo'
+
+    def crawl_helper(self, short_name, pub_date):
+        page_url = 'https://nettserier.no/%s/' % (short_name)
+        page = self.parse_page(page_url)
+        url = page.src('img[src*="/_ns/files"]')
+
+        comic_text = page.root.xpath('//div[@class="comic-text"]')[0]
+        title = comic_text.find('h4').text
+        text = comic_text.find('p').text
+
+        # Check the published date
+        pub_date_check = page.text('p[class="comic-pubtime"]')
+        date_start_pos = pub_date_check.find(' ')+1
+        date_end_pos = pub_date_check.find(' ', date_start_pos)
+        pub_date_check = pub_date_check[date_start_pos:date_end_pos]
+        if pub_date.strftime('%Y-%m-%d') == pub_date_check:
+            return CrawlerImage(url, title, text)
+        # print pub_date_check
+        # print pub_date.strftime('%Y-%m-%d')
+        return
