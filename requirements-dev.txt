@@ -4,11 +4,11 @@
 # Code linting
 -rrequirements-flake8.txt
 
+# Tests
+-rrequirements-tests.txt
+
 # Task runner
 tox
-
-# Mocking in unit tests
-mock
 
 # Debugging of database queries, etc.
 django-debug-toolbar < 1.5  # For Django 1.7 compat

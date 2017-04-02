@@ -1,0 +1,2 @@
+# Mocking in unit tests
+mock
