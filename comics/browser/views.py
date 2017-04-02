@@ -287,6 +287,8 @@ class MyComicsMixin(object):
 class MyComicsHome(LoginRequiredMixin, RedirectView):
     """Redirects the home page to my comics"""
 
+    permanent = True
+
     def get_redirect_url(self, **kwargs):
         return reverse('mycomics_latest')
 
@@ -452,6 +454,8 @@ class MyComicsMonthView(MyComicsMixin, ReleaseMonthArchiveView):
 
 class MyComicsYearView(LoginRequiredMixin, RedirectView):
     """Redirect anyone trying to view the full year to January"""
+
+    permanent = True
 
     def get_redirect_url(self, **kwargs):
         return reverse('mycomics_month', kwargs={
@@ -667,6 +671,8 @@ class OneComicMonthView(OneComicMixin, ReleaseMonthArchiveView):
 
 class OneComicYearView(LoginRequiredMixin, RedirectView):
     """Redirect anyone trying to view the full year to January"""
+
+    permanent = True
 
     def get_redirect_url(self, **kwargs):
         return reverse('comic_month', kwargs={
