@@ -24,9 +24,9 @@ def log_errors(func):
 
 
 class Aggregator(object):
-    def __init__(self, config=None, optparse_options=None):
-        if config is None and optparse_options is not None:
-            self.config = AggregatorConfig(optparse_options)
+    def __init__(self, config=None, options=None):
+        if config is None and options is not None:
+            self.config = AggregatorConfig(options)
         else:
             assert isinstance(config, AggregatorConfig)
             self.config = config
