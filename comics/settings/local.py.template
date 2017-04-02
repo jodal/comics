@@ -1,9 +1,0 @@
-# Local settings -- do NOT commit to a VCS
-
-# Make this unique, and don't share it with anybody.
-#SECRET_KEY = ''
-
-# The site title
-#COMICS_SITE_TITLE = 'example.com'
-
-# You can override any settings here, like database settings.

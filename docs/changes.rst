@@ -9,6 +9,11 @@ versioned release.
 v2.5.0 (UNRELEASED)
 ===================
 
+- New dependencies:
+
+  - dj-database-url
+  - python-dotenv
+
 - Dependencies with new maximum versions:
 
   - Pillow >= 1.7, < 3.2
@@ -16,6 +21,10 @@ v2.5.0 (UNRELEASED)
   - django-tastypie >= 0.12, < 0.14
   - django_compressor >= 1.1, < 2.0
   - jsmin >= 2.0, < 2.3
+
+- Replaced :mod:`comics.settings.local` module with environment variables or a
+  :file:`.env` file in the project directory for configuration. This makes it
+  easier to deploy *comics* on services like Heroku.
 
 
 v2.4.3 (2017-04-01)

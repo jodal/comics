@@ -5,6 +5,7 @@
 *.pyc
 *.sw[po]
 .eggs
+/.env
 /.tox
 /comics/settings/local.py
 /comics/wsgi/local.py

@@ -1,5 +1,11 @@
 Django >= 1.7, < 1.8
 
+# For loading settings from env
+python-dotenv
+
+# For converting database URLs to Django format
+dj-database-url
+
 # For timezone travel
 pytz
 

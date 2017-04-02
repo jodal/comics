@@ -1,16 +1,43 @@
 import os
 
-BASE_PATH = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+import dj_database_url
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '')
+import dotenv
+
+
+BASE_PATH = os.path.dirname(os.path.dirname(__file__))
+
+
+# Loan environment variables from .env if it exists
+# Useful for local settings
+dotenv_path = os.path.join(BASE_PATH, '.env')
+if os.path.exists(dotenv_path):
+    dotenv.load_dotenv(dotenv_path)
+
+
+#: The Django secret key
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+
+#: Debug mode. Keep off in production.
+DEBUG = os.environ.get('DJANGO_DEBUG') == 'true'
+TEMPLATE_DEBUG = DEBUG
+
+#: Site admins
+ADMINS = []
+if 'DJANGO_ADMIN' in os.environ:
+    os.environ.append(('Site admin', os.environ['DJANGO_ADMIN']))
+
+#: Default from email
+DEFAULT_FROM_EMAIL = os.environ.get(
+    'DJANGO_DEFAULT_FROM_EMAIL', 'webmaster@example.com')
+
+SQLITE_FILE = os.path.join(BASE_PATH, 'db.sqlite3')
+SQLITE_URL = 'sqlite:///' + os.path.abspath(SQLITE_FILE)
 
 #: Database settings. You will want to change this for production. See the
 #: Django docs for details.
 DATABASES = {
-    'default': {
-        'NAME': os.path.join(BASE_PATH, 'db.sqlite3'),
-        'ENGINE': 'django.db.backends.sqlite3',
-    }
+    'default': dj_database_url.config(default=SQLITE_URL, conn_max_age=None),
 }
 
 #: Default time zone to use when displaying datetimes to users
@@ -23,16 +50,18 @@ USE_L10N = False
 USE_TZ = True
 
 #: Path on disk to where downloaded media will be stored and served from
-MEDIA_ROOT = os.path.join(BASE_PATH, 'media')
+MEDIA_ROOT = os.environ.get(
+    'DJANGO_MEDIA_ROOT', os.path.join(BASE_PATH, 'media'))
 
 #: URL to where downloaded media will be stored and served from
-MEDIA_URL = '/media/'
+MEDIA_URL = os.environ.get('DJANGO_MEDIA_URL', '/media/')
 
 #: Path on disk to where static files will be served from
-STATIC_ROOT = os.path.join(BASE_PATH, 'static')
+STATIC_ROOT = os.environ.get(
+    'DJANGO_STATIC_ROOT', os.path.join(BASE_PATH, 'static'))
 
 #: URL to where static files will be served from
-STATIC_URL = '/static/'
+STATIC_URL = os.environ.get('DJANGO_STATIC_URL', '/static/')
 
 STATICFILES_DIRS = (
     os.path.join(BASE_PATH, 'comics', 'static'),
@@ -58,8 +87,12 @@ TEMPLATE_LOADERS = (
         'django.template.loaders.app_directories.Loader',
     )),
 )
+if DEBUG:
+    TEMPLATE_LOADERS = (
+        'django.template.loaders.app_directories.Loader',
+    )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE_CLASSES = [
     # Disabled to prevent BREACH attack, ref.
     # https://www.djangoproject.com/weblog/2013/aug/06/breach-and-django/
     # 'django.middleware.gzip.GZipMiddleware',
@@ -71,9 +104,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
     'comics.core.middleware.MinifyHTMLMiddleware',
-)
+]
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.auth',
@@ -93,7 +126,7 @@ INSTALLED_APPS = (
     'comics.browser',
     'comics.help',
     'comics.status',
-)
+]
 
 ROOT_URLCONF = 'comics.urls'
 
@@ -130,9 +163,17 @@ CACHES = {
         },
     }
 }
+if 'MEMCACHED_URL' in os.environ:
+    CACHES['default'] = {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': os.environ['MEMCACHED_URL'],
+    }
+    SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
 CACHE_MIDDLEWARE_SECONDS = 300
 CACHE_MIDDLEWARE_KEY_PREFIX = 'comics'
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+
 
 DATE_FORMAT = 'l j F Y'
 TIME_FORMAT = 'H:i'
@@ -143,6 +184,32 @@ SESSION_COOKIE_AGE = 86400 * 365
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 WSGI_APPLICATION = 'comics.wsgi.application'
+
+if 'DJANGO_ALLOWED_HOSTS' in os.environ:
+    ALLOWED_HOSTS = os.environ['DJANGO_ALLOWED_HOSTS'].split(';')
+else:
+    ALLOWED_HOSTS = ['*']
+
+
+# ### djang-debug-toolbar settings
+
+try:
+    import debug_toolbar  # noqa
+except ImportError:
+    pass
+else:
+    MIDDLEWARE_CLASSES += ['debug_toolbar.middleware.DebugToolbarMiddleware']
+    INSTALLED_APPS += ['debug_toolbar']
+
+
+# ### django-extensions settings
+
+try:
+    import django_extensions  # noqa
+except ImportError:
+    pass
+else:
+    INSTALLED_APPS += ['django_extensions']
 
 
 # ### django_compressor settings
@@ -186,7 +253,7 @@ REGISTRATION_BACKEND = 'comics.accounts.backends.RegistrationBackend'
 
 #: Turn invitations off by default, leaving the site open for user
 #: registrations
-INVITE_MODE = False
+INVITE_MODE = os.environ.get('COMICS_INVITE_MODE') == 'true'
 
 #: Number of days an invitation will be valid
 ACCOUNT_INVITATION_DAYS = 7
@@ -203,13 +270,15 @@ TASTYPIE_DEFAULT_FORMATS = ['json', 'jsonp', 'xml', 'yaml', 'plist']
 # ### comics settings
 
 #: Name of the site. Used in page header, page title, feed titles, etc.
-COMICS_SITE_TITLE = 'example.com'
+COMICS_SITE_TITLE = os.environ.get('COMICS_SITE_TITLE', 'example.com')
 
 #: Maximum number of releases to show on one page
-COMICS_MAX_RELEASES_PER_PAGE = 50
+COMICS_MAX_RELEASES_PER_PAGE = int(
+    os.environ.get('COMICS_MAX_RELEASES_PER_PAGE', 50))
 
 #: Maximum number of days to show in a feed
-COMICS_MAX_DAYS_IN_FEED = 30
+COMICS_MAX_DAYS_IN_FEED = int(
+    os.environ.get('COMICS_MAX_DAYS_IN_FEED', 30))
 
 #: SHA256 of blacklisted images
 COMICS_IMAGE_BLACKLIST = (
@@ -238,15 +307,19 @@ COMICS_IMAGE_BLACKLIST = (
 )
 
 #: Comics log file path on disk
-COMICS_LOG_FILENAME = os.path.join(BASE_PATH, 'comics.log')
+COMICS_LOG_FILENAME = os.environ.get(
+    'COMICS_LOG_FILENAME',
+    os.path.join(BASE_PATH, 'comics.log'))
 
 #: Google Analytics tracking code. Tracking code will be included on all pages
 #: if this is set.
-COMICS_GOOGLE_ANALYTICS_CODE = None
+COMICS_GOOGLE_ANALYTICS_CODE = os.environ.get('COMICS_GOOGLE_ANALYTICS_CODE')
 
 #: Number of seconds browsers at the latest view of "My comics" should wait
 #: before they check for new releases again
-COMICS_BROWSER_REFRESH_INTERVAL = 60
+COMICS_BROWSER_REFRESH_INTERVAL = int(
+    os.environ.get('COMICS_BROWSER_REFRESH_INTERVAL', 60))
 
 #: Number of days a new comic on the site is labeled as new
-COMICS_NUM_DAYS_COMIC_IS_NEW = 7
+COMICS_NUM_DAYS_COMIC_IS_NEW = int(
+    os.environ.get('COMICS_NUM_DAYS_COMIC_IS_NEW', 7))

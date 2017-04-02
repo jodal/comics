@@ -3,10 +3,11 @@ Deployment
 **********
 
 The following example documents *one way* to deploy *comics*. As *comics* is a
-standard Django project with an additional batch job for , it may be deployed in
-just about any way a Django project may be deployed. Please refer to `Django's
-deployment documentation
-<http://docs.djangoproject.com/en/dev/howto/deployment/>`_ for further details.
+standard Django project with an additional batch job for crawling, it may be
+deployed in just about any way a Django project may be deployed. Please refer
+to `Django's deployment documentation
+<https://docs.djangoproject.com/en/dev/howto/deployment/>`_ for further
+details.
 
 In the following examples we assume that we are deploying *comics* at
 http://comics.example.com/, using Apache, mod_wsgi, and PostgreSQL. The Django
@@ -19,8 +20,8 @@ Database
 ========
 
 *comics* should theoretically work with any database supported by Django.
-Though, development is mostly done on SQLite 3 and PostgreSQL 8.x. For
-production use, PostgreSQL is the recommended choice.
+Though, development is mostly done on SQLite and PostgreSQL. For production
+use, PostgreSQL is the recommended choice.
 
 .. note::
 
@@ -80,7 +81,7 @@ Available settings
 ==================
 
 The Django docs got a `list of all available settings
-<https://docs.djangoproject.com/en/1.4/ref/settings/>`_. Some of them are
+<https://docs.djangoproject.com/en/1.7/ref/settings/>`_. Some of them are
 repeated here if they are especially relevant for *comics*. In addition,
 *comics* adds some settings of its own, which are all listed here as well.
 
@@ -88,52 +89,29 @@ repeated here if they are especially relevant for *comics*. In addition,
     :members:
 
 
-Example ``settings/local.py``
-=============================
+Example ``.env``
+================
 
 To change settings, you should not change the settings files shipped with
-*comics*, but instead override the settings in your own
-``comics/comics/settings/local.py``.  Even if you do not want to override any
-default settings, you must add a ``local.py`` which at least sets
-``SECRET_KEY`` and most probably your database settings. A full ``local.py``
-may look like this::
+*comics*, but instead override the settings in the apps environment or in the
+file ``comics/.env``.  Even if you do not want to override any default
+settings, you must at least set ``DJANGO_SECRET_KEY`` and most probably your
+database settings. A full set of environment variables for a production
+deployment may look like this::
 
-    # Local settings -- do NOT commit to a VCS
+    DJANGO_SECRET_KEY=Kaikoh9aiye7air9dae5aigh9ue1Ooc7
 
-    # Make this unique, and don't share it with anybody.
-    SECRET_KEY = 'djdjdk5k4$(DA=!SDAD!)12312415151368edkfjgngnw3m!$!Dfafa'
+    DJANGO_ADMIN=comics@example.com
+    DJANGO_DEFAULT_FROM_EMAIL=comics@example.com
 
-    # You can override any settings here, like database settings.
+    DJANGO_MEDIA_ROOT=/var/www/static.example.com/media/
+    DJANGO_MEDIA_URL=http://static.example.com/media/
+    DJANGO_STATIC_ROOT=/var/www/static.example.com/static/
+    DJANGO_STATIC_URL=http://static.example.com/static/
 
-    ADMINS = (
-        ('Comics Webmaster', 'comics@example.com'),
-    )
-    MANAGERS = ADMINS
+    DATABASE_URL=postgres://comics:topsecret@localhost:5432/comics
 
-    # Database settings
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'comics',
-            'USER': 'comics',
-            'PASSWORD': 'topsecret',
-            'HOST': 'localhost',
-            'PORT': '',
-        }
-    }
-
-    # Internal IP addresses
-    INTERNAL_IPS = ('127.0.0.1',)
-
-    # Media
-    MEDIA_ROOT = '/var/www/comics.example.com/media/'
-    MEDIA_URL = 'http://comics.example.com/media/'
-    STATIC_ROOT = '/var/www/comics.example.com/static/'
-    STATIC_URL = 'http://comics.example.com/static/'
-
-    # Caching
-    CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
-    CACHE_MIDDLEWARE_KEY_PREFIX = 'comics'
+    MEMCACHED_URL=127.0.0.1:11211
 
 Of course, you should change most, if not all, of these settings for your own
 installation. If your are not running a *memcached* server, remove the part on

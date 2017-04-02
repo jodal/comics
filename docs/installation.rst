@@ -1,7 +1,7 @@
 Installation
 ************
 
-First of all, *comics* is just a `Django <http://www.djangoproject.org/>`_
+First of all, *comics* is just a `Django <https://www.djangoproject.com/>`_
 application. Thus, if there are details not outlined in *comics*' own docs,
 you'll probably find the answer in Django's docs. For example, database
 settings are mentioned on this page, but no details are given, as we're just
@@ -14,7 +14,7 @@ Get *comics*
 
 You can get hold of *comics* in two ways:
 
-- Download the lastest release from http://github.com/jodal/comics/tags and
+- Download the lastest release from https://github.com/jodal/comics/tags and
   unpack it.
 
 - Clone the Git repository. You can do so by running::
@@ -35,19 +35,18 @@ You can get hold of *comics* in two ways:
 Software requirements
 =====================
 
-The dependencies can be installed using `pip <http://www.pip-installer.org>`_.
-
-You can either install the dependencies globally on your computer::
-
-    cd comics/
-    sudo pip install -r requirements.txt
-
-Or, in an isolated environment using `virtualenv
-<http://www.virtualenv.org>`_::
+It is recommended to create a `virtualenv <https://virtualenv.pypa.io/>`_ to
+isolate the dependencies from other applications on the same system::
 
     cd comics/
     virtualenv ../comics-virtualenv/
+
+Every time you want to use the virtualenv, it must be activated::
+
     source ../comics-virtualenv/bin/activate
+
+The dependencies can be installed using `pip <https://pip.pypa.io/>`_::
+
     pip install -r requirements.txt
 
 If you make use of a virtualenv for a real deployment, you'll also need to make
@@ -91,19 +90,16 @@ usage, the following steps are all that is needed.
 Create database
 ---------------
 
-A file-based SQLite database will be used, unless you have created a file
-``comics/comics/settings/local.py`` where you have configured another database,
-like PostgreSQL.
+A file-based SQLite database will be used, unless you have configured another
+database, like PostgreSQL.
 
 To create the database and database schema, open a terminal, go to top level
 directory in your checkout of the comics repo, where you'll find the file
 ``manage.py``, and run::
 
-    python manage.py migrate --noinput
+    python manage.py migrate
 
-:option:`--noinput` stops syncdb from asking you to create a superuser, as this
-will fail at this point. Instead, when syncdb has finished, create a superuser
-by running::
+When migrate has finished, create a superuser by running::
 
     python manage.py createsuperuser
 
@@ -147,12 +143,12 @@ Development web server
 Finally, to be able to browse the comic releases we have aggregated, start the
 Django development web server by running::
 
-    python manage.py runserver --settings=comics.settings.dev
+    python manage.py runserver
 
 If you now point your web browser at http://localhost:8000/ you will be able to
-browse all available comics. If you provided a username and password at the
-``syncdb`` step, you can log in at http://localhost:8000/admin/ to do simple
-administration tasks, like removing comics or releases.
+browse all available comics. If you created a superuser above, you can log in
+at http://localhost:8000/admin/ to do simple administration tasks, like
+removing comics or releases.
 
 
 More options
