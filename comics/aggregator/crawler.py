@@ -250,3 +250,24 @@ class HeltNormaltCrawlerBase(CrawlerBase):
         page = self.parse_page(page_url)
         url = page.src('img[src*="/img/%s/%s"]' % (short_name, date_string))
         return CrawlerImage(url)
+
+
+class DagbladetCrawlerBase(CrawlerBase):
+    """Base comics crawler for all comics posted at dagbladet.no"""
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    time_zone = 'Europe/Oslo'
+
+    def crawl_helper(self, short_name, pub_date):
+        page_url = 'http://www.dagbladet.no/tegneserie/%s' % short_name
+        page = self.parse_page(page_url)
+
+        date_string = pub_date.strftime('%Y-%m-%dT00:00:00+02:00')
+        time = page.root.xpath('//time[@datetime="%s"]' % date_string)
+
+        if not time:
+            return
+
+        article = time[0].getparent().getparent()
+        url = article.find('.//img').get('src')
+
+        return CrawlerImage(url)
