@@ -19,7 +19,6 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 #: Debug mode. Keep off in production.
 DEBUG = os.environ.get('DJANGO_DEBUG') == 'true'
-TEMPLATE_DEBUG = DEBUG
 
 #: Site admins
 ADMINS = []
@@ -71,25 +70,35 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.contrib.messages.context_processors.messages',
-    'django.template.context_processors.i18n',
-    'django.template.context_processors.media',
-    'django.template.context_processors.static',
-    'comics.core.context_processors.site_settings',
-    'comics.core.context_processors.all_comics',
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            # insert your TEMPLATE_DIRS here
+        ],
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.contrib.messages.context_processors.messages',
+                'comics.core.context_processors.site_settings',
+                'comics.core.context_processors.all_comics',
+            ],
+            'loaders': [
+                ('django.template.loaders.cached.Loader', [
+                    'django.template.loaders.app_directories.Loader',
+                ]),
+            ],
+        },
+    },
+]
 
-TEMPLATE_LOADERS = (
-    ('django.template.loaders.cached.Loader', (
-        'django.template.loaders.app_directories.Loader',
-    )),
-)
 if DEBUG:
-    TEMPLATE_LOADERS = (
+    TEMPLATES[0]['OPTIONS']['loaders'] = [
         'django.template.loaders.app_directories.Loader',
-    )
+    ]
 
 MIDDLEWARE_CLASSES = [
     # Disabled to prevent BREACH attack, ref.
