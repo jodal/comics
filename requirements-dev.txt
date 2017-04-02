@@ -11,7 +11,7 @@
 tox
 
 # Debugging of database queries, etc.
-django-debug-toolbar < 1.5  # For Django 1.7 compat
+django-debug-toolbar
 
 # Generation of the model graph used in the docs
 django-extensions

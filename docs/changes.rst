@@ -29,6 +29,11 @@ v3.0.0 (UNRELEASED)
   - dj-database-url
   - python-dotenv
 
+- Dependencies with new minimum versions:
+
+  - Django >= 1.8, < 1.9
+  - django_compressor >= 2.1, < 3
+
 - Dependencies with new maximum versions:
 
   - Pillow >= 1.7, < 5
@@ -36,7 +41,6 @@ v3.0.0 (UNRELEASED)
   - defusedxml >= 0.4, < 0.6
   - django-bootstrap-form >= 3.1, < 3.3
   - django-tastypie >= 0.12, < 0.14
-  - django_compressor >= 1.1, < 2.0
   - jsmin >= 2.0, < 2.3
 
 - Upgraded jQuery, Bootstrap, Font Awesome and Moment.js to latest versions.
