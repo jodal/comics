@@ -59,7 +59,7 @@
                     <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
                   </div>
                   <div class="edit-view hide">
-                    <label class="checkbox">
+                    <label class="checkbox-inline">
                       <input type="checkbox" name="{{ comic.slug }}"
                         {% if comic in my_comics %}checked="checked"{% endif %}>
                       {{ comic.name }}
