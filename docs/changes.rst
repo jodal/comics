@@ -31,7 +31,7 @@ v3.0.0 (UNRELEASED)
 
 - Dependencies with new minimum versions:
 
-  - Django >= 1.8, < 1.9
+  - Django >= 1.9, < 1.10
   - django_compressor >= 2.1, < 3
 
 - Dependencies with new maximum versions:
