@@ -259,16 +259,16 @@ class DagbladetCrawlerBase(CrawlerBase):
 
     def crawl_helper(self, short_name, pub_date):
         epoch = self.date_to_epoch(pub_date)
-        page_url = 'http://www.dagbladet.no/tegneserie/%s' % (short_name)
+        page_url = 'http://www.dagbladet.no/tegneserie/%s' % short_name
         page = self.parse_page(page_url)
-        # Find the strip for the wanted date
+
         date_string = pub_date.strftime('%Y-%m-%dT00:00:00+02:00')
-        time = page.root.xpath('//time[@datetime="%s"]' % (date_string))
-        # No release that date
+        time = page.root.xpath('//time[@datetime="%s"]' % date_string)
+
         if not time:
             return
-        # Get the image
-        article = time[0].getparent().getparent()
-        image = article.find('.//img').get('src')
 
-        return CrawlerImage(image)
+        article = time[0].getparent().getparent()
+        url = article.find('.//img').get('src')
+
+        return CrawlerImage(url)
