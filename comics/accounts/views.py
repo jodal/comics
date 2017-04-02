@@ -6,7 +6,6 @@ from django.shortcuts import get_object_or_404, render
 
 from comics.accounts.models import Subscription
 from comics.core.models import Comic
-from comics.sets.models import Set
 
 
 @login_required
@@ -102,39 +101,3 @@ def mycomics_edit_comics(request):
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
     else:
         return HttpResponseRedirect(reverse('mycomics_latest'))
-
-
-@login_required
-def mycomics_import_named_set(request):
-    """Import comics from a named set into My comics"""
-
-    if request.method == 'POST':
-        try:
-            named_set = Set.objects.get(name=request.POST['namedset'])
-        except Set.DoesNotExist:
-            messages.error(
-                request,
-                'No comic set named "%s" found.' % request.POST['namedset'])
-            return HttpResponseRedirect(reverse('import_named_set'))
-
-        count_before = len(request.user.comics_profile.comics.all())
-        for comic in named_set.comics.all():
-            Subscription.objects.get_or_create(
-                userprofile=request.user.comics_profile,
-                comic=comic)
-        count_after = len(request.user.comics_profile.comics.all())
-        count_added = count_after - count_before
-        messages.info(
-            request,
-            '%d comic(s) was added to your comics selection.' % count_added)
-        if count_added > 0:
-            return HttpResponseRedirect(reverse('mycomics_latest'))
-        else:
-            return HttpResponseRedirect(reverse('import_named_set'))
-
-    return render(request, 'sets/import_named_set.html', {
-        'active': {
-            'account': True,
-            'import_named_set': True,
-        }
-    })

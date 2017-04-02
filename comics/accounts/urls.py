@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.conf.urls import patterns, url
 from django.contrib.auth import views as auth_views
 from django.views.generic.base import TemplateView
@@ -142,10 +141,3 @@ urlpatterns = patterns(
     url(r'^edit-comics/$',
         account_views.mycomics_edit_comics, name='edit_comics'),
 )
-
-if 'comics.sets' in settings.INSTALLED_APPS:
-    urlpatterns += patterns(
-        '',
-        url(r'^import-set/$',
-            account_views.mycomics_import_named_set, name='import_named_set'),
-    )

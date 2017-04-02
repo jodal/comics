@@ -96,11 +96,6 @@ The :mod:`comics.accounts` app adds a :class:`UserProfile
 <comics.accounts.models.UserProfile>` which add comic specific fields to
 Django's user model, including a mapping from the user to her preferred comics.
 
-.. deprecated:: 2.0
-   The :mod:`comics.sets` app has a model named :class:`Set
-   <comics.sets.models.Set>`. This model is deprecated and replaced by
-   :class:`UserProfile <comics.accounts.models.UserProfile>`.
-
 Changes to the data model are managed using Django's built-in database
 migrations. If you need to change the models, please provide the needed
 migrations.

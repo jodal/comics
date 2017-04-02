@@ -6,8 +6,23 @@ This change log is used to track all major changes to *comics* after the first
 versioned release.
 
 
-v2.5.0 (UNRELEASED)
+v3.0.0 (UNRELEASED)
 ===================
+
+**Breaking changes**
+
+- Replaced :mod:`comics.settings.local` module with environment variables or a
+  :file:`.env` file in the project directory for configuration. This makes it
+  easier to deploy *comics* on services like Heroku.
+
+- Replaced :mod:`comics.wsgi.local` modules with the ``VIRTUALENV_ROOT``
+  environment variable for specifying the path to the virtualenv the WSGI app
+  should activate when starting.
+
+- Removed the comics sets app. It has been deprecated since the release of
+  comics 2.0 in 2012. The database table ``comics_set`` may be dropped.
+
+**Dependencies**
 
 - New dependencies:
 
@@ -23,14 +38,6 @@ v2.5.0 (UNRELEASED)
   - django-tastypie >= 0.12, < 0.14
   - django_compressor >= 1.1, < 2.0
   - jsmin >= 2.0, < 2.3
-
-- Replaced :mod:`comics.settings.local` module with environment variables or a
-  :file:`.env` file in the project directory for configuration. This makes it
-  easier to deploy *comics* on services like Heroku.
-
-- Replaced :mod:`comics.wsgi.local` modules with the ``VIRTUALENV_ROOT``
-  environment variable for specifying the path to the virtualenv the WSGI app
-  should activate when starting.
 
 - Upgraded jQuery, Bootstrap, Font Awesome and Moment.js to latest versions.
 
