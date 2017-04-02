@@ -5,12 +5,11 @@ import dj_database_url
 import dotenv
 
 
-BASE_PATH = os.path.dirname(os.path.dirname(__file__))
+PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__))
 
 
-# Loan environment variables from .env if it exists
-# Useful for local settings
-dotenv_path = os.path.join(BASE_PATH, '.env')
+# Load environment variables from .env if it exists
+dotenv_path = os.path.join(PROJECT_ROOT, '.env')
 if os.path.exists(dotenv_path):
     dotenv.load_dotenv(dotenv_path)
 
@@ -31,7 +30,7 @@ if 'DJANGO_ADMIN' in os.environ:
 DEFAULT_FROM_EMAIL = os.environ.get(
     'DJANGO_DEFAULT_FROM_EMAIL', 'webmaster@example.com')
 
-SQLITE_FILE = os.path.join(BASE_PATH, 'db.sqlite3')
+SQLITE_FILE = os.path.join(PROJECT_ROOT, 'db.sqlite3')
 SQLITE_URL = 'sqlite:///' + os.path.abspath(SQLITE_FILE)
 
 #: Database settings. You will want to change this for production. See the
@@ -51,20 +50,20 @@ USE_TZ = True
 
 #: Path on disk to where downloaded media will be stored and served from
 MEDIA_ROOT = os.environ.get(
-    'DJANGO_MEDIA_ROOT', os.path.join(BASE_PATH, 'media'))
+    'DJANGO_MEDIA_ROOT', os.path.join(PROJECT_ROOT, 'media'))
 
 #: URL to where downloaded media will be stored and served from
 MEDIA_URL = os.environ.get('DJANGO_MEDIA_URL', '/media/')
 
 #: Path on disk to where static files will be served from
 STATIC_ROOT = os.environ.get(
-    'DJANGO_STATIC_ROOT', os.path.join(BASE_PATH, 'static'))
+    'DJANGO_STATIC_ROOT', os.path.join(PROJECT_ROOT, 'static'))
 
 #: URL to where static files will be served from
 STATIC_URL = os.environ.get('DJANGO_STATIC_URL', '/static/')
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_PATH, 'comics', 'static'),
+    os.path.join(PROJECT_ROOT, 'comics', 'static'),
 )
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -309,7 +308,7 @@ COMICS_IMAGE_BLACKLIST = (
 #: Comics log file path on disk
 COMICS_LOG_FILENAME = os.environ.get(
     'COMICS_LOG_FILENAME',
-    os.path.join(BASE_PATH, 'comics.log'))
+    os.path.join(PROJECT_ROOT, 'comics.log'))
 
 #: Google Analytics tracking code. Tracking code will be included on all pages
 #: if this is set.
