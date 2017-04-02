@@ -1,30 +1,30 @@
 import os
 import sys
 
+import dotenv
+
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__))
+sys.path.insert(0, PROJECT_ROOT)
+
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'comics.settings')
 
-root_path = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..', '..'))
-sys.path.insert(0, root_path)
+
+# Load environment variables from .env if it exists
+dotenv_path = os.path.join(PROJECT_ROOT, '.env')
+if os.path.exists(dotenv_path):
+    dotenv.load_dotenv(dotenv_path)
 
 
-VIRTUALENV_ROOT = None
-
-try:
-    from comics.wsgi.local import *  # NOQA
-except ImportError:
-    pass
+VIRTUALENV_ROOT = os.environ.get('VIRTUALENV_ROOT')
 
 if VIRTUALENV_ROOT:
     # Activate virtualenv
-    VIRTUALENV_ROOT = os.path.abspath(os.path.join(
-        os.path.dirname(__file__), VIRTUALENV_ROOT))
     activate_this = os.path.join(VIRTUALENV_ROOT, 'bin', 'activate_this.py')
     execfile(activate_this, dict(__file__=activate_this))
 
-    # Import Django and reload from the virtualenv in case it was loaded
-    # elsewhere
+    # Import Django and reload it in case it was loaded outside the virtualenv
     import django
     django = reload(django)
 

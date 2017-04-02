@@ -7,8 +7,6 @@
 .eggs
 /.env
 /.tox
-/comics/settings/local.py
-/comics/wsgi/local.py
 /db.sqlite3
 /docs/_build
 /media

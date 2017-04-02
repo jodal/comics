@@ -66,8 +66,8 @@ efficient static media serving and caching, you should probably enable
         # mod_wsgi setup
         WSGIDaemonProcess comics user=comics-user group=comics-user threads=50 maximum-requests=10000
         WSGIProcessGroup comics
-        WSGIScriptAlias / /path/to/comics/comics/wsgi/__init__.py
-        <Directory /path/to/comics/comics/wsgi>
+        WSGIScriptAlias / /path/to/comics/comics/wsgi.py
+        <Directory /path/to/comics/comics>
             Require all granted
         </Directory>
     </VirtualHost>
@@ -98,6 +98,8 @@ file ``comics/.env``.  Even if you do not want to override any default
 settings, you must at least set ``DJANGO_SECRET_KEY`` and most probably your
 database settings. A full set of environment variables for a production
 deployment may look like this::
+
+    VIRTUALENV_ROOT=/srv/example.com/venv
 
     DJANGO_SECRET_KEY=Kaikoh9aiye7air9dae5aigh9ue1Ooc7
 
@@ -130,7 +132,7 @@ files from all apps into the ``STATIC_ROOT``. To do this, run::
 
 You have to rerun this command every time you deploy changes to graphics, CSS
 and JavaScript. For more details, see the Django documentation on `staticfiles
-<https://docs.djangoproject.com/en/1.4/howto/static-files/>`_.
+<https://docs.djangoproject.com/en/1.7/howto/static-files/>`_.
 
 
 Example cronjob

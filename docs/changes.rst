@@ -26,6 +26,10 @@ v2.5.0 (UNRELEASED)
   :file:`.env` file in the project directory for configuration. This makes it
   easier to deploy *comics* on services like Heroku.
 
+- Replaced :mod:`comics.wsgi.local` modules with the ``VIRTUALENV_ROOT``
+  environment variable for specifying the path to the virtualenv the WSGI app
+  should activate when starting.
+
 
 v2.4.3 (2017-04-01)
 ===================
