@@ -41,6 +41,18 @@ v3.0.0 (UNRELEASED)
 
 - Upgraded jQuery, Bootstrap, Font Awesome and Moment.js to latest versions.
 
+**Crawlers**
+
+- Updated all dagbladet.no crawlers to use a common ``DagbladetCrawlerBase``:
+
+  - ``fagprat``
+  - ``firekanta``
+  - ``lunchdb``
+  - ``nemi``
+  - ``pondus``
+  - ``rutetid``
+  - ``zelda``
+
 
 v2.4.3 (2017-04-01)
 ===================
