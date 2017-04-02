@@ -12,8 +12,6 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(DagbladetCrawlerBase):
-    # History capability is 6 releases,
-    # but it is only released three days per week
     history_capable_days = 14
     schedule = 'Mo,We,Fr'
     time_zone = 'Europe/Oslo'
