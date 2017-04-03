@@ -1,9 +1,9 @@
 import datetime
+from collections import OrderedDict
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max
 from django.shortcuts import render
-from django.utils.datastructures import SortedDict
 
 from comics.aggregator.utils import get_comic_schedule
 from comics.core.models import Comic, Release
@@ -12,7 +12,7 @@ from comics.core.models import Comic, Release
 @login_required
 def status(request, num_days=21):
     today = datetime.date.today()
-    timeline = SortedDict()
+    timeline = OrderedDict()
     last = today - datetime.timedelta(days=num_days)
 
     releases = Release.objects.filter(pub_date__gte=last, comic__active=True)
