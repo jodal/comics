@@ -1,13 +1,11 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 
 from comics.accounts import views as account_views
 from comics.accounts.forms import AuthenticationForm, PasswordResetForm
 
 
-urlpatterns = patterns(
-    '',
-
+urlpatterns = [
     # django.contrib.auth
 
     url(r'^login/$',
@@ -73,4 +71,4 @@ urlpatterns = patterns(
 
     url(r'^edit-comics/$',
         account_views.mycomics_edit_comics, name='edit_comics'),
-)
+]

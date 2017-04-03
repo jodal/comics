@@ -1,4 +1,4 @@
-from django.conf.urls import include, patterns
+from django.conf.urls import include, url
 
 from tastypie.api import Api
 
@@ -17,7 +17,6 @@ v1_api.register(ImagesResource())
 v1_api.register(ReleasesResource())
 v1_api.register(SubscriptionsResource())
 
-urlpatterns = patterns(
-    '',
-    (r'', include(v1_api.urls)),
-)
+urlpatterns = [
+    url(r'', include(v1_api.urls)),
+]
