@@ -61,14 +61,14 @@ STATIC_ROOT = os.environ.get(
 #: URL to where static files will be served from
 STATIC_URL = os.environ.get('DJANGO_STATIC_URL', '/static/')
 
-STATICFILES_DIRS = (
+STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT, 'comics', 'static'),
-)
-STATICFILES_FINDERS = (
+]
+STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
-)
+]
 
 TEMPLATES = [
     {
@@ -240,10 +240,10 @@ COMPRESS_HTML = True
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 AUTH_PROFILE_MODULE = 'accounts.UserProfile'
-AUTHENTICATION_BACKENDS = (
+AUTHENTICATION_BACKENDS = [
     'comics.accounts.backends.AuthBackend',
     'django.contrib.auth.backends.ModelBackend'
-)
+]
 
 
 # ### auth settings
@@ -270,7 +270,7 @@ COMICS_MAX_DAYS_IN_FEED = int(
     os.environ.get('COMICS_MAX_DAYS_IN_FEED', 30))
 
 #: SHA256 of blacklisted images
-COMICS_IMAGE_BLACKLIST = (
+COMICS_IMAGE_BLACKLIST = [
     # Empty file
     'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
     # Billy
@@ -293,7 +293,7 @@ COMICS_IMAGE_BLACKLIST = (
     '38eca900236617b2c38768c5e5fa410544fea7a3b79cc1e9bd45043623124dbf',
     # tu.no
     'e90e3718487c99190426b3b38639670d4a3ee39c1e7319b9b781740b0c7a53bf',
-)
+]
 
 #: Comics log file path on disk
 COMICS_LOG_FILENAME = os.environ.get(
