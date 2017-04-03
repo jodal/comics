@@ -27,7 +27,7 @@ def feedback(request):
 
             metadata = 'Client IP address: %s\n' % request.META['REMOTE_ADDR']
             metadata += 'User agent: %s\n' % request.META['HTTP_USER_AGENT']
-            if request.user.is_authenticated():
+            if request.user.is_authenticated:
                 metadata += 'User: %s <%s>\n' % (
                     request.user.username, request.user.email)
             else:
@@ -37,7 +37,7 @@ def feedback(request):
                 form.cleaned_data['message'], metadata)
 
             headers = {}
-            if request.user.is_authenticated():
+            if request.user.is_authenticated:
                 headers['Reply-To'] = request.user.email
 
             mail = EmailMessage(
