@@ -73,7 +73,7 @@ class Comic(models.Model):
 
 class Release(models.Model):
     # Required fields
-    comic = models.ForeignKey(Comic)
+    comic = models.ForeignKey(Comic, on_delete=models.CASCADE)
     pub_date = models.DateField(verbose_name='publication date', db_index=True)
     images = models.ManyToManyField('Image', related_name='releases')
 
@@ -114,7 +114,7 @@ def image_file_path(instance, filename):
 
 class Image(models.Model):
     # Required fields
-    comic = models.ForeignKey(Comic)
+    comic = models.ForeignKey(Comic, on_delete=models.CASCADE)
     file = models.ImageField(
         storage=image_storage, upload_to=image_file_path,
         height_field='height', width_field='width')
