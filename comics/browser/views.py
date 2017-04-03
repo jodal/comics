@@ -3,12 +3,12 @@ import json
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
-from django.utils.decorators import method_decorator
 from django.views.generic import (
     DayArchiveView,
     ListView,
@@ -29,19 +29,6 @@ def comics_list(request):
     })
 
 
-class LoginRequiredMixin(object):
-    """Things common for views requiring the user to be logged in"""
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        # This overide is here so that the login_required decorator can be
-        # applied to all the views subclassing this class.
-        return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
-
-    def get_user(self):
-        return self.request.user
-
-
 class ComicMixin(object):
     """Things common for *all* views of comics"""
 
@@ -51,6 +38,9 @@ class ComicMixin(object):
             self._comic = get_object_or_404(
                 Comic, slug=self.kwargs['comic_slug'])
         return self._comic
+
+    def get_user(self):
+        return self.request.user
 
     def get_my_comics(self):
         return self.get_user().comics_profile.comics.all()
