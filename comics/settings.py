@@ -24,7 +24,7 @@ TEMPLATE_DEBUG = DEBUG
 #: Site admins
 ADMINS = []
 if 'DJANGO_ADMIN' in os.environ:
-    os.environ.append(('Site admin', os.environ['DJANGO_ADMIN']))
+    ADMINS.append(('Site admin', os.environ['DJANGO_ADMIN']))
 
 #: Default from email
 DEFAULT_FROM_EMAIL = os.environ.get(
