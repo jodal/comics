@@ -437,7 +437,7 @@ class SubscriptionsResourceTestCase(TestCase):
             userprofile__user=self.user, comic=comic)
         self.assertEquals(
             response['Location'],
-            'http://testserver/api/v1/subscriptions/%d/' % subscription.pk)
+            '/api/v1/subscriptions/%d/' % subscription.pk)
 
         self.assertEquals(response.content, '')
 

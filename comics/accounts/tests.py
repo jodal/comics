@@ -17,7 +17,7 @@ class LoginTest(TestCase):
 
         self.assertEquals(response.status_code, 302)
         self.assertEquals(
-            response['Location'], 'http://testserver/account/login/?next=/')
+            response['Location'], '/account/login/?next=/')
 
     def test_login_page_includes_email_and_password_fields(self):
         response = self.client.get('/account/login/')
@@ -32,7 +32,7 @@ class LoginTest(TestCase):
             {'email': 'alice@example.com', 'password': 'secret'})
 
         self.assertEquals(response.status_code, 302)
-        self.assertEquals(response['Location'], 'http://testserver/')
+        self.assertEquals(response['Location'], '/')
 
     def test_failed_login_shows_error_on_login_page(self):
         response = self.client.post(
