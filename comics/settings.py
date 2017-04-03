@@ -100,18 +100,16 @@ if DEBUG:
         'django.template.loaders.app_directories.Loader',
     ]
 
-MIDDLEWARE_CLASSES = [
-    # Disabled to prevent BREACH attack, ref.
-    # https://www.djangoproject.com/weblog/2013/aug/06/breach-and-django/
-    # 'django.middleware.gzip.GZipMiddleware',
-    'django.middleware.common.CommonMiddleware',
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.middleware.http.ConditionalGetMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.http.ConditionalGetMiddleware',
-    'comics.core.middleware.MinifyHTMLMiddleware',
+    'comics.core.middleware.minify_html_middleware',
 ]
 
 INSTALLED_APPS = [
@@ -204,7 +202,7 @@ try:
 except ImportError:
     pass
 else:
-    MIDDLEWARE_CLASSES += ['debug_toolbar.middleware.DebugToolbarMiddleware']
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
     INSTALLED_APPS += ['debug_toolbar']
 
 

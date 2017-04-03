@@ -8,8 +8,9 @@ RE_MULTISPACE = re.compile(r'\s{2,}')
 RE_NEWLINE = re.compile(r'\n')
 
 
-class MinifyHTMLMiddleware(object):
-    def process_response(self, request, response):
+def minify_html_middleware(get_response):
+    def middleware(request):
+        response = get_response(request)
         if (
                 'text/html' in response.get('Content-Type', '') and
                 settings.COMPRESS_HTML):
@@ -18,3 +19,4 @@ class MinifyHTMLMiddleware(object):
             response.content = RE_MULTISPACE.sub(' ', response.content)
             response.content = RE_NEWLINE.sub(' ', response.content)
         return response
+    return middleware
