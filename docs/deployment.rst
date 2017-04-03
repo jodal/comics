@@ -77,18 +77,6 @@ For details, please refer to the documentation of the `Apache
 <http://code.google.com/p/modwsgi/>`_ projects.
 
 
-Available settings
-==================
-
-The Django docs got a `list of all available settings
-<https://docs.djangoproject.com/en/1.7/ref/settings/>`_. Some of them are
-repeated here if they are especially relevant for *comics*. In addition,
-*comics* adds some settings of its own, which are all listed here as well.
-
-.. automodule:: comics.settings.base
-    :members:
-
-
 Example ``.env``
 ================
 
