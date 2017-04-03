@@ -26,6 +26,7 @@ class ComicsBaseCommand(BaseCommand):
         self._setup_logging(int(options.get('verbosity', 1)))
 
     def _setup_logging(self, verbosity_level):
+        logging.root.setLevel(logging.NOTSET)
         self._setup_file_logging()
         self._setup_console_logging(verbosity_level)
 
