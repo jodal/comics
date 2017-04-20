@@ -18,6 +18,9 @@ class Crawler(CrawlerBase):
     headers = {'User-Agent': 'Mozilla/4.0'}
 
     def crawl(self, pub_date):
+        # Compensating for website giving 1-year old dates
+        new_year = pub_date.year -1
+        pub_date = pub_date.replace(year=new_year)
         feed = self.parse_feed('http://thegamercat.com/feed/')
         for entry in feed.for_date(pub_date):
             url = entry.summary.src('img')
