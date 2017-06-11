@@ -22,7 +22,7 @@ VIRTUALENV_ROOT = os.environ.get('VIRTUALENV_ROOT')
 if VIRTUALENV_ROOT:
     # Activate virtualenv
     activate_this = os.path.join(VIRTUALENV_ROOT, 'bin', 'activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
+    execfile(activate_this, {'__file__': activate_this})
 
     # Import Django and reload it in case it was loaded outside the virtualenv
     import django
