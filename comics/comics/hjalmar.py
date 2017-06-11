@@ -7,11 +7,11 @@ class ComicData(ComicDataBase):
     language = 'no'
     url = 'http://heltnormalt.no/hjalmar'
     rights = 'Nils Axle Kanten'
+    active = False
 
 
 class Crawler(HeltNormaltCrawlerBase):
     history_capable_date = '2013-01-15'
-    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
 
     def crawl(self, pub_date):
-        return self.crawl_helper('hjalmar', pub_date)
+        pass  # Comic no longer published

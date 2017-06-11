@@ -7,16 +7,12 @@ class ComicData(ComicDataBase):
     language = 'no'
     url = 'http://www.dagbladet.no/tegneserie/kellermannen/'
     rights = 'Martin Kellerman'
+    active = False
 
 
 class Crawler(CrawlerBase):
     history_capable_days = 30
-    schedule = 'Mo,We,Fr'
     time_zone = 'Europe/Oslo'
 
     def crawl(self, pub_date):
-        epoch = self.date_to_epoch(pub_date)
-        url = (
-            'http://www.dagbladet.no/tegneserie/' +
-            'kellermannenarkiv/serve.php?%d' % epoch)
-        return CrawlerImage(url)
+        pass  # Comic no longer published
