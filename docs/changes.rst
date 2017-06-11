@@ -52,6 +52,12 @@ v3.0.0 (UNRELEASED)
   - ``pondus``
   - ``rutetid``
   - ``zelda``
+  - ``rocky``
+
+- Update: ``GoComicsComCrawlerBase`` after site change.
+- Update: ``truthfactsgo`` schedule.
+- Inactive: ``hjalmar``
+- Inactive: ``kellermannen``
 
 
 v2.4.3 (2017-04-01)
