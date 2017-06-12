@@ -13,16 +13,18 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 90
-    schedule = 'Th,Su'
+    history_capable_date = '2008-12-01'
+    schedule = 'Mo,Fr'
     time_zone = 'Europe/Oslo'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://feeds.feedburner.com/Optipess')
-        for entry in feed.for_date(pub_date):
-            if 'Comic' not in entry.tags:
-                continue
-            url = entry.summary.src('img[src*="/comics/"]')
-            title = entry.title
-            text = entry.summary.title('img[src*="/comics/"]')
-            return CrawlerImage(url, title, text)
+        # Find the post for the requested date
+        date_string = pub_date.strftime('%Y/%m/%d')
+        date_page = self.parse_page('http://www.optipess.com/%s' % date_string)
+        post_link = date_page.root.xpath('//h2[@class="post-title"]/a')[0]
+        title = post_link.text
+        # Fetch the actual post
+        page = self.parse_page(post_link.get('href'))
+        url = page.src('img[src*="/comics/"]')
+        text = page.title('img[src*="/comics/"]')
+        return CrawlerImage(url, title, text)
