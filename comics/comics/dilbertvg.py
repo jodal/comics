@@ -8,6 +8,7 @@ class ComicData(ComicDataBase):
     url = 'http://heltnormalt.no/dilbert'
     start_date = '1989-04-16'
     rights = 'Scott Adams'
+    active = False
 
 
 class Crawler(HeltNormaltCrawlerBase):
@@ -15,4 +16,4 @@ class Crawler(HeltNormaltCrawlerBase):
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
 
     def crawl(self, pub_date):
-        return self.crawl_helper('dilbert', pub_date)
+        pass  # Comic no longer published

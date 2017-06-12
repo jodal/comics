@@ -7,6 +7,7 @@ class ComicData(ComicDataBase):
     language = 'no'
     url = 'http://heltnormalt.no/wumo'
     rights = 'Mikael Wulff & Anders Morgenthaler'
+    active = False
 
 
 class Crawler(HeltNormaltCrawlerBase):
@@ -14,4 +15,4 @@ class Crawler(HeltNormaltCrawlerBase):
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
 
     def crawl(self, pub_date):
-        return self.crawl_helper('wumo', pub_date)
+        pass  # Comic no longer published
