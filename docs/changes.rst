@@ -57,6 +57,7 @@ v3.0.0 (UNRELEASED)
 - Update: ``GoComicsComCrawlerBase`` after site change.
 - Update: ``truthfactsgo`` schedule.
 - Update: ``kalscartoon`` to not crash if URL not found.
+- Update: ``roseisrose`` typo in URL.
 - Inactive: ``hjalmar``
 - Inactive: ``kellermannen``
 
