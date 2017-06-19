@@ -22,5 +22,5 @@ class Crawler(CrawlerBase):
         page = self.parse_page('http://www.economist.com/content/kallery')
         url = page.src('.content-image-full img')
         date = pub_date.strftime('%Y%m%d')
-        if date in url:
+        if url and date in url:
             return CrawlerImage(url)
