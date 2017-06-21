@@ -220,13 +220,14 @@ class GoComicsComCrawlerBase(CrawlerBase):
         page_url = 'http://www.gocomics.com/%s/%s' % (
             url_name, pub_date.strftime('%Y/%m/%d/'))
         page = self.parse_page(page_url)
-        url = page.root.xpath('//*[@id="js-item-start"]')[0].get('data-image')
-        date = page.root.xpath('//meta[@property="article:published_time"]')
-        date = date[0].get('content')
+        url = page.src('picture.item-comic-image img')
+
         # If we request a date that doesn't exist
         # we get redirected to todays comic
+        date = page.content('meta[property="article:published_time"]')
         if date != pub_date.strftime('%Y-%m-%d'):
             return
+
         return CrawlerImage(url)
 
 
