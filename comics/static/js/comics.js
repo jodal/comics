@@ -11,7 +11,7 @@ var keyboardNavigation = (function () {
 
     var goToPreviousRelease = function () {
         var $previousRelease = $('.release').filter(function (index) {
-            return $(window).scrollTop() > getPosition($(this));
+            return $(window).scrollTop() > (getPosition($(this)) + 1);
         }).last();
 
         if ($previousRelease.length) {
@@ -23,7 +23,7 @@ var keyboardNavigation = (function () {
 
     var goToNextRelease = function () {
         var $nextRelease = $('.release').filter(function (index) {
-            return $(window).scrollTop() < getPosition($(this));
+            return $(window).scrollTop() < (getPosition($(this)) - 1);
         }).first();
 
         if ($nextRelease.length) {
