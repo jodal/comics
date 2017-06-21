@@ -6,6 +6,7 @@ class ComicData(ComicDataBase):
     name = 'Truth Facts'
     language = 'no'
     url = 'http://heltnormalt.no/truthfacts'
+    active = False
 
 
 class Crawler(HeltNormaltCrawlerBase):
@@ -13,4 +14,4 @@ class Crawler(HeltNormaltCrawlerBase):
     schedule = 'Mo,Tu,We,Th,Fr'
 
     def crawl(self, pub_date):
-        return self.crawl_helper('truth_facts', pub_date)
+        pass  # Comic no longer published

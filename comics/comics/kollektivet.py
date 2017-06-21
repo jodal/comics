@@ -9,6 +9,7 @@ class ComicData(ComicDataBase):
     language = 'no'
     url = 'http://heltnormalt.no/kollektivet'
     rights = 'Torbjørn Lien'
+    active = False
 
 
 class Crawler(HeltNormaltCrawlerBase):
@@ -16,4 +17,4 @@ class Crawler(HeltNormaltCrawlerBase):
     schedule = 'Mo,Tu,We,Th,Fr,Sa'
 
     def crawl(self, pub_date):
-        return self.crawl_helper('kollektivet', pub_date)
+        pass  # Comic no longer published

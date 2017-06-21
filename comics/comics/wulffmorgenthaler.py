@@ -5,7 +5,7 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = 'Wumo'
     language = 'en'
-    url = 'http://kindofnormal.com/wumo/'
+    url = 'http://wumo.com/wumo/'
     start_date = '2001-01-01'
     rights = 'Mikael Wulff & Anders Morgenthaler'
 
@@ -15,10 +15,13 @@ class Crawler(CrawlerBase):
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = 'Europe/Copenhagen'
 
+    # Without User-Agent set, the server returns 403 Forbidden
+    headers = {'User-Agent': 'Mozilla/4.0'}
+
     def crawl(self, pub_date):
-        page_url = 'http://kindofnormal.com/wumo/%s' % (
+        page_url = 'http://wumo.com/wumo/%s' % (
             pub_date.strftime('%Y/%m/%d'))
         page = self.parse_page(page_url)
-        url = page.href('link[rel="image_src"]')
-        title = page.alt('img[src="%s"]' % url)
-        return CrawlerImage(url, title)
+        url = page.src('img[src*="/img/wumo/%s"]' % (
+            pub_date.strftime('%Y/%m')), allow_multiple=True)
+        return CrawlerImage(url[0])

@@ -7,6 +7,7 @@ class ComicData(ComicDataBase):
     language = 'no'
     url = 'http://heltnormalt.no/tommytigern'
     rights = 'Bill Watterson'
+    active = False
 
 
 class Crawler(HeltNormaltCrawlerBase):
@@ -14,4 +15,4 @@ class Crawler(HeltNormaltCrawlerBase):
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
 
     def crawl(self, pub_date):
-        return self.crawl_helper('tommytigern', pub_date)
+        pass  # Comic no longer published
