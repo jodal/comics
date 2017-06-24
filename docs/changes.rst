@@ -55,14 +55,14 @@ v3.0.0 (UNRELEASED)
   - ``rocky``
 
 - Update: ``GoComicsComCrawlerBase`` after site change
-- Update ``wulffmorgenthaler`` after site change
-- Update: ``truthfactsgo`` schedule.
 - Update: ``kalscartoon`` to not crash if URL not found
-- Update: ``roseisrose`` typo in URL
 - Update: ``optipess`` after feed change
+- Update: ``roseisrose`` typo in URL
+- Update: ``truthfactsgo`` schedule
+- Update: ``wulffmorgenthaler`` after site change
+- Inactive: ``dilbertvg``
 - Inactive: ``hjalmar``
 - Inactive: ``kellermannen``
-- Inactive: ``dilbertvg``
 - Inactive: ``kollektivet``
 - Inactive: ``tommyogtigern``
 - Inactive: ``truthfacts``
