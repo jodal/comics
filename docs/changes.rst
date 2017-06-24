@@ -55,6 +55,7 @@ v3.0.0 (UNRELEASED)
   - ``rocky``
 
 - Update: ``GoComicsComCrawlerBase`` after site change
+- Update: ``axecop`` to not crash if URL not found
 - Update: ``kalscartoon`` to not crash if URL not found
 - Update: ``optipess`` after feed change
 - Update: ``roseisrose`` typo in URL
