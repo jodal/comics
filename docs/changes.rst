@@ -41,6 +41,11 @@ v3.0.0 (UNRELEASED)
 
 - Upgraded jQuery, Bootstrap, Font Awesome and Moment.js to latest versions.
 
+**Browser**
+
+- Fix j/k keyboard navigation which didn't work on all Firefox versions. (PR:
+  #91)
+
 **Crawlers**
 
 - Updated all dagbladet.no crawlers to use a common ``DagbladetCrawlerBase``:
