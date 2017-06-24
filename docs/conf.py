@@ -19,10 +19,10 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 project = u'comics'
-copyright = u'2009-2015, Stein Magnus Jodal'
+copyright = u'2009-2017, Stein Magnus Jodal'
 
-version = '2.4'
-release = '2.4.3'
+version = '3.0'
+release = '3.0.0'
 
 exclude_trees = ['_build']
 
