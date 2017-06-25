@@ -92,12 +92,6 @@
                     <li class="{{ active.secret_key|yesno:"active," }}">
                       <a href="{% url "secret_key" %}">Secret key</a>
                     </li>
-                    {% url "import_named_set" as import_named_set_url %}
-                    {% if import_named_set_url %}
-                      <li class="{{ active.import_named_set|yesno:"active," }}">
-                        <a href="{{ import_named_set_url }}">Import comic set</a>
-                      </li>
-                    {% endif %}
                     <li class="divider"></li>
                     <li>
                       <a href="{% url "logout" %}">Logout</a>

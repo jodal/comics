@@ -119,11 +119,6 @@
         <div class="alert alert-info">
           <strong>No comics found in my comics.</strong>
           You can <a href="{% url "comics_list" %}">browse available comics</a>.
-          {% url "import_named_set" as import_named_set_url %}
-          {% if import_named_set_url %}
-            Alternatively, you can
-            <a href="{{ import_named_set_url }}">import an old comic set</a>.
-          {% endif %}
         </div>
       {% endifequal %}
 
