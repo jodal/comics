@@ -1,0 +1,35 @@
+{% extends "account/base.html" %}
+{% load bootstrap %}
+
+{% block title %}Registration{% endblock %}
+
+{% block content %}
+
+<h1 class="page-header">
+  Register
+  <small>a new account</small>
+</h1>
+
+<p>
+  Already have an account? Then please <a href="{{ login_url }}">login</a>.
+</p>
+
+<form method="post" action="{% url "account_signup" %}" class="form-horizontal">
+  {% csrf_token %}
+
+  {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+  {% endif %}
+
+  {{ form|bootstrap_horizontal }}
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-primary">
+        Register
+      </button>
+    </div>
+  </div>
+</form>
+
+{% endblock %}

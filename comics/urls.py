@@ -14,7 +14,8 @@ urlpatterns = [
         template_name='robots.txt', content_type='text/plain')),
 
     # User accounts management
-    url(r'^account/', include('comics.accounts.urls')),
+    url(r'^accounts/', include('allauth.urls')),
+    url(r'^me/', include('comics.accounts.urls')),
 
     # API
     url(r'^api/', include('comics.api.urls')),

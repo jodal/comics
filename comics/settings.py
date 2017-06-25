@@ -81,6 +81,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.i18n',
                 'django.template.context_processors.media',
+                'django.template.context_processors.request',
                 'django.template.context_processors.static',
                 'django.contrib.messages.context_processors.messages',
                 'comics.core.context_processors.site_settings',
@@ -113,16 +114,17 @@ MIDDLEWARE = [
 ]
 
 INSTALLED_APPS = [
+    # Django apps
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
-    'bootstrapform',
-    'compressor',
-    'tastypie',
+
+    # Our apps
     'comics.core',
     'comics.accounts',
     'comics.aggregator',
@@ -130,6 +132,13 @@ INSTALLED_APPS = [
     'comics.browser',
     'comics.help',
     'comics.status',
+
+    # Third party apps
+    'allauth',
+    'allauth.account',
+    'bootstrapform',
+    'compressor',
+    'tastypie',
 ]
 
 ROOT_URLCONF = 'comics.urls'
@@ -235,13 +244,24 @@ COMPRESS_HTML = True
 
 # ### django.contrib.auth settings
 
-LOGIN_URL = 'login'
+LOGIN_URL = 'account_login'
 LOGIN_REDIRECT_URL = '/'
 AUTH_PROFILE_MODULE = 'accounts.UserProfile'
 AUTHENTICATION_BACKENDS = [
-    'comics.accounts.backends.AuthBackend',
-    'django.contrib.auth.backends.ModelBackend'
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
+
+
+# ### django-allauth settings
+
+SITE_ID = 1
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_SUBJECT_PREFIX = '[%s] ' % (
+    os.environ.get('COMICS_SITE_TITLE', 'example.com'))
+ACCOUNT_USERNAME_REQUIRED = False
 
 
 # ### Tastypie settings

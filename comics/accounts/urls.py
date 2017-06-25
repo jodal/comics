@@ -2,39 +2,10 @@ from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 
 from comics.accounts import views as account_views
-from comics.accounts.forms import AuthenticationForm, PasswordResetForm
 
 
 urlpatterns = [
     # django.contrib.auth
-
-    url(r'^login/$',
-        auth_views.login,
-        {
-            'authentication_form': AuthenticationForm,
-            'extra_context': {'active': {'login': True}},
-            'template_name': 'auth/login.html',
-        },
-        name='login'),
-    url(r'^logout/$',
-        auth_views.logout,
-        {'next_page': '/account/login/'},
-        name='logout'),
-
-    url(r'^password/change/$',
-        auth_views.password_change,
-        {
-            'template_name': 'auth/password_change.html',
-            'extra_context': {'active': {
-                'account': True,
-                'password_change': True,
-            }},
-        },
-        name='password_change'),
-    url(r'^password/change/done/$',
-        auth_views.password_change_done,
-        {'template_name': 'auth/password_change_done.html'},
-        name='password_change_done'),
 
     url(r'^password/reset/$',
         auth_views.password_reset,
@@ -42,7 +13,6 @@ urlpatterns = [
             'template_name': 'auth/password_reset.html',
             'email_template_name': 'auth/password_reset_email.txt',
             'subject_template_name': 'auth/password_reset_email_subject.txt',
-            'password_reset_form': PasswordResetForm,
         },
         name='password_reset'),
     url(r'^password/reset/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',

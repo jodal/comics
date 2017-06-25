@@ -39,26 +39,31 @@
             <div class="collapse navbar-collapse" id="site-menu">
               <ul class="nav navbar-nav">
               {% if user.is_authenticated %}
-                <li class="{{ active.comics|yesno:"active," }}" >
+                <li class="{{ active.comics|yesno:"active," }}">
                   <a href="{% url "mycomics_latest" %}">
                     <i class="fa fa-th-large"></i>
                     My comics</a>
                 </li>
-                <li class="{{ active.comics_list|yesno:"active," }}" >
+                <li class="{{ active.comics_list|yesno:"active," }}">
                   <a href="{% url "comics_list" %}">
                     <i class="fa fa-list"></i>
                     All comics</a>
                 </li>
-                <li class="{{ active.status|yesno:"active," }}" >
+                <li class="{{ active.status|yesno:"active," }}">
                   <a href="{% url "status" %}">
                     <i class="fa fa-download"></i>
                     Crawler status</a>
                 </li>
               {% else %}
-                <li class="{{ active.login|yesno:"active," }}" >
-                  <a href="{% url "login" %}">
+                <li class="{{ active.login|yesno:"active," }}">
+                  <a href="{% url "account_login" %}">
                     <i class="fa fa-sign-in"></i>
                     Login</a>
+                </li>
+                <li>
+                  <a href="{% url "account_signup" %}">
+                    <i class="fa fa-plus"></i>
+                    Register</a>
                 </li>
               {% endif %}
               </ul>
@@ -75,15 +80,18 @@
                     <li class="{{ active.account_details|yesno:"active," }}">
                       <a href="{% url "account" %}">Account details</a>
                     </li>
-                    <li class="{{ active.password_change|yesno:"active," }}">
-                      <a href="{% url "password_change" %}">Change password</a>
+                    <li>
+                      <a href="{% url "account_email" %}">E-mail addresses</a>
+                    </li>
+                    <li>
+                      <a href="{% url "account_change_password" %}">Change password</a>
                     </li>
                     <li class="{{ active.secret_key|yesno:"active," }}">
                       <a href="{% url "secret_key" %}">Secret key</a>
                     </li>
                     <li class="divider"></li>
                     <li>
-                      <a href="{% url "logout" %}">Logout</a>
+                      <a href="{% url "account_logout" %}">Logout</a>
                     </li>
                   </ul>
                 </li>
@@ -98,7 +106,7 @@
 
         {% if messages %}
           {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
+            <div class="alert alert-{{ message.tags }} {% if "error" in message.tags %}alert-danger{% endif %}">
               <a class="close" data-dismiss="alert">×</a>
               {{ message }}
             </div>

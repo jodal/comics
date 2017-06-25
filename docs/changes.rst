@@ -27,7 +27,13 @@ v3.0.0 (UNRELEASED)
 - New dependencies:
 
   - dj-database-url
+  - django-allauth
   - python-dotenv
+
+- Removed dependencies:
+
+  - django-invitation (was bundled with *comics*)
+  - django-registration
 
 - Dependencies with new minimum versions:
 
