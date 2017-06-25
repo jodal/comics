@@ -1,9 +1,9 @@
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import EmailMessage
-from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 
 from comics.help.forms import FeedbackForm
 
