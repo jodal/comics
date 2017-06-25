@@ -38,7 +38,7 @@ class UserProfile(models.Model):
 
 class Subscription(models.Model):
     userprofile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    comic = models.ForeignKey(Comic)
+    comic = models.ForeignKey(Comic, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'comics_user_profile_comics'
