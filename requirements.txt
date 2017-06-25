@@ -1,4 +1,4 @@
-Django >= 1.10, < 1.11
+Django >= 1.11, < 1.12
 
 # For loading settings from env
 python-dotenv
