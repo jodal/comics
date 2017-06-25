@@ -102,7 +102,7 @@ class Release(models.Model):
 
 
 # Let all created dirs and files be writable by the group
-os.umask(0002)
+os.umask(0o002)
 
 image_storage = FileSystemStorage(
     location=settings.MEDIA_ROOT, base_url=settings.MEDIA_URL)
