@@ -136,6 +136,7 @@ INSTALLED_APPS = [
     # Third party apps
     'allauth',
     'allauth.account',
+    'invitations',  # After allauth
     'bootstrapform',
     'compressor',
     'tastypie',
@@ -256,12 +257,19 @@ AUTHENTICATION_BACKENDS = [
 # ### django-allauth settings
 
 SITE_ID = 1
+ACCOUNT_ADAPTER = 'invitations.models.InvitationsAdapter'
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_EMAIL_SUBJECT_PREFIX = '[%s] ' % (
     os.environ.get('COMICS_SITE_TITLE', 'example.com'))
 ACCOUNT_USERNAME_REQUIRED = False
+
+
+# ### django-invitations settings
+
+INVITATIONS_ADAPTER = ACCOUNT_ADAPTER
+INVITATIONS_INVITATION_ONLY = os.environ.get('INVITATION_ONLY') == 'true'
 
 
 # ### Tastypie settings

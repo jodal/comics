@@ -28,6 +28,7 @@ v3.0.0 (UNRELEASED)
 
   - dj-database-url
   - django-allauth
+  - django-invitations
   - python-dotenv
 
 - Removed dependencies:

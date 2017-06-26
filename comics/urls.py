@@ -15,6 +15,9 @@ urlpatterns = [
 
     # User accounts management
     url(r'^accounts/', include('allauth.urls')),
+    url(
+        r'^invitations/',
+        include('invitations.urls', namespace='invitations')),
     url(r'^me/', include('comics.accounts.urls')),
 
     # API

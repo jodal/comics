@@ -101,11 +101,13 @@ deployment may look like this::
 
     DATABASE_URL=postgres://comics:topsecret@localhost:5432/comics
 
+    INVITATION_ONLY=true
+
     MEMCACHED_URL=127.0.0.1:11211
 
 Of course, you should change most, if not all, of these settings for your own
-installation. If your are not running a *memcached* server, remove the part on
-caching from your ``local.py``.
+installation. If your are not running a *memcached* server, remove
+`MEMCACHED_URL` variable from your environment.
 
 
 .. _collecting-static-files:
