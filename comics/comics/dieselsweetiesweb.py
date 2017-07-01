@@ -20,7 +20,7 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             if not hasattr(entry, 'summary'):
                 continue
-            url = entry.summary.src('img[src*="/strips/"]')
+            url = entry.summary.src('img[src*="/strips666/"]')
             title = entry.title
-            text = entry.summary.alt('img[src*="/strips/"]')
+            text = entry.summary.alt('img[src*="/strips666/"]')
             return CrawlerImage(url, title, text)
