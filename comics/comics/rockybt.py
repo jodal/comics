@@ -4,15 +4,15 @@ from comics.comics.rocky import ComicData as RockyData
 
 class ComicData(RockyData):
     name = 'Rocky (bt.no)'
-    url = 'http://www.bt.no/bergenpuls/tegneserier/tegneserier_rocky/'
+    url = 'https://www.bt.no/kultur/tegneserier/'
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 162
+    history_capable_date = '2008-07-01'
     schedule = 'Mo,Tu,We,Th,Fr,Sa'
     time_zone = 'Europe/Oslo'
 
     def crawl(self, pub_date):
-        url = 'http://www.bt.no/external/cartoon/rocky/%s.gif' % (
+        url = 'https://cartoon-prod.schibsted.tech/rocky/%s.gif' % (
             pub_date.strftime('%d%m%y'),)
         return CrawlerImage(url)
