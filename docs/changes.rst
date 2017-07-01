@@ -66,6 +66,9 @@ v3.0.0 (UNRELEASED)
 - Update: ``roseisrose`` typo in URL
 - Update: ``truthfactsgo`` schedule
 - Update: ``wulffmorgenthaler`` after site change
+- Update: ``pondusbt`` after site change
+- Update: ``zeldabt`` after site change
+- Update: ``rockybt`` after site change
 - Inactive: ``dilbertvg``
 - Inactive: ``hjalmar``
 - Inactive: ``kellermannen``
