@@ -63,9 +63,13 @@ v3.0.0 (UNRELEASED)
 - Update: ``axecop`` to not crash if URL not found
 - Update: ``kalscartoon`` to not crash if URL not found
 - Update: ``optipess`` after feed change
+- Update: ``dieselsweetiesweb`` after feed change
 - Update: ``roseisrose`` typo in URL
 - Update: ``truthfactsgo`` schedule
 - Update: ``wulffmorgenthaler`` after site change
+- Update: ``pondusbt`` after site change
+- Update: ``zeldabt`` after site change
+- Update: ``rockybt`` after site change
 - Inactive: ``dilbertvg``
 - Inactive: ``hjalmar``
 - Inactive: ``kellermannen``

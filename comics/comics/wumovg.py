@@ -12,7 +12,6 @@ class ComicData(ComicDataBase):
 
 class Crawler(HeltNormaltCrawlerBase):
     history_capable_date = '2013-01-26'
-    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
 
     def crawl(self, pub_date):
         pass  # Comic no longer published
