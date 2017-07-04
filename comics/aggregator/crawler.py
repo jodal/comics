@@ -1,5 +1,6 @@
 import datetime
 import httplib
+import json
 import socket
 import time
 import urllib2
@@ -277,3 +278,20 @@ class DagbladetCrawlerBase(CrawlerBase):
         url = article.find('.//img').get('src')
 
         return CrawlerImage(url)
+
+
+class CreatorsCrawlerBase(CrawlerBase):
+    """Base comics crawler for all comics posted at creators.com"""
+    headers = {'User-Agent': 'Mozilla/5.0'}
+
+    def crawl_helper(self, feature_id, pub_date):
+        url = 'https://www.creators.com/api/features/get_release_dates?'
+        url += 'feature_id=%s&year=%s' % (feature_id, pub_date.strftime('%Y'))
+        req = urllib2.Request(url, None, self.headers)
+        response = urllib2.urlopen(req)
+        releases = json.load(response)
+        for release in releases:
+            if release['release'] == pub_date.strftime('%Y-%m-%d'):
+                page = self.parse_page(release['url'])
+                url = page.src('img[itemprop="image"]')
+                return CrawlerImage(url)

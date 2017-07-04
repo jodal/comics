@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import CreatorsCrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -11,15 +11,10 @@ class ComicData(ComicDataBase):
     rights = 'Frank Cho'
 
 
-class Crawler(CrawlerBase):
-    history_capable_days = 19
+class Crawler(CreatorsCrawlerBase):
+    history_capable_date = '2006-11-21'
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed(
-            'http://www.creators.com/comics/liberty-meadows.rss')
-        for entry in feed.for_date(pub_date):
-            page = self.parse_page(entry.link)
-            url = page.src('img[src*="_thumb"]').replace('thumb', 'image')
-            return CrawlerImage(url)
+        return self.crawl_helper('153', pub_date)
