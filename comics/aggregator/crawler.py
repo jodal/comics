@@ -285,8 +285,11 @@ class CreatorsCrawlerBase(CrawlerBase):
     headers = {'User-Agent': 'Mozilla/5.0'}
 
     def crawl_helper(self, feature_id, pub_date):
-        url = 'https://www.creators.com/api/features/get_release_dates?'
-        url += 'feature_id=%s&year=%s' % (feature_id, pub_date.strftime('%Y'))
+        url = (
+            'https://www.creators.com/api/features/get_release_dates?'
+            'feature_id=%s&year=%s'
+        ) % (feature_id, pub_date.year)
+
         req = urllib2.Request(url, None, self.headers)
         response = urllib2.urlopen(req)
         releases = json.load(response)
