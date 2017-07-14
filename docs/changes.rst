@@ -48,6 +48,7 @@ v3.0.0 (UNRELEASED)
 
 **Crawlers**
 
+- Add: ``dogsofckennel``
 - Updated all dagbladet.no crawlers to use a common ``DagbladetCrawlerBase``:
 
   - ``fagprat``
