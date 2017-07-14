@@ -3,18 +3,16 @@ from comics.core.comic_data import ComicDataBase
 
 
 class ComicData(ComicDataBase):
-    name = 'Liberty Meadows'
+    name = 'Dogs of C-Kennel'
     language = 'en'
-    url = 'http://www.creators.com/comics/liberty-meadows.html'
-    start_date = '1997-03-30'
-    end_date = '2001-12-31'
-    rights = 'Frank Cho'
+    url = 'https://www.creators.com/read/dogs-of-c-kennel'
+    rights = 'Mason Mastroianni, Mick Mastroianni, Johnny Hart'
 
 
 class Crawler(CreatorsCrawlerBase):
-    history_capable_date = '2006-11-21'
+    history_capable_date = '2007-02-12'
     schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = 'US/Pacific'
 
     def crawl(self, pub_date):
-        return self.crawl_helper('153', pub_date)
+        return self.crawl_helper('179', pub_date)
