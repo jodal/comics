@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import KingFeaturesCrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -10,24 +10,10 @@ class ComicData(ComicDataBase):
     rights = 'Dan Piraro'
 
 
-class Crawler(CrawlerBase):
-    history_capable_days = 40
-    schedule = 'We,Sa'
+class Crawler(KingFeaturesCrawlerBase):
+    history_capable_date = '1996-02-04'
+    schedule = 'Mo,Tu,We,Th,Fr,Sa,Su'
     time_zone = 'US/Eastern'
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://bizarrocomics.com/feed/')
-
-        for entry in feed.for_date(pub_date):
-            if 'daily Bizarros' not in entry.tags:
-                continue
-
-            page = self.parse_page(entry.link)
-
-            results = []
-            for url in page.src('img.size-full', allow_multiple=True):
-                results.append(CrawlerImage(url))
-
-            if results:
-                results[0].title = entry.title
-                return results
+        return self.crawl_helper('bizarro.com', pub_date)

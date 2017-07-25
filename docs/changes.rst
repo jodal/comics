@@ -62,6 +62,7 @@ v3.0.0 (UNRELEASED)
 
 - Update: ``GoComicsComCrawlerBase`` after site change
 - Update: ``axecop`` to not crash if URL not found
+- Update: ``bizarro`` after feed change
 - Update: ``dieselsweetiesweb`` after feed change
 - Update: ``kalscartoon`` to not crash if URL not found
 - Update: ``optipess`` after feed change
