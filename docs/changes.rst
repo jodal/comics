@@ -49,6 +49,7 @@ v3.0.0 (UNRELEASED)
 **Crawlers**
 
 - Add: ``dogsofckennel``
+- Add: ``komistriper``
 - Updated all dagbladet.no crawlers to use a common ``DagbladetCrawlerBase``:
 
   - ``fagprat``
@@ -70,8 +71,11 @@ v3.0.0 (UNRELEASED)
 - Update: ``rockybt`` after site change
 - Update: ``roseisrose`` typo in URL
 - Update: ``truthfactsgo`` schedule
+- Update: ``utensokker`` after site change
 - Update: ``wulffmorgenthaler`` after site change
+- Update: ``wyyrd`` after site change
 - Update: ``zeldabt`` after site change
+- Update: ``zits`` to use KingFeaturesCrawlerBase
 - Inactive: ``dilbertvg``
 - Inactive: ``hjalmar``
 - Inactive: ``kellermannen``
