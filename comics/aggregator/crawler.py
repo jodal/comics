@@ -298,3 +298,23 @@ class CreatorsCrawlerBase(CrawlerBase):
                 page = self.parse_page(release['url'])
                 url = page.src('img[itemprop="image"]')
                 return CrawlerImage(url)
+
+
+class NettserierCrawlerBase(CrawlerBase):
+    """Base comics crawler for all comics posted at nettserier.no"""
+    time_zone = 'Europe/Oslo'
+
+    def crawl_helper(self, short_name, pub_date):
+        page_url = 'https://nettserier.no/%s/' % (short_name)
+        page = self.parse_page(page_url)
+        site_date = page.text('p[class="comic-pubtime"]')
+        f = 'Published %Y-%m-%d %H:%M:%S'
+        date = datetime.datetime.strptime(site_date, f)
+
+        if pub_date == date.date():
+            # Get comic-text div which contains title and text for the comic
+            comic_text = page.root.xpath('//div[@class="comic-text"]')[0]
+            title = comic_text.find('h4').text
+            text = comic_text.find('p').text
+            url = page.src('img[src*="/_ns/files"]')
+            return CrawlerImage(url, title, text)
