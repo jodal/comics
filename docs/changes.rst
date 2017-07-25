@@ -49,6 +49,7 @@ v3.0.0 (UNRELEASED)
 **Crawlers**
 
 - Add: ``dogsofckennel``
+- Add: ``ikkesaro``
 - Add: ``komistriper``
 - Updated all dagbladet.no crawlers to use a common ``DagbladetCrawlerBase``:
 
