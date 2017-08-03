@@ -1,2 +1,2 @@
 # Mocking in unit tests
-mock
+mock==2.0.0
