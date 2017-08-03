@@ -2,6 +2,6 @@ flake8
 flake8-blind-except
 flake8-comprehensions
 flake8-import-order
-flake8-quotes
+flake8-quotes==0.11.0
 flake8-tidy-imports
 pep8-naming
