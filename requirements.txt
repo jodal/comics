@@ -25,7 +25,7 @@ cssmin >= 0.1, < 0.3
 jsmin >= 2.0, < 2.3
 
 # For user registration with email verification
-django-registration >= 0.8, < 0.9
+django-registration==2.2
 
 # For user invitation
 -e ./django-invitation
