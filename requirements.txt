@@ -7,7 +7,7 @@ python-dotenv
 dj-database-url
 
 # For timezone travel
-pytz
+pytz==2017.2
 
 # For image handling
 Pillow >= 1.7, < 5
