@@ -1,7 +1,7 @@
 Django >= 1.7, < 1.8
 
 # For loading settings from env
-python-dotenv
+python-dotenv==0.6.4
 
 # For converting database URLs to Django format
 dj-database-url
