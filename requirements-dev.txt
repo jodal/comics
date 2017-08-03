@@ -8,7 +8,7 @@
 -rrequirements-tests.txt
 
 # Task runner
-tox
+tox==2.7.0
 
 # Debugging of database queries, etc.
 django-debug-toolbar < 1.5  # For Django 1.7 compat
