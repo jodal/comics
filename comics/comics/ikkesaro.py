@@ -3,16 +3,15 @@ from comics.core.comic_data import ComicDataBase
 
 
 class ComicData(ComicDataBase):
-    name = 'Wyyrd'
+    name = 'Ikke Saro'
     language = 'no'
-    url = 'http://wyyrd.nettserier.no/'
-    start_date = '2008-01-14'
-    rights = 'Gard Robot Helset'
+    url = 'http://ikkesaro.nettserier.no/'
+    rights = 'Ladder'
 
 
 class Crawler(NettserierCrawlerBase):
-    history_capable_date = '2008-01-14'
+    history_capable_date = '2016-06-16'
     time_zone = 'Europe/Oslo'
 
     def crawl(self, pub_date):
-        return self.crawl_helper('wyyrd', pub_date)
+        return self.crawl_helper('ikkesaro', pub_date)
