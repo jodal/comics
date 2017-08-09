@@ -305,12 +305,12 @@ class NettserierCrawlerBase(CrawlerBase):
     time_zone = 'Europe/Oslo'
 
     def crawl_helper(self, short_name, pub_date):
-        page_url = 'https://nettserier.no/%s/' % (short_name)
+        page_url = 'https://nettserier.no/%s/' % short_name
         page = self.parse_page(page_url)
         site_date = page.text('p[class="comic-pubtime"]')
-        f = 'Published %Y-%m-%d %H:%M:%S'
-        date = datetime.datetime.strptime(site_date, f)
 
+        date = datetime.datetime.strptime(
+            site_date, 'Published %Y-%m-%d %H:%M:%S')
         if pub_date == date.date():
             # Get comic-text div which contains title and text for the comic
             comic_text = page.root.xpath('//div[@class="comic-text"]')[0]
