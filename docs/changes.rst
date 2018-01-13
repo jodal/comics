@@ -51,6 +51,7 @@ v3.0.0 (UNRELEASED)
 - Add: ``dogsofckennel``
 - Add: ``ikkesaro``
 - Add: ``komistriper``
+- Add: ``lilleberlin``
 - Updated all dagbladet.no crawlers to use a common ``DagbladetCrawlerBase``:
 
   - ``fagprat``
