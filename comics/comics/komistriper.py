@@ -5,9 +5,9 @@ from comics.core.comic_data import ComicDataBase
 
 
 class ComicData(ComicDataBase):
-    name = 'Komistriper'
+    name = 'Samtull'
     language = 'no'
-    url = 'http://aikomi.nettserier.no/'
+    url = 'https://nettserier.no/aikomi/comic/'
     rights = 'Emil Åslund'
     start_date = '2015-01-14'
 
