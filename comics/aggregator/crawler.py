@@ -268,8 +268,9 @@ class DagbladetCrawlerBase(CrawlerBase):
         page_url = 'http://www.dagbladet.no/tegneserie/%s' % short_name
         page = self.parse_page(page_url)
 
-        date_string = pub_date.strftime('%Y-%m-%dT00:00:00+02:00')
-        time = page.root.xpath('//time[@datetime="%s"]' % date_string)
+        date_string = pub_date.strftime('%Y-%m-%dT00:00:00')
+        time = page.root.xpath('//time[contains(@datetime,"%s")]' %
+                               date_string)
 
         if not time:
             return
