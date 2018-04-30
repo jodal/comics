@@ -20,6 +20,7 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             if 'Comics' not in entry.tags:
                 continue
-            url = entry.content0.src('img.size-full')
+            page = self.parse_page(entry.link)
+            url = page.src('img.size-full')
             title = entry.title.replace('Q2Q Comics ', '')
             return CrawlerImage(url, title)
