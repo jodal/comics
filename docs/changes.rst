@@ -63,6 +63,7 @@ v3.0.0 (UNRELEASED)
   - ``rocky``
 
 - Update: ``GoComicsComCrawlerBase`` after site change
+- Update: ``awkwardzombie`` to not crash on invalid date format
 - Update: ``axecop`` to not crash if URL not found
 - Update: ``bizarro`` after feed change
 - Update: ``dieselsweetiesweb`` after feed change

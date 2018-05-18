@@ -27,7 +27,10 @@ class Crawler(CrawlerBase):
         page_date = page_date.replace('nd,', ',')
         page_date = page_date.replace('rd,', ',')
         page_date = page_date.replace('th,', ',')
-        page_date = self.string_to_date(page_date, '%B %d, %Y')
+        try:
+            page_date = self.string_to_date(page_date, '%B %d, %Y')
+        except ValueError:
+            return
         if page_date != pub_date:
             return
 
