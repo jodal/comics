@@ -7,13 +7,11 @@ class ComicData(ComicDataBase):
     language = 'no'
     url = 'http://www.dagbladet.no/tegneserie/rocky/'
     start_date = '1998-01-01'
+    end_date = '2018-07-14'
+    active = False
     rights = 'Martin Kellerman'
 
 
 class Crawler(DagbladetCrawlerBase):
-    history_capable_days = 14
-    schedule = 'Mo,Tu,We,Th,Fr,Sa'
-    time_zone = 'Europe/Oslo'
-
     def crawl(self, pub_date):
-        return self.crawl_helper('rocky', pub_date)
+        pass  # Comic no longer published
