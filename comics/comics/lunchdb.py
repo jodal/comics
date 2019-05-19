@@ -9,6 +9,7 @@ class ComicData(ComicDataBase):
     language = 'no'
     url = 'http://www.dagbladet.no/tegneserie/lunch/'
     start_date = '2009-10-21'
+    active = False
     rights = 'Børge Lund'
 
 
@@ -18,4 +19,4 @@ class Crawler(DagbladetCrawlerBase):
     time_zone = 'Europe/Oslo'
 
     def crawl(self, pub_date):
-        return self.crawl_helper('lunch', pub_date)
+        pass  # Comic no longer published on this site
