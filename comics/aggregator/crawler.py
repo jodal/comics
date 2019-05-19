@@ -192,14 +192,12 @@ class CrawlerBase(object):
         return int(time.mktime(local_midnight.utctimetuple()))
 
 
-class KingFeaturesCrawlerBase(CrawlerBase):
-    """Base comic crawler for King Features comics"""
+class ComicsKingdomCrawlerBase(CrawlerBase):
+    """Base comic crawler for Comics Kingdom comics"""
 
-    def crawl_helper(self, domain, pub_date):
-        date = pub_date.strftime('%B-')
-        date += pub_date.strftime('%d').lstrip('0')
-        date += pub_date.strftime('-%Y')
-        page_url = 'http://%s/comics/%s' % (domain, date)
+    def crawl_helper(self, short_name, pub_date):
+        date = pub_date.strftime('%Y-%m-%d')
+        page_url = 'https://www.comicskingdom.com/%s/%s' % (short_name, date)
         page = self.parse_page(page_url)
         url = page.src('img[src*="safr.kingfeatures.com"]')
         return CrawlerImage(url)
