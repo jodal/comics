@@ -275,6 +275,7 @@ class DagbladetCrawlerBase(CrawlerBase):
 
         article = time[0].getparent().getparent()
         url = article.find('.//img').get('src')
+        url = url.replace('_1000', '')
 
         return CrawlerImage(url)
 
