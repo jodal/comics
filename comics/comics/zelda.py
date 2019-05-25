@@ -8,12 +8,9 @@ class ComicData(ComicDataBase):
     url = 'http://www.dagbladet.no/tegneserie/zelda-lille-berlin/'
     start_date = '2012-06-07'
     rights = 'Lina Neidestam'
+    active = False
 
 
 class Crawler(DagbladetCrawlerBase):
-    history_capable_days = 14
-    schedule = 'Mo,Tu,We,Th,Fr,Sa'
-    time_zone = 'Europe/Oslo'
-
     def crawl(self, pub_date):
-        return self.crawl_helper('zelda-lille-berlin', pub_date)
+        pass
