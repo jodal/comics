@@ -13,4 +13,4 @@ class ComicData(ComicDataBase):
 
 class Crawler(DagbladetCrawlerBase):
     def crawl(self, pub_date):
-        pass
+        pass   # Comic no longer published
