@@ -10,7 +10,7 @@ dj-database-url
 pytz
 
 # For image handling
-Pillow >= 1.7, < 5
+Pillow >= 6.2.2
 
 # For crawling comics and the REST API
 lxml >= 3, < 4

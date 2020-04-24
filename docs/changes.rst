@@ -43,7 +43,7 @@ v3.0.0 (UNRELEASED)
 
 - Dependencies with new maximum versions:
 
-  - Pillow >= 1.7, < 5
+  - Pillow >= 6.2.2
   - cssselect >= 0.8, < 2
   - defusedxml >= 0.4, < 0.6
   - django-bootstrap-form >= 3.1, < 3.3
