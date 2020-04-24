@@ -106,14 +106,14 @@ class ComicAggregatorTestCase(TestCase):
     def test_init(self):
         self.assertIsInstance(self.aggregator.config, command.AggregatorConfig)
 
-    def test_init_optparse_config(self):
-        optparse_options_mock = mock.Mock()
-        optparse_options_mock.comic_slugs = None
-        optparse_options_mock.from_date = None
-        optparse_options_mock.to_date = None
-        optparse_options_mock.get.return_value = None
+    def test_init_options(self):
+        options_mock = mock.Mock()
+        options_mock.comic_slugs = None
+        options_mock.from_date = None
+        options_mock.to_date = None
+        options_mock.get.return_value = None
 
-        result = command.Aggregator(optparse_options=optparse_options_mock)
+        result = command.Aggregator(options=options_mock)
 
         self.assertEquals(
             len(self.aggregator.config.comics), len(result.config.comics))

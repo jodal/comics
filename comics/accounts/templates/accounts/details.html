@@ -25,7 +25,7 @@
         <p class="form-control-static">{{ user.last_login|date }}</p>
       </div>
       <div class="col-sm-7">
-        <a href="{% url "logout" %}" class="btn btn-danger btn-xs">
+        <a href="{% url "account_logout" %}" class="btn btn-danger btn-xs">
           Logout now</a>
       </div>
     </div>
@@ -34,27 +34,6 @@
       <label class="col-sm-2 control-label">Date joined</label>
       <div class="col-sm-10">
         <p class="form-control-static">{{ user.date_joined|date }}</p>
-      </div>
-    </div>
-
-    {% for invitation in user.invitations_used.all %}
-      <div class="form-group">
-        <label class="col-sm-2 control-label">Invited by</label>
-        <div class="col-sm-10">
-          <p class="form-control-static">{{ invitation.from_user.email }}</p>
-        </div>
-      </div>
-    {% endfor %}
-
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Invitations sent</label>
-      <div class="col-sm-3">
-        <p class="form-control-static">{{ user.invitations_sent.count }}</p>
-      </div>
-      <div class="col-sm-7">
-        <a href="{% url "invitation_invite" %}"
-          class="btn btn-primary btn-xs">
-          Invite more friends</a>
       </div>
     </div>
 

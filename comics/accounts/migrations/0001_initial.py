@@ -20,7 +20,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False,
                     auto_created=True, primary_key=True)),
-                ('comic', models.ForeignKey(to='core.Comic')),
+                ('comic', models.ForeignKey(to='core.Comic',
+                    on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'comics_user_profile_comics',
@@ -40,7 +41,7 @@ class Migration(migrations.Migration):
                 ('comics', models.ManyToManyField(to='core.Comic',
                     through='accounts.Subscription')),
                 ('user', models.OneToOneField(related_name=b'comics_profile',
-                    to=settings.AUTH_USER_MODEL)),
+                    to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
             options={
                 'db_table': 'comics_user_profile',
@@ -51,7 +52,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='subscription',
             name='userprofile',
-            field=models.ForeignKey(to='accounts.UserProfile'),
+            field=models.ForeignKey(to='accounts.UserProfile',
+                on_delete=models.CASCADE),
             preserve_default=True,
         ),
     ]

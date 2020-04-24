@@ -27,7 +27,19 @@ v3.0.0 (UNRELEASED)
 - New dependencies:
 
   - dj-database-url
+  - django-allauth
+  - django-invitations
   - python-dotenv
+
+- Removed dependencies:
+
+  - django-invitation (was bundled with *comics*)
+  - django-registration
+
+- Dependencies with new minimum versions:
+
+  - Django >= 1.11, < 1.12
+  - django_compressor >= 2.1, < 3
 
 - Dependencies with new maximum versions:
 
@@ -36,7 +48,6 @@ v3.0.0 (UNRELEASED)
   - defusedxml >= 0.4, < 0.6
   - django-bootstrap-form >= 3.1, < 3.3
   - django-tastypie >= 0.12, < 0.14
-  - django_compressor >= 1.1, < 2.0
   - jsmin >= 2.0, < 2.3
 
 - Upgraded jQuery, Bootstrap, Font Awesome and Moment.js to latest versions.

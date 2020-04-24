@@ -1,0 +1,21 @@
+{% extends "account/base.html" %}
+{% load bootstrap %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>Logout <small>from your account</small></h1>
+</div>
+
+<p>Are you sure you want to logout?</p>
+
+<form method="post" action="{% url 'account_logout' %}" class="form">
+  {% csrf_token %}
+  {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+  {% endif %}
+
+  <button type="submit" class="btn btn-danger">Logout</button>
+</form>
+
+{% endblock %}

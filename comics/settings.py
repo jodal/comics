@@ -19,7 +19,6 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 #: Debug mode. Keep off in production.
 DEBUG = os.environ.get('DJANGO_DEBUG') == 'true'
-TEMPLATE_DEBUG = DEBUG
 
 #: Site admins
 ADMINS = []
@@ -62,62 +61,70 @@ STATIC_ROOT = os.environ.get(
 #: URL to where static files will be served from
 STATIC_URL = os.environ.get('DJANGO_STATIC_URL', '/static/')
 
-STATICFILES_DIRS = (
+STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT, 'comics', 'static'),
-)
-STATICFILES_FINDERS = (
+]
+STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
-)
+]
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.contrib.messages.context_processors.messages',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'comics.core.context_processors.site_settings',
-    'comics.core.context_processors.all_comics',
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            # insert your TEMPLATE_DIRS here
+        ],
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.request',
+                'django.template.context_processors.static',
+                'django.contrib.messages.context_processors.messages',
+                'comics.core.context_processors.site_settings',
+                'comics.core.context_processors.all_comics',
+            ],
+            'loaders': [
+                ('django.template.loaders.cached.Loader', [
+                    'django.template.loaders.app_directories.Loader',
+                ]),
+            ],
+        },
+    },
+]
 
-TEMPLATE_LOADERS = (
-    ('django.template.loaders.cached.Loader', (
-        'django.template.loaders.app_directories.Loader',
-    )),
-)
 if DEBUG:
-    TEMPLATE_LOADERS = (
+    TEMPLATES[0]['OPTIONS']['loaders'] = [
         'django.template.loaders.app_directories.Loader',
-    )
+    ]
 
-MIDDLEWARE_CLASSES = [
-    # Disabled to prevent BREACH attack, ref.
-    # https://www.djangoproject.com/weblog/2013/aug/06/breach-and-django/
-    # 'django.middleware.gzip.GZipMiddleware',
-    'django.middleware.common.CommonMiddleware',
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.middleware.http.ConditionalGetMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.http.ConditionalGetMiddleware',
-    'comics.core.middleware.MinifyHTMLMiddleware',
+    'comics.core.middleware.minify_html_middleware',
 ]
 
 INSTALLED_APPS = [
+    # Django apps
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
-    'bootstrapform',
-    'compressor',
-    'invitation',
-    'registration',
-    'tastypie',
+
+    # Our apps
     'comics.core',
     'comics.accounts',
     'comics.aggregator',
@@ -125,6 +132,14 @@ INSTALLED_APPS = [
     'comics.browser',
     'comics.help',
     'comics.status',
+
+    # Third party apps
+    'allauth',
+    'allauth.account',
+    'invitations',  # After allauth
+    'bootstrapform',
+    'compressor',
+    'tastypie',
 ]
 
 ROOT_URLCONF = 'comics.urls'
@@ -197,7 +212,7 @@ try:
 except ImportError:
     pass
 else:
-    MIDDLEWARE_CLASSES += ['debug_toolbar.middleware.DebugToolbarMiddleware']
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
     INSTALLED_APPS += ['debug_toolbar']
 
 
@@ -230,35 +245,31 @@ COMPRESS_HTML = True
 
 # ### django.contrib.auth settings
 
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-AUTH_PROFILE_MODULE = 'accounts.UserProfile'
-AUTHENTICATION_BACKENDS = (
-    'comics.accounts.backends.AuthBackend',
-    'django.contrib.auth.backends.ModelBackend'
-)
-
-
-# ### django-registration settings
-
-#: Number of days an the account activation link will work
-ACCOUNT_ACTIVATION_DAYS = 7
-
+LOGIN_URL = 'account_login'
 LOGIN_REDIRECT_URL = '/'
-REGISTRATION_BACKEND = 'comics.accounts.backends.RegistrationBackend'
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 
 
-# ### django-invitation settings
+# ### django-allauth settings
 
-#: Turn invitations off by default, leaving the site open for user
-#: registrations
-INVITE_MODE = os.environ.get('COMICS_INVITE_MODE') == 'true'
+SITE_ID = 1
+ACCOUNT_ADAPTER = 'invitations.models.InvitationsAdapter'
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_SUBJECT_PREFIX = '[%s] ' % (
+    os.environ.get('COMICS_SITE_TITLE', 'example.com'))
+ACCOUNT_USERNAME_REQUIRED = False
 
-#: Number of days an invitation will be valid
-ACCOUNT_INVITATION_DAYS = 7
 
-#: Number of invitations each existing user can send
-INVITATIONS_PER_USER = 10
+# ### django-invitations settings
+
+INVITATIONS_ADAPTER = ACCOUNT_ADAPTER
+INVITATIONS_INVITATION_ONLY = os.environ.get('INVITATION_ONLY') == 'true'
 
 
 # ### Tastypie settings
@@ -280,7 +291,7 @@ COMICS_MAX_DAYS_IN_FEED = int(
     os.environ.get('COMICS_MAX_DAYS_IN_FEED', 30))
 
 #: SHA256 of blacklisted images
-COMICS_IMAGE_BLACKLIST = (
+COMICS_IMAGE_BLACKLIST = [
     # Empty file
     'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
     # Billy
@@ -303,7 +314,7 @@ COMICS_IMAGE_BLACKLIST = (
     '38eca900236617b2c38768c5e5fa410544fea7a3b79cc1e9bd45043623124dbf',
     # tu.no
     'e90e3718487c99190426b3b38639670d4a3ee39c1e7319b9b781740b0c7a53bf',
-)
+]
 
 #: Comics log file path on disk
 COMICS_LOG_FILENAME = os.environ.get(

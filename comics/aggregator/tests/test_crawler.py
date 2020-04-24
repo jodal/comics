@@ -1,13 +1,13 @@
 import datetime
 
-from django.utils import unittest
+from django.test import TestCase
 
 import pytz
 
 from comics.aggregator import crawler
 
 
-class CurrentDateWhenLocalTZIsUTCTest(unittest.TestCase):
+class CurrentDateWhenLocalTZIsUTCTest(TestCase):
     time_zone_local = 'UTC'
     time_zone_ahead = 'Australia/Sydney'
     time_zone_behind = 'America/New_York'

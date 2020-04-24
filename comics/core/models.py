@@ -3,8 +3,8 @@ import os
 
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
-from django.core.urlresolvers import reverse
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 
 from comics.core.managers import ComicManager
@@ -73,7 +73,7 @@ class Comic(models.Model):
 
 class Release(models.Model):
     # Required fields
-    comic = models.ForeignKey(Comic)
+    comic = models.ForeignKey(Comic, on_delete=models.CASCADE)
     pub_date = models.DateField(verbose_name='publication date', db_index=True)
     images = models.ManyToManyField('Image', related_name='releases')
 
@@ -102,7 +102,7 @@ class Release(models.Model):
 
 
 # Let all created dirs and files be writable by the group
-os.umask(0002)
+os.umask(0o002)
 
 image_storage = FileSystemStorage(
     location=settings.MEDIA_ROOT, base_url=settings.MEDIA_URL)
@@ -114,7 +114,7 @@ def image_file_path(instance, filename):
 
 class Image(models.Model):
     # Required fields
-    comic = models.ForeignKey(Comic)
+    comic = models.ForeignKey(Comic, on_delete=models.CASCADE)
     file = models.ImageField(
         storage=image_storage, upload_to=image_file_path,
         height_field='height', width_field='width')

@@ -1,7 +1,0 @@
-Your {{ site.name }} account have been created.
-
-Follow this link within {{ expiration_days }} day{{ expiration_days|pluralize }} to activate your account:
-
-http://{{ site.domain }}{% url "registration_activate" activation_key %}
-
-If you don't know what this is about, you can safely ignore this email.
