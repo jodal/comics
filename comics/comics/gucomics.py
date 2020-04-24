@@ -34,7 +34,7 @@ class Crawler(CrawlerBase):
         text = text.strip()
         # Reduce any amount of newlines down to two newlines
         text = text.replace('\r', '')
-        text = re.sub('\s*\n\n\s*', '\n\n', text)
+        text = re.sub(r'\s*\n\n\s*', '\n\n', text)
 
         url = page.src('img[alt^="Comic for"]')
         return CrawlerImage(url, title, text)

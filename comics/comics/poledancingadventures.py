@@ -24,7 +24,7 @@ class Crawler(CrawlerBase):
 
             for url in entry.content0.src('img', allow_multiple=True):
                 # Look for NNN-*.jpg to differentiate comics from other images
-                if re.match('.*\/\d\d\d-.*\.jpg', url) is not None:
+                if re.match(r'.*\/\d\d\d-.*\.jpg', url) is not None:
                     results.append(CrawlerImage(url))
 
             if results:

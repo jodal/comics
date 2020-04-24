@@ -23,5 +23,5 @@ class Crawler(CrawlerBase):
             url = entry.summary.src('img[src*="/wp-content/uploads/"]')
             if not url:
                 continue
-            url = re.sub('-\d+x\d+.jpg', '.jpg', url)
+            url = re.sub(r'-\d+x\d+.jpg', '.jpg', url)
             return CrawlerImage(url, title)
