@@ -48,7 +48,10 @@ v3.0.0 (UNRELEASED)
 
 **Crawlers**
 
+- Add: ``bestis``
 - Add: ``dogsofckennel``
+- Add: ``dunce``
+- Add: ``hagarthehorrible``
 - Add: ``ikkesaro``
 - Add: ``komistriper``
 - Updated all dagbladet.no crawlers to use a common ``DagbladetCrawlerBase``:
@@ -62,12 +65,19 @@ v3.0.0 (UNRELEASED)
   - ``zelda``
   - ``rocky``
 
+- Update: ``DagbladetCrawlerBase`` to support different time zones and higher
+  resolution
 - Update: ``GoComicsComCrawlerBase`` after site change
+- Update: ``KingFeaturesCrawlerBase`` with new name and URL
 - Update: ``awkwardzombie`` to not crash on invalid date format
 - Update: ``axecop`` to not crash if URL not found
 - Update: ``bizarro`` after feed change
+- Update: ``calvinandhobbes`` with more history capability
 - Update: ``dieselsweetiesweb`` after feed change
 - Update: ``kalscartoon`` to not crash if URL not found
+- Update: ``komistriper`` with new name
+- Update: ``nemi`` schedule
+- Update: ``nemibt`` schedule
 - Update: ``optipess`` after feed change
 - Update: ``pondusbt`` after site change
 - Update: ``q2qcomics`` after feed change
@@ -83,8 +93,12 @@ v3.0.0 (UNRELEASED)
 - Inactive: ``hjalmar``
 - Inactive: ``kellermannen``
 - Inactive: ``kollektivet``
+- Inactive: ``lunchdb``
+- Inactive: ``pondus``
+- Inactive: ``rockybt``
 - Inactive: ``tommyogtigern``
 - Inactive: ``truthfacts``
+- Inactive: ``zelda``
 
 
 v2.4.3 (2017-04-01)
