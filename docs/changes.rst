@@ -36,19 +36,16 @@ v3.0.0 (UNRELEASED)
   - django-invitation (was bundled with *comics*)
   - django-registration
 
-- Dependencies with new minimum versions:
+- Upgraded dependencies:
 
-  - Django >= 1.11, < 1.12
-  - django_compressor >= 2.1, < 3
-
-- Dependencies with new maximum versions:
-
-  - Pillow >= 6.2.2
-  - cssselect >= 0.8, < 2
-  - defusedxml >= 0.4, < 0.6
-  - django-bootstrap-form >= 3.1, < 3.3
-  - django-tastypie >= 0.12, < 0.14
-  - jsmin >= 2.0, < 2.3
+  - Django 1.11
+  - cssselect
+  - defusedxml
+  - django-bootstrap-form
+  - django-tastypie
+  - django_compressor
+  - jsmin
+  - Pillow
 
 - Upgraded jQuery, Bootstrap, Font Awesome and Moment.js to latest versions.
 
