@@ -77,7 +77,7 @@ v3.0.0 (UNRELEASED)
   resolution
 - Update: ``GoComicsComCrawlerBase`` after site change
 - Update: ``KingFeaturesCrawlerBase`` with new name and URL
-- Update: ``awkwardzombie`` to not crash on invalid date format
+- Update: ``awkwardzombie`` after site change
 - Update: ``axecop`` to not crash if URL not found
 - Update: ``bizarro`` after feed change
 - Update: ``calvinandhobbes`` with more history capability

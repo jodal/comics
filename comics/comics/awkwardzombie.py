@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_date = "2006-09-20"
+    history_capable_days = 8
     schedule = "Mo"
     time_zone = "US/Eastern"
 
@@ -19,26 +19,25 @@ class Crawler(CrawlerBase):
     headers = {"User-Agent": "Mozilla/4.0"}
 
     def crawl(self, pub_date):
-        page = self.parse_page(
-            pub_date.strftime("http://www.awkwardzombie.com/?comic=%m%d%y")
-        )
+        page = self.parse_page("https://www.awkwardzombie.com/")
 
-        page_date = page.text("#date").strip()
-        page_date = page_date.replace("st,", ",")
-        page_date = page_date.replace("nd,", ",")
-        page_date = page_date.replace("rd,", ",")
-        page_date = page_date.replace("th,", ",")
+        page_epoch = page.src("#cc-comic")
+        page_epoch = page_epoch.rsplit("/", 1)[-1]
+        page_epoch = page_epoch.split("-", 1)[0]
         try:
-            page_date = self.string_to_date(page_date, "%B %d, %Y")
+            page_epoch = int(page_epoch)
         except ValueError:
             return
-        if page_date != pub_date:
+
+        pub_date_start = self.date_to_epoch(pub_date)
+        pub_date_end = pub_date_start + 24 * 60 * 60
+        if not (pub_date_start < page_epoch < pub_date_end):
             return
 
         result = [
             CrawlerImage(url)
-            for url in page.src("#comic img", allow_multiple=True)
+            for url in page.src("#cc-comic", allow_multiple=True)
         ]
         if result:
-            result[0].title = page.text(".title").strip()
+            result[0].title = page.title("#cc-comic").strip()
         return result
