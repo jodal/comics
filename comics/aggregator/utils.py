@@ -1,6 +1,6 @@
 from comics.comics import get_comic_module
 
-SCHEDULE_DAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+SCHEDULE_DAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
 
 
 def get_comic_schedule(comic):
@@ -9,4 +9,4 @@ def get_comic_schedule(comic):
 
     if not schedule:
         return []
-    return [SCHEDULE_DAYS.index(day) for day in schedule.split(',')]
+    return [SCHEDULE_DAYS.index(day) for day in schedule.split(",")]

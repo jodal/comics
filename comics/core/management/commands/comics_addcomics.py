@@ -5,11 +5,16 @@ from comics.core.command_utils import ComicsBaseCommand
 class Command(ComicsBaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
-            '-c', '--comic',
-            action='append', dest='comic_slugs', metavar='COMIC',
+            "-c",
+            "--comic",
+            action="append",
+            dest="comic_slugs",
+            metavar="COMIC",
             help=(
-                'Comic to add to site, repeat for multiple. ' +
-                'Use "-c all" to add all.'))
+                "Comic to add to site, repeat for multiple. "
+                + 'Use "-c all" to add all.'
+            ),
+        )
 
     def handle(self, *args, **options):
         super(Command, self).handle(*args, **options)

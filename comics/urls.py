@@ -10,39 +10,37 @@ from django.views.static import serve
 
 urlpatterns = [
     # Robots not welcome
-    url(r'^robots\.txt$', TemplateView.as_view(
-        template_name='robots.txt', content_type='text/plain')),
-
-    # User accounts management
-    url(r'^accounts/', include('allauth.urls')),
     url(
-        r'^invitations/',
-        include('invitations.urls', namespace='invitations')),
-    url(r'^me/', include('comics.accounts.urls')),
-
+        r"^robots\.txt$",
+        TemplateView.as_view(
+            template_name="robots.txt", content_type="text/plain"
+        ),
+    ),
+    # User accounts management
+    url(r"^accounts/", include("allauth.urls")),
+    url(r"^invitations/", include("invitations.urls", namespace="invitations")),
+    url(r"^me/", include("comics.accounts.urls")),
     # API
-    url(r'^api/', include('comics.api.urls')),
-
+    url(r"^api/", include("comics.api.urls")),
     # Help, about and feedback
-    url(r'^help/', include('comics.help.urls')),
-
+    url(r"^help/", include("comics.help.urls")),
     # Comic crawler status
-    url(r'^status/', include('comics.status.urls')),
-
+    url(r"^status/", include("comics.status.urls")),
     # Django admin
-    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    url(r'^admin/', admin.site.urls),
-
+    url(r"^admin/doc/", include("django.contrib.admindocs.urls")),
+    url(r"^admin/", admin.site.urls),
     # Comics browsing. Must be last one included.
-    url(r'^', include('comics.browser.urls')),
+    url(r"^", include("comics.browser.urls")),
 ]
 
 # Let Django host media if doing local development on runserver
-if not settings.MEDIA_URL.startswith('http'):
+if not settings.MEDIA_URL.startswith("http"):
     urlpatterns += [
-        url(r'^media/(?P<path>.*)$', serve, {
-            'document_root': settings.MEDIA_ROOT,
-        }),
+        url(
+            r"^media/(?P<path>.*)$",
+            serve,
+            {"document_root": settings.MEDIA_ROOT},
+        ),
     ]
 
 urlpatterns += staticfiles_urlpatterns()

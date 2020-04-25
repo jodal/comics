@@ -11,8 +11,8 @@ from comics.core.models import Comic
 
 
 def create_comics():
-    Comic.objects.create(slug='xkcd')
-    Comic.objects.create(slug='sinfest')
+    Comic.objects.create(slug="xkcd")
+    Comic.objects.create(slug="sinfest")
 
 
 class AggregatorConfigTestCase(TestCase):
@@ -27,7 +27,8 @@ class AggregatorConfigTestCase(TestCase):
 
     def test_init_invalid(self):
         self.assertRaises(
-            AttributeError, command.AggregatorConfig, options=True)
+            AttributeError, command.AggregatorConfig, options=True
+        )
 
     def test_set_from_date(self):
         from_date = datetime.date(2008, 3, 11)
@@ -64,17 +65,17 @@ class AggregatorConfigTestCase(TestCase):
         self.assertRaises(ComicsError, self.cc._validate_dates)
 
     def test_get_comic_by_slug_valid(self):
-        expected = Comic.objects.get(slug='xkcd')
-        result = self.cc._get_comic_by_slug('xkcd')
+        expected = Comic.objects.get(slug="xkcd")
+        result = self.cc._get_comic_by_slug("xkcd")
         self.assertEquals(expected, result)
 
     def test_get_comic_by_slug_invalid(self):
-        self.assertRaises(ComicsError, self.cc._get_comic_by_slug, 'not slug')
+        self.assertRaises(ComicsError, self.cc._get_comic_by_slug, "not slug")
 
     def test_set_comics_to_crawl_two(self):
-        comic1 = Comic.objects.get(slug='xkcd')
-        comic2 = Comic.objects.get(slug='sinfest')
-        self.cc.set_comics_to_crawl(['xkcd', 'sinfest'])
+        comic1 = Comic.objects.get(slug="xkcd")
+        comic2 = Comic.objects.get(slug="sinfest")
+        self.cc.set_comics_to_crawl(["xkcd", "sinfest"])
         self.assertEquals(2, len(self.cc.comics))
         self.assert_(comic1 in self.cc.comics)
         self.assert_(comic2 in self.cc.comics)
@@ -95,10 +96,10 @@ class ComicAggregatorTestCase(TestCase):
         config = command.AggregatorConfig()
         config.set_comics_to_crawl(None)
         self.aggregator = command.Aggregator(config)
-        self.aggregator.identifier = 'slug'
+        self.aggregator.identifier = "slug"
 
         self.comic = mock.Mock()
-        self.comic.slug = 'slug'
+        self.comic.slug = "slug"
         self.crawler_mock = mock.Mock()
         self.crawler_mock.comic = self.comic
         self.downloader_mock = mock.Mock()
@@ -116,11 +117,12 @@ class ComicAggregatorTestCase(TestCase):
         result = command.Aggregator(options=options_mock)
 
         self.assertEquals(
-            len(self.aggregator.config.comics), len(result.config.comics))
+            len(self.aggregator.config.comics), len(result.config.comics)
+        )
         self.assertEquals(
-            self.aggregator.config.from_date, result.config.from_date)
-        self.assertEquals(
-            self.aggregator.config.to_date, result.config.to_date)
+            self.aggregator.config.from_date, result.config.from_date
+        )
+        self.assertEquals(self.aggregator.config.to_date, result.config.to_date)
 
     def test_init_invalid_config(self):
         self.assertRaises(AssertionError, command.Aggregator)
@@ -130,8 +132,7 @@ class ComicAggregatorTestCase(TestCase):
         crawler_release = CrawlerRelease(self.comic, pub_date)
         self.crawler_mock.get_crawler_release.return_value = crawler_release
 
-        self.aggregator._crawl_one_comic_one_date(
-            self.crawler_mock, pub_date)
+        self.aggregator._crawl_one_comic_one_date(self.crawler_mock, pub_date)
 
         self.assertEqual(1, self.crawler_mock.get_crawler_release.call_count)
         self.crawler_mock.get_crawler_release.assert_called_with(pub_date)
@@ -147,23 +148,23 @@ class ComicAggregatorTestCase(TestCase):
 
     def test_get_valid_date_from_history_capable(self):
         expected = datetime.date(2008, 3, 1)
-        self.crawler_mock.comic = Comic.objects.get(slug='xkcd')
+        self.crawler_mock.comic = Comic.objects.get(slug="xkcd")
         self.crawler_mock.history_capable = expected
         self.crawler_mock.current_date = datetime.date(2008, 4, 1)
 
         result = self.aggregator._get_valid_date(
-            self.crawler_mock, datetime.date(2008, 2, 1))
+            self.crawler_mock, datetime.date(2008, 2, 1)
+        )
 
         self.assertEquals(expected, result)
 
     def test_get_valid_date_from_config(self):
         expected = datetime.date(2008, 3, 1)
-        self.crawler_mock.comic = Comic.objects.get(slug='xkcd')
+        self.crawler_mock.comic = Comic.objects.get(slug="xkcd")
         self.crawler_mock.history_capable = datetime.date(2008, 1, 1)
         self.crawler_mock.current_date = datetime.date(2008, 4, 1)
 
-        result = self.aggregator._get_valid_date(
-            self.crawler_mock, expected)
+        result = self.aggregator._get_valid_date(self.crawler_mock, expected)
 
         self.assertEquals(expected, result)
 

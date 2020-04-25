@@ -3,15 +3,16 @@ import logging
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-DATE_TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
+DATE_TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 FILE_LOG_FORMAT = (
-    '%(asctime)s [%(process)d] %(name)-12s %(levelname)-8s %(message)s')
-CONSOLE_LOG_FORMAT = '%(levelname)-8s %(message)s'
+    "%(asctime)s [%(process)d] %(name)-12s %(levelname)-8s %(message)s"
+)
+CONSOLE_LOG_FORMAT = "%(levelname)-8s %(message)s"
 
 
 class ComicsBaseCommand(BaseCommand):
     def handle(self, *args, **options):
-        self._setup_logging(options['verbosity'])
+        self._setup_logging(options["verbosity"])
 
     def _setup_logging(self, verbosity_level):
         logging.root.setLevel(logging.NOTSET)
@@ -24,7 +25,8 @@ class ComicsBaseCommand(BaseCommand):
             format=FILE_LOG_FORMAT,
             datefmt=DATE_TIME_FORMAT,
             filename=settings.COMICS_LOG_FILENAME,
-            filemode='a')
+            filemode="a",
+        )
 
     def _setup_console_logging(self, verbosity_level):
         console = logging.StreamHandler()

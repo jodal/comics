@@ -8,9 +8,9 @@ from comics.aggregator import crawler
 
 
 class CurrentDateWhenLocalTZIsUTCTest(TestCase):
-    time_zone_local = 'UTC'
-    time_zone_ahead = 'Australia/Sydney'
-    time_zone_behind = 'America/New_York'
+    time_zone_local = "UTC"
+    time_zone_ahead = "Australia/Sydney"
+    time_zone_behind = "America/New_York"
 
     def setUp(self):
         self.tz = pytz.timezone(self.time_zone_local)
@@ -41,12 +41,12 @@ class CurrentDateWhenLocalTZIsUTCTest(TestCase):
 
 
 class CurrentDateWhenLocalTZIsCETTest(CurrentDateWhenLocalTZIsUTCTest):
-    time_zone_local = 'Europe/Oslo'
-    time_zone_ahead = 'Australia/Sydney'
-    time_zone_behind = 'America/New_York'
+    time_zone_local = "Europe/Oslo"
+    time_zone_ahead = "Australia/Sydney"
+    time_zone_behind = "America/New_York"
 
 
 class CurrentDateWhenLocalTZIsESTTest(CurrentDateWhenLocalTZIsUTCTest):
-    time_zone_local = 'America/New_York'
-    time_zone_ahead = 'Europe/Moscow'
-    time_zone_behind = 'America/Los_Angeles'
+    time_zone_local = "America/New_York"
+    time_zone_ahead = "Europe/Moscow"
+    time_zone_behind = "America/Los_Angeles"

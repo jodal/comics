@@ -19,18 +19,20 @@ class SplitListNode(Node):
 
     def render(self, context):
         context[self.new_results] = self.split_seq(
-            context[self.results], int(self.cols))
-        return ''
+            context[self.results], int(self.cols)
+        )
+        return ""
 
 
 def list_to_columns(parser, token):
     """Parse template tag: {% list_to_columns results as new_results 2 %}"""
     bits = token.contents.split()
     if len(bits) != 5:
-        raise TemplateSyntaxError('list_to_columns results as new_results 2')
-    if bits[2] != 'as':
+        raise TemplateSyntaxError("list_to_columns results as new_results 2")
+    if bits[2] != "as":
         raise TemplateSyntaxError(
-            "second argument to the list_to_columns tag must be 'as'")
+            "second argument to the list_to_columns tag must be 'as'"
+        )
     return SplitListNode(bits[1], bits[4], bits[3])
 
 

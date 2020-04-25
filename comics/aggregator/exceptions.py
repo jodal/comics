@@ -9,7 +9,7 @@ class AggregatorError(ComicsError):
         self.value = value
 
     def __str__(self):
-        return '%s: Generic aggregator error' % self.identifier
+        return "%s: Generic aggregator error" % self.identifier
 
 
 ###
@@ -19,37 +19,38 @@ class CrawlerError(AggregatorError):
     """Base class for crawler exceptions"""
 
     def __str__(self):
-        return '%s: Generic crawler error (%s)' % (self.identifier, self.value)
+        return "%s: Generic crawler error (%s)" % (self.identifier, self.value)
 
 
 class CrawlerHTTPError(CrawlerError):
     """Exception used to wrap urllib2.HTTPError from the crawler"""
 
     def __str__(self):
-        return '%s: Crawler HTTP Error (%s)' % (
-            self.identifier, self.value)
+        return "%s: Crawler HTTP Error (%s)" % (self.identifier, self.value)
 
 
 class ImageURLNotFound(CrawlerError):
     """Exception raised when no URL is found by the crawler"""
 
     def __str__(self):
-        return '%s: Image URL not found' % self.identifier
+        return "%s: Image URL not found" % self.identifier
 
 
 class NotHistoryCapable(CrawlerError):
     """Exception raised when a comic is not history capable for the date"""
 
     def __str__(self):
-        return '%s: Comic is not history capable (%s)' % (
-            self.identifier, self.value)
+        return "%s: Comic is not history capable (%s)" % (
+            self.identifier,
+            self.value,
+        )
 
 
 class ReleaseAlreadyExists(CrawlerError):
     """Exception raised when crawling a release that already exists"""
 
     def __str__(self):
-        return '%s: Release already exists' % self.identifier
+        return "%s: Release already exists" % self.identifier
 
 
 ###
@@ -59,41 +60,42 @@ class DownloaderError(AggregatorError):
     """Base class for downloader exceptions"""
 
     def __str__(self):
-        return '%s: Generic downloader error (%s)' % (
-            self.identifier, self.value)
+        return "%s: Generic downloader error (%s)" % (
+            self.identifier,
+            self.value,
+        )
 
 
 class DownloaderHTTPError(DownloaderError):
     """Exception used to wrap urllib2.HTTPError from the downloader"""
 
     def __str__(self):
-        return '%s: Downloader HTTP Error (%s)' % (
-            self.identifier, self.value)
+        return "%s: Downloader HTTP Error (%s)" % (self.identifier, self.value)
 
 
 class ImageTypeError(DownloaderError):
     """Exception raised when the image isn't of the right type"""
 
     def __str__(self):
-        return '%s: Invalid image type (%s)' % (self.identifier, self.value)
+        return "%s: Invalid image type (%s)" % (self.identifier, self.value)
 
 
 class ImageIsCorrupt(DownloaderError):
     """Exception raised when the fetched image is corrupt"""
 
     def __str__(self):
-        return '%s: Image is corrupt (%s)' % (self.identifier, self.value)
+        return "%s: Image is corrupt (%s)" % (self.identifier, self.value)
 
 
 class ImageAlreadyExists(DownloaderError):
     """Exception raised when trying to save an image that already exists"""
 
     def __str__(self):
-        return '%s: Image already exists' % self.identifier
+        return "%s: Image already exists" % self.identifier
 
 
 class ImageIsBlacklisted(DownloaderError):
     """Exception raised when a blacklisted image has been downloaded"""
 
     def __str__(self):
-        return '%s: Image is blacklisted' % self.identifier
+        return "%s: Image is blacklisted" % self.identifier

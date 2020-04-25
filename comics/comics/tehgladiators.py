@@ -3,20 +3,20 @@ from comics.core.comic_data import ComicDataBase
 
 
 class ComicData(ComicDataBase):
-    name = 'Teh Gladiators'
-    language = 'en'
-    url = 'http://www.tehgladiators.com/'
-    start_date = '2008-03-18'
-    rights = 'Uros Jojic & Borislav Grabovic'
+    name = "Teh Gladiators"
+    language = "en"
+    url = "http://www.tehgladiators.com/"
+    start_date = "2008-03-18"
+    rights = "Uros Jojic & Borislav Grabovic"
 
 
 class Crawler(CrawlerBase):
     history_capable_days = 90
-    schedule = 'We'
-    time_zone = 'Europe/Belgrade'
+    schedule = "We"
+    time_zone = "Europe/Belgrade"
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('http://www.tehgladiators.com/rss.xml')
+        feed = self.parse_feed("http://www.tehgladiators.com/rss.xml")
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
             url = page.src('img[alt^="Teh Gladiators Webcomic"]')

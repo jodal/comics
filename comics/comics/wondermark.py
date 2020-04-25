@@ -3,20 +3,20 @@ from comics.core.comic_data import ComicDataBase
 
 
 class ComicData(ComicDataBase):
-    name = 'Wondermark'
-    language = 'en'
-    url = 'http://wondermark.com/'
-    start_date = '2003-04-25'
-    rights = 'David Malki'
+    name = "Wondermark"
+    language = "en"
+    url = "http://wondermark.com/"
+    start_date = "2003-04-25"
+    rights = "David Malki"
 
 
 class Crawler(CrawlerBase):
     history_capable_days = 28
-    schedule = 'Tu,Fr'
-    time_zone = 'US/Pacific'
+    schedule = "Tu,Fr"
+    time_zone = "US/Pacific"
 
     def crawl(self, pub_date):
-        feed_url = 'http://feeds.feedburner.com/wondermark'
+        feed_url = "http://feeds.feedburner.com/wondermark"
         feed = self.parse_feed(feed_url)
         for entry in feed.for_date(pub_date):
             url = entry.summary.src('img[src*="/c/"]')

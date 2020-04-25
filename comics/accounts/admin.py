@@ -18,6 +18,6 @@ def subscription_count(obj):
 
 @admin.register(models.UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', email, 'secret_key', subscription_count)
+    list_display = ("user", email, "secret_key", subscription_count)
     inlines = [SubscriptionInline]
-    readonly_fields = ('user',)
+    readonly_fields = ("user",)

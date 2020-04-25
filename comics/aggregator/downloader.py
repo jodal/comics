@@ -26,9 +26,9 @@ from comics.core.models import Image, Release
 
 # Image types we accept, and the file extension they are saved with
 IMAGE_FORMATS = {
-    'GIF': '.gif',
-    'JPEG': '.jpg',
-    'PNG': '.png',
+    "GIF": ".gif",
+    "JPEG": ".jpg",
+    "PNG": ".png",
 }
 
 
@@ -36,7 +36,8 @@ class ReleaseDownloader(object):
     def download(self, crawler_release):
         images = self._download_images(crawler_release)
         return self._create_new_release(
-            crawler_release.comic, crawler_release.pub_date, images)
+            crawler_release.comic, crawler_release.pub_date, images
+        )
 
     def _download_images(self, crawler_release):
         image_downloader = ImageDownloader(crawler_release)
@@ -59,17 +60,18 @@ class ImageDownloader(object):
         self.identifier = self.crawler_release.identifier
 
         with self._download_image(
-                crawler_image.url, crawler_image.request_headers
-                ) as image_file:
+            crawler_image.url, crawler_image.request_headers
+        ) as image_file:
             checksum = self._get_sha256sum(image_file)
-            self.identifier = '%s/%s' % (self.identifier, checksum[:6])
+            self.identifier = "%s/%s" % (self.identifier, checksum[:6])
 
             self._check_if_blacklisted(checksum)
 
             existing_image = self._get_existing_image(
                 comic=self.crawler_release.comic,
                 has_rerun_releases=self.crawler_release.has_rerun_releases,
-                checksum=checksum)
+                checksum=checksum,
+            )
             if existing_image is not None:
                 return existing_image
 
@@ -84,7 +86,8 @@ class ImageDownloader(object):
                 text=crawler_image.text,
                 image_file=image_file,
                 file_name=file_name,
-                checksum=checksum)
+                checksum=checksum,
+            )
 
     def _download_image(self, url, request_headers):
         try:
@@ -93,10 +96,10 @@ class ImageDownloader(object):
                 # URI encoded all the way through the system. If we get Unicode
                 # strings here, our best guess is to encode them as UTF-8 so
                 # urllib2 can URI encode them properly.
-                url = url.encode('utf-8')
+                url = url.encode("utf-8")
             request = urllib2.Request(url, None, request_headers)
             with contextlib.closing(urllib2.urlopen(request)) as http_file:
-                temp_file = tempfile.NamedTemporaryFile(suffix='comics')
+                temp_file = tempfile.NamedTemporaryFile(suffix="comics")
                 temp_file.write(http_file.read())
                 temp_file.seek(0)
                 return temp_file
@@ -105,7 +108,7 @@ class ImageDownloader(object):
         except urllib2.URLError as error:
             raise DownloaderHTTPError(self.identifier, error.reason)
         except httplib.BadStatusLine:
-            raise DownloaderHTTPError(self.identifier, 'BadStatusLine')
+            raise DownloaderHTTPError(self.identifier, "BadStatusLine")
         except socket.error as error:
             raise DownloaderHTTPError(self.identifier, error)
 
@@ -150,11 +153,12 @@ class ImageDownloader(object):
 
     def _get_file_name(self, checksum, extension):
         if checksum and extension:
-            return '%s%s' % (checksum, extension)
+            return "%s%s" % (checksum, extension)
 
     @transaction.atomic
     def _create_new_image(
-            self, comic, title, text, image_file, file_name, checksum):
+        self, comic, title, text, image_file, file_name, checksum
+    ):
         image = Image(comic=comic, checksum=checksum)
         image.file.save(file_name, File(image_file))
         if title is not None:
