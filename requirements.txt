@@ -33,5 +33,5 @@ django-allauth == 0.40.0  # Dropped Python 2.7 in 0.41
 django-invitations == 1.9.3
 
 # For REST API
-django-tastypie == 0.13.3
+django-tastypie == 0.14.3
 defusedxml == 0.6.0
