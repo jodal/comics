@@ -29,7 +29,7 @@ jsmin == 2.2.2
 django-bootstrap-form == 3.4
 
 # For user invitation, registration and authentication
-django-allauth == 0.40.0  # Dropped Python 2.7 in 0.41
+django-allauth == 0.41.0  # Dropped Python 2.7 in 0.41
 django-invitations == 1.9.3
 
 # For REST API
