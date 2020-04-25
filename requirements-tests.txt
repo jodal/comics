@@ -1,2 +1,7 @@
 # Mocking in unit tests
 mock
+
+# Test runner
+pytest
+pytest-cov
+pytest-django
