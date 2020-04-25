@@ -25,7 +25,7 @@ Public License version 3.
     :alt: CircleCI build status
 
 .. image:: https://img.shields.io/readthedocs/comics/
-    :target: https://docs.mopidy.com/
+    :target: https://comics.readthedocs.io/
     :alt: Read the Docs build status
 
 .. image:: https://img.shields.io/codecov/c/github/jodal/comics/
