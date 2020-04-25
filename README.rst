@@ -20,6 +20,14 @@ Public License version 3.
 - `Issues <https://github.com/jodal/comics/issues>`_
 - `Contributors <https://github.com/jodal/comics/contributors>`_
 
-.. image:: https://img.shields.io/travis/jodal/comics/develop.svg?style=flat
-    :target: https://travis-ci.org/jodal/comics
-    :alt: Travis CI build status
+.. image:: https://img.shields.io/circleci/build/github/jodal/comics/
+    :target: https://circleci.com/gh/jodal/comics
+    :alt: CircleCI build status
+
+.. image:: https://img.shields.io/readthedocs/comics/
+    :target: https://docs.mopidy.com/
+    :alt: Read the Docs build status
+
+.. image:: https://img.shields.io/codecov/c/github/jodal/comics/
+    :target: https://codecov.io/gh/jodal/comics
+    :alt: Test coverage
