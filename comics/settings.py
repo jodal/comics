@@ -268,7 +268,7 @@ ACCOUNT_USERNAME_REQUIRED = False
 # ### django-invitations settings
 
 INVITATIONS_ADAPTER = ACCOUNT_ADAPTER
-INVITATIONS_INVITATION_ONLY = os.environ.get("INVITATION_ONLY") == "true"
+INVITATIONS_INVITATION_ONLY = os.environ.get("COMICS_INVITE_MODE") == "true"
 
 
 # ### Tastypie settings

@@ -101,9 +101,9 @@ deployment may look like this::
 
     DATABASE_URL=postgres://comics:topsecret@localhost:5432/comics
 
-    INVITATION_ONLY=true
-
     MEMCACHED_URL=127.0.0.1:11211
+
+    COMICS_INVITE_MODE=true
 
 Of course, you should change most, if not all, of these settings for your own
 installation. If your are not running a *memcached* server, remove
