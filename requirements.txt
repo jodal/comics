@@ -7,7 +7,7 @@ python-dotenv == 0.13.0
 dj-database-url == 0.5.0
 
 # For timezone travel
-pytz == 2019.3
+pytz == 2020.1
 
 # For image handling
 Pillow == 6.2.2
