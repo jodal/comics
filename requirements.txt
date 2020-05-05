@@ -1,4 +1,4 @@
-Django == 1.11.29
+Django == 3.0.6
 
 # For loading settings from env
 python-dotenv == 0.13.0
