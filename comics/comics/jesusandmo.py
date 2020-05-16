@@ -11,13 +11,34 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 180
+    history_capable_date = "2005-11-24"
     schedule = "We"
     time_zone = "Europe/London"
 
+    archive_page = None
+
     def crawl(self, pub_date):
-        feed = self.parse_feed("http://www.jesusandmo.net/feed/")
-        for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src*="/strips/"]')
-            title = entry.title
-            return CrawlerImage(url, title)
+        if not self.archive_page:
+            page_url = "https://www.jesusandmo.net/archives/"
+            self.archive_page = self.parse_page(page_url)
+
+        release = self.archive_page.root.xpath(
+            '//span[(@class="comic-archive-date") and '
+            '(.="%s")]/../span[@class="comic-archive-title"]/a'
+            % pub_date.strftime("%b %d, %Y")
+        )
+        if not release:
+            return
+        release = release[0]
+        link = release.get("href")
+        title = release.text
+        release_page = self.parse_page(link)
+        url = release_page.root.xpath('//div[@id="comic"]/img/@data-src')
+        url = url[0]
+        text = release_page.root.xpath('//div[@class="entry"]/p')
+        if text:
+            text = text[0].text
+        else:
+            text = None
+
+        return CrawlerImage(url, title, text)
