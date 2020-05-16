@@ -9,11 +9,10 @@ class ComicData(ComicDataBase):
     language = "no"
     url = "http://www.dagbladet.no/tegneserie/firekanta"
     rights = "Nils Axle Kanten"
+    active = False
 
 
 class Crawler(DagbladetCrawlerBase):
-    history_capable_days = 14
-    schedule = "Mo,We,Fr"
     time_zone = "Europe/Oslo"
 
     def crawl(self, pub_date):
