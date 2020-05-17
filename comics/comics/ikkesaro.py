@@ -7,6 +7,7 @@ class ComicData(ComicDataBase):
     language = "no"
     url = "http://ikkesaro.nettserier.no/"
     rights = "Ladder"
+    active = False
 
 
 class Crawler(NettserierCrawlerBase):
