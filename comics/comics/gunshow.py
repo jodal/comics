@@ -8,6 +8,7 @@ class ComicData(ComicDataBase):
     url = "http://www.gunshowcomic.com/"
     start_date = "2008-09-04"
     rights = '"Lord KC Green"'
+    active = False
 
 
 class Crawler(CrawlerBase):
