@@ -8,6 +8,7 @@ class ComicData(ComicDataBase):
     url = "http://www.crookedgremlins.com/"
     start_date = "2008-04-01"
     rights = "Carter Fort and Paul Lucci"
+    active = False
 
 
 class Crawler(CrawlerBase):
