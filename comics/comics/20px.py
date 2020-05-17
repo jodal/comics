@@ -8,6 +8,7 @@ class ComicData(ComicDataBase):
     url = "http://20px.com/"
     start_date = "2011-02-11"
     rights = "Angela"
+    active = False
 
 
 class Crawler(CrawlerBase):
