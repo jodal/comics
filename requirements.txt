@@ -10,7 +10,7 @@ dj-database-url == 0.5.0
 pytz == 2020.1
 
 # For image handling
-Pillow == 6.2.2
+Pillow == 7.1.2
 
 # For crawling comics and the REST API
 lxml == 4.5.1
