@@ -8,6 +8,7 @@ class ComicData(ComicDataBase):
     url = "http://www.spaceavalanche.com/"
     start_date = "2009-02-02"
     rights = "Eoin Ryan"
+    active = False
 
 
 class Crawler(CrawlerBase):
