@@ -7,11 +7,13 @@ class ComicData(ComicDataBase):
     language = "en"
     url = "http://mikejacobsen.tumblr.com/"
     start_date = "2007-07-31"
+    end_date = '2017-04-06'
     rights = "Mike Jacobsen"
+    active = False
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 180
+    history_capable_date = '2014-05-06'
     time_zone = "Australia/Sydney"
 
     def crawl(self, pub_date):
