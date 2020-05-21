@@ -9,7 +9,7 @@ class ComicData(ComicDataBase):
     language = "en"
     url = "http://www.viruscomix.com/subnormality.html"
     start_date = "2007-01-01"
-    end_date = '2019-06-07'
+    end_date = "2019-06-07"
     rights = "Winston Rowntree"
     active = False
 
