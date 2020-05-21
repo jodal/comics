@@ -8,6 +8,7 @@ class ComicData(ComicDataBase):
     url = "http://thepunchlineismachismo.com/"
     start_date = "2005-05-29"
     rights = "Kelly Turnbull, CC BY-NC-SA 3.0"
+    active = False
 
 
 class Crawler(CrawlerBase):
