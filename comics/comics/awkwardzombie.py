@@ -11,33 +11,33 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 8
+    history_capable_date = "2006-09-19"
     schedule = "Mo"
     time_zone = "US/Eastern"
-
-    # Without User-Agent set, the server returns 403 Forbidden
-    headers = {"User-Agent": "Mozilla/4.0"}
+    archive_page = None
 
     def crawl(self, pub_date):
-        page = self.parse_page("https://www.awkwardzombie.com/")
+        if not self.archive_page:
+            page_url = "https://www.awkwardzombie.com/awkward-zombie/archive/"
+            self.archive_page = self.parse_page(page_url)
 
-        page_epoch = page.src("#cc-comic")
-        page_epoch = page_epoch.rsplit("/", 1)[-1]
-        page_epoch = page_epoch.split("-", 1)[0]
-        try:
-            page_epoch = int(page_epoch)
-        except ValueError:
+        release = self.archive_page.root.xpath(
+            "//div[(@class='archive-date') and contains(.,'%s')]/.."
+            % pub_date.strftime("%m-%d-%y")
+        )
+        if not release:
             return
+        release = release[0]
+        title = release.xpath("div[@class='archive-title']/a")
+        title = title[0]
+        game = release.xpath("div[@class='archive-game']/a")
+        game = game[0].text
 
-        pub_date_start = self.date_to_epoch(pub_date)
-        pub_date_end = pub_date_start + 24 * 60 * 60
-        if not (pub_date_start < page_epoch < pub_date_end):
-            return
+        link = title.get("href")
+        title = title.text
+        release_page = self.parse_page(link)
 
-        result = [
-            CrawlerImage(url)
-            for url in page.src("#cc-comic", allow_multiple=True)
-        ]
-        if result:
-            result[0].title = page.title("#cc-comic").strip()
-        return result
+        img = release_page.root.xpath("//img[@id='cc-comic']")
+        url = img[0].get("src")
+
+        return CrawlerImage(url, title, game)
