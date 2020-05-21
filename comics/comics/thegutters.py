@@ -9,6 +9,7 @@ class ComicData(ComicDataBase):
     language = "en"
     url = "http://the-gutters.com/"
     rights = "Blind Ferret Entertainment"
+    active = False
 
 
 class Crawler(CrawlerBase):

@@ -9,6 +9,7 @@ class ComicData(ComicDataBase):
     url = "http://utensokker.nettserier.no/"
     start_date = "2009-07-14"
     rights = "Bjørnar Grandalen"
+    active = False
 
 
 class Crawler(NettserierCrawlerBase):

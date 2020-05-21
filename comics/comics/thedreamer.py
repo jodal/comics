@@ -7,6 +7,7 @@ class ComicData(ComicDataBase):
     language = "en"
     url = "http://thedreamercomic.com/"
     rights = "Lora Innes"
+    active = False
 
 
 class Crawler(CrawlerBase):

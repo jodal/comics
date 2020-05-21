@@ -10,6 +10,7 @@ class ComicData(ComicDataBase):
     url = "http://www.stickydillybuns.com/"
     start_date = "2013-01-07"
     rights = "G. Lagace"
+    active = False
 
 
 class Crawler(CrawlerBase):

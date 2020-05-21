@@ -8,6 +8,7 @@ class ComicData(ComicDataBase):
     url = "http://cardboard-crack.com/"
     start_date = "2013-03-01"
     rights = "Magic Addict"
+    active = False
 
 
 class Crawler(CrawlerBase):

@@ -8,17 +8,11 @@ class ComicData(ComicDataBase):
     url = "http://www.blasternation.com/"
     start_date = "2011-01-27"
     rights = "Leslie Brown & Brad Brown"
+    active = False
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 90
-    schedule = "We,Fr,Su"
     time_zone = "US/Eastern"
 
     def crawl(self, pub_date):
-        feed = self.parse_feed("http://www.blasternation.com/rss.php")
-        for entry in feed.for_date(pub_date):
-            page = self.parse_page(entry.link)
-            url = page.src("img#cc-comic")
-            title = entry.title.replace("Blaster Nation - ", "")
-            return CrawlerImage(url, title)
+        pass
