@@ -15,7 +15,7 @@ class Crawler(CrawlerBase):
     time_zone = "America/Merida"
 
     def crawl(self, pub_date):
-        page_url = "http://www.crfh.net/d2/%s.html" % (
+        page_url = "http://www.crfh.net/d/%s.html" % (
             pub_date.strftime("%Y%m%d"),
         )
         page = self.parse_page(page_url)
