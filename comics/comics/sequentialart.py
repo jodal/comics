@@ -18,5 +18,5 @@ class Crawler(CrawlerBase):
         page = self.parse_page(
             "http://www.collectedcurios.com/sequentialart.php"
         )
-        url = page.src("img#strip")
+        url = page.src("img.w3-image")
         return CrawlerImage(url)
