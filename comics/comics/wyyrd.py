@@ -8,6 +8,7 @@ class ComicData(ComicDataBase):
     url = "http://wyyrd.nettserier.no/"
     start_date = "2008-01-14"
     rights = "Gard Robot Helset"
+    active = False
 
 
 class Crawler(NettserierCrawlerBase):
