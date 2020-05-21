@@ -250,21 +250,6 @@ class PondusNoCrawlerBase(CrawlerBase):
         return CrawlerImage(url)
 
 
-class HeltNormaltCrawlerBase(CrawlerBase):
-    """Base comics crawler for all comics posted at heltnormalt.no"""
-
-    headers = {"User-Agent": "Mozilla/5.0"}
-    time_zone = "Europe/Oslo"
-
-    def crawl_helper(self, short_name, pub_date):
-        date_string = pub_date.strftime("%Y/%m/%d")
-        short_name2 = short_name.replace("_", "")
-        page_url = "http://heltnormalt.no/%s/%s" % (short_name2, date_string)
-        page = self.parse_page(page_url)
-        url = page.src('img[src*="/img/%s/%s"]' % (short_name, date_string))
-        return CrawlerImage(url)
-
-
 class DagbladetCrawlerBase(CrawlerBase):
     """Base comics crawler for all comics posted at dagbladet.no"""
 
