@@ -8,11 +8,11 @@ class ComicData(ComicDataBase):
     url = "http://www.axecop.com/"
     start_date = "2010-01-02"
     rights = "Ethan Nicolle"
+    active = False
 
 
 class Crawler(CrawlerBase):
     history_capable_days = 60
-    schedule = "Tu"
     time_zone = "US/Pacific"
 
     headers = {"User-Agent": "Mozilla/4.0"}
