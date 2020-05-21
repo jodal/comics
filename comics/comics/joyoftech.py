@@ -27,7 +27,7 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             title = entry.title
 
-            matches = re.match(r"^JoT (\d+)", title)
+            matches = re.match(r"^JoT #(\d+)", title)
             if matches is None:
                 continue
             num = matches.group(1)
