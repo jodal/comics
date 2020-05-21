@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-from comics.aggregator.crawler import HeltNormaltCrawlerBase
+from comics.aggregator.crawler import CrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -12,8 +12,6 @@ class ComicData(ComicDataBase):
     active = False
 
 
-class Crawler(HeltNormaltCrawlerBase):
-    history_capable_date = "2013-05-01"
-
+class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         pass  # Comic no longer published
