@@ -297,20 +297,38 @@ class CreatorsCrawlerBase(CrawlerBase):
 class NettserierCrawlerBase(CrawlerBase):
     """Base comics crawler for all comics posted at nettserier.no"""
 
+    # Nettserier has no option to fetch a specific date
+    # In order to get older releases we need to
+    # loop through the pages and check the published date
     time_zone = "Europe/Oslo"
+    page_cache = {}
+
+    def get_page(self, url):
+        if url not in self.page_cache:
+            page = self.parse_page(url)
+            page_date = page.text('p[class="comic-pubtime"]')
+            date = self.string_to_date(
+                page_date, "Published %Y-%m-%d %H:%M:%S"
+            )
+            self.page_cache[url] = [page, date]
+        return self.page_cache[url]
 
     def crawl_helper(self, short_name, pub_date):
-        page_url = "https://nettserier.no/%s/" % short_name
-        page = self.parse_page(page_url)
-        site_date = page.text('p[class="comic-pubtime"]')
+        url = "https://nettserier.no/%s/" % short_name
+        page, comic_date = self.get_page(url)
 
-        date = datetime.datetime.strptime(
-            site_date, "Published %Y-%m-%d %H:%M:%S"
-        )
-        if pub_date == date.date():
-            # Get comic-text div which contains title and text for the comic
-            comic_text = page.root.xpath('//div[@class="comic-text"]')[0]
-            title = comic_text.find("h4").text
-            text = comic_text.find("p").text
-            url = page.src('img[src*="/_ns/files"]')
-            return CrawlerImage(url, title, text)
+        while pub_date <= comic_date:
+            # Wanted date is earlier than the current, get previous page
+            if pub_date < comic_date:
+                previous_link = page.root.xpath('//li[@class="prev"]/a/@href')
+                if not previous_link:
+                    return  # No previous comic
+                page, comic_date = self.get_page(previous_link[0])
+            elif pub_date == comic_date:  # Correct date found
+                # Get comic-text div which contains title and text for the comic
+                comic_text = page.root.xpath('//div[@class="comic-text"]')[0]
+                title = comic_text.find("h4").text
+                text = comic_text.find("p").text
+                # Get comic image
+                url = page.src('img[src*="/_ns/files"]')
+                return CrawlerImage(url, title, text)
