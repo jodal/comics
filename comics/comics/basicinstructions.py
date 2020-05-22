@@ -20,6 +20,6 @@ class Crawler(CrawlerBase):
             "http://basicinstructions.net/basic-instructions/rss.xml"
         )
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src*="/storage/"][src*=".gif"]')
+            url = entry.summary.src("img")
             title = entry.title
             return CrawlerImage(url, title)
