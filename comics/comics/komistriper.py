@@ -9,11 +9,11 @@ class ComicData(ComicDataBase):
     language = "no"
     url = "https://nettserier.no/aikomi/comic/"
     rights = "Emil Åslund"
-    start_date = "2015-01-14"
+    start_date = "2015-01-24"
 
 
 class Crawler(NettserierCrawlerBase):
-    history_capable_date = "2015-01-14"
+    history_capable_date = "2015-01-24"
     time_zone = "Europe/Oslo"
 
     def crawl(self, pub_date):
