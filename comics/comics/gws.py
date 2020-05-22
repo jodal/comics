@@ -19,7 +19,7 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed("http://www.girlswithslingshots.com/feed/")
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
-            url = page.src("img#comic")
+            url = page.src("img#cc-comic")
             title = entry.title.replace("Girls with Slingshots - ", "")
-            text = page.title("img#comic")
+            text = page.title("img#cc-comic")
             return CrawlerImage(url, title, text)
