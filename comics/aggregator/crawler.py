@@ -307,9 +307,7 @@ class NettserierCrawlerBase(CrawlerBase):
         if url not in self.page_cache:
             page = self.parse_page(url)
             page_date = page.text('p[class="comic-pubtime"]')
-            date = self.string_to_date(
-                page_date, "Published %Y-%m-%d %H:%M:%S"
-            )
+            date = self.string_to_date(page_date, "Published %Y-%m-%d %H:%M:%S")
             self.page_cache[url] = [page, date]
         return self.page_cache[url]
 
