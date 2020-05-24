@@ -10,10 +10,11 @@ class ComicData(ComicDataBase):
     url = "http://poledancingadventures.com/"
     start_date = "2010-01-28"
     rights = "Leen Isabel"
+    active = False
 
 
 class Crawler(CrawlerBase):
-    history_capable_date = "2010-01-28"
+    history_capable_date = "2018-05-29"
     time_zone = "US/Pacific"
 
     def crawl(self, pub_date):
