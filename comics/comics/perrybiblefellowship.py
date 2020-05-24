@@ -18,8 +18,9 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed("http://www.pbfcomics.com/feed/feed.xml")
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
-            images = page.root.xpath("//div[@id='comic']/img")
+            images = page.src("div#comic img", allow_multiple=True)
             crawler_images = []
             for image in images:
                 title = entry.title
-                crawler_images.append(CrawlerImage(image.get("src"), title))
+                crawler_images.append(CrawlerImage(image, title))
+            return crawler_images
