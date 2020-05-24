@@ -8,10 +8,11 @@ class ComicData(ComicDataBase):
     url = "http://hijinksensue.com/"
     start_date = "2007-05-11"
     rights = "Joel Watson"
+    active = False
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 180
+    history_capable_date = "2015-03-11"
     time_zone = "US/Central"
 
     def crawl(self, pub_date):
@@ -19,7 +20,7 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             if "/comic/" not in entry.link:
                 continue
-            url = entry.content0.src('img[src*="-300x120"]')
+            url = entry.content0.src('img[srcset*="-300x120"]')
             if not url:
                 continue
             url = url.replace("-300x120", "")
