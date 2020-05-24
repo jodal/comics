@@ -22,4 +22,8 @@ class Crawler(CrawlerBase):
         )
         page = self.parse_page(page_url)
         url = page.src('img[alt^="Strip for"]')
+        if not url:  # Old releases
+            url = page.src(
+                'img[src^="http://www.userfriendly.org/cartoons/archives/"]'
+            )
         return CrawlerImage(url)
