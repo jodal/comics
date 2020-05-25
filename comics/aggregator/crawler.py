@@ -315,23 +315,25 @@ class NettserierCrawlerBase(CrawlerBase):
         url = "https://nettserier.no/%s/" % short_name
         page, comic_date = self.get_page(url)
 
-        while pub_date <= comic_date:
+        while pub_date < comic_date:
             # Wanted date is earlier than the current, get previous page
-            if pub_date < comic_date:
-                previous_link = page.root.xpath('//li[@class="prev"]/a/@href')
-                if not previous_link:
-                    return  # No previous comic
-                page, comic_date = self.get_page(previous_link[0])
-            elif pub_date == comic_date:  # Correct date found
-                # comic-text div which contains title and text for the comic
-                title = page.text("div.comic-text h4")
-                text = page.text("div.comic-text p", allow_multiple=True)
+            previous_link = page.root.xpath('//li[@class="prev"]/a/@href')
+            if not previous_link:
+                return  # No previous comic
+            page, comic_date = self.get_page(previous_link[0])
 
-                if text[0].find("Published") > -1:
-                    text = None
-                else:
-                    text = text[0]
+        if pub_date != comic_date:
+            return  # Correct date not found
 
-                # Get comic image
-                url = page.src('img[src*="/_ns/files"]')
-                return CrawlerImage(url, title, text)
+        # comic-text div which contains title and text for the comic
+        title = page.text("div.comic-text h4")
+        text = page.text("div.comic-text p", allow_multiple=True)
+
+        if text[0].find("Published") > -1:
+            text = None
+        else:
+            text = text[0]
+
+        # Get comic image
+        url = page.src('img[src*="/_ns/files"]')
+            return CrawlerImage(url, title, text)
