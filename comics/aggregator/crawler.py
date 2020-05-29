@@ -336,4 +336,4 @@ class NettserierCrawlerBase(CrawlerBase):
 
         # Get comic image
         url = page.src('img[src*="/_ns/files"]')
-            return CrawlerImage(url, title, text)
+        return CrawlerImage(url, title, text)
