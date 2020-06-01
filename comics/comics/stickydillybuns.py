@@ -1,6 +1,4 @@
-import datetime
-
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import ComicControlCrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -13,19 +11,12 @@ class ComicData(ComicDataBase):
     active = False
 
 
-class Crawler(CrawlerBase):
+class Crawler(ComicControlCrawlerBase):
     history_capable_days = 50
     schedule = "Mo,Fr"
     time_zone = "US/Eastern"
 
     def crawl(self, pub_date):
-        # Release to the feed is one day delayed, so we try to get yesterday's
-        # comic instead.
-        pub_date -= datetime.timedelta(days=1)
-
-        feed = self.parse_feed("http://www.stickydillybuns.com/comic.rss")
-        for entry in feed.for_date(pub_date):
-            title = entry.title.replace("Sticky Dilly Buns - ", "")
-            page = self.parse_page(entry.link)
-            url = page.src("#comic img")
-            return CrawlerImage(url, title)
+        return self.crawl_helper(
+            "https://pixietrixcomix.com/sticky-dilly-buns", pub_date
+        )

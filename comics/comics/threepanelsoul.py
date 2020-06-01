@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import ComicControlCrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -10,17 +10,10 @@ class ComicData(ComicDataBase):
     rights = "Ian McConville & Matt Boyd"
 
 
-class Crawler(CrawlerBase):
+class Crawler(ComicControlCrawlerBase):
     history_capable_days = 180
     schedule = "Mo"
     time_zone = "US/Eastern"
 
     def crawl(self, pub_date):
-        feed = self.parse_feed("http://www.threepanelsoul.com/rss.php")
-        for entry in feed.for_date(pub_date):
-            page = self.parse_page(entry.link)
-            url = page.src("img#cc-comic")
-            if url is None:
-                continue
-            title = page.text("#comictitle")
-            return CrawlerImage(url, title)
+        return self.crawl_helper("http://www.threepanelsoul.com", pub_date)

@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import ComicControlCrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -10,18 +10,10 @@ class ComicData(ComicDataBase):
     rights = "David Willis"
 
 
-class Crawler(CrawlerBase):
+class Crawler(ComicControlCrawlerBase):
     schedule = "Mo,We,Fr"
     history_capable_days = 32
     time_zone = "US/Eastern"
 
     def crawl(self, pub_date):
-        feed = self.parse_feed("http://www.shortpacked.com/rss.php")
-        for entry in feed.for_date(pub_date):
-            if "blog.php" in entry.link:
-                continue
-            page = self.parse_page(entry.link)
-            url = page.src("img#comic")
-            title = entry.title.replace("Shortpacked! - ", "")
-            text = page.title("img#comic")
-            return CrawlerImage(url, title, text)
+        return self.crawl_helper("https://www.shortpacked.com", pub_date)

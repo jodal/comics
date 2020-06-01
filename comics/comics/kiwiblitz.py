@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import ComicControlCrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -10,15 +10,10 @@ class ComicData(ComicDataBase):
     rights = "Mary Cagle"
 
 
-class Crawler(CrawlerBase):
+class Crawler(ComicControlCrawlerBase):
     history_capable_days = 180
     schedule = "Th"
     time_zone = "US/Pacific"
 
     def crawl(self, pub_date):
-        feed = self.parse_feed("http://www.kiwiblitz.com/rss.php")
-        for entry in feed.for_date(pub_date):
-            page = self.parse_page(entry.link)
-            url = page.src("img#cc-comic")
-            title = entry.title.strip().replace("Kiwi Blitz - ", "")
-            return CrawlerImage(url, title)
+        return self.crawl_helper("http://www.kiwiblitz.com", pub_date)
