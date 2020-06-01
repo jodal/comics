@@ -12,6 +12,7 @@ class ComicData(ComicDataBase):
     url = "http://www.ma3comic.com/"
     start_date = "2008-05-17"
     rights = "Giz & Dave Zero 1"
+    active = False
 
 
 class Crawler(CrawlerBase):
