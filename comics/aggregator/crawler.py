@@ -346,7 +346,7 @@ class ComicControlCrawlerBase(CrawlerBase):
     def crawl_helper(self, site_url, pub_date):
         if site_url[-1] == "/":
             site_url = site_url[0:-1]
-        if site_url.find("pixietrixcomix.com") > -1:
+        if "pixietrixcomix.com" in site_url:
             feed = self.parse_feed("%s/rss" % site_url)
         else:
             feed = self.parse_feed("%s/comic/rss" % site_url)
