@@ -16,4 +16,4 @@ class Crawler(ComicControlCrawlerBase):
     time_zone = "US/Eastern"
 
     def crawl(self, pub_date):
-        return self.crawl_helper("https://www.shortpacked.com", pub_date)
+        return self.crawl_helper(ComicData.url, pub_date)

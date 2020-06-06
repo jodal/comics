@@ -15,4 +15,4 @@ class Crawler(ComicControlCrawlerBase):
     time_zone = "US/Pacific"
 
     def crawl(self, pub_date):
-        return self.crawl_helper("http://www.goblinscomic.com", pub_date)
+        return self.crawl_helper(ComicData.url, pub_date)
