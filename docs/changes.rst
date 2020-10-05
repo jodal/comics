@@ -54,6 +54,9 @@ v3.0.0 (UNRELEASED)
 - Fix j/k keyboard navigation which didn't work on all Firefox versions. (PR:
   #91)
 
+- To avoid spam submitted through the feedback form, it now only allows
+  authenticated users to submit feedback.
+
 **Crawlers**
 
 - Numerous fixes and improvements. Many fixes are still needed after years of

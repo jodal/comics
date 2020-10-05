@@ -124,7 +124,9 @@
           </p>
           <ul class="list-inline">
             <li><a href="{% url "help_about" %}">About</a></li>
-            <li><a href="{% url "help_feedback" %}">Contact</a></li>
+	    {% if user.is_authenticated %}
+              <li><a href="{% url "help_feedback" %}">Contact</a></li>
+	    {% endif %}
             <li><a href="{% url "help_keyboard" %}">Keyboard shortcuts</a></li>
           </ul>
         </div>

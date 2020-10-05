@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -14,6 +15,7 @@ def about(request):
     )
 
 
+@login_required
 def feedback(request):
     """Mail feedback to ADMINS"""
 
@@ -24,25 +26,18 @@ def feedback(request):
 
             metadata = "Client IP address: %s\n" % request.META["REMOTE_ADDR"]
             metadata += "User agent: %s\n" % request.META["HTTP_USER_AGENT"]
-            if request.user.is_authenticated:
-                metadata += "User: %s <%s>\n" % (
-                    request.user.username,
-                    request.user.email,
-                )
-            else:
-                metadata += "User: anonymous\n"
+            metadata += "User: %s <%s>\n" % (
+                request.user.username,
+                request.user.email,
+            )
 
             message = "%s\n\n-- \n%s" % (form.cleaned_data["message"], metadata)
-
-            headers = {}
-            if request.user.is_authenticated:
-                headers["Reply-To"] = request.user.email
 
             mail = EmailMessage(
                 subject=subject,
                 body=message,
                 to=[email for name, email in settings.ADMINS],
-                headers=headers,
+                headers={"Reply-To": request.user.email},
             )
             mail.send()
 
