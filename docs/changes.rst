@@ -56,57 +56,8 @@ v3.0.0 (UNRELEASED)
 
 **Crawlers**
 
-- Add: ``bestis``
-- Add: ``dogsofckennel``
-- Add: ``dunce``
-- Add: ``hagarthehorrible``
-- Add: ``ikkesaro``
-- Add: ``komistriper``
-- Updated all dagbladet.no crawlers to use a common ``DagbladetCrawlerBase``:
-
-  - ``fagprat``
-  - ``firekanta``
-  - ``lunchdb``
-  - ``nemi``
-  - ``pondus``
-  - ``rutetid``
-  - ``zelda``
-  - ``rocky``
-
-- Update: ``DagbladetCrawlerBase`` to support different time zones and higher
-  resolution
-- Update: ``GoComicsComCrawlerBase`` after site change
-- Update: ``KingFeaturesCrawlerBase`` with new name and URL
-- Update: ``awkwardzombie`` after site change
-- Update: ``axecop`` to not crash if URL not found
-- Update: ``bizarro`` after feed change
-- Update: ``calvinandhobbes`` with more history capability
-- Update: ``dieselsweetiesweb`` after feed change
-- Update: ``kalscartoon`` to not crash if URL not found
-- Update: ``komistriper`` with new name
-- Update: ``nemi`` schedule
-- Update: ``nemibt`` schedule
-- Update: ``optipess`` after feed change
-- Update: ``pondusbt`` after site change
-- Update: ``q2qcomics`` after feed change
-- Update: ``rockybt`` after site change
-- Update: ``roseisrose`` typo in URL
-- Update: ``truthfactsgo`` schedule
-- Update: ``utensokker`` after site change
-- Update: ``wulffmorgenthaler`` after site change
-- Update: ``wyyrd`` after site change
-- Update: ``zeldabt`` after site change
-- Update: ``zits`` to use KingFeaturesCrawlerBase
-- Inactive: ``dilbertvg``
-- Inactive: ``hjalmar``
-- Inactive: ``kellermannen``
-- Inactive: ``kollektivet``
-- Inactive: ``lunchdb``
-- Inactive: ``pondus``
-- Inactive: ``rockybt``
-- Inactive: ``tommyogtigern``
-- Inactive: ``truthfacts``
-- Inactive: ``zelda``
+- Numerous fixes and improvements. Many fixes are still needed after years of
+  little crawler maintenance.
 
 
 v2.4.3 (2017-04-01)
@@ -512,7 +463,7 @@ v2.1.1 (2013-02-26)
 - New: ``lunchtu``
 - New: ``mutts``. Contributed by Anders Birkenes.
 - New: ``pelsogpoter``. Contributed by Anders Birkenes.
-- New: ``stickygillybuns``
+- New: ``stickydillybuns``
 - New: ``undeclaredmajor``
 - New: ``yamac``
 - Update: ``abstrusegoose`` after feed change.
@@ -810,7 +761,7 @@ The regular crawler updates and a small bug fix.
 - Update: ``fagprat`` has a new schedule.
 - Update: ``fanboys`` was broken due to feed changes.
 - Update: ``heltnils`` has a new schedule.
-- Update: ``hijinksensure`` was broken due to feed changes.
+- Update: ``hijinksensue`` was broken due to feed changes.
 - Update: ``playervsplayer`` was broken due to feed changes.
 - Update: ``pondus`` was broken due to a site change.
 - Update: ``savagechickens`` has a new schedule.
