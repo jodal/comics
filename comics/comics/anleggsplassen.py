@@ -32,7 +32,8 @@ class Crawler(CrawlerBase):
         )
         srcset = image[0].get("srcset")
         matches = re.search(
-            r"//(img\.gfx\.no/[0-9]+/[0-9]+/.+?)\.[0-9x]+mc\.([a-z]+)", srcset,
+            r"//(img\.gfx\.no/[0-9]+/[0-9]+/.+?)\.[0-9x]+mc\.([a-z]+)",
+            srcset,
         )
         url = "https://%s.%s" % (matches.group(1), matches.group(2))
 

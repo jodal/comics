@@ -95,7 +95,10 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"ordering": ["name"], "db_table": "comics_comic",},
+            options={
+                "ordering": ["name"],
+                "db_table": "comics_comic",
+            },
             bases=(models.Model,),
         ),
         migrations.CreateModel(
@@ -135,7 +138,9 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"db_table": "comics_image",},
+            options={
+                "db_table": "comics_image",
+            },
             bases=(models.Model,),
         ),
         migrations.CreateModel(
