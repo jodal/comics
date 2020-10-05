@@ -1,10 +1,7 @@
 Django == 1.11.29
 
 # For loading settings from env
-python-dotenv == 0.13.0
-
-# For converting database URLs to Django format
-dj-database-url == 0.5.0
+django-environ == 0.4.5
 
 # For timezone travel
 pytz == 2020.1

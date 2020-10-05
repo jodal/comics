@@ -1,42 +1,37 @@
 import os
 
-import dj_database_url
-
-import dotenv
+import environ
 
 
-PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__))
+root = environ.Path(os.path.dirname(os.path.dirname(__file__)))
 
-
-# Load environment variables from .env if it exists
-dotenv_path = os.path.join(PROJECT_ROOT, ".env")
-if os.path.exists(dotenv_path):
-    dotenv.load_dotenv(dotenv_path)
+env = environ.Env()
+env.read_env(root(".env"))
 
 
 #: The Django secret key
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+SECRET_KEY = env.str("DJANGO_SECRET_KEY")
 
 #: Debug mode. Keep off in production.
-DEBUG = os.environ.get("DJANGO_DEBUG") == "true"
+DEBUG = env.bool("DJANGO_DEBUG", default=False)
 
 #: Site admins
 ADMINS = []
-if "DJANGO_ADMIN" in os.environ:
-    ADMINS.append(("Site admin", os.environ["DJANGO_ADMIN"]))
+if "DJANGO_ADMIN" in env:
+    ADMINS.append(("Site admin", env.str("DJANGO_ADMIN")))
 
 #: Default from email
-DEFAULT_FROM_EMAIL = os.environ.get(
-    "DJANGO_DEFAULT_FROM_EMAIL", "webmaster@example.com"
+DEFAULT_FROM_EMAIL = env.str(
+    "DJANGO_DEFAULT_FROM_EMAIL", default="webmaster@example.com"
 )
 
-SQLITE_FILE = os.path.join(PROJECT_ROOT, "db.sqlite3")
+SQLITE_FILE = root("db.sqlite3")
 SQLITE_URL = "sqlite:///" + os.path.abspath(SQLITE_FILE)
 
 #: Database settings. You will want to change this for production. See the
 #: Django docs for details.
 DATABASES = {
-    "default": dj_database_url.config(default=SQLITE_URL, conn_max_age=None),
+    "default": env.db("DATABASE_URL", default=SQLITE_URL),
 }
 
 #: Default time zone to use when displaying datetimes to users
@@ -49,23 +44,19 @@ USE_L10N = False
 USE_TZ = True
 
 #: Path on disk to where downloaded media will be stored and served from
-MEDIA_ROOT = os.environ.get(
-    "DJANGO_MEDIA_ROOT", os.path.join(PROJECT_ROOT, "media")
-)
+MEDIA_ROOT = env.str("DJANGO_MEDIA_ROOT", default=root("media"))
 
 #: URL to where downloaded media will be stored and served from
-MEDIA_URL = os.environ.get("DJANGO_MEDIA_URL", "/media/")
+MEDIA_URL = env.str("DJANGO_MEDIA_URL", default="/media/")
 
 #: Path on disk to where static files will be served from
-STATIC_ROOT = os.environ.get(
-    "DJANGO_STATIC_ROOT", os.path.join(PROJECT_ROOT, "static")
-)
+STATIC_ROOT = env.str("DJANGO_STATIC_ROOT", default=root("static"))
 
 #: URL to where static files will be served from
-STATIC_URL = os.environ.get("DJANGO_STATIC_URL", "/static/")
+STATIC_URL = env.str("DJANGO_STATIC_URL", default="/static/")
 
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_ROOT, "comics", "static"),
+    root("comics/static"),
 ]
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
@@ -175,11 +166,8 @@ CACHES = {
         "OPTIONS": {"MAX_ENTRIES": 1000},
     }
 }
-if "MEMCACHED_URL" in os.environ:
-    CACHES["default"] = {
-        "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
-        "LOCATION": os.environ["MEMCACHED_URL"],
-    }
+if "CACHE_URL" in env:
+    CACHES["default"] = env.cache("CACHE_URL")
     SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
 CACHE_MIDDLEWARE_SECONDS = 300
@@ -197,10 +185,7 @@ TEST_RUNNER = "django.test.runner.DiscoverRunner"
 
 WSGI_APPLICATION = "comics.wsgi.application"
 
-if "DJANGO_ALLOWED_HOSTS" in os.environ:
-    ALLOWED_HOSTS = os.environ["DJANGO_ALLOWED_HOSTS"].split(";")
-else:
-    ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default="*")
 
 
 # ### djang-debug-toolbar settings
@@ -260,7 +245,7 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "[%s] " % (
-    os.environ.get("COMICS_SITE_TITLE", "example.com")
+    env.str("COMICS_SITE_TITLE", default="example.com")
 )
 ACCOUNT_USERNAME_REQUIRED = False
 
@@ -268,7 +253,7 @@ ACCOUNT_USERNAME_REQUIRED = False
 # ### django-invitations settings
 
 INVITATIONS_ADAPTER = ACCOUNT_ADAPTER
-INVITATIONS_INVITATION_ONLY = os.environ.get("COMICS_INVITE_MODE") == "true"
+INVITATIONS_INVITATION_ONLY = env.bool("COMICS_INVITE_MODE", default=False)
 
 
 # ### Tastypie settings
@@ -279,15 +264,15 @@ TASTYPIE_DEFAULT_FORMATS = ["json", "jsonp", "xml", "yaml", "plist"]
 # ### comics settings
 
 #: Name of the site. Used in page header, page title, feed titles, etc.
-COMICS_SITE_TITLE = os.environ.get("COMICS_SITE_TITLE", "example.com")
+COMICS_SITE_TITLE = env.str("COMICS_SITE_TITLE", default="example.com")
 
 #: Maximum number of releases to show on one page
-COMICS_MAX_RELEASES_PER_PAGE = int(
-    os.environ.get("COMICS_MAX_RELEASES_PER_PAGE", 50)
+COMICS_MAX_RELEASES_PER_PAGE = env.int(
+    "COMICS_MAX_RELEASES_PER_PAGE", default=50
 )
 
 #: Maximum number of days to show in a feed
-COMICS_MAX_DAYS_IN_FEED = int(os.environ.get("COMICS_MAX_DAYS_IN_FEED", 30))
+COMICS_MAX_DAYS_IN_FEED = env.int("COMICS_MAX_DAYS_IN_FEED", default=30)
 
 #: SHA256 of blacklisted images
 COMICS_IMAGE_BLACKLIST = [
@@ -316,21 +301,21 @@ COMICS_IMAGE_BLACKLIST = [
 ]
 
 #: Comics log file path on disk
-COMICS_LOG_FILENAME = os.environ.get(
-    "COMICS_LOG_FILENAME", os.path.join(PROJECT_ROOT, "comics.log")
-)
+COMICS_LOG_FILENAME = env.str("COMICS_LOG_FILENAME", default=root("comics.log"))
 
 #: Google Analytics tracking code. Tracking code will be included on all pages
 #: if this is set.
-COMICS_GOOGLE_ANALYTICS_CODE = os.environ.get("COMICS_GOOGLE_ANALYTICS_CODE")
+COMICS_GOOGLE_ANALYTICS_CODE = env.str(
+    "COMICS_GOOGLE_ANALYTICS_CODE", default=""
+)
 
 #: Number of seconds browsers at the latest view of "My comics" should wait
 #: before they check for new releases again
-COMICS_BROWSER_REFRESH_INTERVAL = int(
-    os.environ.get("COMICS_BROWSER_REFRESH_INTERVAL", 60)
+COMICS_BROWSER_REFRESH_INTERVAL = env.int(
+    "COMICS_BROWSER_REFRESH_INTERVAL", default=60
 )
 
 #: Number of days a new comic on the site is labeled as new
-COMICS_NUM_DAYS_COMIC_IS_NEW = int(
-    os.environ.get("COMICS_NUM_DAYS_COMIC_IS_NEW", 7)
+COMICS_NUM_DAYS_COMIC_IS_NEW = env.int(
+    "COMICS_NUM_DAYS_COMIC_IS_NEW", default=7
 )

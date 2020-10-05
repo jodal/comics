@@ -1,27 +1,25 @@
 import os
 import sys
 
-import dotenv
+import environ
 
 
-PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__))
-sys.path.insert(0, PROJECT_ROOT)
+root = environ.Path(os.path.dirname(os.path.dirname(__file__)))
+
+env = environ.Env()
+env.read_env(root(".env"))
 
 
+sys.path.insert(0, root())
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "comics.settings")
 
 
-# Load environment variables from .env if it exists
-dotenv_path = os.path.join(PROJECT_ROOT, ".env")
-if os.path.exists(dotenv_path):
-    dotenv.load_dotenv(dotenv_path)
-
-
-VIRTUALENV_ROOT = os.environ.get("VIRTUALENV_ROOT")
+VIRTUALENV_ROOT = env.str("VIRTUALENV_ROOT", default="")
 
 if VIRTUALENV_ROOT:
     # Activate virtualenv
-    activate_this = os.path.join(VIRTUALENV_ROOT, "bin", "activate_this.py")
+    venv = environ.Path(VIRTUALENV_ROOT)
+    activate_this = venv("bin/activate_this.py")
     execfile(activate_this, {"__file__": activate_this})
 
     # Import Django and reload it in case it was loaded outside the virtualenv
