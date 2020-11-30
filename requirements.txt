@@ -10,7 +10,7 @@ pytz == 2020.4
 Pillow == 6.2.2
 
 # For crawling comics and the REST API
-lxml == 4.6.1
+lxml == 4.6.2
 
 # For crawling comics
 feedparser == 5.2.1
