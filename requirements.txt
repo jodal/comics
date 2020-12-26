@@ -1,4 +1,4 @@
-Django == 1.11.29
+Django == 3.1.4
 
 # For loading settings from env
 django-environ == 0.4.5
