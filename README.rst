@@ -20,9 +20,9 @@ Public License version 3.
 - `Issues <https://github.com/jodal/comics/issues>`_
 - `Contributors <https://github.com/jodal/comics/contributors>`_
 
-.. image:: https://img.shields.io/circleci/build/github/jodal/comics/
-    :target: https://circleci.com/gh/jodal/comics
-    :alt: CircleCI build status
+.. image:: https://img.shields.io/github/workflow/status/jodal/comics/CI
+    :target: https://github.com/jodal/comics/actions
+    :alt: CI build status
 
 .. image:: https://img.shields.io/readthedocs/comics/
     :target: https://comics.readthedocs.io/
