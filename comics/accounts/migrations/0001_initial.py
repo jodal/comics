@@ -34,7 +34,9 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"db_table": "comics_user_profile_comics",},
+            options={
+                "db_table": "comics_user_profile_comics",
+            },
             bases=(models.Model,),
         ),
         migrations.CreateModel(
