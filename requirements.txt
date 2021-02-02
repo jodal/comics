@@ -7,7 +7,7 @@ django-environ == 0.4.5
 pytz == 2021.1
 
 # For image handling
-Pillow == 6.2.2
+Pillow == 7.1.0
 
 # For crawling comics and the REST API
 lxml == 4.6.2
