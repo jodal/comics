@@ -31,4 +31,4 @@ django-invitations == 1.9.3
 
 # For REST API
 django-tastypie == 0.14.3
-defusedxml == 0.6.0
+defusedxml == 0.7.0
