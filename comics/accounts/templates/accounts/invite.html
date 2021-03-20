@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Invite
+{% endblock %}
+
+{% block content %}
+
+  <div class="page-header">
+    <h1>Invite</h1>
+  </div>
+
+  <h2>Sent invitations</h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Invite sent</th>
+        <th>Invite accepted</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for invitation in invitations %}
+        <tr>
+          <td>{{ invitation.email }}</td>
+          <td>{{ invitation.created|date:"Y-m-d H:i e" }}</td>
+          <td><i class="fa fa-{{ invitation.accepted|yesno:"check,times" }}"></i></td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="0"><em>No existing invitations found</em></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

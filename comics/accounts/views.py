@@ -104,3 +104,17 @@ def mycomics_edit_comics(request):
         return HttpResponseRedirect(request.META["HTTP_REFERER"])
     else:
         return HttpResponseRedirect(reverse("mycomics_latest"))
+
+
+@login_required
+def invite(request):
+    invitations = request.user.invitation_set.all()
+
+    return render(
+        request,
+        "accounts/invite.html",
+        {
+            "active": {"invite": True},
+            "invitations": invitations,
+        },
+    )

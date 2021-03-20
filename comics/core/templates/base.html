@@ -70,6 +70,12 @@
 
               <ul class="nav navbar-nav navbar-right">
               {% if user.is_authenticated %}
+                <li class="{{ active.invite|yesno:"active," }}">
+                  <a href="{% url "invite" %}">
+                    <i class="fa fa-heart"></i>
+                    Invite
+                  </a>
+                </li>
                 <li class="{{ active.account|yesno:"active," }}" >
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-user"></i>
