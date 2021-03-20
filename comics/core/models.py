@@ -87,6 +87,7 @@ class Release(models.Model):
 
     class Meta:
         db_table = "comics_release"
+        indexes = [models.Index(fields=["comic", "pub_date"])]
         get_latest_by = "pub_date"
 
     def __unicode__(self):

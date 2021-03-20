@@ -29,18 +29,6 @@ use, PostgreSQL is the recommended choice.
     need to ensure that the user the web server will be running as has write
     access to the *directory* the SQLite database file is located in.
 
-Additional database indexes
----------------------------
-
-Out of the box, *comics* will create a few extra database indexes that will
-make it a lot more performant. In addition, creating the following indexes will
-improve performance a bit more:
-
-.. code-block:: sql
-
-    CREATE INDEX comics_release_comic_id_pub_date
-        ON comics_release (comic_id, pub_date);
-
 
 Example Apache vhost
 ====================
