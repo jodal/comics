@@ -2,19 +2,19 @@
 
 {% load account %}
 
-{% block title %}Confirm e-mail address{% endblock %}
+{% block title %}Confirm email address{% endblock %}
 
 {% block content %}
 
 <h1 class="page-title">
   Confirm
-  <small>e-mail address</small>
+  <small>email address</small>
 </h1>
 
 {% if confirmation %}
 
   <p>
-    Please confirm that {{ confirmation.email_address.email }} is an e-mail
+    Please confirm that {{ confirmation.email_address.email }} is an email
     address for user {{ confirmation.email_address.user }}.
   </p>
 
@@ -26,8 +26,8 @@
 {% else %}
 
   <p>
-    This e-mail confirmation link expired or is invalid. Please
-    <a href="{% url "account_email" %}">issue a new e-mail confirmation request</a>.
+    This email confirmation link expired or is invalid. Please
+    <a href="{% url "account_email" %}">issue a new email confirmation request</a>.
   </p>
 
 {% endif %}
