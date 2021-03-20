@@ -2,14 +2,14 @@
 Deployment
 **********
 
-The following example documents *one way* to deploy *comics*. As *comics* is a
+The following example documents *one way* to deploy Comics. As Comics is a
 standard Django project with an additional batch job for crawling, it may be
 deployed in just about any way a Django project may be deployed. Please refer
 to `Django's deployment documentation
 <https://docs.djangoproject.com/en/dev/howto/deployment/>`_ for further
 details.
 
-In the following examples we assume that we are deploying *comics* at
+In the following examples we assume that we are deploying Comics at
 http://comics.example.com/, using Apache, mod_wsgi, and PostgreSQL. The Django
 application and batch job is both running as the user ``comics-user``. The
 static media files, like comic images, are served from
@@ -19,7 +19,7 @@ http://comics.example.com/media/, but may also be served from a different host.
 Database
 ========
 
-*comics* should theoretically work with any database supported by Django.
+Comics should theoretically work with any database supported by Django.
 Though, development is mostly done on SQLite and PostgreSQL. For production
 use, PostgreSQL is the recommended choice.
 
@@ -69,7 +69,7 @@ Example ``.env``
 ================
 
 To change settings, you should not change the settings files shipped with
-*comics*, but instead override the settings in the apps environment or in the
+Comics, but instead override the settings in the apps environment or in the
 file ``comics/.env``.  Even if you do not want to override any default
 settings, you must at least set ``DJANGO_SECRET_KEY`` and most probably your
 database settings. A full set of environment variables for a production
@@ -129,7 +129,7 @@ One way is to use ``cron`` e.g. by placing the following in
     1 * * * * comics-user python /path/to/comics/manage.py comics_getreleases -v0
     1 3 * * * comics-user python /path/to/comics/manage.py clear_expired_invitations -v0
 
-If you have installed *comics*' dependencies in a virtualenv instead of
+If you have installed Comics' dependencies in a virtualenv instead of
 globally, the cronjob must also activate the virtualenv. This can be done by
 using the ``python`` interpreter from the virtualenv:
 

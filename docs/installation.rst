@@ -1,18 +1,18 @@
 Installation
 ************
 
-First of all, *comics* is just a `Django <https://www.djangoproject.com/>`_
-application. Thus, if there are details not outlined in *comics*' own docs,
+First of all, Comics is just a `Django <https://www.djangoproject.com/>`_
+application. Thus, if there are details not outlined in Comics' own docs,
 you'll probably find the answer in Django's docs. For example, database
 settings are mentioned on this page, but no details are given, as we're just
 talking about Django's database settings. Django got better docs for their
 database settings than we could ever write, so please refer to Django's docs.
 
 
-Get *comics*
+Get Comics
 ============
 
-You can get hold of *comics* in two ways:
+You can get hold of Comics in two ways:
 
 - Download the lastest release from https://github.com/jodal/comics/tags and
   unpack it.
@@ -56,7 +56,7 @@ sure that the WSGI file and the cronjob activate the virtualenv.
 Minimum dependencies
 --------------------
 
-The absolute minimum requirements for getting *comics* up and running are
+The absolute minimum requirements for getting Comics up and running are
 documented in the file ``requirements.txt``:
 
 .. literalinclude:: ../requirements.txt
@@ -80,10 +80,10 @@ are listed in the file ``requirements-dev.txt``:
 .. literalinclude:: ../requirements-dev.txt
 
 
-Run *comics*
+Run Comics
 ============
 
-To get *comics* to a state useful for testing of new crawlers and personal
+To get Comics to a state useful for testing of new crawlers and personal
 usage, the following steps are all that is needed.
 
 

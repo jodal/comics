@@ -2,15 +2,15 @@
 Web service
 ***********
 
-*comics* comes with a web service that exposes all useful data about the
+Comics comes with a web service that exposes all useful data about the
 current user, the user's comics subscriptions, comics, comic releases, and
 comic images. The web service may be used to e.g. create iOS/Android apps or
 alternative comics browsers, while leaving the comics crawling job to a
-*comics* instance.
+Comics instance.
 
 Please make any apps using this API generic, so that they can be used with any
-*comics* instance as the backend. In other words, when starting your app, let
-the end user enter the hostname of the *comics* instance, in addition to his
+Comics instance as the backend. In other words, when starting your app, let
+the end user enter the hostname of the Comics instance, in addition to his
 secret key or email/password pair.
 
 
@@ -18,9 +18,9 @@ Authentication
 ==============
 
 The web service is only available for users with an active user account on the
-*comics* instance. The user must authenticate himself using the same
+Comics instance. The user must authenticate himself using the same
 secret key as is used to access comic feeds. The key can be found in the
-account section of the *comics* instance.
+account section of the Comics instance.
 
 The secret key can be provided in one of two ways:
 
@@ -37,17 +37,17 @@ Get secret key using email and password
 ---------------------------------------
 
 If it's inconvenient for the end user to enter the secret key in your user
-interface--on mobile phones copy-pasting the API key from the *comics*
+interface--on mobile phones copy-pasting the API key from the Comics
 instance's account page is time consuming at best--you may retrieve the secret
 key on behalf of the end user by following steps:
 
 1. Ask the end user to provide:
 
-   - the *comics* instance's base URL (e.g. ``example.com``)
+   - the Comics instance's base URL (e.g. ``example.com``)
 
-   - the email address the end user have registered on the *comics* instance
+   - the email address the end user have registered on the Comics instance
 
-   - the password the end user have registered on the *comics* instance
+   - the password the end user have registered on the Comics instance
 
 2. Use the provided information to retrieve the :ref:`users-resource` from the
    API. Authenticate using `Basic Authentication
@@ -108,10 +108,10 @@ You can specify what response format you prefer in one of two ways:
       Accept: application/x-plist
 
 JSON and JSONP are always supported. Other formats like XML, YAML, and Apple
-binary plists (bplist) may be available if the *comics* instance got the
+binary plists (bplist) may be available if the Comics instance got the
 additional dependencies required by the format installed.
 
-If you run a *comics* instance yourself, and want support for more response
+If you run a Comics instance yourself, and want support for more response
 formats, check out `Tastypie's serialization docs
 <https://django-tastypie.readthedocs.io/en/latest/serialization.html>`_ for
 details on what you need to install.
