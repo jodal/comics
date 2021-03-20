@@ -47,4 +47,9 @@ urlpatterns = [
         account_views.mycomics_edit_comics,
         name="edit_comics",
     ),
+    url(
+        r"^invite/$",
+        account_views.invite,
+        name="invite",
+    ),
 ]
