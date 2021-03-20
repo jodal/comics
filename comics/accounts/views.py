@@ -119,7 +119,7 @@ def invite(request):
             'An invitation has been sent to "%s".' % invitation.email
         )
 
-    invitations = request.user.invitation_set.all().order_by('-created')
+    invitations = request.user.invitation_set.all().order_by("-created")
 
     return render(
         request,
