@@ -1,6 +1,6 @@
-*********************
-Creating new crawlers
-*********************
+*****************
+Creating crawlers
+*****************
 
 For each comic Comics is aggregating, we need to create a crawler. At the
 time of writing, about 100 crawlers are available in the
