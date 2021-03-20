@@ -1,0 +1,15 @@
+version: 2
+
+build:
+  image: latest
+
+python:
+  version: 2.7
+  install:
+    - requirements: requirements-docs.txt
+
+sphinx:
+  builder: htmldir
+  configuration: docs/conf.py
+
+formats: all
