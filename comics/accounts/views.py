@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
+from invitations.utils import get_invitation_model
 
 from comics.accounts.models import Subscription
 from comics.core.models import Comic
@@ -108,6 +109,16 @@ def mycomics_edit_comics(request):
 
 @login_required
 def invite(request):
+    if request.method == "POST":
+        invitation_model = get_invitation_model()
+        invitation = invitation_model.create(
+            request.POST["email"], inviter=request.user
+        )
+        invitation.send_invitation(request)
+        messages.success(
+            'An invitation has been sent to "%s".' % invitation.email
+        )
+
     invitations = request.user.invitation_set.all()
 
     return render(
