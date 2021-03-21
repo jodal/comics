@@ -178,8 +178,7 @@ Example cronjob
 ===============
 
 To get new comics releases, you should run ``comics_getreleases`` regularly. In
-addition, you should run ``clear_expired_invitations`` once in a while to remove
-expired user invitations, and ``clearsessions`` to clear expired user sessions.
+addition, you should run ``clearsessions`` to clear expired user sessions.
 One way is to use ``cron`` e.g. by placing the following in
 ``/etc/cron.d/comics``:
 
@@ -188,7 +187,6 @@ One way is to use ``cron`` e.g. by placing the following in
     MAILTO=comics@example.com
     PYTHONPATH=/srv/comics.example.com/app/comics
     1 * * * * comics-user python /srv/comics.example.com/app/comics/manage.py comics_getreleases -v0
-    1 3 * * * comics-user python /srv/comics.example.com/app/comics/manage.py clear_expired_invitations -v0
     1 3 * * * comics-user python /srv/comics.example.com/app/comics/manage.py clearsessions -v0
 
 If you have installed Comics' dependencies in a virtualenv instead of
@@ -200,7 +198,6 @@ using the ``python`` interpreter from the virtualenv:
     MAILTO=comics@example.com
     PYTHONPATH=/srv/comics.example.com/app/comics
     1 * * * * comics-user /srv/comics.example.com/app/venv/bin/python /srv/comics.example.com/app/comics/manage.py comics_getreleases -v0
-    1 3 * * * comics-user /srv/comics.example.com/app/venv/bin/python /srv/comics.example.com/app/comics/manage.py clear_expired_invitations -v0
     1 3 * * * comics-user /srv/comics.example.com/app/venv/bin/python /srv/comics.example.com/app/comics/manage.py clearsessions -v0
 
 By setting ``MAILTO`` any exceptions raised by the comic crawlers will be sent
