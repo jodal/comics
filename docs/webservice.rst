@@ -188,24 +188,24 @@ Users resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 200 OK
+        HTTP/1.1 200 OK
         Content-Type: application/json; charset=utf-8
 
         {
-            meta: {
-                limit: 20,
-                next: null,
-                offset: 0,
-                previous: null,
-                total_count: 1
+            "meta": {
+                "limit": 20,
+                "next": null,
+                "offset": 0,
+                "previous": null,
+                "total_count": 1
             },
-            objects: [
+            "objects": [
                 {
-                    date_joined: "2012-04-30T18:39:59+00:00",
-                    email: "alice@example.com",
-                    last_login: "2012-06-09T23:09:54.312109+00:00",
-                    resource_uri: "/api/v1/users/1/",
-                    secret_key: "76acdcdf16ae4e12becb00d09a9d9456"
+                    "date_joined": "2012-04-30T18:39:59+00:00",
+                    "email": "alice@example.com",
+                    "last_login": "2012-06-09T23:09:54.312109+00:00",
+                    "resource_uri": "/api/v1/users/1/",
+                    "secret_key": "76acdcdf16ae4e12becb00d09a9d9456"
                 }
             ]
         }
@@ -234,30 +234,30 @@ Comics resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 200 OK
+        HTTP/1.1 200 OK
         Content-Type: application/json; charset=utf-8
 
         {
-            meta: {
-                limit: 20,
-                next: null,
-                offset: 0,
-                previous: null,
-                total_count: 1
+            "meta": {
+                "limit": 20,
+                "next": null,
+                "offset": 0,
+                "previous": null,
+                "total_count": 1
             },
-            objects: [
+            "objects": [
                 {
-                    active: true,
-                    added: "0001-01-01T00:00:00+00:00",
-                    end_date: null,
-                    id: "18",
-                    language: "en",
-                    name: "xkcd",
-                    resource_uri: "/api/v1/comics/18/",
-                    rights: "Randall Munroe, CC BY-NC 2.5",
-                    slug: "xkcd",
-                    start_date: "2005-05-29",
-                    url: "http://www.xkcd.com/"
+                    "active": true,
+                    "added": "0001-01-01T00:00:00+00:00",
+                    "end_date": null,
+                    "id": "18",
+                    "language": "en",
+                    "name": "xkcd",
+                    "resource_uri": "/api/v1/comics/18/",
+                    "rights": "Randall Munroe, CC BY-NC 2.5",
+                    "slug": "xkcd",
+                    "start_date": "2005-05-29",
+                    "url": "http://www.xkcd.com/"
                 }
             ]
         }
@@ -293,21 +293,21 @@ Comics resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 200 OK
+        HTTP/1.1 200 OK
         Content-Type: application/json; charset=utf-8
 
         {
-            active: true,
-            added: "0001-01-01T00:00:00+00:00",
-            end_date: null,
-            id: "18",
-            language: "en",
-            name: "xkcd",
-            resource_uri: "/api/v1/comics/18/",
-            rights: "Randall Munroe, CC BY-NC 2.5",
-            slug: "xkcd",
-            start_date: "2005-05-29",
-            url: "http://www.xkcd.com/"
+            "active": true,
+            "added": "0001-01-01T00:00:00+00:00",
+            "end_date": null,
+            "id": "18",
+            "language": "en",
+            "name": "xkcd",
+            "resource_uri": "/api/v1/comics/18/",
+            "rights": "Randall Munroe, CC BY-NC 2.5",
+            "slug": "xkcd",
+            "start_date": "2005-05-29",
+            "url": "http://www.xkcd.com/"
         }
 
     :param comic_id: the comic ID
@@ -338,57 +338,57 @@ Releases resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 200 OK
+        HTTP/1.1 200 OK
         Content-Type: application/json; charset=utf-8
 
         {
-            meta: {
-                limit: 2,
-                next: "/api/v1/releases/?limit=2&key=76acdcdf16ae4e12becb00d09a9d9456&format=json&comic__slug=xkcd&offset=2",
-                offset: 0,
-                previous: null,
-                total_count: 1104
+            "meta": {
+                "limit": 2,
+                "next": "/api/v1/releases/?limit=2&key=76acdcdf16ae4e12becb00d09a9d9456&format=json&comic__slug=xkcd&offset=2",
+                "offset": 0,
+                "previous": null,
+                "total_count": 1104
             },
-            objects: [
+            "objects": [
                 {
-                    comic: "/api/v1/comics/18/",
-                    fetched: "2012-10-08T04:03:56.411028+00:00",
-                    id: "147708",
-                    images: [
+                    "comic": "/api/v1/comics/18/",
+                    "fetched": "2012-10-08T04:03:56.411028+00:00",
+                    "id": "147708",
+                    "images": [
                         {
-                            checksum: "605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12",
-                            fetched: "2012-10-08T04:03:56.406586+00:00",
-                            file: "https://static.example.com/media/xkcd/6/605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12.png",
-                            height: 365,
-                            id: "151937",
-                            resource_uri: "/api/v1/images/151937/",
-                            text: "Facebook, Apple, and Google all got away with their monopolist power grabs because they don't have any 'S's in their names for critics to snarkily replace with '$'s.",
-                            title: "Microsoft",
-                            width: 278
+                            "checksum": "605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12",
+                            "fetched": "2012-10-08T04:03:56.406586+00:00",
+                            "file": "https://static.example.com/media/xkcd/6/605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12.png",
+                            "height": 365,
+                            "id": "151937",
+                            "resource_uri": "/api/v1/images/151937/",
+                            "text": "Facebook, Apple, and Google all got away with their monopolist power grabs because they don't have any 'S's in their names for critics to snarkily replace with '$'s.",
+                            "title": "Microsoft",
+                            "width": 278
                         }
                     ],
-                    pub_date: "2012-10-08",
-                    resource_uri: "/api/v1/releases/147708/"
+                    "pub_date": "2012-10-08",
+                    "resource_uri": "/api/v1/releases/147708/"
                 },
                 {
-                    comic: "/api/v1/comics/18/",
-                    fetched: "2012-10-05T05:03:33.744355+00:00",
-                    id: "147172",
-                    images: [
+                    "comic": "/api/v1/comics/18/",
+                    "fetched": "2012-10-05T05:03:33.744355+00:00",
+                    "id": "147172",
+                    "images": [
                         {
-                            checksum: "6d1b67d3dc00d362ddb5b5e8f1c3f174926d2998ca497e8737ff8b74e7100997",
-                            fetched: "2012-10-05T05:03:33.737231+00:00",
-                            file: "https://static.example.com/media/xkcd/6/6d1b67d3dc00d362ddb5b5e8f1c3f174926d2998ca497e8737ff8b74e7100997.png",
-                            height: 254,
-                            id: "151394",
-                            resource_uri: "/api/v1/images/151394/",
-                            text: "According to my mom, my first word was (looking up at the sky) 'Wow!'",
-                            title: "My Sky",
-                            width: 713
+                            "checksum": "6d1b67d3dc00d362ddb5b5e8f1c3f174926d2998ca497e8737ff8b74e7100997",
+                            "fetched": "2012-10-05T05:03:33.737231+00:00",
+                            "file": "https://static.example.com/media/xkcd/6/6d1b67d3dc00d362ddb5b5e8f1c3f174926d2998ca497e8737ff8b74e7100997.png",
+                            "height": 254,
+                            "id": "151394",
+                            "resource_uri": "/api/v1/images/151394/",
+                            "text": "According to my mom, my first word was (looking up at the sky) 'Wow!'",
+                            "title": "My Sky",
+                            "width": 713
                         }
                     ],
-                    pub_date: "2012-10-05",
-                    resource_uri: "/api/v1/releases/147172/"
+                    "pub_date": "2012-10-05",
+                    "resource_uri": "/api/v1/releases/147172/"
                 }
             ]
         }
@@ -426,28 +426,28 @@ Releases resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 200 OK
+        HTTP/1.1 200 OK
         Content-Type: application/json; charset=utf-8
 
         {
-            comic: "/api/v1/comics/18/",
-            fetched: "2012-10-08T04:03:56.411028+00:00",
-            id: "147708",
-            images: [
+            "comic": "/api/v1/comics/18/",
+            "fetched": "2012-10-08T04:03:56.411028+00:00",
+            "id": "147708",
+            "images": [
                 {
-                    checksum: "605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12",
-                    fetched: "2012-10-08T04:03:56.406586+00:00",
-                    file: "https://static.example.com/media/xkcd/6/605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12.png",
-                    height: 365,
-                    id: "151937",
-                    resource_uri: "/api/v1/images/151937/",
-                    text: "Facebook, Apple, and Google all got away with their monopolist power grabs because they don't have any 'S's in their names for critics to snarkily replace with '$'s.",
-                    title: "Microsoft",
-                    width: 278
+                    "checksum": "605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12",
+                    "fetched": "2012-10-08T04:03:56.406586+00:00",
+                    "file": "https://static.example.com/media/xkcd/6/605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12.png",
+                    "height": 365,
+                    "id": "151937",
+                    "resource_uri": "/api/v1/images/151937/",
+                    "text": "Facebook, Apple, and Google all got away with their monopolist power grabs because they don't have any 'S's in their names for critics to snarkily replace with '$'s.",
+                    "title": "Microsoft",
+                    "width": 278
                 }
             ],
-            pub_date: "2012-10-08",
-            resource_uri: "/api/v1/releases/147708/"
+            "pub_date": "2012-10-08",
+            "resource_uri": "/api/v1/releases/147708/"
         }
 
     :param release_id: the release ID
@@ -516,22 +516,22 @@ Subscriptions resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 200 OK
+        HTTP/1.1 200 OK
         Content-Type: application/json; charset=utf-8
 
         {
-            meta: {
-                limit: 20,
-                next: null,
-                offset: 0,
-                previous: null,
-                total_count: 1
+            "meta": {
+                "limit": 20,
+                "next": null,
+                "offset": 0,
+                "previous": null,
+                "total_count": 1
             },
-            objects: [
+            "objects": [
                 {
-                    comic: "/api/v1/comics/18/",
-                    id: "2",
-                    resource_uri: "/api/v1/subscriptions/2/"
+                    "comic": "/api/v1/comics/18/",
+                    "id": "2",
+                    "resource_uri": "/api/v1/subscriptions/2/"
                 }
             ]
         }
@@ -567,7 +567,7 @@ Subscriptions resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 201 CREATED
+        HTTP/1.1 201 CREATED
         Content-Type: text/html; charset=utf-8
         Location: https://example.com/api/v1/subscriptions/4/
 
@@ -612,7 +612,7 @@ Subscriptions resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 202 ACCEPTED
+        HTTP/1.1 202 ACCEPTED
         Content-Length: 0
         Content-Type: text/html; charset=utf-8
 
@@ -640,13 +640,13 @@ Subscriptions resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 200 OK
+        HTTP/1.1 200 OK
         Content-Type: application/json; charset=utf-8
 
         {
-            comic: "/api/v1/comics/18/",
-            id: "2",
-            resource_uri: "/api/v1/subscriptions/2/"
+            "comic": "/api/v1/comics/18/",
+            "id": "2",
+            "resource_uri": "/api/v1/subscriptions/2/"
         }
 
     :param subscription_id: the subscription ID
@@ -672,7 +672,7 @@ Subscriptions resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 204 NO CONTENT
+        HTTP/1.1 204 NO CONTENT
         Content-Length: 0
         Content-Type: text/html; charset=utf-8
 
