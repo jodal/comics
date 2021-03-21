@@ -37,4 +37,4 @@ Project resources
     crawlers
     web-api
     data-model
-    development
+    devenv

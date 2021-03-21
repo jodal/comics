@@ -1,6 +1,6 @@
-***********
-Development
-***********
+***********************
+Development environment
+***********************
 
 Comics development is coordinated through `GitHub
 <http://github.com/jodal/comics/>`_.
