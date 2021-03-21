@@ -1,10 +1,10 @@
-***********
-Web service
-***********
+*******
+Web API
+*******
 
-Comics comes with a web service that exposes all useful data about the
+Comics comes with a web API that exposes all useful data about the
 current user, the user's comics subscriptions, comics, comic releases, and
-comic images. The web service may be used to e.g. create iOS/Android apps or
+comic images. The web API may be used to e.g. create iOS/Android apps or
 alternative comics browsers, while leaving the comics crawling job to a
 Comics instance.
 
@@ -17,7 +17,7 @@ secret key or email/password pair.
 Authentication
 ==============
 
-The web service is only available for users with an active user account on the
+The web API is only available for users with an active user account on the
 Comics instance. The user must authenticate himself using the same
 secret key as is used to access comic feeds. The key can be found in the
 account section of the Comics instance.

@@ -24,7 +24,7 @@ crawling web sites and feeds.
     :caption: Reference
 
     crawlers
-    webservice
+    web-api
     data-model
 
 .. toctree::
