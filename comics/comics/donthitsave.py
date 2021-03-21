@@ -5,7 +5,7 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = "Don't Hit Save"
     language = "en"
-    url = "http://www.donthitsave.com/"
+    url = "https://donthitsave.com/"
     start_date = "2015-09-18"
     rights = "Jeff Lofvers"
 
@@ -16,8 +16,8 @@ class Crawler(CrawlerBase):
     time_zone = "US/Eastern"
 
     def crawl(self, pub_date):
-        feed = self.parse_feed("http://www.donthitsave.com/donthitsavefeed.xml")
+        feed = self.parse_feed("https://donthitsave.com/donthitsavefeed.xml")
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src("img")
+            url = entry.summary.src('img[src*="/comicimages/"]')
             title = entry.title
             return CrawlerImage(url, title)
