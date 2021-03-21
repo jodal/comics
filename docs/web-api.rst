@@ -358,7 +358,7 @@ Releases resource
                         {
                             "checksum": "605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12",
                             "fetched": "2012-10-08T04:03:56.406586+00:00",
-                            "file": "https://static.example.com/media/xkcd/6/605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12.png",
+                            "file": "https://comics.example.com/static/media/xkcd/6/605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12.png",
                             "height": 365,
                             "id": "151937",
                             "resource_uri": "/api/v1/images/151937/",
@@ -378,7 +378,7 @@ Releases resource
                         {
                             "checksum": "6d1b67d3dc00d362ddb5b5e8f1c3f174926d2998ca497e8737ff8b74e7100997",
                             "fetched": "2012-10-05T05:03:33.737231+00:00",
-                            "file": "https://static.example.com/media/xkcd/6/6d1b67d3dc00d362ddb5b5e8f1c3f174926d2998ca497e8737ff8b74e7100997.png",
+                            "file": "https://comics.example.com/static/media/xkcd/6/6d1b67d3dc00d362ddb5b5e8f1c3f174926d2998ca497e8737ff8b74e7100997.png",
                             "height": 254,
                             "id": "151394",
                             "resource_uri": "/api/v1/images/151394/",
@@ -437,7 +437,7 @@ Releases resource
                 {
                     "checksum": "605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12",
                     "fetched": "2012-10-08T04:03:56.406586+00:00",
-                    "file": "https://static.example.com/media/xkcd/6/605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12.png",
+                    "file": "https://comics.example.com/static/media/xkcd/6/605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12.png",
                     "height": 365,
                     "id": "151937",
                     "resource_uri": "/api/v1/images/151937/",
