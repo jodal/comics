@@ -17,7 +17,7 @@ templates_path = ["_templates"]
 source_suffix = ".rst"
 master_doc = "index"
 
-project = u"comics"
+project = u"Comics"
 copyright = u"2009-2021, Stein Magnus Jodal"
 
 version = "3.0"
@@ -47,7 +47,7 @@ latex_documents = [
     (
         "index",
         "comics.tex",
-        "comics Documentation",
+        "Comics Documentation",
         "Stein Magnus Jodal and contributors",
         "manual",
     ),
