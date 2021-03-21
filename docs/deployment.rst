@@ -10,10 +10,10 @@ to `Django's deployment documentation
 details.
 
 In the following examples we assume that we are deploying Comics at
-http://comics.example.com/, using Apache, mod_wsgi, and PostgreSQL. The Django
+http://comics.example.com/, using Nginx, Gunicorn, and PostgreSQL. The Django
 application and batch job is both running as the user ``comics-user``. The
 static media files, like comic images, are served from
-http://comics.example.com/media/, but may also be served from a different host.
+http://comics.example.com/static/.
 
 
 Database
@@ -25,77 +25,138 @@ use, PostgreSQL is the recommended choice.
 
 .. note::
 
-    If you are going to use SQLite in a deployment with Apache and so on, you
+    If you are going to use SQLite in a deployment with Nginx and so on, you
     need to ensure that the user the web server will be running as has write
     access to the *directory* the SQLite database file is located in.
-
-
-Example Apache vhost
-====================
-
-This example requires your Apache to have the ``mod_wsgi`` module. For
-efficient static media serving and caching, you should probably enable
-``mod_deflate`` and ``mod_expires`` for ``/media`` and ``/static``.
-
-.. code-block:: apache
-
-    <VirtualHost *:80>
-        ServerName comics.example.com
-        ErrorLog /var/log/apache2/comics.example.com-error.log
-        CustomLog /var/log/apache2/comics.example.com-access.log combined
-
-        # Not used, but Apache will complain if the dir does not exist
-        DocumentRoot /var/www/comics.example.com
-
-        # Static media hosting
-        Alias /media/ /path/to/comics/media/
-        Alias /static/ /path/to/comics/static/
-
-        # mod_wsgi setup
-        WSGIDaemonProcess comics user=comics-user group=comics-user threads=50 maximum-requests=10000
-        WSGIProcessGroup comics
-        WSGIScriptAlias / /path/to/comics/comics/wsgi.py
-        <Directory /path/to/comics/comics>
-            Require all granted
-        </Directory>
-    </VirtualHost>
-
-For details, please refer to the documentation of the `Apache
-<http://httpd.apache.org/docs/>`_ and `mod_wsgi
-<http://code.google.com/p/modwsgi/>`_ projects.
 
 
 Example ``.env``
 ================
 
+In the following examples, we assume the Comics source code is unpacked at
+``/srv/comics.example.com/app/comics``.
+
 To change settings, you should not change the settings files shipped with
-Comics, but instead override the settings in the apps environment or in the
-file ``comics/.env``.  Even if you do not want to override any default
-settings, you must at least set ``DJANGO_SECRET_KEY`` and most probably your
-database settings. A full set of environment variables for a production
-deployment may look like this::
+Comics, but instead override the settings using environment variables, or by
+creating a file named ``/srv/comics.example.com/app/comics/.env``. You must
+at least set ``DJANGO_SECRET_KEY`` and database settings, unless you use
+SQLite.
 
-    VIRTUALENV_ROOT=/srv/example.com/venv
+A full set of environment variables for a production deployment may look like
+this:
 
-    DJANGO_SECRET_KEY=Kaikoh9aiye7air9dae5aigh9ue1Ooc7
+.. code-block:: text
 
+    VIRTUALENV_ROOT=/srv/comics.example.com/app/venv
+
+    DJANGO_SECRET_KEY=replace-this-with-a-long-random-value
     DJANGO_ADMIN=comics@example.com
     DJANGO_DEFAULT_FROM_EMAIL=comics@example.com
 
-    DJANGO_MEDIA_ROOT=/var/www/static.example.com/media/
-    DJANGO_MEDIA_URL=http://static.example.com/media/
-    DJANGO_STATIC_ROOT=/var/www/static.example.com/static/
-    DJANGO_STATIC_URL=http://static.example.com/static/
+    DJANGO_MEDIA_ROOT=/srv/comics.example.com/htdocs/static/media/
+    DJANGO_MEDIA_URL=https://comics.example.com/static/media/
+    DJANGO_STATIC_ROOT=/srv/comics.example.com/htdocs/static/
+    DJANGO_STATIC_URL=https://comics.example.com/static/
 
-    DATABASE_URL=postgres://comics:topsecret@localhost:5432/comics
+    DATABASE_URL=postgres://comics:topsecret-password@localhost:5432/comics
 
-    MEMCACHED_URL=127.0.0.1:11211
+    CACHE_URL=memcache://127.0.0.1:11211
 
+    COMICS_LOG_FILENAME=/srv/comics.example.com/app/log/comics.log
+    COMICS_SITE_TITLE=comics.example.com
     COMICS_INVITE_MODE=true
 
-Of course, you should change most, if not all, of these settings for your own
-installation. If your are not running a *memcached* server, remove
-`MEMCACHED_URL` variable from your environment.
+Of course, you should change most, if not all, of these settings to fit your own
+installation.
+
+If your are not running a ``memcached`` server, remove ``CACHE_URL`` variable
+from your environment. Comics does not require a cache, but responses are
+significantly faster with a cache available.
+
+
+Example Gunicorn setup
+======================
+
+Comics is a WSGI app and can be run with any WSGI server, for example
+Gunicorn. Gunicorn is a Python program, so you can simply install it in
+Comics' own virtualenv:
+
+.. code-block:: sh
+
+    source /srv/comics.example.com/app/venv/bin/activate
+    pip install gunicorn
+
+Then you need to start Gunicorn, for example with a systemd service:
+
+.. code-block:: ini
+
+    [Unit]
+    Description=gunicorn-comics
+    After=network.target
+
+    [Install]
+    WantedBy=multi-user.target
+
+    [Service]
+    User=comics-user
+    Group=comics-user
+    Restart=always
+
+    ExecStart=/srv/comics.example.com/app/venv/bin/gunicorn --bind=127.0.0.1:8000 --workers=9 --access-logfile=/srv/comics.example.com/htlogs/gunicorn-access.log --error-logfile=/srv/comics.example.com/htlogs/gunicorn-error.log comics.wsgi
+    ExecReload=/bin/kill -s HUP $MAINPID
+    ExecStop=/bin/kill -s TERM $MAINPID
+
+    WorkingDirectory=/srv/comics.example.com/app/comics
+    Environment=PYTHONPATH='/srv/comics.example.com/app/comics'
+
+    PrivateTmp=true
+
+
+Example Nginx vhost
+===================
+
+The web server Nginx can be used in front of Gunicorn to terminate HTTPS
+connections and effectively serve static files.
+
+The following is an example of a complete Nginx vhost:
+
+.. code-block:: nginx
+
+    server {
+        server_name comics.example.com;
+        listen 443 ssl http2;
+        listen [::]:443 ssl http2;
+
+        access_log /srv/comics.example.com/htlogs/nginx-access.log;
+        error_log /srv/comics.example.com/htlogs/nginx-error.log error;
+
+        ssl_certificate /etc/letsencrypt/live/comics.example.com/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/comics.example.com/privkey.pem;
+
+        location /static {
+            root /srv/comics.example.com/htdocs;
+            expires max;
+
+            location ~* \/fonts\/ {
+                add_header Access-Control-Allow-Origin *;
+            }
+        }
+
+        location / {
+            proxy_pass_header Server;
+            proxy_set_header Host $http_host;
+            proxy_redirect off;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Scheme $scheme;
+            proxy_connect_timeout 10;
+            proxy_read_timeout 30;
+            proxy_pass http://localhost:8000/;
+        }
+    }
+
+For details, please refer to the documentation of the `Nginx
+<http://nginx.org/en/docs/>`_ project.
 
 
 .. _collecting-static-files:
@@ -110,24 +171,25 @@ files from all apps into the ``STATIC_ROOT``. To do this, run::
 
 You have to rerun this command every time you deploy changes to graphics, CSS
 and JavaScript. For more details, see the Django documentation on `staticfiles
-<https://docs.djangoproject.com/en/1.7/howto/static-files/>`_.
+<https://docs.djangoproject.com/en/1.11/howto/static-files/>`_.
 
 
 Example cronjob
 ===============
 
-To get new comics, you should run ``comics_getreleases`` regularly. In
+To get new comics releases, you should run ``comics_getreleases`` regularly. In
 addition, you should run ``clear_expired_invitations`` once in a while to remove
-expired user invitations.
+expired user invitations, and ``clearsessions`` to clear expired user sessions.
 One way is to use ``cron`` e.g. by placing the following in
 ``/etc/cron.d/comics``:
 
 .. code-block:: sh
 
     MAILTO=comics@example.com
-    PYTHONPATH=/path/to/comics
-    1 * * * * comics-user python /path/to/comics/manage.py comics_getreleases -v0
-    1 3 * * * comics-user python /path/to/comics/manage.py clear_expired_invitations -v0
+    PYTHONPATH=/srv/comics.example.com/app/comics
+    1 * * * * comics-user python /srv/comics.example.com/app/comics/manage.py comics_getreleases -v0
+    1 3 * * * comics-user python /srv/comics.example.com/app/comics/manage.py clear_expired_invitations -v0
+    1 3 * * * comics-user python /srv/comics.example.com/app/comics/manage.py clearsessions -v0
 
 If you have installed Comics' dependencies in a virtualenv instead of
 globally, the cronjob must also activate the virtualenv. This can be done by
@@ -136,9 +198,10 @@ using the ``python`` interpreter from the virtualenv:
 .. code-block:: sh
 
     MAILTO=comics@example.com
-    PYTHONPATH=/path/to/comics
-    1 * * * * comics-user /path/to/comics-virtualenv/bin/python /path/to/comics/manage.py comics_getreleases -v0
-    1 3 * * * comics-user /path/to/comics-virtualenv/bin/python /path/to/comics/manage.py -clear_expired_invitations -v0
+    PYTHONPATH=/srv/comics.example.com/app/comics
+    1 * * * * comics-user /srv/comics.example.com/app/venv/bin/python /srv/comics.example.com/app/comics/manage.py comics_getreleases -v0
+    1 3 * * * comics-user /srv/comics.example.com/app/venv/bin/python /srv/comics.example.com/app/comics/manage.py clear_expired_invitations -v0
+    1 3 * * * comics-user /srv/comics.example.com/app/venv/bin/python /srv/comics.example.com/app/comics/manage.py clearsessions -v0
 
 By setting ``MAILTO`` any exceptions raised by the comic crawlers will be sent
 by mail to the given mail address. ``1 * * * *`` specifies that the command
