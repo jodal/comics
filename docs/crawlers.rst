@@ -3,9 +3,9 @@ Creating crawlers
 *****************
 
 For each comic Comics is aggregating, we need to create a crawler. At the
-time of writing, about 100 crawlers are available in the
-``comics/comics/comics/`` directory. They serve as a great source for learning
-how to write new crawlers for Comics.
+time of writing, more than 200 crawlers are available in the
+``comics/comics/`` directory. They serve as a great source for learning how
+to write new crawlers for Comics.
 
 
 A crawler example
@@ -24,7 +24,7 @@ implementation itself.
     class ComicData(ComicDataBase):
         name = 'xkcd'
         language = 'en'
-        url = 'http://www.xkcd.com/'
+        url = 'https://www.xkcd.com/'
         start_date = '2005-05-29'
         rights = 'Randall Munroe, CC BY-NC 2.5'
 
@@ -34,7 +34,7 @@ implementation itself.
         time_zone = 'US/Eastern'
 
         def crawl(self, pub_date):
-            feed = self.parse_feed('http://www.xkcd.com/rss.xml')
+            feed = self.parse_feed('https://www.xkcd.com/rss.xml')
             for entry in feed.for_date(pub_date):
                 url = entry.summary.src('img[src*="/comics/"]')
                 title = entry.title
@@ -189,12 +189,13 @@ This means that you must always supply an URL, and that you can supply a
 For some crawlers, this is all you need. If the image URL is predictable and
 based upon the ``pub_date`` in some way, just create the URL with the help
 of `Python's strftime documentation
-<http://docs.python.org/library/datetime.html#strftime-behavior>`_, and return
-it wrapped in a :class:`CrawlerImage`::
+<https://docs.python.org/2.7/library/datetime.html#strftime-behavior>`_, and
+return it wrapped in a :class:`CrawlerImage`::
 
     def crawl(self, pub_date):
         url = 'http://www.example.com/comics/%s.png' % (
-            pub_date.strftime('%Y-%m-%d'),)
+            pub_date.strftime('%Y-%m-%d'),
+        )
         return CrawlerImage(url)
 
 Though, for most crawlers, some interaction with RSS or Atom feeds or web pages
@@ -339,7 +340,7 @@ class ``foo`` red, and all elements with the ID ``bar`` which is contained in
 
 .. code-block:: css
 
-    h1.foo { color red; }
+    h1.foo { color: red; }
     h1 #bar { color: blue; }
 
 In CSS3, the power of CSS selectors have been greatly increased by the addition
