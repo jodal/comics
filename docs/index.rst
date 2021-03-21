@@ -11,25 +11,25 @@ Python file with some metadata and a few lines of code. To make crawler
 development easy, Comics comes with both documentation and powerful APIs for
 crawling web sites and feeds.
 
-
-Contents
---------
-
 .. toctree::
-    :maxdepth: 3
+    :maxdepth: 2
+    :caption: Setup
 
     installation
+    bootstrapping
     deployment
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Reference
+
     crawlers
     webservice
+
+.. toctree::
+    :maxdepth: 2
+    :caption: About
+
     development
     authors
     changes
-
-
-Indices and tables
-------------------
-
-- :ref:`genindex`
-- :ref:`modindex`
-- :ref:`search`

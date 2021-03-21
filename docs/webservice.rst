@@ -2,15 +2,15 @@
 Web service
 ***********
 
-*comics* comes with a web service that exposes all useful data about the
+Comics comes with a web service that exposes all useful data about the
 current user, the user's comics subscriptions, comics, comic releases, and
 comic images. The web service may be used to e.g. create iOS/Android apps or
 alternative comics browsers, while leaving the comics crawling job to a
-*comics* instance.
+Comics instance.
 
 Please make any apps using this API generic, so that they can be used with any
-*comics* instance as the backend. In other words, when starting your app, let
-the end user enter the hostname of the *comics* instance, in addition to his
+Comics instance as the backend. In other words, when starting your app, let
+the end user enter the hostname of the Comics instance, in addition to his
 secret key or email/password pair.
 
 
@@ -18,9 +18,9 @@ Authentication
 ==============
 
 The web service is only available for users with an active user account on the
-*comics* instance. The user must authenticate himself using the same
+Comics instance. The user must authenticate himself using the same
 secret key as is used to access comic feeds. The key can be found in the
-account section of the *comics* instance.
+account section of the Comics instance.
 
 The secret key can be provided in one of two ways:
 
@@ -37,17 +37,17 @@ Get secret key using email and password
 ---------------------------------------
 
 If it's inconvenient for the end user to enter the secret key in your user
-interface--on mobile phones copy-pasting the API key from the *comics*
+interface--on mobile phones copy-pasting the API key from the Comics
 instance's account page is time consuming at best--you may retrieve the secret
 key on behalf of the end user by following steps:
 
 1. Ask the end user to provide:
 
-   - the *comics* instance's base URL (e.g. ``example.com``)
+   - the Comics instance's base URL (e.g. ``example.com``)
 
-   - the email address the end user have registered on the *comics* instance
+   - the email address the end user have registered on the Comics instance
 
-   - the password the end user have registered on the *comics* instance
+   - the password the end user have registered on the Comics instance
 
 2. Use the provided information to retrieve the :ref:`users-resource` from the
    API. Authenticate using `Basic Authentication
@@ -108,10 +108,10 @@ You can specify what response format you prefer in one of two ways:
       Accept: application/x-plist
 
 JSON and JSONP are always supported. Other formats like XML, YAML, and Apple
-binary plists (bplist) may be available if the *comics* instance got the
+binary plists (bplist) may be available if the Comics instance got the
 additional dependencies required by the format installed.
 
-If you run a *comics* instance yourself, and want support for more response
+If you run a Comics instance yourself, and want support for more response
 formats, check out `Tastypie's serialization docs
 <https://django-tastypie.readthedocs.io/en/latest/serialization.html>`_ for
 details on what you need to install.
@@ -188,24 +188,24 @@ Users resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 200 OK
+        HTTP/1.1 200 OK
         Content-Type: application/json; charset=utf-8
 
         {
-            meta: {
-                limit: 20,
-                next: null,
-                offset: 0,
-                previous: null,
-                total_count: 1
+            "meta": {
+                "limit": 20,
+                "next": null,
+                "offset": 0,
+                "previous": null,
+                "total_count": 1
             },
-            objects: [
+            "objects": [
                 {
-                    date_joined: "2012-04-30T18:39:59+00:00",
-                    email: "alice@example.com",
-                    last_login: "2012-06-09T23:09:54.312109+00:00",
-                    resource_uri: "/api/v1/users/1/",
-                    secret_key: "76acdcdf16ae4e12becb00d09a9d9456"
+                    "date_joined": "2012-04-30T18:39:59+00:00",
+                    "email": "alice@example.com",
+                    "last_login": "2012-06-09T23:09:54.312109+00:00",
+                    "resource_uri": "/api/v1/users/1/",
+                    "secret_key": "76acdcdf16ae4e12becb00d09a9d9456"
                 }
             ]
         }
@@ -234,30 +234,30 @@ Comics resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 200 OK
+        HTTP/1.1 200 OK
         Content-Type: application/json; charset=utf-8
 
         {
-            meta: {
-                limit: 20,
-                next: null,
-                offset: 0,
-                previous: null,
-                total_count: 1
+            "meta": {
+                "limit": 20,
+                "next": null,
+                "offset": 0,
+                "previous": null,
+                "total_count": 1
             },
-            objects: [
+            "objects": [
                 {
-                    active: true,
-                    added: "0001-01-01T00:00:00+00:00",
-                    end_date: null,
-                    id: "18",
-                    language: "en",
-                    name: "xkcd",
-                    resource_uri: "/api/v1/comics/18/",
-                    rights: "Randall Munroe, CC BY-NC 2.5",
-                    slug: "xkcd",
-                    start_date: "2005-05-29",
-                    url: "http://www.xkcd.com/"
+                    "active": true,
+                    "added": "0001-01-01T00:00:00+00:00",
+                    "end_date": null,
+                    "id": "18",
+                    "language": "en",
+                    "name": "xkcd",
+                    "resource_uri": "/api/v1/comics/18/",
+                    "rights": "Randall Munroe, CC BY-NC 2.5",
+                    "slug": "xkcd",
+                    "start_date": "2005-05-29",
+                    "url": "http://www.xkcd.com/"
                 }
             ]
         }
@@ -293,21 +293,21 @@ Comics resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 200 OK
+        HTTP/1.1 200 OK
         Content-Type: application/json; charset=utf-8
 
         {
-            active: true,
-            added: "0001-01-01T00:00:00+00:00",
-            end_date: null,
-            id: "18",
-            language: "en",
-            name: "xkcd",
-            resource_uri: "/api/v1/comics/18/",
-            rights: "Randall Munroe, CC BY-NC 2.5",
-            slug: "xkcd",
-            start_date: "2005-05-29",
-            url: "http://www.xkcd.com/"
+            "active": true,
+            "added": "0001-01-01T00:00:00+00:00",
+            "end_date": null,
+            "id": "18",
+            "language": "en",
+            "name": "xkcd",
+            "resource_uri": "/api/v1/comics/18/",
+            "rights": "Randall Munroe, CC BY-NC 2.5",
+            "slug": "xkcd",
+            "start_date": "2005-05-29",
+            "url": "http://www.xkcd.com/"
         }
 
     :param comic_id: the comic ID
@@ -338,57 +338,57 @@ Releases resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 200 OK
+        HTTP/1.1 200 OK
         Content-Type: application/json; charset=utf-8
 
         {
-            meta: {
-                limit: 2,
-                next: "/api/v1/releases/?limit=2&key=76acdcdf16ae4e12becb00d09a9d9456&format=json&comic__slug=xkcd&offset=2",
-                offset: 0,
-                previous: null,
-                total_count: 1104
+            "meta": {
+                "limit": 2,
+                "next": "/api/v1/releases/?limit=2&key=76acdcdf16ae4e12becb00d09a9d9456&format=json&comic__slug=xkcd&offset=2",
+                "offset": 0,
+                "previous": null,
+                "total_count": 1104
             },
-            objects: [
+            "objects": [
                 {
-                    comic: "/api/v1/comics/18/",
-                    fetched: "2012-10-08T04:03:56.411028+00:00",
-                    id: "147708",
-                    images: [
+                    "comic": "/api/v1/comics/18/",
+                    "fetched": "2012-10-08T04:03:56.411028+00:00",
+                    "id": "147708",
+                    "images": [
                         {
-                            checksum: "605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12",
-                            fetched: "2012-10-08T04:03:56.406586+00:00",
-                            file: "https://static.example.com/media/xkcd/6/605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12.png",
-                            height: 365,
-                            id: "151937",
-                            resource_uri: "/api/v1/images/151937/",
-                            text: "Facebook, Apple, and Google all got away with their monopolist power grabs because they don't have any 'S's in their names for critics to snarkily replace with '$'s.",
-                            title: "Microsoft",
-                            width: 278
+                            "checksum": "605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12",
+                            "fetched": "2012-10-08T04:03:56.406586+00:00",
+                            "file": "https://static.example.com/media/xkcd/6/605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12.png",
+                            "height": 365,
+                            "id": "151937",
+                            "resource_uri": "/api/v1/images/151937/",
+                            "text": "Facebook, Apple, and Google all got away with their monopolist power grabs because they don't have any 'S's in their names for critics to snarkily replace with '$'s.",
+                            "title": "Microsoft",
+                            "width": 278
                         }
                     ],
-                    pub_date: "2012-10-08",
-                    resource_uri: "/api/v1/releases/147708/"
+                    "pub_date": "2012-10-08",
+                    "resource_uri": "/api/v1/releases/147708/"
                 },
                 {
-                    comic: "/api/v1/comics/18/",
-                    fetched: "2012-10-05T05:03:33.744355+00:00",
-                    id: "147172",
-                    images: [
+                    "comic": "/api/v1/comics/18/",
+                    "fetched": "2012-10-05T05:03:33.744355+00:00",
+                    "id": "147172",
+                    "images": [
                         {
-                            checksum: "6d1b67d3dc00d362ddb5b5e8f1c3f174926d2998ca497e8737ff8b74e7100997",
-                            fetched: "2012-10-05T05:03:33.737231+00:00",
-                            file: "https://static.example.com/media/xkcd/6/6d1b67d3dc00d362ddb5b5e8f1c3f174926d2998ca497e8737ff8b74e7100997.png",
-                            height: 254,
-                            id: "151394",
-                            resource_uri: "/api/v1/images/151394/",
-                            text: "According to my mom, my first word was (looking up at the sky) 'Wow!'",
-                            title: "My Sky",
-                            width: 713
+                            "checksum": "6d1b67d3dc00d362ddb5b5e8f1c3f174926d2998ca497e8737ff8b74e7100997",
+                            "fetched": "2012-10-05T05:03:33.737231+00:00",
+                            "file": "https://static.example.com/media/xkcd/6/6d1b67d3dc00d362ddb5b5e8f1c3f174926d2998ca497e8737ff8b74e7100997.png",
+                            "height": 254,
+                            "id": "151394",
+                            "resource_uri": "/api/v1/images/151394/",
+                            "text": "According to my mom, my first word was (looking up at the sky) 'Wow!'",
+                            "title": "My Sky",
+                            "width": 713
                         }
                     ],
-                    pub_date: "2012-10-05",
-                    resource_uri: "/api/v1/releases/147172/"
+                    "pub_date": "2012-10-05",
+                    "resource_uri": "/api/v1/releases/147172/"
                 }
             ]
         }
@@ -426,28 +426,28 @@ Releases resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 200 OK
+        HTTP/1.1 200 OK
         Content-Type: application/json; charset=utf-8
 
         {
-            comic: "/api/v1/comics/18/",
-            fetched: "2012-10-08T04:03:56.411028+00:00",
-            id: "147708",
-            images: [
+            "comic": "/api/v1/comics/18/",
+            "fetched": "2012-10-08T04:03:56.411028+00:00",
+            "id": "147708",
+            "images": [
                 {
-                    checksum: "605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12",
-                    fetched: "2012-10-08T04:03:56.406586+00:00",
-                    file: "https://static.example.com/media/xkcd/6/605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12.png",
-                    height: 365,
-                    id: "151937",
-                    resource_uri: "/api/v1/images/151937/",
-                    text: "Facebook, Apple, and Google all got away with their monopolist power grabs because they don't have any 'S's in their names for critics to snarkily replace with '$'s.",
-                    title: "Microsoft",
-                    width: 278
+                    "checksum": "605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12",
+                    "fetched": "2012-10-08T04:03:56.406586+00:00",
+                    "file": "https://static.example.com/media/xkcd/6/605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12.png",
+                    "height": 365,
+                    "id": "151937",
+                    "resource_uri": "/api/v1/images/151937/",
+                    "text": "Facebook, Apple, and Google all got away with their monopolist power grabs because they don't have any 'S's in their names for critics to snarkily replace with '$'s.",
+                    "title": "Microsoft",
+                    "width": 278
                 }
             ],
-            pub_date: "2012-10-08",
-            resource_uri: "/api/v1/releases/147708/"
+            "pub_date": "2012-10-08",
+            "resource_uri": "/api/v1/releases/147708/"
         }
 
     :param release_id: the release ID
@@ -516,22 +516,22 @@ Subscriptions resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 200 OK
+        HTTP/1.1 200 OK
         Content-Type: application/json; charset=utf-8
 
         {
-            meta: {
-                limit: 20,
-                next: null,
-                offset: 0,
-                previous: null,
-                total_count: 1
+            "meta": {
+                "limit": 20,
+                "next": null,
+                "offset": 0,
+                "previous": null,
+                "total_count": 1
             },
-            objects: [
+            "objects": [
                 {
-                    comic: "/api/v1/comics/18/",
-                    id: "2",
-                    resource_uri: "/api/v1/subscriptions/2/"
+                    "comic": "/api/v1/comics/18/",
+                    "id": "2",
+                    "resource_uri": "/api/v1/subscriptions/2/"
                 }
             ]
         }
@@ -567,7 +567,7 @@ Subscriptions resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 201 CREATED
+        HTTP/1.1 201 CREATED
         Content-Type: text/html; charset=utf-8
         Location: https://example.com/api/v1/subscriptions/4/
 
@@ -612,7 +612,7 @@ Subscriptions resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 202 ACCEPTED
+        HTTP/1.1 202 ACCEPTED
         Content-Length: 0
         Content-Type: text/html; charset=utf-8
 
@@ -640,13 +640,13 @@ Subscriptions resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 200 OK
+        HTTP/1.1 200 OK
         Content-Type: application/json; charset=utf-8
 
         {
-            comic: "/api/v1/comics/18/",
-            id: "2",
-            resource_uri: "/api/v1/subscriptions/2/"
+            "comic": "/api/v1/comics/18/",
+            "id": "2",
+            "resource_uri": "/api/v1/subscriptions/2/"
         }
 
     :param subscription_id: the subscription ID
@@ -672,7 +672,7 @@ Subscriptions resource
 
     .. sourcecode:: http
 
-        HTTP/1.0 204 NO CONTENT
+        HTTP/1.1 204 NO CONTENT
         Content-Length: 0
         Content-Type: text/html; charset=utf-8
 

@@ -2,20 +2,20 @@
 Development
 ***********
 
-*comics* development is coordinated through `GitHub <http://github.com/>`_.
+Comics development is coordinated through `GitHub <http://github.com/>`_.
 
 
 How to contribute
 =================
 
-The easiest way to contribute to *comics* is to register as a user at GitHub,
+The easiest way to contribute to Comics is to register as a user at GitHub,
 fork `the comics project <http://github.com/jodal/comics>`_, and start hacking.
-To get your changes back into *comics*' mainline, send a pull request to `jodal
+To get your changes back into Comics' mainline, send a pull request to `jodal
 at GitHub <http://github.com/jodal>`_. Patches accompanied by tests and
-documentation gives +5 karma and kudos. When hacking on *comics*, please follow
+documentation gives +5 karma and kudos. When hacking on Comics, please follow
 the code style and commit guidelines below.
 
-All contributions must be granted under the same license as *comics* itself.
+All contributions must be granted under the same license as Comics itself.
 
 
 Code style
@@ -89,7 +89,7 @@ Commit guidelines
 Data model
 ==========
 
-*comics*' data model is very simple. The :mod:`comics.core` app consists of
+Comics' data model is very simple. The :mod:`comics.core` app consists of
 three models; :class:`Comic <comics.core.models.Comic>`, :class:`Release
 <comics.core.models.Release>`, and :class:`Image <comics.core.models.Image>`.
 The :mod:`comics.accounts` app adds a :class:`UserProfile
@@ -115,8 +115,8 @@ the following command:
 Running tests
 =============
 
-*comics* got some tests, but far from full test coverage. If you write new or
-improved tests for *comics*' functionality it will be greatly appreciated.
+Comics got some tests, but far from full test coverage. If you write new or
+improved tests for Comics' functionality it will be greatly appreciated.
 
 To run unit tests::
 
