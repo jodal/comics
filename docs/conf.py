@@ -18,7 +18,7 @@ source_suffix = ".rst"
 master_doc = "index"
 
 project = u"Comics"
-copyright = u"2009-2021, Stein Magnus Jodal"
+copyright = u"2009-2021, Stein Magnus Jodal and contributors"
 
 version = "3.0"
 release = "3.0.0"
