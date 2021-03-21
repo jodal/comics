@@ -459,7 +459,7 @@ When the first version of you crawler is complete, it's time to test it.
 The file name is important, as it is used as the comic's slug. This means that
 it must be unique within the Comics installation, and that it is used in the
 URLs Comics will serve the comic at. For this example, we call the crawler
-file ``foo.py``. The file must be placed in the ``comics/comics/comics/``
+file ``foo.py``. The file must be placed in the ``comics/comics/``
 directory, and will be available in Python as ``comics.comics.foo``.
 
 

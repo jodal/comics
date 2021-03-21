@@ -33,7 +33,7 @@ Add comics
 ----------
 
 Then we need to seed the database with information on what comics to crawl.
-E.g. to add the *XKCD* comic from ``comics/comics/comics/xkcd.py``, run::
+E.g. to add the *XKCD* comic from ``comics/comics/xkcd.py``, run::
 
     python manage.py comics_addcomics -c xkcd
 
