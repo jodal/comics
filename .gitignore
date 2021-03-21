@@ -9,6 +9,7 @@
 /.env
 /.tox/
 /.venv/
+/coverage.xml
 /db.sqlite3
 /docs/_build/
 /media/
