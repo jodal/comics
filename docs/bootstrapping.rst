@@ -51,12 +51,12 @@ them. This will get today's releases for all added comics::
     python manage.py comics_getreleases
 
 To get the release for a specific added comics, you can filter with
-:option:`--comic` or :option:`-c`::
+``--comic`` or ``-c``::
 
     python manage.py comics_getreleases -c xkcd
 
 To get releases for a range of days, you can specify a date range with
-:option:`--from` or :option:`-f` and :option:`--to` or :option:`-t`. Both
+``--from`` or ``-f`` and ``--to`` or ``-t``. Both
 defaults to today, so you can leave the end of the range out::
 
     python manage.py comics_getreleases -f 2011-11-11
@@ -80,5 +80,5 @@ More options
 ------------
 
 All of the ``manage.py`` commands got more options available. Add the
-:option:`--help` argument to any of the commands to get a full listing of the
+``--help`` argument to any of the commands to get a full listing of the
 available options.
