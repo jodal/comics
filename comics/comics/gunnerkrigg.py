@@ -19,9 +19,7 @@ class Crawler(CrawlerBase):
         url = page.src('img[src*="/comics/"]')
         title = page.alt('img[src*="/comics/"]')
         text = ""
-        for content in page.text(
-            'table[cellpadding="5"] td', allow_multiple=True
-        ):
+        for content in page.text('table[cellpadding="5"] td', allow_multiple=True):
             text += content + "\n\n"
         text = text.strip()
         return CrawlerImage(url, title, text)

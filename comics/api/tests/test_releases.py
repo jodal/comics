@@ -115,9 +115,7 @@ class ReleasesResourceTestCase(TestCase):
         release_uri = data["objects"][0]["resource_uri"]
         self.assertEquals(release_uri, "/api/v1/releases/11/")
 
-        response = self.client.get(
-            release_uri, HTTP_AUTHORIZATION="Key s3cretk3y"
-        )
+        response = self.client.get(release_uri, HTTP_AUTHORIZATION="Key s3cretk3y")
 
         data = json.loads(response.content)
         self.assertEquals(data["pub_date"], "2012-10-12")

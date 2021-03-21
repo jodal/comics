@@ -16,9 +16,7 @@ class Crawler(CrawlerBase):
     time_zone = "US/Pacific"
 
     def crawl(self, pub_date):
-        feed = self.parse_feed(
-            "http://feeds.feedburner.com/thedoghousediaries/feed"
-        )
+        feed = self.parse_feed("http://feeds.feedburner.com/thedoghousediaries/feed")
         for entry in feed.for_date(pub_date):
             url = entry.content0.src("img.comic-item")
             title = entry.content0.alt("img.comic-item")

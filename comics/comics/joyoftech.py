@@ -21,9 +21,7 @@ class Crawler(CrawlerBase):
     headers = {"User-Agent": "Mozilla/4.0"}
 
     def crawl(self, pub_date):
-        feed = self.parse_feed(
-            "http://www.joyoftech.com/joyoftech/jotblog/atom.xml"
-        )
+        feed = self.parse_feed("http://www.joyoftech.com/joyoftech/jotblog/atom.xml")
         for entry in feed.for_date(pub_date):
             title = entry.title
 

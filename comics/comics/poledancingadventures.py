@@ -18,9 +18,7 @@ class Crawler(CrawlerBase):
     time_zone = "US/Pacific"
 
     def crawl(self, pub_date):
-        feed = self.parse_feed(
-            "http://poledancingadventures.com/category/comics/feed"
-        )
+        feed = self.parse_feed("http://poledancingadventures.com/category/comics/feed")
         for entry in feed.for_date(pub_date):
             results = []
 

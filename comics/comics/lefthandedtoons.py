@@ -16,9 +16,7 @@ class Crawler(CrawlerBase):
     time_zone = "US/Eastern"
 
     def crawl(self, pub_date):
-        feed = self.parse_feed(
-            "http://feeds.feedburner.com/lefthandedtoons/awesome"
-        )
+        feed = self.parse_feed("http://feeds.feedburner.com/lefthandedtoons/awesome")
 
         for entry in feed.for_date(pub_date):
             url = entry.summary.src('img[src*="/toons/"]')

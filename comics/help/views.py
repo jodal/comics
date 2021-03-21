@@ -10,9 +10,7 @@ from comics.help.forms import FeedbackForm
 
 
 def about(request):
-    return render(
-        request, "help/about.html", {"active": {"help": True, "about": True}}
-    )
+    return render(request, "help/about.html", {"active": {"help": True, "about": True}})
 
 
 @login_required

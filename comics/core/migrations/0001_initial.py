@@ -27,9 +27,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "name",
-                    models.CharField(
-                        help_text=b"Name of the comic", max_length=100
-                    ),
+                    models.CharField(help_text=b"Name of the comic", max_length=100),
                 ),
                 (
                     "slug",
@@ -72,8 +70,7 @@ class Migration(migrations.Migration):
                 (
                     "end_date",
                     models.DateField(
-                        help_text=b"Last published at, if comic has been "
-                        b"cancelled",
+                        help_text=b"Last published at, if comic has been " b"cancelled",
                         null=True,
                         blank=True,
                     ),
@@ -133,9 +130,7 @@ class Migration(migrations.Migration):
                 ("width", models.IntegerField()),
                 (
                     "comic",
-                    models.ForeignKey(
-                        to="core.Comic", on_delete=models.CASCADE
-                    ),
+                    models.ForeignKey(to="core.Comic", on_delete=models.CASCADE),
                 ),
             ],
             options={
@@ -157,9 +152,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "pub_date",
-                    models.DateField(
-                        verbose_name=b"publication date", db_index=True
-                    ),
+                    models.DateField(verbose_name=b"publication date", db_index=True),
                 ),
                 (
                     "fetched",
@@ -167,15 +160,11 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "comic",
-                    models.ForeignKey(
-                        to="core.Comic", on_delete=models.CASCADE
-                    ),
+                    models.ForeignKey(to="core.Comic", on_delete=models.CASCADE),
                 ),
                 (
                     "images",
-                    models.ManyToManyField(
-                        related_name=b"releases", to="core.Image"
-                    ),
+                    models.ManyToManyField(related_name=b"releases", to="core.Image"),
                 ),
             ],
             options={

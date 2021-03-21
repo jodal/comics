@@ -15,9 +15,7 @@ class Crawler(CrawlerBase):
     time_zone = "Europe/Stockholm"
 
     def crawl(self, pub_date):
-        feed = self.parse_feed(
-            "http://www.little-gamers.com/category/comic/feed"
-        )
+        feed = self.parse_feed("http://www.little-gamers.com/category/comic/feed")
         for entry in feed.for_date(pub_date):
             url = entry.summary.src("img")
             title = entry.title

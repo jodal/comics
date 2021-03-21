@@ -6,11 +6,7 @@ from tastypie.http import HttpUnauthorized
 
 class SecretKeyAuthentication(Authentication):
     def extract_credentials(self, request):
-        if (
-            request.META.get("HTTP_AUTHORIZATION", "")
-            .lower()
-            .startswith("key ")
-        ):
+        if request.META.get("HTTP_AUTHORIZATION", "").lower().startswith("key "):
             (auth_type, secret_key) = request.META["HTTP_AUTHORIZATION"].split()
 
             if auth_type.lower() != "key":

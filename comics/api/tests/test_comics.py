@@ -81,9 +81,7 @@ class ComicsResourceTestCase(TestCase):
         comic_uri = data["objects"][0]["resource_uri"]
         self.assertEquals(comic_uri, "/api/v1/comics/1/")
 
-        response = self.client.get(
-            comic_uri, HTTP_AUTHORIZATION="Key s3cretk3y"
-        )
+        response = self.client.get(comic_uri, HTTP_AUTHORIZATION="Key s3cretk3y")
 
         data = json.loads(response.content)
         self.assertEquals(data["slug"], "abstrusegoose")

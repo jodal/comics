@@ -86,9 +86,7 @@ def mycomics_edit_comics(request):
             )
             subscriptions.delete()
             if not request.is_ajax():
-                messages.info(
-                    request, 'Removed "%s" from my comics' % comic.name
-                )
+                messages.info(request, 'Removed "%s" from my comics' % comic.name)
 
     for comic in Comic.objects.all():
         if comic.slug in request.POST and comic not in my_comics:
@@ -115,9 +113,7 @@ def invite(request):
             request.POST["email"], inviter=request.user
         )
         invitation.send_invitation(request)
-        messages.success(
-            'An invitation has been sent to "%s".' % invitation.email
-        )
+        messages.success('An invitation has been sent to "%s".' % invitation.email)
 
     invitations = request.user.invitation_set.all().order_by("-created")
 

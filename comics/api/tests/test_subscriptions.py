@@ -42,9 +42,7 @@ class SubscriptionsResourceTestCase(TestCase):
         self.assertEquals(
             sub["resource_uri"], "/api/v1/subscriptions/%d/" % subscription.pk
         )
-        self.assertEquals(
-            sub["comic"], "/api/v1/comics/%d/" % subscription.comic.pk
-        )
+        self.assertEquals(sub["comic"], "/api/v1/comics/%d/" % subscription.comic.pk)
 
     def test_comic_filter(self):
         subscription = Subscription.objects.get(comic__slug="xkcd")
@@ -82,9 +80,7 @@ class SubscriptionsResourceTestCase(TestCase):
         )
 
         data = json.loads(response.content)
-        self.assertEquals(
-            data["comic"], "/api/v1/comics/%d/" % subscription.comic.pk
-        )
+        self.assertEquals(data["comic"], "/api/v1/comics/%d/" % subscription.comic.pk)
 
     def test_subscribe_to_comic(self):
         comic = Comic.objects.get(slug="bunny")

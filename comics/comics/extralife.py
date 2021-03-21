@@ -19,9 +19,7 @@ class Crawler(CrawlerBase):
     headers = {"User-Agent": "Mozilla/4.0"}
 
     def crawl(self, pub_date):
-        feed = self.parse_feed(
-            "http://www.myextralife.com/category/comic/feed/"
-        )
+        feed = self.parse_feed("http://www.myextralife.com/category/comic/feed/")
         for entry in feed.for_date(pub_date):
             url = entry.content0.src('img[src*="/wp-content/"]')
             title = entry.title

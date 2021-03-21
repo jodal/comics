@@ -39,9 +39,7 @@ class ComicMixin(object):
     @property
     def comic(self):
         if not hasattr(self, "_comic"):
-            self._comic = get_object_or_404(
-                Comic, slug=self.kwargs["comic_slug"]
-            )
+            self._comic = get_object_or_404(Comic, slug=self.kwargs["comic_slug"])
         return self._comic
 
     def get_user(self):
@@ -190,9 +188,7 @@ class ReleaseFeedView(ComicMixin, ListView):
                 "feed": {
                     "title": self.get_feed_title(),
                     "url": self.request.build_absolute_uri(self.get_feed_url()),
-                    "web_url": self.request.build_absolute_uri(
-                        self.get_web_url()
-                    ),
+                    "web_url": self.request.build_absolute_uri(self.get_web_url()),
                     "base_url": self.request.build_absolute_uri("/"),
                     "author": self.get_feed_author(),
                     "updated": self.get_last_updated(),
@@ -341,9 +337,7 @@ class MyComicsLatestView(MyComicsMixin, ReleaseLatestView):
 
 class MyComicsNumReleasesSinceView(MyComicsLatestView):
     def get_num_releases_since(self):
-        last_release_seen = get_object_or_404(
-            Release, id=self.kwargs["release_id"]
-        )
+        last_release_seen = get_object_or_404(Release, id=self.kwargs["release_id"])
         releases = super(MyComicsNumReleasesSinceView, self).get_queryset()
         return releases.filter(fetched__gt=last_release_seen.fetched).count()
 
@@ -504,9 +498,7 @@ class MyComicsYearView(LoginRequiredMixin, RedirectView):
     permanent = True
 
     def get_redirect_url(self, **kwargs):
-        return reverse(
-            "mycomics_month", kwargs={"year": kwargs["year"], "month": "1"}
-        )
+        return reverse("mycomics_month", kwargs={"year": kwargs["year"], "month": "1"})
 
 
 class MyComicsFeed(MyComicsMixin, ReleaseFeedView):
@@ -550,9 +542,7 @@ class OneComicMixin(object):
 
     def get_today_url(self):
         if datetime.date.today() in self._get_recent_pub_dates():
-            return reverse(
-                "comic_today", kwargs={"comic_slug": self.comic.slug}
-            )
+            return reverse("comic_today", kwargs={"comic_slug": self.comic.slug})
 
     def get_day_url(self):
         try:
@@ -787,8 +777,6 @@ class OneComicWebsiteRedirect(LoginRequiredMixin, ComicMixin, TemplateView):
     template_name = "browser/comic_website.html"
 
     def get_context_data(self, **kwargs):
-        context = super(OneComicWebsiteRedirect, self).get_context_data(
-            **kwargs
-        )
+        context = super(OneComicWebsiteRedirect, self).get_context_data(**kwargs)
         context["url"] = self.comic.url
         return context

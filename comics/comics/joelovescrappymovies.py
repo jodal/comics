@@ -46,9 +46,7 @@ class Crawler(CrawlerBase):
                 # Make sure we strip off the leading '0' on %d: Joe doesn't
                 # include them.  We can't use a regex due to the speed
                 # penalty of ~500+ regex comparisons
-                if the_date == pub_date.strftime("%B %d, %Y").replace(
-                    " 0", " ", 1
-                ):
+                if the_date == pub_date.strftime("%B %d, %Y").replace(" 0", " ", 1):
                     the_id = possible_id
                     break
 
@@ -58,8 +56,7 @@ class Crawler(CrawlerBase):
 
         # We got an ID:  Now, pull that page...
         right_page = self.parse_page(
-            "http://www.digitalpimponline.com/strips.php?title=movie&id=%s"
-            % the_id
+            "http://www.digitalpimponline.com/strips.php?title=movie&id=%s" % the_id
         )
 
         # ...and parse the url...

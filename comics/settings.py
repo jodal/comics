@@ -140,9 +140,7 @@ ROOT_URLCONF = "comics.urls"
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "filters": {
-        "require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}
-    },
+    "filters": {"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}},
     "handlers": {
         "mail_admins": {
             "level": "ERROR",
@@ -267,9 +265,7 @@ TASTYPIE_DEFAULT_FORMATS = ["json", "jsonp", "xml", "yaml", "plist"]
 COMICS_SITE_TITLE = env.str("COMICS_SITE_TITLE", default="example.com")
 
 #: Maximum number of releases to show on one page
-COMICS_MAX_RELEASES_PER_PAGE = env.int(
-    "COMICS_MAX_RELEASES_PER_PAGE", default=50
-)
+COMICS_MAX_RELEASES_PER_PAGE = env.int("COMICS_MAX_RELEASES_PER_PAGE", default=50)
 
 #: Maximum number of days to show in a feed
 COMICS_MAX_DAYS_IN_FEED = env.int("COMICS_MAX_DAYS_IN_FEED", default=30)
@@ -305,17 +301,11 @@ COMICS_LOG_FILENAME = env.str("COMICS_LOG_FILENAME", default=root("comics.log"))
 
 #: Google Analytics tracking code. Tracking code will be included on all pages
 #: if this is set.
-COMICS_GOOGLE_ANALYTICS_CODE = env.str(
-    "COMICS_GOOGLE_ANALYTICS_CODE", default=""
-)
+COMICS_GOOGLE_ANALYTICS_CODE = env.str("COMICS_GOOGLE_ANALYTICS_CODE", default="")
 
 #: Number of seconds browsers at the latest view of "My comics" should wait
 #: before they check for new releases again
-COMICS_BROWSER_REFRESH_INTERVAL = env.int(
-    "COMICS_BROWSER_REFRESH_INTERVAL", default=60
-)
+COMICS_BROWSER_REFRESH_INTERVAL = env.int("COMICS_BROWSER_REFRESH_INTERVAL", default=60)
 
 #: Number of days a new comic on the site is labeled as new
-COMICS_NUM_DAYS_COMIC_IS_NEW = env.int(
-    "COMICS_NUM_DAYS_COMIC_IS_NEW", default=7
-)
+COMICS_NUM_DAYS_COMIC_IS_NEW = env.int("COMICS_NUM_DAYS_COMIC_IS_NEW", default=7)

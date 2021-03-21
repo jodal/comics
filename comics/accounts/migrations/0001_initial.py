@@ -29,9 +29,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "comic",
-                    models.ForeignKey(
-                        to="core.Comic", on_delete=models.CASCADE
-                    ),
+                    models.ForeignKey(to="core.Comic", on_delete=models.CASCADE),
                 ),
             ],
             options={

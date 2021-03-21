@@ -15,8 +15,6 @@ class Crawler(CrawlerBase):
     time_zone = "Europe/London"
 
     def crawl(self, pub_date):
-        page = self.parse_page(
-            "http://www.collectedcurios.com/sequentialart.php"
-        )
+        page = self.parse_page("http://www.collectedcurios.com/sequentialart.php")
         url = page.src("img.w3-image")
         return CrawlerImage(url)

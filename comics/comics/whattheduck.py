@@ -17,9 +17,9 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed("http://www.whattheduck.net/strip/rss.xml")
         for entry in feed.for_date(pub_date):
-            if entry.enclosures[0].type.startswith(
-                "image"
-            ) and entry.title.startswith("WTD"):
+            if entry.enclosures[0].type.startswith("image") and entry.title.startswith(
+                "WTD"
+            ):
                 url = entry.enclosures[0].href
                 title = entry.title
                 return CrawlerImage(url, title)

@@ -18,9 +18,7 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed("http://adam4d.com/feed/")
         for entry in feed.for_date(pub_date):
             results = []
-            urls = entry.content0.src(
-                'img[src*="/wp-content/"]', allow_multiple=True
-            )
+            urls = entry.content0.src('img[src*="/wp-content/"]', allow_multiple=True)
 
             for url in urls:
                 url = url.replace("comics-rss", "comics")

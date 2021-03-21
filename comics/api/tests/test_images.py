@@ -59,9 +59,7 @@ class ImagesResourceTestCase(TestCase):
         image_uri = data["objects"][1]["resource_uri"]
         self.assertEquals(image_uri, "/api/v1/images/2/")
 
-        response = self.client.get(
-            image_uri, HTTP_AUTHORIZATION="Key s3cretk3y"
-        )
+        response = self.client.get(image_uri, HTTP_AUTHORIZATION="Key s3cretk3y")
 
         data = json.loads(response.content)
         self.assertEquals(

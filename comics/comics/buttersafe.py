@@ -16,9 +16,7 @@ class Crawler(CrawlerBase):
     time_zone = "US/Eastern"
 
     def crawl(self, pub_date):
-        feed = self.parse_feed(
-            "http://feeds.feedburner.com/Buttersafe?format=xml"
-        )
+        feed = self.parse_feed("http://feeds.feedburner.com/Buttersafe?format=xml")
         for entry in feed.for_date(pub_date):
             url = entry.summary.src('img[src*="/comics/"]')
             if not url:

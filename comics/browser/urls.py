@@ -34,9 +34,7 @@ urlpatterns = [
         views.MyComicsDayView.as_view(),
         name="mycomics_day",
     ),
-    url(
-        r"^my/today/$", views.MyComicsTodayView.as_view(), name="mycomics_today"
-    ),
+    url(r"^my/today/$", views.MyComicsTodayView.as_view(), name="mycomics_today"),
     url(r"^my/feed/$", views.MyComicsFeed.as_view(), name="mycomics_feed"),
     url(
         r"^my/num-releases-since/(?P<release_id>\d+)/$",

@@ -22,7 +22,6 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         url = (
-            "http://www.tu.no/"
-            "?module=TekComics&service=image&id=lunch&key=%s"
+            "http://www.tu.no/" "?module=TekComics&service=image&id=lunch&key=%s"
         ) % pub_date.strftime("%Y-%m-%d")
         return CrawlerImage(url)

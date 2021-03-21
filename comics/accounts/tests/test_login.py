@@ -33,7 +33,6 @@ class LoginTest(TestCase):
 
         self.assertEquals(response.status_code, 200)
         self.assertIn(
-            "The e-mail address and/or password you "
-            "specified are not correct.",
+            "The e-mail address and/or password you " "specified are not correct.",
             response.content,
         )

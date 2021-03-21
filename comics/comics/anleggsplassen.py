@@ -27,8 +27,7 @@ class Crawler(CrawlerBase):
             return
 
         image = article.xpath(
-            'figure[@data-headline-prefix="Anlegg"]'
-            "/a/div/noscript/picture/source"
+            'figure[@data-headline-prefix="Anlegg"]' "/a/div/noscript/picture/source"
         )
         srcset = image[0].get("srcset")
         matches = re.search(

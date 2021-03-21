@@ -35,9 +35,7 @@ class Comic(models.Model):
     active = models.BooleanField(
         default=True, help_text="Wheter the comic is still being crawled"
     )
-    start_date = models.DateField(
-        blank=True, null=True, help_text="First published at"
-    )
+    start_date = models.DateField(blank=True, null=True, help_text="First published at")
     end_date = models.DateField(
         blank=True,
         null=True,

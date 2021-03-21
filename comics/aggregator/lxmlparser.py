@@ -14,9 +14,7 @@ class LxmlParser(object):
         elif string is not None:
             self.root = self._parse_string(string)
         else:
-            raise LxmlParserException(
-                "Parser needs URL or string to operate on"
-            )
+            raise LxmlParserException("Parser needs URL or string to operate on")
 
     def href(self, selector, default=None, allow_multiple=False):
         return self._get("href", selector, default, allow_multiple)

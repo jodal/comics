@@ -32,9 +32,7 @@ class UsersResource(ModelResource):
         detail_allowed_methods = ["get"]
 
     def dehydrate(self, bundle):
-        bundle.data[
-            "secret_key"
-        ] = bundle.request.user.comics_profile.secret_key
+        bundle.data["secret_key"] = bundle.request.user.comics_profile.secret_key
         return bundle
 
 
@@ -83,13 +81,9 @@ class ImagesResource(ModelResource):
 class ReleasesAuthorization(ReadOnlyAuthorization):
     def read_list(self, object_list, bundle):
         if bundle.request.GET.get("subscribed") == "true":
-            return object_list.filter(
-                comic__userprofile__user=bundle.request.user
-            )
+            return object_list.filter(comic__userprofile__user=bundle.request.user)
         elif bundle.request.GET.get("subscribed") == "false":
-            return object_list.exclude(
-                comic__userprofile__user=bundle.request.user
-            )
+            return object_list.exclude(comic__userprofile__user=bundle.request.user)
         else:
             return object_list
 

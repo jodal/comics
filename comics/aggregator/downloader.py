@@ -156,9 +156,7 @@ class ImageDownloader(object):
             return "%s%s" % (checksum, extension)
 
     @transaction.atomic
-    def _create_new_image(
-        self, comic, title, text, image_file, file_name, checksum
-    ):
+    def _create_new_image(self, comic, title, text, image_file, file_name, checksum):
         image = Image(comic=comic, checksum=checksum)
         image.file.save(file_name, File(image_file))
         if title is not None:

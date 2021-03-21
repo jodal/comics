@@ -21,9 +21,7 @@ class RootResourceTestCase(TestCase):
         self.assertEquals(data["users"]["list_endpoint"], "/api/v1/users/")
         self.assertEquals(data["comics"]["list_endpoint"], "/api/v1/comics/")
         self.assertEquals(data["images"]["list_endpoint"], "/api/v1/images/")
-        self.assertEquals(
-            data["releases"]["list_endpoint"], "/api/v1/releases/"
-        )
+        self.assertEquals(data["releases"]["list_endpoint"], "/api/v1/releases/")
         self.assertEquals(
             data["subscriptions"]["list_endpoint"], "/api/v1/subscriptions/"
         )
@@ -31,9 +29,7 @@ class RootResourceTestCase(TestCase):
     def test_resource_can_return_xml(self):
         response = self.client.get("/api/v1/", HTTP_ACCEPT="application/xml")
 
-        self.assertIn(
-            "<?xml version='1.0' encoding='utf-8'?>", response.content
-        )
+        self.assertIn("<?xml version='1.0' encoding='utf-8'?>", response.content)
 
     def test_resource_can_return_jsonp(self):
         response = self.client.get("/api/v1/", {"format": "jsonp"})
@@ -41,9 +37,7 @@ class RootResourceTestCase(TestCase):
         self.assertIn("callback(", response.content)
 
     def test_resource_can_return_jsonp_with_custom_callback_name(self):
-        response = self.client.get(
-            "/api/v1/", {"format": "jsonp", "callback": "foo"}
-        )
+        response = self.client.get("/api/v1/", {"format": "jsonp", "callback": "foo"})
 
         self.assertIn("foo(", response.content)
 
