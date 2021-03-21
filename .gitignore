@@ -5,6 +5,7 @@
 *.pyc
 *.sw[po]
 .eggs/
+/.coverage
 /.env
 /.tox/
 /.venv/
