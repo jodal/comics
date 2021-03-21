@@ -86,32 +86,6 @@ Commit guidelines
 - Same policy applies for non-crawler changes.
 
 
-Data model
-==========
-
-Comics' data model is very simple. The :mod:`comics.core` app consists of
-three models; :class:`Comic <comics.core.models.Comic>`, :class:`Release
-<comics.core.models.Release>`, and :class:`Image <comics.core.models.Image>`.
-The :mod:`comics.accounts` app adds a :class:`UserProfile
-<comics.accounts.models.UserProfile>` which add comic specific fields to
-Django's user model, including a mapping from the user to her preferred comics.
-
-Changes to the data model are managed using Django's built-in database
-migrations. If you need to change the models, please provide the needed
-migrations.
-
-.. image:: _static/data_model.png
-
-The above data model diagram was generated using the Django app
-`django_extensions <http://code.google.com/p/django-command-extensions/>`_ and
-the following command:
-
-.. code-block:: sh
-
-    python manage.py graph_models --settings=comics.settings.dev \
-        --output=docs/_static/data_model.png --group-models core accounts
-
-
 Running tests
 =============
 

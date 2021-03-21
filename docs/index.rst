@@ -25,11 +25,12 @@ crawling web sites and feeds.
 
     crawlers
     webservice
+    data-model
 
 .. toctree::
     :maxdepth: 2
     :caption: About
 
     development
-    authors
     changes
+    authors
