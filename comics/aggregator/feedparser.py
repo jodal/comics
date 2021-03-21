@@ -11,8 +11,13 @@ from comics.aggregator.lxmlparser import LxmlParser
 class FeedParser(object):
     def __init__(self, url):
         self.raw_feed = feedparser.parse(url)
-        if "bozo_exception" in self.raw_feed:
-            raise self.raw_feed["bozo_exception"]
+
+        bozo_exception = self.raw_feed.get("bozo_exception")
+        if bozo_exception is not None and not isinstance(
+            bozo_exception, feedparser.NonXMLContentType
+        ):
+            raise bozo_exception
+
         self.encoding = None
         if hasattr(self.raw_feed, "encoding") and self.raw_feed.encoding:
             self.encoding = self.raw_feed.encoding
