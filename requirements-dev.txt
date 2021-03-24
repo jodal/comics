@@ -11,7 +11,7 @@
 tox
 
 # Debugging of database queries, etc.
-django-debug-toolbar
+django-debug-toolbar < 3
 
 # Generation of the model graph used in the docs
 django-extensions < 3
