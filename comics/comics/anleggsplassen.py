@@ -20,6 +20,8 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         page = self.parse_page(ComicData.url)
         article = page.root.xpath('//span[.="Ukens stripe"]/..')
+        if not article:
+            return
         article = article[0]
         title = article.get("data-article-headline")
         date = article.get("data-publish-date")[0:10]

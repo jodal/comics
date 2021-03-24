@@ -18,5 +18,7 @@ class Crawler(CrawlerBase):
         page_url = "http://www.crfh.net/d/%s.html" % (pub_date.strftime("%Y%m%d"),)
         page = self.parse_page(page_url)
         url = page.src('img[src*="crfh%s"]' % pub_date.strftime("%Y%m%d"))
+        if url is None:
+            return
         url = url.replace("\n", "")
         return CrawlerImage(url)

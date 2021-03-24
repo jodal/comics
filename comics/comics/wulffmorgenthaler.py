@@ -25,4 +25,6 @@ class Crawler(CrawlerBase):
             'img[src*="/img/wumo/%s"]' % (pub_date.strftime("%Y/%m")),
             allow_multiple=True,
         )
+        if not url:
+            return
         return CrawlerImage(url[0])
