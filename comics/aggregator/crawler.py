@@ -1,16 +1,11 @@
 import datetime
-import http.client
-import json
 import re
 import time
-import urllib.error
-import urllib.parse
-import urllib.request
 import xml
 
-from django.utils import timezone
-
+import httpx
 import pytz
+from django.utils import timezone
 
 from comics.aggregator.exceptions import (
     CrawlerHTTPError,
@@ -105,13 +100,7 @@ class CrawlerBase:
 
         try:
             results = self.crawl(pub_date)
-        except urllib.error.HTTPError as error:
-            raise CrawlerHTTPError(release.identifier, error.code)
-        except urllib.error.URLError as error:
-            raise CrawlerHTTPError(release.identifier, error.reason)
-        except http.client.BadStatusLine:
-            raise CrawlerHTTPError(release.identifier, "BadStatusLine")
-        except OSError as error:
+        except (httpx.HTTPError, httpx.InvalidURL, OSError) as error:
             raise CrawlerHTTPError(release.identifier, error)
         except xml.sax.SAXException as error:
             raise CrawlerHTTPError(release.identifier, str(error))
@@ -286,9 +275,8 @@ class CreatorsCrawlerBase(CrawlerBase):
             "feature_id=%s&year=%s"
         ) % (feature_id, pub_date.year)
 
-        req = urllib.request.Request(url, None, self.headers)
-        response = urllib.request.urlopen(req)
-        releases = json.load(response)
+        response = httpx.get(url, headers=self.headers)
+        releases = response.json()
         for release in releases:
             if release["release"] == pub_date.strftime("%Y-%m-%d"):
                 page = self.parse_page(release["url"])

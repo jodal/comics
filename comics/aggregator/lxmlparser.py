@@ -1,7 +1,4 @@
-import urllib.error
-import urllib.parse
-import urllib.request
-
+import httpx
 from lxml.html import fromstring
 
 from comics.aggregator.exceptions import CrawlerError
@@ -90,15 +87,9 @@ class LxmlParser:
             return elements[0]
 
     def _parse_url(self, url, headers=None):
-        if headers is None:
-            handle = urllib.request.urlopen(url)
-        else:
-            request = urllib.request.Request(url, headers=headers)
-            handle = urllib.request.urlopen(request)
-        content = handle.read()
-        self._retrieved_url = handle.geturl()
-        handle.close()
-        content = content.replace("\x00", "")
+        response = httpx.get(url, headers=headers)
+        self._retrieved_url = str(response.url)
+        content = response.content.replace(b"\x00", b"")
         root = self._parse_string(content)
         root.make_links_absolute(self._retrieved_url)
         return root

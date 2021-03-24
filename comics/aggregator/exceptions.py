@@ -23,7 +23,7 @@ class CrawlerError(AggregatorError):
 
 
 class CrawlerHTTPError(CrawlerError):
-    """Exception used to wrap urllib2.HTTPError from the crawler"""
+    """Exception used to wrap HTTP errors from the crawler"""
 
     def __str__(self):
         return f"{self.identifier}: Crawler HTTP Error ({self.value})"
@@ -67,7 +67,7 @@ class DownloaderError(AggregatorError):
 
 
 class DownloaderHTTPError(DownloaderError):
-    """Exception used to wrap urllib2.HTTPError from the downloader"""
+    """Exception used to wrap HTTP errors from the downloader"""
 
     def __str__(self):
         return f"{self.identifier}: Downloader HTTP Error ({self.value})"
