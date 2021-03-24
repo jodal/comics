@@ -7,6 +7,9 @@
 # Tests
 -rrequirements-tests.txt
 
+# Code formatter
+black
+
 # Task runner
 tox
 
