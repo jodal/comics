@@ -34,6 +34,8 @@ class Crawler(CrawlerBase):
         title = release.text
         release_page = self.parse_page(link)
         url = release_page.root.xpath('//div[@id="comic"]/img/@data-src')
+        if not url:
+            return
         url = url[0]
         text = release_page.root.xpath('//div[@class="entry"]/p')
         if text:
