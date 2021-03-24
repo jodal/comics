@@ -54,9 +54,9 @@ class CrawlerImage:
         self.request_headers = headers or {}
 
         # Convert from e.g. lxml.etree._ElementUnicodeResult to unicode
-        if self.title is not None and type(self.title) != str:
+        if self.title is not None and not isinstance(self.title, str):
             self.title = str(self.title)
-        if self.text is not None and type(self.text) != str:
+        if self.text is not None and not isinstance(self.text, str):
             self.text = str(self.text)
 
     def validate(self, identifier):

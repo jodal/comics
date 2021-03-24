@@ -54,14 +54,14 @@ class Entry:
 
     def __getattr__(self, name):
         attr = getattr(self.raw_entry, name)
-        if isinstance(attr, str) and self.encoding is not None:
+        if isinstance(attr, bytes) and self.encoding is not None:
             attr = attr.decode(self.encoding)
         return attr
 
-    def html(self, string):
-        if isinstance(string, str) and self.encoding is not None:
-            string = string.decode(self.encoding)
-        return LxmlParser(string=string)
+    def html(self, value):
+        if isinstance(value, bytes) and self.encoding is not None:
+            value = value.decode(self.encoding)
+        return LxmlParser(string=value)
 
     @property
     def tags(self):
