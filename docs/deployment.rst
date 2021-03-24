@@ -47,8 +47,6 @@ this:
 
 .. code-block:: text
 
-    VIRTUALENV_ROOT=/srv/comics.example.com/app/venv
-
     DJANGO_SECRET_KEY=replace-this-with-a-long-random-value
     DJANGO_ADMIN=comics@example.com
     DJANGO_DEFAULT_FROM_EMAIL=comics@example.com
