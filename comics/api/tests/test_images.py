@@ -16,14 +16,14 @@ class ImagesResourceTestCase(TestCase):
     def test_requires_authentication(self):
         response = self.client.get("/api/v1/images/")
 
-        self.assertEquals(response.status_code, 401)
+        self.assertEqual(response.status_code, 401)
 
     def test_authentication_with_secret_key_in_header(self):
         response = self.client.get(
             "/api/v1/images/", HTTP_AUTHORIZATION="Key s3cretk3y"
         )
 
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_lists_images(self):
         response = self.client.get(
@@ -31,9 +31,9 @@ class ImagesResourceTestCase(TestCase):
         )
 
         data = json.loads(response.content)
-        self.assertEquals(len(data["objects"]), 12)
-        self.assertEquals(data["objects"][0]["height"], 1132)
-        self.assertEquals(
+        self.assertEqual(len(data["objects"]), 12)
+        self.assertEqual(data["objects"][0]["height"], 1132)
+        self.assertEqual(
             data["objects"][1]["title"],
             "Geek&Poke About The Good Ol' Days In Computers",
         )
@@ -46,9 +46,9 @@ class ImagesResourceTestCase(TestCase):
         )
 
         data = json.loads(response.content)
-        self.assertEquals(len(data["objects"]), 2)
-        self.assertEquals(data["objects"][0]["height"], 1132)
-        self.assertEquals(data["objects"][1]["height"], 1132)
+        self.assertEqual(len(data["objects"]), 2)
+        self.assertEqual(data["objects"][0]["height"], 1132)
+        self.assertEqual(data["objects"][1]["height"], 1132)
 
     def test_details_view(self):
         response = self.client.get(
@@ -57,11 +57,11 @@ class ImagesResourceTestCase(TestCase):
 
         data = json.loads(response.content)
         image_uri = data["objects"][1]["resource_uri"]
-        self.assertEquals(image_uri, "/api/v1/images/2/")
+        self.assertEqual(image_uri, "/api/v1/images/2/")
 
         response = self.client.get(image_uri, HTTP_AUTHORIZATION="Key s3cretk3y")
 
         data = json.loads(response.content)
-        self.assertEquals(
+        self.assertEqual(
             data["title"], "Geek&Poke About The Good Ol' Days In Computers"
         )

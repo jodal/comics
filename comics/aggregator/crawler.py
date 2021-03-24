@@ -1,9 +1,11 @@
 import datetime
-import httplib
+import http.client
 import json
 import re
 import time
-import urllib2
+import urllib.error
+import urllib.parse
+import urllib.request
 import xml
 
 from django.utils import timezone
@@ -52,10 +54,10 @@ class CrawlerImage:
         self.request_headers = headers or {}
 
         # Convert from e.g. lxml.etree._ElementUnicodeResult to unicode
-        if self.title is not None and type(self.title) != unicode:
-            self.title = unicode(self.title)
-        if self.text is not None and type(self.text) != unicode:
-            self.text = unicode(self.text)
+        if self.title is not None and type(self.title) != str:
+            self.title = str(self.title)
+        if self.text is not None and type(self.text) != str:
+            self.text = str(self.text)
 
     def validate(self, identifier):
         if not self.url:
@@ -103,11 +105,11 @@ class CrawlerBase:
 
         try:
             results = self.crawl(pub_date)
-        except urllib2.HTTPError as error:
+        except urllib.error.HTTPError as error:
             raise CrawlerHTTPError(release.identifier, error.code)
-        except urllib2.URLError as error:
+        except urllib.error.URLError as error:
             raise CrawlerHTTPError(release.identifier, error.reason)
-        except httplib.BadStatusLine:
+        except http.client.BadStatusLine:
             raise CrawlerHTTPError(release.identifier, "BadStatusLine")
         except OSError as error:
             raise CrawlerHTTPError(release.identifier, error)
@@ -284,8 +286,8 @@ class CreatorsCrawlerBase(CrawlerBase):
             "feature_id=%s&year=%s"
         ) % (feature_id, pub_date.year)
 
-        req = urllib2.Request(url, None, self.headers)
-        response = urllib2.urlopen(req)
+        req = urllib.request.Request(url, None, self.headers)
+        response = urllib.request.urlopen(req)
         releases = json.load(response)
         for release in releases:
             if release["release"] == pub_date.strftime("%Y-%m-%d"):

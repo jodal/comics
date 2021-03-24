@@ -11,18 +11,18 @@ class RootResourceTestCase(TestCase):
     def test_get_root_without_authentication(self):
         response = self.client.get("/api/v1/")
 
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_root_resource_returns_other_resource_endpoints_in_json(self):
         response = self.client.get("/api/v1/")
 
         data = json.loads(response.content)
         self.assertIn("comics", data)
-        self.assertEquals(data["users"]["list_endpoint"], "/api/v1/users/")
-        self.assertEquals(data["comics"]["list_endpoint"], "/api/v1/comics/")
-        self.assertEquals(data["images"]["list_endpoint"], "/api/v1/images/")
-        self.assertEquals(data["releases"]["list_endpoint"], "/api/v1/releases/")
-        self.assertEquals(
+        self.assertEqual(data["users"]["list_endpoint"], "/api/v1/users/")
+        self.assertEqual(data["comics"]["list_endpoint"], "/api/v1/comics/")
+        self.assertEqual(data["images"]["list_endpoint"], "/api/v1/images/")
+        self.assertEqual(data["releases"]["list_endpoint"], "/api/v1/releases/")
+        self.assertEqual(
             data["subscriptions"]["list_endpoint"], "/api/v1/subscriptions/"
         )
 

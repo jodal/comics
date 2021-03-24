@@ -15,13 +15,13 @@ class LoginTest(TestCase):
     def test_front_page_redirects_to_login_page(self):
         response = self.client.get("/")
 
-        self.assertEquals(response.status_code, 302)
-        self.assertEquals(response["Location"], "/accounts/login/?next=/")
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response["Location"], "/accounts/login/?next=/")
 
     def test_login_page_includes_email_and_password_fields(self):
         response = self.client.get("/accounts/login/")
 
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         self.assertIn("E-mail", response.content)
         self.assertIn("Password", response.content)
 
@@ -31,7 +31,7 @@ class LoginTest(TestCase):
             {"login": "alice@example.com", "password": "wrong"},
         )
 
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         self.assertIn(
             "The e-mail address and/or password you " "specified are not correct.",
             response.content,

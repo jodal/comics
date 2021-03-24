@@ -16,14 +16,14 @@ class ComicsResourceTestCase(TestCase):
     def test_requires_authentication(self):
         response = self.client.get("/api/v1/comics/")
 
-        self.assertEquals(response.status_code, 401)
+        self.assertEqual(response.status_code, 401)
 
     def test_authentication_with_secret_key_in_header(self):
         response = self.client.get(
             "/api/v1/comics/", HTTP_AUTHORIZATION="Key s3cretk3y"
         )
 
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_lists_comics(self):
         response = self.client.get(
@@ -31,8 +31,8 @@ class ComicsResourceTestCase(TestCase):
         )
 
         data = json.loads(response.content)
-        self.assertEquals(len(data["objects"]), 10)
-        self.assertEquals(data["objects"][0]["slug"], "abstrusegoose")
+        self.assertEqual(len(data["objects"]), 10)
+        self.assertEqual(data["objects"][0]["slug"], "abstrusegoose")
 
     def test_slug_filter(self):
         response = self.client.get(
@@ -42,8 +42,8 @@ class ComicsResourceTestCase(TestCase):
         )
 
         data = json.loads(response.content)
-        self.assertEquals(len(data["objects"]), 1)
-        self.assertEquals(data["objects"][0]["slug"], "xkcd")
+        self.assertEqual(len(data["objects"]), 1)
+        self.assertEqual(data["objects"][0]["slug"], "xkcd")
 
     def test_subscribed_filter(self):
         create_subscriptions(self.user)
@@ -55,9 +55,9 @@ class ComicsResourceTestCase(TestCase):
         )
 
         data = json.loads(response.content)
-        self.assertEquals(len(data["objects"]), 2)
-        self.assertEquals(data["objects"][0]["slug"], "geekandpoke")
-        self.assertEquals(data["objects"][1]["slug"], "xkcd")
+        self.assertEqual(len(data["objects"]), 2)
+        self.assertEqual(data["objects"][0]["slug"], "geekandpoke")
+        self.assertEqual(data["objects"][1]["slug"], "xkcd")
 
     def test_unsubscribed_filter(self):
         create_subscriptions(self.user)
@@ -69,8 +69,8 @@ class ComicsResourceTestCase(TestCase):
         )
 
         data = json.loads(response.content)
-        self.assertEquals(len(data["objects"]), 8)
-        self.assertEquals(data["objects"][0]["slug"], "abstrusegoose")
+        self.assertEqual(len(data["objects"]), 8)
+        self.assertEqual(data["objects"][0]["slug"], "abstrusegoose")
 
     def test_details_view(self):
         response = self.client.get(
@@ -79,9 +79,9 @@ class ComicsResourceTestCase(TestCase):
 
         data = json.loads(response.content)
         comic_uri = data["objects"][0]["resource_uri"]
-        self.assertEquals(comic_uri, "/api/v1/comics/1/")
+        self.assertEqual(comic_uri, "/api/v1/comics/1/")
 
         response = self.client.get(comic_uri, HTTP_AUTHORIZATION="Key s3cretk3y")
 
         data = json.loads(response.content)
-        self.assertEquals(data["slug"], "abstrusegoose")
+        self.assertEqual(data["slug"], "abstrusegoose")

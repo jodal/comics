@@ -96,9 +96,9 @@ class ComicDataLoader(object):
                 self._load_data(data)
             else:
                 logger.debug("Skipping inactive comic")
-        except ComicDataError, error:
+        except ComicDataError as error:
             logger.error(error)
-        except Exception, error:
+        except Exception as error:
             logger.exception(error)
 
     def _get_data(self, comic_slug):

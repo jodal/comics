@@ -12,7 +12,7 @@ class SplitListNode(Node):
     def split_seq(self, results, cols=2):
         start = 0
         results = list(results)
-        for i in xrange(cols):
+        for i in range(cols):
             stop = start + len(results[i::cols])
             yield results[start:stop]
             start = stop

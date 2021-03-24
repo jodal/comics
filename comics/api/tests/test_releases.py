@@ -16,14 +16,14 @@ class ReleasesResourceTestCase(TestCase):
     def test_requires_authentication(self):
         response = self.client.get("/api/v1/releases/")
 
-        self.assertEquals(response.status_code, 401)
+        self.assertEqual(response.status_code, 401)
 
     def test_authentication_with_secret_key_in_header(self):
         response = self.client.get(
             "/api/v1/releases/", HTTP_AUTHORIZATION="Key s3cretk3y"
         )
 
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_list_releases(self):
         response = self.client.get(
@@ -31,24 +31,24 @@ class ReleasesResourceTestCase(TestCase):
         )
 
         data = json.loads(response.content)
-        self.assertEquals(len(data["objects"]), 11)
+        self.assertEqual(len(data["objects"]), 11)
 
         release = data["objects"][0]
-        self.assertEquals(release["comic"], "/api/v1/comics/9/")
-        self.assertEquals(release["pub_date"], "2012-10-12")
-        self.assertEquals(release["resource_uri"], "/api/v1/releases/11/")
-        self.assertEquals(len(release["images"]), 1)
+        self.assertEqual(release["comic"], "/api/v1/comics/9/")
+        self.assertEqual(release["pub_date"], "2012-10-12")
+        self.assertEqual(release["resource_uri"], "/api/v1/releases/11/")
+        self.assertEqual(len(release["images"]), 1)
 
         image = release["images"][0]
-        self.assertEquals(image["title"], "Blurring the Line")
-        self.assertEquals(
+        self.assertEqual(image["title"], "Blurring the Line")
+        self.assertEqual(
             image["text"],
             "People into masturbatory "
             + "navel-gazing have a lot to learn about masturbation.",
         )
-        self.assertEquals(image["height"], 235)
-        self.assertEquals(image["width"], 740)
-        self.assertEquals(
+        self.assertEqual(image["height"], 235)
+        self.assertEqual(image["width"], 740)
+        self.assertEqual(
             image["checksum"],
             "76a1407a2730b000d51ccf764c689c8930fdd3580e01f62f70cbe73d8be17e9c",
         )
@@ -63,7 +63,7 @@ class ReleasesResourceTestCase(TestCase):
         )
 
         data = json.loads(response.content)
-        self.assertEquals(len(data["objects"]), 6)
+        self.assertEqual(len(data["objects"]), 6)
 
     def test_comic_filter(self):
         response = self.client.get(
@@ -73,10 +73,10 @@ class ReleasesResourceTestCase(TestCase):
         )
 
         data = json.loads(response.content)
-        self.assertEquals(len(data["objects"]), 2)
+        self.assertEqual(len(data["objects"]), 2)
 
         release = data["objects"][0]
-        self.assertEquals(release["comic"], "/api/v1/comics/4/")
+        self.assertEqual(release["comic"], "/api/v1/comics/4/")
 
     def test_pub_date_filter(self):
         response = self.client.get(
@@ -86,7 +86,7 @@ class ReleasesResourceTestCase(TestCase):
         )
 
         data = json.loads(response.content)
-        self.assertEquals(len(data["objects"]), 11)
+        self.assertEqual(len(data["objects"]), 11)
 
         response = self.client.get(
             "/api/v1/releases/",
@@ -95,7 +95,7 @@ class ReleasesResourceTestCase(TestCase):
         )
 
         data = json.loads(response.content)
-        self.assertEquals(len(data["objects"]), 0)
+        self.assertEqual(len(data["objects"]), 0)
 
     def test_unknown_filter_fails(self):
         response = self.client.get(
@@ -104,7 +104,7 @@ class ReleasesResourceTestCase(TestCase):
             HTTP_AUTHORIZATION="Key s3cretk3y",
         )
 
-        self.assertEquals(response.status_code, 400)
+        self.assertEqual(response.status_code, 400)
 
     def test_details_view(self):
         response = self.client.get(
@@ -113,10 +113,10 @@ class ReleasesResourceTestCase(TestCase):
 
         data = json.loads(response.content)
         release_uri = data["objects"][0]["resource_uri"]
-        self.assertEquals(release_uri, "/api/v1/releases/11/")
+        self.assertEqual(release_uri, "/api/v1/releases/11/")
 
         response = self.client.get(release_uri, HTTP_AUTHORIZATION="Key s3cretk3y")
 
         data = json.loads(response.content)
-        self.assertEquals(data["pub_date"], "2012-10-12")
-        self.assertEquals(len(data["images"]), 1)
+        self.assertEqual(data["pub_date"], "2012-10-12")
+        self.assertEqual(len(data["images"]), 1)

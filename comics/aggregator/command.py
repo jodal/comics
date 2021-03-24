@@ -16,9 +16,9 @@ def log_errors(func):
     def inner(*args, **kwargs):
         try:
             return func(*args, **kwargs)
-        except ComicsError, error:
+        except ComicsError as error:
             logger.info(error)
-        except Exception, error:
+        except Exception as error:
             logger.exception("%s: %s", args[0].identifier, error)
 
     return inner

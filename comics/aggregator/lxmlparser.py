@@ -1,4 +1,6 @@
-import urllib2
+import urllib.error
+import urllib.parse
+import urllib.request
 
 from lxml.html import fromstring
 
@@ -89,10 +91,10 @@ class LxmlParser:
 
     def _parse_url(self, url, headers=None):
         if headers is None:
-            handle = urllib2.urlopen(url)
+            handle = urllib.request.urlopen(url)
         else:
-            request = urllib2.Request(url, headers=headers)
-            handle = urllib2.urlopen(request)
+            request = urllib.request.Request(url, headers=headers)
+            handle = urllib.request.urlopen(request)
         content = handle.read()
         self._retrieved_url = handle.geturl()
         handle.close()

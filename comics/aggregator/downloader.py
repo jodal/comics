@@ -1,8 +1,10 @@
 import contextlib
 import hashlib
-import httplib
+import http.client
 import tempfile
-import urllib2
+import urllib.error
+import urllib.parse
+import urllib.request
 
 try:
     from PIL import Image as PILImage
@@ -40,7 +42,7 @@ class ReleaseDownloader:
 
     def _download_images(self, crawler_release):
         image_downloader = ImageDownloader(crawler_release)
-        return map(image_downloader.download, crawler_release.images)
+        return list(map(image_downloader.download, crawler_release.images))
 
     @transaction.atomic
     def _create_new_release(self, comic, pub_date, images):
@@ -90,23 +92,23 @@ class ImageDownloader:
 
     def _download_image(self, url, request_headers):
         try:
-            if isinstance(url, unicode):
+            if isinstance(url, str):
                 # Ideally, we should keep the URLs in the original encoding or
                 # URI encoded all the way through the system. If we get Unicode
                 # strings here, our best guess is to encode them as UTF-8 so
                 # urllib2 can URI encode them properly.
                 url = url.encode("utf-8")
-            request = urllib2.Request(url, None, request_headers)
-            with contextlib.closing(urllib2.urlopen(request)) as http_file:
+            request = urllib.request.Request(url, None, request_headers)
+            with contextlib.closing(urllib.request.urlopen(request)) as http_file:
                 temp_file = tempfile.NamedTemporaryFile(suffix="comics")
                 temp_file.write(http_file.read())
                 temp_file.seek(0)
                 return temp_file
-        except urllib2.HTTPError as error:
+        except urllib.error.HTTPError as error:
             raise DownloaderHTTPError(self.identifier, error.code)
-        except urllib2.URLError as error:
+        except urllib.error.URLError as error:
             raise DownloaderHTTPError(self.identifier, error.reason)
-        except httplib.BadStatusLine:
+        except http.client.BadStatusLine:
             raise DownloaderHTTPError(self.identifier, "BadStatusLine")
         except OSError as error:
             raise DownloaderHTTPError(self.identifier, error)
