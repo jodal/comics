@@ -35,11 +35,13 @@ You can get hold of Comics in two ways:
 Software requirements
 =====================
 
-It is recommended to create a `virtualenv <https://virtualenv.pypa.io/>`_ to
-isolate the dependencies from other applications on the same system::
+First of all, you need Python 3.7 or newer.
+
+It is recommended to create a virtualenv to isolate the dependencies from
+other applications on the same system::
 
     cd comics/
-    virtualenv .venv/
+    python3 -m venv .venv/
 
 Every time you want to use the virtualenv, it must be activated::
 
@@ -47,7 +49,7 @@ Every time you want to use the virtualenv, it must be activated::
 
 The dependencies can be installed using `pip <https://pip.pypa.io/>`_::
 
-    pip install -r requirements.txt
+    python3 -m pip install -r requirements.txt
 
 If you make use of a virtualenv for a real deployment, you'll also need to make
 sure that the WSGI file and the cronjob activate the virtualenv.

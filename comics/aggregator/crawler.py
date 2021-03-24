@@ -1,15 +1,11 @@
 import datetime
-import httplib
-import json
 import re
-import socket
 import time
-import urllib2
 import xml
 
-from django.utils import timezone
-
+import httpx
 import pytz
+from django.utils import timezone
 
 from comics.aggregator.exceptions import (
     CrawlerHTTPError,
@@ -25,7 +21,7 @@ now = timezone.now
 today = datetime.date.today
 
 
-class CrawlerRelease(object):
+class CrawlerRelease:
     def __init__(self, comic, pub_date, has_rerun_releases=False):
         self.comic = comic
         self.pub_date = pub_date
@@ -34,7 +30,7 @@ class CrawlerRelease(object):
 
     @property
     def identifier(self):
-        return u"%s/%s" % (self.comic.slug, self.pub_date)
+        return f"{self.comic.slug}/{self.pub_date}"
 
     @property
     def images(self):
@@ -45,7 +41,7 @@ class CrawlerRelease(object):
         self._images.append(image)
 
 
-class CrawlerImage(object):
+class CrawlerImage:
     def __init__(self, url, title=None, text=None, headers=None):
         self.url = url
         self.title = title
@@ -53,17 +49,17 @@ class CrawlerImage(object):
         self.request_headers = headers or {}
 
         # Convert from e.g. lxml.etree._ElementUnicodeResult to unicode
-        if self.title is not None and type(self.title) != unicode:
-            self.title = unicode(self.title)
-        if self.text is not None and type(self.text) != unicode:
-            self.text = unicode(self.text)
+        if self.title is not None and not isinstance(self.title, str):
+            self.title = str(self.title)
+        if self.text is not None and not isinstance(self.text, str):
+            self.text = str(self.text)
 
     def validate(self, identifier):
         if not self.url:
             raise ImageURLNotFound(identifier)
 
 
-class CrawlerBase(object):
+class CrawlerBase:
     # ### Crawler settings
     # Date of oldest release available for crawling
     history_capable_date = None
@@ -104,13 +100,7 @@ class CrawlerBase(object):
 
         try:
             results = self.crawl(pub_date)
-        except urllib2.HTTPError as error:
-            raise CrawlerHTTPError(release.identifier, error.code)
-        except urllib2.URLError as error:
-            raise CrawlerHTTPError(release.identifier, error.reason)
-        except httplib.BadStatusLine:
-            raise CrawlerHTTPError(release.identifier, "BadStatusLine")
-        except socket.error as error:
+        except (httpx.HTTPError, httpx.InvalidURL, OSError) as error:
             raise CrawlerHTTPError(release.identifier, error)
         except xml.sax.SAXException as error:
             raise CrawlerHTTPError(release.identifier, str(error))
@@ -129,7 +119,7 @@ class CrawlerBase(object):
         return release
 
     def _get_date_to_crawl(self, pub_date):
-        identifier = u"%s/%s" % (self.comic.slug, pub_date)
+        identifier = f"{self.comic.slug}/{pub_date}"
 
         if pub_date is None:
             pub_date = self.current_date
@@ -203,7 +193,7 @@ class ComicsKingdomCrawlerBase(CrawlerBase):
 
     def crawl_helper(self, short_name, pub_date):
         date = pub_date.strftime("%Y-%m-%d")
-        page_url = "https://www.comicskingdom.com/%s/%s" % (short_name, date)
+        page_url = f"https://www.comicskingdom.com/{short_name}/{date}"
         page = self.parse_page(page_url)
         url = page.src('img[src*="safr.kingfeatures.com"]')
         return CrawlerImage(url)
@@ -223,7 +213,7 @@ class GoComicsComCrawlerBase(CrawlerBase):
     }
 
     def crawl_helper(self, url_name, pub_date):
-        page_url = "http://www.gocomics.com/%s/%s" % (
+        page_url = "http://www.gocomics.com/{}/{}".format(
             url_name,
             pub_date.strftime("%Y/%m/%d/"),
         )
@@ -285,9 +275,8 @@ class CreatorsCrawlerBase(CrawlerBase):
             "feature_id=%s&year=%s"
         ) % (feature_id, pub_date.year)
 
-        req = urllib2.Request(url, None, self.headers)
-        response = urllib2.urlopen(req)
-        releases = json.load(response)
+        response = httpx.get(url, headers=self.headers)
+        releases = response.json()
         for release in releases:
             if release["release"] == pub_date.strftime("%Y-%m-%d"):
                 page = self.parse_page(release["url"])

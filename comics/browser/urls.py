@@ -20,17 +20,17 @@ urlpatterns = [
         name="mycomics_latest_page_n",
     ),
     url(
-        r"^my/%s/$" % (YEAR,),
+        fr"^my/{YEAR}/$",
         views.MyComicsYearView.as_view(),
         name="mycomics_year",
     ),
     url(
-        r"^my/%s/%s/$" % (YEAR, MONTH),
+        fr"^my/{YEAR}/{MONTH}/$",
         views.MyComicsMonthView.as_view(),
         name="mycomics_month",
     ),
     url(
-        r"^my/%s/%s/%s/$" % (YEAR, MONTH, DAY),
+        fr"^my/{YEAR}/{MONTH}/{DAY}/$",
         views.MyComicsDayView.as_view(),
         name="mycomics_day",
     ),
@@ -43,37 +43,37 @@ urlpatterns = [
     ),
     # Views of a single comic
     url(
-        r"^%s/$" % (COMIC,),
+        fr"^{COMIC}/$",
         views.OneComicLatestView.as_view(),
         name="comic_latest",
     ),
     url(
-        r"^%s/%s/$" % (COMIC, YEAR),
+        fr"^{COMIC}/{YEAR}/$",
         views.OneComicYearView.as_view(),
         name="comic_year",
     ),
     url(
-        r"^%s/%s/%s/$" % (COMIC, YEAR, MONTH),
+        fr"^{COMIC}/{YEAR}/{MONTH}/$",
         views.OneComicMonthView.as_view(),
         name="comic_month",
     ),
     url(
-        r"^%s/%s/%s/%s/$" % (COMIC, YEAR, MONTH, DAY),
+        fr"^{COMIC}/{YEAR}/{MONTH}/{DAY}/$",
         views.OneComicDayView.as_view(),
         name="comic_day",
     ),
     url(
-        r"^%s/today/$" % (COMIC,),
+        fr"^{COMIC}/today/$",
         views.OneComicTodayView.as_view(),
         name="comic_today",
     ),
     url(
-        r"^%s/website/$" % (COMIC,),
+        fr"^{COMIC}/website/$",
         views.OneComicWebsiteRedirect.as_view(),
         name="comic_website",
     ),
     url(
-        r"^%s/feed/$" % (COMIC,),
+        fr"^{COMIC}/feed/$",
         views.OneComicFeed.as_view(),
         name="comic_feed",
     ),

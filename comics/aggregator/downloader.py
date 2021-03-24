@@ -1,15 +1,12 @@
-import contextlib
 import hashlib
-import httplib
-import socket
 import tempfile
-import urllib2
 
 try:
     from PIL import Image as PILImage
 except ImportError:
     import Image as PILImage  # noqa
 
+import httpx
 from django.conf import settings
 from django.core.files import File
 from django.db import transaction
@@ -32,7 +29,7 @@ IMAGE_FORMATS = {
 }
 
 
-class ReleaseDownloader(object):
+class ReleaseDownloader:
     def download(self, crawler_release):
         images = self._download_images(crawler_release)
         return self._create_new_release(
@@ -41,7 +38,7 @@ class ReleaseDownloader(object):
 
     def _download_images(self, crawler_release):
         image_downloader = ImageDownloader(crawler_release)
-        return map(image_downloader.download, crawler_release.images)
+        return list(map(image_downloader.download, crawler_release.images))
 
     @transaction.atomic
     def _create_new_release(self, comic, pub_date, images):
@@ -52,7 +49,7 @@ class ReleaseDownloader(object):
         return release
 
 
-class ImageDownloader(object):
+class ImageDownloader:
     def __init__(self, crawler_release):
         self.crawler_release = crawler_release
 
@@ -63,7 +60,7 @@ class ImageDownloader(object):
             crawler_image.url, crawler_image.request_headers
         ) as image_file:
             checksum = self._get_sha256sum(image_file)
-            self.identifier = "%s/%s" % (self.identifier, checksum[:6])
+            self.identifier = "{}/{}".format(self.identifier, checksum[:6])
 
             self._check_if_blacklisted(checksum)
 
@@ -91,25 +88,13 @@ class ImageDownloader(object):
 
     def _download_image(self, url, request_headers):
         try:
-            if isinstance(url, unicode):
-                # Ideally, we should keep the URLs in the original encoding or
-                # URI encoded all the way through the system. If we get Unicode
-                # strings here, our best guess is to encode them as UTF-8 so
-                # urllib2 can URI encode them properly.
-                url = url.encode("utf-8")
-            request = urllib2.Request(url, None, request_headers)
-            with contextlib.closing(urllib2.urlopen(request)) as http_file:
-                temp_file = tempfile.NamedTemporaryFile(suffix="comics")
-                temp_file.write(http_file.read())
-                temp_file.seek(0)
-                return temp_file
-        except urllib2.HTTPError as error:
-            raise DownloaderHTTPError(self.identifier, error.code)
-        except urllib2.URLError as error:
-            raise DownloaderHTTPError(self.identifier, error.reason)
-        except httplib.BadStatusLine:
-            raise DownloaderHTTPError(self.identifier, "BadStatusLine")
-        except socket.error as error:
+            response = httpx.get(url, headers=request_headers)
+            response.raise_for_status()
+            temp_file = tempfile.NamedTemporaryFile(suffix="comics")
+            temp_file.write(response.content)
+            temp_file.seek(0)
+            return temp_file
+        except (httpx.HTTPError, httpx.InvalidURL, OSError) as error:
             raise DownloaderHTTPError(self.identifier, error)
 
     def _get_sha256sum(self, file_handle):
@@ -143,7 +128,7 @@ class ImageDownloader(object):
             return image
         except IndexError:
             raise ImageIsCorrupt(self.identifier)
-        except IOError as error:
+        except OSError as error:
             raise ImageIsCorrupt(self.identifier, error.message)
 
     def _get_file_extension(self, image):
@@ -153,7 +138,7 @@ class ImageDownloader(object):
 
     def _get_file_name(self, checksum, extension):
         if checksum and extension:
-            return "%s%s" % (checksum, extension)
+            return f"{checksum}{extension}"
 
     @transaction.atomic
     def _create_new_image(self, comic, title, text, image_file, file_name, checksum):

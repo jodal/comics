@@ -13,6 +13,7 @@ Pillow == 6.2.2
 lxml == 4.6.3
 
 # For crawling comics
+httpx == 0.17.1
 feedparser == 5.2.1
 cssselect == 1.1.0
 

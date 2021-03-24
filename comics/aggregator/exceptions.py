@@ -19,14 +19,14 @@ class CrawlerError(AggregatorError):
     """Base class for crawler exceptions"""
 
     def __str__(self):
-        return "%s: Generic crawler error (%s)" % (self.identifier, self.value)
+        return f"{self.identifier}: Generic crawler error ({self.value})"
 
 
 class CrawlerHTTPError(CrawlerError):
-    """Exception used to wrap urllib2.HTTPError from the crawler"""
+    """Exception used to wrap HTTP errors from the crawler"""
 
     def __str__(self):
-        return "%s: Crawler HTTP Error (%s)" % (self.identifier, self.value)
+        return f"{self.identifier}: Crawler HTTP Error ({self.value})"
 
 
 class ImageURLNotFound(CrawlerError):
@@ -40,7 +40,7 @@ class NotHistoryCapable(CrawlerError):
     """Exception raised when a comic is not history capable for the date"""
 
     def __str__(self):
-        return "%s: Comic is not history capable (%s)" % (
+        return "{}: Comic is not history capable ({})".format(
             self.identifier,
             self.value,
         )
@@ -60,31 +60,31 @@ class DownloaderError(AggregatorError):
     """Base class for downloader exceptions"""
 
     def __str__(self):
-        return "%s: Generic downloader error (%s)" % (
+        return "{}: Generic downloader error ({})".format(
             self.identifier,
             self.value,
         )
 
 
 class DownloaderHTTPError(DownloaderError):
-    """Exception used to wrap urllib2.HTTPError from the downloader"""
+    """Exception used to wrap HTTP errors from the downloader"""
 
     def __str__(self):
-        return "%s: Downloader HTTP Error (%s)" % (self.identifier, self.value)
+        return f"{self.identifier}: Downloader HTTP Error ({self.value})"
 
 
 class ImageTypeError(DownloaderError):
     """Exception raised when the image isn't of the right type"""
 
     def __str__(self):
-        return "%s: Invalid image type (%s)" % (self.identifier, self.value)
+        return f"{self.identifier}: Invalid image type ({self.value})"
 
 
 class ImageIsCorrupt(DownloaderError):
     """Exception raised when the fetched image is corrupt"""
 
     def __str__(self):
-        return "%s: Image is corrupt (%s)" % (self.identifier, self.value)
+        return f"{self.identifier}: Image is corrupt ({self.value})"
 
 
 class ImageAlreadyExists(DownloaderError):

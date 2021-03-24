@@ -11,7 +11,7 @@ def get_comic_module_names():
 
 
 def get_comic_module(comic_slug):
-    module_name = "%s.%s" % (__package__, comic_slug)
+    module_name = f"{__package__}.{comic_slug}"
     return _import_by_name(module_name)
 
 

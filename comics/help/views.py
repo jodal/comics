@@ -24,12 +24,12 @@ def feedback(request):
 
             metadata = "Client IP address: %s\n" % request.META["REMOTE_ADDR"]
             metadata += "User agent: %s\n" % request.META["HTTP_USER_AGENT"]
-            metadata += "User: %s <%s>\n" % (
+            metadata += "User: {} <{}>\n".format(
                 request.user.username,
                 request.user.email,
             )
 
-            message = "%s\n\n-- \n%s" % (form.cleaned_data["message"], metadata)
+            message = "{}\n\n-- \n{}".format(form.cleaned_data["message"], metadata)
 
             mail = EmailMessage(
                 subject=subject,

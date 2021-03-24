@@ -1,11 +1,10 @@
-import urllib2
-
+import httpx
 from lxml.html import fromstring
 
 from comics.aggregator.exceptions import CrawlerError
 
 
-class LxmlParser(object):
+class LxmlParser:
     def __init__(self, url=None, string=None, headers=None):
         self._retrieved_url = None
 
@@ -88,31 +87,25 @@ class LxmlParser(object):
             return elements[0]
 
     def _parse_url(self, url, headers=None):
-        if headers is None:
-            handle = urllib2.urlopen(url)
-        else:
-            request = urllib2.Request(url, headers=headers)
-            handle = urllib2.urlopen(request)
-        content = handle.read()
-        self._retrieved_url = handle.geturl()
-        handle.close()
-        content = content.replace("\x00", "")
+        response = httpx.get(url, headers=headers)
+        self._retrieved_url = str(response.url)
+        content = response.content.replace(b"\x00", b"")
         root = self._parse_string(content)
         root.make_links_absolute(self._retrieved_url)
         return root
 
-    def _parse_string(self, string):
-        if len(string.strip()) == 0:
-            string = "<xml />"
-        return fromstring(string)
+    def _parse_string(self, value):
+        if len(value.strip()) == 0:
+            value = "<xml />"
+        return fromstring(value)
 
-    def _decode(self, string):
-        if isinstance(string, str):
+    def _decode(self, value):
+        if isinstance(value, bytes):
             try:
-                string = string.decode("utf-8")
+                value = value.decode("utf-8")
             except UnicodeDecodeError:
-                string = string.decode("iso-8859-1")
-        return string
+                value = value.decode("iso-8859-1")
+        return value
 
 
 class LxmlParserException(CrawlerError):

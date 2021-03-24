@@ -84,7 +84,7 @@ Comics' own virtualenv:
 .. code-block:: sh
 
     source /srv/comics.example.com/app/venv/bin/activate
-    pip install gunicorn
+    python -m pip install gunicorn
 
 Then you need to start Gunicorn, for example with a systemd service:
 

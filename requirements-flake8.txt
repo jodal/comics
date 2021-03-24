@@ -1,4 +1,5 @@
 flake8
+flake8-black
 flake8-blind-except
 flake8-comprehensions
 flake8-import-order

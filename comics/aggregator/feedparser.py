@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 import datetime
 import warnings
 
@@ -8,7 +6,7 @@ import feedparser
 from comics.aggregator.lxmlparser import LxmlParser
 
 
-class FeedParser(object):
+class FeedParser:
     def __init__(self, url):
         self.raw_feed = feedparser.parse(url)
 
@@ -45,7 +43,7 @@ class FeedParser(object):
         return [Entry(e, self.encoding) for e in self.raw_feed.entries]
 
 
-class Entry(object):
+class Entry:
     def __init__(self, entry, encoding=None):
         self.raw_entry = entry
         self.encoding = encoding
@@ -56,14 +54,14 @@ class Entry(object):
 
     def __getattr__(self, name):
         attr = getattr(self.raw_entry, name)
-        if isinstance(attr, str) and self.encoding is not None:
+        if isinstance(attr, bytes) and self.encoding is not None:
             attr = attr.decode(self.encoding)
         return attr
 
-    def html(self, string):
-        if isinstance(string, str) and self.encoding is not None:
-            string = string.decode(self.encoding)
-        return LxmlParser(string=string)
+    def html(self, value):
+        if isinstance(value, bytes) and self.encoding is not None:
+            value = value.decode(self.encoding)
+        return LxmlParser(string=value)
 
     @property
     def tags(self):

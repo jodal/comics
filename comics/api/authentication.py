@@ -39,7 +39,7 @@ class SecretKeyAuthentication(Authentication):
         return self.extract_credentials(request)
 
 
-class MultiAuthentication(object):
+class MultiAuthentication:
     """
     An authentication backend that tries a number of backends in order.
 
@@ -48,7 +48,7 @@ class MultiAuthentication(object):
     """
 
     def __init__(self, *backends, **kwargs):
-        super(MultiAuthentication, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.backends = backends
 
     def is_authenticated(self, request, **kwargs):

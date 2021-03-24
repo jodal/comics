@@ -19,7 +19,7 @@ class Crawler(CrawlerBase):
     headers = {"User-Agent": "Mozilla/4.0"}
 
     def crawl(self, pub_date):
-        url = "http://www.vgcats.com/super/images/%s.gif" % (
+        url = "http://www.vgcats.com/super/images/{}.gif".format(
             pub_date.strftime("%y%m%d"),
         )
         return CrawlerImage(url)

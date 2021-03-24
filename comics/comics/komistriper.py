@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 from comics.aggregator.crawler import NettserierCrawlerBase
 from comics.core.comic_data import ComicDataBase
 
