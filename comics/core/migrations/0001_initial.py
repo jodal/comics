@@ -23,30 +23,30 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "name",
-                    models.CharField(help_text=b"Name of the comic", max_length=100),
+                    models.CharField(help_text="Name of the comic", max_length=100),
                 ),
                 (
                     "slug",
                     models.SlugField(
-                        help_text=b"For file paths and URLs",
+                        help_text="For file paths and URLs",
                         unique=True,
                         max_length=100,
-                        verbose_name=b"Short name",
+                        verbose_name="Short name",
                     ),
                 ),
                 (
                     "language",
                     models.CharField(
-                        help_text=b"The language of the comic",
+                        help_text="The language of the comic",
                         max_length=2,
-                        choices=[(b"en", b"English"), (b"no", b"Norwegian")],
+                        choices=[("en", "English"), ("no", "Norwegian")],
                     ),
                 ),
                 (
                     "url",
                     models.URLField(
-                        help_text=b"URL to the official website",
-                        verbose_name=b"URL",
+                        help_text="URL to the official website",
+                        verbose_name="URL",
                         blank=True,
                     ),
                 ),
@@ -54,19 +54,19 @@ class Migration(migrations.Migration):
                     "active",
                     models.BooleanField(
                         default=True,
-                        help_text=b"Wheter the comic is still being crawled",
+                        help_text="Wheter the comic is still being crawled",
                     ),
                 ),
                 (
                     "start_date",
                     models.DateField(
-                        help_text=b"First published at", null=True, blank=True
+                        help_text="First published at", null=True, blank=True
                     ),
                 ),
                 (
                     "end_date",
                     models.DateField(
-                        help_text=b"Last published at, if comic has been " b"cancelled",
+                        help_text="Last published at, if comic has been cancelled",
                         null=True,
                         blank=True,
                     ),
@@ -74,8 +74,7 @@ class Migration(migrations.Migration):
                 (
                     "rights",
                     models.CharField(
-                        help_text=b"Author, copyright, and/or licensing "
-                        b"information",
+                        help_text="Author, copyright, and/or licensing " "information",
                         max_length=100,
                         blank=True,
                     ),
@@ -83,7 +82,7 @@ class Migration(migrations.Migration):
                 (
                     "added",
                     models.DateTimeField(
-                        help_text=b"Time the comic was added to the site",
+                        help_text="Time the comic was added to the site",
                         auto_now_add=True,
                     ),
                 ),
@@ -109,12 +108,12 @@ class Migration(migrations.Migration):
                 (
                     "file",
                     models.ImageField(
-                        height_field=b"height",
+                        height_field="height",
                         storage=django.core.files.storage.FileSystemStorage(
-                            base_url=b"/media/",
-                            location=b"/home/jodal/dev/comics/media",
+                            base_url="/media/",
+                            location="/home/jodal/dev/comics/media",
                         ),
-                        width_field=b"width",
+                        width_field="width",
                         upload_to=comics.core.models.image_file_path,
                     ),
                 ),
@@ -148,7 +147,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "pub_date",
-                    models.DateField(verbose_name=b"publication date", db_index=True),
+                    models.DateField(verbose_name="publication date", db_index=True),
                 ),
                 (
                     "fetched",
@@ -160,7 +159,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "images",
-                    models.ManyToManyField(related_name=b"releases", to="core.Image"),
+                    models.ManyToManyField(related_name="releases", to="core.Image"),
                 ),
             ],
             options={

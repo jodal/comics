@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
         migrations.AddIndex(
             model_name="release",
             index=models.Index(
-                fields=[b"comic", b"pub_date"],
+                fields=["comic", "pub_date"],
                 name="comics_rele_comic_i_2b6b41_idx",
             ),
         ),

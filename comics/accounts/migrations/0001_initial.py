@@ -50,7 +50,7 @@ class Migration(migrations.Migration):
                     "secret_key",
                     models.CharField(
                         default=comics.accounts.models.make_secret_key,
-                        help_text=b"Secret key for feed and API access",
+                        help_text="Secret key for feed and API access",
                         max_length=32,
                     ),
                 ),
@@ -63,7 +63,7 @@ class Migration(migrations.Migration):
                 (
                     "user",
                     models.OneToOneField(
-                        related_name=b"comics_profile",
+                        related_name="comics_profile",
                         to=settings.AUTH_USER_MODEL,
                         on_delete=models.CASCADE,
                     ),
