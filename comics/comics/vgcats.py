@@ -25,7 +25,7 @@ class Crawler(CrawlerBase):
             file_ext = "gif"
         else:
             file_ext = "jpg"
-        url = "http://www.vgcats.com/comics/images/%s.%s" % (
+        url = "http://www.vgcats.com/comics/images/{}.{}".format(
             pub_date.strftime("%y%m%d"),
             file_ext,
         )

@@ -1,4 +1,3 @@
-# encoding: utf-8
 import re
 
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
@@ -36,6 +35,6 @@ class Crawler(CrawlerBase):
             r"//(img\.gfx\.no/[0-9]+/[0-9]+/.+?)\.[0-9x]+mc\.([a-z]+)",
             srcset,
         )
-        url = "https://%s.%s" % (matches.group(1), matches.group(2))
+        url = "https://{}.{}".format(matches.group(1), matches.group(2))
 
         return CrawlerImage(url, title)

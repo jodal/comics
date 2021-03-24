@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 from comics.aggregator.crawler import PondusNoCrawlerBase
 from comics.comics.pondus import ComicData as PondusData
 

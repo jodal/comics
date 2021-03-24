@@ -33,7 +33,7 @@ def comics_list(request):
     )
 
 
-class ComicMixin(object):
+class ComicMixin:
     """Things common for *all* views of comics"""
 
     @property
@@ -60,7 +60,7 @@ class ReleaseMixin(LoginRequiredMixin, ComicMixin):
         # because the date based views only populate the context with
         # date-related information right before render_to_response() is called.
         context.update(self.get_release_context_data(context))
-        return super(ReleaseMixin, self).render_to_response(context, **kwargs)
+        return super().render_to_response(context, **kwargs)
 
     def get_release_context_data(self, context):
         # The methods called later in this method assumes that ``self.context``
@@ -182,7 +182,7 @@ class ReleaseFeedView(ComicMixin, ListView):
     template_name = "browser/release_feed.html"
 
     def get_context_data(self, **kwargs):
-        context = super(ReleaseFeedView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context.update(
             {
                 "feed": {
@@ -198,7 +198,7 @@ class ReleaseFeedView(ComicMixin, ListView):
         return context
 
     def render_to_response(self, context, **kwargs):
-        return super(ReleaseFeedView, self).render_to_response(
+        return super().render_to_response(
             context, content_type="application/xml", **kwargs
         )
 
@@ -222,7 +222,7 @@ class ReleaseFeedView(ComicMixin, ListView):
             return timezone.now()
 
 
-class MyComicsMixin(object):
+class MyComicsMixin:
     """Things common for all views of *my comics*"""
 
     def get_queryset(self):
@@ -278,7 +278,7 @@ class MyComicsMixin(object):
             pass
 
     def get_feed_url(self):
-        return "%s?key=%s" % (
+        return "{}?key={}".format(
             reverse("mycomics_feed"),
             self.get_user().comics_profile.secret_key,
         )
@@ -302,7 +302,7 @@ class MyComicsLatestView(MyComicsMixin, ReleaseLatestView):
     paginate_by = settings.COMICS_MAX_RELEASES_PER_PAGE
 
     def get_queryset(self):
-        releases = super(MyComicsLatestView, self).get_queryset()
+        releases = super().get_queryset()
         return releases.order_by("-fetched")
 
     def get_first_url(self):
@@ -338,7 +338,7 @@ class MyComicsLatestView(MyComicsMixin, ReleaseLatestView):
 class MyComicsNumReleasesSinceView(MyComicsLatestView):
     def get_num_releases_since(self):
         last_release_seen = get_object_or_404(Release, id=self.kwargs["release_id"])
-        releases = super(MyComicsNumReleasesSinceView, self).get_queryset()
+        releases = super().get_queryset()
         return releases.filter(fetched__gt=last_release_seen.fetched).count()
 
     def render_to_response(self, context, **kwargs):
@@ -508,11 +508,11 @@ class MyComicsFeed(MyComicsMixin, ReleaseFeedView):
         from_date = datetime.date.today() - datetime.timedelta(
             days=settings.COMICS_MAX_DAYS_IN_FEED
         )
-        releases = super(MyComicsFeed, self).get_queryset()
+        releases = super().get_queryset()
         return releases.filter(fetched__gte=from_date).order_by("-fetched")
 
 
-class OneComicMixin(object):
+class OneComicMixin:
     """Things common for all views of a single comic"""
 
     def get_queryset(self):
@@ -574,7 +574,7 @@ class OneComicMixin(object):
             pass
 
     def get_feed_url(self):
-        return "%s?key=%s" % (
+        return "{}?key={}".format(
             reverse("comic_feed", kwargs={"comic_slug": self.comic.slug}),
             self.get_user().comics_profile.secret_key,
         )
@@ -651,7 +651,7 @@ class OneComicLatestView(OneComicMixin, ReleaseLatestView):
     paginate_by = 1
 
     def get_queryset(self):
-        releases = super(OneComicLatestView, self).get_queryset()
+        releases = super().get_queryset()
         return releases.order_by("-fetched")
 
     def get_current_day(self):
@@ -769,7 +769,7 @@ class OneComicFeed(OneComicMixin, ReleaseFeedView):
         from_date = datetime.date.today() - datetime.timedelta(
             days=settings.COMICS_MAX_DAYS_IN_FEED
         )
-        releases = super(OneComicFeed, self).get_queryset()
+        releases = super().get_queryset()
         return releases.filter(fetched__gte=from_date).order_by("-fetched")
 
 
@@ -777,6 +777,6 @@ class OneComicWebsiteRedirect(LoginRequiredMixin, ComicMixin, TemplateView):
     template_name = "browser/comic_website.html"
 
     def get_context_data(self, **kwargs):
-        context = super(OneComicWebsiteRedirect, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context["url"] = self.comic.url
         return context

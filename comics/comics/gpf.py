@@ -16,7 +16,7 @@ class Crawler(CrawlerBase):
     time_zone = "US/Eastern"
 
     def crawl(self, pub_date):
-        page_url = "http://www.gpf-comics.com/archive.php?d=%s" % (
+        page_url = "http://www.gpf-comics.com/archive.php?d={}".format(
             pub_date.strftime("%Y%m%d"),
         )
         page = self.parse_page(page_url)

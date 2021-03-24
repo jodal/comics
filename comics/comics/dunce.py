@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 from comics.aggregator.crawler import DagbladetCrawlerBase
 from comics.core.comic_data import ComicDataBase
 

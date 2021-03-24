@@ -19,7 +19,9 @@ class Crawler(CrawlerBase):
     headers = {"User-Agent": "Mozilla/4.0"}
 
     def crawl(self, pub_date):
-        page_url = "http://penny-arcade.com/comic/%s" % (pub_date.strftime("%Y/%m/%d"),)
+        page_url = "http://penny-arcade.com/comic/{}".format(
+            pub_date.strftime("%Y/%m/%d")
+        )
         page = self.parse_page(page_url)
         # The site gives a 404 page without a real 404 code
         page_title = page.text("title")

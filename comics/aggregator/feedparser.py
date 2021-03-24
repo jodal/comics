@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 import datetime
 import warnings
 
@@ -8,7 +6,7 @@ import feedparser
 from comics.aggregator.lxmlparser import LxmlParser
 
 
-class FeedParser(object):
+class FeedParser:
     def __init__(self, url):
         self.raw_feed = feedparser.parse(url)
 
@@ -45,7 +43,7 @@ class FeedParser(object):
         return [Entry(e, self.encoding) for e in self.raw_feed.entries]
 
 
-class Entry(object):
+class Entry:
     def __init__(self, entry, encoding=None):
         self.raw_entry = entry
         self.encoding = encoding

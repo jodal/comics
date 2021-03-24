@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import os
 import sys
 
@@ -17,8 +15,8 @@ templates_path = ["_templates"]
 source_suffix = ".rst"
 master_doc = "index"
 
-project = u"Comics"
-copyright = u"2009-2021, Stein Magnus Jodal and contributors"
+project = "Comics"
+copyright = "2009-2021, Stein Magnus Jodal and contributors"
 
 version = "3.0"
 release = "3.0.0"

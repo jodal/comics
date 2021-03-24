@@ -17,7 +17,7 @@ class Crawler(CrawlerBase):
     time_zone = "America/Vancouver"
 
     def crawl(self, pub_date):
-        page_url = "http://ars.userfriendly.org/cartoons/?id=%s" % (
+        page_url = "http://ars.userfriendly.org/cartoons/?id={}".format(
             pub_date.strftime("%Y%m%d"),
         )
         page = self.parse_page(page_url)

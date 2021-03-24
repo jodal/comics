@@ -16,7 +16,7 @@ class Crawler(CrawlerBase):
     time_zone = "US/Eastern"
 
     def crawl(self, pub_date):
-        page_url = "http://shermanslagoon.com/comics/%s-%s-%s/" % (
+        page_url = "http://shermanslagoon.com/comics/{}-{}-{}/".format(
             pub_date.strftime("%B").lower(),
             int(pub_date.strftime("%d")),
             pub_date.strftime("%Y"),

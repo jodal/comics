@@ -30,7 +30,7 @@ class Command(ComicsBaseCommand):
         )
 
     def handle(self, *args, **options):
-        super(Command, self).handle(*args, **options)
+        super().handle(*args, **options)
         aggregator = Aggregator(options=options)
         try:
             aggregator.start()

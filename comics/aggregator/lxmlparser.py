@@ -5,7 +5,7 @@ from lxml.html import fromstring
 from comics.aggregator.exceptions import CrawlerError
 
 
-class LxmlParser(object):
+class LxmlParser:
     def __init__(self, url=None, string=None, headers=None):
         self._retrieved_url = None
 

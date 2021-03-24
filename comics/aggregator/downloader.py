@@ -1,7 +1,6 @@
 import contextlib
 import hashlib
 import httplib
-import socket
 import tempfile
 import urllib2
 
@@ -32,7 +31,7 @@ IMAGE_FORMATS = {
 }
 
 
-class ReleaseDownloader(object):
+class ReleaseDownloader:
     def download(self, crawler_release):
         images = self._download_images(crawler_release)
         return self._create_new_release(
@@ -52,7 +51,7 @@ class ReleaseDownloader(object):
         return release
 
 
-class ImageDownloader(object):
+class ImageDownloader:
     def __init__(self, crawler_release):
         self.crawler_release = crawler_release
 
@@ -63,7 +62,7 @@ class ImageDownloader(object):
             crawler_image.url, crawler_image.request_headers
         ) as image_file:
             checksum = self._get_sha256sum(image_file)
-            self.identifier = "%s/%s" % (self.identifier, checksum[:6])
+            self.identifier = "{}/{}".format(self.identifier, checksum[:6])
 
             self._check_if_blacklisted(checksum)
 
@@ -109,7 +108,7 @@ class ImageDownloader(object):
             raise DownloaderHTTPError(self.identifier, error.reason)
         except httplib.BadStatusLine:
             raise DownloaderHTTPError(self.identifier, "BadStatusLine")
-        except socket.error as error:
+        except OSError as error:
             raise DownloaderHTTPError(self.identifier, error)
 
     def _get_sha256sum(self, file_handle):
@@ -143,7 +142,7 @@ class ImageDownloader(object):
             return image
         except IndexError:
             raise ImageIsCorrupt(self.identifier)
-        except IOError as error:
+        except OSError as error:
             raise ImageIsCorrupt(self.identifier, error.message)
 
     def _get_file_extension(self, image):
@@ -153,7 +152,7 @@ class ImageDownloader(object):
 
     def _get_file_name(self, checksum, extension):
         if checksum and extension:
-            return "%s%s" % (checksum, extension)
+            return f"{checksum}{extension}"
 
     @transaction.atomic
     def _create_new_image(self, comic, title, text, image_file, file_name, checksum):

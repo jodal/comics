@@ -17,7 +17,7 @@ class Command(ComicsBaseCommand):
         )
 
     def handle(self, *args, **options):
-        super(Command, self).handle(*args, **options)
+        super().handle(*args, **options)
         data_loader = ComicDataLoader(options)
         try:
             data_loader.start()

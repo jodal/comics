@@ -16,7 +16,7 @@ class Crawler(CrawlerBase):
     time_zone = "Europe/Oslo"
 
     def crawl(self, pub_date):
-        url = "https://cartoon-prod.schibsted.tech/nemi/%s.gif" % (
+        url = "https://cartoon-prod.schibsted.tech/nemi/{}.gif".format(
             pub_date.strftime("%d%m%y"),
         )
         return CrawlerImage(url)

@@ -19,7 +19,7 @@ def log_errors(func):
         except ComicsError, error:
             logger.info(error)
         except Exception, error:
-            logger.exception(u"%s: %s", args[0].identifier, error)
+            logger.exception("%s: %s", args[0].identifier, error)
 
     return inner
 
@@ -52,7 +52,7 @@ class Aggregator(object):
             logger.info("%s: Crawling from %s to %s", comic.slug, from_date, to_date)
         pub_date = from_date
         while pub_date <= to_date:
-            self.identifier = u"%s/%s" % (comic.slug, pub_date)
+            self.identifier = "%s/%s" % (comic.slug, pub_date)
             crawler_release = self._crawl_one_comic_one_date(crawler, pub_date)
             if crawler_release:
                 self._download_release(crawler_release)

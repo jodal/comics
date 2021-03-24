@@ -2,7 +2,6 @@ import datetime
 import httplib
 import json
 import re
-import socket
 import time
 import urllib2
 import xml
@@ -25,7 +24,7 @@ now = timezone.now
 today = datetime.date.today
 
 
-class CrawlerRelease(object):
+class CrawlerRelease:
     def __init__(self, comic, pub_date, has_rerun_releases=False):
         self.comic = comic
         self.pub_date = pub_date
@@ -34,7 +33,7 @@ class CrawlerRelease(object):
 
     @property
     def identifier(self):
-        return u"%s/%s" % (self.comic.slug, self.pub_date)
+        return f"{self.comic.slug}/{self.pub_date}"
 
     @property
     def images(self):
@@ -45,7 +44,7 @@ class CrawlerRelease(object):
         self._images.append(image)
 
 
-class CrawlerImage(object):
+class CrawlerImage:
     def __init__(self, url, title=None, text=None, headers=None):
         self.url = url
         self.title = title
@@ -63,7 +62,7 @@ class CrawlerImage(object):
             raise ImageURLNotFound(identifier)
 
 
-class CrawlerBase(object):
+class CrawlerBase:
     # ### Crawler settings
     # Date of oldest release available for crawling
     history_capable_date = None
@@ -110,7 +109,7 @@ class CrawlerBase(object):
             raise CrawlerHTTPError(release.identifier, error.reason)
         except httplib.BadStatusLine:
             raise CrawlerHTTPError(release.identifier, "BadStatusLine")
-        except socket.error as error:
+        except OSError as error:
             raise CrawlerHTTPError(release.identifier, error)
         except xml.sax.SAXException as error:
             raise CrawlerHTTPError(release.identifier, str(error))
@@ -129,7 +128,7 @@ class CrawlerBase(object):
         return release
 
     def _get_date_to_crawl(self, pub_date):
-        identifier = u"%s/%s" % (self.comic.slug, pub_date)
+        identifier = f"{self.comic.slug}/{pub_date}"
 
         if pub_date is None:
             pub_date = self.current_date
@@ -203,7 +202,7 @@ class ComicsKingdomCrawlerBase(CrawlerBase):
 
     def crawl_helper(self, short_name, pub_date):
         date = pub_date.strftime("%Y-%m-%d")
-        page_url = "https://www.comicskingdom.com/%s/%s" % (short_name, date)
+        page_url = f"https://www.comicskingdom.com/{short_name}/{date}"
         page = self.parse_page(page_url)
         url = page.src('img[src*="safr.kingfeatures.com"]')
         return CrawlerImage(url)
@@ -223,7 +222,7 @@ class GoComicsComCrawlerBase(CrawlerBase):
     }
 
     def crawl_helper(self, url_name, pub_date):
-        page_url = "http://www.gocomics.com/%s/%s" % (
+        page_url = "http://www.gocomics.com/{}/{}".format(
             url_name,
             pub_date.strftime("%Y/%m/%d/"),
         )

@@ -17,11 +17,11 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         if pub_date.weekday() == 6:
-            url = "http://picayune.uclick.com/comics/ga/%s.jpg" % (
+            url = "http://picayune.uclick.com/comics/ga/{}.jpg".format(
                 pub_date.strftime("%Y/ga%y%m%d"),
             )
         else:
-            url = "http://images.ucomics.com/comics/ga/%s.gif" % (
+            url = "http://images.ucomics.com/comics/ga/{}.gif".format(
                 pub_date.strftime("%Y/ga%y%m%d"),
             )
         return CrawlerImage(url)
