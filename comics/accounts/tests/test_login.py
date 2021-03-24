@@ -22,8 +22,8 @@ class LoginTest(TestCase):
         response = self.client.get("/accounts/login/")
 
         self.assertEqual(response.status_code, 200)
-        self.assertIn("E-mail", response.content)
-        self.assertIn("Password", response.content)
+        self.assertIn(b"E-mail", response.content)
+        self.assertIn(b"Password", response.content)
 
     def test_failed_login_shows_error_on_login_page(self):
         response = self.client.post(
@@ -33,6 +33,6 @@ class LoginTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertIn(
-            "The e-mail address and/or password you " "specified are not correct.",
+            b"The e-mail address and/or password you specified are not correct.",
             response.content,
         )

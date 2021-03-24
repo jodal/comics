@@ -21,7 +21,9 @@ class UsersResourceTestCase(TestCase):
     def test_get_users_with_basic_auth(self):
         response = self.client.get(
             "/api/v1/users/",
-            HTTP_AUTHORIZATION="Basic %s" % base64.encodestring("alice:secret"),
+            HTTP_AUTHORIZATION="Basic {}".format(
+                base64.b64encode(b"alice:secret").decode()
+            ),
         )
 
         self.assertEqual(response.status_code, 200)

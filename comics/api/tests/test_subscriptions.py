@@ -102,7 +102,7 @@ class SubscriptionsResourceTestCase(TestCase):
             response["Location"], "/api/v1/subscriptions/%d/" % subscription.pk
         )
 
-        self.assertEqual(response.content, "")
+        self.assertEqual(response.content, b"")
 
     def test_unsubscribe_from_comic(self):
         sub = Subscription.objects.get(comic__slug="xkcd")
@@ -117,7 +117,7 @@ class SubscriptionsResourceTestCase(TestCase):
         )
 
         self.assertEqual(response.status_code, 204)
-        self.assertEqual(response.content, "")
+        self.assertEqual(response.content, b"")
 
         self.assertEqual(
             1, Subscription.objects.filter(userprofile__user=self.user).count()

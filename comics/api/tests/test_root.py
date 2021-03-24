@@ -29,19 +29,19 @@ class RootResourceTestCase(TestCase):
     def test_resource_can_return_xml(self):
         response = self.client.get("/api/v1/", HTTP_ACCEPT="application/xml")
 
-        self.assertIn("<?xml version='1.0' encoding='utf-8'?>", response.content)
+        self.assertIn(b"<?xml version='1.0' encoding='utf-8'?>", response.content)
 
     def test_resource_can_return_jsonp(self):
         response = self.client.get("/api/v1/", {"format": "jsonp"})
 
-        self.assertIn("callback(", response.content)
+        self.assertIn(b"callback(", response.content)
 
     def test_resource_can_return_jsonp_with_custom_callback_name(self):
         response = self.client.get("/api/v1/", {"format": "jsonp", "callback": "foo"})
 
-        self.assertIn("foo(", response.content)
+        self.assertIn(b"foo(", response.content)
 
     def test_resource_returns_jsonp_if_just_given_callback_name(self):
         response = self.client.get("/api/v1/", {"callback": "foo"})
 
-        self.assertIn("foo(", response.content)
+        self.assertIn(b"foo(", response.content)
