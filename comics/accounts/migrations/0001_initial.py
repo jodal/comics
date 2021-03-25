@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.db import models, migrations
+from django.db import migrations, models
 
 import comics.accounts.models
 

@@ -1,8 +1,7 @@
 import datetime
 
-from django.test import TestCase
-
 import pytz
+from django.test import TestCase
 
 from comics.aggregator import crawler
 

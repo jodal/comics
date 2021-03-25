@@ -1,5 +1,4 @@
 from django.conf.urls import include, url
-
 from tastypie.api import Api
 
 from comics.api.resources import (

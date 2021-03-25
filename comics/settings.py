@@ -2,7 +2,6 @@ import os
 
 import environ
 
-
 root = environ.Path(os.path.dirname(os.path.dirname(__file__)))
 
 env = environ.Env()

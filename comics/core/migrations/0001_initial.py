@@ -1,5 +1,5 @@
 import django.core.files.storage
-from django.db import models, migrations
+from django.db import migrations, models
 
 import comics.core.models
 

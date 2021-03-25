@@ -35,11 +35,9 @@ django-debug-toolbar = "<3"
 django-extensions = "<3"
 flake8 = "^3.9.0"
 flake8-black = "^0.2.1"
-flake8-blind-except = "^0.2.0"
-flake8-comprehensions = "^3.4.0"
-flake8-import-order = "^0.18.1"
-flake8-quotes = "^3.2.0"
-flake8-tidy-imports = "^4.2.1"
+flake8-bugbear = "^21.3.2"
+flake8-isort = "^4.0.0"
+isort = "^5.8.0"
 pep8-naming = "^0.11.1"
 pytest = "^6.2.2"
 pytest-cov = "^2.11.1"
@@ -55,6 +53,9 @@ server = ["gunicorn"]
 
 [tool.black]
 target-version = ["py37"]
+
+[tool.isort]
+profile = "black"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

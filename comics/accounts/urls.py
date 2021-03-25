@@ -3,7 +3,6 @@ from django.contrib.auth import views as auth_views
 
 from comics.accounts import views as account_views
 
-
 urlpatterns = [
     # django.contrib.auth
     url(

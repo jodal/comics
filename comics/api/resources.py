@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-
 from tastypie import fields
 from tastypie.authentication import BasicAuthentication
 from tastypie.authorization import Authorization, ReadOnlyAuthorization
@@ -7,10 +6,7 @@ from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from tastypie.resources import ModelResource
 
 from comics.accounts.models import Subscription
-from comics.api.authentication import (
-    MultiAuthentication,
-    SecretKeyAuthentication,
-)
+from comics.api.authentication import MultiAuthentication, SecretKeyAuthentication
 from comics.core.models import Comic, Image, Release
 
 
