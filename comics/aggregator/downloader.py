@@ -128,7 +128,7 @@ class ImageDownloader:
         except IndexError:
             raise ImageIsCorrupt(self.identifier)
         except OSError as error:
-            raise ImageIsCorrupt(self.identifier, error.message)
+            raise ImageIsCorrupt(self.identifier, error)
 
     def _get_file_extension(self, image):
         if image.format not in IMAGE_FORMATS:
