@@ -292,12 +292,19 @@ black = "*"
 flake8 = ">=3.0.0"
 
 [[package]]
-name = "flake8-blind-except"
-version = "0.2.0"
-description = "A flake8 extension that checks for blind except: statements"
+name = "flake8-bugbear"
+version = "21.3.2"
+description = "A plugin for flake8 finding likely bugs and design problems in your program. Contains warnings that don't belong in pyflakes and pycodestyle."
 category = "dev"
 optional = false
-python-versions = "*"
+python-versions = ">=3.6"
+
+[package.dependencies]
+attrs = ">=19.2.0"
+flake8 = ">=3.0.0"
+
+[package.extras]
+dev = ["coverage", "black", "hypothesis", "hypothesmith"]
 
 [[package]]
 name = "flake8-comprehensions"
@@ -916,7 +923,7 @@ server = ["gunicorn"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.7"
-content-hash = "7e91a043f0894fb206b83b5b5d421126eb3f6b0fe5a2f307ce604db0c96f9d7e"
+content-hash = "f0c511483fc398d940ad1a2b22f01fbfd3484d06dfe496c6f2b5982ccdb8cadf"
 
 [metadata.files]
 appdirs = [
@@ -1075,8 +1082,9 @@ flake8 = [
 flake8-black = [
     {file = "flake8-black-0.2.1.tar.gz", hash = "sha256:f26651bc10db786c03f4093414f7c9ea982ed8a244cec323c984feeffdf4c118"},
 ]
-flake8-blind-except = [
-    {file = "flake8-blind-except-0.2.0.tar.gz", hash = "sha256:02a860a1a19cb602c006a3fe0778035b0d14d3f57929b4b798bc7d6684f204e5"},
+flake8-bugbear = [
+    {file = "flake8-bugbear-21.3.2.tar.gz", hash = "sha256:cadce434ceef96463b45a7c3000f23527c04ea4b531d16c7ac8886051f516ca0"},
+    {file = "flake8_bugbear-21.3.2-py36.py37.py38-none-any.whl", hash = "sha256:5d6ccb0c0676c738a6e066b4d50589c408dcc1c5bf1d73b464b18b73cd6c05c2"},
 ]
 flake8-comprehensions = [
     {file = "flake8-comprehensions-3.4.0.tar.gz", hash = "sha256:c00039be9f3959a26a98da3024f0fe809859bf1753ccb90e228cc40f3ac31ca7"},
