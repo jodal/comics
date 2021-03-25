@@ -307,18 +307,6 @@ flake8 = ">=3.0.0"
 dev = ["coverage", "black", "hypothesis", "hypothesmith"]
 
 [[package]]
-name = "flake8-comprehensions"
-version = "3.4.0"
-description = "A flake8 plugin to help you write better list/set/dict comprehensions."
-category = "dev"
-optional = false
-python-versions = ">=3.6"
-
-[package.dependencies]
-flake8 = ">=3.0,<3.2.0 || >3.2.0,<4"
-importlib-metadata = {version = "*", markers = "python_version < \"3.8\""}
-
-[[package]]
 name = "flake8-isort"
 version = "4.0.0"
 description = "flake8 plugin that integrates isort ."
@@ -923,7 +911,7 @@ server = ["gunicorn"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.7"
-content-hash = "f0c511483fc398d940ad1a2b22f01fbfd3484d06dfe496c6f2b5982ccdb8cadf"
+content-hash = "2ad7ebc29ecf1b8b6caed052ff56645e4ba986e73032bff977012badf4b1e4bc"
 
 [metadata.files]
 appdirs = [
@@ -1085,10 +1073,6 @@ flake8-black = [
 flake8-bugbear = [
     {file = "flake8-bugbear-21.3.2.tar.gz", hash = "sha256:cadce434ceef96463b45a7c3000f23527c04ea4b531d16c7ac8886051f516ca0"},
     {file = "flake8_bugbear-21.3.2-py36.py37.py38-none-any.whl", hash = "sha256:5d6ccb0c0676c738a6e066b4d50589c408dcc1c5bf1d73b464b18b73cd6c05c2"},
-]
-flake8-comprehensions = [
-    {file = "flake8-comprehensions-3.4.0.tar.gz", hash = "sha256:c00039be9f3959a26a98da3024f0fe809859bf1753ccb90e228cc40f3ac31ca7"},
-    {file = "flake8_comprehensions-3.4.0-py3-none-any.whl", hash = "sha256:7258a28e229fb9a8d16370b9c47a7d66396ba0201abb06c9d11df41b18ed64c4"},
 ]
 flake8-isort = [
     {file = "flake8-isort-4.0.0.tar.gz", hash = "sha256:2b91300f4f1926b396c2c90185844eb1a3d5ec39ea6138832d119da0a208f4d9"},
