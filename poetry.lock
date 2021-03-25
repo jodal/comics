@@ -135,14 +135,15 @@ python-versions = "*"
 
 [[package]]
 name = "django"
-version = "1.11.29"
+version = "2.2.19"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=3.5"
 
 [package.dependencies]
 pytz = "*"
+sqlparse = ">=0.2.2"
 
 [package.extras]
 argon2 = ["argon2-cffi (>=16.1.0)"]
@@ -794,7 +795,7 @@ python-versions = ">=3.5"
 name = "sqlparse"
 version = "0.4.1"
 description = "A non-validating SQL parser."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.5"
 
@@ -911,7 +912,7 @@ server = ["gunicorn"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.7"
-content-hash = "2ad7ebc29ecf1b8b6caed052ff56645e4ba986e73032bff977012badf4b1e4bc"
+content-hash = "d3c7f595e30dab53b3b9bd00535e3129d885f84bf16fc9c11079450ef693a46e"
 
 [metadata.files]
 appdirs = [
@@ -1019,8 +1020,8 @@ distlib = [
     {file = "distlib-0.3.1.zip", hash = "sha256:edf6116872c863e1aa9d5bb7cb5e05a022c519a4594dc703843343a9ddd9bff1"},
 ]
 django = [
-    {file = "Django-1.11.29-py2.py3-none-any.whl", hash = "sha256:014e3392058d94f40569206a24523ce254d55ad2f9f46c6550b0fe2e4f94cf3f"},
-    {file = "Django-1.11.29.tar.gz", hash = "sha256:4200aefb6678019a0acf0005cd14cfce3a5e6b9b90d06145fcdd2e474ad4329c"},
+    {file = "Django-2.2.19-py3-none-any.whl", hash = "sha256:e319a7164d6d30cb177b3fd74d02c52f1185c37304057bb76d74047889c605d9"},
+    {file = "Django-2.2.19.tar.gz", hash = "sha256:30c235dec87e05667597e339f194c9fed6c855bda637266ceee891bf9093da43"},
 ]
 django-allauth = [
     {file = "django-allauth-0.40.0.tar.gz", hash = "sha256:6a189fc4d3ee23596c3fd6e9f49c59b5b15618980118171a50675dd6a27cc589"},
