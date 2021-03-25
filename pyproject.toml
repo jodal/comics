@@ -1,2 +1,61 @@
+[tool.poetry]
+name = "comics"
+version = "3.0.0"
+description = ""
+authors = ["Stein Magnus Jodal <stein.magnus@jodal.no>"]
+license = "AGPL-3.0-only"
+
+[tool.poetry.dependencies]
+python = "3.7"
+biplist = {version = "^1.0.3", optional = true}
+cssmin = "^0.2.0"
+cssselect = "^1.1.0"
+defusedxml = "^0.7.1"
+django = "^1.11.29"
+django-allauth = "^0.40.0"
+django-bootstrap-form = "^3.4"
+django-compressor = "^2.4"
+django-environ = "^0.4.5"
+django-invitations = "^1.9.3"
+django-tastypie = "^0.14.3"
+feedparser = "^5.2.1"
+gunicorn = {version = "^20.0.4", optional = true}
+httpx = "^0.17.1"
+jsmin = "^2.2.2"
+lxml = "^4.6.3"
+pillow = "^6.2.2"
+psycopg2 = {version = "^2.8.6", optional = true}
+python-memcached = {version = "^1.59", optional = true}
+pytz = "^2021.1"
+PyYAML = {version = "^5.4.1", optional = true}
+
+[tool.poetry.dev-dependencies]
+black = "^20.8b1"
+django-debug-toolbar = "<3"
+django-extensions = "<3"
+flake8 = "^3.9.0"
+flake8-black = "^0.2.1"
+flake8-blind-except = "^0.2.0"
+flake8-comprehensions = "^3.4.0"
+flake8-import-order = "^0.18.1"
+flake8-quotes = "^3.2.0"
+flake8-tidy-imports = "^4.2.1"
+pep8-naming = "^0.11.1"
+pytest = "^6.2.2"
+pytest-cov = "^2.11.1"
+pytest-django = "^4.1.0"
+pytest-mock = "^3.5.1"
+tox = "^3.23.0"
+
+[tool.poetry.extras]
+api = ["biplist", "PyYAML"]
+cache = ["python-memcached"]
+pgsql = ["psycopg2"]
+server = ["gunicorn"]
+
 [tool.black]
 target-version = ["py37"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
