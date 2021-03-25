@@ -20,7 +20,6 @@ from comics.aggregator.exceptions import (
 )
 from comics.core.models import Image, Release
 
-
 # Image types we accept, and the file extension they are saved with
 IMAGE_FORMATS = {
     "GIF": ".gif",

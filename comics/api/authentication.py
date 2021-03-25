@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-
 from tastypie.authentication import Authentication
 from tastypie.http import HttpUnauthorized
 

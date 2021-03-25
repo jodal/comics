@@ -5,7 +5,6 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic.base import TemplateView
 from django.views.static import serve
 
-
 urlpatterns = [
     # Robots not welcome
     url(
