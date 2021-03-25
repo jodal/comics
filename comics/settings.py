@@ -1,6 +1,8 @@
 import os
 
 import environ
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 root = environ.Path(os.path.dirname(os.path.dirname(__file__)))
 
@@ -255,6 +257,18 @@ INVITATIONS_INVITATION_ONLY = env.bool("COMICS_INVITE_MODE", default=False)
 # ### Tastypie settings
 
 TASTYPIE_DEFAULT_FORMATS = ["json", "jsonp", "xml", "yaml", "plist"]
+
+
+# ### Sentry settings
+
+SENTRY_DSN = env.str("SENTRY_DSN", default=None)
+
+sentry_sdk.init(
+    dsn=SENTRY_DSN,
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=1.0,
+    send_default_pii=True,
+)
 
 
 # ### comics settings
