@@ -1,4 +1,4 @@
-from django.conf.urls import include, url
+from django.urls import include, path
 from tastypie.api import Api
 
 from comics.api.resources import (
@@ -17,5 +17,5 @@ v1_api.register(ReleasesResource())
 v1_api.register(SubscriptionsResource())
 
 urlpatterns = [
-    url(r"", include(v1_api.urls)),
+    path("", include(v1_api.urls)),
 ]

@@ -1,7 +1,7 @@
-from django.conf.urls import url
+from django.urls import path
 
 from comics.status import views
 
 urlpatterns = [
-    url(r"^$", views.status, name="status"),
+    path("", views.status, name="status"),
 ]
