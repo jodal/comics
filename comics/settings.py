@@ -262,11 +262,12 @@ TASTYPIE_DEFAULT_FORMATS = ["json", "jsonp", "xml", "yaml", "plist"]
 # ### Sentry settings
 
 SENTRY_DSN = env.str("SENTRY_DSN", default=None)
+SENTRY_TRACES_SAMPLE_RATE = env.float("SENTRY_TRACES_SAMPLE_RATE", default=0)
 
 sentry_sdk.init(
     dsn=SENTRY_DSN,
     integrations=[DjangoIntegration()],
-    traces_sample_rate=1.0,
+    traces_sample_rate=SENTRY_TRACES_SAMPLE_RATE,
     send_default_pii=True,
 )
 
