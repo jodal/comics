@@ -10,6 +10,8 @@ urlpatterns = [
         "robots.txt",
         TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
     ),
+    # Core, metrics, etc.
+    path("core/", include("comics.core.urls")),
     # User accounts management
     path("accounts/", include("allauth.urls")),
     path("invitations/", include("invitations.urls", namespace="invitations")),
