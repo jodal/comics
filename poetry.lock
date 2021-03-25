@@ -339,17 +339,6 @@ python-versions = "*"
 flake8 = "*"
 
 [[package]]
-name = "flake8-quotes"
-version = "3.2.0"
-description = "Flake8 lint for quotes."
-category = "dev"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-flake8 = "*"
-
-[[package]]
 name = "gunicorn"
 version = "20.0.4"
 description = "WSGI HTTP Server for UNIX"
@@ -927,7 +916,7 @@ server = ["gunicorn"]
 [metadata]
 lock-version = "1.1"
 python-versions = "3.7"
-content-hash = "879e684cf51cb01ff51cd4e3e31897a33698f60985849d04681d93cc5e4aacc0"
+content-hash = "7e91a043f0894fb206b83b5b5d421126eb3f6b0fe5a2f307ce604db0c96f9d7e"
 
 [metadata.files]
 appdirs = [
@@ -1100,9 +1089,6 @@ flake8-isort = [
 flake8-polyfill = [
     {file = "flake8-polyfill-1.0.2.tar.gz", hash = "sha256:e44b087597f6da52ec6393a709e7108b2905317d0c0b744cdca6208e670d8eda"},
     {file = "flake8_polyfill-1.0.2-py2.py3-none-any.whl", hash = "sha256:12be6a34ee3ab795b19ca73505e7b55826d5f6ad7230d31b18e106400169b9e9"},
-]
-flake8-quotes = [
-    {file = "flake8-quotes-3.2.0.tar.gz", hash = "sha256:3f1116e985ef437c130431ac92f9b3155f8f652fda7405ac22ffdfd7a9d1055e"},
 ]
 gunicorn = [
     {file = "gunicorn-20.0.4-py2.py3-none-any.whl", hash = "sha256:cd4a810dd51bf497552cf3f863b575dabd73d6ad6a91075b65936b151cbf4f9c"},
