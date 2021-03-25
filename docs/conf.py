@@ -1,9 +1,11 @@
-import os
-import sys
+import toml
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+project = "Comics"
+author = "Stein Magnus Jodal and contributors"
+copyright = f"2009-2021, {author}"
 
-# -- General configuration ----------------------------------------------------
+release = toml.load("../pyproject.toml")["tool"]["poetry"]["version"]
+version = ".".join(release.split(".")[:2])
 
 extensions = [
     "sphinx.ext.autodoc",
@@ -11,49 +13,13 @@ extensions = [
     "sphinxcontrib.httpdomain",
 ]
 
-templates_path = ["_templates"]
-source_suffix = ".rst"
-master_doc = "index"
-
-project = "Comics"
-copyright = "2009-2021, Stein Magnus Jodal and contributors"
-
-version = "3.0"
-release = "3.0.0"
-
-exclude_trees = ["_build"]
-
-pygments_style = "sphinx"
-
-
-# -- Options for HTML output --------------------------------------------------
-
 html_theme = "sphinx_rtd_theme"
-html_static_path = ["_static"]
-
 html_use_modindex = True
 html_use_index = True
 html_split_index = False
 html_show_sourcelink = True
+html_static_path = ["_static"]
 
-htmlhelp_basename = "comics"
+autodoc_member_order = "bysource"
 
-
-# -- Options for LaTeX output -------------------------------------------------
-
-latex_documents = [
-    (
-        "index",
-        "comics.tex",
-        "Comics Documentation",
-        "Stein Magnus Jodal and contributors",
-        "manual",
-    ),
-]
-
-
-# -- Options for extlink extension --------------------------------------------
-
-extlinks = {
-    "issue": ("https://github.com/jodal/comics/issues/%s", "#"),
-}
+extlinks = {"issue": ("https://github.com/jodal/comics/issues/%s", "#")}
