@@ -18,7 +18,7 @@ feedparser == 5.2.1
 cssselect == 1.1.0
 
 # For static resource compression
-django_appconf == 1.0.3  # django_compressor dep, which dropped Python 2.7 in 1.0.4
+django_appconf == 1.0.4  # django_compressor dep, which dropped Python 2.7 in 1.0.4
 django_compressor == 2.4
 cssmin == 0.2.0
 jsmin == 2.2.2
