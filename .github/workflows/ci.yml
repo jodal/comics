@@ -12,9 +12,6 @@ jobs:
             python: "3.7"
             tox: py37
             coverage: true
-          - name: "Lint: black"
-            python: "3.7"
-            tox: black
           - name: "Lint: flake8"
             python: "3.7"
             tox: flake8
@@ -34,10 +31,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-${{ matrix.python }}-${{ matrix.tox }}-pip-${{ hashFiles('requirements.txt') }}-${{ hashFiles('tox.ini') }}
+          key: ${{ runner.os }}-${{ matrix.python }}-${{ matrix.tox }}-pip-${{ hashFiles('pyproject.toml', 'poetry.lock', 'tox.ini') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.python }}-${{ matrix.tox }}-pip-
-      - run: python -m pip install tox
+      - run: python -m pip install poetry==1.1.5 tox==3.23.0
       - run: python -m tox -e ${{ matrix.tox }}
         if: ${{ ! matrix.coverage }}
       - run: python -m tox -e ${{ matrix.tox }} -- --cov-report=xml

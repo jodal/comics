@@ -6,7 +6,9 @@ build:
 python:
   version: 3.7
   install:
-    - requirements: requirements-docs.txt
+    - requirements: docs/requirements.txt
+    - method: pip
+      path: .
 
 sphinx:
   builder: htmldir

@@ -1,0 +1,4 @@
+Sphinx >= 3.5.2
+sphinx-rtd-theme >= 0.5.1
+sphinxcontrib-httpdomain >= 1.7.0
+toml >= 0.10.2
