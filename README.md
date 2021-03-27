@@ -25,14 +25,11 @@ Comics runs on Python and Django. For instructions on how to install and use it,
 ## Development status
 
 The Comics project is almost as old as Django itself, with the code base
-originating back to 2007. Currently, it is a bit stagnated, still running on
-Django 2.2.
-
-However, as of 2021, the project isn't entirely dead: the project maintainer
-is still running his own instance with a number of regular users. There are
-no immediate plans for any new features, but there is a
-[roadmap](https://github.com/jodal/comics/projects/1) for getting Comics
-up and running on the latest dependency releases, with a modern and
+originating back to 2007. However, as of 2021, the project isn't entirely
+dead: the project maintainer is still running his own instance with a number
+of regular users. There are no immediate plans for any new features, but
+there is a [roadmap](https://github.com/jodal/comics/projects/1) for getting
+Comics up and running on the latest dependency releases, with a modern and
 maintainable deployment setup.
 
 ## License
