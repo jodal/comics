@@ -59,6 +59,10 @@ target-version = ["py37"]
 profile = "black"
 
 [tool.pytest.ini_options]
+filterwarnings = [
+    "ignore::django.utils.deprecation.RemovedInDjango40Warning:invitations",
+    "ignore::django.utils.deprecation.RemovedInDjango40Warning:tastypie",
+]
 DJANGO_SETTINGS_MODULE = "comics.settings"
 
 [build-system]
