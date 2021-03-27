@@ -6,7 +6,7 @@ authors = ["Stein Magnus Jodal <stein.magnus@jodal.no>"]
 license = "AGPL-3.0-only"
 
 [tool.poetry.dependencies]
-python = "3.7"
+python = "^3.7"
 biplist = {version = "^1.0.3", optional = true}
 cssmin = "^0.2.0"
 cssselect = "^1.1.0"
