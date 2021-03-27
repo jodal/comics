@@ -1,15 +1,11 @@
 import hashlib
 import tempfile
 
-try:
-    from PIL import Image as PILImage
-except ImportError:
-    import Image as PILImage  # noqa
-
 import httpx
 from django.conf import settings
 from django.core.files import File
 from django.db import transaction
+from PIL import Image as PILImage
 
 from comics.aggregator.exceptions import (
     DownloaderHTTPError,
