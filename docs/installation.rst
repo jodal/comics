@@ -29,7 +29,7 @@ You can get hold of Comics in two ways:
   you find in the release archives::
 
       git tag -l
-      git checkout v3.0.0
+      git checkout v4.0.0
 
 
 Software requirements
