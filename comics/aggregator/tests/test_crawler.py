@@ -10,6 +10,7 @@ class CurrentDateWhenLocalTZIsUTCTest(TestCase):
     time_zone_local = "UTC"
     time_zone_ahead = "Australia/Sydney"
     time_zone_behind = "America/New_York"
+    now: datetime.datetime
 
     def setUp(self):
         self.tz = pytz.timezone(self.time_zone_local)

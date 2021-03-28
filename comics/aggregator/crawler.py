@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 import datetime
 import re
 import time
-import xml
+import xml.sax
 from dataclasses import dataclass, field
-from typing import Dict, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Union
 
 import httpx
 import pytz
@@ -17,52 +19,62 @@ from comics.aggregator.exceptions import (
 )
 from comics.aggregator.feedparser import FeedParser
 from comics.aggregator.lxmlparser import LxmlParser
+from comics.core.models import Comic
 
 # For testability
 now = timezone.now
 today = datetime.date.today
 
 
+RequestHeaders = Dict[str, str]
+
+
+@dataclass
 class CrawlerRelease:
-    def __init__(self, comic, pub_date, has_rerun_releases=False):
-        self.comic = comic
-        self.pub_date = pub_date
-        self.has_rerun_releases = has_rerun_releases
-        self._images = []
+    comic: Comic
+    pub_date: datetime.date
+    has_rerun_releases: bool = False
+    _images: List[CrawlerImage] = field(default_factory=list)
 
     @property
-    def identifier(self):
+    def identifier(self) -> str:
         return f"{self.comic.slug}/{self.pub_date}"
 
     @property
-    def images(self):
+    def images(self) -> List[CrawlerImage]:
         return self._images
 
-    def add_image(self, image):
+    def add_image(self, image: CrawlerImage) -> None:
         image.validate(self.identifier)
         self._images.append(image)
 
 
+@dataclass
 class CrawlerImage:
-    def __init__(self, url, title=None, text=None, headers=None):
-        self.url = url
-        self.title = title
-        self.text = text
-        self.request_headers = headers or {}
+    url: str
+    title: Optional[str] = None
+    text: Optional[str] = None
+    request_headers: RequestHeaders = field(default_factory=dict)
 
+    def __post_init__(self) -> None:
         # Convert from e.g. lxml.etree._ElementUnicodeResult to unicode
         if self.title is not None and not isinstance(self.title, str):
             self.title = str(self.title)
         if self.text is not None and not isinstance(self.text, str):
             self.text = str(self.text)
 
-    def validate(self, identifier):
+    def validate(self, identifier: str) -> None:
         if not self.url:
             raise ImageURLNotFound(identifier)
 
 
+CrawlerResult = Union[None, CrawlerImage, List[CrawlerImage]]
+
+
 @dataclass
 class CrawlerBase:
+    comic: Comic
+
     # ### Crawler settings
     # Date of oldest release available for crawling
     history_capable_date: Optional[str] = None
@@ -82,7 +94,7 @@ class CrawlerBase:
 
     # ### Settings used for both crawling and downloading
     # Dictionary of HTTP headers to send when retrieving items from the site
-    headers: Dict[str, str] = field(default_factory=dict)
+    headers: RequestHeaders = field(default_factory=dict)
 
     # Feed object which is reused when crawling multiple dates
     feed: Optional[FeedParser] = None
@@ -90,10 +102,9 @@ class CrawlerBase:
     # Page objects mapped against URL for use when crawling multiple dates
     pages: Dict[str, LxmlParser] = field(default_factory=dict)
 
-    def __init__(self, comic):
-        self.comic = comic
-
-    def get_crawler_release(self, pub_date=None):
+    def get_crawler_release(
+        self, pub_date: Optional[datetime.date] = None
+    ) -> Optional[CrawlerRelease]:
         """Get meta data for release at pub_date, or the latest release"""
 
         pub_date = self._get_date_to_crawl(pub_date)
@@ -109,9 +120,9 @@ class CrawlerBase:
             raise CrawlerHTTPError(release.identifier, str(error))
 
         if not results:
-            return
+            return None
 
-        if not hasattr(results, "__iter__"):
+        if isinstance(results, CrawlerImage):
             results = [results]
 
         for result in results:
@@ -121,7 +132,7 @@ class CrawlerBase:
 
         return release
 
-    def _get_date_to_crawl(self, pub_date):
+    def _get_date_to_crawl(self, pub_date: Optional[datetime.date]) -> datetime.date:
         identifier = f"{self.comic.slug}/{pub_date}"
 
         if pub_date is None:
@@ -137,13 +148,13 @@ class CrawlerBase:
         return pub_date
 
     @property
-    def current_date(self):
+    def current_date(self) -> datetime.date:
         tz = pytz.timezone(self.time_zone)
         now_in_tz = tz.normalize(now().astimezone(tz))
         return now_in_tz.date()
 
     @property
-    def history_capable(self):
+    def history_capable(self) -> datetime.date:
         if self.history_capable_date is not None:
             return datetime.datetime.strptime(
                 self.history_capable_date, "%Y-%m-%d"
@@ -153,7 +164,7 @@ class CrawlerBase:
         else:
             return today()
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: datetime.date) -> CrawlerResult:
         """
         Must be overridden by all crawlers
 
@@ -171,20 +182,20 @@ class CrawlerBase:
 
     # ### Helpers for the crawl() implementations
 
-    def parse_feed(self, feed_url):
+    def parse_feed(self, feed_url: str) -> FeedParser:
         if self.feed is None:
             self.feed = FeedParser(feed_url)
         return self.feed
 
-    def parse_page(self, page_url):
+    def parse_page(self, page_url: str) -> LxmlParser:
         if page_url not in self.pages:
             self.pages[page_url] = LxmlParser(page_url, headers=self.headers)
         return self.pages[page_url]
 
-    def string_to_date(self, *args, **kwargs):
-        return datetime.datetime.strptime(*args, **kwargs).date()
+    def string_to_date(self, string: str, format: str) -> datetime.date:
+        return datetime.datetime.strptime(string, format).date()
 
-    def date_to_epoch(self, date):
+    def date_to_epoch(self, date: datetime.date) -> int:
         """The UNIX time of midnight at ``date`` in the comic's time zone"""
         naive_midnight = datetime.datetime(date.year, date.month, date.day)
         local_midnight = pytz.timezone(self.time_zone).localize(naive_midnight)
@@ -194,7 +205,7 @@ class CrawlerBase:
 class ComicsKingdomCrawlerBase(CrawlerBase):
     """Base comic crawler for Comics Kingdom comics"""
 
-    def crawl_helper(self, short_name, pub_date):
+    def crawl_helper(self, short_name: str, pub_date: datetime.date) -> CrawlerResult:
         date = pub_date.strftime("%Y-%m-%d")
         page_url = f"https://www.comicskingdom.com/{short_name}/{date}"
         page = self.parse_page(page_url)
@@ -215,7 +226,7 @@ class GoComicsComCrawlerBase(CrawlerBase):
         ),
     }
 
-    def crawl_helper(self, url_name, pub_date):
+    def crawl_helper(self, url_name: str, pub_date: datetime.date) -> CrawlerResult:
         page_url = "http://www.gocomics.com/{}/{}".format(
             url_name,
             pub_date.strftime("%Y/%m/%d/"),
@@ -227,7 +238,7 @@ class GoComicsComCrawlerBase(CrawlerBase):
         # we get redirected to todays comic
         date = page.content('meta[property="article:published_time"]')
         if date != pub_date.strftime("%Y-%m-%d"):
-            return
+            return None
 
         return CrawlerImage(url)
 
@@ -237,7 +248,7 @@ class PondusNoCrawlerBase(CrawlerBase):
 
     time_zone = "Europe/Oslo"
 
-    def crawl_helper(self, url_id):
+    def crawl_helper(self, url_id: str, pub_date: datetime.date) -> CrawlerResult:
         page_url = "http://www.pondus.no/?section=artikkel&id=%s" % url_id
         page = self.parse_page(page_url)
         url = page.src(".imagegallery img")
@@ -250,7 +261,7 @@ class DagbladetCrawlerBase(CrawlerBase):
     headers = {"User-Agent": "Mozilla/5.0"}
     time_zone = "Europe/Oslo"
 
-    def crawl_helper(self, short_name, pub_date):
+    def crawl_helper(self, short_name: str, pub_date: datetime.date) -> CrawlerResult:
         page_url = "http://www.dagbladet.no/tegneserie/%s" % short_name
         page = self.parse_page(page_url)
 
@@ -258,7 +269,7 @@ class DagbladetCrawlerBase(CrawlerBase):
         time = page.root.xpath('//time[contains(@datetime,"%s")]' % date_string)
 
         if not time:
-            return
+            return None
 
         article = time[0].getparent().getparent()
         url = article.find(".//img").get("src")
@@ -272,7 +283,7 @@ class CreatorsCrawlerBase(CrawlerBase):
 
     headers = {"User-Agent": "Mozilla/5.0"}
 
-    def crawl_helper(self, feature_id, pub_date):
+    def crawl_helper(self, feature_id: str, pub_date: datetime.date) -> CrawlerResult:
         url = (
             "https://www.creators.com/api/features/get_release_dates?"
             "feature_id=%s&year=%s"
@@ -280,11 +291,14 @@ class CreatorsCrawlerBase(CrawlerBase):
 
         response = httpx.get(url, headers=self.headers)
         releases = response.json()
+
         for release in releases:
             if release["release"] == pub_date.strftime("%Y-%m-%d"):
                 page = self.parse_page(release["url"])
                 url = page.src('img[itemprop="image"]')
                 return CrawlerImage(url)
+
+        return None
 
 
 class NettserierCrawlerBase(CrawlerBase):
@@ -296,7 +310,7 @@ class NettserierCrawlerBase(CrawlerBase):
     time_zone = "Europe/Oslo"
     page_cache: Dict[str, Tuple[LxmlParser, datetime.date]] = {}
 
-    def get_page(self, url) -> Tuple[LxmlParser, datetime.date]:
+    def get_page(self, url: str) -> Tuple[LxmlParser, datetime.date]:
         if url not in self.page_cache:
             page = self.parse_page(url)
             page_date = page.text('p[class="comic-pubtime"]')
@@ -304,7 +318,7 @@ class NettserierCrawlerBase(CrawlerBase):
             self.page_cache[url] = (page, date)
         return self.page_cache[url]
 
-    def crawl_helper(self, short_name, pub_date):
+    def crawl_helper(self, short_name: str, pub_date: datetime.date) -> CrawlerResult:
         url = "https://nettserier.no/%s/" % short_name
         page, comic_date = self.get_page(url)
 
@@ -312,11 +326,11 @@ class NettserierCrawlerBase(CrawlerBase):
             # Wanted date is earlier than the current, get previous page
             previous_link = page.root.xpath('//li[@class="prev"]/a/@href')
             if not previous_link:
-                return  # No previous comic
+                return None  # No previous comic
             page, comic_date = self.get_page(previous_link[0])
 
         if pub_date != comic_date:
-            return  # Correct date not found
+            return None  # Correct date not found
 
         # comic-text div which contains title and text for the comic
         title = page.text("div.comic-text h4")
@@ -335,7 +349,7 @@ class NettserierCrawlerBase(CrawlerBase):
 class ComicControlCrawlerBase(CrawlerBase):
     """Base comics crawler for all comics using ComicControl CMS"""
 
-    def crawl_helper(self, site_url, pub_date):
+    def crawl_helper(self, site_url: str, pub_date: datetime.date) -> CrawlerResult:
         if site_url[-1] == "/":
             site_url = site_url[0:-1]
         if "pixietrixcomix.com" in site_url:
@@ -350,3 +364,5 @@ class ComicControlCrawlerBase(CrawlerBase):
             title = re.sub(r".+? - (.+)", r"\1", entry.title)
 
             return CrawlerImage(url, title, text)
+
+        return None
