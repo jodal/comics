@@ -1,5 +1,6 @@
 import datetime
 import json
+from typing import Optional
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -142,7 +143,7 @@ class ReleaseLatestView(ReleaseMixin, ListView):
 class ReleaseDateMixin(ReleaseMixin):
     """Things common for all *date based* views"""
 
-    date_field = "pub_date"
+    date_field: Optional[str] = "pub_date"
     month_format = "%m"
 
 

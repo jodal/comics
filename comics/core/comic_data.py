@@ -1,5 +1,7 @@
 import datetime
 import logging
+from dataclasses import dataclass
+from typing import Optional
 
 from comics.comics import get_comic_module, get_comic_module_names
 from comics.core.exceptions import ComicDataError
@@ -8,17 +10,18 @@ from comics.core.models import Comic
 logger = logging.getLogger("comics.core.comic_data")
 
 
+@dataclass
 class ComicDataBase:
     # Required values
-    name = None
-    language = None
-    url = None
+    name: str
+    language: str
+    url: str
 
     # Default values
-    active = True
-    start_date = None
-    end_date = None
-    rights = ""
+    active: bool = True
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+    rights: str = ""
 
     @property
     def slug(self):

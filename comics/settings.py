@@ -93,7 +93,7 @@ TEMPLATES = [
 ]
 
 if DEBUG:
-    TEMPLATES[0]["OPTIONS"]["loaders"] = [
+    TEMPLATES[0]["OPTIONS"]["loaders"] = [  # type: ignore
         "django.template.loaders.app_directories.Loader",
     ]
 
