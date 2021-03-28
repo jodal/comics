@@ -11,7 +11,7 @@ biplist = {version = "^1.0.3", optional = true}
 cssmin = "^0.2.0"
 cssselect = "^1.1.0"
 defusedxml = "^0.7.1"
-django = "^2.2.19"
+Django = "^3.1.7"
 django-allauth = "^0.44.0"
 django-bootstrap-form = "^3.4"
 django-compressor = "^2.4"
@@ -32,8 +32,8 @@ sentry-sdk = "^1.0.0"
 
 [tool.poetry.dev-dependencies]
 black = "^20.8b1"
-django-debug-toolbar = "<3"
-django-extensions = "<3"
+django-debug-toolbar = "^3.2"
+django-extensions = "^3.1.1"
 flake8 = "^3.9.0"
 flake8-black = "^0.2.1"
 flake8-bugbear = "^21.3.2"
@@ -59,6 +59,10 @@ target-version = ["py37"]
 profile = "black"
 
 [tool.pytest.ini_options]
+filterwarnings = [
+    "ignore::django.utils.deprecation.RemovedInDjango40Warning:invitations",
+    "ignore::django.utils.deprecation.RemovedInDjango40Warning:tastypie",
+]
 DJANGO_SETTINGS_MODULE = "comics.settings"
 
 [build-system]
