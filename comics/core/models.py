@@ -13,7 +13,10 @@ from comics.core.managers import ComicManager
 
 class Comic(models.Model):
     # Required fields
-    name = models.CharField(max_length=100, help_text="Name of the comic")
+    name = models.CharField(
+        max_length=100,
+        help_text="Name of the comic",
+    )
     slug = models.SlugField(
         max_length=100,
         unique=True,
@@ -21,17 +24,26 @@ class Comic(models.Model):
         help_text="For file paths and URLs",
     )
     language = models.CharField(
-        max_length=2, choices=Language.choices, help_text="The language of the comic"
+        max_length=2,
+        choices=Language.choices,
+        help_text="The language of the comic",
     )
 
     # Optional fields
     url = models.URLField(
-        verbose_name="URL", blank=True, help_text="URL to the official website"
+        verbose_name="URL",
+        blank=True,
+        help_text="URL to the official website",
     )
     active = models.BooleanField(
-        default=True, help_text="Wheter the comic is still being crawled"
+        default=True,
+        help_text="Wheter the comic is still being crawled",
     )
-    start_date = models.DateField(blank=True, null=True, help_text="First published at")
+    start_date = models.DateField(
+        blank=True,
+        null=True,
+        help_text="First published at",
+    )
     end_date = models.DateField(
         blank=True,
         null=True,
@@ -45,7 +57,8 @@ class Comic(models.Model):
 
     # Automatically populated fields
     added = models.DateTimeField(
-        auto_now_add=True, help_text="Time the comic was added to the site"
+        auto_now_add=True,
+        help_text="Time the comic was added to the site",
     )
 
     objects = ComicManager()
@@ -72,9 +85,18 @@ class Comic(models.Model):
 
 class Release(models.Model):
     # Required fields
-    comic = models.ForeignKey(Comic, on_delete=models.CASCADE)
-    pub_date = models.DateField(verbose_name="publication date", db_index=True)
-    images = models.ManyToManyField("Image", related_name="releases")
+    comic = models.ForeignKey(
+        Comic,
+        on_delete=models.CASCADE,
+    )
+    pub_date = models.DateField(
+        verbose_name="publication date",
+        db_index=True,
+    )
+    images = models.ManyToManyField(
+        "Image",
+        related_name="releases",
+    )
 
     # Automatically populated fields
     fetched = models.DateTimeField(auto_now_add=True, db_index=True)
@@ -118,21 +140,34 @@ def image_file_path(instance, filename):
 
 class Image(models.Model):
     # Required fields
-    comic = models.ForeignKey(Comic, on_delete=models.CASCADE)
+    comic = models.ForeignKey(
+        Comic,
+        on_delete=models.CASCADE,
+    )
     file = models.ImageField(
         storage=image_storage,
         upload_to=image_file_path,
         height_field="height",
         width_field="width",
     )
-    checksum = models.CharField(max_length=64, db_index=True)
+    checksum = models.CharField(
+        max_length=64,
+        db_index=True,
+    )
 
     # Optional fields
-    title = models.CharField(max_length=255, blank=True)
-    text = models.TextField(blank=True)
+    title = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+    text = models.TextField(
+        blank=True,
+    )
 
     # Automatically populated fields
-    fetched = models.DateTimeField(auto_now_add=True)
+    fetched = models.DateTimeField(
+        auto_now_add=True,
+    )
     height = models.IntegerField()
     width = models.IntegerField()
 
