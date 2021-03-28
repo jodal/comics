@@ -2,6 +2,8 @@ import datetime
 import re
 import time
 import xml
+from dataclasses import dataclass, field
+from typing import Dict, Optional, Tuple
 
 import httpx
 import pytz
@@ -59,33 +61,34 @@ class CrawlerImage:
             raise ImageURLNotFound(identifier)
 
 
+@dataclass
 class CrawlerBase:
     # ### Crawler settings
     # Date of oldest release available for crawling
-    history_capable_date = None
+    history_capable_date: Optional[str] = None
     # Number of days a release is available for crawling
-    history_capable_days = None
+    history_capable_days: Optional[int] = None
     # On what weekdays the comic is published (example: "Mo,We,Fr")
-    schedule = None
+    schedule: Optional[str] = None
     # In approximately what time zone the comic is published
     # (example: "Europe/Oslo")
-    time_zone = "UTC"
+    time_zone: str = "UTC"
     # Whether to allow multiple releases per day
-    multiple_releases_per_day = False
+    multiple_releases_per_day: bool = False
 
     # ### Downloader settings
     # Whether the comic reruns old images as new releases
-    has_rerun_releases = False
+    has_rerun_releases: bool = False
 
     # ### Settings used for both crawling and downloading
     # Dictionary of HTTP headers to send when retrieving items from the site
-    headers = {}
+    headers: Dict[str, str] = field(default_factory=dict)
 
     # Feed object which is reused when crawling multiple dates
-    feed = None
+    feed: Optional[FeedParser] = None
 
     # Page objects mapped against URL for use when crawling multiple dates
-    pages = {}
+    pages: Dict[str, LxmlParser] = field(default_factory=dict)
 
     def __init__(self, comic):
         self.comic = comic
@@ -291,14 +294,14 @@ class NettserierCrawlerBase(CrawlerBase):
     # In order to get older releases we need to
     # loop through the pages and check the published date
     time_zone = "Europe/Oslo"
-    page_cache = {}
+    page_cache: Dict[str, Tuple[LxmlParser, datetime.date]] = {}
 
-    def get_page(self, url):
+    def get_page(self, url) -> Tuple[LxmlParser, datetime.date]:
         if url not in self.page_cache:
             page = self.parse_page(url)
             page_date = page.text('p[class="comic-pubtime"]')
             date = self.string_to_date(page_date, "Published %Y-%m-%d %H:%M:%S")
-            self.page_cache[url] = [page, date]
+            self.page_cache[url] = (page, date)
         return self.page_cache[url]
 
     def crawl_helper(self, short_name, pub_date):
