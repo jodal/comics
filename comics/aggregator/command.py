@@ -24,7 +24,7 @@ def log_errors(func):
     return inner
 
 
-class Aggregator(object):
+class Aggregator:
     def __init__(self, config=None, options=None):
         if config is None and options is not None:
             self.config = AggregatorConfig(options)
@@ -52,7 +52,7 @@ class Aggregator(object):
             logger.info("%s: Crawling from %s to %s", comic.slug, from_date, to_date)
         pub_date = from_date
         while pub_date <= to_date:
-            self.identifier = "%s/%s" % (comic.slug, pub_date)
+            self.identifier = f"{comic.slug}/{pub_date}"
             crawler_release = self._crawl_one_comic_one_date(crawler, pub_date)
             if crawler_release:
                 self._download_release(crawler_release)
@@ -109,7 +109,7 @@ class Aggregator(object):
             return date
 
 
-class AggregatorConfig(object):
+class AggregatorConfig:
     DATE_FORMAT = "%Y-%m-%d"
 
     def __init__(self, options=None):
@@ -170,7 +170,7 @@ class AggregatorConfig(object):
 
     def _validate_dates(self):
         if self.from_date and self.to_date and self.from_date > self.to_date:
-            error_msg = "From date (%s) after to date (%s)" % (
+            error_msg = "From date ({}) after to date ({})".format(
                 self.from_date,
                 self.to_date,
             )

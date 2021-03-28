@@ -8,7 +8,7 @@ from comics.core.models import Comic
 logger = logging.getLogger("comics.core.comic_data")
 
 
-class ComicDataBase(object):
+class ComicDataBase:
     # Required values
     name = None
     language = None
@@ -52,7 +52,7 @@ class ComicDataBase(object):
         return datetime.datetime.strptime(date, "%Y-%m-%d").date()
 
 
-class ComicDataLoader(object):
+class ComicDataLoader:
     def __init__(self, options):
         self.include_inactive = self._get_include_inactive(options)
         self.comic_slugs = self._get_comic_slugs(options)
