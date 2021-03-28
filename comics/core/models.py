@@ -7,15 +7,11 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 
+from comics.core.enums import Language
 from comics.core.managers import ComicManager
 
 
 class Comic(models.Model):
-    LANGUAGES = (
-        ("en", "English"),
-        ("no", "Norwegian"),
-    )
-
     # Required fields
     name = models.CharField(max_length=100, help_text="Name of the comic")
     slug = models.SlugField(
@@ -25,7 +21,7 @@ class Comic(models.Model):
         help_text="For file paths and URLs",
     )
     language = models.CharField(
-        max_length=2, choices=LANGUAGES, help_text="The language of the comic"
+        max_length=2, choices=Language.choices, help_text="The language of the comic"
     )
 
     # Optional fields
