@@ -113,7 +113,9 @@ def invite(request):
             request.POST["email"], inviter=request.user
         )
         invitation.send_invitation(request)
-        messages.success('An invitation has been sent to "%s".' % invitation.email)
+        messages.success(
+            request, 'An invitation has been sent to "%s".' % invitation.email
+        )
 
     invitations = request.user.invitation_set.all().order_by("-created")
 
