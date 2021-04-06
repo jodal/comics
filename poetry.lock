@@ -264,11 +264,14 @@ python-versions = "*"
 
 [[package]]
 name = "django-extensions"
-version = "3.1.1"
+version = "3.1.2"
 description = "Extensions for Django"
 category = "dev"
 optional = false
 python-versions = ">=3.6"
+
+[package.dependencies]
+Django = ">=2.2"
 
 [[package]]
 name = "django-invitations"
@@ -1045,7 +1048,7 @@ server = ["gunicorn"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "ec0021aa3bc04d90edcef2ebae85660524e75683f95d46b39da7baa6a0b50953"
+content-hash = "e06ae861ba313edfdc5e03ed2648f348fa4dca4d206e9d80f3b7faa2ac6e11d7"
 
 [metadata.files]
 appdirs = [
@@ -1235,8 +1238,8 @@ django-environ = [
     {file = "django_environ-0.4.5-py2.py3-none-any.whl", hash = "sha256:c57b3c11ec1f319d9474e3e5a79134f40174b17c7cc024bbb2fad84646b120c4"},
 ]
 django-extensions = [
-    {file = "django-extensions-3.1.1.tar.gz", hash = "sha256:674ad4c3b1587a884881824f40212d51829e662e52f85b012cd83d83fe1271d9"},
-    {file = "django_extensions-3.1.1-py3-none-any.whl", hash = "sha256:9507f8761ee760748938fd8af766d0608fb2738cf368adfa1b2451f61c15ae35"},
+    {file = "django-extensions-3.1.2.tar.gz", hash = "sha256:081828e985485662f62a22340c1506e37989d14b927652079a5b7cd84a82368b"},
+    {file = "django_extensions-3.1.2-py3-none-any.whl", hash = "sha256:17f85f4dcdd5eea09b8c4f0bad8f0370bf2db6d03e61b431fa7103fee29888de"},
 ]
 django-invitations = [
     {file = "django-invitations-1.9.3.tar.gz", hash = "sha256:6077807aa641c7abae9ca418e757c8e3940fb0ce60499dba24c100ad57c61442"},
