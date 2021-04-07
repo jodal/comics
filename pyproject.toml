@@ -11,7 +11,7 @@ biplist = {version = "^1.0.3", optional = true}
 cssmin = "^0.2.0"
 cssselect = "^1.1.0"
 defusedxml = "^0.7.1"
-Django = "^3.1.7"
+Django = "^3.2"
 django-allauth = "^0.44.0"
 django-bootstrap-form = "^3.4"
 django-compressor = "^2.4"
