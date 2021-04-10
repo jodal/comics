@@ -35,6 +35,8 @@ DATABASES = {
     "default": env.db("DATABASE_URL", default=SQLITE_URL),
 }
 
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 #: Default time zone to use when displaying datetimes to users
 TIME_ZONE = "UTC"
 
@@ -165,7 +167,9 @@ CACHES = {
     }
 }
 if "CACHE_URL" in env:
-    CACHES["default"] = env.cache("CACHE_URL")
+    CACHES["default"] = env.cache(
+        "CACHE_URL", backend="django.core.cache.backends.memcached.PyMemcacheCache"
+    )
     SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
 CACHE_MIDDLEWARE_SECONDS = 300
