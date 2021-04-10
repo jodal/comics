@@ -64,6 +64,7 @@ profile = "black"
 filterwarnings = [
     "ignore::django.utils.deprecation.RemovedInDjango40Warning:invitations",
     "ignore::django.utils.deprecation.RemovedInDjango40Warning:tastypie",
+    "ignore::django.utils.deprecation.RemovedInDjango41Warning",
 ]
 DJANGO_SETTINGS_MODULE = "comics.settings"
 
