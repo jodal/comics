@@ -167,7 +167,9 @@ CACHES = {
     }
 }
 if "CACHE_URL" in env:
-    CACHES["default"] = env.cache("CACHE_URL")
+    CACHES["default"] = env.cache(
+        "CACHE_URL", backend="django.core.cache.backends.memcached.PyMemcacheCache"
+    )
     SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
 CACHE_MIDDLEWARE_SECONDS = 300
