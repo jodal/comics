@@ -35,6 +35,8 @@ DATABASES = {
     "default": env.db("DATABASE_URL", default=SQLITE_URL),
 }
 
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 #: Default time zone to use when displaying datetimes to users
 TIME_ZONE = "UTC"
 
