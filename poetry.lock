@@ -678,7 +678,7 @@ tests = ["pytest (>=6.0.0,<7.0.0)", "coverage[toml] (==5.0.4)"]
 
 [[package]]
 name = "pymemcache"
-version = "3.4.1"
+version = "3.4.2"
 description = "A comprehensive, fast, pure Python memcached client"
 category = "main"
 optional = true
@@ -1049,7 +1049,7 @@ server = ["gunicorn"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "a9041f4c0a0c5528d5e1317844ac54be2937698c528daf827dc07c249deaccbb"
+content-hash = "5aeb4bed2f4faefb1ca4cfe841464491a4fc58294cdc35d33f5c8c925d36850e"
 
 [metadata.files]
 appdirs = [
@@ -1476,8 +1476,8 @@ pyjwt = [
     {file = "PyJWT-2.0.1.tar.gz", hash = "sha256:a5c70a06e1f33d81ef25eecd50d50bd30e34de1ca8b2b9fa3fe0daaabcf69bf7"},
 ]
 pymemcache = [
-    {file = "pymemcache-3.4.1-py2.py3-none-any.whl", hash = "sha256:06a5069fc357c436fdcb8bb9413a3efe4e062c55fa16502b7757120b7745acda"},
-    {file = "pymemcache-3.4.1.tar.gz", hash = "sha256:deba75d6d16206e846916570cf9fabd4cf7d7c72ec86e3bdcc65e032f01418e9"},
+    {file = "pymemcache-3.4.2-py2.py3-none-any.whl", hash = "sha256:62462d9c6887549d1bb9718c0384b445c3a1d1021ddf250ff17e2f603248585e"},
+    {file = "pymemcache-3.4.2.tar.gz", hash = "sha256:ff6f7db6893e05e30b259b25ca399181d1d20eb6f78b8c999448be997f26745f"},
 ]
 pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
