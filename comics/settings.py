@@ -224,9 +224,6 @@ COMPRESS_CSS_FILTERS = [
     "compressor.filters.cssmin.CSSMinFilter",
 ]
 
-# Turn on HTML compression through custom middleware
-COMPRESS_HTML = True
-
 
 # ### django.contrib.auth settings
 
