@@ -217,12 +217,16 @@ else:
 # of LxmlParser
 COMPRESS_PARSER = "compressor.parser.HtmlParser"
 
-# Turn on CSS compression. JS compression is on by default if jsmin is
-# installed
-COMPRESS_CSS_FILTERS = [
-    "compressor.filters.css_default.CssAbsoluteFilter",
-    "compressor.filters.cssmin.CSSMinFilter",
-]
+# Turn on CSS and JS compression
+COMPRESS_FILTERS = {
+    "css": [
+        "compressor.filters.css_default.CssAbsoluteFilter",
+        "compressor.filters.cssmin.CSSMinFilter",
+    ],
+    "js": [
+        "compressor.filters.jsmin.JSMinFilter",
+    ],
+}
 
 
 # ### django.contrib.auth settings
