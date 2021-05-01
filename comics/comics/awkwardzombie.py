@@ -37,7 +37,9 @@ class Crawler(CrawlerBase):
         title = title.text
         release_page = self.parse_page(link)
 
-        img = release_page.root.xpath("//img[@id='cc-comic']")
-        url = img[0].get("src")
+        imgs = release_page.root.xpath("//img[@id='cc-comic']")
+        if not imgs:
+            return
+        url = imgs[0].get("src")
 
         return CrawlerImage(url, title, game)
