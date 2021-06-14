@@ -317,7 +317,7 @@ python-mimeparse = ">=0.1.4,<1.5 || >1.5"
 
 [[package]]
 name = "feedparser"
-version = "6.0.2"
+version = "6.0.4"
 description = "Universal feed parser, handles RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3, and Atom 1.0 feeds"
 category = "main"
 optional = false
@@ -1052,7 +1052,7 @@ server = ["gunicorn"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "24db27b7ec209cce26dda6f113c8fe6f1b469090ccade217da3a25fb67b4bd1a"
+content-hash = "3c7513b95e26bd631ce7f70e1e6c8764b814731bd5087f95d65ad6c49767ed0d"
 
 [metadata.files]
 appdirs = [
@@ -1269,8 +1269,8 @@ django-tastypie = [
     {file = "django-tastypie-0.14.3.tar.gz", hash = "sha256:79fbadf81a3cc42cb5304731a88f46c207ae4c8efa7556856356ec916e5b2ec7"},
 ]
 feedparser = [
-    {file = "feedparser-6.0.2-py3-none-any.whl", hash = "sha256:f596c4b34fb3e2dc7e6ac3a8191603841e8d5d267210064e94d4238737452ddd"},
-    {file = "feedparser-6.0.2.tar.gz", hash = "sha256:1b00a105425f492f3954fd346e5b524ca9cef3a4bbf95b8809470e9857aa1074"},
+    {file = "feedparser-6.0.4-py3-none-any.whl", hash = "sha256:459eea28488105ac92f6ef2c952539ed06b2460a833740062d5456d358a558d2"},
+    {file = "feedparser-6.0.4.tar.gz", hash = "sha256:dcb019f1c892e106e6f981a11a6f97704601d52112f13975bda0adbe11cb6220"},
 ]
 filelock = [
     {file = "filelock-3.0.12-py3-none-any.whl", hash = "sha256:929b7d63ec5b7d6b71b0fa5ac14e030b3f70b75747cef1b10da9b879fef15836"},
