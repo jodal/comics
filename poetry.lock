@@ -995,7 +995,7 @@ python-versions = "*"
 
 [[package]]
 name = "types-pytz"
-version = "0.1.1"
+version = "0.1.2"
 description = "Typing stubs for pytz"
 category = "dev"
 optional = false
@@ -1070,7 +1070,7 @@ server = ["gunicorn"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "37b7f4ac953a88cb645345e810ba252404d8d12a2f1e38c9c01fb5ec87c4bc3a"
+content-hash = "42ab88ae3be2e0d2df26c3029d0d8d1099336f043ac60ae5507f4177d8aa5d25"
 
 [metadata.files]
 appdirs = [
@@ -1726,7 +1726,8 @@ typed-ast = [
     {file = "typed_ast-1.4.2.tar.gz", hash = "sha256:9fc0b3cb5d1720e7141d103cf4819aea239f7d136acf9ee4a69b047b7986175a"},
 ]
 types-pytz = [
-    {file = "types_pytz-0.1.1-py2.py3-none-any.whl", hash = "sha256:1f444521f32c02ec18f17b3ae2b0dffcfb10c0e92f9d93ace14daf6b646edac4"},
+    {file = "types-pytz-0.1.2.tar.gz", hash = "sha256:923976ea4b55c00a5b51daad8f497519780315f7b298a49550e22176f5a8f6d5"},
+    {file = "types_pytz-0.1.2-py2.py3-none-any.whl", hash = "sha256:e2fb8cc82d8dc1d2f20b2776645cf74a65a8dfc9bd26a33adb9ebd2c03e0f8f8"},
 ]
 types-toml = [
     {file = "types_toml-0.1.2-py2.py3-none-any.whl", hash = "sha256:92fe51b57534bc5c16da2d5e2a712aa229c86f8872df95d5f58dcb6977a376ce"},
