@@ -903,7 +903,7 @@ python-versions = "*"
 
 [[package]]
 name = "sentry-sdk"
-version = "1.1.0"
+version = "1.2.0"
 description = "Python client for Sentry (https://sentry.io)"
 category = "main"
 optional = false
@@ -922,6 +922,7 @@ chalice = ["chalice (>=1.16.0)"]
 django = ["django (>=1.8)"]
 falcon = ["falcon (>=1.4)"]
 flask = ["flask (>=0.11)", "blinker (>=1.1)"]
+httpx = ["httpx (>=0.16.0)"]
 pure_eval = ["pure-eval", "executing", "asttokens"]
 pyspark = ["pyspark (>=2.4.4)"]
 rq = ["rq (>=0.6)"]
@@ -1090,7 +1091,7 @@ server = ["gunicorn"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "655beaa9d56dbec814829c8bb14a33e0f49811255d4644e4f31684a9613fffda"
+content-hash = "d1298d2828e9f6a9343cc3ce062876ff342697203f41f6c0e1a011111609cbeb"
 
 [metadata.files]
 anyio = [
@@ -1687,8 +1688,8 @@ rjsmin = [
     {file = "rjsmin-1.1.0.tar.gz", hash = "sha256:b15dc75c71f65d9493a8c7fa233fdcec823e3f1b88ad84a843ffef49b338ac32"},
 ]
 sentry-sdk = [
-    {file = "sentry-sdk-1.1.0.tar.gz", hash = "sha256:c1227d38dca315ba35182373f129c3e2722e8ed999e52584e6aca7d287870739"},
-    {file = "sentry_sdk-1.1.0-py2.py3-none-any.whl", hash = "sha256:c7d380a21281e15be3d9f67a3c4fbb4f800c481d88ff8d8931f39486dd7b4ada"},
+    {file = "sentry-sdk-1.2.0.tar.gz", hash = "sha256:9907adbdd30a55b818914512cc143e6beae0bb3ba78b2649f4b079752eb0e424"},
+    {file = "sentry_sdk-1.2.0-py2.py3-none-any.whl", hash = "sha256:593f6118cc6d3eba4786c3f802567c937bdb81b3c8e90436e8a29e84071c6936"},
 ]
 sgmllib3k = [
     {file = "sgmllib3k-1.0.0.tar.gz", hash = "sha256:7868fb1c8bfa764c1ac563d3cf369c381d1325d36124933a726f29fcdaa812e9"},
