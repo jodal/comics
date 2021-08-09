@@ -47,7 +47,7 @@ pytest-cov = "^2.12.1"
 pytest-django = "^4.4.0"
 pytest-mock = "^3.6.1"
 tox = "^3.24.1"
-types-pytz = "^2021.1.0"
+types-pytz = "^2021.1.2"
 types-toml = "^0.1.5"
 
 [tool.poetry.extras]
