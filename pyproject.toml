@@ -8,7 +8,7 @@ license = "AGPL-3.0-only"
 [tool.poetry.dependencies]
 Django = "^3.2"
 Pillow = "^8.3.2"
-PyYAML = {version = "^5.4.1", optional = true}
+PyYAML = {version = "^6.0", optional = true}
 biplist = {version = "^1.0.3", optional = true}
 cssmin = "^0.2.0"
 cssselect = "^1.1.0"
