@@ -289,7 +289,7 @@ class CreatorsCrawlerBase(CrawlerBase):
             "feature_id=%s&year=%s"
         ) % (feature_id, pub_date.year)
 
-        response = httpx.get(url, headers=self.headers)
+        response = httpx.get(url, headers=self.headers, follow_redirects=True)
         releases = response.json()
 
         for release in releases:

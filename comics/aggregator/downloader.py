@@ -83,7 +83,7 @@ class ImageDownloader:
 
     def _download_image(self, url, request_headers):
         try:
-            response = httpx.get(url, headers=request_headers)
+            response = httpx.get(url, headers=request_headers, follow_redirects=True)
             response.raise_for_status()
             temp_file = tempfile.NamedTemporaryFile(suffix="comics")
             temp_file.write(response.content)
