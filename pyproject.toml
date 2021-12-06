@@ -31,7 +31,7 @@ pytz = "^2021.3"
 sentry-sdk = "^1.5.0"
 
 [tool.poetry.dev-dependencies]
-black = "^21.11b1"
+black = "^21.12b0"
 django-debug-toolbar = "^3.2"
 django-extensions = "^3.1.5"
 django-stubs = "^1.9.0"
