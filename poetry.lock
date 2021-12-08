@@ -208,7 +208,7 @@ python-versions = "*"
 
 [[package]]
 name = "django"
-version = "3.2.9"
+version = "3.2.10"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
 category = "main"
 optional = false
@@ -1324,8 +1324,8 @@ distlib = [
     {file = "distlib-0.3.1.zip", hash = "sha256:edf6116872c863e1aa9d5bb7cb5e05a022c519a4594dc703843343a9ddd9bff1"},
 ]
 django = [
-    {file = "Django-3.2.9-py3-none-any.whl", hash = "sha256:e22c9266da3eec7827737cde57694d7db801fedac938d252bf27377cec06ed1b"},
-    {file = "Django-3.2.9.tar.gz", hash = "sha256:51284300f1522ffcdb07ccbdf676a307c6678659e1284f0618e5a774127a6a08"},
+    {file = "Django-3.2.10-py3-none-any.whl", hash = "sha256:df6f5eb3c797b27c096d61494507b7634526d4ce8d7c8ca1e57a4fb19c0738a3"},
+    {file = "Django-3.2.10.tar.gz", hash = "sha256:074e8818b4b40acdc2369e67dcd6555d558329785408dcd25340ee98f1f1d5c4"},
 ]
 django-allauth = [
     {file = "django-allauth-0.46.0.tar.gz", hash = "sha256:8217b8dc46f85812ff209fc542f4bf378f1751cdbe867008169d4c85685df50d"},
