@@ -46,7 +46,7 @@ pytest = "^6.2.5"
 pytest-cov = "^3.0.0"
 pytest-django = "^4.5.2"
 pytest-mock = "^3.6.1"
-tox = "^3.24.4"
+tox = "^3.24.5"
 types-pytz = "^2021.3.3"
 types-toml = "^0.10.1"
 
