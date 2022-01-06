@@ -487,7 +487,7 @@ http2 = ["h2 (>=3,<5)"]
 
 [[package]]
 name = "httpx"
-version = "0.21.1"
+version = "0.21.2"
 description = "The next generation HTTP client."
 category = "main"
 optional = false
@@ -1146,7 +1146,7 @@ server = ["gunicorn"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "cf843fd9786a9b618c267296d3410b734fde4610222a2f95d7459f63766229ba"
+content-hash = "41f1881b60d96acf9cec60dfc7ed93f2cbc7447829126b3e5a0883311e3f5d72"
 
 [metadata.files]
 anyio = [
@@ -1408,8 +1408,8 @@ httpcore = [
     {file = "httpcore-0.14.1.tar.gz", hash = "sha256:d59d3d437405f14253d9a5889026e1e8657b057399274f8769a08a95084351a1"},
 ]
 httpx = [
-    {file = "httpx-0.21.1-py3-none-any.whl", hash = "sha256:208e5ef2ad4d105213463cfd541898ed9d11851b346473539a8425e644bb7c66"},
-    {file = "httpx-0.21.1.tar.gz", hash = "sha256:02af20df486b78892a614a7ccd4e4e86a5409ec4981ab0e422c579a887acad83"},
+    {file = "httpx-0.21.2-py3-none-any.whl", hash = "sha256:6d88b1208f0996ee99c7a1e38fcfbdc66891c8fc583673337152681ac23585f6"},
+    {file = "httpx-0.21.2.tar.gz", hash = "sha256:c7c71345faa8983a094bbd24b5b5cc6f4bd274aadcb072a25b312cb209167aef"},
 ]
 idna = [
     {file = "idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},
