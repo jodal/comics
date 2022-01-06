@@ -348,7 +348,7 @@ django = "*"
 
 [[package]]
 name = "django-tastypie"
-version = "0.14.3"
+version = "0.14.4"
 description = "A flexible & capable API layer for Django."
 category = "main"
 optional = false
@@ -1146,7 +1146,7 @@ server = ["gunicorn"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "41f1881b60d96acf9cec60dfc7ed93f2cbc7447829126b3e5a0883311e3f5d72"
+content-hash = "f2c85c1e882838144f6178817de1037968e9111565a6f8042f5978b2b260c880"
 
 [metadata.files]
 anyio = [
@@ -1365,7 +1365,7 @@ django-stubs-ext = [
     {file = "django_stubs_ext-0.3.0-py3-none-any.whl", hash = "sha256:1ba241655a62a6aadbc4c8e324a108557e76c116cfc9edd8c5c83eabf1fc4afa"},
 ]
 django-tastypie = [
-    {file = "django-tastypie-0.14.3.tar.gz", hash = "sha256:79fbadf81a3cc42cb5304731a88f46c207ae4c8efa7556856356ec916e5b2ec7"},
+    {file = "django-tastypie-0.14.4.tar.gz", hash = "sha256:c27b1a99efb0b13fb7b49b80fb79a7536b5915aaef788b58852f07e02d4779e8"},
 ]
 feedparser = [
     {file = "feedparser-6.0.8-py3-none-any.whl", hash = "sha256:1b7f57841d9cf85074deb316ed2c795091a238adb79846bc46dccdaf80f9c59a"},
