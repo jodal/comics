@@ -553,7 +553,7 @@ plugins = ["setuptools"]
 
 [[package]]
 name = "jsmin"
-version = "3.0.0"
+version = "3.0.1"
 description = "JavaScript minifier."
 category = "main"
 optional = false
@@ -1147,7 +1147,7 @@ server = ["gunicorn"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "74b5d1db80bac7bee172c567a99ca5efaf82066318af010f0388f89a6766cc08"
+content-hash = "4a6f593ff3644c19c6b3077d39a6dca794efb5552623fbee4c5b25c568ad36e3"
 
 [metadata.files]
 anyio = [
@@ -1429,7 +1429,7 @@ isort = [
     {file = "isort-5.10.1.tar.gz", hash = "sha256:e8443a5e7a020e9d7f97f1d7d9cd17c88bcb3bc7e218bf9cf5095fe550be2951"},
 ]
 jsmin = [
-    {file = "jsmin-3.0.0.tar.gz", hash = "sha256:88fc1bd6033a47c5911dbcada7d279c7a8b7ad0841909590f6a742c20c4d2e08"},
+    {file = "jsmin-3.0.1.tar.gz", hash = "sha256:c0959a121ef94542e807a674142606f7e90214a2b3d1eb17300244bbb5cc2bfc"},
 ]
 lxml = [
     {file = "lxml-4.7.1-cp27-cp27m-macosx_10_14_x86_64.whl", hash = "sha256:d546431636edb1d6a608b348dd58cc9841b81f4116745857b6cb9f8dadb2725f"},
