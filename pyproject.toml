@@ -28,7 +28,7 @@ psycopg2 = {version = "^2.9.3", optional = true}
 pymemcache = {version = "^3.5.0", optional = true}
 python = "^3.7"
 pytz = "^2021.3"
-sentry-sdk = "^1.5.2"
+sentry-sdk = "^1.5.3"
 
 [tool.poetry.dev-dependencies]
 black = "^21.12b0"
