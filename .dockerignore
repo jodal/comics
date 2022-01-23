@@ -1,0 +1,34 @@
+# Keep the build context small and avoid baking secrets/dev artifacts into
+# image layers. The Dockerfile does `COPY . /src`, so anything not ignored
+# here ends up in the build stage.
+
+# Version control
+.git
+.jj
+
+# Local environment and secrets
+.env
+*.env
+!dev-template.env
+
+# Python virtualenv and caches
+.venv
+.*_cache
+__pycache__/
+*.egg-info/
+
+# Tooling and test artifacts
+.tox
+.coverage*
+coverage.xml
+
+# Generated/local runtime data
+run/
+
+# Docs build output
+docs/_build/
+
+# Docker files themselves don't belong in the image
+Dockerfile
+.dockerignore
+docker-compose*.yml
