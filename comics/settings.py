@@ -70,9 +70,8 @@ STATICFILES_FINDERS = [
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-            # insert your TEMPLATE_DIRS here
-        ],
+        "DIRS": [],
+        "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
                 "django.contrib.auth.context_processors.auth",
@@ -84,20 +83,9 @@ TEMPLATES = [
                 "comics.core.context_processors.site_settings",
                 "comics.core.context_processors.all_comics",
             ],
-            "loaders": [
-                (
-                    "django.template.loaders.cached.Loader",
-                    ["django.template.loaders.app_directories.Loader"],
-                ),
-            ],
         },
     },
 ]
-
-if DEBUG:
-    TEMPLATES[0]["OPTIONS"]["loaders"] = [  # type: ignore
-        "django.template.loaders.app_directories.Loader",
-    ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
