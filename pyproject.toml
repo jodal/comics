@@ -8,8 +8,8 @@ license = "AGPL-3.0-only"
 [tool.poetry.dependencies]
 Django = "^3.2"
 Pillow = "^9.0.0"
-PyYAML = {version = "^6.0", optional = true}
-biplist = {version = "^1.0.3", optional = true}
+PyYAML = { version = "^6.0", optional = true }
+biplist = { version = "^1.0.3", optional = true }
 cssmin = "^0.2.0"
 cssselect = "^1.1.0"
 defusedxml = "^0.7.1"
@@ -20,12 +20,12 @@ django-environ = "^0.8.1"
 django-invitations = "^1.9.3"
 django-tastypie = "^0.14.4"
 feedparser = "^6.0.8"
-gunicorn = {version = "^20.1.0", optional = true}
+gunicorn = { version = "^20.1.0", optional = true }
 httpx = "^0.21.3"
 jsmin = "^3.0.1"
 lxml = "^4.7.1"
-psycopg2 = {version = "^2.9.3", optional = true}
-pymemcache = {version = "^3.5.0", optional = true}
+psycopg2-binary = { version = "^2.9.3", optional = true }
+pymemcache = { version = "^3.5.0", optional = true }
 python = "^3.7"
 pytz = "^2021.3"
 sentry-sdk = "^1.5.3"
@@ -53,7 +53,7 @@ types-toml = "^0.10.3"
 [tool.poetry.extras]
 api = ["biplist", "PyYAML"]
 cache = ["pymemcache"]
-pgsql = ["psycopg2"]
+pgsql = ["psycopg2-binary"]
 server = ["gunicorn"]
 
 [tool.black]
