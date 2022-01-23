@@ -1,0 +1,49 @@
+name: comics
+
+volumes:
+  postgres:
+  media:
+
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      - POSTGRES_USER=comics
+      - POSTGRES_PASSWORD=comics
+      - POSTGRES_DB=comics
+    volumes:
+      - postgres:/var/lib/postgresql
+    command:
+      - postgres
+      - -cfsync=off
+      - -cfull_page_writes=off
+      - -csynchronous_commit=off
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U comics -d comics"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: comics:latest
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      - DATABASE_URL=postgres://comics:comics@postgres:5432/comics
+      - PORT=8000
+    volumes:
+      - media:/media
+    command: web
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
