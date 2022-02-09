@@ -217,7 +217,7 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 name = "django-allauth"
-version = "0.47.0"
+version = "0.48.0"
 description = "Integrated set of Django applications addressing authentication, registration, account management as well as 3rd party (social) account authentication."
 category = "main"
 optional = false
@@ -1149,7 +1149,7 @@ server = ["gunicorn"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "325a72c9c6a042b319980dde62c71d38d928577fd64c48b76d83a0f73afe8bd1"
+content-hash = "5eced00494cc6732cdbee3093cddcfe68a299937a28a726ff04dd02061bcf929"
 
 [metadata.files]
 anyio = [
@@ -1349,7 +1349,7 @@ django = [
     {file = "Django-3.2.12.tar.gz", hash = "sha256:9772e6935703e59e993960832d66a614cf0233a1c5123bc6224ecc6ad69e41e2"},
 ]
 django-allauth = [
-    {file = "django-allauth-0.47.0.tar.gz", hash = "sha256:2bcf09d4c6e672620981d283f555d643982ac066b71f8947dbd81882a1d7c5e8"},
+    {file = "django-allauth-0.48.0.tar.gz", hash = "sha256:531821ce6a2278168054add13421776c9f8e565cf39926e799fa02d6c29da920"},
 ]
 django-appconf = [
     {file = "django-appconf-1.0.5.tar.gz", hash = "sha256:be3db0be6c81fa84742000b89a81c016d70ae66a7ccb620cdef592b1f1a6aaa4"},
