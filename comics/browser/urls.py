@@ -33,17 +33,17 @@ urlpatterns = [
                     name="mycomics_latest_page_n",
                 ),
                 re_path(
-                    fr"^{YEAR}/$",
+                    rf"^{YEAR}/$",
                     views.MyComicsYearView.as_view(),
                     name="mycomics_year",
                 ),
                 re_path(
-                    fr"^{YEAR}/{MONTH}/$",
+                    rf"^{YEAR}/{MONTH}/$",
                     views.MyComicsMonthView.as_view(),
                     name="mycomics_month",
                 ),
                 re_path(
-                    fr"^{YEAR}/{MONTH}/{DAY}/$",
+                    rf"^{YEAR}/{MONTH}/{DAY}/$",
                     views.MyComicsDayView.as_view(),
                     name="mycomics_day",
                 ),
@@ -76,17 +76,17 @@ urlpatterns = [
                     name="comic_latest",
                 ),
                 re_path(
-                    fr"^{YEAR}/$",
+                    rf"^{YEAR}/$",
                     views.OneComicYearView.as_view(),
                     name="comic_year",
                 ),
                 re_path(
-                    fr"^{YEAR}/{MONTH}/$",
+                    rf"^{YEAR}/{MONTH}/$",
                     views.OneComicMonthView.as_view(),
                     name="comic_month",
                 ),
                 re_path(
-                    fr"^{YEAR}/{MONTH}/{DAY}/$",
+                    rf"^{YEAR}/{MONTH}/{DAY}/$",
                     views.OneComicDayView.as_view(),
                     name="comic_day",
                 ),
