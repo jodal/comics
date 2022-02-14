@@ -1066,7 +1066,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "types-pytz"
-version = "2021.3.4"
+version = "2021.3.5"
 description = "Typing stubs for pytz"
 category = "dev"
 optional = false
@@ -1149,7 +1149,7 @@ server = ["gunicorn"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "fa854b0b10952e1be04ee8f938f983748a3cad2eb95750614981bd7dad570008"
+content-hash = "96d0c892c303228b98aa756aa63cd42ca88c20b47d5c828f0015ab63d21ef072"
 
 [metadata.files]
 anyio = [
@@ -1871,8 +1871,8 @@ typed-ast = [
     {file = "typed_ast-1.5.1.tar.gz", hash = "sha256:484137cab8ecf47e137260daa20bafbba5f4e3ec7fda1c1e69ab299b75fa81c5"},
 ]
 types-pytz = [
-    {file = "types-pytz-2021.3.4.tar.gz", hash = "sha256:101da53091013bb07403468c20d36930d749d3918054ac46f9c1bfc607dadf7d"},
-    {file = "types_pytz-2021.3.4-py3-none-any.whl", hash = "sha256:ccfa2ed29f816e3de2f882541c06ad2791f808a79cfe38265411820190999f0f"},
+    {file = "types-pytz-2021.3.5.tar.gz", hash = "sha256:fef8de238ee95135952229a2a23bfb87bd63d5a6c8598106a46cfcf48f069ea8"},
+    {file = "types_pytz-2021.3.5-py3-none-any.whl", hash = "sha256:8831f689379ac9e2a62668157381379ed74b3702980e08e71f8673c179c4e3c7"},
 ]
 types-pyyaml = [
     {file = "types-PyYAML-6.0.3.tar.gz", hash = "sha256:6ea4eefa8579e0ce022f785a62de2bcd647fad4a81df5cf946fd67e4b059920b"},
