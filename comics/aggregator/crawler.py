@@ -213,12 +213,6 @@ class ComicsKingdomCrawlerBase(CrawlerBase):
         if not url:
             url = page.content('meta[property="og:image"]')
 
-        page_title = page.text("title")
-        if page_title == "Comics Kingdom - About ":
-            return  # Requires premium
-        if page_title == "Comics Kingdom - WHOOPS! ":
-            return  # Error
-
         return CrawlerImage(url)
 
 
