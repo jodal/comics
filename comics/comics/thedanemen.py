@@ -8,11 +8,12 @@ class ComicData(ComicDataBase):
     url = "http://www.webtoons.com/en/comedy/the-danemen/list?title_no=395"
     start_date = "2015-03-02"
     rights = "David Danemen"
+    active = False
 
 
 class Crawler(CrawlerBase):
     has_rerun_releases = True  # Not really, but reuses same image in a release
-    history_capable_days = 90
+    history_capable_date = "2017-08-26"
     schedule = "Mo,Sa"
     time_zone = "US/Pacific"
 
