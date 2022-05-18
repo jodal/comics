@@ -8,6 +8,7 @@ class ComicData(ComicDataBase):
     url = "http://www.dagbladet.no/tegneserie/nemi/"
     start_date = "1997-01-01"
     rights = "Lise Myhre"
+    active = False
 
 
 class Crawler(DagbladetCrawlerBase):

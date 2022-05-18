@@ -7,6 +7,7 @@ class ComicData(ComicDataBase):
     language = "no"
     url = "http://www.dagbladet.no/tegneserie/bestis/"
     rights = "Kenneth Larsen"
+    active = False
 
 
 class Crawler(DagbladetCrawlerBase):
