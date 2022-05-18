@@ -8,10 +8,12 @@ class ComicData(ComicDataBase):
     url = "http://www.mollybeans.com/"
     start_date = "2016-02-11"
     rights = "Dan Sacharow"
+    end_date = "2019-06-14"
+    active = False
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 30
+    history_capable_date = "2019-05-08"
     schedule = "We,Fr"
     time_zone = "US/Eastern"
 
