@@ -7,6 +7,7 @@ class ComicData(ComicDataBase):
     language = "no"
     url = "http://www.dagbladet.no/tegneserie/intetnyttfrahjemmefronten/"
     rights = "Therese G. Eide"
+    active = False
 
 
 class Crawler(DagbladetCrawlerBase):

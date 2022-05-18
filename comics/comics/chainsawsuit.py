@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import CrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -8,6 +8,7 @@ class ComicData(ComicDataBase):
     url = "http://chainsawsuit.com/"
     start_date = "2008-03-12"
     rights = "Kris Straub"
+    active = False
 
 
 class Crawler(CrawlerBase):
@@ -16,8 +17,4 @@ class Crawler(CrawlerBase):
     time_zone = "US/Pacific"
 
     def crawl(self, pub_date):
-        feed = self.parse_feed("http://chainsawsuit.com/feed/")
-        for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src*="/wp-content/uploads/"]')
-            title = entry.title
-            return CrawlerImage(url, title)
+        pass

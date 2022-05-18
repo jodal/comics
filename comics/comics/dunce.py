@@ -7,6 +7,7 @@ class ComicData(ComicDataBase):
     language = "no"
     url = "http://www.dagbladet.no/tegneserie/dunce"
     rights = "Jens K. Styve"
+    active = False
 
 
 class Crawler(DagbladetCrawlerBase):

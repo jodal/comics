@@ -10,6 +10,7 @@ class ComicData(ComicDataBase):
     url = "http://www.vgcats.com/"
     start_date = "2001-09-09"
     rights = "Scott Ramsoomair"
+    active = False
 
 
 class Crawler(CrawlerBase):

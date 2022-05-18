@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import CrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -8,6 +8,7 @@ class ComicData(ComicDataBase):
     url = "http://www.tehgladiators.com/"
     start_date = "2008-03-18"
     rights = "Uros Jojic & Borislav Grabovic"
+    active = False
 
 
 class Crawler(CrawlerBase):
@@ -16,9 +17,4 @@ class Crawler(CrawlerBase):
     time_zone = "Europe/Belgrade"
 
     def crawl(self, pub_date):
-        feed = self.parse_feed("http://www.tehgladiators.com/rss.xml")
-        for entry in feed.for_date(pub_date):
-            page = self.parse_page(entry.link)
-            url = page.src('img[alt^="Teh Gladiators Webcomic"]')
-            title = entry.title
-            return CrawlerImage(url, title)
+        pass
