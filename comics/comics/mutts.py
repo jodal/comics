@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import ComicsKingdomCrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -10,13 +10,10 @@ class ComicData(ComicDataBase):
     rights = "Patrick McDonnell"
 
 
-class Crawler(CrawlerBase):
+class Crawler(ComicsKingdomCrawlerBase):
     history_capable_date = "1994-09-11"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "US/Eastern"
 
     def crawl(self, pub_date):
-        url = "http://www.mutts.com/sites/default/files/strips/{}.gif".format(
-            pub_date.strftime("%m%d%y"),
-        )
-        return CrawlerImage(url)
+        return self.crawl_helper("mutts", pub_date)

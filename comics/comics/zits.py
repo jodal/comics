@@ -11,7 +11,7 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(ComicsKingdomCrawlerBase):
-    history_capable_days = 6
+    history_capable_date = "1997-07-13"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "US/Eastern"
 

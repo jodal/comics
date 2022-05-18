@@ -207,9 +207,12 @@ class ComicsKingdomCrawlerBase(CrawlerBase):
 
     def crawl_helper(self, short_name: str, pub_date: datetime.date) -> CrawlerResult:
         date = pub_date.strftime("%Y-%m-%d")
-        page_url = f"https://www.comicskingdom.com/{short_name}/{date}"
+        page_url = f"https://comicskingdom.com/{short_name}/{date}"
         page = self.parse_page(page_url)
-        url = page.src('img[src*="safr.kingfeatures.com"]')
+        url = page.src('img[id="theComicImage"]')
+        if not url:
+            url = page.content('meta[property="og:image"]')
+
         return CrawlerImage(url)
 
 
