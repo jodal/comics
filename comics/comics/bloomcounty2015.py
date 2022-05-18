@@ -8,6 +8,7 @@ class ComicData(ComicDataBase):
     url = "http://www.gocomics.com/bloom-county/"
     start_date = "2015-07-20"
     rights = "Berkeley Breathed"
+    active = False
 
 
 class Crawler(GoComicsComCrawlerBase):
