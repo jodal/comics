@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import GoComicsComCrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -10,17 +10,10 @@ class ComicData(ComicDataBase):
     rights = "Jim Toomey"
 
 
-class Crawler(CrawlerBase):
+class Crawler(GoComicsComCrawlerBase):
     history_capable_date = "2003-12-29"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "US/Eastern"
 
     def crawl(self, pub_date):
-        page_url = "http://shermanslagoon.com/comics/{}-{}-{}/".format(
-            pub_date.strftime("%B").lower(),
-            int(pub_date.strftime("%d")),
-            pub_date.strftime("%Y"),
-        )
-        page = self.parse_page(page_url)
-        url = page.src(".entry-content img")
-        return CrawlerImage(url)
+        return self.crawl_helper("shermanslagoon", pub_date)
