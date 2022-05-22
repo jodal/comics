@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
 
@@ -8,11 +8,15 @@ class ComicData(ComicDataBase):
     url = "https://www.bt.no/kultur/tegneserier/"
     start_date = "1997-01-01"
     rights = "Lise Myhre"
-    active = False
 
 
 class Crawler(CrawlerBase):
+    history_capable_date = "2008-07-01"
+    schedule = "Mo,Tu,We,Th,Fr,Sa"
     time_zone = "Europe/Oslo"
 
     def crawl(self, pub_date):
-        pass
+        url = "https://cartoon-prod.schibsted.tech/nemi/{}.gif".format(
+            pub_date.strftime("%d%m%y"),
+        )
+        return CrawlerImage(url)
