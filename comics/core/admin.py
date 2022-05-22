@@ -42,7 +42,7 @@ class ComicAdmin(admin.ModelAdmin):
 
 @admin.register(models.Release)
 class ReleaseAdmin(admin.ModelAdmin):
-    list_display = ("__unicode__", "comic", "pub_date", "fetched")
+    list_display = ("__str__", "comic", "pub_date", "fetched")
     list_filter = ["pub_date", "fetched", "comic"]
     date_hierarchy = "pub_date"
     exclude = ("images",)
@@ -64,7 +64,7 @@ def text_preview(obj):
 @admin.register(models.Image)
 class ImageAdmin(admin.ModelAdmin):
     list_display = (
-        "__unicode__",
+        "__str__",
         "file",
         "height",
         "width",
