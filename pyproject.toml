@@ -19,7 +19,7 @@ django-compressor = "^3.1"
 django-environ = "^0.8.1"
 django-invitations = "^1.9.3"
 django-tastypie = "^0.14.4"
-feedparser = "^6.0.9"
+feedparser = "^6.0.10"
 gunicorn = { version = "^20.1.0", optional = true }
 httpx = "^0.22.0"
 jsmin = "^3.0.1"
