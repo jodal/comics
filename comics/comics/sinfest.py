@@ -1,11 +1,12 @@
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.exceptions import CrawlerError
 from comics.core.comic_data import ComicDataBase
 
 
 class ComicData(ComicDataBase):
     name = "Sinfest"
     language = "en"
-    url = "http://www.sinfest.net/"
+    url = "https://sinfest.xyz/"
     start_date = "2001-01-17"
     rights = "Tatsuya Ishida"
 
@@ -16,7 +17,13 @@ class Crawler(CrawlerBase):
     time_zone = "US/Eastern"
 
     def crawl(self, pub_date):
-        url = "http://www.sinfest.net/btphp/comics/{}.gif".format(
-            pub_date.strftime("%Y-%m-%d"),
-        )
-        return CrawlerImage(url)
+        try:
+            url = "https://sinfest.xyz/btphp/comics/{}.jpg".format(
+                pub_date.strftime("%Y-%m-%d"),
+            )
+            return CrawlerImage(url)
+        except CrawlerError:  # Some releases use gif
+            url = "https://sinfest.xyz/btphp/comics/{}.gif".format(
+                pub_date.strftime("%Y-%m-%d"),
+            )
+            return CrawlerImage(url)

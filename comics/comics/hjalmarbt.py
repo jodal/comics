@@ -3,20 +3,18 @@ from comics.core.comic_data import ComicDataBase
 
 
 class ComicData(ComicDataBase):
-    name = "Nemi (bt.no)"
+    name = "Hjalmar (bt.no)"
     language = "no"
     url = "https://www.bt.no/kultur/tegneserier/"
-    start_date = "1997-01-01"
-    rights = "Lise Myhre"
+    rights = "Nils Axle Kanten"
 
 
 class Crawler(CrawlerBase):
-    history_capable_date = "2008-07-01"
-    schedule = "Mo,Tu,We,Th,Fr,Sa"
-    time_zone = "Europe/Oslo"
+    history_capable_date = "2013-01-15"
+    schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
 
     def crawl(self, pub_date):
-        url = "https://cartoon-prod.schibsted.tech/nemi/{}.gif".format(
+        url = "https://cartoon-prod.schibsted.tech/rocky/%s.gif" % (
             pub_date.strftime("%d%m%y"),
         )
         return CrawlerImage(url)
