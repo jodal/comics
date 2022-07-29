@@ -254,7 +254,7 @@ django = ">=1.5"
 
 [[package]]
 name = "django-compressor"
-version = "3.1"
+version = "4.0"
 description = "Compresses linked and inline JavaScript or CSS into single cached files."
 category = "main"
 optional = false
@@ -1132,7 +1132,7 @@ server = ["gunicorn"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "8d3c5eb3cfd94152f6143a55b35c70987a0f0b7d78445d25e20221437bc59de8"
+content-hash = "071e52d0605b757927eb705548815873a10cb4427cf8f76bbe4a682f473d74d9"
 
 [metadata.files]
 anyio = [
@@ -1342,8 +1342,8 @@ django-bootstrap-form = [
     {file = "django-bootstrap-form-3.4.tar.gz", hash = "sha256:de3f7893e515352834d446c441c0cb861637f92cebbe59d8229469c6cd3dc640"},
 ]
 django-compressor = [
-    {file = "django_compressor-3.1-py2.py3-none-any.whl", hash = "sha256:89f7ba86777b30672c2f9c7557bf2aff87c5890903c73b1fa3ae38acd143e855"},
-    {file = "django_compressor-3.1.tar.gz", hash = "sha256:c4a87bf65f9a534cfaf1c321a000a229c24e50c6d62ba6ab089482db42e819d9"},
+    {file = "django_compressor-4.0-py2.py3-none-any.whl", hash = "sha256:b4fe15cc23bf39420b37cb0030572bd0971104ca1ec3764f502c0f179e576dff"},
+    {file = "django_compressor-4.0.tar.gz", hash = "sha256:1db91b6d04293636a68bd1328dc7bb90d636b0295f67b1cc6d4fa102b9fd25f6"},
 ]
 django-debug-toolbar = [
     {file = "django-debug-toolbar-3.5.0.tar.gz", hash = "sha256:97965f2630692de316ea0c1ca5bfa81660d7ba13146dbc6be2059cf55b35d0e5"},
