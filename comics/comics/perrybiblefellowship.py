@@ -15,12 +15,14 @@ class Crawler(CrawlerBase):
     time_zone = "US/Eastern"
 
     def crawl(self, pub_date):
-        feed = self.parse_feed("http://www.pbfcomics.com/feed/feed.xml")
+        feed = self.parse_feed("https://pbfcomics.com/feed/")
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
             images = page.src("div#comic img", allow_multiple=True)
             crawler_images = []
             for image in images:
+                if image[0:4] != 'http':
+                    continue
                 title = entry.title
                 crawler_images.append(CrawlerImage(image, title))
             return crawler_images
