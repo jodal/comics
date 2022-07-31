@@ -21,7 +21,7 @@ class Crawler(CrawlerBase):
             images = page.src("div#comic img", allow_multiple=True)
             crawler_images = []
             for image in images:
-                if image[0:4] != 'http':
+                if image[0:4] != "http":
                     continue
                 title = entry.title
                 crawler_images.append(CrawlerImage(image, title))
