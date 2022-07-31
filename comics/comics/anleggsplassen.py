@@ -1,5 +1,7 @@
 import re
 
+import dateutil.parser
+
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
@@ -7,34 +9,35 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = "Anleggsplassen"
     language = "no"
-    url = "https://www.at.no/"
+    url = "https://www.at.no"
     rights = "Trond J. Stavås"
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 7
+    history_capable_days = 7 * 9
     schedule = "Fr"
     time_zone = "Europe/Oslo"
 
     def crawl(self, pub_date):
         page = self.parse_page(ComicData.url)
-        article = page.root.xpath('//span[.="Ukens stripe"]/..')
-        if not article:
-            return
-        article = article[0]
-        title = article.get("data-article-headline")
-        date = article.get("data-publish-date")[0:10]
-        if not pub_date.strftime("%Y-%m-%d") == date:
-            return
+        div = page.root.xpath('//h5[.="Anleggsplassen"]/..')
+        articles = div[0].xpath(".//ul/li/a/@href")
+        for article in articles:
+            article_page = self.parse_page(article)
+            title = article_page.content('meta[name="title"]')
+            text = article_page.content('meta[name="description"]')
 
-        image = article.xpath(
-            'figure[@data-headline-prefix="Anlegg"]' "/a/div/noscript/picture/source"
-        )
-        srcset = image[0].get("srcset")
-        matches = re.search(
-            r"//(img\.gfx\.no/[0-9]+/[0-9]+/.+?)\.[0-9x]+mc\.([a-z]+)",
-            srcset,
-        )
-        url = "https://{}.{}".format(matches.group(1), matches.group(2))
+            date_string = article_page.content(
+                'meta[property="article:published_time"]'
+            )
+            date = dateutil.parser.parse(date_string).date()
+            if date != pub_date:
+                continue
 
-        return CrawlerImage(url, title)
+            url = re.sub(
+                r"(http.+imageId=\d+).+",
+                r"\1&x=0&y=0&cropw=100&croph=100&width=1037&height=396",
+                article_page.content('meta[property="og:image"]'),
+            )
+
+            return CrawlerImage(url, title, text)
