@@ -12,9 +12,9 @@ sniffio = ">=1.1"
 typing-extensions = {version = "*", markers = "python_version < \"3.8\""}
 
 [package.extras]
-doc = ["packaging", "sphinx-rtd-theme", "sphinx-autodoc-typehints (>=1.2.0)"]
-test = ["coverage[toml] (>=4.5)", "hypothesis (>=4.0)", "pytest (>=6.0)", "pytest-mock (>=3.6.1)", "trustme", "contextlib2", "uvloop (<0.15)", "mock (>=4)", "uvloop (>=0.15)"]
 trio = ["trio (>=0.16)"]
+test = ["uvloop (>=0.15)", "mock (>=4)", "uvloop (<0.15)", "contextlib2", "trustme", "pytest-mock (>=3.6.1)", "pytest (>=6.0)", "hypothesis (>=4.0)", "coverage[toml] (>=4.5)"]
+doc = ["sphinx-autodoc-typehints (>=1.2.0)", "sphinx-rtd-theme", "packaging"]
 
 [[package]]
 name = "asgiref"
@@ -47,10 +47,10 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [package.extras]
-dev = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "mypy", "pytest-mypy-plugins", "zope.interface", "furo", "sphinx", "sphinx-notfound-page", "pre-commit", "cloudpickle"]
-docs = ["furo", "sphinx", "zope.interface", "sphinx-notfound-page"]
-tests = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "mypy", "pytest-mypy-plugins", "zope.interface", "cloudpickle"]
-tests_no_zope = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "mypy", "pytest-mypy-plugins", "cloudpickle"]
+tests_no_zope = ["cloudpickle", "pytest-mypy-plugins", "mypy", "six", "pytest (>=4.3.0)", "pympler", "hypothesis", "coverage[toml] (>=5.0.2)"]
+tests = ["cloudpickle", "zope.interface", "pytest-mypy-plugins", "mypy", "six", "pytest (>=4.3.0)", "pympler", "hypothesis", "coverage[toml] (>=5.0.2)"]
+docs = ["sphinx-notfound-page", "zope.interface", "sphinx", "furo"]
+dev = ["cloudpickle", "pre-commit", "sphinx-notfound-page", "sphinx", "furo", "zope.interface", "pytest-mypy-plugins", "mypy", "six", "pytest (>=4.3.0)", "pympler", "hypothesis", "coverage[toml] (>=5.0.2)"]
 
 [[package]]
 name = "biplist"
@@ -212,8 +212,8 @@ pytz = "*"
 sqlparse = ">=0.2.2"
 
 [package.extras]
-argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
+argon2 = ["argon2-cffi (>=19.1.0)"]
 
 [[package]]
 name = "django-allauth"
@@ -416,7 +416,7 @@ attrs = ">=19.2.0"
 flake8 = ">=3.0.0"
 
 [package.extras]
-dev = ["coverage", "hypothesis", "hypothesmith (>=0.2)", "pre-commit"]
+dev = ["pre-commit", "hypothesmith (>=0.2)", "hypothesis", "coverage"]
 
 [[package]]
 name = "flake8-isort"
@@ -514,8 +514,8 @@ typing-extensions = {version = ">=3.6.4", markers = "python_version < \"3.8\""}
 zipp = ">=0.5"
 
 [package.extras]
-docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
-testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-cov", "pytest-enabler (>=1.0.1)", "packaging", "pep517", "pyfakefs", "flufl.flake8", "pytest-black (>=0.3.7)", "pytest-mypy", "importlib-resources (>=1.3)"]
+testing = ["importlib-resources (>=1.3)", "pytest-mypy", "pytest-black (>=0.3.7)", "flufl.flake8", "pyfakefs", "pep517", "packaging", "pytest-enabler (>=1.0.1)", "pytest-cov", "pytest-flake8", "pytest-checkdocs (>=2.4)", "pytest (>=4.6)"]
+docs = ["rst.linker (>=1.9)", "jaraco.packaging (>=8.2)", "sphinx"]
 
 [[package]]
 name = "iniconfig"
@@ -556,10 +556,10 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, != 3.4.*"
 
 [package.extras]
-cssselect = ["cssselect (>=0.7)"]
-html5 = ["html5lib"]
-htmlsoup = ["beautifulsoup4"]
 source = ["Cython (>=0.29.7)"]
+htmlsoup = ["beautifulsoup4"]
+html5 = ["html5lib"]
+cssselect = ["cssselect (>=0.7)"]
 
 [[package]]
 name = "mccabe"
@@ -584,9 +584,9 @@ typed-ast = {version = ">=1.4.0,<2", markers = "python_version < \"3.8\""}
 typing-extensions = ">=3.10"
 
 [package.extras]
-dmypy = ["psutil (>=4.0)"]
-python2 = ["typed-ast (>=1.4.0,<2)"]
 reports = ["lxml"]
+python2 = ["typed-ast (>=1.4.0,<2)"]
+dmypy = ["psutil (>=4.0)"]
 
 [[package]]
 name = "mypy-extensions"
@@ -755,7 +755,7 @@ optional = false
 python-versions = ">=3.6"
 
 [package.extras]
-diagrams = ["jinja2", "railroad-diagrams"]
+diagrams = ["railroad-diagrams", "jinja2"]
 
 [[package]]
 name = "pytest"
@@ -777,7 +777,7 @@ py = ">=1.8.2"
 tomli = ">=1.0.0"
 
 [package.extras]
-testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "xmlschema"]
+testing = ["xmlschema", "requests", "pygments (>=2.7.2)", "nose", "mock", "hypothesis (>=3.56)", "argcomplete"]
 
 [[package]]
 name = "pytest-cov"
@@ -806,8 +806,8 @@ python-versions = ">=3.5"
 pytest = ">=5.4.0"
 
 [package.extras]
-docs = ["sphinx", "sphinx-rtd-theme"]
-testing = ["django", "django-configurations (>=2.0)"]
+testing = ["django-configurations (>=2.0)", "django"]
+docs = ["sphinx-rtd-theme", "sphinx"]
 
 [[package]]
 name = "pytest-mock"
@@ -821,7 +821,7 @@ python-versions = ">=3.7"
 pytest = ">=5.0"
 
 [package.extras]
-dev = ["pre-commit", "tox", "pytest-asyncio"]
+dev = ["pytest-asyncio", "tox", "pre-commit"]
 
 [[package]]
 name = "python-dateutil"
@@ -854,8 +854,8 @@ python-versions = "*"
 defusedxml = "*"
 
 [package.extras]
-mysql = ["mysql-connector-python"]
 postgresql = ["psycopg2"]
+mysql = ["mysql-connector-python"]
 
 [[package]]
 name = "pytz"
@@ -896,8 +896,8 @@ idna = {version = ">=2.5,<4", markers = "python_version >= \"3\""}
 urllib3 = ">=1.21.1,<1.27"
 
 [package.extras]
-socks = ["PySocks (>=1.5.6,!=1.5.7)", "win-inet-pton"]
 use_chardet_on_py3 = ["chardet (>=3.0.2,<5)"]
+socks = ["win-inet-pton", "PySocks (>=1.5.6,!=1.5.7)"]
 
 [[package]]
 name = "requests-oauthlib"
@@ -938,7 +938,7 @@ python-versions = "*"
 
 [[package]]
 name = "sentry-sdk"
-version = "1.9.3"
+version = "1.9.4"
 description = "Python client for Sentry (https://sentry.io)"
 category = "main"
 optional = false
@@ -947,29 +947,29 @@ python-versions = "*"
 [package.dependencies]
 certifi = "*"
 urllib3 = [
-    {version = ">=1.26.9", markers = "python_version >= \"3.5\""},
     {version = ">=1.26.11", markers = "python_version >= \"3.6\""},
+    {version = ">=1.26.9", markers = "python_version >= \"3.5\""},
 ]
 
 [package.extras]
-aiohttp = ["aiohttp (>=3.5)"]
-beam = ["apache-beam (>=2.12)"]
-bottle = ["bottle (>=0.12.13)"]
-celery = ["celery (>=3)"]
-chalice = ["chalice (>=1.16.0)"]
-django = ["django (>=1.8)"]
-falcon = ["falcon (>=1.4)"]
-fastapi = ["fastapi (>=0.79.0)"]
-flask = ["flask (>=0.11)", "blinker (>=1.1)"]
-httpx = ["httpx (>=0.16.0)"]
-pure_eval = ["pure-eval", "executing", "asttokens"]
-pyspark = ["pyspark (>=2.4.4)"]
-quart = ["quart (>=0.16.1)", "blinker (>=1.1)"]
-rq = ["rq (>=0.6)"]
-sanic = ["sanic (>=0.8)"]
-sqlalchemy = ["sqlalchemy (>=1.2)"]
-starlette = ["starlette (>=0.19.1)"]
 tornado = ["tornado (>=5)"]
+starlette = ["starlette (>=0.19.1)"]
+sqlalchemy = ["sqlalchemy (>=1.2)"]
+sanic = ["sanic (>=0.8)"]
+rq = ["rq (>=0.6)"]
+quart = ["blinker (>=1.1)", "quart (>=0.16.1)"]
+pyspark = ["pyspark (>=2.4.4)"]
+pure_eval = ["asttokens", "executing", "pure-eval"]
+httpx = ["httpx (>=0.16.0)"]
+flask = ["blinker (>=1.1)", "flask (>=0.11)"]
+fastapi = ["fastapi (>=0.79.0)"]
+falcon = ["falcon (>=1.4)"]
+django = ["django (>=1.8)"]
+chalice = ["chalice (>=1.16.0)"]
+celery = ["celery (>=3)"]
+bottle = ["bottle (>=0.12.13)"]
+beam = ["apache-beam (>=2.12)"]
+aiohttp = ["aiohttp (>=3.5)"]
 
 [[package]]
 name = "sgmllib3k"
@@ -1039,8 +1039,8 @@ toml = ">=0.9.4"
 virtualenv = ">=16.0.0,<20.0.0 || >20.0.0,<20.0.1 || >20.0.1,<20.0.2 || >20.0.2,<20.0.3 || >20.0.3,<20.0.4 || >20.0.4,<20.0.5 || >20.0.5,<20.0.6 || >20.0.6,<20.0.7 || >20.0.7"
 
 [package.extras]
-docs = ["pygments-github-lexers (>=0.0.5)", "sphinx (>=2.0.0)", "sphinxcontrib-autoprogram (>=0.1.5)", "towncrier (>=18.5.0)"]
-testing = ["flaky (>=3.4.0)", "freezegun (>=0.3.11)", "pytest (>=4.0.0)", "pytest-cov (>=2.5.1)", "pytest-mock (>=1.10.0)", "pytest-randomly (>=1.0.0)", "psutil (>=5.6.1)", "pathlib2 (>=2.3.3)"]
+testing = ["pathlib2 (>=2.3.3)", "psutil (>=5.6.1)", "pytest-randomly (>=1.0.0)", "pytest-mock (>=1.10.0)", "pytest-cov (>=2.5.1)", "pytest (>=4.0.0)", "freezegun (>=0.3.11)", "flaky (>=3.4.0)"]
+docs = ["towncrier (>=18.5.0)", "sphinxcontrib-autoprogram (>=0.1.5)", "sphinx (>=2.0.0)", "pygments-github-lexers (>=0.0.5)"]
 
 [[package]]
 name = "typed-ast"
@@ -1091,9 +1091,9 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*, <4"
 
 [package.extras]
-brotli = ["brotlicffi (>=0.8.0)", "brotli (>=1.0.9)", "brotlipy (>=0.6.0)"]
-secure = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "certifi", "ipaddress"]
 socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
+secure = ["ipaddress", "certifi", "idna (>=2.0.0)", "cryptography (>=1.3.4)", "pyOpenSSL (>=0.14)"]
+brotli = ["brotlipy (>=0.6.0)", "brotli (>=1.0.9)", "brotlicffi (>=0.8.0)"]
 
 [[package]]
 name = "virtualenv"
@@ -1111,8 +1111,8 @@ platformdirs = ">=2,<3"
 six = ">=1.9.0,<2"
 
 [package.extras]
-docs = ["proselint (>=0.10.2)", "sphinx (>=3)", "sphinx-argparse (>=0.2.5)", "sphinx-rtd-theme (>=0.4.3)", "towncrier (>=21.3)"]
-testing = ["coverage (>=4)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", "pytest (>=4)", "pytest-env (>=0.6.2)", "pytest-freezegun (>=0.4.1)", "pytest-mock (>=2)", "pytest-randomly (>=1)", "pytest-timeout (>=1)", "packaging (>=20.0)"]
+testing = ["packaging (>=20.0)", "pytest-timeout (>=1)", "pytest-randomly (>=1)", "pytest-mock (>=2)", "pytest-freezegun (>=0.4.1)", "pytest-env (>=0.6.2)", "pytest (>=4)", "flaky (>=3)", "coverage-enable-subprocess (>=1)", "coverage (>=4)"]
+docs = ["towncrier (>=21.3)", "sphinx-rtd-theme (>=0.4.3)", "sphinx-argparse (>=0.2.5)", "sphinx (>=3)", "proselint (>=0.10.2)"]
 
 [[package]]
 name = "zipp"
@@ -1135,7 +1135,7 @@ server = ["gunicorn"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "7cdbbcc4b8da178fb4d9afc67f40c33dc9d1409ed98f532857d68b0fd8268c99"
+content-hash = "83cabf0c7a0b8886187379db9661878f244c358375ff1f9e610b4d2fbaa11678"
 
 [metadata.files]
 anyio = [
@@ -1833,8 +1833,8 @@ rjsmin = [
     {file = "rjsmin-1.2.0.tar.gz", hash = "sha256:6c529feb6c400984452494c52dd9fdf59185afeacca2afc5174a28ab37751a1b"},
 ]
 sentry-sdk = [
-    {file = "sentry-sdk-1.9.3.tar.gz", hash = "sha256:75643a8c656ffd61ea0a37bf4b0b9463825d6043d4fbfd7c80872ab66e4fa06e"},
-    {file = "sentry_sdk-1.9.3-py2.py3-none-any.whl", hash = "sha256:baac8e9426b7927f95792b1f38c83ae743a62471e92b72fa3ec2d5987609abeb"},
+    {file = "sentry-sdk-1.9.4.tar.gz", hash = "sha256:f1e2333d1922dca3f91e57dad872c73b3cc449ac8542867664fb898b2eec342f"},
+    {file = "sentry_sdk-1.9.4-py2.py3-none-any.whl", hash = "sha256:02b7bf195f209f51c9f9458098a8f541dbf82314d21477e68ad841668fcf9a46"},
 ]
 sgmllib3k = [
     {file = "sgmllib3k-1.0.0.tar.gz", hash = "sha256:7868fb1c8bfa764c1ac563d3cf369c381d1325d36124933a726f29fcdaa812e9"},
