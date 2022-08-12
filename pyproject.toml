@@ -27,7 +27,7 @@ lxml = "^4.9.1"
 psycopg2-binary = { version = "^2.9.3", optional = true }
 pymemcache = { version = "^3.5.2", optional = true }
 python = "^3.7"
-pytz = "^2022.1"
+pytz = "^2022.2"
 sentry-sdk = "^1.9.4"
 
 [tool.poetry.dev-dependencies]
