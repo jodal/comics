@@ -14,6 +14,17 @@
       <link rel="stylesheet" type="text/css" href="{% static 'css/comics.css' %}">
     {% endcompress %}
     {% block extra_head %}{% endblock %}
+    {% if google_analytics_code %}
+      <script async src="https://www.googletagmanager.com/gtag/js?id={{ google_analytics_code }}"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+	  dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+	gtag('config', '{{ google_analytics_code }}');
+      </script>
+    {% endif %}
   </head>
 
   <body>
@@ -161,22 +172,6 @@
         <script type="text/javascript" src="{% static 'js/bootstrap-3.3.7.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/moment-2.18.1.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/comics.js' %}"></script>
-        {% if google_analytics_code %}
-          <script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', '{{ google_analytics_code }}']);
-            // Avoid sending Google Analytics cookies to subdomains
-            _gaq.push(['_setDomainName', 'none']);
-            _gaq.push(['_setSiteSpeedSampleRate', 100]);
-            _gaq.push(['_trackPageview']);
-
-            (function() {
-              var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-              ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
-              var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-            })();
-          </script>
-        {% endif %}
       {% endcompress %}
     {% endblock extra_footer %}
 
