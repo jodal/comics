@@ -24,7 +24,7 @@ gunicorn = { version = "^20.1.0", optional = true }
 httpx = "^0.23.0"
 jsmin = "^3.0.1"
 lxml = "^4.9.1"
-psycopg2-binary = { version = "^2.9.3", optional = true }
+psycopg2-binary = { version = "^2.9.7", optional = true }
 pymemcache = { version = "^3.5.2", optional = true }
 python = "^3.7"
 pytz = "^2022.2"
