@@ -1,0 +1,28 @@
+version: "3"
+
+volumes:
+  postgres:
+
+services:
+  postgres:
+    image: postgis/postgis:13-3.1
+    environment:
+      - POSTGRES_PASSWORD=s3cret
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  web:
+    build: .
+    image: comics:latest
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=psql://postgres:s3cret@postgres:5432/postgres
+      - PORT=8000
+    command: web
+    ports:
+      - "8000:8000"
