@@ -130,7 +130,8 @@ class Release(models.Model):
 os.umask(0o002)
 
 image_storage = FileSystemStorage(
-    location=settings.MEDIA_ROOT, base_url=settings.MEDIA_URL
+    location=settings.MEDIA_ROOT,  # type: ignore  # noqa: PGH003
+    base_url=settings.MEDIA_URL,  # type: ignore  # noqa: PGH003
 )
 
 

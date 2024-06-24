@@ -60,6 +60,46 @@ filterwarnings = [
 DJANGO_SETTINGS_MODULE = "comics.settings"
 
 
+[tool.django-stubs]
+django_settings_module = "comics.settings"
+
+
+[tool.mypy]
+no_implicit_optional = true
+strict_equality = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unused_configs = true
+plugins = ["mypy_django_plugin.main"]
+
+[[tool.mypy.overrides]]
+module = "comics.aggregator.crawler"
+disallow_untyped_defs = true
+warn_return_any = true
+
+[[tool.mypy.overrides]]
+module = "comics.core.comic_data"
+disallow_untyped_defs = true
+warn_return_any = true
+
+[[tool.mypy.overrides]]
+module = "comics.*.migrations.*"
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = [
+    "debug_toolbar.*",
+    "django_extensions.*",
+    "environ.*",
+    "feedparser.*",
+    "invitations.*",
+    "lxml.*",
+    "PIL.*",
+    "tastypie.*",
+]
+ignore_missing_imports = true
+
+
 [tool.ruff]
 target-version = "py312"
 
@@ -87,7 +127,7 @@ select = [
     "PLW", # pylint warning
     #"PT",  # flake8-pytest-style  # TODO
     #"PTH", # flake8-use-pathlib  # TODO
-    "Q",   # flake8-quotes
+    "Q", # flake8-quotes
     #"RET", # flake8-return  # TODO
     "RSE", # flake8-raise
     "RUF", # ruff
@@ -97,8 +137,8 @@ select = [
     "TCH", # flake8-type-checking
     "TID", # flake8-tidy-imports
     #"TRY", # tryceratops  # TODO
-    "UP",  # pyupgrade
-    "W",   # pycodestyle
+    "UP", # pyupgrade
+    "W",  # pycodestyle
 ]
 ignore = [
     "A003",    # builtin-attribute-shadowing
