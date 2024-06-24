@@ -5,7 +5,6 @@ import comics.core.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = []
 
     operations = [
