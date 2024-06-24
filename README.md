@@ -33,6 +33,6 @@ dependencies, with a modern and maintainable deployment setup.
 
 ## License
 
-Comics is copyright 2009-2021 Stein Magnus Jodal and contributors.
+Comics is copyright 2009-2024 Stein Magnus Jodal and contributors.
 Comics is licensed under the
 [GNU Affero General Public License version 3](https://www.gnu.org/licenses/agpl-3.0.en.html).

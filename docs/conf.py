@@ -2,7 +2,7 @@ import toml
 
 project = "Comics"
 author = "Stein Magnus Jodal and contributors"
-copyright = f"2009-2021, {author}"
+copyright = f"2009-2024, {author}"
 
 release = toml.load("../pyproject.toml")["tool"]["poetry"]["version"]
 version = ".".join(release.split(".")[:2])
