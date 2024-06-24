@@ -11,8 +11,7 @@ class Command(ComicsBaseCommand):
             dest="comic_slugs",
             metavar="COMIC",
             help=(
-                "Comic to add to site, repeat for multiple. "
-                + 'Use "-c all" to add all.'
+                "Comic to add to site, repeat for multiple. " 'Use "-c all" to add all.'
             ),
         )
 

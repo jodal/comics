@@ -90,7 +90,7 @@ class Aggregator:
         elif date < crawler.history_capable:
             logger.info(
                 "%s: Adjusting date from %s to %s because of "
-                + "limited history capability",
+                "limited history capability",
                 crawler.comic.slug,
                 date,
                 crawler.history_capable,
@@ -99,7 +99,7 @@ class Aggregator:
         elif date > crawler.current_date:
             logger.info(
                 "%s: Adjusting date from %s to %s because the given "
-                + "date is in the future in the comic's time zone",
+                "date is in the future in the comic's time zone",
                 crawler.comic.slug,
                 date,
                 crawler.current_date,
@@ -143,10 +143,10 @@ class AggregatorConfig:
 
         try:
             comic = Comic.objects.get(slug=comic_slug)
-        except Comic.DoesNotExist:
+        except Comic.DoesNotExist as exc:
             error_msg = "Comic %s not found" % comic_slug
             logger.error(error_msg)
-            raise ComicsError(error_msg)
+            raise ComicsError(error_msg) from exc
         return comic
 
     def set_date_interval(self, from_date, to_date):

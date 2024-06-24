@@ -38,9 +38,6 @@ class Crawler(CrawlerBase):
             return
         url = url[0]
         text = release_page.root.xpath('//div[@class="entry"]/p')
-        if text:
-            text = text[0].text
-        else:
-            text = None
+        text = text[0].text if text else None
 
         return CrawlerImage(url, title, text)

@@ -181,7 +181,7 @@ ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default="*")
 # ### djang-debug-toolbar settings
 
 try:
-    import debug_toolbar  # noqa
+    import debug_toolbar  # noqa: F401
 except ImportError:
     pass
 else:
@@ -192,7 +192,7 @@ else:
 # ### django-extensions settings
 
 try:
-    import django_extensions  # noqa
+    import django_extensions  # noqa: F401
 except ImportError:
     pass
 else:
@@ -292,7 +292,7 @@ COMICS_IMAGE_BLACKLIST = [
     "6dec8be9787fc8b103746886033ccad7348bc4eec44c12994ba83596f3cbcd32",
     "f56248bf5b94b324d495c3967e568337b6b15249d4dfe7f9d8afdca4cb54cd29",
     "0a929bfebf333a16226e0734bbaefe3b85f9c615ff8fb7a777954793788b6e34",
-    # Dilbert (bt.no)
+    # Dilbert from bt.no
     "cde5b71cfb91c05d0cd19f35e325fc1cc9f529dfbce5c6e2583a3aa73d240638",
     # GoComics
     "60478320f08212249aefaa3ac647fa182dc7f0d7b70e5691c5f95f9859319bdf",

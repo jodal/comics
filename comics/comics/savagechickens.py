@@ -18,8 +18,6 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed("http://www.savagechickens.com/feed")
         for entry in feed.for_date(pub_date):
-            if "Cartoons" not in entry.tags:
-                print("skipping")
             url = entry.content0.src('img[src*="/wp-content/"]')
             title = entry.title
             return CrawlerImage(url, title)

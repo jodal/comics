@@ -88,20 +88,21 @@ class ImageDownloader:
             temp_file = tempfile.NamedTemporaryFile(suffix="comics")
             temp_file.write(response.content)
             temp_file.seek(0)
-            return temp_file
         except (httpx.HTTPError, httpx.InvalidURL, OSError) as error:
-            raise DownloaderHTTPError(self.identifier, error)
+            raise DownloaderHTTPError(self.identifier, error) from error
+        else:
+            return temp_file
 
     def _get_sha256sum(self, file_handle):
         original_position = file_handle.tell()
-        hash = hashlib.sha256()
+        h = hashlib.sha256()
         while True:
             data = file_handle.read(8096)
             if not data:
                 break
-            hash.update(data)
+            h.update(data)
         file_handle.seek(original_position)
-        return hash.hexdigest()
+        return h.hexdigest()
 
     def _check_if_blacklisted(self, checksum):
         if checksum in settings.COMICS_IMAGE_BLACKLIST:
@@ -110,21 +111,23 @@ class ImageDownloader:
     def _get_existing_image(self, comic, has_rerun_releases, checksum):
         try:
             image = Image.objects.get(comic=comic, checksum=checksum)
+        except Image.DoesNotExist:
+            return None
+        else:
             if image is not None and not has_rerun_releases:
                 raise ImageAlreadyExists(self.identifier)
             return image
-        except Image.DoesNotExist:
-            return None
 
     def _validate_image(self, image_file):
         try:
             image = PILImage.open(image_file)
             image.load()
-            return image
-        except IndexError:
-            raise ImageIsCorrupt(self.identifier)
+        except IndexError as error:
+            raise ImageIsCorrupt(self.identifier) from error
         except OSError as error:
-            raise ImageIsCorrupt(self.identifier, error)
+            raise ImageIsCorrupt(self.identifier, error) from error
+        else:
+            return image
 
     def _get_file_extension(self, image):
         if image.format not in IMAGE_FORMATS:

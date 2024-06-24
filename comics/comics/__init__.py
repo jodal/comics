@@ -1,9 +1,8 @@
 import os
 from types import ModuleType
-from typing import List
 
 
-def get_comic_module_names() -> List[str]:
+def get_comic_module_names() -> list[str]:
     module_files = os.listdir(os.path.dirname(__file__))
     module_names = []
     for file in module_files:

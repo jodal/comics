@@ -44,7 +44,7 @@ class ReleasesResourceTestCase(TestCase):
         self.assertEqual(
             image["text"],
             "People into masturbatory "
-            + "navel-gazing have a lot to learn about masturbation.",
+            "navel-gazing have a lot to learn about masturbation.",
         )
         self.assertEqual(image["height"], 235)
         self.assertEqual(image["width"], 740)

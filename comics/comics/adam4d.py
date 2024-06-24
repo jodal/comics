@@ -21,8 +21,7 @@ class Crawler(CrawlerBase):
             urls = entry.content0.src('img[src*="/wp-content/"]', allow_multiple=True)
 
             for url in urls:
-                url = url.replace("comics-rss", "comics")
-                results.append(CrawlerImage(url))
+                results.append(CrawlerImage(url.replace("comics-rss", "comics")))
 
             if not results:
                 continue

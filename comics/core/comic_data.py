@@ -1,6 +1,6 @@
 import logging
 from dataclasses import dataclass, field
-from typing import List, Optional, TypedDict
+from typing import TypedDict
 
 from comics.comics import get_comic_module, get_comic_module_names
 from comics.core.exceptions import ComicDataError
@@ -10,7 +10,7 @@ logger = logging.getLogger("comics.core.comic_data")
 
 
 class Options(TypedDict):
-    comic_slugs: List[str]
+    comic_slugs: list[str]
 
 
 @dataclass
@@ -23,8 +23,8 @@ class ComicDataBase:
 
     # Default values
     active: bool = field(init=False, default=True)
-    start_date: Optional[str] = field(init=False, default=None)
-    end_date: Optional[str] = field(init=False, default=None)
+    start_date: str | None = field(init=False, default=None)
+    end_date: str | None = field(init=False, default=None)
     rights: str = field(init=False, default="")
 
     def __post_init__(self) -> None:
@@ -53,7 +53,7 @@ class ComicDataLoader:
             logger.debug("Including inactive comics")
             return True
 
-    def _get_comic_slugs(self, options: Options) -> List[str]:
+    def _get_comic_slugs(self, options: Options) -> list[str]:
         comic_slugs = options.get("comic_slugs", None)
         if comic_slugs is None or len(comic_slugs) == 0:
             logger.error("No comic given. Use -c option to specify comic(s).")
@@ -84,19 +84,16 @@ class ComicDataLoader:
             raise ComicDataError(
                 "%s does not have a ComicData class" % comic_module.__name__
             )
-        data = comic_module.ComicData()  # type: ignore
+        data = comic_module.ComicData()
         assert isinstance(data, ComicDataBase)
         return data
 
     def _should_load_data(self, data: ComicDataBase) -> bool:
-        if (
+        return bool(
             data.active
             or self.include_inactive
             or Comic.objects.filter(slug=data.slug).exists()
-        ):
-            return True
-        else:
-            return False
+        )
 
     def _load_data(self, data: ComicDataBase) -> None:
         logger.debug("Updating database with: %s", data)

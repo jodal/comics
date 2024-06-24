@@ -5,7 +5,7 @@ import re
 import time
 import xml.sax
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple, Union
+from typing import TYPE_CHECKING
 
 import httpx
 import pytz
@@ -19,14 +19,16 @@ from comics.aggregator.exceptions import (
 )
 from comics.aggregator.feedparser import FeedParser
 from comics.aggregator.lxmlparser import LxmlParser
-from comics.core.models import Comic
+
+if TYPE_CHECKING:
+    from comics.core.models import Comic
 
 # For testability
 now = timezone.now
 today = datetime.date.today
 
 
-RequestHeaders = Dict[str, str]
+RequestHeaders = dict[str, str]
 
 
 @dataclass
@@ -34,14 +36,14 @@ class CrawlerRelease:
     comic: Comic
     pub_date: datetime.date
     has_rerun_releases: bool = False
-    _images: List[CrawlerImage] = field(default_factory=list)
+    _images: list[CrawlerImage] = field(default_factory=list)
 
     @property
     def identifier(self) -> str:
         return f"{self.comic.slug}/{self.pub_date}"
 
     @property
-    def images(self) -> List[CrawlerImage]:
+    def images(self) -> list[CrawlerImage]:
         return self._images
 
     def add_image(self, image: CrawlerImage) -> None:
@@ -52,8 +54,8 @@ class CrawlerRelease:
 @dataclass
 class CrawlerImage:
     url: str
-    title: Optional[str] = None
-    text: Optional[str] = None
+    title: str | None = None
+    text: str | None = None
     request_headers: RequestHeaders = field(default_factory=dict)
 
     def __post_init__(self) -> None:
@@ -68,7 +70,7 @@ class CrawlerImage:
             raise ImageURLNotFound(identifier)
 
 
-CrawlerResult = Union[None, CrawlerImage, List[CrawlerImage]]
+CrawlerResult = list[CrawlerImage] | CrawlerImage | None
 
 
 @dataclass
@@ -77,11 +79,11 @@ class CrawlerBase:
 
     # ### Crawler settings
     # Date of oldest release available for crawling
-    history_capable_date: Optional[str] = None
+    history_capable_date: str | None = None
     # Number of days a release is available for crawling
-    history_capable_days: Optional[int] = None
+    history_capable_days: int | None = None
     # On what weekdays the comic is published (example: "Mo,We,Fr")
-    schedule: Optional[str] = None
+    schedule: str | None = None
     # In approximately what time zone the comic is published
     # (example: "Europe/Oslo")
     time_zone: str = "UTC"
@@ -97,14 +99,14 @@ class CrawlerBase:
     headers: RequestHeaders = field(default_factory=dict)
 
     # Feed object which is reused when crawling multiple dates
-    feed: Optional[FeedParser] = None
+    feed: FeedParser | None = None
 
     # Page objects mapped against URL for use when crawling multiple dates
-    pages: Dict[str, LxmlParser] = field(default_factory=dict)
+    pages: dict[str, LxmlParser] = field(default_factory=dict)
 
     def get_crawler_release(
-        self, pub_date: Optional[datetime.date] = None
-    ) -> Optional[CrawlerRelease]:
+        self, pub_date: datetime.date | None = None
+    ) -> CrawlerRelease | None:
         """Get meta data for release at pub_date, or the latest release"""
 
         pub_date = self._get_date_to_crawl(pub_date)
@@ -115,9 +117,9 @@ class CrawlerBase:
         try:
             results = self.crawl(pub_date)
         except (httpx.HTTPError, httpx.InvalidURL, OSError) as error:
-            raise CrawlerHTTPError(release.identifier, error)
+            raise CrawlerHTTPError(release.identifier, error) from error
         except xml.sax.SAXException as error:
-            raise CrawlerHTTPError(release.identifier, str(error))
+            raise CrawlerHTTPError(release.identifier, str(error)) from error
 
         if not results:
             return None
@@ -132,7 +134,7 @@ class CrawlerBase:
 
         return release
 
-    def _get_date_to_crawl(self, pub_date: Optional[datetime.date]) -> datetime.date:
+    def _get_date_to_crawl(self, pub_date: datetime.date | None) -> datetime.date:
         identifier = f"{self.comic.slug}/{pub_date}"
 
         if pub_date is None:
@@ -141,9 +143,11 @@ class CrawlerBase:
         if pub_date < self.history_capable:
             raise NotHistoryCapable(identifier, self.history_capable)
 
-        if self.multiple_releases_per_day is False:
-            if self.comic.release_set.filter(pub_date=pub_date).count() > 0:
-                raise ReleaseAlreadyExists(identifier)
+        if (
+            self.multiple_releases_per_day is False
+            and self.comic.release_set.filter(pub_date=pub_date).count() > 0
+        ):
+            raise ReleaseAlreadyExists(identifier)
 
         return pub_date
 
@@ -192,8 +196,8 @@ class CrawlerBase:
             self.pages[page_url] = LxmlParser(page_url, headers=self.headers)
         return self.pages[page_url]
 
-    def string_to_date(self, string: str, format: str) -> datetime.date:
-        return datetime.datetime.strptime(string, format).date()
+    def string_to_date(self, string: str, fmt: str) -> datetime.date:
+        return datetime.datetime.strptime(string, fmt).date()
 
     def date_to_epoch(self, date: datetime.date) -> int:
         """The UNIX time of midnight at ``date`` in the comic's time zone"""
@@ -311,9 +315,9 @@ class NettserierCrawlerBase(CrawlerBase):
     # In order to get older releases we need to
     # loop through the pages and check the published date
     time_zone = "Europe/Oslo"
-    page_cache: Dict[str, Tuple[LxmlParser, datetime.date]] = {}
+    page_cache: dict[str, tuple[LxmlParser, datetime.date]] = {}
 
-    def get_page(self, url: str) -> Tuple[LxmlParser, datetime.date]:
+    def get_page(self, url: str) -> tuple[LxmlParser, datetime.date]:
         if url not in self.page_cache:
             page = self.parse_page(url)
             page_date = page.text('p[class="comic-pubtime"]')
@@ -339,10 +343,7 @@ class NettserierCrawlerBase(CrawlerBase):
         title = page.text("div.comic-text h4")
         text = page.text("div.comic-text p", allow_multiple=True)
 
-        if text[0].find("Published") > -1:
-            text = None
-        else:
-            text = text[0]
+        text = None if text[0].find("Published") > -1 else text[0]
 
         # Get comic image
         url = page.src('img[src*="/_ns/files"]')

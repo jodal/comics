@@ -29,9 +29,6 @@ class Crawler(CrawlerBase):
 
             # Put together text from multiple paragraphs
             text_paragraphs = entry.content0.text("p", allow_multiple=True)
-            if text_paragraphs is not None:
-                text = "\n\n".join(text_paragraphs)
-            else:
-                text = None
+            text = "\n\n".join(text_paragraphs) if text_paragraphs is not None else None
 
             return CrawlerImage(url, title, text)

@@ -22,10 +22,7 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         # FIXME: Seems like they are using gif images now and then
-        if pub_date < datetime.date(2003, 5, 1):
-            file_ext = "gif"
-        else:
-            file_ext = "jpg"
+        file_ext = "gif" if pub_date < datetime.date(2003, 5, 1) else "jpg"
         url = "http://www.vgcats.com/comics/images/{}.{}".format(
             pub_date.strftime("%y%m%d"),
             file_ext,

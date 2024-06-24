@@ -1,8 +1,10 @@
+# noqa: INP001
+
 import toml
 
 project = "Comics"
 author = "Stein Magnus Jodal and contributors"
-copyright = f"2009-2024, {author}"
+copyright = f"2009-2024, {author}"  # noqa: A001
 
 release = toml.load("../pyproject.toml")["tool"]["poetry"]["version"]
 version = ".".join(release.split(".")[:2])
