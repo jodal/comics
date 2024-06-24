@@ -24,10 +24,7 @@ def feedback(request):
 
             metadata = "Client IP address: %s\n" % request.META["REMOTE_ADDR"]
             metadata += "User agent: %s\n" % request.META["HTTP_USER_AGENT"]
-            metadata += "User: {} <{}>\n".format(
-                request.user.username,
-                request.user.email,
-            )
+            metadata += f"User: {request.user.username} <{request.user.email}>\n"
 
             message = "{}\n\n-- \n{}".format(form.cleaned_data["message"], metadata)
 

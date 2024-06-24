@@ -1,8 +1,6 @@
 import logging
 from dataclasses import dataclass, field
-from typing import List, Optional
-
-from mypy_extensions import TypedDict
+from typing import List, Optional, TypedDict
 
 from comics.comics import get_comic_module, get_comic_module_names
 from comics.core.exceptions import ComicDataError
@@ -91,11 +89,7 @@ class ComicDataLoader:
         return data
 
     def _should_load_data(self, data: ComicDataBase) -> bool:
-        if data.active:
-            return True
-        elif self.include_inactive:
-            return True
-        elif Comic.objects.filter(slug=data.slug).exists():
+        if data.active or self.include_inactive or Comic.objects.filter(slug=data.slug).exists():
             return True
         else:
             return False

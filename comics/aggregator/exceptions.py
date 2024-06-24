@@ -40,10 +40,7 @@ class NotHistoryCapable(CrawlerError):
     """Exception raised when a comic is not history capable for the date"""
 
     def __str__(self):
-        return "{}: Comic is not history capable ({})".format(
-            self.identifier,
-            self.value,
-        )
+        return f"{self.identifier}: Comic is not history capable ({self.value})"
 
 
 class ReleaseAlreadyExists(CrawlerError):
@@ -60,10 +57,7 @@ class DownloaderError(AggregatorError):
     """Base class for downloader exceptions"""
 
     def __str__(self):
-        return "{}: Generic downloader error ({})".format(
-            self.identifier,
-            self.value,
-        )
+        return f"{self.identifier}: Generic downloader error ({self.value})"
 
 
 class DownloaderHTTPError(DownloaderError):

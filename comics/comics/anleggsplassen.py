@@ -24,7 +24,7 @@ class Crawler(CrawlerBase):
         article = article[0]
         title = article.get("data-article-headline")
         date = article.get("data-publish-date")[0:10]
-        if not pub_date.strftime("%Y-%m-%d") == date:
+        if pub_date.strftime("%Y-%m-%d") != date:
             return
 
         image = article.xpath(
@@ -35,6 +35,6 @@ class Crawler(CrawlerBase):
             r"//(img\.gfx\.no/[0-9]+/[0-9]+/.+?)\.[0-9x]+mc\.([a-z]+)",
             srcset,
         )
-        url = "https://{}.{}".format(matches.group(1), matches.group(2))
+        url = f"https://{matches.group(1)}.{matches.group(2)}"
 
         return CrawlerImage(url, title)

@@ -135,7 +135,7 @@ image_storage = FileSystemStorage(
 
 
 def image_file_path(instance, filename):
-    return "{}/{}/{}".format(instance.comic.slug, filename[0], filename)
+    return f"{instance.comic.slug}/{filename[0]}/{filename}"
 
 
 class Image(models.Model):
@@ -175,4 +175,4 @@ class Image(models.Model):
         db_table = "comics_image"
 
     def __str__(self):
-        return "Image {}/{}...".format(self.comic.slug, self.checksum[:8])
+        return f"Image {self.comic.slug}/{self.checksum[:8]}..."

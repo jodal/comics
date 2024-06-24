@@ -170,10 +170,7 @@ class AggregatorConfig:
 
     def _validate_dates(self):
         if self.from_date and self.to_date and self.from_date > self.to_date:
-            error_msg = "From date ({}) after to date ({})".format(
-                self.from_date,
-                self.to_date,
-            )
+            error_msg = f"From date ({self.from_date}) after to date ({self.to_date})"
             logger.error(error_msg)
             raise ComicsError(error_msg)
         else:

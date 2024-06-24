@@ -55,7 +55,7 @@ class ImageDownloader:
             crawler_image.url, crawler_image.request_headers
         ) as image_file:
             checksum = self._get_sha256sum(image_file)
-            self.identifier = "{}/{}".format(self.identifier, checksum[:6])
+            self.identifier = f"{self.identifier}/{checksum[:6]}"
 
             self._check_if_blacklisted(checksum)
 

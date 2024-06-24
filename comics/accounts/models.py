@@ -53,7 +53,4 @@ class Subscription(models.Model):
         db_table = "comics_user_profile_comics"
 
     def __str__(self):
-        return "Subscription for {} to {}".format(
-            self.userprofile.user.email,
-            self.comic.slug,
-        )
+        return f"Subscription for {self.userprofile.user.email} to {self.comic.slug}"
