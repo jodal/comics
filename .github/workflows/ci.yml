@@ -12,14 +12,17 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: "Test: Python 3.12"
+          - name: "Tests"
             python: "3.12"
             tox: py312
             coverage: true
-          - name: "Lint: flake8"
+          - name: "ruff-format"
             python: "3.12"
-            tox: flake8
-          - name: "Lint: mypy"
+            tox: ruff-format
+          - name: "ruff-lint"
+            python: "3.12"
+            tox: ruff-lint
+          - name: "mypy"
             python: "3.12"
             tox: mypy
           - name: "Docs"

@@ -31,22 +31,16 @@ pytz = "^2024.1"
 sentry-sdk = "^2.6.0"
 setuptools = "^70.1.0"
 
-[tool.poetry.dev-dependencies]
-black = "^22.8"
+[tool.poetry.group.dev.dependencies]
 django-debug-toolbar = "^3.8.1"
 django-extensions = "^3.2.3"
 django-stubs = "^1.16.0"
-flake8 = "^7.1.0"
-flake8-black = "^0.3.6"
-flake8-bugbear = "^24.4.26"
-flake8-isort = "^6.1.1"
-isort = "^5.13.2"
 mypy = "^1.10.0"
-pep8-naming = "^0.14.1"
 pytest = "^8.2.2"
 pytest-cov = "^5.0.0"
 pytest-django = "^4.8.0"
 pytest-mock = "^3.14.0"
+ruff = "^0.4.10"
 tox = "^4.15.1"
 types-pytz = "^2024.1.0.20240417"
 types-toml = "^0.10.8.20240310"
@@ -57,12 +51,6 @@ cache = ["pymemcache"]
 pgsql = ["psycopg2-binary"]
 server = ["gunicorn"]
 
-[tool.black]
-target-version = ["py37"]
-
-[tool.isort]
-profile = "black"
-
 [tool.pytest.ini_options]
 filterwarnings = [
     "ignore::django.utils.deprecation.RemovedInDjango40Warning:invitations",
@@ -70,6 +58,67 @@ filterwarnings = [
     "ignore::django.utils.deprecation.RemovedInDjango41Warning",
 ]
 DJANGO_SETTINGS_MODULE = "comics.settings"
+
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "A",   # flake8-builtins
+    "ARG", # flake8-unused-arguments
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "C90", # mccabe
+    #"DTZ", # flake8-datetimez  # TODO
+    "E",   # pycodestyle
+    "ERA", # eradicate
+    "F",   # pyflakes
+    #"FBT", # flake8-boolean-trap  # TODO
+    "I",   # isort
+    "INP", # flake8-no-pep420
+    "ISC", # flake8-implicit-str-concat
+    "N",   # pep8-naming
+    "PGH", # pygrep-hooks
+    "PIE", # flake8-pie
+    "PLC", # pylint convention
+    "PLE", # pylint error
+    "PLR", # pylint refactor
+    "PLW", # pylint warning
+    #"PT",  # flake8-pytest-style  # TODO
+    #"PTH", # flake8-use-pathlib  # TODO
+    "Q",   # flake8-quotes
+    #"RET", # flake8-return  # TODO
+    "RSE", # flake8-raise
+    "RUF", # ruff
+    "SIM", # flake8-simplify
+    #"SLF", # flake8-self  # TODO
+    "T20", # flake8-print
+    "TCH", # flake8-type-checking
+    "TID", # flake8-tidy-imports
+    #"TRY", # tryceratops  # TODO
+    "UP",  # pyupgrade
+    "W",   # pycodestyle
+]
+ignore = [
+    "A003",    # builtin-attribute-shadowing
+    "ANN101",  # missing-type-self
+    "ANN102",  # missing-type-cls
+    "ARG001",  # unused-function-argument  # TODO
+    "ARG002",  # unused-method-argument  # TODO
+    "ISC001",  # single-line-implicit-string-concatenation
+    "PLR0913", # too-many-arguments  # TODO
+    "PLR2004", # magic-value-comparison
+    "N818",    # error-suffix-on-exception-name  # TODO
+    "RET504",  # unnecessary-assign
+    "RUF012",  # mutable-class-default  # TODO
+    "TRY003",  # raise-vanilla-args
+    "UP031",   # printf-string-formatting  # TODO
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["comics"]
+
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
