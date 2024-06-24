@@ -2,7 +2,7 @@
 
 _Comics is a webcomics aggregator._
 
-[![CI](https://img.shields.io/github/workflow/status/jodal/comics/CI)](https://github.com/jodal/comics/actions?workflow=CI)
+[![CI](https://img.shields.io/github/actions/workflow/status/jodal/comics/ci.yml)](https://github.com/jodal/comics/actions/workflows/ci.yml)
 [![Docs](https://img.shields.io/readthedocs/comics)](https://comics.readthedocs.io/)
 [![Coverage](https://img.shields.io/codecov/c/gh/jodal/comics)](https://codecov.io/gh/jodal/comics)
 
