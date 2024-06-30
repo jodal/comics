@@ -4,9 +4,11 @@
 *.log.*
 *.pyc
 *.sw[po]
-.eggs/
 /.coverage
 /.env
+/.mypy_cache/
+/.pytest_cache/
+/.ruff_cache/
 /.tox/
 /.venv/
 /coverage.xml
