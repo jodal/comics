@@ -6,7 +6,7 @@ from comics.core.models import Comic
 
 def create_user():
     user = User.objects.create_user("alice", "alice@example.com", "secret")
-    user.comics_profile.secret_key = "s3cretk3y"
+    user.comics_profile.secret_key = "s3cretk3y"  # noqa: S105
     user.comics_profile.save()
     return user
 

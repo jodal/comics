@@ -135,7 +135,7 @@ class AggregatorConfig:
             comics = []
             for comic_slug in comic_slugs:
                 comics.append(self._get_comic_by_slug(comic_slug))
-            logger.debug("Crawl targets: %s" % comics)
+            logger.debug("Crawl targets: %s", comics)
             self.comics = comics
 
     def _get_comic_by_slug(self, comic_slug):
