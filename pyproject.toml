@@ -29,7 +29,7 @@ pymemcache = { version = "^4.0.0", optional = true }
 python = "^3.12"
 pytz = "^2024.1"
 sentry-sdk = "^2.7.1"
-setuptools = "^70.1.1"
+setuptools = "^70.2.0"
 
 [tool.poetry.group.dev.dependencies]
 django-debug-toolbar = "^3.8.1"
