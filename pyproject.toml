@@ -6,7 +6,7 @@ authors = ["Stein Magnus Jodal <stein.magnus@jodal.no>"]
 license = "AGPL-3.0-only"
 
 [tool.poetry.dependencies]
-Django = "^3.2"
+Django = "^5.1"
 Pillow = "^10.3.0"
 PyYAML = { version = "^6.0.1", optional = true }
 biplist = { version = "^1.0.3", optional = true }
