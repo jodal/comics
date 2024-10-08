@@ -28,7 +28,7 @@ psycopg2-binary = { version = "^2.9.9", optional = true }
 pymemcache = { version = "^4.0.0", optional = true }
 python = "^3.12"
 pytz = "^2024.1"
-sentry-sdk = "^2.7.1"
+sentry-sdk = "^2.16.0"
 setuptools = "^72.1.0"
 
 [tool.poetry.group.dev.dependencies]
