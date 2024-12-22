@@ -79,20 +79,20 @@ class CrawlerBase:
 
     # ### Crawler settings
     # Date of oldest release available for crawling
-    history_capable_date: str | None = None
+    history_capable_date: str | None = field(init=False, default=None)
     # Number of days a release is available for crawling
-    history_capable_days: int | None = None
+    history_capable_days: int | None = field(init=False, default=None)
     # On what weekdays the comic is published (example: "Mo,We,Fr")
-    schedule: str | None = None
+    schedule: str | None = field(init=False, default=None)
     # In approximately what time zone the comic is published
     # (example: "Europe/Oslo")
-    time_zone: str = "UTC"
+    time_zone: str = field(init=False, default="UTC")
     # Whether to allow multiple releases per day
-    multiple_releases_per_day: bool = False
+    multiple_releases_per_day: bool = field(init=False, default=False)
 
     # ### Downloader settings
     # Whether the comic reruns old images as new releases
-    has_rerun_releases: bool = False
+    has_rerun_releases: bool = field(init=False, default=False)
 
     # ### Settings used for both crawling and downloading
     # Dictionary of HTTP headers to send when retrieving items from the site
