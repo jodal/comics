@@ -10,6 +10,7 @@ class ComicData(ComicDataBase):
     url = "http://www.gucomics.com/"
     start_date = "2000-07-10"
     rights = "Woody Hearn"
+    active = False
 
 
 class Crawler(CrawlerBase):
