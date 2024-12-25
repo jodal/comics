@@ -205,7 +205,7 @@ dev = [
     { name = "pytest-django", specifier = ">=4.8.0,<5" },
     { name = "pytest-mock", specifier = ">=3.14.0,<4" },
     { name = "ruff", specifier = ">=0.5.0,<1" },
-    { name = "tox", specifier = ">=4.15.1,<5" },
+    { name = "tox", specifier = ">=4.21" },
     { name = "tox-uv", specifier = ">=1.16.2" },
     { name = "types-pytz", specifier = ">=2024.1.0.20240417,<2025" },
     { name = "types-toml", specifier = ">=0.10.8.20240310,<0.11" },

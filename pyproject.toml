@@ -46,7 +46,7 @@ dev = [
     "pytest-mock>=3.14.0,<4",
     "ruff>=0.5.0,<1",
     "tox-uv>=1.16.2",
-    "tox>=4.15.1,<5",
+    "tox>=4.21",
     "types-pytz>=2024.1.0.20240417,<2025",
     "types-toml>=0.10.8.20240310,<0.11",
 ]
@@ -142,3 +142,61 @@ ignore = [
 
 [tool.ruff.lint.isort]
 known-first-party = ["comics"]
+
+[tool.tox]
+requires = ["tox>=4.21"]
+env_list = ["3.12", "docs", "ruff-format", "ruff-lint", "mypy"]
+
+[tool.tox.env_run_base]
+runner = "uv-venv-lock-runner"
+dependency_groups = ["dev"]
+set_env = { DJANGO_SECRET_KEY = "test-only-s3cret" }
+commands = [
+    [
+        "uv",
+        "run",
+        "pytest",
+        "--basetemp={envtmpdir}",
+        "--cov=comics",
+        "--cov-report=term-missing",
+        "{posargs}",
+    ],
+]
+
+[tool.tox.env.docs]
+changedir = "docs"
+commands = [
+    [
+        "uv",
+        "pip",
+        "install",
+        "-r",
+        "requirements.txt",
+    ],
+    [
+        "uv",
+        "run",
+        "sphinx-build",
+        "--builder",
+        "html",
+        "--doctree-dir",
+        "{envtmpdir}{/}doctrees",
+        ".",
+        "{envtmpdir}{/}html",
+    ],
+]
+
+[tool.tox.env."ruff-format"]
+runner = "uv-venv-lock-runner"
+dependency_groups = ["dev"]
+commands = [["uv", "run", "ruff", "format", "--check", "{posargs:.}"]]
+
+[tool.tox.env."ruff-lint"]
+runner = "uv-venv-lock-runner"
+dependency_groups = ["dev"]
+commands = [["uv", "run", "ruff", "check", "{posargs:.}"]]
+
+[tool.tox.env.mypy]
+runner = "uv-venv-lock-runner"
+dependency_groups = ["dev"]
+commands = [["uv", "run", "mypy", "{posargs:comics}"]]

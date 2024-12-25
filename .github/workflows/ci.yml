@@ -14,7 +14,7 @@ jobs:
         include:
           - name: "pytest"
             python: "3.12"
-            tox: py312
+            tox: "3.12"
             coverage: true
           - name: "ruff-format"
             python: "3.12"
