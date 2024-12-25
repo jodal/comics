@@ -25,20 +25,20 @@ Code formatting
 ===============
 
 All code is autoformatted, and PRs will only be accepted if they are
-formatted in the same way. To format code, use `Black
-<https://black.readthedocs.io/>`_::
+formatted in the same way. To format code, use `ruff
+<https://docs.astral.sh/ruff/>`_::
 
-    black .
+    ruff format .
 
 
 Linting
 =======
 
 All code should be lint free, and PRs will only be accepted if they pass
-linting. To check the code for code quality issues, use `flake8
-<https://flake8.pycqa.org/>`_::
+linting. To check the code for code quality issues, use `ruff
+<https://docs.astral.sh/ruff/>`_::
 
-    flake8
+    ruff check .
 
 
 Run it all
