@@ -196,7 +196,7 @@ requires-dist = [
     { name = "pymemcache", marker = "extra == 'cache'", specifier = ">=4.0.0,<5" },
     { name = "pytz", specifier = ">=2024.2" },
     { name = "pyyaml", marker = "extra == 'api'", specifier = ">=6.0.1,<7" },
-    { name = "sentry-sdk", specifier = ">=2.7.1" },
+    { name = "sentry-sdk", specifier = ">=2.19.2" },
     { name = "setuptools", specifier = ">=72.1" },
 ]
 
