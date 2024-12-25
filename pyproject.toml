@@ -22,7 +22,7 @@ dependencies = [
     "feedparser>=6.0.11",
     "httpx>=0.28.1",
     "jsmin==3.0.1",
-    "lxml==5.2.2",
+    "lxml>=5.3.0",
     "pytz==2024.1",
     "sentry-sdk>=2.7.1",
     "setuptools>=72.1",           # Needed by django-bootstrap-form
