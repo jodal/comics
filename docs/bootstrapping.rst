@@ -14,9 +14,8 @@ Create database
 A file-based SQLite database will be used, unless you have configured another
 database, like PostgreSQL.
 
-To create the database and database schema, open a terminal, go to top level
-directory in your checkout of the Comics repo, where you'll find the file
-``manage.py``, and run::
+To create the database and database schema, open a terminal, go to your checkout
+of the Comics repo, and run::
 
     uv run comics migrate
 
@@ -79,6 +78,6 @@ removing comics or releases.
 More options
 ------------
 
-All of the ``manage.py`` commands got more options available. Add the
+All of the ``uv run comics`` commands have more options available. Add the
 ``--help`` argument to any of the commands to get a full listing of the
 available options.

@@ -184,19 +184,8 @@ One way is to use ``cron`` e.g. by placing the following in
 
     MAILTO=comics@example.com
     PYTHONPATH=/srv/comics.example.com/app/comics
-    1 * * * * comics-user python /srv/comics.example.com/app/comics/manage.py get_releases -v0
-    1 3 * * * comics-user python /srv/comics.example.com/app/comics/manage.py clearsessions -v0
-
-If you have installed Comics' dependencies in a virtualenv instead of
-globally, the cronjob must also activate the virtualenv. This can be done by
-using the ``python`` interpreter from the virtualenv:
-
-.. code-block:: sh
-
-    MAILTO=comics@example.com
-    PYTHONPATH=/srv/comics.example.com/app/comics
-    1 * * * * comics-user /srv/comics.example.com/app/venv/bin/python /srv/comics.example.com/app/comics/manage.py get_releases -v0
-    1 3 * * * comics-user /srv/comics.example.com/app/venv/bin/python /srv/comics.example.com/app/comics/manage.py clearsessions -v0
+    1 * * * * comics-user cd /srv/comics.example.com/app && uv run comics get_releases -v0
+    1 3 * * * comics-user cd /srv/comics.example.com/app && uv run comics clearsessions -v0
 
 By setting ``MAILTO`` any exceptions raised by the comic crawlers will be sent
 by mail to the given mail address. ``1 * * * *`` specifies that the command
