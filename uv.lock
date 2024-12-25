@@ -113,7 +113,7 @@ wheels = [
 [[package]]
 name = "comics"
 version = "4.2.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "cssmin" },
     { name = "cssselect" },

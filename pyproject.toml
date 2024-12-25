@@ -34,6 +34,9 @@ cache = ["pymemcache>=4.0.0,<5"]
 pgsql = ["psycopg2-binary>=2.9.9,<3"]
 server = ["gunicorn>=22.0,<23"]
 
+[project.scripts]
+comics = "comics.__main__:main"
+
 [dependency-groups]
 dev = [
     "django-debug-toolbar>=3.8.1,<4",
@@ -208,3 +211,7 @@ commands = [["uv", "run", "ruff", "check", "{posargs:.}"]]
 runner = "uv-venv-lock-runner"
 dependency_groups = ["typing"]
 commands = [["uv", "run", "mypy", "{posargs:comics}"]]
+
+
+[tool.uv]
+package = true
