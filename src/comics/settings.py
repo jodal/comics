@@ -1,13 +1,18 @@
-import os
+from pathlib import Path
 
 import environ
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
-root = environ.Path(os.path.dirname(os.path.dirname(__file__)))
+# Paths
+ROOT_DIR = Path(__file__).parents[2]
+SRC_DIR = ROOT_DIR / "src"
+RUN_DIR = ROOT_DIR / "run"
 
+
+# Environment variables
 env = environ.Env()
-env.read_env(root(".env"))
+env.read_env(ROOT_DIR / ".env")
 
 
 #: The Django secret key
@@ -26,8 +31,8 @@ DEFAULT_FROM_EMAIL = env.str(
     "DJANGO_DEFAULT_FROM_EMAIL", default="webmaster@example.com"
 )
 
-SQLITE_FILE = root("db.sqlite3")
-SQLITE_URL = "sqlite:///" + os.path.abspath(SQLITE_FILE)
+SQLITE_FILE = str(RUN_DIR / "db.sqlite3")
+SQLITE_URL = f"sqlite:///{SQLITE_FILE}"
 
 #: Database settings. You will want to change this for production. See the
 #: Django docs for details.
@@ -47,19 +52,21 @@ USE_L10N = False
 USE_TZ = True
 
 #: Path on disk to where downloaded media will be stored and served from
-MEDIA_ROOT = env.str("DJANGO_MEDIA_ROOT", default=root("media"))
+MEDIA_ROOT = env.str("DJANGO_MEDIA_ROOT", default=str(RUN_DIR / "media"))
+Path(MEDIA_ROOT).mkdir(parents=True, exist_ok=True)
 
 #: URL to where downloaded media will be stored and served from
 MEDIA_URL = env.str("DJANGO_MEDIA_URL", default="/media/")
 
 #: Path on disk to where static files will be served from
-STATIC_ROOT = env.str("DJANGO_STATIC_ROOT", default=root("static"))
+STATIC_ROOT = env.str("DJANGO_STATIC_ROOT", default=str(RUN_DIR / "static"))
+Path(STATIC_ROOT).mkdir(parents=True, exist_ok=True)
 
 #: URL to where static files will be served from
 STATIC_URL = env.str("DJANGO_STATIC_URL", default="/static/")
 
 STATICFILES_DIRS = [
-    root("comics/static"),
+    str(SRC_DIR / "comics" / "static"),
 ]
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
@@ -303,7 +310,9 @@ COMICS_IMAGE_BLACKLIST = [
 ]
 
 #: Comics log file path on disk
-COMICS_LOG_FILENAME = env.str("COMICS_LOG_FILENAME", default=root("comics.log"))
+COMICS_LOG_FILENAME = env.str(
+    "COMICS_LOG_FILENAME", default=str(RUN_DIR / "comics.log")
+)
 
 #: Google Analytics tracking code. Tracking code will be included on all pages
 #: if this is set.
