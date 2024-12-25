@@ -178,7 +178,7 @@ requires-dist = [
     { name = "biplist", marker = "extra == 'api'", specifier = ">=1.0.3,<2" },
     { name = "cssmin", specifier = "==0.2.0" },
     { name = "cssselect", specifier = "==1.2.0" },
-    { name = "defusedxml", specifier = "==0.7.1" },
+    { name = "defusedxml", specifier = ">=0.7.1" },
     { name = "django", specifier = "==3.2.25" },
     { name = "django-allauth", specifier = "==0.51" },
     { name = "django-bootstrap-form", specifier = "==3.4" },

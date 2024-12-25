@@ -12,7 +12,7 @@ dependencies = [
     "pillow>=11.0.0",
     "cssmin==0.2.0",
     "cssselect==1.2.0",
-    "defusedxml==0.7.1",
+    "defusedxml>=0.7.1",
     "django-allauth==0.51",
     "django-bootstrap-form==3.4",
     "django-compressor==3.1",
