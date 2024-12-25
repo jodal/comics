@@ -9,7 +9,7 @@ classifiers = ["Private :: Do Not Upload"]
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "django==3.2.25",
-    "pillow==10.3.0",
+    "pillow>=11.0.0",
     "cssmin==0.2.0",
     "cssselect==1.2.0",
     "defusedxml==0.7.1",
