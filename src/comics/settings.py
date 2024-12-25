@@ -16,7 +16,10 @@ env.read_env(ROOT_DIR / ".env")
 
 
 #: The Django secret key
-SECRET_KEY = env.str("DJANGO_SECRET_KEY")
+SECRET_KEY = env.str(
+    "DJANGO_SECRET_KEY",
+    default="django-insecure-xe=$sh@*pt#46(_q(zy89quq&n1rut&o9b(qk1+o(^7exqqnj=",
+)
 
 #: Debug mode. Keep off in production.
 DEBUG = env.bool("DJANGO_DEBUG", default=False)
