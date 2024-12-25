@@ -37,7 +37,7 @@ jobs:
       - uses: astral-sh/setup-uv@v5
         with:
           python-version: ${{ matrix.python }}
-      - run: uv pip install tox
+      - run: uv pip install tox tox-uv
       - run: tox -e ${{ matrix.tox }}
         if: ${{ ! matrix.coverage }}
       - run: tox -e ${{ matrix.tox }} -- --cov-report=xml
