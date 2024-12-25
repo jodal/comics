@@ -186,7 +186,7 @@ requires-dist = [
     { name = "django-environ", specifier = "==0.9.0" },
     { name = "django-invitations", specifier = "==1.9.3" },
     { name = "django-tastypie", specifier = "==0.14.7" },
-    { name = "feedparser", specifier = "==6.0.11" },
+    { name = "feedparser", specifier = ">=6.0.11" },
     { name = "gunicorn", marker = "extra == 'server'", specifier = ">=22.0,<23" },
     { name = "httpx", specifier = "==0.27.0" },
     { name = "jsmin", specifier = "==3.0.1" },
