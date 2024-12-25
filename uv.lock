@@ -197,7 +197,7 @@ requires-dist = [
     { name = "pytz", specifier = ">=2024.2" },
     { name = "pyyaml", marker = "extra == 'api'", specifier = ">=6.0.1,<7" },
     { name = "sentry-sdk", specifier = ">=2.19.2" },
-    { name = "setuptools", specifier = ">=72.1" },
+    { name = "setuptools", specifier = ">=75.6.0" },
 ]
 
 [package.metadata.requires-dev]
