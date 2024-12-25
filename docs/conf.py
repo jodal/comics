@@ -6,7 +6,7 @@ project = "Comics"
 author = "Stein Magnus Jodal and contributors"
 copyright = f"2009-2024, {author}"  # noqa: A001
 
-release = toml.load("../pyproject.toml")["tool"]["poetry"]["version"]
+release = toml.load("../pyproject.toml")["project"]["version"]
 version = ".".join(release.split(".")[:2])
 
 extensions = [
