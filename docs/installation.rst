@@ -94,7 +94,7 @@ Development dependencies
 If you're setting up Comics for development, you should install `uv
 <https://docs.astral.sh/uv/>`_, and in the Comics git repository, run::
 
-    uv sync
+    uv sync --all-extras --all-groups
 
 This installs both the minimum dependencies as described above and all extra
 dependencies required for development.
