@@ -467,43 +467,43 @@ Loading :class:`ComicData` for your new comic
 ---------------------------------------------
 
 For Comics to know about your new crawler, you need to load the comic meta
-data into Comics' database. To do so, we run the ``comics_addcomics``
+data into Comics' database. To do so, we run the ``add_comics``
 command::
 
-    uv run comics comics_addcomics -c foo
+    uv run comics add_comics -c foo
 
 If you do any changes to the :class:`ComicData` class of any crawler, you must
-rerun ``comics_addcomics`` to update the database representation of the comic.
+rerun ``add_comics`` to update the database representation of the comic.
 
 
 Running the crawler
 -------------------
 
-When ``comics_addcomics`` has created a :class:`comics.core.models.Comic`
+When ``add_comics`` has created a :class:`comics.core.models.Comic`
 instance for the new crawler, you may use your new crawler to fetch the comic's
 release for the current date by running::
 
-    uv run comics comics_getreleases -c foo
+    uv run comics get_releases -c foo
 
 If you want to get comics releases for more than the current day, you may
 specify a date range to crawl, like::
 
-    uv run comics comics_getreleases -c foo -f 2009-01-01 -t 2009-03-31
+    uv run comics get_releases -c foo -f 2009-01-01 -t 2009-03-31
 
 The date range will automatically be adjusted to the crawlers *history
 capability*. You may also get comics for a date range without a specific end.
 In which case, the current date will be used instead::
 
-    uv run comics comics_getreleases -c foo -f 2009-01-01
+    uv run comics get_releases -c foo -f 2009-01-01
 
 If your new crawler is not working properly, you may add ``-v2`` to the command
 to turn on full debug output::
 
-    uv run comics comics_getreleases -c foo -v2
+    uv run comics get_releases -c foo -v2
 
-For a full overview of ``comics_getreleases`` options, run::
+For a full overview of ``get_releases`` options, run::
 
-    uv run comics comics_getreleases --help
+    uv run comics get_releases --help
 
 
 Submitting your new crawler for inclusion in Comics
