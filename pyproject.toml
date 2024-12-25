@@ -210,7 +210,7 @@ commands = [["uv", "run", "ruff", "check", "{posargs:.}"]]
 [tool.tox.env.mypy]
 runner = "uv-venv-lock-runner"
 dependency_groups = ["typing"]
-commands = [["uv", "run", "mypy", "{posargs:comics}"]]
+commands = [["uv", "run", "mypy", "{posargs:src}"]]
 
 
 [tool.uv]
