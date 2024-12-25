@@ -165,7 +165,7 @@ Collecting static files
 When you're not running in development mode, you'll need to collect the static
 files from all apps into the ``STATIC_ROOT``. To do this, run::
 
-    python manage.py collectstatic
+    uv run comics collectstatic
 
 You have to rerun this command every time you deploy changes to graphics, CSS
 and JavaScript. For more details, see the Django documentation on `staticfiles

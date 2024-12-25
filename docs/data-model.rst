@@ -33,7 +33,7 @@ the following command:
 
 .. code-block:: sh
 
-    python manage.py graph_models \
+    uv run comics graph_models \
       --output docs/_static/data_model.png \
       --group-models \
       core accounts

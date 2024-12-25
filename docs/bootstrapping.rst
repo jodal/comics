@@ -18,7 +18,7 @@ To create the database and database schema, open a terminal, go to top level
 directory in your checkout of the Comics repo, where you'll find the file
 ``manage.py``, and run::
 
-    python manage.py migrate
+    uv run comics migrate
 
 
 Create first user
@@ -26,7 +26,7 @@ Create first user
 
 When ``migrate`` has finished, create a superuser by running::
 
-    python manage.py createsuperuser
+    uv run comics createsuperuser
 
 
 Add comics
@@ -35,11 +35,11 @@ Add comics
 Then we need to seed the database with information on what comics to crawl.
 E.g. to add the *XKCD* comic from ``src/comics/comics/xkcd.py``, run::
 
-    python manage.py comics_addcomics -c xkcd
+    uv run comics comics_addcomics -c xkcd
 
 Optionally, you can add all available active comics to the database::
 
-    python manage.py comics_addcomics -c all
+    uv run comics comics_addcomics -c all
 
 
 Get comic releases
@@ -48,18 +48,18 @@ Get comic releases
 Next, we need to get hold of some comic releases, so we will crawl the web for
 them. This will get today's releases for all added comics::
 
-    python manage.py comics_getreleases
+    uv run comics comics_getreleases
 
 To get the release for a specific added comics, you can filter with
 ``--comic`` or ``-c``::
 
-    python manage.py comics_getreleases -c xkcd
+    uv run comics comics_getreleases -c xkcd
 
 To get releases for a range of days, you can specify a date range with
 ``--from`` or ``-f`` and ``--to`` or ``-t``. Both
 defaults to today, so you can leave the end of the range out::
 
-    python manage.py comics_getreleases -f 2011-11-11
+    uv run comics comics_getreleases -f 2011-11-11
 
 
 Development web server
@@ -68,7 +68,7 @@ Development web server
 Finally, to be able to browse the comic releases we have aggregated, start the
 Django development web server by running::
 
-    python manage.py runserver
+    uv run comics runserver
 
 If you now point your web browser at http://localhost:8000/ you will be able to
 browse all available comics. If you created a superuser above, you can log in
