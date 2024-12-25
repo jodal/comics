@@ -35,20 +35,13 @@ You can get hold of Comics in two ways:
 Software requirements
 =====================
 
-First of all, you need Python 3.7 or newer.
+The simple way is to install `uv <https://docs.astral.sh/uv/>`_, and while in
+the `comics` directory, run::
 
-It is recommended to create a virtualenv to isolate the dependencies from
-other applications on the same system::
+    uv sync --all-extras --all-groups
 
-    cd comics/
-    python3 -m venv .venv
-
-Every time you want to use the virtualenv, it must be activated::
-
-    source .venv/bin/activate
-
-If you make use of a virtualenv for a real deployment, you'll also need to make
-sure that the app server and the cronjob activate the virtualenv.
+This will install the correct Python version if needed, create or activate the
+virtualenv, and install dependencies.
 
 
 Minimum dependencies
@@ -57,7 +50,7 @@ Minimum dependencies
 The absolute minimum requirements for getting Comics up and running can be
 installed with::
 
-    python3 -m pip install .
+    uv sync --no-dev
 
 
 Optional dependencies for real deployments
@@ -66,26 +59,26 @@ Optional dependencies for real deployments
 To deploy Comics, you need a WSGI server. There are several options, but we
 tend to use Gunicorn. To install it, run::
 
-    python -m pip install ".[server]"
+    uv sync --extra server
 
 By default, Comics is configured to use an SQLite database. While SQLite is
 good enough for local development, we recommend PostgreSQL when running
 Comics long-term. To install the extra dependencies required to use
 PostgreSQL as the database, run::
 
-    python3 -m pip install ".[pgsql]"
+    uv sync --extra pgsql
 
 Comics does not require a cache, but responses are significantly faster with
 a cache available. To install the dependencies required for to use memcached
 as a cache, run::
 
-    python3 -m pip install ".[cache]"
+    uv sync --extra cache
 
 The Comics API is able to respond using JSON, XML, or several other formats.
 To install the dependencies required to provide all possible response
 formats, run::
 
-    python3 -m pip install ".[api]
+    uv sync --extra api
 
 
 Development dependencies
