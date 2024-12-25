@@ -91,10 +91,10 @@ formats, run::
 Development dependencies
 ------------------------
 
-If you're setting up Comics for development, you should install `Poetry
-<https://python-poetry.org/>`_, and in the Comics git repository, run::
+If you're setting up Comics for development, you should install `uv
+<https://docs.astral.sh/uv/>`_, and in the Comics git repository, run::
 
-    poetry install
+    uv sync
 
 This installs both the minimum dependencies as described above and all extra
 dependencies required for development.
