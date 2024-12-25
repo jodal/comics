@@ -87,7 +87,7 @@ class LxmlParser:
             return elements[0]
 
     def _parse_url(self, url, headers=None):
-        response = httpx.get(url, headers=headers)
+        response = httpx.get(url, headers=headers, follow_redirects=True)
         self._retrieved_url = str(response.url)
         content = response.content.replace(b"\x00", b"")
         root = self._parse_string(content)
