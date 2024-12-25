@@ -38,15 +38,22 @@ server = ["gunicorn>=22.0,<23"]
 dev = [
     "django-debug-toolbar>=3.8.1,<4",
     "django-extensions>=3.2.3,<4",
-    "django-stubs>=1.16.0,<2",
-    "mypy>=1.10.0,<2",
+    "tox-uv>=1.16.2",
+    "tox>=4.21",
+]
+# TODO: Replace docs/requirements.txt once Read the Docs supports dependency groups:
+# https://github.com/readthedocs/readthedocs.org/issues/11766
+# docs = []
+lint = ["ruff>=0.8.4"]
+tests = [
     "pytest>=8.2.2,<9",
     "pytest-cov>=5.0.0,<6",
     "pytest-django>=4.8.0,<5",
     "pytest-mock>=3.14.0,<4",
-    "ruff>=0.5.0,<1",
-    "tox-uv>=1.16.2",
-    "tox>=4.21",
+]
+typing = [
+    "django-stubs>=1.16.0,<2",
+    "mypy>=1.10.0,<2",
     "types-pytz>=2024.1.0.20240417,<2025",
     "types-toml>=0.10.8.20240310,<0.11",
 ]
@@ -149,7 +156,7 @@ env_list = ["3.12", "docs", "ruff-format", "ruff-lint", "mypy"]
 
 [tool.tox.env_run_base]
 runner = "uv-venv-lock-runner"
-dependency_groups = ["dev"]
+dependency_groups = ["tests"]
 set_env = { DJANGO_SECRET_KEY = "test-only-s3cret" }
 commands = [
     [
@@ -164,6 +171,7 @@ commands = [
 ]
 
 [tool.tox.env.docs]
+dependency_groups = []
 changedir = "docs"
 commands = [
     [
@@ -188,15 +196,15 @@ commands = [
 
 [tool.tox.env."ruff-format"]
 runner = "uv-venv-lock-runner"
-dependency_groups = ["dev"]
+dependency_groups = ["lint"]
 commands = [["uv", "run", "ruff", "format", "--check", "{posargs:.}"]]
 
 [tool.tox.env."ruff-lint"]
 runner = "uv-venv-lock-runner"
-dependency_groups = ["dev"]
+dependency_groups = ["lint"]
 commands = [["uv", "run", "ruff", "check", "{posargs:.}"]]
 
 [tool.tox.env.mypy]
 runner = "uv-venv-lock-runner"
-dependency_groups = ["dev"]
+dependency_groups = ["typing"]
 commands = [["uv", "run", "mypy", "{posargs:comics}"]]

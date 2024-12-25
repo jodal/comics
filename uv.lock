@@ -154,15 +154,21 @@ server = [
 dev = [
     { name = "django-debug-toolbar" },
     { name = "django-extensions" },
-    { name = "django-stubs" },
-    { name = "mypy" },
+    { name = "tox" },
+    { name = "tox-uv" },
+]
+lint = [
+    { name = "ruff" },
+]
+tests = [
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "pytest-django" },
     { name = "pytest-mock" },
-    { name = "ruff" },
-    { name = "tox" },
-    { name = "tox-uv" },
+]
+typing = [
+    { name = "django-stubs" },
+    { name = "mypy" },
     { name = "types-pytz" },
     { name = "types-toml" },
 ]
@@ -198,15 +204,19 @@ requires-dist = [
 dev = [
     { name = "django-debug-toolbar", specifier = ">=3.8.1,<4" },
     { name = "django-extensions", specifier = ">=3.2.3,<4" },
-    { name = "django-stubs", specifier = ">=1.16.0,<2" },
-    { name = "mypy", specifier = ">=1.10.0,<2" },
+    { name = "tox", specifier = ">=4.21" },
+    { name = "tox-uv", specifier = ">=1.16.2" },
+]
+lint = [{ name = "ruff", specifier = ">=0.8.4" }]
+tests = [
     { name = "pytest", specifier = ">=8.2.2,<9" },
     { name = "pytest-cov", specifier = ">=5.0.0,<6" },
     { name = "pytest-django", specifier = ">=4.8.0,<5" },
     { name = "pytest-mock", specifier = ">=3.14.0,<4" },
-    { name = "ruff", specifier = ">=0.5.0,<1" },
-    { name = "tox", specifier = ">=4.21" },
-    { name = "tox-uv", specifier = ">=1.16.2" },
+]
+typing = [
+    { name = "django-stubs", specifier = ">=1.16.0,<2" },
+    { name = "mypy", specifier = ">=1.10.0,<2" },
     { name = "types-pytz", specifier = ">=2024.1.0.20240417,<2025" },
     { name = "types-toml", specifier = ">=0.10.8.20240310,<0.11" },
 ]
