@@ -153,6 +153,24 @@ ignore = [
 [tool.ruff.lint.isort]
 known-first-party = ["comics"]
 
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+comics = [
+    "*.css",
+    "*.eot",
+    "*.html",
+    "*.js",
+    "*.png",
+    "*.svg",
+    "*.ttf",
+    "*.woff",
+    "*.woff2",
+]
+
+
 [tool.tox]
 requires = ["tox>=4.21"]
 env_list = ["3.12", "docs", "ruff-format", "ruff-lint", "mypy"]
@@ -215,3 +233,8 @@ commands = [["uv", "run", "mypy", "{posargs:src}"]]
 
 [tool.uv]
 package = true
+
+
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
