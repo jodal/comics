@@ -132,6 +132,7 @@ dependencies = [
     { name = "sentry-sdk" },
     { name = "setuptools" },
     { name = "typenv" },
+    { name = "whitenoise" },
 ]
 
 [package.optional-dependencies]
@@ -194,6 +195,7 @@ requires-dist = [
     { name = "sentry-sdk", specifier = ">=2.19.2" },
     { name = "setuptools", specifier = ">=75.6.0" },
     { name = "typenv", specifier = ">=0.2.0" },
+    { name = "whitenoise", specifier = ">=6.8.2" },
 ]
 
 [package.metadata.requires-dev]
@@ -1090,4 +1092,13 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/bf/75/53316a5a8050069228a2f6d11f32046cfa94fbb6cc3f08703f59b873de2e/virtualenv-20.28.0.tar.gz", hash = "sha256:2c9c3262bb8e7b87ea801d715fae4495e6032450c71d2309be9550e7364049aa", size = 7650368 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/10/f9/0919cf6f1432a8c4baa62511f8f8da8225432d22e83e3476f5be1a1edc6e/virtualenv-20.28.0-py3-none-any.whl", hash = "sha256:23eae1b4516ecd610481eda647f3a7c09aea295055337331bb4e6892ecce47b0", size = 4276702 },
+]
+
+[[package]]
+name = "whitenoise"
+version = "6.8.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/68/49/c21ebb5b911888c349a849ec7d1ead2dffbbcc4e2be0f6af2a7dbac03393/whitenoise-6.8.2.tar.gz", hash = "sha256:486bd7267a375fa9650b136daaec156ac572971acc8bf99add90817a530dd1d4", size = 25892 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/8c/3a/8d22513e1942899270dcdbd47f9886309836442cd7ede4b0d00be79715f5/whitenoise-6.8.2-py3-none-any.whl", hash = "sha256:df12dce147a043d1956d81d288c6f0044147c6d2ab9726e5772ac50fb45d2280", size = 20158 },
 ]

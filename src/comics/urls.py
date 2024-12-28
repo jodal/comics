@@ -43,6 +43,3 @@ if settings.DEBUG:
         pass
     else:
         urlpatterns += debug_toolbar_urls()
-
-
-urlpatterns += static(settings.STATIC_URL)

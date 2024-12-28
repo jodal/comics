@@ -102,6 +102,7 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.sessions",
     "django.contrib.sites",
+    "whitenoise.runserver_nostatic",  # Before staticfiles
     "django.contrib.staticfiles",
 ]
 LOCAL_APPS = [
@@ -128,6 +129,7 @@ INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 #
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -266,6 +268,15 @@ DATE_FORMAT = "l j F Y"
 TIME_FORMAT = "H:i"
 
 
+# Storage backends
+#
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    }
+}
+
+
 # Static files (CSS, JavaScript, etc.)
 #
 # Path on disk to where static files will be collected to and served from.
@@ -292,6 +303,9 @@ STATICFILES_FINDERS = [
 
 
 # Static files - django-compressor
+#
+# Compress files offline to enable WhiteNoise to serve the generated files.
+COMPRESS_OFFLINE = True
 #
 # Explicitly use HtmlParser to avoid depending on BeautifulSoup through the use
 # of LxmlParser

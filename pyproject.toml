@@ -25,6 +25,7 @@ dependencies = [
     "sentry-sdk>=2.19.2",
     "setuptools>=75.6.0",             # Needed by django-bootstrap-form
     "typenv>=0.2.0",
+    "whitenoise>=6.8.2",
 ]
 
 [project.optional-dependencies]
