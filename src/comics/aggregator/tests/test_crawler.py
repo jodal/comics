@@ -1,6 +1,6 @@
 import datetime
+import zoneinfo
 
-import pytz
 from django.test import TestCase
 
 from comics.aggregator import crawler
@@ -13,27 +13,27 @@ class CurrentDateWhenLocalTZIsUTCTest(TestCase):
     now: datetime.datetime
 
     def setUp(self):
-        self.tz = pytz.timezone(self.time_zone_local)
+        self.tz = zoneinfo.ZoneInfo(self.time_zone_local)
         self.crawler = crawler.CrawlerBase(None)
         crawler.now = lambda: self.now
         crawler.today = lambda: self.now.today()
 
     def test_current_date_when_crawler_is_in_local_today(self):
-        self.now = self.tz.localize(datetime.datetime(2001, 2, 5, 23, 1, 0))
+        self.now = datetime.datetime(2001, 2, 5, 23, 1, 0, tzinfo=self.tz)
         self.crawler.time_zone = self.time_zone_local
 
         today = datetime.date(2001, 2, 5)
         self.assertEqual(self.crawler.current_date, today)
 
     def test_current_date_when_crawler_is_in_local_tomorrow(self):
-        self.now = self.tz.localize(datetime.datetime(2001, 2, 5, 23, 1, 0))
+        self.now = datetime.datetime(2001, 2, 5, 23, 1, 0, tzinfo=self.tz)
         self.crawler.time_zone = self.time_zone_ahead
 
         tomorrow = datetime.date(2001, 2, 6)
         self.assertEqual(self.crawler.current_date, tomorrow)
 
     def test_current_date_when_crawler_is_in_local_yesterday(self):
-        self.now = self.tz.localize(datetime.datetime(2001, 2, 5, 0, 59, 0))
+        self.now = datetime.datetime(2001, 2, 5, 0, 59, 0, tzinfo=self.tz)
         self.crawler.time_zone = self.time_zone_behind
 
         yesterday = datetime.date(2001, 2, 4)

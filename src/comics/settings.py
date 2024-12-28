@@ -26,6 +26,9 @@ DEBUG = env.bool(
     "DJANGO_DEBUG",
     default=False,
 )
+INTERNAL_IPS = [
+    "127.0.0.1"  # Required by django-debug-toolbar
+]
 
 #: Site admins
 ADMINS = []
@@ -243,10 +246,10 @@ COMPRESS_PARSER = "compressor.parser.HtmlParser"
 COMPRESS_FILTERS = {
     "css": [
         "compressor.filters.css_default.CssAbsoluteFilter",
-        "compressor.filters.cssmin.CSSMinFilter",
+        "compressor.filters.cssmin.rCSSMinFilter",
     ],
     "js": [
-        "compressor.filters.jsmin.JSMinFilter",
+        "compressor.filters.jsmin.rJSMinFilter",
     ],
 }
 

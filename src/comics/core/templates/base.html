@@ -19,10 +19,10 @@
       <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() {
-	  dataLayer.push(arguments);
+          dataLayer.push(arguments);
         }
         gtag('js', new Date());
-	gtag('config', '{{ google_analytics_code }}');
+        gtag('config', '{{ google_analytics_code }}');
       </script>
     {% endif %}
   </head>
@@ -141,9 +141,9 @@
           </p>
           <ul class="list-inline">
             <li><a href="{% url "help_about" %}">About</a></li>
-	    {% if user.is_authenticated %}
+            {% if user.is_authenticated %}
               <li><a href="{% url "help_feedback" %}">Contact</a></li>
-	    {% endif %}
+            {% endif %}
             <li><a href="{% url "help_keyboard" %}">Keyboard shortcuts</a></li>
           </ul>
         </div>

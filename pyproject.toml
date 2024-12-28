@@ -8,22 +8,19 @@ license = { text = "AGPL-3.0-only" }
 classifiers = ["Private :: Do Not Upload"]
 requires-python = ">=3.12,<3.13"
 dependencies = [
-    "cssmin==0.2.0",
-    "cssselect==1.2.0",
+    "cssselect>=1.2.0",
     "defusedxml>=0.7.1",
-    "dj-database-url>=2.2.0",
-    "django-allauth==0.51",
-    "django-bootstrap-form==3.4",
-    "django-compressor==3.1",
-    "django-invitations==1.9.3",
-    "django-tastypie==0.14.7",
-    "django==3.2.25",
+    "dj-database-url>=2.3.0",
+    "django-allauth==0.51",       # TODO: Review changelog and update
+    "django-bootstrap-form>=3.4",
+    "django-compressor>=4.5.1",
+    "django-invitations>=2.1.0",
+    "django-tastypie>=0.15.0",
+    "django>=4.2.17,<5",
     "feedparser>=6.0.11",
     "httpx>=0.28.1",
-    "jsmin==3.0.1",
     "lxml>=5.3.0",
     "pillow>=11.0.0",
-    "pytz>=2024.2",
     "sentry-sdk>=2.19.2",
     "setuptools>=75.6.0",         # Needed by django-bootstrap-form
     "typenv>=0.2.0",
@@ -40,8 +37,8 @@ comics = "comics.__main__:main"
 
 [dependency-groups]
 dev = [
-    "django-debug-toolbar>=3.8.1,<4",
-    "django-extensions>=3.2.3,<4",
+    "django-debug-toolbar>=4.4.6",
+    "django-extensions>=3.2.3",
     "tox-uv>=1.16.2",
     "tox>=4.21",
 ]
@@ -50,17 +47,12 @@ dev = [
 # docs = []
 lint = ["ruff>=0.8.4"]
 tests = [
-    "pytest>=8.2.2,<9",
-    "pytest-cov>=5.0.0,<6",
-    "pytest-django>=4.8.0,<5",
-    "pytest-mock>=3.14.0,<4",
+    "pytest>=8.3.4",
+    "pytest-cov>=6.0.0",
+    "pytest-django>=4.8.0",
+    "pytest-mock>=3.14.0",
 ]
-typing = [
-    "django-stubs>=1.16.0,<2",
-    "mypy>=1.10.0,<2",
-    "types-pytz>=2024.1.0.20240417,<2025",
-    "types-toml>=0.10.8.20240310,<0.11",
-]
+typing = ["django-stubs==4.2.7", "mypy>=1.7,<1.8"]
 
 
 [tool.django-stubs]
@@ -68,11 +60,6 @@ django_settings_module = "comics.settings"
 
 
 [tool.pytest.ini_options]
-filterwarnings = [
-    "ignore::django.utils.deprecation.RemovedInDjango40Warning:invitations",
-    "ignore::django.utils.deprecation.RemovedInDjango40Warning:tastypie",
-    "ignore::django.utils.deprecation.RemovedInDjango41Warning",
-]
 DJANGO_SETTINGS_MODULE = "comics.settings"
 
 

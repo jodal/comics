@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import uuid
 
 from django.contrib.auth.models import User
@@ -29,7 +31,7 @@ class UserProfile(models.Model):
         default=make_secret_key,
         help_text="Secret key for feed and API access",
     )
-    comics = models.ManyToManyField(
+    comics: models.ManyToManyField[Comic, UserProfile] = models.ManyToManyField(
         Comic,
         through="Subscription",
     )

@@ -29,9 +29,20 @@ urlpatterns = [
     path("", include("comics.browser.urls")),
 ]
 
+
 # Let Django host media if doing local development on runserver
 if not settings.MEDIA_URL.startswith("http"):
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+# Include debug_toolbar during development
+if settings.DEBUG:
+    try:
+        from debug_toolbar.toolbar import debug_toolbar_urls
+    except ImportError:
+        pass
+    else:
+        urlpatterns += debug_toolbar_urls()
 
 
 urlpatterns += static(settings.STATIC_URL)

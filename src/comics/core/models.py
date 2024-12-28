@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import datetime
 import os
 
@@ -93,7 +95,7 @@ class Release(models.Model):
         verbose_name="publication date",
         db_index=True,
     )
-    images = models.ManyToManyField(
+    images: models.ManyToManyField[Image, Release] = models.ManyToManyField(
         "Image",
         related_name="releases",
     )

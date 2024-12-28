@@ -110,7 +110,7 @@ class Migration(migrations.Migration):
                         height_field="height",
                         storage=django.core.files.storage.FileSystemStorage(
                             base_url="/media/",
-                            location="/home/jodal/dev/comics/media",
+                            location="/home/jodal/dev/comics/run/media",
                         ),
                         width_field="width",
                         upload_to=comics.core.models.image_file_path,
