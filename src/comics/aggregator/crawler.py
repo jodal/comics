@@ -4,11 +4,11 @@ import datetime
 import re
 import time
 import xml.sax
+import zoneinfo
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
 
 import httpx
-import pytz
 from django.utils import timezone
 
 from comics.aggregator.exceptions import (
@@ -153,8 +153,8 @@ class CrawlerBase:
 
     @property
     def current_date(self) -> datetime.date:
-        tz = pytz.timezone(self.time_zone)
-        now_in_tz = tz.normalize(now().astimezone(tz))
+        time_zone = zoneinfo.ZoneInfo(self.time_zone)
+        now_in_tz = now().astimezone(time_zone)
         return now_in_tz.date()
 
     @property
@@ -201,9 +201,10 @@ class CrawlerBase:
 
     def date_to_epoch(self, date: datetime.date) -> int:
         """The UNIX time of midnight at ``date`` in the comic's time zone"""
-        naive_midnight = datetime.datetime(date.year, date.month, date.day)
-        local_midnight = pytz.timezone(self.time_zone).localize(naive_midnight)
-        return int(time.mktime(local_midnight.utctimetuple()))
+        midnight = datetime.datetime(
+            date.year, date.month, date.day, tzinfo=zoneinfo.ZoneInfo(self.time_zone)
+        )
+        return int(time.mktime(midnight.utctimetuple()))
 
 
 class ComicsKingdomCrawlerBase(CrawlerBase):

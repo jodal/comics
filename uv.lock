@@ -128,7 +128,6 @@ dependencies = [
     { name = "httpx" },
     { name = "lxml" },
     { name = "pillow" },
-    { name = "pytz" },
     { name = "sentry-sdk" },
     { name = "setuptools" },
     { name = "typenv" },
@@ -168,7 +167,6 @@ tests = [
 typing = [
     { name = "django-stubs" },
     { name = "mypy" },
-    { name = "types-pytz" },
 ]
 
 [package.metadata]
@@ -190,7 +188,6 @@ requires-dist = [
     { name = "pillow", specifier = ">=11.0.0" },
     { name = "psycopg2-binary", marker = "extra == 'pgsql'", specifier = ">=2.9.9,<3" },
     { name = "pymemcache", marker = "extra == 'cache'", specifier = ">=4.0.0,<5" },
-    { name = "pytz", specifier = ">=2024.2" },
     { name = "pyyaml", marker = "extra == 'api'", specifier = ">=6.0.1,<7" },
     { name = "sentry-sdk", specifier = ">=2.19.2" },
     { name = "setuptools", specifier = ">=75.6.0" },
@@ -214,7 +211,6 @@ tests = [
 typing = [
     { name = "django-stubs", specifier = "==4.2.7" },
     { name = "mypy", specifier = ">=1.7,<1.8" },
-    { name = "types-pytz", specifier = ">=2024.1.0.20240417,<2025" },
 ]
 
 [[package]]
@@ -796,15 +792,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/5f/4a/29feb8da6c44f77007dcd29518fea73a3d5653ee02a587ae1f17f1f5ddb5/python3-openid-3.2.0.tar.gz", hash = "sha256:33fbf6928f401e0b790151ed2b5290b02545e8775f982485205a066f874aaeaf", size = 305600 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e0/a5/c6ba13860bdf5525f1ab01e01cc667578d6f1efc8a1dba355700fb04c29b/python3_openid-3.2.0-py3-none-any.whl", hash = "sha256:6626f771e0417486701e0b4daff762e7212e820ca5b29fcc0d05f6f8736dfa6b", size = 133681 },
-]
-
-[[package]]
-name = "pytz"
-version = "2024.2"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/3a/31/3c70bf7603cc2dca0f19bdc53b4537a797747a58875b552c8c413d963a3f/pytz-2024.2.tar.gz", hash = "sha256:2aa355083c50a0f93fa581709deac0c9ad65cca8a9e9beac660adcbd493c798a", size = 319692 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/11/c3/005fcca25ce078d2cc29fd559379817424e94885510568bc1bc53d7d5846/pytz-2024.2-py2.py3-none-any.whl", hash = "sha256:31c7c1817eb7fae7ca4b8c7ee50c72f93aa2dd863de768e1ef4245d426aa0725", size = 508002 },
 ]
 
 [[package]]
