@@ -90,7 +90,7 @@ STATIC_URL = env.str(
 )
 
 STATICFILES_DIRS = [
-    str(Path(__file__) / "static"),
+    str(Path(__file__).parent / "static"),
 ]
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
