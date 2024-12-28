@@ -26,6 +26,9 @@ DEBUG = env.bool(
     "DJANGO_DEBUG",
     default=False,
 )
+INTERNAL_IPS = [
+    "127.0.0.1"  # Required by django-debug-toolbar
+]
 
 #: Site admins
 ADMINS = []

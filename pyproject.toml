@@ -37,7 +37,7 @@ comics = "comics.__main__:main"
 
 [dependency-groups]
 dev = [
-    "django-debug-toolbar>=3.8.1,<4",
+    "django-debug-toolbar>=4.4.6",
     "django-extensions>=3.2.3,<4",
     "tox-uv>=1.16.2",
     "tox>=4.21",
