@@ -53,7 +53,7 @@ class ReleaseMixin(LoginRequiredMixin, ComicMixin):
     """Things common for *all* views of comic releases"""
 
     allow_future = True
-    template_name = "browser/release_list.html"
+    template_name: str | None = "browser/release_list.html"
 
     def render_to_response(self, context, **kwargs):
         # We hook into render_to_response() instead of get_context_data()
