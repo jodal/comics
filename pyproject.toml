@@ -23,7 +23,7 @@ dependencies = [
     "pillow>=11.0.0",
     "pytz>=2024.2",
     "sentry-sdk>=2.19.2",
-    "setuptools>=75.6.0", # Needed by django-bootstrap-form
+    "setuptools>=75.6.0",         # Needed by django-bootstrap-form
     "typenv>=0.2.0",
 ]
 
@@ -54,8 +54,8 @@ tests = [
     "pytest-mock>=3.14.0,<4",
 ]
 typing = [
-    "django-stubs>=1.16.0,<2",
-    "mypy>=1.10.0,<2",
+    "django-stubs==4.2.7",
+    "mypy>=1.7,<1.8",
     "types-pytz>=2024.1.0.20240417,<2025",
     "types-toml>=0.10.8.20240310,<0.11",
 ]
