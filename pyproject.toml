@@ -17,7 +17,7 @@ dependencies = [
     "django-compressor==3.1",
     "django-invitations==1.9.3",
     "django-tastypie==0.14.7",
-    "django==3.2.25",
+    "django==4.2.17",
     "feedparser>=6.0.11",
     "httpx>=0.28.1",
     "jsmin==3.0.1",
@@ -25,7 +25,7 @@ dependencies = [
     "pillow>=11.0.0",
     "pytz>=2024.2",
     "sentry-sdk>=2.19.2",
-    "setuptools>=75.6.0",         # Needed by django-bootstrap-form
+    "setuptools>=75.6.0", # Needed by django-bootstrap-form
     "typenv>=0.2.0",
 ]
 
