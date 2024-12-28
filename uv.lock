@@ -197,7 +197,7 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "django-debug-toolbar", specifier = ">=4.4.6" },
-    { name = "django-extensions", specifier = ">=3.2.3,<4" },
+    { name = "django-extensions", specifier = ">=3.2.3" },
     { name = "tox", specifier = ">=4.21" },
     { name = "tox-uv", specifier = ">=1.16.2" },
 ]
