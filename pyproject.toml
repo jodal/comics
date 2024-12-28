@@ -8,21 +8,21 @@ license = { text = "AGPL-3.0-only" }
 classifiers = ["Private :: Do Not Upload"]
 requires-python = ">=3.12,<3.13"
 dependencies = [
-    "cssselect==1.2.0",
+    "cssselect>=1.2.0",
     "defusedxml>=0.7.1",
     "dj-database-url>=2.2.0",
-    "django-allauth==0.51",
-    "django-bootstrap-form==3.4",
-    "django-compressor==4.5.1",
-    "django-invitations==2.1.0",
-    "django-tastypie==0.14.7",
-    "django==4.2.17",
+    "django-allauth==0.51",       # TODO: Review changelog and update
+    "django-bootstrap-form>=3.4",
+    "django-compressor>=4.5.1",
+    "django-invitations>=2.1.0",
+    "django-tastypie>=0.14.7",
+    "django>=4.2.17,<5",
     "feedparser>=6.0.11",
     "httpx>=0.28.1",
     "lxml>=5.3.0",
     "pillow>=11.0.0",
     "sentry-sdk>=2.19.2",
-    "setuptools>=75.6.0", # Needed by django-bootstrap-form
+    "setuptools>=75.6.0",         # Needed by django-bootstrap-form
     "typenv>=0.2.0",
 ]
 
@@ -52,10 +52,7 @@ tests = [
     "pytest-django>=4.8.0",
     "pytest-mock>=3.14.0",
 ]
-typing = [
-    "django-stubs==4.2.7",
-    "mypy>=1.7,<1.8",
-]
+typing = ["django-stubs==4.2.7", "mypy>=1.7,<1.8"]
 
 
 [tool.django-stubs]
