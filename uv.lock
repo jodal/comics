@@ -118,11 +118,11 @@ dependencies = [
     { name = "cssmin" },
     { name = "cssselect" },
     { name = "defusedxml" },
+    { name = "dj-database-url" },
     { name = "django" },
     { name = "django-allauth" },
     { name = "django-bootstrap-form" },
     { name = "django-compressor" },
-    { name = "django-environ" },
     { name = "django-invitations" },
     { name = "django-tastypie" },
     { name = "feedparser" },
@@ -133,6 +133,7 @@ dependencies = [
     { name = "pytz" },
     { name = "sentry-sdk" },
     { name = "setuptools" },
+    { name = "typenv" },
 ]
 
 [package.optional-dependencies]
@@ -179,11 +180,11 @@ requires-dist = [
     { name = "cssmin", specifier = "==0.2.0" },
     { name = "cssselect", specifier = "==1.2.0" },
     { name = "defusedxml", specifier = ">=0.7.1" },
+    { name = "dj-database-url", specifier = ">=2.2.0" },
     { name = "django", specifier = "==3.2.25" },
     { name = "django-allauth", specifier = "==0.51" },
     { name = "django-bootstrap-form", specifier = "==3.4" },
     { name = "django-compressor", specifier = "==3.1" },
-    { name = "django-environ", specifier = "==0.9.0" },
     { name = "django-invitations", specifier = "==1.9.3" },
     { name = "django-tastypie", specifier = "==0.14.7" },
     { name = "feedparser", specifier = ">=6.0.11" },
@@ -198,6 +199,7 @@ requires-dist = [
     { name = "pyyaml", marker = "extra == 'api'", specifier = ">=6.0.1,<7" },
     { name = "sentry-sdk", specifier = ">=2.19.2" },
     { name = "setuptools", specifier = ">=75.6.0" },
+    { name = "typenv", specifier = ">=0.2.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -304,6 +306,19 @@ wheels = [
 ]
 
 [[package]]
+name = "dj-database-url"
+version = "2.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/1a/48/51f398a47c197f584b3445de886986ddc40de18bdb6e168f325a8d2c7bca/dj_database_url-2.2.0.tar.gz", hash = "sha256:9f9b05058ddf888f1e6f840048b8d705ff9395e3b52a07165daa3d8b9360551b", size = 10874 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6f/9a/13f173c716d07283661e821f7e1624d0904835151b4f099687455dbef81e/dj_database_url-2.2.0-py3-none-any.whl", hash = "sha256:3e792567b0aa9a4884860af05fe2aa4968071ad351e033b6db632f97ac6db9de", size = 7764 },
+]
+
+[[package]]
 name = "django"
 version = "3.2.25"
 source = { registry = "https://pypi.org/simple" }
@@ -376,15 +391,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/80/53/1d1e3bbef3c6f5820f838a6a6a8e795a3c86323f9dbf2f8a89de78477972/django_debug_toolbar-3.8.1.tar.gz", hash = "sha256:24ef1a7d44d25e60d7951e378454c6509bf536dce7e7d9d36e7c387db499bc27", size = 120252 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/c7/c3/fd81e84ce86904019112428c690a06ab19c66742c917a898dcf9da6ae166/django_debug_toolbar-3.8.1-py3-none-any.whl", hash = "sha256:879f8a4672d41621c06a4d322dcffa630fc4df056cada6e417ed01db0e5e0478", size = 221071 },
-]
-
-[[package]]
-name = "django-environ"
-version = "0.9.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/bf/5a/0325376b74279c89cfbdfd134d044094dfce91c1e8f21ea4088f43f56f68/django-environ-0.9.0.tar.gz", hash = "sha256:bff5381533056328c9ac02f71790bd5bf1cea81b1beeb648f28b81c9e83e0a21", size = 49835 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/60/5a/f231f5d3e15217cdf0164019cff5c4a7e5ba6bb5fd502759f94972786e17/django_environ-0.9.0-py2.py3-none-any.whl", hash = "sha256:f21a5ef8cc603da1870bbf9a09b7e5577ab5f6da451b843dbcc721a7bca6b3d9", size = 17918 },
 ]
 
 [[package]]
@@ -776,6 +782,15 @@ wheels = [
 ]
 
 [[package]]
+name = "python-dotenv"
+version = "1.0.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/bc/57/e84d88dfe0aec03b7a2d4327012c1627ab5f03652216c63d49846d7a6c58/python-dotenv-1.0.1.tar.gz", hash = "sha256:e324ee90a023d808f1959c46bcbc04446a10ced277783dc6ee09987c37ec10ca", size = 39115 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6a/3e/b68c118422ec867fa7ab88444e1274aa40681c606d59ac27de5a5588f082/python_dotenv-1.0.1-py3-none-any.whl", hash = "sha256:f7b63ef50f1b690dddf550d03497b66d609393b40b564ed0d674909a68ebf16a", size = 19863 },
+]
+
+[[package]]
 name = "python-mimeparse"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -993,6 +1008,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/34/7e/6331464889486389d63395ab6034333a8e3120c1093abca63d04e1c5628e/tox_uv-1.16.2.tar.gz", hash = "sha256:06d9c4c1a41c9d0cde472f111276c31b97aa7bf50abfa0bf6e17c0de891bdba9", size = 17301 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/09/92/07ad2cbe8fbf80d2ba7a0cf246e1f62e48bbd8d59fb08e4c38bc94d9ca9d/tox_uv-1.16.2-py3-none-any.whl", hash = "sha256:57d4c00cfd7973f2d3ebb1ca2ecbf18599c47aa080253355a742de44430cc58b", size = 13693 },
+]
+
+[[package]]
+name = "typenv"
+version = "0.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "python-dotenv" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/96/62/3da6e385d6e400e72edbee43b1b11c0c446d84db175a4a9174fefb463c50/typenv-0.2.0.tar.gz", hash = "sha256:6fd1e6964fe5bb4a9aefcd28557ee520913b51208d1afff33598fc677bc855fb", size = 10027 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/15/bb/1ca83f95829c1e0a36a8a1e9845b8d240f77547c8802654149e59eb6ce1c/typenv-0.2.0-py3-none-any.whl", hash = "sha256:6cd2a00a0ce4ff03f8645f1b6da1f64e60a1f260a732ba7a716c17e3b0946915", size = 8340 },
 ]
 
 [[package]]

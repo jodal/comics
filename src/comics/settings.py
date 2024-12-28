@@ -1,8 +1,11 @@
 from pathlib import Path
+from urllib.parse import urlsplit
 
-import environ
+import dj_database_url
 import sentry_sdk
+from django.core.management.utils import get_random_secret_key
 from sentry_sdk.integrations.django import DjangoIntegration
+from typenv import Env
 
 # Paths
 ROOT_DIR = Path(__file__).parents[2]
@@ -11,27 +14,31 @@ RUN_DIR = ROOT_DIR / "run"
 
 
 # Environment variables
-env = environ.Env()
-env.read_env(ROOT_DIR / ".env")
+env = Env()
+env.read_env(".env")
 
 
 #: The Django secret key
 SECRET_KEY = env.str(
     "DJANGO_SECRET_KEY",
-    default="django-insecure-xe=$sh@*pt#46(_q(zy89quq&n1rut&o9b(qk1+o(^7exqqnj=",
+    default=get_random_secret_key(),
 )
 
 #: Debug mode. Keep off in production.
-DEBUG = env.bool("DJANGO_DEBUG", default=False)
+DEBUG = env.bool(
+    "DJANGO_DEBUG",
+    default=False,
+)
 
 #: Site admins
 ADMINS = []
-if "DJANGO_ADMIN" in env:
-    ADMINS.append(("Site admin", env.str("DJANGO_ADMIN")))
+if admin_email := env.str("DJANGO_ADMIN", default=None):
+    ADMINS.append(("Site admin", admin_email))
 
 #: Default from email
 DEFAULT_FROM_EMAIL = env.str(
-    "DJANGO_DEFAULT_FROM_EMAIL", default="webmaster@example.com"
+    "DJANGO_DEFAULT_FROM_EMAIL",
+    default="webmaster@example.com",
 )
 
 SQLITE_FILE = str(RUN_DIR / "db.sqlite3")
@@ -40,7 +47,12 @@ SQLITE_URL = f"sqlite:///{SQLITE_FILE}"
 #: Database settings. You will want to change this for production. See the
 #: Django docs for details.
 DATABASES = {
-    "default": env.db("DATABASE_URL", default=SQLITE_URL),
+    "default": dj_database_url.parse(
+        env.str(
+            "DATABASE_URL",
+            default=SQLITE_URL,
+        ),
+    ),
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
@@ -55,18 +67,30 @@ USE_L10N = False
 USE_TZ = True
 
 #: Path on disk to where downloaded media will be stored and served from
-MEDIA_ROOT = env.str("DJANGO_MEDIA_ROOT", default=str(RUN_DIR / "media"))
+MEDIA_ROOT = env.str(
+    "DJANGO_MEDIA_ROOT",
+    default=str(RUN_DIR / "media"),
+)
 Path(MEDIA_ROOT).mkdir(parents=True, exist_ok=True)
 
 #: URL to where downloaded media will be stored and served from
-MEDIA_URL = env.str("DJANGO_MEDIA_URL", default="/media/")
+MEDIA_URL = env.str(
+    "DJANGO_MEDIA_URL",
+    default="/media/",
+)
 
 #: Path on disk to where static files will be served from
-STATIC_ROOT = env.str("DJANGO_STATIC_ROOT", default=str(RUN_DIR / "static"))
+STATIC_ROOT = env.str(
+    "DJANGO_STATIC_ROOT",
+    default=str(RUN_DIR / "static"),
+)
 Path(STATIC_ROOT).mkdir(parents=True, exist_ok=True)
 
 #: URL to where static files will be served from
-STATIC_URL = env.str("DJANGO_STATIC_URL", default="/static/")
+STATIC_URL = env.str(
+    "DJANGO_STATIC_URL",
+    default="/static/",
+)
 
 STATICFILES_DIRS = [
     str(SRC_DIR / "comics" / "static"),
@@ -164,11 +188,14 @@ CACHES = {
         "OPTIONS": {"MAX_ENTRIES": 1000},
     }
 }
-if "CACHE_URL" in env:
-    CACHES["default"] = env.cache(
-        "CACHE_URL", backend="django.core.cache.backends.memcached.PyMemcacheCache"
-    )
-    SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
+if cache_url := env.str("CACHE_URL", default=None):
+    parts = urlsplit(cache_url)
+    if parts.scheme == "memcache":
+        CACHES["default"] = {
+            "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+            "LOCATION": parts.netloc,
+        }
+        SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
 CACHE_MIDDLEWARE_SECONDS = 300
 CACHE_MIDDLEWARE_KEY_PREFIX = "comics"
@@ -185,7 +212,7 @@ TEST_RUNNER = "django.test.runner.DiscoverRunner"
 
 WSGI_APPLICATION = "comics.wsgi.application"
 
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default="*")
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["*"])
 
 
 # ### djang-debug-toolbar settings
