@@ -7,16 +7,13 @@ from django.core.management.utils import get_random_secret_key
 from sentry_sdk.integrations.django import DjangoIntegration
 from typenv import Env
 
-# Paths
-ROOT_DIR = Path(__file__).parents[2]
-SRC_DIR = ROOT_DIR / "src"
-RUN_DIR = ROOT_DIR / "run"
-
+# During development, keep generated files in a run directory in the
+# repo root.
+RUN_DIR = Path(__file__).parents[2] / "run"
 
 # Environment variables
 env = Env()
 env.read_env(".env")
-
 
 #: The Django secret key
 SECRET_KEY = env.str(
@@ -93,7 +90,7 @@ STATIC_URL = env.str(
 )
 
 STATICFILES_DIRS = [
-    str(SRC_DIR / "comics" / "static"),
+    str(Path(__file__) / "static"),
 ]
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
