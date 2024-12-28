@@ -30,7 +30,7 @@ dependencies = [
 api = ["biplist>=1.0.3,<2", "pyyaml>=6.0.1,<7"]
 cache = ["pymemcache>=4.0.0,<5"]
 pgsql = ["psycopg2-binary>=2.9.9,<3"]
-server = ["gunicorn>=22.0,<23"]
+server = ["gunicorn>=23.0.0"]
 
 [project.scripts]
 comics = "comics.__main__:main"
