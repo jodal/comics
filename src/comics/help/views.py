@@ -23,7 +23,7 @@ def feedback(request):
             subject = "Feedback from %s" % settings.COMICS_SITE_TITLE
 
             metadata = "Client IP address: %s\n" % request.META["REMOTE_ADDR"]
-            metadata += "User agent: %s\n" % request.META["HTTP_USER_AGENT"]
+            metadata += "User agent: %s\n" % request.headers["user-agent"]
             metadata += f"User: {request.user.username} <{request.user.email}>\n"
 
             message = "{}\n\n-- \n{}".format(form.cleaned_data["message"], metadata)

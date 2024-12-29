@@ -99,8 +99,8 @@ def mycomics_edit_comics(request):
 
     if request.is_ajax():
         return HttpResponse(status=204)
-    elif "HTTP_REFERER" in request.META:
-        return HttpResponseRedirect(request.META["HTTP_REFERER"])
+    elif "referer" in request.headers:
+        return HttpResponseRedirect(request.headers["referer"])
     else:
         return HttpResponseRedirect(reverse("mycomics_latest"))
 
