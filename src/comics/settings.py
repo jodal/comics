@@ -62,9 +62,18 @@ ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["*"])
 
 # Security - Cross-Site Request Forgery (CSRF)
 #
+# Set this to match your site's base URL, including port if not 80 or 443.
 CSRF_TRUSTED_ORIGINS = env.list(
     "DJANGO_CSRF_TRUSTED_ORIGINS",
     default=["http://localhost:8000"],
+)
+#
+# Do not allow JavaScript to access the CSRF cookie
+CSRF_COOKIE_HTTPONLY = True
+#
+# Do not allow the CSRF cookie to be sent over HTTP if the site is served over HTTPS.
+CSRF_COOKIE_SECURE = (
+    CSRF_TRUSTED_ORIGINS[0].startswith("https://") if CSRF_TRUSTED_ORIGINS else False
 )
 
 
