@@ -29,7 +29,7 @@
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         <button type="submit" class="btn btn-primary">
-          <i class="fa fa-heart"></i>
+          <i class="fa-solid fa-heart"></i>
           Send invitation
         </button>
       </div>
@@ -51,7 +51,7 @@
         <tr>
           <td>{{ invitation.email }}</td>
           <td>{{ invitation.created|date:"Y-m-d H:i e" }}</td>
-          <td><i class="fa fa-{{ invitation.accepted|yesno:"check,times" }}"></i></td>
+          <td><i class="fa-solid fa-{{ invitation.accepted|yesno:"check,times" }}"></i></td>
         </tr>
       {% empty %}
         <tr>

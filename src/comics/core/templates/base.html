@@ -10,7 +10,8 @@
     <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}">
     {% compress css %}
       <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-3.4.1.min.css' %}">
-      <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome-4.7.0.min.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome-6.7.2.min.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome-solid-6.7.2.min.css' %}">
       <link rel="stylesheet" type="text/css" href="{% static 'css/comics.css' %}">
     {% endcompress %}
     {% block extra_head %}{% endblock %}
@@ -52,28 +53,28 @@
               {% if user.is_authenticated %}
                 <li class="{{ active.comics|yesno:"active," }}">
                   <a href="{% url "mycomics_latest" %}">
-                    <i class="fa fa-th-large"></i>
+                    <i class="fa-solid fa-images"></i>
                     My comics</a>
                 </li>
                 <li class="{{ active.comics_list|yesno:"active," }}">
                   <a href="{% url "comics_list" %}">
-                    <i class="fa fa-list"></i>
+                    <i class="fa-solid fa-list-check"></i>
                     All comics</a>
                 </li>
                 <li class="{{ active.status|yesno:"active," }}">
                   <a href="{% url "status" %}">
-                    <i class="fa fa-download"></i>
+                    <i class="fa-solid fa-chart-gantt"></i>
                     Crawler status</a>
                 </li>
               {% else %}
                 <li class="{{ active.login|yesno:"active," }}">
                   <a href="{% url "account_login" %}">
-                    <i class="fa fa-sign-in"></i>
+                    <i class="fa-solid fa-sign-in"></i>
                     Login</a>
                 </li>
                 <li>
                   <a href="{% url "account_signup" %}">
-                    <i class="fa fa-plus"></i>
+                    <i class="fa-solid fa-plus"></i>
                     Register</a>
                 </li>
               {% endif %}
@@ -83,13 +84,13 @@
               {% if user.is_authenticated %}
                 <li class="{{ active.invite|yesno:"active," }}">
                   <a href="{% url "invite" %}">
-                    <i class="fa fa-heart"></i>
+                    <i class="fa-solid fa-heart"></i>
                     Invite
                   </a>
                 </li>
                 <li class="{{ active.account|yesno:"active," }}" >
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-user"></i>
+                    <i class="fa-solid fa-user"></i>
                     Me
                     <b class="caret"></b>
                   </a>
@@ -168,10 +169,10 @@
     {% block extra_footer %}
       {{ block.super }}
       {% compress js %}
-        <script type="text/javascript" src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/bootstrap-3.4.1.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/moment-2.18.1.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/comics.js' %}"></script>
+        <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap-3.4.1.min.js' %}"></script>
+        <script src="{% static 'js/moment-2.18.1.min.js' %}"></script>
+        <script src="{% static 'js/comics.js' %}"></script>
       {% endcompress %}
     {% endblock extra_footer %}
 

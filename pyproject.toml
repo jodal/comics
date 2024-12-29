@@ -148,17 +148,7 @@ known-first-party = ["comics"]
 where = ["src"]
 
 [tool.setuptools.package-data]
-comics = [
-    "*.css",
-    "*.eot",
-    "*.html",
-    "*.js",
-    "*.png",
-    "*.svg",
-    "*.ttf",
-    "*.woff",
-    "*.woff2",
-]
+comics = ["*.css", "*.html", "*.js", "*.png", "*.ttf", "*.woff2"]
 
 
 [tool.tox]
