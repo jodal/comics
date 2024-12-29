@@ -34,11 +34,11 @@ Example ``.env``
 ================
 
 In the following examples, we assume the Comics source code is unpacked at
-``/srv/comics.example.com/app/comics``.
+``/srv/comics.example.com/app``.
 
 To change settings, you should not change the settings files shipped with
 Comics, but instead override the settings using environment variables, or by
-creating a file named ``/srv/comics.example.com/app/comics/.env``. You must
+creating a file named ``/srv/comics.example.com/app/.env``. You must
 at least set ``DJANGO_SECRET_KEY`` and database settings, unless you use
 SQLite.
 
@@ -51,8 +51,8 @@ this:
     DJANGO_ADMIN=comics@example.com
     DJANGO_DEFAULT_FROM_EMAIL=comics@example.com
 
-    DJANGO_MEDIA_ROOT=/srv/comics.example.com/htdocs/static/media/
-    DJANGO_MEDIA_URL=https://comics.example.com/static/media/
+    DJANGO_MEDIA_ROOT=/srv/comics.example.com/htdocs/media/
+    DJANGO_MEDIA_URL=https://comics.example.com/media/
     DJANGO_STATIC_ROOT=/srv/comics.example.com/htdocs/static/
     DJANGO_STATIC_URL=https://comics.example.com/static/
 
@@ -60,7 +60,7 @@ this:
 
     CACHE_URL=memcache://127.0.0.1:11211
 
-    COMICS_LOG_FILENAME=/srv/comics.example.com/app/log/comics.log
+    COMICS_LOG_FILENAME=/srv/comics.example.com/log/comics.log
     COMICS_SITE_TITLE=comics.example.com
     COMICS_INVITE_MODE=true
 
@@ -81,15 +81,15 @@ Comics' own virtualenv:
 
 .. code-block:: sh
 
-    source /srv/comics.example.com/app/venv/bin/activate
-    python -m pip install gunicorn
+    cd /srv/comics.example.com/app
+    uv sync --extra server
 
 Then you need to start Gunicorn, for example with a systemd service:
 
 .. code-block:: ini
 
     [Unit]
-    Description=gunicorn-comics
+    Description=comics
     After=network.target
 
     [Install]
@@ -100,12 +100,10 @@ Then you need to start Gunicorn, for example with a systemd service:
     Group=comics-user
     Restart=always
 
-    ExecStart=/srv/comics.example.com/app/venv/bin/gunicorn --bind=127.0.0.1:8000 --workers=9 --access-logfile=/srv/comics.example.com/htlogs/gunicorn-access.log --error-logfile=/srv/comics.example.com/htlogs/gunicorn-error.log comics.wsgi
+    WorkingDirectory=/srv/comics.example.com/app
+    ExecStart=uv run gunicorn --bind=127.0.0.1:8000 --workers=9 --access-logfile=/srv/comics.example.com/htlogs/gunicorn-access.log --error-logfile=/srv/comics.example.com/htlogs/gunicorn-error.log comics.wsgi
     ExecReload=/bin/kill -s HUP $MAINPID
     ExecStop=/bin/kill -s TERM $MAINPID
-
-    WorkingDirectory=/srv/comics.example.com/app/comics
-    Environment=PYTHONPATH='/srv/comics.example.com/app/comics'
 
     PrivateTmp=true
 
@@ -130,6 +128,11 @@ The following is an example of a complete Nginx vhost:
 
         ssl_certificate /etc/letsencrypt/live/comics.example.com/fullchain.pem;
         ssl_certificate_key /etc/letsencrypt/live/comics.example.com/privkey.pem;
+
+        location /media {
+            root /srv/comics.example.com/htdocs;
+            expires max;
+        }
 
         location /static {
             root /srv/comics.example.com/htdocs;
