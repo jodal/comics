@@ -52,17 +52,17 @@ def mycomics_toggle_comic(request):
             userprofile=request.user.comics_profile, comic=comic
         )
         subscription.save()
-        if not request.is_ajax():
+        if not _is_js_request(request):
             messages.info(request, 'Added "%s" to my comics' % comic.name)
     elif "remove_comic" in request.POST:
         subscriptions = Subscription.objects.filter(
             userprofile=request.user.comics_profile, comic=comic
         )
         subscriptions.delete()
-        if not request.is_ajax():
+        if not _is_js_request(request):
             messages.info(request, 'Removed "%s" from my comics' % comic.name)
 
-    if request.is_ajax():
+    if _is_js_request(request):
         return HttpResponse(status=204)
     else:
         return HttpResponseRedirect(reverse("mycomics_latest"))
@@ -85,7 +85,7 @@ def mycomics_edit_comics(request):
                 userprofile=request.user.comics_profile, comic=comic
             )
             subscriptions.delete()
-            if not request.is_ajax():
+            if not _is_js_request(request):
                 messages.info(request, 'Removed "%s" from my comics' % comic.name)
 
     for comic in Comic.objects.all():
@@ -94,10 +94,10 @@ def mycomics_edit_comics(request):
                 userprofile=request.user.comics_profile, comic=comic
             )
             subscription.save()
-            if not request.is_ajax():
+            if not _is_js_request(request):
                 messages.info(request, 'Added "%s" to my comics' % comic.name)
 
-    if request.is_ajax():
+    if _is_js_request(request):
         return HttpResponse(status=204)
     elif "referer" in request.headers:
         return HttpResponseRedirect(request.headers["referer"])
@@ -127,3 +127,7 @@ def invite(request):
             "invitations": invitations,
         },
     )
+
+
+def _is_js_request(request):
+    return request.headers.get("JS-Request") == "true"

@@ -99,17 +99,25 @@ const mycomicsToggler = (() => {
   const isMyComicsPage = () => `${window.location}`.match(/\/my\//);
 
   return {
-    addComic: function (event) {
+    addComic: async function (event) {
       event.preventDefault();
       const $button = $(this);
       $button.attr("disabled", "disabled");
       const $form = $button.parent("form");
-      const data = `${$form.serialize()}&add_comic=1`;
-      $.post($form.attr("action"), data, () => {
-        showSuccess($button);
+      const response = await fetch($form.attr("action"), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "JS-Request": "true",
+        },
+        body: `${$form.serialize()}&add_comic=1`,
       });
+      if (!response.ok) {
+        throw new Error(`Error adding comic: ${response.status}`);
+      }
+      showSuccess($button);
     },
-    removeComic: function (event) {
+    removeComic: async function (event) {
       event.preventDefault();
       const $button = $(this);
       if ($button.find(".action:visible").length) {
@@ -117,17 +125,25 @@ const mycomicsToggler = (() => {
       } else {
         $button.attr("disabled", "disabled");
         const $form = $button.parent("form");
-        const data = `${$form.serialize()}&remove_comic=1`;
-        $.post($form.attr("action"), data, () => {
-          showSuccess($button);
-          if (isMyComicsPage()) {
-            const comic = $button.parents(".release").data("comic");
-            $(`.release[data-comic="${comic}"]`)
-              .slideUp("slow")
-              .children()
-              .fadeOut("slow");
-          }
+        const response = await fetch($form.attr("action"), {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "JS-Request": "true",
+          },
+          body: `${$form.serialize()}&remove_comic=1`,
         });
+        if (!response.ok) {
+          throw new Error(`Error removing comic: ${response.status}`);
+        }
+        showSuccess($button);
+        if (isMyComicsPage()) {
+          const comic = $button.parents(".release").data("comic");
+          $(`.release[data-comic="${comic}"]`)
+            .slideUp("slow")
+            .children()
+            .fadeOut("slow");
+        }
       }
     },
   };
