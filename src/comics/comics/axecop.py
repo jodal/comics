@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_days = 60
-    time_zone = "US/Pacific"
+    time_zone = "America/Los_Angeles"
 
     headers = {"User-Agent": "Mozilla/4.0"}
 

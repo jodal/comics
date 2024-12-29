@@ -15,7 +15,7 @@ class Crawler(CrawlerBase):
     has_rerun_releases = True  # Not really, but reuses same image in a release
     history_capable_date = "2017-08-26"
     schedule = "Mo,Sa"
-    time_zone = "US/Pacific"
+    time_zone = "America/Los_Angeles"
 
     headers = {
         "Referer": "http://www.webtoons.com/",

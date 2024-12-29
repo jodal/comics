@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = "1997-10-27"
     schedule = None
-    time_zone = "US/Pacific"
+    time_zone = "America/Los_Angeles"
 
     def crawl(self, pub_date):
         feed = self.parse_feed("http://www.phdcomics.com/gradfeed.php")

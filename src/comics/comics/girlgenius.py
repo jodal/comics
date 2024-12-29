@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = "2002-11-04"
     schedule = "Mo,We,Fr"
-    time_zone = "US/Pacific"
+    time_zone = "America/Los_Angeles"
 
     def crawl(self, pub_date):
         url = "http://www.girlgeniusonline.com/ggmain/strips/ggmain{}b.jpg".format(

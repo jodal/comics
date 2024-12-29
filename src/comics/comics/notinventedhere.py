@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_date = "2009-09-21"
-    time_zone = "US/Pacific"
+    time_zone = "America/Los_Angeles"
 
     def crawl(self, pub_date):
         url = "http://thiswas.notinventedhe.re/on/%s" % pub_date.strftime("%Y-%m-%d")

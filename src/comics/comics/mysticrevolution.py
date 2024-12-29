@@ -14,7 +14,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     # Not history capable, just a workaround for time zone bug in comics:
     history_capable_days = 1
-    time_zone = "US/Pacific"
+    time_zone = "America/Los_Angeles"
 
     # Without User-Agent set, the server returns 403 Forbidden
     headers = {"User-Agent": "Mozilla/4.0"}
