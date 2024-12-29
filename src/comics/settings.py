@@ -7,100 +7,146 @@ from django.core.management.utils import get_random_secret_key
 from sentry_sdk.integrations.django import DjangoIntegration
 from typenv import Env
 
-# During development, keep generated files in a run directory in the
+# Paths
+#
+# During development, we keep generated files in a "run" directory in the
 # repo root.
 RUN_DIR = Path(__file__).parents[2] / "run"
 
+
 # Environment variables
+# https://github.com/hukkin/typenv
+#
 env = Env()
 env.read_env(".env")
 
-#: The Django secret key
+
+# Debug mode
+# Keep off in production!
+#
+DEBUG = env.bool(
+    "DJANGO_DEBUG",
+    default=False,
+)
+#
+INTERNAL_IPS = [
+    "127.0.0.1"  # Required by django-debug-toolbar
+]
+
+
+# Sentry crash reporting
+#
+# To enable Sentry crash reporting, set the SENTRY_DSN environment variable.
+SENTRY_DSN = env.str("SENTRY_DSN", default=None)
+SENTRY_TRACES_SAMPLE_RATE = env.float("SENTRY_TRACES_SAMPLE_RATE", default=0)
+sentry_sdk.init(
+    dsn=SENTRY_DSN,
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=SENTRY_TRACES_SAMPLE_RATE,
+    send_default_pii=True,
+)
+
+
+# Security - Django's secret key
+#
 SECRET_KEY = env.str(
     "DJANGO_SECRET_KEY",
     default=get_random_secret_key(),
 )
 
-#: Debug mode. Keep off in production.
-DEBUG = env.bool(
-    "DJANGO_DEBUG",
-    default=False,
-)
-INTERNAL_IPS = [
-    "127.0.0.1"  # Required by django-debug-toolbar
-]
 
-#: Site admins
-ADMINS = []
-if admin_email := env.str("DJANGO_ADMIN", default=None):
-    ADMINS.append(("Site admin", admin_email))
+# Security - Allowed hosts
+#
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["*"])
 
-#: Default from email
-DEFAULT_FROM_EMAIL = env.str(
-    "DJANGO_DEFAULT_FROM_EMAIL",
-    default="webmaster@example.com",
-)
 
-SQLITE_FILE = str(RUN_DIR / "db.sqlite3")
-SQLITE_URL = f"sqlite:///{SQLITE_FILE}"
+# Security - Session
+#
+# Time the user session cookies will be valid. Default: 1 year
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 365
 
-#: Database settings. You will want to change this for production. See the
-#: Django docs for details.
-DATABASES = {
-    "default": dj_database_url.parse(
-        env.str(
-            "DATABASE_URL",
-            default=SQLITE_URL,
-        ),
-    ),
+
+# Logging
+#
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
+    },
+    "handlers": {
+        "mail_admins": {
+            "level": "ERROR",
+            "filters": ["require_debug_false"],
+            "class": "django.utils.log.AdminEmailHandler",
+        }
+    },
+    "loggers": {
+        "django.request": {
+            "handlers": ["mail_admins"],
+            "level": "ERROR",
+            "propagate": True,
+        },
+    },
 }
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-#: Default time zone to use when displaying datetimes to users
-TIME_ZONE = "UTC"
+# Application definition
+#
+ROOT_URLCONF = "comics.urls"
+WSGI_APPLICATION = "comics.wsgi.application"
 
-LANGUAGE_CODE = "en-us"
 
-USE_I18N = False
-USE_L10N = False
-USE_TZ = True
-
-#: Path on disk to where downloaded media will be stored and served from
-MEDIA_ROOT = env.str(
-    "DJANGO_MEDIA_ROOT",
-    default=str(RUN_DIR / "media"),
-)
-Path(MEDIA_ROOT).mkdir(parents=True, exist_ok=True)
-
-#: URL to where downloaded media will be stored and served from
-MEDIA_URL = env.str(
-    "DJANGO_MEDIA_URL",
-    default="/media/",
-)
-
-#: Path on disk to where static files will be served from
-STATIC_ROOT = env.str(
-    "DJANGO_STATIC_ROOT",
-    default=str(RUN_DIR / "static"),
-)
-Path(STATIC_ROOT).mkdir(parents=True, exist_ok=True)
-
-#: URL to where static files will be served from
-STATIC_URL = env.str(
-    "DJANGO_STATIC_URL",
-    default="/static/",
-)
-
-STATICFILES_DIRS = [
-    str(Path(__file__).parent / "static"),
+# Installed apps
+#
+DJANGO_APPS = [
+    "django.contrib.admin",
+    "django.contrib.admindocs",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.messages",
+    "django.contrib.sessions",
+    "django.contrib.sites",
+    "django.contrib.staticfiles",
 ]
-STATICFILES_FINDERS = [
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    "compressor.finders.CompressorFinder",
+LOCAL_APPS = [
+    "comics.core",
+    "comics.accounts",
+    "comics.aggregator",
+    "comics.api",
+    "comics.browser",
+    "comics.help",
+    "comics.status",
+]
+THIRD_PARTY_APPS = [
+    "allauth",
+    "allauth.account",
+    "invitations",  # After allauth
+    "bootstrapform",
+    "compressor",
+    "tastypie",
+]
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
+
+
+# Middleware
+#
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "django.middleware.http.ConditionalGetMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+
+# Templates
+#
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -121,66 +167,9 @@ TEMPLATES = [
     },
 ]
 
-MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
-    "django.middleware.http.ConditionalGetMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-]
 
-INSTALLED_APPS = [
-    # Django apps
-    "django.contrib.admin",
-    "django.contrib.admindocs",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.messages",
-    "django.contrib.sessions",
-    "django.contrib.sites",
-    "django.contrib.staticfiles",
-    # Our apps
-    "comics.core",
-    "comics.accounts",
-    "comics.aggregator",
-    "comics.api",
-    "comics.browser",
-    "comics.help",
-    "comics.status",
-    # Third party apps
-    "allauth",
-    "allauth.account",
-    "invitations",  # After allauth
-    "bootstrapform",
-    "compressor",
-    "tastypie",
-]
-
-ROOT_URLCONF = "comics.urls"
-
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "filters": {"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}},
-    "handlers": {
-        "mail_admins": {
-            "level": "ERROR",
-            "filters": ["require_debug_false"],
-            "class": "django.utils.log.AdminEmailHandler",
-        }
-    },
-    "loggers": {
-        "django.request": {
-            "handlers": ["mail_admins"],
-            "level": "ERROR",
-            "propagate": True,
-        },
-    },
-}
-
+# Cache
+#
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
@@ -196,52 +185,116 @@ if cache_url := env.str("CACHE_URL", default=None):
             "LOCATION": parts.netloc,
         }
         SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
-
+#
 CACHE_MIDDLEWARE_SECONDS = 300
 CACHE_MIDDLEWARE_KEY_PREFIX = "comics"
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
 
+# Database
+#
+# SQLite is used by default by tests and development. In production, you should
+# set the DATABASE_URL environment variable to use a PostgreSQL database.
+SQLITE_FILE = str(RUN_DIR / "db.sqlite3")
+SQLITE_URL = f"sqlite:///{SQLITE_FILE}"
+#
+DATABASES = {
+    "default": dj_database_url.parse(
+        env.str(
+            "DATABASE_URL",
+            default=SQLITE_URL,
+        ),
+    ),
+}
+#
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Email
+#
+DEFAULT_FROM_EMAIL = env.str(
+    "DJANGO_DEFAULT_FROM_EMAIL",
+    default="webmaster@example.com",
+)
+#
+# Site admins
+ADMINS = []
+if admin_email := env.str("DJANGO_ADMIN", default=None):
+    ADMINS.append(("Site admin", admin_email))
+
+
+# Auth - django.contrib.auth
+#
+AUTH_PROFILE_MODULE = "accounts.UserProfile"
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = "account_login"
+
+
+# Auth - django-allauth
+#
+SITE_ID = 1
+ACCOUNT_ADAPTER = "invitations.models.InvitationsAdapter"
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "[%s] " % (
+    env.str("COMICS_SITE_TITLE", default="example.com")
+)
+ACCOUNT_USERNAME_REQUIRED = False
+
+
+# Auth - django-invitations
+#
+INVITATIONS_ADAPTER = ACCOUNT_ADAPTER
+INVITATIONS_INVITATION_ONLY = env.bool("COMICS_INVITE_MODE", default=False)
+
+
+# Internationalization
+#
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "UTC"
+USE_I18N = False
+USE_TZ = True
+#
 DATE_FORMAT = "l j F Y"
 TIME_FORMAT = "H:i"
 
-#: Time the user session cookies will be valid. 1 year by default.
-SESSION_COOKIE_AGE = 86400 * 365
 
-TEST_RUNNER = "django.test.runner.DiscoverRunner"
-
-WSGI_APPLICATION = "comics.wsgi.application"
-
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["*"])
-
-
-# ### djang-debug-toolbar settings
-
-try:
-    import debug_toolbar  # noqa: F401
-except ImportError:
-    pass
-else:
-    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
-    INSTALLED_APPS += ["debug_toolbar"]
-
-
-# ### django-extensions settings
-
-try:
-    import django_extensions  # noqa: F401
-except ImportError:
-    pass
-else:
-    INSTALLED_APPS += ["django_extensions"]
+# Static files (CSS, JavaScript, etc.)
+#
+# Path on disk to where static files will be collected to and served from.
+STATIC_ROOT = env.str(
+    "DJANGO_STATIC_ROOT",
+    default=str(RUN_DIR / "static"),
+)
+Path(STATIC_ROOT).mkdir(parents=True, exist_ok=True)
+#
+# URL to where static files will be served from.
+STATIC_URL = env.str(
+    "DJANGO_STATIC_URL",
+    default="/static/",
+)
+#
+STATICFILES_DIRS = [
+    str(Path(__file__).parent / "static"),
+]
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "compressor.finders.CompressorFinder",
+]
 
 
-# ### django_compressor settings
-
+# Static files - django-compressor
+#
 # Explicitly use HtmlParser to avoid depending on BeautifulSoup through the use
 # of LxmlParser
 COMPRESS_PARSER = "compressor.parser.HtmlParser"
-
+#
 # Turn on CSS and JS compression
 COMPRESS_FILTERS = {
     "css": [
@@ -254,66 +307,74 @@ COMPRESS_FILTERS = {
 }
 
 
-# ### django.contrib.auth settings
-
-LOGIN_URL = "account_login"
-LOGIN_REDIRECT_URL = "/"
-AUTH_PROFILE_MODULE = "accounts.UserProfile"
-AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
-]
-
-
-# ### django-allauth settings
-
-SITE_ID = 1
-ACCOUNT_ADAPTER = "invitations.models.InvitationsAdapter"
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-ACCOUNT_EMAIL_SUBJECT_PREFIX = "[%s] " % (
-    env.str("COMICS_SITE_TITLE", default="example.com")
+# Media files (comic images, etc.)
+#
+# Path on disk to where downloaded media will be stored and served from.
+MEDIA_ROOT = env.str(
+    "DJANGO_MEDIA_ROOT",
+    default=str(RUN_DIR / "media"),
 )
-ACCOUNT_USERNAME_REQUIRED = False
+Path(MEDIA_ROOT).mkdir(parents=True, exist_ok=True)
+#
+# URL to where downloaded media will be stored and served from.
+MEDIA_URL = env.str(
+    "DJANGO_MEDIA_URL",
+    default="/media/",
+)
 
 
-# ### django-invitations settings
-
-INVITATIONS_ADAPTER = ACCOUNT_ADAPTER
-INVITATIONS_INVITATION_ONLY = env.bool("COMICS_INVITE_MODE", default=False)
-
-
-# ### Tastypie settings
-
+# API - django-tastypie
+#
 TASTYPIE_DEFAULT_FORMATS = ["json", "jsonp", "xml", "yaml", "plist"]
 
 
-# ### Sentry settings
+# Tests
+#
+TEST_RUNNER = "django.test.runner.DiscoverRunner"
 
-SENTRY_DSN = env.str("SENTRY_DSN", default=None)
-SENTRY_TRACES_SAMPLE_RATE = env.float("SENTRY_TRACES_SAMPLE_RATE", default=0)
 
-sentry_sdk.init(
-    dsn=SENTRY_DSN,
-    integrations=[DjangoIntegration()],
-    traces_sample_rate=SENTRY_TRACES_SAMPLE_RATE,
-    send_default_pii=True,
+# Development - django-debug-toolbar
+#
+try:
+    import debug_toolbar  # noqa: F401
+except ImportError:
+    pass
+else:
+    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
+    INSTALLED_APPS += ["debug_toolbar"]
+
+
+# Development - django-extensions
+#
+try:
+    import django_extensions  # noqa: F401
+except ImportError:
+    pass
+else:
+    INSTALLED_APPS += ["django_extensions"]
+
+
+# Comics
+#
+# Name of the site. Used in page header, page title, feed titles, etc.
+COMICS_SITE_TITLE = env.str(
+    "COMICS_SITE_TITLE",
+    default="example.com",
 )
-
-
-# ### comics settings
-
-#: Name of the site. Used in page header, page title, feed titles, etc.
-COMICS_SITE_TITLE = env.str("COMICS_SITE_TITLE", default="example.com")
-
-#: Maximum number of releases to show on one page
-COMICS_MAX_RELEASES_PER_PAGE = env.int("COMICS_MAX_RELEASES_PER_PAGE", default=50)
-
-#: Maximum number of days to show in a feed
-COMICS_MAX_DAYS_IN_FEED = env.int("COMICS_MAX_DAYS_IN_FEED", default=30)
-
-#: SHA256 of blacklisted images
+#
+# Maximum number of releases to show on one page
+COMICS_MAX_RELEASES_PER_PAGE = env.int(
+    "COMICS_MAX_RELEASES_PER_PAGE",
+    default=50,
+)
+#
+# Maximum number of days to show in a feed
+COMICS_MAX_DAYS_IN_FEED = env.int(
+    "COMICS_MAX_DAYS_IN_FEED",
+    default=30,
+)
+#
+# SHA256 of blacklisted images
 COMICS_IMAGE_BLACKLIST = [
     # Empty file
     "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -338,19 +399,29 @@ COMICS_IMAGE_BLACKLIST = [
     # tu.no
     "e90e3718487c99190426b3b38639670d4a3ee39c1e7319b9b781740b0c7a53bf",
 ]
-
-#: Comics log file path on disk
+#
+# Comics log file path on disk
 COMICS_LOG_FILENAME = env.str(
-    "COMICS_LOG_FILENAME", default=str(RUN_DIR / "comics.log")
+    "COMICS_LOG_FILENAME",
+    default=str(RUN_DIR / "comics.log"),
 )
-
-#: Google Analytics tracking code. Tracking code will be included on all pages
-#: if this is set.
-COMICS_GOOGLE_ANALYTICS_CODE = env.str("COMICS_GOOGLE_ANALYTICS_CODE", default="")
-
-#: Number of seconds browsers at the latest view of "My comics" should wait
-#: before they check for new releases again
-COMICS_BROWSER_REFRESH_INTERVAL = env.int("COMICS_BROWSER_REFRESH_INTERVAL", default=60)
-
-#: Number of days a new comic on the site is labeled as new
-COMICS_NUM_DAYS_COMIC_IS_NEW = env.int("COMICS_NUM_DAYS_COMIC_IS_NEW", default=7)
+#
+# Google Analytics
+# Tracking code will be included on all pages if this is set.
+COMICS_GOOGLE_ANALYTICS_CODE = env.str(
+    "COMICS_GOOGLE_ANALYTICS_CODE",
+    default="",
+)
+#
+# Number of seconds browsers at the latest view of "My comics" should wait
+# before they check for new releases again
+COMICS_BROWSER_REFRESH_INTERVAL = env.int(
+    "COMICS_BROWSER_REFRESH_INTERVAL",
+    default=60,
+)
+#
+# Number of days a new comic on the site is labeled as new
+COMICS_NUM_DAYS_COMIC_IS_NEW = env.int(
+    "COMICS_NUM_DAYS_COMIC_IS_NEW",
+    default=7,
+)

@@ -120,6 +120,7 @@ ignore = [
     "PERF401", # manual-list-comprehension  # TODO
     "PLR0913", # too-many-arguments  # TODO
     "PLR2004", # magic-value-comparison
+    "PLR2044", # empty-comment
     "PT",      # flake8-pytest-style  # TODO
     "PTH",     # flake8-use-pathlib  # TODO
     "RET",     # flake8-return  # TODO
