@@ -54,26 +54,27 @@ const keyboardNavigation = (() => {
       return;
     }
     if ($("#releases").length) {
-      if (event.which === 63) {
-        // ?
-        event.preventDefault();
-        $(".keyboard-shortcuts.modal").modal();
-      } else if (event.which === 72 || event.which === 104) {
-        // H or h
-        event.preventDefault();
-        goToPreviousPage();
-      } else if (event.which === 74 || event.which === 106) {
-        // J or j
-        event.preventDefault();
-        goToNextRelease();
-      } else if (event.which === 75 || event.which === 107) {
-        // K or k
-        event.preventDefault();
-        goToPreviousRelease();
-      } else if (event.which === 76 || event.which === 108) {
-        // L or l
-        event.preventDefault();
-        goToNextPage();
+      switch (event.key.toLowerCase()) {
+        case "?":
+          event.preventDefault();
+          $(".keyboard-shortcuts.modal").modal();
+          break;
+        case "h":
+          event.preventDefault();
+          goToPreviousPage();
+          break;
+        case "j":
+          event.preventDefault();
+          goToNextRelease();
+          break;
+        case "k":
+          event.preventDefault();
+          goToPreviousRelease();
+          break;
+        case "l":
+          event.preventDefault();
+          goToNextPage();
+          break;
       }
     }
   };
