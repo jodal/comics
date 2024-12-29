@@ -12,7 +12,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_days = 7
-    time_zone = "US/Central"
+    time_zone = "America/Chicago"
 
     def crawl(self, pub_date):
         feed = self.parse_feed("http://www.whattheduck.net/strip/rss.xml")

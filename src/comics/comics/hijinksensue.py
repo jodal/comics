@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_date = "2015-03-11"
-    time_zone = "US/Central"
+    time_zone = "America/Chicago"
 
     def crawl(self, pub_date):
         feed = self.parse_feed("http://hijinksensue.com/feed/")

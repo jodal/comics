@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 14
     schedule = "Mo,Tu,We,Th,Fr"
-    time_zone = "US/Central"
+    time_zone = "America/Chicago"
 
     def crawl(self, pub_date):
         feed = self.parse_feed("http://wapsisquare.com/feed/")
