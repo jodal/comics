@@ -183,12 +183,18 @@ const newReleaseCheck = (() => {
 
   const getLastReleaseId = () => $(".release").first().data("release-id");
 
-  const checkForNewReleases = () => {
+  const checkForNewReleases = async () => {
     const lastReleaseId = getLastReleaseId();
     if (lastReleaseId) {
-      $.get(`/my/num-releases-since/${lastReleaseId}/`)
-        .done(onSuccess)
-        .fail(onFailure);
+      try {
+        const response = await fetch(
+          `/my/num-releases-since/${lastReleaseId}/`,
+        );
+        const data = await response.json();
+        onSuccess(data);
+      } catch (error) {
+        onFailure();
+      }
     }
   };
 
