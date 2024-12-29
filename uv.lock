@@ -120,6 +120,7 @@ dependencies = [
     { name = "dj-database-url" },
     { name = "django" },
     { name = "django-allauth" },
+    { name = "django-anymail" },
     { name = "django-bootstrap-form" },
     { name = "django-compressor" },
     { name = "django-invitations" },
@@ -177,6 +178,7 @@ requires-dist = [
     { name = "dj-database-url", specifier = ">=2.3.0" },
     { name = "django", specifier = ">=4.2.17,<5" },
     { name = "django-allauth", specifier = "==0.51" },
+    { name = "django-anymail", extras = ["sendgrid"], specifier = "==12.0" },
     { name = "django-bootstrap-form", specifier = ">=3.4" },
     { name = "django-compressor", specifier = ">=4.5.1" },
     { name = "django-invitations", specifier = ">=2.1.0" },
@@ -328,6 +330,20 @@ dependencies = [
     { name = "requests-oauthlib" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/44/cf/ef0354010b6621b0d2053dc25ddce0132635fb0cbcfebf32a947877fb78e/django-allauth-0.51.0.tar.gz", hash = "sha256:ca1622733b6faa591580ccd3984042f12d8c79ade93438212de249b7ffb6f91f", size = 709644 }
+
+[[package]]
+name = "django-anymail"
+version = "12.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "requests" },
+    { name = "urllib3" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/91/cd/34eca54757511df252ae8b56f5b75f3d137cc51ba53c7c5c74b8d449fa0d/django_anymail-12.0.tar.gz", hash = "sha256:65789c1b0f42915aa0450a4f173f77572d4c552979b748ddd8125af41972ad30", size = 95175 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/3d/09/83c613d8781d56af7b8736c7c968f8dc0487763b2680ae9d726a7313c9de/django_anymail-12.0-py3-none-any.whl", hash = "sha256:de8458d713d0f9776da9ed04dcd3a0161be23e9ecbcb49dcf149219700ecd274", size = 131312 },
+]
 
 [[package]]
 name = "django-appconf"

@@ -189,6 +189,20 @@ DEFAULT_FROM_EMAIL = env.str(
     "DJANGO_DEFAULT_FROM_EMAIL",
     default="webmaster@example.com",
 )
+#
+# Email backend to use.
+# Default sends emails to console output, which is useful for development.
+EMAIL_BACKEND = env.str(
+    "DJANGO_EMAIL_BACKEND",
+    default="django.core.mail.backends.console.EmailBackend",
+)
+#
+# Send email using Anymail via SendGrid if SENDGRID_API_KEY is set.
+if sendgrid_api_key := env.str("SENDGRID_API_KEY", default=None):
+    EMAIL_BACKEND = "anymail.backends.sendgrid.EmailBackend"
+    ANYMAIL = {
+        "SENDGRID_API_KEY": sendgrid_api_key,
+    }
 
 
 # Auth - django.contrib.auth
