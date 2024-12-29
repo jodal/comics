@@ -81,6 +81,9 @@ CSRF_COOKIE_SECURE = (
 #
 # Time the user session cookies will be valid. Default: 1 year
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 365
+#
+# Do not allow the session cookie to be sent over HTTP if the site is served over HTTPS.
+SESSION_COOKIE_SECURE = CSRF_COOKIE_SECURE
 
 
 # Application definition
