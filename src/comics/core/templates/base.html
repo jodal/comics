@@ -167,8 +167,6 @@
     {% block extra_footer %}
       {{ block.super }}
       {% compress js %}
-        <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
-        <script src="{% static 'js/bootstrap-3.4.1.min.js' %}"></script>
         <script src="{% static 'js/comics.js' %}"></script>
       {% endcompress %}
     {% endblock extra_footer %}
