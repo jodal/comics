@@ -5,17 +5,17 @@
       <a href="{{ latest_url }}"
         class="
           btn
-          {% ifequal view_type 'latest' %}
+          {% if view_type == 'latest' %}
             btn-primary active
           {% else %}
             btn-default
-          {% endifequal %}">
+          {% endif %}">
         Latest</a>
     {% else %}
       <a class="btn btn-default disabled">Latest</a>
     {% endif %}
 
-    {% ifequal view_type 'latest' %}
+    {% if view_type == 'latest' %}
       <a {% if first_url %}href="{{ first_url }}"{% endif %}
         class="btn btn-primary {% if not first_url %}disabled{% endif %}"
         id="first" title="First">
@@ -35,7 +35,7 @@
         class="btn btn-primary {% if not last_url %}disabled{% endif %}"
         id="last" title="Last">
       <i class="fa fa-step-forward"></i></a>
-    {% endifequal %}
+    {% endif %}
   </div>
 
   <div class="btn-group">
@@ -43,17 +43,17 @@
       <a href="{{ today_url }}"
         class="
           btn
-          {% ifequal view_type 'today' %}
+          {% if view_type == 'today' %}
             btn-primary active
           {% else %}
             btn-default
-          {% endifequal %}">
+          {% endif %}">
         Today</a>
     {% else %}
       <a class="btn btn-default disabled">Today</a>
     {% endif %}
 
-    {% ifequal view_type 'today' %}
+    {% if view_type == 'today' %}
       <a {% if first_url %}href="{{ first_url }}"{% endif %}
         class="btn btn-primary {% if not first_url %}disabled{% endif %}"
         id="first" title="First">
@@ -73,7 +73,7 @@
         class="btn btn-primary {% if not last_url %}disabled{% endif %}"
         id="last" title="Last">
       <i class="fa fa-step-forward"></i></a>
-    {% endifequal %}
+    {% endif %}
   </div>
 
   <div class="btn-group">
@@ -81,17 +81,17 @@
       <a href="{{ day_url }}"
         class="
           btn
-          {% ifequal view_type 'day' %}
+          {% if view_type == 'day' %}
             btn-primary active
           {% else %}
             btn-default
-          {% endifequal %}">
+          {% endif %}">
         By day</a>
     {% else %}
       <a class="btn btn-default disabled">By day</a>
     {% endif %}
 
-    {% ifequal view_type 'day' %}
+    {% if view_type == 'day' %}
       <a {% if first_url %}href="{{ first_url }}"{% endif %}
         class="btn btn-primary {% if not first_url %}disabled{% endif %}"
         id="first" title="First">
@@ -111,7 +111,7 @@
         class="btn btn-primary {% if not last_url %}disabled{% endif %}"
         id="last" title="Last">
       <i class="fa fa-step-forward"></i></a>
-    {% endifequal %}
+    {% endif %}
   </div>
 
   <div class="btn-group">
@@ -119,17 +119,17 @@
       <a href="{{ month_url }}"
         class="
           btn
-          {% ifequal view_type 'month' %}
+          {% if view_type == 'month' %}
             btn-primary active
           {% else %}
             btn-default
-          {% endifequal %}">
+          {% endif %}">
         By month</a>
     {% else %}
       <a class="btn btn-default disabled">By month</a>
     {% endif %}
 
-    {% ifequal view_type 'month' %}
+    {% if view_type == 'month' %}
       <a {% if first_url %}href="{{ first_url }}"{% endif %}
         class="btn btn-primary {% if not first_url %}disabled{% endif %}"
         id="first" title="First">
@@ -149,7 +149,7 @@
         class="btn btn-primary {% if not last_url %}disabled{% endif %}"
         id="last" title="Last">
       <i class="fa fa-step-forward"></i></a>
-    {% endifequal %}
+    {% endif %}
   </div>
 
 </div>

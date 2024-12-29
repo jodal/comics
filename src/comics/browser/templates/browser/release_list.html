@@ -53,14 +53,14 @@
     {% include "browser/menu.html" %}
   </div>
 
-  {% ifequal object_type 'mycomics' %}
-    {% ifequal view_type 'latest' %}
+  {% if object_type == 'mycomics' %}
+    {% if view_type == 'latest' %}
       <div class="list-group text-center new-releases-alert">
         <a class="list-group-item list-group-item-info"
           href="{% url "mycomics_latest" %}">0 new releases</a>
       </div>
-    {% endifequal %}
-  {% endifequal %}
+    {% endif %}
+  {% endif %}
 
   <div id="releases">
     {% for release in release_list %}
@@ -115,14 +115,14 @@
 
     {% empty %}
 
-      {% ifequal object_type 'mycomics' %}
+      {% if object_type == 'mycomics' %}
         <div class="alert alert-info">
           <strong>No comics found in my comics.</strong>
           You can <a href="{% url "comics_list" %}">browse available comics</a>.
         </div>
-      {% endifequal %}
+      {% endif %}
 
-      {% ifequal object_type 'onecomic' %}
+      {% if object_type == 'onecomic' %}
         <div class="alert alert-info">
           <strong>No releases found for this comic.</strong>
           You can <a href="{% url "comics_list" %}">browse available comics</a>.
@@ -135,7 +135,7 @@
             <code>python manage.py comics_getreleases</code>
           </div>
         {% endif %}
-      {% endifequal %}
+      {% endif %}
 
     {% endfor %}
   </div>
