@@ -66,33 +66,6 @@ ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["*"])
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 365
 
 
-# Logging
-#
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "filters": {
-        "require_debug_false": {
-            "()": "django.utils.log.RequireDebugFalse",
-        },
-    },
-    "handlers": {
-        "mail_admins": {
-            "level": "ERROR",
-            "filters": ["require_debug_false"],
-            "class": "django.utils.log.AdminEmailHandler",
-        }
-    },
-    "loggers": {
-        "django.request": {
-            "handlers": ["mail_admins"],
-            "level": "ERROR",
-            "propagate": True,
-        },
-    },
-}
-
-
 # Application definition
 #
 ROOT_URLCONF = "comics.urls"
@@ -216,11 +189,6 @@ DEFAULT_FROM_EMAIL = env.str(
     "DJANGO_DEFAULT_FROM_EMAIL",
     default="webmaster@example.com",
 )
-#
-# Site admins
-ADMINS = []
-if admin_email := env.str("DJANGO_ADMIN", default=None):
-    ADMINS.append(("Site admin", admin_email))
 
 
 # Auth - django.contrib.auth

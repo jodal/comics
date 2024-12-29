@@ -48,7 +48,6 @@ this:
 .. code-block:: text
 
     DJANGO_SECRET_KEY=replace-this-with-a-long-random-value
-    DJANGO_ADMIN=comics@example.com
     DJANGO_DEFAULT_FROM_EMAIL=comics@example.com
 
     DJANGO_MEDIA_ROOT=/srv/comics.example.com/htdocs/media/
