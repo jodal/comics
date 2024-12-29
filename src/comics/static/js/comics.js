@@ -153,9 +153,28 @@ const fullSizeToggler = function (event) {
   }
 };
 
-$.fn.momentify = function () {
+$.fn.relativify = function () {
+  const rtf = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
   return this.each(function () {
-    $(this).text(moment($(this).attr("datetime")).fromNow());
+    const date = new Date($(this).attr("datetime"));
+    const now = new Date();
+    const diffInSeconds = (date - now) / 1000;
+    const intervals = {
+      year: 86400 * 365,
+      month: 86400 * 30,
+      week: 86400 * 7,
+      day: 86400,
+      hour: 3600,
+      minute: 60,
+      second: 1,
+    };
+    for (const [unit, secondsInUnit] of Object.entries(intervals)) {
+      const value = Math.round(diffInSeconds / secondsInUnit);
+      if (Math.abs(value) >= 1) {
+        $(this).text(rtf.format(value, unit));
+        return;
+      }
+    }
   });
 };
 
@@ -213,6 +232,6 @@ $(() => {
   $(".mycomics-edit").click(mycomicsEditor.edit);
   $(".mycomics-cancel").click(mycomicsEditor.cancel);
   $(".release .image a").click(fullSizeToggler);
-  $(".release time").momentify();
+  $(".release time").relativify();
   newReleaseCheck();
 });
