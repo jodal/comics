@@ -60,7 +60,7 @@ const keyboardNavigation = (() => {
     switch (event.key.toLowerCase()) {
       case "?":
         event.preventDefault();
-        $(".keyboard-shortcuts.modal").modal();
+        document.querySelector("dialog.keyboard-shortcuts").showModal();
         break;
       case "h":
         event.preventDefault();

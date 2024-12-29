@@ -152,19 +152,17 @@
 
     {% endblock body %}
 
-    <div class="keyboard-shortcuts modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">×</button>
-            <h4 class="modal-title">Keyboard shortcuts</h4>
-          </div>
-          <div class="modal-body">
-            {% include "help/keyboard_content.html" %}
-          </div>
+    <dialog class="modal-dialog keyboard-shortcuts" style="border: none; background: transparent;">
+      <form class="modal-content">
+        <div class="modal-header">
+          <button class="close" formmethod="dialog">×</button>
+          <h4 class="modal-title">Keyboard shortcuts</h4>
         </div>
-      </div>
-    </div>
+        <div class="modal-body">
+          {% include "help/keyboard_content.html" %}
+        </div>
+      </form>
+    </dialog>
 
     {% block extra_footer %}
       {{ block.super }}
