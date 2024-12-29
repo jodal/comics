@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = "1989-04-16"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
-    time_zone = "US/Mountain"
+    time_zone = "America/Denver"
 
     def crawl(self, pub_date):
         page = self.parse_page(pub_date.strftime("http://dilbert.com/strip/%Y-%m-%d"))

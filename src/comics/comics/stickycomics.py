@@ -12,7 +12,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_days = 60
-    time_zone = "US/Mountain"
+    time_zone = "America/Denver"
 
     def crawl(self, pub_date):
         feed = self.parse_feed("http://www.stickycomics.com/feed")

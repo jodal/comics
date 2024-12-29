@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 32
     schedule = "Mo"
-    time_zone = "US/Mountain"
+    time_zone = "America/Denver"
 
     # Without User-Agent set, the server returns empty responses
     headers = {"User-Agent": "Mozilla/4.0"}
