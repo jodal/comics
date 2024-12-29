@@ -12,7 +12,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     schedule = "Tu"
-    time_zone = "US/Eastern"
+    time_zone = "America/New_York"
 
     def crawl(self, pub_date):
         page = self.parse_page("http://www.redmeat.com/max-cannon/FreshMeat")

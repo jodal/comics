@@ -12,7 +12,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     schedule = "Mo,Tu,We,Th,Fr"
-    time_zone = "US/Eastern"
+    time_zone = "America/New_York"
 
     def crawl(self, pub_date):
         feed = self.parse_feed("http://sssscomic.com/ssss-feed.xml")

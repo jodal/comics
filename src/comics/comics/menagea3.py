@@ -14,7 +14,7 @@ class ComicData(ComicDataBase):
 class Crawler(ComicControlCrawlerBase):
     history_capable_days = 50
     schedule = "Tu,Th,Sa"
-    time_zone = "US/Eastern"
+    time_zone = "America/New_York"
 
     def crawl(self, pub_date):
         return self.crawl_helper("https://pixietrixcomix.com/menage-a-3", pub_date)

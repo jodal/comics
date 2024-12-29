@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_days = 60
     schedule = "Tu,Fr"
-    time_zone = "US/Eastern"
+    time_zone = "America/New_York"
 
     def crawl(self, pub_date):
         feed = self.parse_feed("https://donthitsave.com/donthitsavefeed.xml")

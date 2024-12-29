@@ -15,7 +15,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = "2019-05-08"
     schedule = "We,Fr"
-    time_zone = "US/Eastern"
+    time_zone = "America/New_York"
 
     def crawl(self, pub_date):
         feed = self.parse_feed("http://www.mollybeans.com/feed/")

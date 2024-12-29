@@ -14,7 +14,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = "2008-09-04"
     schedule = "Mo,We,Fr"
-    time_zone = "US/Eastern"
+    time_zone = "America/New_York"
 
     def crawl(self, pub_date):
         page_url = "http://www.gunshowcomic.com/d/{}.html".format(

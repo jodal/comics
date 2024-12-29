@@ -12,7 +12,7 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    time_zone = "US/Eastern"
+    time_zone = "America/New_York"
 
     def crawl(self, pub_date):
         pass

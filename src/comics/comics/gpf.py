@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     history_capable_date = "1998-11-02"
     schedule = "Mo,We,Fr"
-    time_zone = "US/Eastern"
+    time_zone = "America/New_York"
 
     def crawl(self, pub_date):
         page_url = "http://www.gpf-comics.com/archive.php?d={}".format(
