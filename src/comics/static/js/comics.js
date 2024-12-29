@@ -187,7 +187,7 @@ const mycomicsEditor = (() => ({
 
 const fullSizeToggler = (event) => {
   event.preventDefault();
-  const img = event.currentTarget.querySelector("img");
+  const img = event.currentTarget;
   if (img.style.maxWidth === "none") {
     img.style.maxWidth = "100%";
   } else {
@@ -288,7 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
   for (const el of document.querySelectorAll(".mycomics-cancel")) {
     el.addEventListener("click", mycomicsEditor.cancel);
   }
-  for (const el of document.querySelectorAll(".release .image a")) {
+  for (const el of document.querySelectorAll(".release img.img-responsive")) {
     el.addEventListener("click", fullSizeToggler);
   }
   for (const el of document.querySelectorAll(".release time")) {
