@@ -60,6 +60,14 @@ SECRET_KEY = env.str(
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["*"])
 
 
+# Security - Cross-Site Request Forgery (CSRF)
+#
+CSRF_TRUSTED_ORIGINS = env.list(
+    "DJANGO_CSRF_TRUSTED_ORIGINS",
+    default=["http://localhost:8000"],
+)
+
+
 # Security - Session
 #
 # Time the user session cookies will be valid. Default: 1 year

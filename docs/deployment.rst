@@ -48,11 +48,11 @@ this:
 .. code-block:: text
 
     DJANGO_SECRET_KEY=replace-this-with-a-long-random-value
-    DJANGO_DEFAULT_FROM_EMAIL=comics@example.com
+    DJANGO_CSRF_TRUSTED_ORIGINS=https://comics.example.com
 
+    DJANGO_DEFAULT_FROM_EMAIL=comics@example.com
     # Sending email, alternative 1: Using a local SMTP server
     DJANGO_EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
-
     # Sending email, alternative 2: Using the SendGrid API
     SENDGRID_API_KEY=your-sendgrid-api-key
 
