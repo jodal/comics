@@ -9,7 +9,7 @@
     <title>{% block title %}{% endblock %} | {{ site_title }}</title>
     <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}">
     {% compress css %}
-      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-3.3.7.min.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-3.4.1.min.css' %}">
       <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome-4.7.0.min.css' %}">
       <link rel="stylesheet" type="text/css" href="{% static 'css/comics.css' %}">
     {% endcompress %}
@@ -169,7 +169,7 @@
       {{ block.super }}
       {% compress js %}
         <script type="text/javascript" src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/bootstrap-3.3.7.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/bootstrap-3.4.1.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/moment-2.18.1.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/comics.js' %}"></script>
       {% endcompress %}
