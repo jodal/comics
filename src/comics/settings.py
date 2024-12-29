@@ -105,16 +105,8 @@ DJANGO_APPS = [
     "whitenoise.runserver_nostatic",  # Before staticfiles
     "django.contrib.staticfiles",
 ]
-LOCAL_APPS = [
-    "comics.core",
-    "comics.accounts",
-    "comics.aggregator",
-    "comics.api",
-    "comics.browser",
-    "comics.help",
-    "comics.status",
-]
 THIRD_PARTY_APPS = [
+    "comics.accounts",  # Before allauth
     "allauth",
     "allauth.account",
     "invitations",  # After allauth
@@ -122,7 +114,15 @@ THIRD_PARTY_APPS = [
     "compressor",
     "tastypie",
 ]
-INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
+LOCAL_APPS = [
+    "comics.core",
+    "comics.aggregator",
+    "comics.api",
+    "comics.browser",
+    "comics.help",
+    "comics.status",
+]
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 
 # Middleware
