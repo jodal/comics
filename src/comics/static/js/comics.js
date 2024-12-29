@@ -1,16 +1,16 @@
-var keyboardNavigation = (function () {
-  var getPosition = function ($release) {
-    var releasePosition = $release.position().top;
-    var navbarHeight = 0;
+const keyboardNavigation = (() => {
+  const getPosition = ($release) => {
+    const releasePosition = $release.position().top;
+    let navbarHeight = 0;
     if ($(".navbar").css("position") === "fixed") {
       navbarHeight = $(".navbar").outerHeight();
     }
-    var spacer = 10;
+    const spacer = 10;
     return Math.floor(releasePosition - navbarHeight - spacer);
   };
 
-  var goToPreviousRelease = function () {
-    var $previousRelease = $(".release")
+  const goToPreviousRelease = () => {
+    const $previousRelease = $(".release")
       .filter(function (index) {
         return $(window).scrollTop() > getPosition($(this)) + 1;
       })
@@ -23,8 +23,8 @@ var keyboardNavigation = (function () {
     }
   };
 
-  var goToNextRelease = function () {
-    var $nextRelease = $(".release")
+  const goToNextRelease = () => {
+    const $nextRelease = $(".release")
       .filter(function (index) {
         return $(window).scrollTop() < getPosition($(this)) - 1;
       })
@@ -35,21 +35,21 @@ var keyboardNavigation = (function () {
     }
   };
 
-  var goToPreviousPage = function () {
-    var prev_url = $("#prev").attr("href");
+  const goToPreviousPage = () => {
+    const prev_url = $("#prev").attr("href");
     if (prev_url) {
       window.location = prev_url;
     }
   };
 
-  var goToNextPage = function () {
-    var next_url = $("#next").attr("href");
+  const goToNextPage = () => {
+    const next_url = $("#next").attr("href");
     if (next_url) {
       window.location = next_url;
     }
   };
 
-  return function (event) {
+  return (event) => {
     if (event.ctrlKey || event.altKey || event.metaKey) {
       return;
     }
@@ -79,15 +79,15 @@ var keyboardNavigation = (function () {
   };
 })();
 
-var mycomicsToggler = (function () {
-  var showConfirmation = function ($button) {
+const mycomicsToggler = (() => {
+  const showConfirmation = ($button) => {
     $button.css("opacity", 1);
     $button.find(".action").hide();
     $button.find(".confirmation").show();
     $button.addClass("btn-danger");
   };
 
-  var showSuccess = function ($button) {
+  const showSuccess = ($button) => {
     $button.css("opacity", 1);
     $button.find(".action").hide();
     $button.find(".confirmation").hide();
@@ -95,35 +95,33 @@ var mycomicsToggler = (function () {
     $button.removeClass("btn-danger").addClass("btn-success");
   };
 
-  var isMyComicsPage = function () {
-    return (window.location + "").match(/\/my\//);
-  };
+  const isMyComicsPage = () => `${window.location}`.match(/\/my\//);
 
   return {
     addComic: function (event) {
       event.preventDefault();
-      var $button = $(this);
+      const $button = $(this);
       $button.attr("disabled", "disabled");
-      var $form = $button.parent("form");
-      var data = $form.serialize() + "&add_comic=1";
-      $.post($form.attr("action"), data, function () {
+      const $form = $button.parent("form");
+      const data = `${$form.serialize()}&add_comic=1`;
+      $.post($form.attr("action"), data, () => {
         showSuccess($button);
       });
     },
     removeComic: function (event) {
       event.preventDefault();
-      var $button = $(this);
+      const $button = $(this);
       if ($button.find(".action:visible").length) {
         showConfirmation($button);
       } else {
         $button.attr("disabled", "disabled");
-        var $form = $button.parent("form");
-        var data = $form.serialize() + "&remove_comic=1";
-        $.post($form.attr("action"), data, function () {
+        const $form = $button.parent("form");
+        const data = `${$form.serialize()}&remove_comic=1`;
+        $.post($form.attr("action"), data, () => {
           showSuccess($button);
           if (isMyComicsPage()) {
-            var comic = $button.parents(".release").data("comic");
-            $('.release[data-comic="' + comic + '"]')
+            const comic = $button.parents(".release").data("comic");
+            $(`.release[data-comic="${comic}"]`)
               .slideUp("slow")
               .children()
               .fadeOut("slow");
@@ -134,21 +132,19 @@ var mycomicsToggler = (function () {
   };
 })();
 
-var mycomicsEditor = (function () {
-  return {
-    edit: function (event) {
-      event.preventDefault();
-      $(".comics-list .edit-view").removeClass("hide");
-      $(".comics-list .show-view").addClass("hide");
-    },
-    cancel: function (event) {
-      $(".comics-list .show-view").removeClass("hide");
-      $(".comics-list .edit-view").addClass("hide");
-    },
-  };
-})();
+const mycomicsEditor = (() => ({
+  edit: (event) => {
+    event.preventDefault();
+    $(".comics-list .edit-view").removeClass("hide");
+    $(".comics-list .show-view").addClass("hide");
+  },
+  cancel: (event) => {
+    $(".comics-list .show-view").removeClass("hide");
+    $(".comics-list .edit-view").addClass("hide");
+  },
+}))();
 
-var fullSizeToggler = function (event) {
+const fullSizeToggler = function (event) {
   event.preventDefault();
   if ($("img", this).css("max-width") !== "none") {
     $("img", this).css("max-width", "none");
@@ -163,33 +159,31 @@ $.fn.momentify = function () {
   });
 };
 
-var newReleaseCheck = (function () {
-  var secondsBeforeFirstCheck = 60;
+const newReleaseCheck = (() => {
+  const secondsBeforeFirstCheck = 60;
 
-  var getLastReleaseId = function () {
-    return $(".release").first().data("release-id");
-  };
+  const getLastReleaseId = () => $(".release").first().data("release-id");
 
-  var checkForNewReleases = function () {
-    var lastReleaseId = getLastReleaseId();
+  const checkForNewReleases = () => {
+    const lastReleaseId = getLastReleaseId();
     if (lastReleaseId) {
-      $.get("/my/num-releases-since/" + lastReleaseId + "/")
+      $.get(`/my/num-releases-since/${lastReleaseId}/`)
         .done(onSuccess)
         .fail(onFailure);
     }
   };
 
-  var showNewReleaseNotification = function (numReleases) {
-    var $el = $(".new-releases-alert");
+  const showNewReleaseNotification = (numReleases) => {
+    const $el = $(".new-releases-alert");
     $el
       .find("a")
       .text(
-        numReleases + (numReleases == 1 ? " new release" : " new releases"),
+        numReleases + (numReleases === 1 ? " new release" : " new releases"),
       );
     $el.slideDown();
   };
 
-  var onSuccess = function (data) {
+  const onSuccess = (data) => {
     if (data.num_releases > 0) {
       showNewReleaseNotification(data.num_releases);
     }
@@ -198,22 +192,21 @@ var newReleaseCheck = (function () {
     }
   };
 
-  var onFailure = function () {
+  const onFailure = () => {
     setTimeout(checkForNewReleases, secondsBeforeFirstCheck * 1000);
   };
 
-  var isPageOneOfMyComicsLatest = function () {
-    return (window.location + "").match(/\/my\/(page1\/)?$/);
-  };
+  const isPageOneOfMyComicsLatest = () =>
+    `${window.location}`.match(/\/my\/(page1\/)?$/);
 
-  return function () {
+  return () => {
     if (isPageOneOfMyComicsLatest()) {
       setTimeout(checkForNewReleases, secondsBeforeFirstCheck * 1000);
     }
   };
 })();
 
-$(function () {
+$(() => {
   $(document).keypress(keyboardNavigation);
   $(".mycomics-add").click(mycomicsToggler.addComic);
   $(".mycomics-remove").click(mycomicsToggler.removeComic);
