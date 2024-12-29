@@ -20,14 +20,14 @@ class ComicsResourceTestCase(TestCase):
 
     def test_authentication_with_secret_key_in_header(self):
         response = self.client.get(
-            "/api/v1/comics/", HTTP_AUTHORIZATION="Key s3cretk3y"
+            "/api/v1/comics/", headers={"authorization": "Key s3cretk3y"}
         )
 
         self.assertEqual(response.status_code, 200)
 
     def test_lists_comics(self):
         response = self.client.get(
-            "/api/v1/comics/", HTTP_AUTHORIZATION="Key s3cretk3y"
+            "/api/v1/comics/", headers={"authorization": "Key s3cretk3y"}
         )
 
         data = json.loads(response.content)
@@ -38,7 +38,7 @@ class ComicsResourceTestCase(TestCase):
         response = self.client.get(
             "/api/v1/comics/",
             {"slug": "xkcd"},
-            HTTP_AUTHORIZATION="Key s3cretk3y",
+            headers={"authorization": "Key s3cretk3y"},
         )
 
         data = json.loads(response.content)
@@ -51,7 +51,7 @@ class ComicsResourceTestCase(TestCase):
         response = self.client.get(
             "/api/v1/comics/",
             {"subscribed": "true"},
-            HTTP_AUTHORIZATION="Key s3cretk3y",
+            headers={"authorization": "Key s3cretk3y"},
         )
 
         data = json.loads(response.content)
@@ -65,7 +65,7 @@ class ComicsResourceTestCase(TestCase):
         response = self.client.get(
             "/api/v1/comics/",
             {"subscribed": "false"},
-            HTTP_AUTHORIZATION="Key s3cretk3y",
+            headers={"authorization": "Key s3cretk3y"},
         )
 
         data = json.loads(response.content)
@@ -74,14 +74,16 @@ class ComicsResourceTestCase(TestCase):
 
     def test_details_view(self):
         response = self.client.get(
-            "/api/v1/comics/", HTTP_AUTHORIZATION="Key s3cretk3y"
+            "/api/v1/comics/", headers={"authorization": "Key s3cretk3y"}
         )
 
         data = json.loads(response.content)
         comic_uri = data["objects"][0]["resource_uri"]
         self.assertEqual(comic_uri, "/api/v1/comics/1/")
 
-        response = self.client.get(comic_uri, HTTP_AUTHORIZATION="Key s3cretk3y")
+        response = self.client.get(
+            comic_uri, headers={"authorization": "Key s3cretk3y"}
+        )
 
         data = json.loads(response.content)
         self.assertEqual(data["slug"], "abstrusegoose")

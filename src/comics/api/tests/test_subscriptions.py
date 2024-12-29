@@ -24,7 +24,7 @@ class SubscriptionsResourceTestCase(TestCase):
 
     def test_authentication_with_secret_key_in_header(self):
         response = self.client.get(
-            "/api/v1/subscriptions/", HTTP_AUTHORIZATION="Key s3cretk3y"
+            "/api/v1/subscriptions/", headers={"authorization": "Key s3cretk3y"}
         )
 
         self.assertEqual(response.status_code, 200)
@@ -33,7 +33,7 @@ class SubscriptionsResourceTestCase(TestCase):
         subscription = Subscription.objects.all()[0]
 
         response = self.client.get(
-            "/api/v1/subscriptions/", HTTP_AUTHORIZATION="Key s3cretk3y"
+            "/api/v1/subscriptions/", headers={"authorization": "Key s3cretk3y"}
         )
 
         data = json.loads(response.content)
@@ -51,7 +51,7 @@ class SubscriptionsResourceTestCase(TestCase):
         response = self.client.get(
             "/api/v1/subscriptions/",
             {"comic__slug": "xkcd"},
-            HTTP_AUTHORIZATION="Key s3cretk3y",
+            headers={"authorization": "Key s3cretk3y"},
         )
 
         data = json.loads(response.content)
@@ -67,7 +67,7 @@ class SubscriptionsResourceTestCase(TestCase):
         subscription = Subscription.objects.all()[0]
 
         response = self.client.get(
-            "/api/v1/subscriptions/", HTTP_AUTHORIZATION="Key s3cretk3y"
+            "/api/v1/subscriptions/", headers={"authorization": "Key s3cretk3y"}
         )
 
         data = json.loads(response.content)
@@ -77,7 +77,7 @@ class SubscriptionsResourceTestCase(TestCase):
         )
 
         response = self.client.get(
-            sub["resource_uri"], HTTP_AUTHORIZATION="Key s3cretk3y"
+            sub["resource_uri"], headers={"authorization": "Key s3cretk3y"}
         )
 
         data = json.loads(response.content)
@@ -91,7 +91,7 @@ class SubscriptionsResourceTestCase(TestCase):
             "/api/v1/subscriptions/",
             data=data,
             content_type="application/json",
-            HTTP_AUTHORIZATION="Key s3cretk3y",
+            headers={"authorization": "Key s3cretk3y"},
         )
 
         self.assertEqual(response.status_code, 201)
@@ -114,7 +114,7 @@ class SubscriptionsResourceTestCase(TestCase):
 
         response = self.client.delete(
             "/api/v1/subscriptions/%d/" % sub.pk,
-            HTTP_AUTHORIZATION="Key s3cretk3y",
+            headers={"authorization": "Key s3cretk3y"},
         )
 
         self.assertEqual(response.status_code, 204)

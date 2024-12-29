@@ -20,14 +20,14 @@ class ReleasesResourceTestCase(TestCase):
 
     def test_authentication_with_secret_key_in_header(self):
         response = self.client.get(
-            "/api/v1/releases/", HTTP_AUTHORIZATION="Key s3cretk3y"
+            "/api/v1/releases/", headers={"authorization": "Key s3cretk3y"}
         )
 
         self.assertEqual(response.status_code, 200)
 
     def test_list_releases(self):
         response = self.client.get(
-            "/api/v1/releases/", HTTP_AUTHORIZATION="Key s3cretk3y"
+            "/api/v1/releases/", headers={"authorization": "Key s3cretk3y"}
         )
 
         data = json.loads(response.content)
@@ -59,7 +59,7 @@ class ReleasesResourceTestCase(TestCase):
         response = self.client.get(
             "/api/v1/releases/",
             {"subscribed": "true"},
-            HTTP_AUTHORIZATION="Key s3cretk3y",
+            headers={"authorization": "Key s3cretk3y"},
         )
 
         data = json.loads(response.content)
@@ -69,7 +69,7 @@ class ReleasesResourceTestCase(TestCase):
         response = self.client.get(
             "/api/v1/releases/",
             {"comic__slug": "geekandpoke"},
-            HTTP_AUTHORIZATION="Key s3cretk3y",
+            headers={"authorization": "Key s3cretk3y"},
         )
 
         data = json.loads(response.content)
@@ -82,7 +82,7 @@ class ReleasesResourceTestCase(TestCase):
         response = self.client.get(
             "/api/v1/releases/",
             {"pub_date__year": 2012, "pub_date__month": 10},
-            HTTP_AUTHORIZATION="Key s3cretk3y",
+            headers={"authorization": "Key s3cretk3y"},
         )
 
         data = json.loads(response.content)
@@ -91,7 +91,7 @@ class ReleasesResourceTestCase(TestCase):
         response = self.client.get(
             "/api/v1/releases/",
             {"pub_date__year": 2012, "pub_date__month": 9},
-            HTTP_AUTHORIZATION="Key s3cretk3y",
+            headers={"authorization": "Key s3cretk3y"},
         )
 
         data = json.loads(response.content)
@@ -101,21 +101,23 @@ class ReleasesResourceTestCase(TestCase):
         response = self.client.get(
             "/api/v1/releases/",
             {"pub_date__foo": "bar"},
-            HTTP_AUTHORIZATION="Key s3cretk3y",
+            headers={"authorization": "Key s3cretk3y"},
         )
 
         self.assertEqual(response.status_code, 400)
 
     def test_details_view(self):
         response = self.client.get(
-            "/api/v1/releases/", HTTP_AUTHORIZATION="Key s3cretk3y"
+            "/api/v1/releases/", headers={"authorization": "Key s3cretk3y"}
         )
 
         data = json.loads(response.content)
         release_uri = data["objects"][0]["resource_uri"]
         self.assertEqual(release_uri, "/api/v1/releases/11/")
 
-        response = self.client.get(release_uri, HTTP_AUTHORIZATION="Key s3cretk3y")
+        response = self.client.get(
+            release_uri, headers={"authorization": "Key s3cretk3y"}
+        )
 
         data = json.loads(response.content)
         self.assertEqual(data["pub_date"], "2012-10-12")

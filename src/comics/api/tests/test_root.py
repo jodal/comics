@@ -27,7 +27,7 @@ class RootResourceTestCase(TestCase):
         )
 
     def test_resource_can_return_xml(self):
-        response = self.client.get("/api/v1/", HTTP_ACCEPT="application/xml")
+        response = self.client.get("/api/v1/", headers={"accept": "application/xml"})
 
         self.assertIn(b"<?xml version='1.0' encoding='utf-8'?>", response.content)
 

@@ -20,14 +20,14 @@ class ImagesResourceTestCase(TestCase):
 
     def test_authentication_with_secret_key_in_header(self):
         response = self.client.get(
-            "/api/v1/images/", HTTP_AUTHORIZATION="Key s3cretk3y"
+            "/api/v1/images/", headers={"authorization": "Key s3cretk3y"}
         )
 
         self.assertEqual(response.status_code, 200)
 
     def test_lists_images(self):
         response = self.client.get(
-            "/api/v1/images/", HTTP_AUTHORIZATION="Key s3cretk3y"
+            "/api/v1/images/", headers={"authorization": "Key s3cretk3y"}
         )
 
         data = json.loads(response.content)
@@ -42,7 +42,7 @@ class ImagesResourceTestCase(TestCase):
         response = self.client.get(
             "/api/v1/images/",
             {"height__gt": 1100},
-            HTTP_AUTHORIZATION="Key s3cretk3y",
+            headers={"authorization": "Key s3cretk3y"},
         )
 
         data = json.loads(response.content)
@@ -52,14 +52,16 @@ class ImagesResourceTestCase(TestCase):
 
     def test_details_view(self):
         response = self.client.get(
-            "/api/v1/images/", HTTP_AUTHORIZATION="Key s3cretk3y"
+            "/api/v1/images/", headers={"authorization": "Key s3cretk3y"}
         )
 
         data = json.loads(response.content)
         image_uri = data["objects"][1]["resource_uri"]
         self.assertEqual(image_uri, "/api/v1/images/2/")
 
-        response = self.client.get(image_uri, HTTP_AUTHORIZATION="Key s3cretk3y")
+        response = self.client.get(
+            image_uri, headers={"authorization": "Key s3cretk3y"}
+        )
 
         data = json.loads(response.content)
         self.assertEqual(
