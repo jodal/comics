@@ -1,27 +1,19 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import GoComicsComCrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
 class ComicData(ComicDataBase):
     name = "Garfield"
     language = "en"
-    url = "http://www.garfield.com/"
+    url = "https://www.gocomics.com/garfield/"
     start_date = "1978-06-19"
     rights = "Jim Davis"
 
 
-class Crawler(CrawlerBase):
-    history_capable_days = 100
+class Crawler(GoComicsComCrawlerBase):
+    history_capable_date = "1978-06-19"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/New_York"
 
     def crawl(self, pub_date):
-        if pub_date.weekday() == 6:
-            url = "http://picayune.uclick.com/comics/ga/{}.jpg".format(
-                pub_date.strftime("%Y/ga%y%m%d"),
-            )
-        else:
-            url = "http://images.ucomics.com/comics/ga/{}.gif".format(
-                pub_date.strftime("%Y/ga%y%m%d"),
-            )
-        return CrawlerImage(url)
+        return self.crawl_helper("garfield", pub_date)
