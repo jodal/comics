@@ -153,7 +153,6 @@ comics = ["*.css", "*.html", "*.js", "*.png", "*.ttf", "*.woff2"]
 
 
 [tool.tox]
-requires = ["tox>=4.21"]
 env_list = ["3.12", "docs", "ruff-format", "ruff-lint", "mypy"]
 
 [tool.tox.env_run_base]
