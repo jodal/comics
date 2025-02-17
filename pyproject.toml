@@ -68,6 +68,20 @@ django_settings_module = "comics.settings"
 
 
 [tool.pytest.ini_options]
+filterwarnings = [
+    # --- Error by default ---
+    # Convert all warnings into errors during testing, except for the given ignores
+    "error",
+    #
+    # --- Deprecation warnings from third-party packages ---
+    # boostrapform uses deprecated `StrictVersion` from `distutils`
+    "ignore:distutils Version classes are deprecated. Use packaging.version instead.:DeprecationWarning",
+    #
+    # tastypie uses deprecated `django.utils.datetime_safe`
+    "ignore:The django.utils.datetime_safe module is deprecated.:django.utils.deprecation.RemovedInDjango50Warning",
+]
+
+# pytest-django
 DJANGO_SETTINGS_MODULE = "comics.settings"
 
 
