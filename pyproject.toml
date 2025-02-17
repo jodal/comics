@@ -196,11 +196,13 @@ commands = [["ruff", "format", "--check", "{posargs:.}"]]
 
 [tool.tox.env."ruff-lint"]
 runner = "uv-venv-lock-runner"
+skip_install = true
 dependency_groups = ["lint"]
 commands = [["ruff", "check", "{posargs:.}"]]
 
 [tool.tox.env.mypy]
 runner = "uv-venv-lock-runner"
+skip_install = true
 dependency_groups = ["typing"]
 commands = [["mypy", "{posargs:src}"]]
 
