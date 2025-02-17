@@ -159,7 +159,7 @@ comics = ["*.css", "*.html", "*.js", "*.png", "*.ttf", "*.woff2"]
 
 
 [tool.tox]
-env_list = ["3.12", "docs", "ruff-format", "ruff-lint", "mypy"]
+env_list = ["3.12", "docs", "mypy", "ruff-format", "ruff-lint"]
 
 [tool.tox.env_run_base]
 runner = "uv-venv-lock-runner"
@@ -189,6 +189,12 @@ commands = [
     ],
 ]
 
+[tool.tox.env.mypy]
+runner = "uv-venv-lock-runner"
+skip_install = true
+dependency_groups = ["typing"]
+commands = [["mypy", "{posargs:src}"]]
+
 [tool.tox.env."ruff-format"]
 runner = "uv-venv-lock-runner"
 dependency_groups = ["lint"]
@@ -199,12 +205,6 @@ runner = "uv-venv-lock-runner"
 skip_install = true
 dependency_groups = ["lint"]
 commands = [["ruff", "check", "{posargs:.}"]]
-
-[tool.tox.env.mypy]
-runner = "uv-venv-lock-runner"
-skip_install = true
-dependency_groups = ["typing"]
-commands = [["mypy", "{posargs:src}"]]
 
 
 [tool.uv]
