@@ -43,6 +43,10 @@ dev = [
     "django-extensions>=3.2.3",
     "tox-uv>=1.16.2",
     "tox>=4.21",
+    { include-group = "docs" },
+    { include-group = "lint" },
+    { include-group = "tests" },
+    { include-group = "typing" },
 ]
 docs = [
     "sphinx>=3.5.2",
