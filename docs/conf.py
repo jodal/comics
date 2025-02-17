@@ -5,7 +5,7 @@ import tomllib
 
 project = "Comics"
 author = "Stein Magnus Jodal and contributors"
-copyright = f"2009-2024, {author}"  # noqa: A001
+copyright = f"2009-2025, {author}"  # noqa: A001
 
 with pathlib.Path("../pyproject.toml").open("rb") as fh:
     release = tomllib.load(fh)["project"]["version"]
