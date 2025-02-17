@@ -44,9 +44,11 @@ dev = [
     "tox-uv>=1.16.2",
     "tox>=4.21",
 ]
-# TODO: Replace docs/requirements.txt once Read the Docs supports dependency groups:
-# https://github.com/readthedocs/readthedocs.org/issues/11766
-# docs = []
+docs = [
+    "sphinx>=3.5.2",
+    "sphinx-rtd-theme>=0.5.1",
+    "sphinxcontrib-httpdomain>=1.7.0",
+]
 lint = ["ruff>=0.8.4"]
 tests = [
     "pytest>=8.3.4",
@@ -172,25 +174,15 @@ commands = [
 ]
 
 [tool.tox.env.docs]
-dependency_groups = []
-changedir = "docs"
+dependency_groups = ["docs"]
 commands = [
     [
-        "uv",
-        "pip",
-        "install",
-        "-r",
-        "requirements.txt",
-    ],
-    [
-        "uv",
-        "run",
         "sphinx-build",
         "--builder",
         "html",
         "--doctree-dir",
         "{envtmpdir}{/}doctrees",
-        ".",
+        "docs",
         "{envtmpdir}{/}html",
     ],
 ]
