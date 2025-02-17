@@ -163,6 +163,8 @@ env_list = ["3.12", "docs", "mypy", "ruff-format", "ruff-lint"]
 
 [tool.tox.env_run_base]
 runner = "uv-venv-lock-runner"
+package = "wheel"
+wheel_build_env = ".pkg"
 dependency_groups = ["tests"]
 set_env = { DJANGO_SECRET_KEY = "test-only-s3cret" }
 commands = [
