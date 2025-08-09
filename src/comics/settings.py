@@ -219,7 +219,7 @@ EMAIL_BACKEND = env.str(
     default="django.core.mail.backends.console.EmailBackend",
 )
 #
-# Send email using Anymail via MailGun if MAILGUN_API_KEY is set.
+# Send email using Anymail via Mailgun if MAILGUN_API_KEY is set.
 if mailgun_api_key := env.str("MAILGUN_API_KEY", default=None):
     EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
     ANYMAIL = {
