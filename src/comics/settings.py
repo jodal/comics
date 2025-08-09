@@ -219,11 +219,11 @@ EMAIL_BACKEND = env.str(
     default="django.core.mail.backends.console.EmailBackend",
 )
 #
-# Send email using Anymail via SendGrid if SENDGRID_API_KEY is set.
-if sendgrid_api_key := env.str("SENDGRID_API_KEY", default=None):
-    EMAIL_BACKEND = "anymail.backends.sendgrid.EmailBackend"
+# Send email using Anymail via MailGun if MAILGUN_API_KEY is set.
+if mailgun_api_key := env.str("MAILGUN_API_KEY", default=None):
+    EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
     ANYMAIL = {
-        "SENDGRID_API_KEY": sendgrid_api_key,
+        "MAILGUN_API_KEY": mailgun_api_key,
     }
 
 

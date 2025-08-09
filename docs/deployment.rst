@@ -53,8 +53,8 @@ this:
     DJANGO_DEFAULT_FROM_EMAIL=comics@example.com
     # Sending email, alternative 1: Using a local SMTP server
     DJANGO_EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
-    # Sending email, alternative 2: Using the SendGrid API
-    SENDGRID_API_KEY=your-sendgrid-api-key
+    # Sending email, alternative 2: Using the MailGun API (which has a free tier)
+    MAILGUN_API_KEY=your-mailgun-api-key
 
     DJANGO_MEDIA_ROOT=/srv/comics.example.com/htdocs/media/
     DJANGO_MEDIA_URL=https://comics.example.com/media/
