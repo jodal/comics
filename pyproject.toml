@@ -23,7 +23,7 @@ dependencies = [
     "lxml>=6.0.0",
     "pillow>=11.3.0",
     "sentry-sdk>=2.34.1",
-    "setuptools>=75.6.0",         # Needed by django-bootstrap-form
+    "setuptools>=80.9.0",         # Needed by django-bootstrap-form
     "typenv>=0.2.0",
     "whitenoise>=6.8.2",
 ]
