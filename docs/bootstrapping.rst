@@ -8,6 +8,19 @@ To get Comics to a state useful for testing of new crawlers and personal
 usage, the following steps are all that is needed.
 
 
+Environment variables
+---------------------
+
+Comics can be configured through environment variables, documented in
+:doc:`deployment`.
+
+A minimal set of environment variables to get started for local development is
+available in the file `dev-template.env`. Copy the file to `.env` and adapt it
+to fit your setup.
+
+    cp dev-template.env .env
+
+
 Create database
 ---------------
 
