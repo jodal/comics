@@ -79,6 +79,9 @@ filterwarnings = [
     #
     # tastypie uses deprecated `django.utils.datetime_safe`
     "ignore:The django.utils.datetime_safe module is deprecated.:django.utils.deprecation.RemovedInDjango50Warning",
+    #
+    # biplist (via tastypie) uses deprecated `datetime.datetime.utcfromtimestamp()`
+    "ignore:datetime.datetime.utcfromtimestamp\\(\\) is deprecated:DeprecationWarning",
 ]
 
 # pytest-django
