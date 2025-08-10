@@ -191,7 +191,7 @@ requires-dist = [
     { name = "dj-database-url", specifier = ">=3.0.1" },
     { name = "django", specifier = ">=4.2.17,<5" },
     { name = "django-allauth", specifier = ">=65.10.0" },
-    { name = "django-anymail", extras = ["anymail"], specifier = "==13.0.1" },
+    { name = "django-anymail", specifier = ">=13.0.1" },
     { name = "django-bootstrap-form", specifier = ">=3.4" },
     { name = "django-compressor", specifier = ">=4.5.1" },
     { name = "django-invitations", specifier = ">=2.1.0" },

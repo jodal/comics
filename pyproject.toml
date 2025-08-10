@@ -12,7 +12,7 @@ dependencies = [
     "defusedxml>=0.7.1",
     "dj-database-url>=3.0.1",
     "django-allauth>=65.10.0",
-    "django-anymail[anymail]==13.0.1",
+    "django-anymail>=13.0.1",
     "django-bootstrap-form>=3.4",
     "django-compressor>=4.5.1",
     "django-invitations>=2.1.0",
@@ -23,7 +23,7 @@ dependencies = [
     "lxml>=5.3.0",
     "pillow>=11.0.0",
     "sentry-sdk>=2.19.2",
-    "setuptools>=75.6.0",              # Needed by django-bootstrap-form
+    "setuptools>=75.6.0",         # Needed by django-bootstrap-form
     "typenv>=0.2.0",
     "whitenoise>=6.8.2",
 ]
