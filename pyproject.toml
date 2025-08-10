@@ -11,7 +11,7 @@ dependencies = [
     "cssselect>=1.2.0",
     "defusedxml>=0.7.1",
     "dj-database-url>=2.3.0",
-    "django-allauth==0.51",            # TODO: Review changelog and update
+    "django-allauth==65.10.0",
     "django-anymail[anymail]==13.0.1",
     "django-bootstrap-form>=3.4",
     "django-compressor>=4.5.1",

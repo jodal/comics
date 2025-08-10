@@ -137,6 +137,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 
@@ -245,19 +246,29 @@ LOGIN_URL = "account_login"
 
 # Auth - django-allauth
 #
+# django-allauth depends on Django's sites framework.
 SITE_ID = 1
+#
+# Integrate django-allauth with django-invitations.
 ACCOUNT_ADAPTER = "invitations.models.InvitationsAdapter"
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_EMAIL_REQUIRED = True
+#
+# Make sessions last long without opt-in.
+ACCOUNT_SESSION_REMEMBER = True
+#
+# Signup
+ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
+#
+# Login
+ACCOUNT_LOGIN_METHODS = {"email"}
+#
+# Email verification
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+#
+# Sending email
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "[%s] " % (
     env.str("COMICS_SITE_TITLE", default="example.com")
 )
-#
-# Prevent bots from spamming with forgotten password emails:
 ACCOUNT_EMAIL_UNKNOWN_ACCOUNTS = False
-#
-ACCOUNT_USERNAME_REQUIRED = False
 
 
 # Auth - django-invitations
