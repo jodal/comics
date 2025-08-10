@@ -12,21 +12,24 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: "pytest"
+          - name: "pytest (3.12)"
             python: "3.12"
             tox: "3.12"
+          - name: "pytest (3.13)"
+            python: "3.13"
+            tox: "3.13"
             coverage: true
           - name: "ruff-format"
-            python: "3.12"
+            python: "3.13"
             tox: ruff-format
           - name: "ruff-lint"
-            python: "3.12"
+            python: "3.13"
             tox: ruff-lint
           - name: "mypy"
-            python: "3.12"
+            python: "3.13"
             tox: mypy
           - name: "docs"
-            python: "3.12"
+            python: "3.13"
             tox: docs
 
     name: ${{ matrix.name }}
