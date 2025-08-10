@@ -15,8 +15,7 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         feed = self.parse_feed(
-            "http://www.goominet.com/unspeakable-vault/"
-            "?type=103&ecorss[clear_cache]=1"
+            "http://www.goominet.com/unspeakable-vault/?type=103&ecorss[clear_cache]=1"
         )
         for entry in feed.for_date(pub_date):
             url = entry.summary.src('img[src*="/tx_cenostripviewer/"]')

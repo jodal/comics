@@ -126,7 +126,7 @@ class AggregatorConfig:
         )
 
     def set_comics_to_crawl(self, comic_slugs):
-        from comics.core.models import Comic
+        from comics.core.models import Comic  # noqa: PLC0415
 
         if comic_slugs is None or len(comic_slugs) == 0:
             logger.debug("Crawl targets: all comics")
@@ -139,7 +139,7 @@ class AggregatorConfig:
             self.comics = comics
 
     def _get_comic_by_slug(self, comic_slug):
-        from comics.core.models import Comic
+        from comics.core.models import Comic  # noqa: PLC0415
 
         try:
             comic = Comic.objects.get(slug=comic_slug)

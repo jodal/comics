@@ -73,7 +73,7 @@ class Migration(migrations.Migration):
                 (
                     "rights",
                     models.CharField(
-                        help_text="Author, copyright, and/or licensing " "information",
+                        help_text="Author, copyright, and/or licensing information",
                         max_length=100,
                         blank=True,
                     ),
