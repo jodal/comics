@@ -207,7 +207,7 @@ requires-dist = [
     { name = "sentry-sdk", specifier = ">=2.34.1" },
     { name = "setuptools", specifier = ">=80.9.0" },
     { name = "typenv", specifier = ">=0.2.0" },
-    { name = "whitenoise", specifier = ">=6.8.2" },
+    { name = "whitenoise", specifier = ">=6.9.0" },
 ]
 provides-extras = ["api", "cache", "pgsql", "server"]
 
@@ -1217,9 +1217,9 @@ wheels = [
 
 [[package]]
 name = "whitenoise"
-version = "6.8.2"
+version = "6.9.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/68/49/c21ebb5b911888c349a849ec7d1ead2dffbbcc4e2be0f6af2a7dbac03393/whitenoise-6.8.2.tar.gz", hash = "sha256:486bd7267a375fa9650b136daaec156ac572971acc8bf99add90817a530dd1d4", size = 25892, upload-time = "2024-10-29T23:04:39.888Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b9/cf/c15c2f21aee6b22a9f6fc9be3f7e477e2442ec22848273db7f4eb73d6162/whitenoise-6.9.0.tar.gz", hash = "sha256:8c4a7c9d384694990c26f3047e118c691557481d624f069b7f7752a2f735d609", size = 25920, upload-time = "2025-02-06T22:16:34.957Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8c/3a/8d22513e1942899270dcdbd47f9886309836442cd7ede4b0d00be79715f5/whitenoise-6.8.2-py3-none-any.whl", hash = "sha256:df12dce147a043d1956d81d288c6f0044147c6d2ab9726e5772ac50fb45d2280", size = 20158, upload-time = "2024-10-29T23:04:38.415Z" },
+    { url = "https://files.pythonhosted.org/packages/64/b2/2ce9263149fbde9701d352bda24ea1362c154e196d2fda2201f18fc585d7/whitenoise-6.9.0-py3-none-any.whl", hash = "sha256:c8a489049b7ee9889617bb4c274a153f3d979e8f51d2efd0f5b403caf41c57df", size = 20161, upload-time = "2025-02-06T22:16:32.589Z" },
 ]
