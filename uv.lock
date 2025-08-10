@@ -213,7 +213,7 @@ provides-extras = ["api", "cache", "pgsql", "server"]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "django-debug-toolbar", specifier = ">=4.4.6" },
+    { name = "django-debug-toolbar", specifier = ">=6.0.0" },
     { name = "django-extensions", specifier = ">=3.2.3" },
     { name = "django-stubs", specifier = "==4.2.7" },
     { name = "mypy", specifier = ">=1.7,<1.8" },
@@ -378,15 +378,15 @@ wheels = [
 
 [[package]]
 name = "django-debug-toolbar"
-version = "4.4.6"
+version = "6.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
     { name = "sqlparse" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d4/9c/0a3238eda0a46df20f2e3fe2a30313d34f5042a1a737d08230b77c29a3e9/django_debug_toolbar-4.4.6.tar.gz", hash = "sha256:36e421cb908c2f0675e07f9f41e3d1d8618dc386392ec82d23bcfcd5d29c7044", size = 272610, upload-time = "2024-07-10T13:18:13.302Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c5/d5/5fc90234532088aeec5faa48d5b09951cc7eab6626030ed427d3bd8cd9bc/django_debug_toolbar-6.0.0.tar.gz", hash = "sha256:6eb9fa6f4a5884bf04004700ffb5a44043f1fff38784447fc52c1633448c8c14", size = 305331, upload-time = "2025-07-25T13:11:48.68Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/2f/33/2036a472eedfbe49240dffea965242b3f444de4ea4fbeceb82ccea33a2ce/django_debug_toolbar-4.4.6-py3-none-any.whl", hash = "sha256:3beb671c9ec44ffb817fad2780667f172bd1c067dbcabad6268ce39a81335f45", size = 229621, upload-time = "2024-07-10T13:18:35.71Z" },
+    { url = "https://files.pythonhosted.org/packages/05/b5/4724a8c18fcc5b09dca7b7a0e70c34208317bb110075ad12484d6588ae91/django_debug_toolbar-6.0.0-py3-none-any.whl", hash = "sha256:0cf2cac5c307b77d6e143c914e5c6592df53ffe34642d93929e5ef095ae56841", size = 266967, upload-time = "2025-07-25T13:11:47.265Z" },
 ]
 
 [[package]]
