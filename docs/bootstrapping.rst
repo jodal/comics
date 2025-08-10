@@ -16,7 +16,7 @@ Comics can be configured through environment variables, documented in
 
 A minimal set of environment variables to get started for local development is
 available in the file `dev-template.env`. Copy the file to `.env` and adapt it
-to fit your setup.
+to fit your setup::
 
     cp dev-template.env .env
 
