@@ -228,6 +228,8 @@ if mailgun_api_key := env.str("MAILGUN_API_KEY", default=None):
             "MAILGUN_API_URL", default="https://api.mailgun.net/v3"
         ),
     }
+if mailgun_sender_domain := env.str("MAILGUN_SENDER_DOMAIN", default=None):
+    ANYMAIL["MAILGUN_SENDER_DOMAIN"] = mailgun_sender_domain
 
 
 # Auth - django.contrib.auth
