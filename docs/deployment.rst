@@ -193,7 +193,6 @@ One way is to use ``cron`` e.g. by placing the following in
 .. code-block:: sh
 
     MAILTO=comics@example.com
-    PYTHONPATH=/srv/comics.example.com/app/comics
     1 * * * * comics-user cd /srv/comics.example.com/app && uv run comics get_releases -v0
     1 3 * * * comics-user cd /srv/comics.example.com/app && uv run comics clearsessions -v0
 
