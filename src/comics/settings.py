@@ -253,6 +253,10 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "[%s] " % (
     env.str("COMICS_SITE_TITLE", default="example.com")
 )
+#
+# Prevent bots from spamming with forgotten password emails:
+ACCOUNT_EMAIL_UNKNOWN_ACCOUNTS = False
+#
 ACCOUNT_USERNAME_REQUIRED = False
 
 
