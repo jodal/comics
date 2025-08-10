@@ -5,7 +5,9 @@ from django.test import override_settings
 
 @pytest.fixture(scope="session", autouse=True)
 def staticfiles(tmp_path_factory):
-    static_root = tmp_path_factory.mktemp("static")
-    with override_settings(STATIC_ROOT=static_root):
+    with override_settings(
+        STATIC_ROOT=tmp_path_factory.mktemp("static"),
+        COMPRESS_ENABLED=False,
+    ):
         call_command("collectstatic", "--noinput")
         yield
