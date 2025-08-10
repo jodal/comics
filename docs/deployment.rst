@@ -55,6 +55,8 @@ this:
     DJANGO_EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
     # Sending email, alternative 2: Using the Mailgun API (which has a free tier)
     MAILGUN_API_KEY=your-mailgun-api-key
+    MAILGUN_API_URL=https://api.eu.mailgun.net/v3
+    MAILGUN_SENDER_DOMAIN=comics.example.com
 
     DJANGO_MEDIA_ROOT=/srv/comics.example.com/htdocs/media/
     DJANGO_MEDIA_URL=https://comics.example.com/media/
