@@ -16,7 +16,7 @@ dependencies = [
     "django-bootstrap-form>=3.4",
     "django-compressor>=4.5.1",
     "django-invitations>=2.1.0",
-    "django-tastypie>=0.15.0",
+    "django-tastypie>=0.15.1",
     "django>=4.2.17,<5",
     "feedparser>=6.0.11",
     "httpx>=0.28.1",
@@ -76,12 +76,6 @@ filterwarnings = [
     # --- Deprecation warnings from third-party packages ---
     # boostrapform uses deprecated `StrictVersion` from `distutils`
     "ignore:distutils Version classes are deprecated. Use packaging.version instead.:DeprecationWarning",
-    #
-    # tastypie uses deprecated `django.utils.datetime_safe`
-    "ignore:The django.utils.datetime_safe module is deprecated.:django.utils.deprecation.RemovedInDjango50Warning",
-    #
-    # biplist (via tastypie) uses deprecated `datetime.datetime.utcfromtimestamp()`
-    "ignore:datetime.datetime.utcfromtimestamp\\(\\) is deprecated:DeprecationWarning",
 ]
 
 # pytest-django

@@ -195,7 +195,7 @@ requires-dist = [
     { name = "django-bootstrap-form", specifier = ">=3.4" },
     { name = "django-compressor", specifier = ">=4.5.1" },
     { name = "django-invitations", specifier = ">=2.1.0" },
-    { name = "django-tastypie", specifier = ">=0.15.0" },
+    { name = "django-tastypie", specifier = ">=0.15.1" },
     { name = "feedparser", specifier = ">=6.0.11" },
     { name = "gunicorn", marker = "extra == 'server'", specifier = ">=23.0.0" },
     { name = "httpx", specifier = ">=0.28.1" },
@@ -444,13 +444,13 @@ wheels = [
 
 [[package]]
 name = "django-tastypie"
-version = "0.15.0"
+version = "0.15.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "python-dateutil" },
     { name = "python-mimeparse" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c7/e1/dc8ab4a7f2304ee677175dd8f6b6edc328fb06cf5bab724657d94bbee2ab/django_tastypie-0.15.0.tar.gz", hash = "sha256:baddce528e53646ee400e7c2dbee9a7c61b98a9fb67c8be2c3cf0f70eb10aa3c", size = 156296, upload-time = "2024-11-20T21:50:04.656Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d8/96/2e27e872d34f360ac6d02077b0027f4851b6cf049b36ee3add68e1740c27/django_tastypie-0.15.1.tar.gz", hash = "sha256:1eb41318b08c0ebc9b8a386871b45401a623e6a5566bf32ae3e17be2c59318b7", size = 156617, upload-time = "2025-02-23T19:19:45.489Z" }
 
 [[package]]
 name = "docutils"
