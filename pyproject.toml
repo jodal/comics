@@ -49,9 +49,9 @@ dev = [
     { include-group = "typing" },
 ]
 docs = [
-    "sphinx>=3.5.2",
-    "sphinx-rtd-theme>=0.5.1",
-    "sphinxcontrib-httpdomain>=1.7.0",
+    "sphinx>=8.2.3",
+    "sphinx-rtd-theme>=3.0.2",
+    "sphinxcontrib-httpdomain>=1.8.1",
 ]
 lint = ["ruff>=0.8.4"]
 tests = [
