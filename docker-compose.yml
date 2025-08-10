@@ -1,0 +1,38 @@
+name: comics
+
+volumes:
+  postgres:
+  media:
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=comics
+      - POSTGRES_PASSWORD=comics
+      - POSTGRES_DB=comics
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    command:
+      - postgres
+      - -cfsync=off
+      - -cfull_page_writes=off
+      - -csynchronous_commit=off
+    ports:
+      - "5432:5432"
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: comics:latest
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=postgres://comics:comics@postgres:5432/comics
+      - PORT=8000
+    volumes:
+      - media:/media
+    command: web
+    ports:
+      - "8000:8000"
