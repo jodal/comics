@@ -61,10 +61,32 @@ tests = [
     "pytest-mock>=3.14.1",
 ]
 typing = [
+    "basedpyright>=1.31.2",
     "django-stubs>=5.2.2",
     "mypy>=1.17.1",
     "types-lxml>=2025.3.30",
 ]
+
+
+[tool.basedpyright]
+pythonVersion = "3.12"
+exclude = [
+    "**/.*",
+    "**/__pycache__",
+    "src/comics/**/migrations",
+]
+venvPath = "."
+venv = ".venv"
+# stubPath = "src/stubs"
+# We enable most type checks and then subsequently disable those we are not interested in
+typeCheckingMode = "strict"
+# We do not create stub files for all modules
+reportMissingTypeStubs = false
+# Warn when "type: ignore" and "pyright: ignore" is used unnecessarily
+reportUnnecessaryTypeIgnoreComment = true
+# Disallow classes that extend abstract classes without also explicitly declaring
+# themselves as abstract or implementing all of the required abstract methods.
+reportImplicitAbstractClass = true
 
 
 [tool.django-stubs]
