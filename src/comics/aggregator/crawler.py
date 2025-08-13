@@ -317,45 +317,19 @@ class NettserierCrawlerBase(CrawlerBase):
 
     # Nettserier has no option to fetch a specific date
     # In order to get older releases we need to
-    # loop through the pages and check the published date
+    # loop through the updates and check the published date
     time_zone = "Europe/Oslo"
-    page_cache: dict[str, tuple[LxmlParser, datetime.date]] = {}
 
-    def get_page(self, url: str) -> tuple[LxmlParser, datetime.date]:
-        if url not in self.page_cache:
-            page = self.parse_page(url)
-            page_date = page.root.xpath('//p[@class="update-pubtime"]/time/@datetime')
-            assert page_date
-            date = self.string_to_date(page_date[0], "%Y-%m-%d %H:%M:%S")
-            self.page_cache[url] = (page, date)
-        return self.page_cache[url]
-
-    def crawl_helper(self, short_name: str, pub_date: datetime.date) -> CrawlerResult:
-        page_url = f"https://nettserier.no/{short_name}/striper/"
-        page, comic_date = self.get_page(page_url)
-
-        while pub_date < comic_date:
-            # Wanted date is earlier than the current, get previous page
-            previous_link = page.root.xpath(
-                '//nav.update_navigation/a[svg[@data-icon="step-backward"]]/@href'
-            )
-            print(f"{comic_date=} {previous_link=}")
-            if not previous_link:
-                return None  # No previous comic
-            page, comic_date = self.get_page(previous_link[0])
-
-        if pub_date != comic_date:
-            return None  # Correct date not found
-
-        # comic-text div which contains title and text for the comic
-        title = page.text("h3.update-h3")
-        texts = page.texts("div.comic-text p")
-        text = None if "Published" in texts[0] else texts[0]
-
-        # Get comic image
-        url = page.src('img[src*="/_ns/files"]')
-        assert url
-        return CrawlerImage(url, title, text)
+    def crawl_helper(self, comic_id: int, pub_date: datetime.date) -> CrawlerResult:
+        response = httpx.get(f"https://api.nettserier.no/v4/updates/{comic_id}/")
+        response.raise_for_status()
+        for update in response.json()["data"]:
+            if self.string_to_date(update["pubtime"], "%Y-%m-%d %H:%M:%S") == pub_date:
+                return CrawlerImage(
+                    f"https://media.nettserier.no/updates/{update['image']}",
+                    update["title"],
+                    update["text"],
+                )
 
 
 class ComicControlCrawlerBase(CrawlerBase):

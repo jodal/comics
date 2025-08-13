@@ -16,4 +16,4 @@ class Crawler(NettserierCrawlerBase):
     time_zone = "Europe/Oslo"
 
     def crawl(self, pub_date):
-        return self.crawl_helper("utensokker", pub_date)
+        return self.crawl_helper(1046, pub_date)
