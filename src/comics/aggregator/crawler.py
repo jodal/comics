@@ -324,19 +324,22 @@ class NettserierCrawlerBase(CrawlerBase):
     def get_page(self, url: str) -> tuple[LxmlParser, datetime.date]:
         if url not in self.page_cache:
             page = self.parse_page(url)
-            page_date = page.text('p[class="comic-pubtime"]')
+            page_date = page.root.xpath('//p[@class="update-pubtime"]/time/@datetime')
             assert page_date
-            date = self.string_to_date(page_date, "Published %Y-%m-%d %H:%M:%S")
+            date = self.string_to_date(page_date[0], "%Y-%m-%d %H:%M:%S")
             self.page_cache[url] = (page, date)
         return self.page_cache[url]
 
     def crawl_helper(self, short_name: str, pub_date: datetime.date) -> CrawlerResult:
-        page_url = "https://nettserier.no/%s/" % short_name
+        page_url = f"https://nettserier.no/{short_name}/striper/"
         page, comic_date = self.get_page(page_url)
 
         while pub_date < comic_date:
             # Wanted date is earlier than the current, get previous page
-            previous_link = page.root.xpath('//li[@class="prev"]/a/@href')
+            previous_link = page.root.xpath(
+                '//nav.update_navigation/a[svg[@data-icon="step-backward"]]/@href'
+            )
+            print(f"{comic_date=} {previous_link=}")
             if not previous_link:
                 return None  # No previous comic
             page, comic_date = self.get_page(previous_link[0])
@@ -345,7 +348,7 @@ class NettserierCrawlerBase(CrawlerBase):
             return None  # Correct date not found
 
         # comic-text div which contains title and text for the comic
-        title = page.text("div.comic-text h4")
+        title = page.text("h3.update-h3")
         texts = page.texts("div.comic-text p")
         text = None if "Published" in texts[0] else texts[0]
 
