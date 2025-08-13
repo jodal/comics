@@ -7,6 +7,7 @@ class ComicData(ComicDataBase):
     language = "no"
     url = "http://wyyrd.nettserier.no/"
     start_date = "2008-01-14"
+    end_date = "2020-11-01"
     rights = "Gard Robot Helset"
     active = False
 
