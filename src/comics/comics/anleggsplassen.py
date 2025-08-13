@@ -12,7 +12,7 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 7
+    history_capable_days = 100
     schedule = "Fr"
     time_zone = "Europe/Oslo"
     headers = {
@@ -34,6 +34,9 @@ class Crawler(CrawlerBase):
             date_string = article_page.content(
                 'meta[property="article:published_time"]'
             )
+            if date_string is None:
+                continue
+
             date = datetime.strptime(date_string[:10], "%Y-%m-%d").date()
             if date != pub_date:
                 continue
