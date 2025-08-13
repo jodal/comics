@@ -6,10 +6,10 @@ class ComicData(ComicDataBase):
     name = "Wyyrd"
     language = "no"
     url = "http://wyyrd.nettserier.no/"
+    active = False
     start_date = "2008-01-14"
     end_date = "2020-11-01"
     rights = "Gard Robot Helset"
-    active = False
 
 
 class Crawler(NettserierCrawlerBase):
@@ -17,4 +17,4 @@ class Crawler(NettserierCrawlerBase):
     time_zone = "Europe/Oslo"
 
     def crawl(self, pub_date):
-        return self.crawl_helper(174, pub_date)
+        pass  # Comic no longer published

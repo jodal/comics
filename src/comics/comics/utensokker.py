@@ -5,10 +5,11 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = "Uten Sokker"
     language = "no"
-    url = "http://utensokker.nettserier.no/"
-    start_date = "2009-07-14"
-    rights = "Bjørnar Grandalen"
+    url = "https://nettserier.no/utensokker/"
     active = False
+    start_date = "2009-07-14"
+    end_date = "2018-04-17"
+    rights = "Bjørnar Grandalen"
 
 
 class Crawler(NettserierCrawlerBase):
@@ -16,4 +17,4 @@ class Crawler(NettserierCrawlerBase):
     time_zone = "Europe/Oslo"
 
     def crawl(self, pub_date):
-        return self.crawl_helper(1046, pub_date)
+        pass  # Comic no longer published
