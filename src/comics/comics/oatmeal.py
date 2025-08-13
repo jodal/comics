@@ -17,10 +17,7 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed("http://feeds.feedburner.com/oatmealfeed")
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
-            results = [
-                CrawlerImage(url)
-                for url in page.src('img[src*="/comics/"]', allow_multiple=True)
-            ]
+            results = [CrawlerImage(url) for url in page.srcs('img[src*="/comics/"]')]
             if results:
                 results[0].title = entry.title
                 return results

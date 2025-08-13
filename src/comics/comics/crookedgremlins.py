@@ -23,7 +23,6 @@ class Crawler(CrawlerBase):
         url = page.src("#comic img")
 
         # Put together the text from multiple paragraphs
-        text_paragraphs = page.text(".post-content p", allow_multiple=True)
-        text = "\n\n".join(text_paragraphs) if text_paragraphs is not None else None
+        text = "\n\n".join(page.texts(".post-content p")).strip()
 
         return CrawlerImage(url, title, text)

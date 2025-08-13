@@ -270,18 +270,20 @@ returned.
 
 If the ``selector`` matches multiple elements, one of two things will happen:
 
-- If ``allow_multiple`` is :class:`False`, a :class:`MultipleElementsReturned`
-  exception is raised.
-- If ``allow_multiple`` is :class:`True`, a list of zero or more elements is
-  returned with all of the elements matching ``selector``.
+- For singular methods, a :class:`MultipleElementsReturned` exception is raised.
+- For plural methods, a list of zero or more values are returned.
 
 .. class:: LxmlParser
 
-    .. method:: text(selector[, default=None, allow_multiple=False])
+    .. method:: text(selector[, default=None])
 
         Returns the text contained by the element matching ``selector``.
 
-    .. method:: src(selector[, default=None, allow_multiple=False])
+    .. method:: texts(selector)
+
+        Returns a list of the text contained by the elements matching ``selector``.
+
+    .. method:: src(selector[, default=None])
 
         Returns the ``src`` attribute of the element matching ``selector``.
 
@@ -290,25 +292,49 @@ If the ``selector`` matches multiple elements, one of two things will happen:
         ``http://www.example.com/2008-04-13.png``, so you do not need to think
         about that.
 
-    .. method:: alt(selector[, default=None, allow_multiple=False])
+    .. method:: srcs(selector)
+
+        Returns the ``src`` attribute of the elements matching ``selector``.
+
+    .. method:: alt(selector[, default=None])
 
         Returns the ``alt`` attribute of the element matching ``selector``.
 
-    .. method:: title(selector[, default=None, allow_multiple=False])
+    .. method:: alts(selector)
+
+        Returns the ``alt`` attribute of the elements matching ``selector``.
+
+    .. method:: title(selector[, default=None])
 
         Returns the ``title`` attribute of the element matching ``selector``.
 
-    .. method:: href(selector[, default=None, allow_multiple=False])
+    .. method:: titles(selector)
+
+        Returns the ``title`` attribute of the elements matching ``selector``.
+
+    .. method:: href(selector[, default=None])
 
         Returns the ``href`` attribute of the element matching ``selector``.
 
-    .. method:: value(selector[, default=None, allow_multiple=False])
+    .. method:: hrefs(selector)
+
+        Returns the ``href`` attribute of the elements matching ``selector``.
+
+    .. method:: value(selector[, default=None])
 
         Returns the ``value`` attribute of the element matching ``selector``.
 
-    .. method:: id(selector[, default=None, allow_multiple=False])
+    .. method:: values(selector[, default=None])
+
+        Returns the ``value`` attribute of the elements matching ``selector``.
+
+    .. method:: id(selector[, default=None])
 
         Returns the ``id`` attribute of the element matching ``selector``.
+
+    .. method:: ids(selector[, default=None])
+
+        Returns the ``id`` attribute of the elements matching ``selector``.
 
     .. method:: remove(selector)
 

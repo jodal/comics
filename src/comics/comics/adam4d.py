@@ -17,14 +17,12 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed("http://adam4d.com/feed/")
         for entry in feed.for_date(pub_date):
-            results = []
-            urls = entry.content0.src('img[src*="/wp-content/"]', allow_multiple=True)
-
-            for url in urls:
-                results.append(CrawlerImage(url.replace("comics-rss", "comics")))
-
+            urls = [
+                url.replace("comics-rss", "comics")
+                for url in entry.content0.srcs('img[src*="/wp-content/"]')
+            ]
+            results = [CrawlerImage(url) for url in urls]
             if not results:
                 continue
-
             results[0].title = entry.title
             return results

@@ -18,5 +18,4 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed("http://sarahcandersen.com/rss")
         for entry in feed.for_date(pub_date):
-            urls = entry.summary.src('img[src*="_500"]', allow_multiple=True)
-            return [CrawlerImage(url) for url in urls]
+            return [CrawlerImage(url) for url in entry.summary.srcs('img[src*="_500"]')]

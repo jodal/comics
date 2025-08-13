@@ -24,13 +24,8 @@ class Crawler(CrawlerBase):
 
         # Go through all IDs in the document, checking to see if the date is
         # the date we want in the option drop-down
-        possible_ids = date_to_index_page.value(
-            'select[name="id"] option', allow_multiple=True
-        )
+        possible_ids = date_to_index_page.values('select[name="id"] option')
         the_id = None
-
-        if possible_ids is None:
-            return
 
         # (cheap conversion to a set to eliminate the duplicate IDs from
         # different parts of the HTML to save time...)
@@ -39,8 +34,8 @@ class Crawler(CrawlerBase):
             # the other is the title.  I can't think of a good way to enforce
             # that we get the real value first, then the title, so we're just
             # going to parse it again later.
-            possible_date_and_title = date_to_index_page.text(
-                'option[value="%s"]' % possible_id, allow_multiple=True
+            possible_date_and_title = date_to_index_page.texts(
+                f'option[value="{possible_id}"]'
             )
             for the_date in possible_date_and_title:
                 # Make sure we strip off the leading '0' on %d: Joe doesn't
@@ -70,9 +65,7 @@ class Crawler(CrawlerBase):
         # identical in basically every way.  We have to therefore get the
         # selected ones.  One is the date.  One is the title.  Check for the
         # date.
-        possible_titles = right_page.text(
-            'select[name="id"] option[selected]', allow_multiple=True
-        )
+        possible_titles = right_page.texts('select[name="id"] option[selected]')
 
         for possible_title in possible_titles:
             if pub_date.strftime("%Y") in possible_title:

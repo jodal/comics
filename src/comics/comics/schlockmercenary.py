@@ -18,7 +18,4 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         page_url = "http://www.schlockmercenary.com/%s" % pub_date.strftime("%Y-%m-%d")
         page = self.parse_page(page_url)
-        result = []
-        for url in page.src("#comic img", allow_multiple=True):
-            result.append(CrawlerImage(url))
-        return result
+        return [CrawlerImage(url) for url in page.srcs("#comic img")]

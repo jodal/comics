@@ -18,11 +18,9 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed("http://feeds.feedburner.com/SpikedMath")
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
-            result = []
-            for url in page.src(
-                'div.asset-body img[src*="/comics/"]', allow_multiple=True
-            ):
-                result.append(CrawlerImage(url))
-            if result:
-                result[0].title = entry.title
+            urls = page.srcs('div.asset-body img[src*="/comics/"]')
+            result = [
+                CrawlerImage(url, title=(entry.title if i == 0 else None))
+                for i, url in enumerate(urls)
+            ]
             return result

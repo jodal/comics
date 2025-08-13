@@ -25,5 +25,5 @@ class Crawler(CrawlerBase):
                 continue
             url = url.replace("-200x150", "")
             title = entry.title
-            text = "\n\n".join(entry.content0.text("p", allow_multiple=True)).strip()
+            text = "\n\n".join(entry.content0.texts("p")).strip()
             return CrawlerImage(url, title, text)

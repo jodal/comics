@@ -25,9 +25,6 @@ class Crawler(CrawlerBase):
             title = entry.title
 
             # Text comes in multiple paragraphs: parse out all the text
-            text = ""
-            for paragraph in entry.content0.text("p", allow_multiple=True):
-                text += paragraph + "\n\n"
-            text = text.strip()
+            text = "\n\n".join(entry.content0.texts("p")).strip()
 
             return CrawlerImage(url, title, text)

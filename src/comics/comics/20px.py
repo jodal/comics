@@ -23,12 +23,8 @@ class Crawler(CrawlerBase):
             if "Comic" not in entry.tags:
                 continue
             selector = 'img[src*="/wp-content/uploads/"]:not(img[src$="_sq.jpg"])'
-            results = []
-
-            for url in entry.content0.src(selector, allow_multiple=True):
-                results.append(CrawlerImage(url))
-
+            results = [CrawlerImage(url) for url in entry.content0.srcs(selector)]
             if results:
                 results[0].title = entry.title
-                results[0].text = entry.content0.alt(selector, allow_multiple=True)[0]
+                results[0].text = entry.content0.alts(selector)[0]
                 return results

@@ -18,11 +18,5 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed("https://pbfcomics.com/feed/")
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
-            images = page.src("div#comic img", allow_multiple=True)
-            crawler_images = []
-            for image in images:
-                if image[0:4] != "http":
-                    continue
-                title = entry.title
-                crawler_images.append(CrawlerImage(image, title))
-            return crawler_images
+            urls = [url for url in page.srcs("div#comic img") if url.startswith("http")]
+            return [CrawlerImage(url, entry.title) for url in urls]

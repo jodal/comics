@@ -27,7 +27,7 @@ class Crawler(CrawlerBase):
         )
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
-            urls = page._get("data-url", "#_imageList img", allow_multiple=True)
+            urls = page._get_all("data-url", "#_imageList img")
             images = [CrawlerImage(url) for url in urls]
             if images:
                 images.pop(0)  # Remove The DaneMen logo

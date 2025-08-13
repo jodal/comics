@@ -21,10 +21,5 @@ class Crawler(CrawlerBase):
                 page = self.parse_page(entry.link)
                 url = page.src("#comic img")
                 title = entry.title
-
-                text = ""
-                for paragraph in entry.content0.text("p", allow_multiple=True):
-                    text += paragraph + "\n\n"
-                text = text.strip()
-
+                text = "\n\n".join(entry.content0.texts("p")).strip()
                 return CrawlerImage(url, title, text)

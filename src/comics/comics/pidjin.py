@@ -17,18 +17,17 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed("http://feeds.feedburner.com/Pidjin")
         for entry in feed.for_date(pub_date):
-            result = []
-            urls = entry.content0.src(
-                'img[src*="/wp-content/uploads/"]', allow_multiple=True
-            )
-            for url in urls:
+            urls = [
+                url
+                for url in entry.content0.srcs('img[src*="/wp-content/uploads/"]')
                 if (
-                    "ad-RSS" in url
-                    or "ad5RSS" in url
-                    or "reddit-txt" in url
-                    or "rss-box" in url
-                ):
-                    continue
-                text = entry.content0.alt('img[src="%s"]' % url)
-                result.append(CrawlerImage(url, None, text))
-            return result
+                    "ad-RSS" not in url
+                    and "ad5RSS" not in url
+                    and "reddit-txt" not in url
+                    and "rss-box" not in url
+                )
+            ]
+            return [
+                CrawlerImage(url, None, entry.content0.alt('img[src="%s"]' % url))
+                for url in urls
+            ]

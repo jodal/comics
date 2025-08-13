@@ -16,7 +16,7 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         page = self.parse_page("http://www.romanticallyapocalyptic.com/")
-        urls = page.src('img[src*="/art/"]', allow_multiple=True)
+        urls = page.srcs('img[src*="/art/"]')
         for url in urls:
             if "thumb" not in url:
                 return CrawlerImage(url)

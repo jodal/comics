@@ -20,13 +20,12 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed("http://poledancingadventures.com/category/comics/feed")
         for entry in feed.for_date(pub_date):
-            results = []
-
-            for url in entry.content0.src("img", allow_multiple=True):
+            results = [
+                CrawlerImage(url)
+                for url in entry.content0.srcs("img")
                 # Look for NNN-*.jpg to differentiate comics from other images
-                if re.match(r".*\/\d\d\d-.*\.jpg", url) is not None:
-                    results.append(CrawlerImage(url))
-
+                if re.match(r".*\/\d\d\d-.*\.jpg", url) is not None
+            ]
             if results:
                 results[0].title = entry.title
                 return results
