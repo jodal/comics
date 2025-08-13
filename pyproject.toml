@@ -60,7 +60,11 @@ tests = [
     "pytest-django>=4.11.1",
     "pytest-mock>=3.14.1",
 ]
-typing = ["django-stubs>=5.2.2", "mypy>=1.17.1"]
+typing = [
+    "django-stubs>=5.2.2",
+    "mypy>=1.17.1",
+    "types-lxml>=2025.3.30",
+]
 
 
 [tool.django-stubs]
