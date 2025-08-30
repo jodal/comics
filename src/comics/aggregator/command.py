@@ -84,6 +84,8 @@ class Aggregator:
             crawler_release = self._crawl_one_comic_one_date(crawler, pub_date)
             if crawler_release:
                 self._download_release(crawler_release)
+            else:
+                logger.info("%s: No release found", self.identifier)
             pub_date += dt.timedelta(days=1)
 
     @log_errors
