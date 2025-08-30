@@ -1,50 +1,73 @@
 """Aggregator which fetches comic releases from the web"""
 
-import datetime
+from __future__ import annotations
+
+import datetime as dt
+import functools
 import logging
 import socket
+from dataclasses import dataclass, field
+from typing import TYPE_CHECKING, Any, Concatenate, Self
 
 from comics.aggregator.downloader import ReleaseDownloader
 from comics.comics import get_comic_module
 from comics.core.exceptions import ComicsError
 
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from comics.aggregator.crawler import CrawlerBase, CrawlerRelease
+    from comics.core.models import Comic
+
 logger = logging.getLogger("comics.aggregator.command")
 socket.setdefaulttimeout(10)
 
 
-def log_errors(func):
-    def inner(*args, **kwargs):
+def log_errors[**P, R](
+    func: Callable[Concatenate[Aggregator, P], R],
+) -> Callable[Concatenate[Aggregator, P], R | None]:
+    @functools.wraps(func)
+    def inner(aggregator: Aggregator, *args: P.args, **kwargs: P.kwargs) -> R | None:
         try:
-            return func(*args, **kwargs)
+            return func(aggregator, *args, **kwargs)
         except ComicsError as error:
             logger.info(error)
+            return None
         except Exception as error:
-            logger.exception("%s: %s", args[0].identifier, error)
+            logger.exception("%s: %s", aggregator.identifier, error)
+            return None
 
     return inner
 
 
 class Aggregator:
-    def __init__(self, config=None, options=None):
+    config: AggregatorConfig
+    identifier: str | None = None
+
+    def __init__(
+        self,
+        config: AggregatorConfig | None = None,
+        options: dict[str, Any] | None = None,
+    ):
         if config is None and options is not None:
-            self.config = AggregatorConfig(options)
+            self.config = AggregatorConfig.from_options(**options)
         else:
             assert isinstance(config, AggregatorConfig)
             self.config = config
 
     def start(self):
-        start_time = datetime.datetime.now()
+        start_time = dt.datetime.now()
         for comic in self.config.comics:
             self.identifier = comic.slug
             self._aggregate_one_comic(comic)
-        ellapsed_time = datetime.datetime.now() - start_time
-        logger.info("Crawling completed in %s", ellapsed_time)
+        elapsed_time = dt.datetime.now() - start_time
+        logger.info("Crawling completed in %s", elapsed_time)
 
     def stop(self):
         pass
 
     @log_errors
-    def _aggregate_one_comic(self, comic):
+    def _aggregate_one_comic(self, comic: Comic) -> None:
         crawler = self._get_crawler(comic)
         from_date = self._get_valid_date(crawler, self.config.from_date)
         to_date = self._get_valid_date(crawler, self.config.to_date)
@@ -56,10 +79,14 @@ class Aggregator:
             crawler_release = self._crawl_one_comic_one_date(crawler, pub_date)
             if crawler_release:
                 self._download_release(crawler_release)
-            pub_date += datetime.timedelta(days=1)
+            pub_date += dt.timedelta(days=1)
 
     @log_errors
-    def _crawl_one_comic_one_date(self, crawler, pub_date):
+    def _crawl_one_comic_one_date(
+        self,
+        crawler: CrawlerBase,
+        pub_date: dt.date,
+    ) -> CrawlerRelease | None:
         logger.debug("Crawling %s for %s", crawler.comic.slug, pub_date)
         crawler_release = crawler.get_crawler_release(pub_date)
         if crawler_release:
@@ -71,20 +98,22 @@ class Aggregator:
         return crawler_release
 
     @log_errors
-    def _download_release(self, crawler_release):
+    def _download_release(self, crawler_release: CrawlerRelease) -> None:
         logger.debug("Downloading %s", crawler_release.identifier)
         downloader = self._get_downloader()
         downloader.download(crawler_release)
         logger.info("%s: Release saved", crawler_release.identifier)
 
-    def _get_downloader(self):
+    def _get_downloader(self) -> ReleaseDownloader:
         return ReleaseDownloader()
 
-    def _get_crawler(self, comic):
+    def _get_crawler(self, comic: Comic) -> CrawlerBase:
         module = get_comic_module(comic.slug)
-        return module.Crawler(comic)
+        crawler = module.Crawler(comic)
+        assert isinstance(crawler, CrawlerBase)
+        return crawler
 
-    def _get_valid_date(self, crawler, date):
+    def _get_valid_date(self, crawler: CrawlerBase, date: dt.date | None) -> dt.date:
         if date is None:
             return crawler.current_date
         elif date < crawler.history_capable:
@@ -109,36 +138,40 @@ class Aggregator:
             return date
 
 
+@dataclass
 class AggregatorConfig:
     DATE_FORMAT = "%Y-%m-%d"
 
-    def __init__(self, options=None):
-        self.comics = []
-        self.from_date = None
-        self.to_date = None
-        if options is not None:
-            self.setup(options)
+    comic_slugs: list[str] = field(default_factory=list)
+    from_date: dt.date | None = None
+    to_date: dt.date | None = None
 
-    def setup(self, options):
-        self.set_comics_to_crawl(options.get("comic_slugs", None))
-        self.set_date_interval(
-            options.get("from_date", None), options.get("to_date", None)
+    @classmethod
+    def from_options(cls, **options: Any) -> Self:
+        from_date, to_date = cls._get_date_interval(
+            options.get("from_date"),
+            options.get("to_date"),
+        )
+        return cls(
+            comic_slugs=options.get("comic_slugs") or [],
+            from_date=from_date,
+            to_date=to_date,
         )
 
-    def set_comics_to_crawl(self, comic_slugs):
+    @property
+    def comics(self) -> list[Comic]:
         from comics.core.models import Comic  # noqa: PLC0415
 
-        if comic_slugs is None or len(comic_slugs) == 0:
+        if len(self.comic_slugs) == 0:
             logger.debug("Crawl targets: all comics")
-            self.comics = Comic.objects.all()
+            return list(Comic.objects.all())
         else:
-            comics = []
-            for comic_slug in comic_slugs:
-                comics.append(self._get_comic_by_slug(comic_slug))
+            comics = [self._get_comic_by_slug(slug) for slug in self.comic_slugs]
             logger.debug("Crawl targets: %s", comics)
-            self.comics = comics
+            return comics
 
-    def _get_comic_by_slug(self, comic_slug):
+    @classmethod
+    def _get_comic_by_slug(cls, comic_slug: str) -> Comic:
         from comics.core.models import Comic  # noqa: PLC0415
 
         try:
@@ -149,29 +182,23 @@ class AggregatorConfig:
             raise ComicsError(error_msg) from exc
         return comic
 
-    def set_date_interval(self, from_date, to_date):
-        self._set_from_date(from_date)
-        self._set_to_date(to_date)
-        self._validate_dates()
+    @classmethod
+    def _get_date_interval(
+        cls,
+        from_date: dt.date | str | None,
+        to_date: dt.date | str | None,
+    ) -> tuple[dt.date | None, dt.date | None]:
+        if isinstance(from_date, str):
+            from_date = dt.datetime.strptime(from_date, cls.DATE_FORMAT).date()
+        logger.debug("From date: %s", from_date)
 
-    def _set_from_date(self, from_date):
-        if from_date is not None:
-            self.from_date = datetime.datetime.strptime(
-                str(from_date), self.DATE_FORMAT
-            ).date()
-        logger.debug("From date: %s", self.from_date)
+        if isinstance(to_date, str):
+            to_date = dt.datetime.strptime(to_date, cls.DATE_FORMAT).date()
+        logger.debug("To date: %s", to_date)
 
-    def _set_to_date(self, to_date):
-        if to_date is not None:
-            self.to_date = datetime.datetime.strptime(
-                str(to_date), self.DATE_FORMAT
-            ).date()
-        logger.debug("To date: %s", self.to_date)
-
-    def _validate_dates(self):
-        if self.from_date and self.to_date and self.from_date > self.to_date:
-            error_msg = f"From date ({self.from_date}) after to date ({self.to_date})"
+        if from_date and to_date and from_date > to_date:
+            error_msg = f"From date ({from_date}) after to date ({to_date})"
             logger.error(error_msg)
             raise ComicsError(error_msg)
-        else:
-            return True
+
+        return from_date, to_date

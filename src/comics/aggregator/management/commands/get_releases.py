@@ -1,9 +1,16 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any
+
 from comics.aggregator.command import Aggregator
 from comics.core.command_utils import ComicsBaseCommand
 
+if TYPE_CHECKING:
+    from argparse import ArgumentParser
+
 
 class Command(ComicsBaseCommand):
-    def add_arguments(self, parser):
+    def add_arguments(self, parser: ArgumentParser) -> None:
         parser.add_argument(
             "-c",
             "--comic",
@@ -29,7 +36,7 @@ class Command(ComicsBaseCommand):
             help="Last date to crawl [default: today]",
         )
 
-    def handle(self, *args, **options):
+    def handle(self, *args: Any, **options: Any) -> None:
         super().handle(*args, **options)
         aggregator = Aggregator(options=options)
         try:
