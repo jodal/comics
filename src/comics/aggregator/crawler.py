@@ -237,16 +237,16 @@ class GoComicsComCrawlerBase(CrawlerBase):
     def crawl_helper(self, url_name: str, pub_date: datetime.date) -> CrawlerResult:
         page_url = "http://www.gocomics.com/{}/{}".format(
             url_name,
-            pub_date.strftime("%Y/%m/%d/"),
+            pub_date.strftime("%Y/%m/%d"),
         )
         page = self.parse_page(page_url)
-        url = page.src("picture.item-comic-image img")
+        url = page.content("meta[property='og:image']")
         assert url
 
         # If we request a date that doesn't exist
         # we get redirected to todays comic
-        date = page.content('meta[property="article:published_time"]')
-        if date != pub_date.strftime("%Y-%m-%d"):
+        date_str = page.content("meta[property='og:title']")
+        if not date_str or f"{pub_date:%B %-d, %Y}" not in date_str:
             return None
 
         return CrawlerImage(url)
