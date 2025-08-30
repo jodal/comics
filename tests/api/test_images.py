@@ -16,14 +16,14 @@ class ImagesResourceTestCase(TestCase):
     def test_requires_authentication(self):
         response = self.client.get("/api/v1/images/")
 
-        self.assertEqual(response.status_code, 401)
+        assert response.status_code == 401
 
     def test_authentication_with_secret_key_in_header(self):
         response = self.client.get(
             "/api/v1/images/", headers={"authorization": "Key s3cretk3y"}
         )
 
-        self.assertEqual(response.status_code, 200)
+        assert response.status_code == 200
 
     def test_lists_images(self):
         response = self.client.get(
@@ -31,11 +31,11 @@ class ImagesResourceTestCase(TestCase):
         )
 
         data = json.loads(response.content)
-        self.assertEqual(len(data["objects"]), 12)
-        self.assertEqual(data["objects"][0]["height"], 1132)
-        self.assertEqual(
-            data["objects"][1]["title"],
-            "Geek&Poke About The Good Ol' Days In Computers",
+        assert len(data["objects"]) == 12
+        assert data["objects"][0]["height"] == 1132
+        assert (
+            data["objects"][1]["title"]
+            == "Geek&Poke About The Good Ol' Days In Computers"
         )
 
     def test_height_filter(self):
@@ -46,9 +46,9 @@ class ImagesResourceTestCase(TestCase):
         )
 
         data = json.loads(response.content)
-        self.assertEqual(len(data["objects"]), 2)
-        self.assertEqual(data["objects"][0]["height"], 1132)
-        self.assertEqual(data["objects"][1]["height"], 1132)
+        assert len(data["objects"]) == 2
+        assert data["objects"][0]["height"] == 1132
+        assert data["objects"][1]["height"] == 1132
 
     def test_details_view(self):
         response = self.client.get(
@@ -57,13 +57,11 @@ class ImagesResourceTestCase(TestCase):
 
         data = json.loads(response.content)
         image_uri = data["objects"][1]["resource_uri"]
-        self.assertEqual(image_uri, "/api/v1/images/2/")
+        assert image_uri == "/api/v1/images/2/"
 
         response = self.client.get(
             image_uri, headers={"authorization": "Key s3cretk3y"}
         )
 
         data = json.loads(response.content)
-        self.assertEqual(
-            data["title"], "Geek&Poke About The Good Ol' Days In Computers"
-        )
+        assert data["title"] == "Geek&Poke About The Good Ol' Days In Computers"

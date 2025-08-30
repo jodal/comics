@@ -16,7 +16,7 @@ class UsersResourceTestCase(TestCase):
     def test_get_users_without_authentication(self):
         response = self.client.get("/api/v1/users/")
 
-        self.assertEqual(response.status_code, 401)
+        assert response.status_code == 401
 
     def test_get_users_with_basic_auth(self):
         response = self.client.get(
@@ -28,19 +28,19 @@ class UsersResourceTestCase(TestCase):
             },
         )
 
-        self.assertEqual(response.status_code, 200)
+        assert response.status_code == 200
 
     def test_get_users_with_secret_key_in_header(self):
         response = self.client.get(
             "/api/v1/users/", headers={"authorization": "Key s3cretk3y"}
         )
 
-        self.assertEqual(response.status_code, 200)
+        assert response.status_code == 200
 
     def test_get_users_with_secret_key_in_url(self):
         response = self.client.get("/api/v1/users/", {"key": "s3cretk3y"})
 
-        self.assertEqual(response.status_code, 200)
+        assert response.status_code == 200
 
     def test_response_returns_a_single_user_object(self):
         User.objects.create_user("bob", "bob@example.com", "topsecret")
@@ -50,7 +50,7 @@ class UsersResourceTestCase(TestCase):
         )
 
         data = json.loads(response.content)
-        self.assertEqual(len(data["objects"]), 1)
+        assert len(data["objects"]) == 1
 
     def test_response_includes_the_secret_key(self):
         response = self.client.get(
@@ -58,4 +58,4 @@ class UsersResourceTestCase(TestCase):
         )
 
         data = json.loads(response.content)
-        self.assertEqual(data["objects"][0]["secret_key"], "s3cretk3y")
+        assert data["objects"][0]["secret_key"] == "s3cretk3y"  # noqa: S105

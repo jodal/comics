@@ -23,21 +23,21 @@ class CurrentDateWhenLocalTZIsUTCTest(TestCase):
         self.crawler.time_zone = self.time_zone_local
 
         today = datetime.date(2001, 2, 5)
-        self.assertEqual(self.crawler.current_date, today)
+        assert self.crawler.current_date == today
 
     def test_current_date_when_crawler_is_in_local_tomorrow(self):
         self.now = datetime.datetime(2001, 2, 5, 23, 1, 0, tzinfo=self.tz)
         self.crawler.time_zone = self.time_zone_ahead
 
         tomorrow = datetime.date(2001, 2, 6)
-        self.assertEqual(self.crawler.current_date, tomorrow)
+        assert self.crawler.current_date == tomorrow
 
     def test_current_date_when_crawler_is_in_local_yesterday(self):
         self.now = datetime.datetime(2001, 2, 5, 0, 59, 0, tzinfo=self.tz)
         self.crawler.time_zone = self.time_zone_behind
 
         yesterday = datetime.date(2001, 2, 4)
-        self.assertEqual(self.crawler.current_date, yesterday)
+        assert self.crawler.current_date == yesterday
 
 
 class CurrentDateWhenLocalTZIsCETTest(CurrentDateWhenLocalTZIsUTCTest):
