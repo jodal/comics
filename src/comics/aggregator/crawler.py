@@ -235,7 +235,7 @@ class GoComicsComCrawlerBase(CrawlerBase):
     }
 
     def crawl_helper(self, url_name: str, pub_date: datetime.date) -> CrawlerResult:
-        page_url = "http://www.gocomics.com/{}/{}".format(
+        page_url = "https://www.gocomics.com/{}/{}".format(
             url_name,
             pub_date.strftime("%Y/%m/%d"),
         )
