@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import hashlib
 import tempfile
+from typing import IO, TYPE_CHECKING
 
 import httpx
 from django.conf import settings
@@ -14,7 +17,14 @@ from comics.aggregator.exceptions import (
     ImageIsCorrupt,
     ImageTypeError,
 )
-from comics.core.models import Image, Release
+from comics.core.models import Comic, Image, Release
+
+if TYPE_CHECKING:
+    import datetime as dt
+
+    from PIL.ImageFile import ImageFile as PILImageFile
+
+    from comics.aggregator.crawler import CrawlerImage, CrawlerRelease
 
 # Image types we accept, and the file extension they are saved with
 IMAGE_FORMATS = {
@@ -25,18 +35,23 @@ IMAGE_FORMATS = {
 
 
 class ReleaseDownloader:
-    def download(self, crawler_release):
+    def download(self, crawler_release: CrawlerRelease) -> Release:
         images = self._download_images(crawler_release)
         return self._create_new_release(
             crawler_release.comic, crawler_release.pub_date, images
         )
 
-    def _download_images(self, crawler_release):
+    def _download_images(self, crawler_release: CrawlerRelease) -> list[Image]:
         image_downloader = ImageDownloader(crawler_release)
         return list(map(image_downloader.download, crawler_release.images))
 
     @transaction.atomic
-    def _create_new_release(self, comic, pub_date, images):
+    def _create_new_release(
+        self,
+        comic: Comic,
+        pub_date: dt.date,
+        images: list[Image],
+    ) -> Release:
         release = Release(comic=comic, pub_date=pub_date)
         release.save()
         for image in images:
@@ -45,10 +60,10 @@ class ReleaseDownloader:
 
 
 class ImageDownloader:
-    def __init__(self, crawler_release):
+    def __init__(self, crawler_release: CrawlerRelease) -> None:
         self.crawler_release = crawler_release
 
-    def download(self, crawler_image):
+    def download(self, crawler_image: CrawlerImage) -> Image:
         self.identifier = self.crawler_release.identifier
 
         with self._download_image(
@@ -81,7 +96,11 @@ class ImageDownloader:
                 checksum=checksum,
             )
 
-    def _download_image(self, url, request_headers):
+    def _download_image(
+        self,
+        url: str,
+        request_headers: dict[str, str],
+    ) -> IO[bytes]:
         try:
             response = httpx.get(url, headers=request_headers, follow_redirects=True)
             response.raise_for_status()
@@ -93,7 +112,7 @@ class ImageDownloader:
         else:
             return temp_file
 
-    def _get_sha256sum(self, file_handle):
+    def _get_sha256sum(self, file_handle: IO[bytes]) -> str:
         original_position = file_handle.tell()
         h = hashlib.sha256()
         while True:
@@ -104,24 +123,26 @@ class ImageDownloader:
         file_handle.seek(original_position)
         return h.hexdigest()
 
-    def _check_if_blacklisted(self, checksum):
+    def _check_if_blacklisted(self, checksum: str) -> None:
         if checksum in settings.COMICS_IMAGE_BLACKLIST:
             raise ImageIsBlacklisted(self.identifier)
 
-    def _get_existing_image(self, comic, has_rerun_releases, checksum):
+    def _get_existing_image(
+        self, comic: Comic, has_rerun_releases: bool, checksum: str
+    ) -> Image | None:
         try:
             image = Image.objects.get(comic=comic, checksum=checksum)
         except Image.DoesNotExist:
             return None
         else:
-            if image is not None and not has_rerun_releases:
+            if not has_rerun_releases:
                 raise ImageAlreadyExists(self.identifier)
             return image
 
-    def _validate_image(self, image_file):
+    def _validate_image(self, image_file: IO[bytes]) -> PILImageFile:
         try:
             image = PILImage.open(image_file)
-            image.load()
+            image.load()  # pyright: ignore[reportUnknownMemberType]
         except IndexError as error:
             raise ImageIsCorrupt(self.identifier) from error
         except OSError as error:
@@ -129,17 +150,26 @@ class ImageDownloader:
         else:
             return image
 
-    def _get_file_extension(self, image):
+    def _get_file_extension(self, image: PILImageFile):
         if image.format not in IMAGE_FORMATS:
             raise ImageTypeError(self.identifier, image.format)
         return IMAGE_FORMATS[image.format]
 
-    def _get_file_name(self, checksum, extension):
-        if checksum and extension:
-            return f"{checksum}{extension}"
+    def _get_file_name(self, checksum: str, extension: str) -> str:
+        if not (checksum and extension):
+            raise ValueError("Checksum and extension must be non-empty")
+        return f"{checksum}{extension}"
 
     @transaction.atomic
-    def _create_new_image(self, comic, title, text, image_file, file_name, checksum):
+    def _create_new_image(
+        self,
+        comic: Comic,
+        title: str | None,
+        text: str | None,
+        image_file: IO[bytes],
+        file_name: str,
+        checksum: str,
+    ) -> Image:
         image = Image(comic=comic, checksum=checksum)
         image.file.save(file_name, File(image_file))
         if title is not None:
