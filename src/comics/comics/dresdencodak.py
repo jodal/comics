@@ -5,7 +5,7 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = "Dresden Codak"
     language = "en"
-    url = "http://www.dresdencodak.com/"
+    url = "https://dresdencodak.com/"
     start_date = "2007-02-08"
     rights = "Aaron Diaz"
 
@@ -15,11 +15,16 @@ class Crawler(CrawlerBase):
     time_zone = "America/Los_Angeles"
 
     def crawl(self, pub_date):
-        feed = self.parse_feed("http://feeds.feedburner.com/rsspect/fJur")
+        feed = self.parse_feed("https://dresdencodak.com/feed/")
         for entry in feed.for_date(pub_date):
-            if "Comics" in entry.tags:
-                page = self.parse_page(entry.link)
-                url = page.src("#comic img")
-                title = entry.title
-                text = "\n\n".join(entry.content0.texts("p")).strip()
-                return CrawlerImage(url, title, text)
+            if "Comics" not in entry.tags:
+                continue
+            page = self.parse_page(entry.link)
+            results = [
+                CrawlerImage(url)
+                for url in page.srcs("section.entry-content > p > img")
+            ]
+            if results:
+                results[0].title = entry.title
+                results[0].text = "\n\n".join(entry.content0.texts("p")).strip()
+                return results
