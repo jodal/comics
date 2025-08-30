@@ -14,6 +14,3 @@ class Crawler(GoComicsComCrawlerBase):
     history_capable_date = "2014-06-16"
     schedule = "Mo,We,Fr"
     time_zone = "Europe/Oslo"
-
-    def crawl(self, pub_date):
-        pass  # Comic no longer published

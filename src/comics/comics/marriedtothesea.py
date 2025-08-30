@@ -1,4 +1,3 @@
-from comics.aggregator.crawler import CrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -9,8 +8,3 @@ class ComicData(ComicDataBase):
     start_date = "2006-02-13"
     active = False
     rights = "Drew"
-
-
-class Crawler(CrawlerBase):
-    def crawl(self, pub_date):
-        pass  # Comic dislikes being read outside official page

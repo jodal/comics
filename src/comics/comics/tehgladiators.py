@@ -15,6 +15,3 @@ class Crawler(CrawlerBase):
     history_capable_days = 90
     schedule = "We"
     time_zone = "Europe/Belgrade"
-
-    def crawl(self, pub_date):
-        pass

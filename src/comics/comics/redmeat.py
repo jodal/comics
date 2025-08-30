@@ -14,6 +14,3 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     schedule = "Tu"
     time_zone = "America/New_York"
-
-    def crawl(self, pub_date):
-        pass  # Comic no longer published

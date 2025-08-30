@@ -1,4 +1,3 @@
-from comics.aggregator.crawler import CrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -10,8 +9,3 @@ class ComicData(ComicDataBase):
     end_date = "2014-05-27"
     rights = "Ryan Pequin"
     active = False
-
-
-class Crawler(CrawlerBase):
-    def crawl(self, pub_date):
-        pass  # Comic no longer published

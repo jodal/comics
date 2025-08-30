@@ -15,6 +15,3 @@ class ComicData(ComicDataBase):
 class Crawler(NettserierCrawlerBase):
     history_capable_date = "2008-01-14"
     time_zone = "Europe/Oslo"
-
-    def crawl(self, pub_date):
-        pass  # Comic no longer published
