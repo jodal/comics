@@ -2,10 +2,14 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 import dj_database_url
+import django_stubs_ext
 import sentry_sdk
 from django.core.management.utils import get_random_secret_key
 from sentry_sdk.integrations.django import DjangoIntegration
 from typenv import Env
+
+# Monkey patch Django to be more typing-friendly
+django_stubs_ext.monkeypatch()
 
 # Paths
 #
