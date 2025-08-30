@@ -1,6 +1,6 @@
 [project]
 name = "comics"
-version = "25.8.1"
+version = "25.8.2"
 description = "Comics is a webcomics aggregator."
 authors = [{ name = "Stein Magnus Jodal", email = "stein.magnus@jodal.no" }]
 readme = "README.md"
@@ -70,11 +70,7 @@ typing = [
 
 [tool.basedpyright]
 pythonVersion = "3.12"
-exclude = [
-    "**/.*",
-    "**/__pycache__",
-    "src/comics/**/migrations",
-]
+exclude = ["**/.*", "**/__pycache__", "src/comics/**/migrations"]
 venvPath = "."
 venv = ".venv"
 # stubPath = "src/stubs"
