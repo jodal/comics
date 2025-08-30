@@ -22,6 +22,9 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed("https://cad-comic.com/feed/")
 
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src("img")
+            if "Ctrl Alt Del" not in entry.tags:
+                continue
+            page = self.parse_page(entry.link)
+            url = page.src(".comicpage img[src*='/uploads/']")
             title = entry.title
             return CrawlerImage(url, title)
