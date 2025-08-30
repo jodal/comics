@@ -1,25 +1,22 @@
-import os
-from types import ModuleType
+from __future__ import annotations
+
+import importlib
+from pathlib import Path
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from types import ModuleType
 
 
 def get_comic_module_names() -> list[str]:
-    module_files = os.listdir(os.path.dirname(__file__))
-    module_names = []
-    for file in module_files:
-        if file.endswith(".py") and not file.startswith("__init__"):
-            module_names.append(file.replace(".py", ""))
+    module_names = [
+        file.stem
+        for file in Path(__file__).parent.glob("*.py")
+        if not file.name.startswith("__init__")
+    ]
     return sorted(module_names)
 
 
 def get_comic_module(comic_slug: str) -> ModuleType:
     module_name = f"{__package__}.{comic_slug}"
-    return _import_by_name(module_name)
-
-
-def _import_by_name(module_name: str) -> ModuleType:
-    module = __import__(module_name)
-    components = module_name.split(".")
-    for component in components[1:]:
-        module = getattr(module, component)
-    assert isinstance(module, ModuleType)
-    return module
+    return importlib.import_module(module_name)
