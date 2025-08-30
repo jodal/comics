@@ -1,4 +1,3 @@
-from comics.aggregator.crawler import GoComicsComCrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -8,9 +7,3 @@ class ComicData(ComicDataBase):
     url = "http://www.gocomics.com/truth-facts"
     active = False
     rights = "Wulff & Morgenthaler"
-
-
-class Crawler(GoComicsComCrawlerBase):
-    history_capable_date = "2014-06-16"
-    schedule = "Mo,We,Fr"
-    time_zone = "Europe/Oslo"

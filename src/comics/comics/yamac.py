@@ -1,4 +1,3 @@
-from comics.aggregator.crawler import CrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -9,7 +8,3 @@ class ComicData(ComicDataBase):
     start_date = "2009-07-01"
     rights = "bubble"
     active = False
-
-
-class Crawler(CrawlerBase):
-    time_zone = "America/Los_Angeles"
