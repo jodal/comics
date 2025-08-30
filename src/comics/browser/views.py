@@ -28,7 +28,8 @@ def comics_list(request):
         "browser/comics_list.html",
         {
             "active": {"comics_list": True},
-            "all_comics": Comic.objects.sort_by_name(),
+            "active_comics": Comic.objects.sort_by_name().filter(active=True),
+            "inactive_comics": Comic.objects.sort_by_name().filter(active=False),
             "my_comics": request.user.comics_profile.comics.all(),
         },
     )

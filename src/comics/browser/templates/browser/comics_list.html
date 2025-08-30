@@ -35,19 +35,15 @@
       <h1>All comics <small>aggregated by {{ site_title }}</small></h1>
     </div>
 
-    {% if all_comics %}
-      {% list_to_columns all_comics as comic_columns 4 %}
+    {% if active_comics %}
+      {% list_to_columns active_comics as comic_columns 4 %}
       <div class="row">
-
         {% for comic_column in comic_columns %}
           <div class="col-md-3">
             <ul class="list-unstyled">
               {% for comic in comic_column %}
                 <li class="{% if not comic.active %}inactive{% endif %}{% if comic in my_comics %} subscribed{% endif %}">
                   <div class="pull-right">
-                    {% if not comic.active %}
-                      <span class="label label-default">Inactive</span>
-                    {% endif %}
                     {% if comic.is_new %}
                       <span class="label label-info">New</span>
                     {% endif %}
@@ -70,10 +66,42 @@
             </ul>
           </div>
         {% endfor %}
-
       </div>
-    {% else %}
+    {% endif %}
 
+    {% if inactive_comics %}
+      <h2 class="inactive">Inactive comics <small>with archives</small></h2>
+      {% list_to_columns inactive_comics as comic_columns 4 %}
+      <div class="row">
+        {% for comic_column in comic_columns %}
+          <div class="col-md-3">
+            <ul class="list-unstyled">
+              {% for comic in comic_column %}
+                <li class="{% if not comic.active %}inactive{% endif %}{% if comic in my_comics %} subscribed{% endif %}">
+                  <div class="pull-right">
+                    {% if comic in my_comics %}
+                      <span class="label label-default">Subscribed</span>
+                    {% endif %}
+                  </div>
+                  <div class="show-view">
+                    <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
+                  </div>
+                  <div class="edit-view hide">
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="{{ comic.slug }}"
+                        {% if comic in my_comics %}checked="checked"{% endif %}>
+                      {{ comic.name }}
+                    </label>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if not active_comics and not inactive_comics %}
       <div class="alert alert-info">
         <strong>No comics found in the database.</strong>
       </div>
@@ -85,7 +113,6 @@
           <code>comics add_comics -c ...</code>
         </div>
       {% endif %}
-
     {% endif %}
   </form>
 
