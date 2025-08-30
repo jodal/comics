@@ -15,10 +15,8 @@ class Crawler(CrawlerBase):
     time_zone = "America/Los_Angeles"
 
     def crawl(self, pub_date):
-        feed = self.parse_feed("http://www.cagle.com/author/daryl-cagle/feed/")
+        feed = self.parse_feed("https://cagle.com/daryl-cagle/feed/")
         for entry in feed.for_date(pub_date):
-            if "Cartoons" not in entry.tags:
-                continue
             url = entry.summary.src("img")
             title = entry.title
             return CrawlerImage(url, title)
