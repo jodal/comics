@@ -12,7 +12,6 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_days = 30
-    schedule = "Mo,We,Fr"
     time_zone = "America/Los_Angeles"
 
     # Without User-Agent set, the server returns 403 Forbidden
