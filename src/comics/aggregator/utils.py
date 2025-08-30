@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from comics.comics import get_comic_module
+from comics.comics import get_comic_crawler
 
 if TYPE_CHECKING:
     from comics.core.models import Comic
@@ -10,10 +10,8 @@ if TYPE_CHECKING:
 SCHEDULE_DAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
 
 
-def get_comic_schedule(comic: Comic):
-    module = get_comic_module(comic.slug)
-    schedule = module.Crawler(comic).schedule
-
-    if not schedule:
+def get_comic_schedule(comic: Comic) -> list[int]:
+    crawler = get_comic_crawler(comic)
+    if crawler is None or not crawler.schedule:
         return []
-    return [SCHEDULE_DAYS.index(day) for day in schedule.split(",")]
+    return [SCHEDULE_DAYS.index(day) for day in crawler.schedule.split(",")]
