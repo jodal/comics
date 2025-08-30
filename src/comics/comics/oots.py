@@ -5,7 +5,7 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = "The Order of the Stick"
     language = "en"
-    url = "http://www.giantitp.com/"
+    url = "https://www.giantitp.com/"
     start_date = "2003-09-30"
     rights = "Rich Burlew"
 
@@ -16,7 +16,7 @@ class Crawler(CrawlerBase):
     headers = {"User-Agent": "Mozilla/5.0"}
 
     def crawl(self, pub_date):
-        feed = self.parse_feed("http://www.giantitp.com/comics/oots.rss")
+        feed = self.parse_feed("https://www.giantitp.com/comics/oots.rss")
         if len(feed.all()):
             entry = feed.all()[0]
             page = self.parse_page(entry.link)

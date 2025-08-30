@@ -5,7 +5,7 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = "Evil Inc."
     language = "en"
-    url = "http://evil-inc.com/"
+    url = "https://www.evil-inc.com/"
     start_date = "2005-05-30"
     rights = "Brad J. Guigar - Colorist: Ed Ryzowski"
 
@@ -16,7 +16,7 @@ class Crawler(CrawlerBase):
     time_zone = "America/New_York"
 
     def crawl(self, pub_date):
-        page_url = "http://evil-inc.com/%s/?post_type=comic" % (
+        page_url = "https://www.evil-inc.com/%s/?post_type=comic" % (
             pub_date.strftime("%Y/%m/%d")
         )
 

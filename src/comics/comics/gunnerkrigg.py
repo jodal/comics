@@ -5,7 +5,7 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = "Gunnerkrigg Court"
     language = "en"
-    url = "http://www.gunnerkrigg.com/"
+    url = "https://www.gunnerkrigg.com/"
     start_date = "2005-08-13"
     rights = "Tom Siddell"
 
@@ -15,7 +15,7 @@ class Crawler(CrawlerBase):
     time_zone = "America/Los_Angeles"
 
     def crawl(self, pub_date):
-        page = self.parse_page("http://www.gunnerkrigg.com/index2.php")
+        page = self.parse_page("https://www.gunnerkrigg.com/")
         url = page.src('img[src*="/comics/"]')
         title = page.alt('img[src*="/comics/"]')
         text = "\n\n".join(page.texts('table[cellpadding="5"] td')).strip()

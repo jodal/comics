@@ -5,7 +5,7 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = "General Protection Fault"
     language = "en"
-    url = "http://www.gpf-comics.com/"
+    url = "https://www.gpf-comics.com/"
     start_date = "1998-11-02"
     rights = "Jeffrey T. Darlington"
 
@@ -16,7 +16,7 @@ class Crawler(CrawlerBase):
     time_zone = "America/New_York"
 
     def crawl(self, pub_date):
-        page_url = "http://www.gpf-comics.com/archive.php?d={}".format(
+        page_url = "https://www.gpf-comics.com/archive.php?d={}".format(
             pub_date.strftime("%Y%m%d"),
         )
         page = self.parse_page(page_url)

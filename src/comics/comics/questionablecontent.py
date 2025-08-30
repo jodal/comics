@@ -7,7 +7,7 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = "Questionable Content"
     language = "en"
-    url = "http://questionablecontent.net/"
+    url = "https://questionablecontent.net/"
     start_date = "2003-08-01"
     rights = "Jeph Jacques"
 
@@ -21,7 +21,7 @@ class Crawler(CrawlerBase):
     headers = {"User-Agent": "Mozilla/4.0"}
 
     def crawl(self, pub_date):
-        page = self.parse_page("http://www.questionablecontent.net/")
+        page = self.parse_page("https://questionablecontent.net/")
         url = page.src("img[src*='/comics/']")
         title = None
         page.remove("#news p, #news script")

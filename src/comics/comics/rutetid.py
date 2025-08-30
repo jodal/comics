@@ -5,7 +5,7 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = "Rutetid"
     language = "no"
-    url = "http://www.dagbladet.no/tegneserie/rutetid/"
+    url = "https://www.dagbladet.no/tegneserie/rutetid/"
     rights = "Frode Øverli"
     active = False
 

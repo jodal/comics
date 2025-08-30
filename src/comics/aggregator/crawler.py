@@ -293,7 +293,7 @@ class DagbladetCrawlerBase(CrawlerBase):
         short_name: str,
         pub_date: datetime.date,
     ) -> CrawlerResult | None:
-        page_url = "http://www.dagbladet.no/tegneserie/%s" % short_name
+        page_url = "https://www.dagbladet.no/tegneserie/%s" % short_name
         page = self.parse_page(page_url)
 
         date_string = pub_date.strftime("%Y-%m-%dT00:00:00")
