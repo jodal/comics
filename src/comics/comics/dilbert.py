@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import CrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -8,14 +8,9 @@ class ComicData(ComicDataBase):
     url = "http://www.dilbert.com/"
     start_date = "1989-04-16"
     rights = "Scott Adams"
+    active = False
 
 
 class Crawler(CrawlerBase):
-    history_capable_date = "1989-04-16"
-    schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
-    time_zone = "America/Denver"
-
     def crawl(self, pub_date):
-        page = self.parse_page(pub_date.strftime("http://dilbert.com/strip/%Y-%m-%d"))
-        url = page.src('img[alt$="Dilbert by Scott Adams"]')
-        return CrawlerImage(url)
+        pass  # Comic no longer published
