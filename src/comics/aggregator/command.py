@@ -9,6 +9,7 @@ import socket
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Concatenate, Self
 
+from comics.aggregator.crawler import CrawlerBase
 from comics.aggregator.downloader import ReleaseDownloader
 from comics.comics import get_comic_module
 from comics.core.exceptions import ComicsError
@@ -16,7 +17,7 @@ from comics.core.exceptions import ComicsError
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-    from comics.aggregator.crawler import CrawlerBase, CrawlerRelease
+    from comics.aggregator.crawler import CrawlerRelease
     from comics.core.models import Comic
 
 logger = logging.getLogger("comics.aggregator.command")
@@ -69,6 +70,10 @@ class Aggregator:
     @log_errors
     def _aggregate_one_comic(self, comic: Comic) -> None:
         crawler = self._get_crawler(comic)
+        if crawler is None:
+            logger.info("%s: No crawler defined, skipping", comic.slug)
+            return
+
         from_date = self._get_valid_date(crawler, self.config.from_date)
         to_date = self._get_valid_date(crawler, self.config.to_date)
         if from_date != to_date:
@@ -107,8 +112,10 @@ class Aggregator:
     def _get_downloader(self) -> ReleaseDownloader:
         return ReleaseDownloader()
 
-    def _get_crawler(self, comic: Comic) -> CrawlerBase:
+    def _get_crawler(self, comic: Comic) -> CrawlerBase | None:
         module = get_comic_module(comic.slug)
+        if not hasattr(module, "Crawler"):
+            return None
         crawler = module.Crawler(comic)
         assert isinstance(crawler, CrawlerBase)
         return crawler
