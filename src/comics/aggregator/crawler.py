@@ -248,6 +248,11 @@ class GoComicsComCrawlerBase(CrawlerBase):
             pub_date.strftime("%Y/%m/%d"),
         )
         page = self.parse_page(page_url)
+
+        # TODO: Expose response status code to crawlers
+        if (header := page.content("h1")) and header.startswith("404"):
+            return None
+
         url = page.content("meta[property='og:image']")
         assert url
 
