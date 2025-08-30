@@ -210,7 +210,11 @@ class CrawlerBase:
 class ComicsKingdomCrawlerBase(CrawlerBase):
     """Base comic crawler for Comics Kingdom comics"""
 
-    def crawl_helper(self, short_name: str, pub_date: datetime.date) -> CrawlerResult:
+    def crawl_helper(
+        self,
+        short_name: str,
+        pub_date: datetime.date,
+    ) -> CrawlerResult | None:
         date = pub_date.strftime("%Y-%m-%d")
         page_url = f"https://comicskingdom.com/{short_name}/{date}"
         page = self.parse_page(page_url)
@@ -234,7 +238,11 @@ class GoComicsComCrawlerBase(CrawlerBase):
         ),
     }
 
-    def crawl_helper(self, url_name: str, pub_date: datetime.date) -> CrawlerResult:
+    def crawl_helper(
+        self,
+        url_name: str,
+        pub_date: datetime.date,
+    ) -> CrawlerResult | None:
         page_url = "https://www.gocomics.com/{}/{}".format(
             url_name,
             pub_date.strftime("%Y/%m/%d"),
@@ -257,7 +265,11 @@ class PondusNoCrawlerBase(CrawlerBase):
 
     time_zone = "Europe/Oslo"
 
-    def crawl_helper(self, url_id: str, pub_date: datetime.date) -> CrawlerResult:
+    def crawl_helper(
+        self,
+        url_id: str,
+        pub_date: datetime.date,
+    ) -> CrawlerResult | None:
         page_url = "http://www.pondus.no/?section=artikkel&id=%s" % url_id
         page = self.parse_page(page_url)
         url = page.src(".imagegallery img")
@@ -271,7 +283,11 @@ class DagbladetCrawlerBase(CrawlerBase):
     headers = {"User-Agent": "Mozilla/5.0"}
     time_zone = "Europe/Oslo"
 
-    def crawl_helper(self, short_name: str, pub_date: datetime.date) -> CrawlerResult:
+    def crawl_helper(
+        self,
+        short_name: str,
+        pub_date: datetime.date,
+    ) -> CrawlerResult | None:
         page_url = "http://www.dagbladet.no/tegneserie/%s" % short_name
         page = self.parse_page(page_url)
 
@@ -293,7 +309,11 @@ class CreatorsCrawlerBase(CrawlerBase):
 
     headers = {"User-Agent": "Mozilla/5.0"}
 
-    def crawl_helper(self, feature_id: str, pub_date: datetime.date) -> CrawlerResult:
+    def crawl_helper(
+        self,
+        feature_id: str,
+        pub_date: datetime.date,
+    ) -> CrawlerResult | None:
         api_url = (
             "https://www.creators.com/api/features/get_release_dates?"
             "feature_id=%s&year=%s"
@@ -320,7 +340,11 @@ class NettserierCrawlerBase(CrawlerBase):
     # loop through the updates and check the published date
     time_zone = "Europe/Oslo"
 
-    def crawl_helper(self, comic_id: int, pub_date: datetime.date) -> CrawlerResult:
+    def crawl_helper(
+        self,
+        comic_id: int,
+        pub_date: datetime.date,
+    ) -> CrawlerResult | None:
         response = httpx.get(f"https://api.nettserier.no/v4/updates/{comic_id}/")
         response.raise_for_status()
         for update in response.json()["data"]:
@@ -330,12 +354,17 @@ class NettserierCrawlerBase(CrawlerBase):
                     update["title"],
                     update["text"],
                 )
+        return None
 
 
 class ComicControlCrawlerBase(CrawlerBase):
     """Base comics crawler for all comics using ComicControl CMS"""
 
-    def crawl_helper(self, site_url: str, pub_date: datetime.date) -> CrawlerResult:
+    def crawl_helper(
+        self,
+        site_url: str,
+        pub_date: datetime.date,
+    ) -> CrawlerResult | None:
         if site_url[-1] == "/":
             site_url = site_url[0:-1]
         if "pixietrixcomix.com" in site_url:
