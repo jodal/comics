@@ -7,6 +7,7 @@ class ComicData(ComicDataBase):
     language = "en"
     url = "http://www.gocomics.com/bloom-county/"
     start_date = "2015-07-20"
+    end_date = "2020-06-08"
     rights = "Berkeley Breathed"
     active = False
 
@@ -17,4 +18,4 @@ class Crawler(GoComicsComCrawlerBase):
     time_zone = "America/New_York"
 
     def crawl(self, pub_date):
-        return self.crawl_helper("bloom-county", pub_date)
+        pass  # Comic no longer published
