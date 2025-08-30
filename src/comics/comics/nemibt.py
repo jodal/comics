@@ -12,7 +12,7 @@ class ComicData(ComicDataBase):
 
 class Crawler(CrawlerBase):
     history_capable_date = "2008-07-01"
-    schedule = "Mo,Tu,We,Th,Fr,Sa"
+    schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "Europe/Oslo"
 
     def crawl(self, pub_date):
