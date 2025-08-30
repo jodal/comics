@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import CrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -7,15 +7,11 @@ class ComicData(ComicDataBase):
     language = "en"
     url = "https://www.little-gamers.com/"
     start_date = "2000-12-01"
+    end_date = "2025-02-05"
     rights = "Christian Fundin & Pontus Madsen"
+    active = False
 
 
 class Crawler(CrawlerBase):
-    history_capable_date = "2000-12-01"
-    time_zone = "Europe/Stockholm"
-
     def crawl(self, pub_date):
-        url = "https://www.little-gamers.com/comics/%s.jpg" % pub_date.strftime(
-            "%Y-%m-%d"
-        )
-        return CrawlerImage(url)
+        pass  # Comic no longer published
