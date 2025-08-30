@@ -16,7 +16,7 @@ def django_db_setup(django_db_setup: None, django_db_blocker: DjangoDbBlocker):
 
 
 @pytest.fixture
-def subscriptions(user: User) -> list[Subscription]:
+def subscriptions(db: None, user: User) -> list[Subscription]:
     profile = cast("UserProfile", user.comics_profile)  # pyright: ignore[reportAttributeAccessIssue]
     return [
         Subscription.objects.create(
