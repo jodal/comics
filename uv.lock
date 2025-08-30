@@ -192,6 +192,7 @@ dev = [
     { name = "django-debug-toolbar" },
     { name = "django-extensions" },
     { name = "django-stubs" },
+    { name = "freezegun" },
     { name = "mypy" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -214,6 +215,7 @@ lint = [
     { name = "ruff" },
 ]
 tests = [
+    { name = "freezegun" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "pytest-django" },
@@ -261,6 +263,7 @@ dev = [
     { name = "django-debug-toolbar", specifier = ">=6.0.0" },
     { name = "django-extensions", specifier = ">=4.1" },
     { name = "django-stubs", specifier = ">=5.2.2" },
+    { name = "freezegun", specifier = ">=1.5.5" },
     { name = "mypy", specifier = ">=1.17.1" },
     { name = "pytest", specifier = ">=8.4.1" },
     { name = "pytest-cov", specifier = ">=6.2.1" },
@@ -281,6 +284,7 @@ docs = [
 ]
 lint = [{ name = "ruff", specifier = ">=0.12.8" }]
 tests = [
+    { name = "freezegun", specifier = ">=1.5.5" },
     { name = "pytest", specifier = ">=8.4.1" },
     { name = "pytest-cov", specifier = ">=6.2.1" },
     { name = "pytest-django", specifier = ">=4.11.1" },
@@ -547,6 +551,18 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/0a/10/c23352565a6544bdc5353e0b15fc1c563352101f30e24bf500207a54df9a/filelock-3.18.0.tar.gz", hash = "sha256:adbc88eabb99d2fec8c9c1b229b171f18afa655400173ddc653d5d01501fb9f2", size = 18075, upload-time = "2025-03-14T07:11:40.47Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/4d/36/2a115987e2d8c300a974597416d9de88f2444426de9571f4b59b2cca3acc/filelock-3.18.0-py3-none-any.whl", hash = "sha256:c401f4f8377c4464e6db25fff06205fd89bdd83b65eb0488ed1b160f780e21de", size = 16215, upload-time = "2025-03-14T07:11:39.145Z" },
+]
+
+[[package]]
+name = "freezegun"
+version = "1.5.5"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "python-dateutil" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/95/dd/23e2f4e357f8fd3bdff613c1fe4466d21bfb00a6177f238079b17f7b1c84/freezegun-1.5.5.tar.gz", hash = "sha256:ac7742a6cc6c25a2c35e9292dfd554b897b517d2dec26891a2e8debf205cb94a", size = 35914, upload-time = "2025-08-09T10:39:08.338Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5e/2e/b41d8a1a917d6581fc27a35d05561037b048e47df50f27f8ac9c7e27a710/freezegun-1.5.5-py3-none-any.whl", hash = "sha256:cd557f4a75cf074e84bc374249b9dd491eaeacd61376b9eb3c423282211619d2", size = 19266, upload-time = "2025-08-09T10:39:06.636Z" },
 ]
 
 [[package]]

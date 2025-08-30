@@ -1,52 +1,67 @@
-import datetime
-import zoneinfo
+import datetime as dt
+from zoneinfo import ZoneInfo
 
-from django.test import TestCase
+import pytest
+from freezegun import freeze_time
+from pytest_mock import MockerFixture
 
-from comics.aggregator import crawler
-
-
-class CurrentDateWhenLocalTZIsUTCTest(TestCase):
-    time_zone_local = "UTC"
-    time_zone_ahead = "Australia/Sydney"
-    time_zone_behind = "America/New_York"
-    now: datetime.datetime
-
-    def setUp(self):
-        self.tz = zoneinfo.ZoneInfo(self.time_zone_local)
-        self.crawler = crawler.CrawlerBase(None)
-        crawler.now = lambda: self.now
-        crawler.today = lambda: self.now.today()
-
-    def test_current_date_when_crawler_is_in_local_today(self):
-        self.now = datetime.datetime(2001, 2, 5, 23, 1, 0, tzinfo=self.tz)
-        self.crawler.time_zone = self.time_zone_local
-
-        today = datetime.date(2001, 2, 5)
-        assert self.crawler.current_date == today
-
-    def test_current_date_when_crawler_is_in_local_tomorrow(self):
-        self.now = datetime.datetime(2001, 2, 5, 23, 1, 0, tzinfo=self.tz)
-        self.crawler.time_zone = self.time_zone_ahead
-
-        tomorrow = datetime.date(2001, 2, 6)
-        assert self.crawler.current_date == tomorrow
-
-    def test_current_date_when_crawler_is_in_local_yesterday(self):
-        self.now = datetime.datetime(2001, 2, 5, 0, 59, 0, tzinfo=self.tz)
-        self.crawler.time_zone = self.time_zone_behind
-
-        yesterday = datetime.date(2001, 2, 4)
-        assert self.crawler.current_date == yesterday
+from comics.aggregator import crawler as crawler_mod
 
 
-class CurrentDateWhenLocalTZIsCETTest(CurrentDateWhenLocalTZIsUTCTest):
-    time_zone_local = "Europe/Oslo"
-    time_zone_ahead = "Australia/Sydney"
-    time_zone_behind = "America/New_York"
+@pytest.fixture
+def crawler(mocker: MockerFixture) -> crawler_mod.CrawlerBase:
+    comic = mocker.Mock()
+    return crawler_mod.CrawlerBase(comic)
 
 
-class CurrentDateWhenLocalTZIsESTTest(CurrentDateWhenLocalTZIsUTCTest):
-    time_zone_local = "America/New_York"
-    time_zone_ahead = "Europe/Moscow"
-    time_zone_behind = "America/Los_Angeles"
+@pytest.mark.parametrize(
+    ("tz_local",),
+    [
+        ("UTC",),
+        ("Europe/Oslo",),
+        ("America/New_York",),
+    ],
+)
+def test_current_date_when_crawler_is_in_local_today(
+    crawler: crawler_mod.CrawlerBase,
+    tz_local: str,
+) -> None:
+    with freeze_time(dt.datetime(2001, 2, 5, 23, 1, 0, tzinfo=ZoneInfo(tz_local))):
+        crawler.time_zone = tz_local
+        assert crawler.current_date == dt.date(2001, 2, 5)
+
+
+@pytest.mark.parametrize(
+    ("tz_local", "tz_ahead"),
+    [
+        ("UTC", "Australia/Sydney"),
+        ("Europe/Oslo", "Australia/Sydney"),
+        ("America/New_York", "Europe/Moscow"),
+    ],
+)
+def test_current_date_when_crawler_is_in_local_tomorrow(
+    crawler: crawler_mod.CrawlerBase,
+    tz_local: str,
+    tz_ahead: str,
+) -> None:
+    with freeze_time(dt.datetime(2001, 2, 5, 23, 1, 0, tzinfo=ZoneInfo(tz_local))):
+        crawler.time_zone = tz_ahead
+        assert crawler.current_date == dt.date(2001, 2, 6)
+
+
+@pytest.mark.parametrize(
+    ("tz_local", "tz_behind"),
+    [
+        ("UTC", "America/New_York"),
+        ("Europe/Oslo", "America/New_York"),
+        ("America/New_York", "America/Los_Angeles"),
+    ],
+)
+def test_current_date_when_crawler_is_in_local_yesterday(
+    crawler: crawler_mod.CrawlerBase,
+    tz_local: str,
+    tz_behind: str,
+) -> None:
+    with freeze_time(dt.datetime(2001, 2, 5, 0, 59, 0, tzinfo=ZoneInfo(tz_local))):
+        crawler.time_zone = tz_behind
+        assert crawler.current_date == dt.date(2001, 2, 4)

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import datetime
+import datetime as dt
 import re
 import time
 import xml.sax
@@ -23,10 +23,6 @@ from comics.aggregator.lxmlparser import LxmlParser
 if TYPE_CHECKING:
     from comics.core.models import Comic
 
-# For testability
-now = timezone.now
-today = datetime.date.today
-
 
 RequestHeaders = dict[str, str]
 
@@ -34,7 +30,7 @@ RequestHeaders = dict[str, str]
 @dataclass
 class CrawlerRelease:
     comic: Comic
-    pub_date: datetime.date
+    pub_date: dt.date
     has_rerun_releases: bool = False
     _images: list[CrawlerImage] = field(default_factory=list)
 
@@ -105,7 +101,7 @@ class CrawlerBase:
     pages: dict[str, LxmlParser] = field(default_factory=dict)
 
     def get_crawler_release(
-        self, pub_date: datetime.date | None = None
+        self, pub_date: dt.date | None = None
     ) -> CrawlerRelease | None:
         """Get meta data for release at pub_date, or the latest release"""
 
@@ -134,7 +130,7 @@ class CrawlerBase:
 
         return release
 
-    def _get_date_to_crawl(self, pub_date: datetime.date | None) -> datetime.date:
+    def _get_date_to_crawl(self, pub_date: dt.date | None) -> dt.date:
         identifier = f"{self.comic.slug}/{pub_date}"
 
         if pub_date is None:
@@ -152,23 +148,21 @@ class CrawlerBase:
         return pub_date
 
     @property
-    def current_date(self) -> datetime.date:
+    def current_date(self) -> dt.date:
         time_zone = zoneinfo.ZoneInfo(self.time_zone)
-        now_in_tz = now().astimezone(time_zone)
+        now_in_tz = timezone.now().astimezone(time_zone)
         return now_in_tz.date()
 
     @property
-    def history_capable(self) -> datetime.date:
+    def history_capable(self) -> dt.date:
         if self.history_capable_date is not None:
-            return datetime.datetime.strptime(
-                self.history_capable_date, "%Y-%m-%d"
-            ).date()
+            return dt.datetime.strptime(self.history_capable_date, "%Y-%m-%d").date()
         elif self.history_capable_days is not None:
-            return today() - datetime.timedelta(self.history_capable_days)
+            return dt.date.today() - dt.timedelta(self.history_capable_days)
         else:
-            return today()
+            return dt.date.today()
 
-    def crawl(self, pub_date: datetime.date) -> CrawlerResult:
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         """
         Must be overridden by all crawlers
 
@@ -196,12 +190,12 @@ class CrawlerBase:
             self.pages[page_url] = LxmlParser(page_url, headers=self.headers)
         return self.pages[page_url]
 
-    def string_to_date(self, string: str, fmt: str) -> datetime.date:
-        return datetime.datetime.strptime(string, fmt).date()
+    def string_to_date(self, string: str, fmt: str) -> dt.date:
+        return dt.datetime.strptime(string, fmt).date()
 
-    def date_to_epoch(self, date: datetime.date) -> int:
+    def date_to_epoch(self, date: dt.date) -> int:
         """The UNIX time of midnight at ``date`` in the comic's time zone"""
-        midnight = datetime.datetime(
+        midnight = dt.datetime(
             date.year, date.month, date.day, tzinfo=zoneinfo.ZoneInfo(self.time_zone)
         )
         return int(time.mktime(midnight.utctimetuple()))
@@ -213,7 +207,7 @@ class ComicsKingdomCrawlerBase(CrawlerBase):
     def crawl_helper(
         self,
         short_name: str,
-        pub_date: datetime.date,
+        pub_date: dt.date,
     ) -> CrawlerResult | None:
         date = pub_date.strftime("%Y-%m-%d")
         page_url = f"https://comicskingdom.com/{short_name}/{date}"
@@ -241,7 +235,7 @@ class GoComicsComCrawlerBase(CrawlerBase):
     def crawl_helper(
         self,
         url_name: str,
-        pub_date: datetime.date,
+        pub_date: dt.date,
     ) -> CrawlerResult | None:
         page_url = "https://www.gocomics.com/{}/{}".format(
             url_name,
@@ -270,7 +264,7 @@ class PondusNoCrawlerBase(CrawlerBase):
     def crawl_helper(
         self,
         url_id: str,
-        pub_date: datetime.date,
+        pub_date: dt.date,
     ) -> CrawlerResult | None:
         page_url = "http://www.pondus.no/?section=artikkel&id=%s" % url_id
         page = self.parse_page(page_url)
@@ -288,7 +282,7 @@ class DagbladetCrawlerBase(CrawlerBase):
     def crawl_helper(
         self,
         short_name: str,
-        pub_date: datetime.date,
+        pub_date: dt.date,
     ) -> CrawlerResult | None:
         page_url = "https://www.dagbladet.no/tegneserie/%s" % short_name
         page = self.parse_page(page_url)
@@ -314,7 +308,7 @@ class CreatorsCrawlerBase(CrawlerBase):
     def crawl_helper(
         self,
         feature_id: str,
-        pub_date: datetime.date,
+        pub_date: dt.date,
     ) -> CrawlerResult | None:
         api_url = (
             "https://www.creators.com/api/features/get_release_dates?"
@@ -345,7 +339,7 @@ class NettserierCrawlerBase(CrawlerBase):
     def crawl_helper(
         self,
         comic_id: int,
-        pub_date: datetime.date,
+        pub_date: dt.date,
     ) -> CrawlerResult | None:
         response = httpx.get(f"https://api.nettserier.no/v4/updates/{comic_id}/")
         response.raise_for_status()
@@ -365,7 +359,7 @@ class ComicControlCrawlerBase(CrawlerBase):
     def crawl_helper(
         self,
         site_url: str,
-        pub_date: datetime.date,
+        pub_date: dt.date,
     ) -> CrawlerResult | None:
         if site_url[-1] == "/":
             site_url = site_url[0:-1]
