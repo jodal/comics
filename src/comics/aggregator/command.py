@@ -11,7 +11,7 @@ from typing import TYPE_CHECKING, Any, Concatenate, Self
 
 from comics.aggregator.crawler import CrawlerBase
 from comics.aggregator.downloader import ReleaseDownloader
-from comics.comics import get_comic_module
+from comics.comics import get_comic_crawler
 from comics.core.exceptions import ComicsError
 
 if TYPE_CHECKING:
@@ -69,7 +69,7 @@ class Aggregator:
 
     @log_errors
     def _aggregate_one_comic(self, comic: Comic) -> None:
-        crawler = self._get_crawler(comic)
+        crawler = get_comic_crawler(comic)
         if crawler is None:
             logger.info("%s: No crawler defined, skipping", comic.slug)
             return
@@ -113,14 +113,6 @@ class Aggregator:
 
     def _get_downloader(self) -> ReleaseDownloader:
         return ReleaseDownloader()
-
-    def _get_crawler(self, comic: Comic) -> CrawlerBase | None:
-        module = get_comic_module(comic.slug)
-        if not hasattr(module, "Crawler"):
-            return None
-        crawler = module.Crawler(comic)
-        assert isinstance(crawler, CrawlerBase)
-        return crawler
 
     def _get_valid_date(self, crawler: CrawlerBase, date: dt.date | None) -> dt.date:
         if date is None:
