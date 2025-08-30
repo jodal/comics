@@ -157,7 +157,6 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.contrib.messages.context_processors.messages",
                 "comics.core.context_processors.site_settings",
-                "comics.core.context_processors.all_comics",
             ],
         },
     },

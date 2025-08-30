@@ -28,6 +28,7 @@ def comics_list(request):
         "browser/comics_list.html",
         {
             "active": {"comics_list": True},
+            "all_comics": Comic.objects.sort_by_name(),
             "my_comics": request.user.comics_profile.comics.all(),
         },
     )
