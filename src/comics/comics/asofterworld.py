@@ -1,4 +1,4 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import CrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -7,6 +7,7 @@ class ComicData(ComicDataBase):
     language = "en"
     url = "http://www.asofterworld.com/"
     start_date = "2003-02-07"
+    end_date = "2015-10-30"
     rights = "Joey Comeau, Emily Horne"
     active = False
 
@@ -16,7 +17,4 @@ class Crawler(CrawlerBase):
     time_zone = "America/Los_Angeles"
 
     def crawl(self, pub_date):
-        page = self.parse_page("http://www.asofterworld.com/")
-        url = page.src("#comicimg img")
-        text = page.title("#comicimg img")
-        return CrawlerImage(url, None, text)
+        pass  # Comic no longer published
