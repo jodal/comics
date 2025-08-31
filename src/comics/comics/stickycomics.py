@@ -5,7 +5,7 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = "Sticky Comics"
     language = "en"
-    url = "http://www.stickycomics.com/"
+    url = "https://www.stickycomics.com/"
     start_date = "2006-05-04"
     rights = "Christiann MacAuley"
 
@@ -15,7 +15,7 @@ class Crawler(CrawlerBase):
     time_zone = "America/Denver"
 
     def crawl(self, pub_date):
-        feed = self.parse_feed("http://www.stickycomics.com/feed")
+        feed = self.parse_feed("https://www.stickycomics.com/feed/")
         for entry in feed.for_date(pub_date):
             if "comics" not in entry.tags:
                 continue
