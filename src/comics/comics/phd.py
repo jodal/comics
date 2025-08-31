@@ -1,4 +1,3 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
 
@@ -7,17 +6,6 @@ class ComicData(ComicDataBase):
     language = "en"
     url = "http://www.phdcomics.com/"
     start_date = "1997-10-27"
+    end_date = "2021-10-22"
     rights = "Jorge Cham"
-
-
-class Crawler(CrawlerBase):
-    history_capable_date = "1997-10-27"
-    schedule = None
-    time_zone = "America/Los_Angeles"
-
-    def crawl(self, pub_date):
-        feed = self.parse_feed("http://www.phdcomics.com/gradfeed.php")
-        for entry in feed.for_date(pub_date):
-            url = entry.summary.src("img")
-            title = entry.title.split("'")[1]
-            return CrawlerImage(url, title)
+    active = False
