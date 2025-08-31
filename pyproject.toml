@@ -4,7 +4,8 @@ version = "25.8.3"
 description = "Comics is a webcomics aggregator."
 authors = [{ name = "Stein Magnus Jodal", email = "stein.magnus@jodal.no" }]
 readme = "README.md"
-license = { text = "AGPL-3.0-only" }
+license = "AGPL-3.0-only"
+license-files = ["COPYING"]
 classifiers = ["Private :: Do Not Upload"]
 requires-python = ">=3.12"
 dependencies = [
@@ -197,13 +198,6 @@ ignore = [
 known-first-party = ["comics"]
 
 
-[tool.setuptools.packages.find]
-where = ["src"]
-
-[tool.setuptools.package-data]
-comics = ["*.css", "*.html", "*.js", "*.png", "*.ttf", "*.woff2"]
-
-
 [tool.tox]
 env_list = ["3.12", "3.13", "docs", "mypy", "ruff-format", "ruff-lint"]
 
@@ -256,7 +250,17 @@ commands = [["ruff", "check", "{posargs:.}"]]
 [tool.uv]
 package = true
 
+[tool.uv.build-backend]
+source-include = [
+    ".github/**",
+    ".gitignore",
+    ".mailmap",
+    "dev-template.env",
+    "docs/**",
+    "tests/**",
+]
+
 
 [build-system]
-requires = ["setuptools>=64"]
-build-backend = "setuptools.build_meta"
+requires = ["uv_build>=0.8.14,<0.9.0"]
+build-backend = "uv_build"
