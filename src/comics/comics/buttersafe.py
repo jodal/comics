@@ -15,10 +15,6 @@ class Crawler(CrawlerBase):
     schedule = "Th"
     time_zone = "America/New_York"
 
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
-    }
-
     def crawl(self, pub_date):
         date_page_url = f"https://www.buttersafe.com/{pub_date:%Y/%m/%d/}"
         date_page = self.parse_page(date_page_url)
