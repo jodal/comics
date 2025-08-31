@@ -8,3 +8,4 @@ class ComicData(ComicDataBase):
     start_date = "2005-04-04"
     end_date = "2019-03-14"
     rights = "Joseph Dunn"
+    active = False
