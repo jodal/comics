@@ -5,7 +5,7 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = "Hejibits"
     language = "en"
-    url = "http://www.hejibits.com/"
+    url = "https://www.hejibits.com/"
     start_date = "2010-03-02"
     rights = "John Kleckner"
 
@@ -14,12 +14,12 @@ class Crawler(CrawlerBase):
     history_capable_days = 90
     time_zone = "America/Los_Angeles"
 
-    # Without User-Agent set, the server returns 403 Forbidden
-    headers = {"User-Agent": "Mozilla/4.0"}
-
     def crawl(self, pub_date):
-        feed = self.parse_feed("http://www.hejibits.com/feed/")
+        feed = self.parse_feed("https://hejibits.com/rss")
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src*="/comics/"]')
-            title = entry.title
-            return CrawlerImage(url, title)
+            if "comic" not in entry.tags:
+                continue
+            results = [CrawlerImage(url) for url in entry.summary.srcs("img")]
+            if results:
+                results[0].title = entry.title
+                return results
