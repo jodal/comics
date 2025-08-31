@@ -150,7 +150,7 @@ class LxmlParser:
         attr: str,
         selector: str,
         *,
-        default: str | None,
+        default: str | None = ...,
     ) -> str | None: ...
 
     def _get_one(
