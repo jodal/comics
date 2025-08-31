@@ -87,6 +87,17 @@ reportUnnecessaryTypeIgnoreComment = true
 reportImplicitAbstractClass = true
 
 
+[tool.coverage.run]
+omit = [
+    "src/comics/*/migrations/*",
+    "src/comics/__main__.py",
+    "src/comics/asgi.py",
+    "src/comics/comics/*",
+    "src/comics/wsgi.py",
+]
+source = ["comics"]
+
+
 [tool.django-stubs]
 django_settings_module = "comics.settings"
 
@@ -204,7 +215,7 @@ commands = [
     [
         "pytest",
         "--basetemp={envtmpdir}",
-        "--cov=comics",
+        "--cov",
         "--cov-report=term-missing",
         "{posargs}",
     ],
