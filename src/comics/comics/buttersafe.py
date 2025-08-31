@@ -15,12 +15,19 @@ class Crawler(CrawlerBase):
     schedule = "Th"
     time_zone = "America/New_York"
 
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
+    }
+
     def crawl(self, pub_date):
-        feed = self.parse_feed("http://feeds.feedburner.com/Buttersafe?format=xml")
-        for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src*="/comics/"]')
-            if not url:
-                continue
-            url = url.replace("/rss/", "/").replace("RSS.jpg", ".jpg")
-            title = entry.title
-            return CrawlerImage(url, title)
+        date_page_url = f"https://www.buttersafe.com/{pub_date:%Y/%m/%d/}"
+        date_page = self.parse_page(date_page_url)
+        page_url = date_page.href(f"a[href^='{date_page_url}']")
+        if not page_url:
+            return
+        page = self.parse_page(page_url)
+        url = page.src(".comic img")
+        if not url:
+            return
+        title = page.alt(".comic img")
+        return CrawlerImage(url, title)
