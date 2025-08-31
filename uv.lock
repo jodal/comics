@@ -147,7 +147,7 @@ wheels = [
 
 [[package]]
 name = "comics"
-version = "25.8.2"
+version = "25.8.3"
 source = { editable = "." }
 dependencies = [
     { name = "cssselect" },
