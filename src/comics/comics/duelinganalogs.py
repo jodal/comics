@@ -1,4 +1,3 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.comic_data import ComicDataBase
 
 
@@ -7,17 +6,6 @@ class ComicData(ComicDataBase):
     language = "en"
     url = "http://www.duelinganalogs.com/"
     start_date = "2005-11-17"
+    end_date = "2018-07-31"
     rights = "Steve Napierski"
-
-
-class Crawler(CrawlerBase):
-    history_capable_days = 35
-    schedule = "Mo,Tu,We,Th,Fr"
-    time_zone = "America/Los_Angeles"
-
-    def crawl(self, pub_date):
-        feed = self.parse_feed("http://feeds.feedburner.com/DuelingAnalogs")
-        for entry in feed.for_date(pub_date):
-            url = entry.content0.src('img[src*="/wp-content/uploads/"]')
-            title = entry.title
-            return CrawlerImage(url, title)
+    active = False
