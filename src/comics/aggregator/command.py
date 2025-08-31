@@ -9,7 +9,6 @@ import socket
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Concatenate, Self
 
-from comics.aggregator.crawler import CrawlerBase
 from comics.aggregator.downloader import ReleaseDownloader
 from comics.comics import get_comic_crawler
 from comics.core.exceptions import ComicsError
@@ -17,7 +16,7 @@ from comics.core.exceptions import ComicsError
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-    from comics.aggregator.crawler import CrawlerRelease
+    from comics.aggregator.crawler import CrawlerBase, CrawlerRelease
     from comics.core.models import Comic
 
 logger = logging.getLogger("comics.aggregator.command")

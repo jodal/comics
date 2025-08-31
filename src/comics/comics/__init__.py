@@ -5,10 +5,11 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 from comics.aggregator.crawler import CrawlerBase
-from comics.core.models import Comic
 
 if TYPE_CHECKING:
     from types import ModuleType
+
+    from comics.core.models import Comic
 
 
 def get_comic_module_names() -> list[str]:
