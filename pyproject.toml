@@ -1,6 +1,6 @@
 [project]
 name = "comics"
-version = "25.8.3"
+version = "25.8.4"
 description = "Comics is a webcomics aggregator."
 authors = [{ name = "Stein Magnus Jodal", email = "stein.magnus@jodal.no" }]
 readme = "README.md"
