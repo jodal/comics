@@ -283,7 +283,7 @@ requires-dist = [
     { name = "pymemcache", marker = "extra == 'cache'", specifier = ">=4.0.0" },
     { name = "pyyaml", marker = "extra == 'api'", specifier = ">=6.0.2" },
     { name = "sentry-sdk", specifier = ">=2.34.1" },
-    { name = "setuptools", specifier = ">=80.9.0" },
+    { name = "setuptools", specifier = ">=82.0.1" },
     { name = "typenv", specifier = ">=0.2.0" },
     { name = "whitenoise", specifier = ">=6.9.0" },
 ]
