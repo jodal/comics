@@ -9,7 +9,7 @@ from comics.core.models import Comic
 logger = logging.getLogger("comics.core.comic_data")
 
 
-class Options(TypedDict):
+class Options(TypedDict, total=False):
     comic_slugs: list[str]
 
 
