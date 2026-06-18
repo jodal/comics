@@ -4,6 +4,37 @@ updates:
   - package-ecosystem: uv
     directory: "/"
     schedule:
-      interval: daily
-    allow:
-      - dependency-type: production
+      interval: monthly
+    cooldown:
+      default-days: 7
+    groups:
+      docs:
+        patterns:
+          - "sphinx*"
+      tests:
+        patterns:
+          - "freezegun"
+          - "pytest*"
+      linters:
+        patterns:
+          - "basedpyright"
+          - "django-stubs"
+          - "mypy"
+          - "ruff"
+          - "tox*"
+          - "types-*"
+      django-devtools:
+        patterns:
+          - "django-debug-toolbar"
+          - "django-extensions"
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        patterns:
+          - "*"
