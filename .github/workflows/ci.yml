@@ -18,18 +18,21 @@ jobs:
           - name: "pytest (3.13)"
             python: "3.13"
             tox: "3.13"
+          - name: "pytest (3.14)"
+            python: "3.14"
+            tox: "3.14"
             coverage: true
           - name: "ruff-format"
-            python: "3.13"
+            python: "3.14"
             tox: ruff-format
           - name: "ruff-lint"
-            python: "3.13"
+            python: "3.14"
             tox: ruff-lint
           - name: "mypy"
-            python: "3.13"
+            python: "3.14"
             tox: mypy
           - name: "docs"
-            python: "3.13"
+            python: "3.14"
             tox: docs
 
     name: ${{ matrix.name }}
