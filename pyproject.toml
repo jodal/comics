@@ -43,8 +43,8 @@ comics = "comics.__main__:main"
 dev = [
     "django-debug-toolbar>=6.0.0",
     "django-extensions>=4.1",
-    "tox-uv>=1.27.0",
-    "tox>=4.28.4",
+    "tox-uv>=1.35.2",
+    "tox>=4.55.1",
     { include-group = "docs" },
     { include-group = "lint" },
     { include-group = "tests" },
@@ -56,7 +56,7 @@ docs = [
     "sphinx-rtd-theme>=3.0.2",
     "sphinxcontrib-httpdomain>=1.8.1",
 ]
-lint = ["ruff>=0.12.8"]
+lint = ["ruff>=0.15.16"]
 tests = [
     "freezegun>=1.5.5",
     "pytest>=8.4.1",
@@ -65,9 +65,9 @@ tests = [
     "pytest-mock>=3.14.1",
 ]
 typing = [
-    "basedpyright>=1.31.2",
-    "django-stubs>=5.2.2",
-    "mypy>=1.17.1",
+    "basedpyright>=1.39.7",
+    "django-stubs>=6.0.5",
+    "mypy>=2.1.0",
     "types-lxml>=2025.3.30",
 ]
 zizmor = ["zizmor==1.25.2"]
@@ -149,7 +149,6 @@ ignore_errors = true
 module = [
     "debug_toolbar.*",
     "django_extensions.*",
-    "environ.*",
     "feedparser.*",
     "invitations.*",
     "lxml.*",

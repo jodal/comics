@@ -1,3 +1,4 @@
+import datetime as dt
 import logging
 from dataclasses import dataclass, field
 from typing import TypedDict
@@ -9,7 +10,7 @@ from comics.core.models import Comic
 logger = logging.getLogger("comics.core.comic_data")
 
 
-class Options(TypedDict):
+class Options(TypedDict, total=False):
     comic_slugs: list[str]
 
 
@@ -104,8 +105,33 @@ class ComicDataLoader:
                 "name": data.name,
                 "url": data.url,
                 "active": data.active,
-                "start_date": data.start_date,
-                "end_date": data.end_date,
+                "start_date": self._parse_optional_date(
+                    comic_slug=data.slug,
+                    field_name="start_date",
+                    value=data.start_date,
+                ),
+                "end_date": self._parse_optional_date(
+                    comic_slug=data.slug,
+                    field_name="end_date",
+                    value=data.end_date,
+                ),
                 "rights": data.rights,
             },
         )
+
+    def _parse_optional_date(
+        self,
+        comic_slug: str,
+        field_name: str,
+        value: str | None,
+    ) -> dt.date | None:
+        if value is None:
+            return None
+        try:
+            return dt.date.fromisoformat(value)
+        except ValueError as error:
+            msg = (
+                f"Invalid {field_name} for comic '{comic_slug}': {value!r}. "
+                "Expected YYYY-MM-DD."
+            )
+            raise ComicDataError(msg) from error
