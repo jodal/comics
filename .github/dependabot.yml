@@ -23,6 +23,7 @@ updates:
           - "ruff"
           - "tox*"
           - "types-*"
+          - "zizmor"
       django-devtools:
         patterns:
           - "django-debug-toolbar"
