@@ -6,6 +6,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   main:
     strategy:
@@ -37,6 +40,9 @@ jobs:
 
     name: ${{ matrix.name }}
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      id-token: write
 
     steps:
       - uses: actions/checkout@v6.0.3
@@ -52,4 +58,4 @@ jobs:
       - uses: codecov/codecov-action@v7
         if: ${{ matrix.coverage }}
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          use_oidc: true
