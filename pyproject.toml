@@ -110,8 +110,11 @@ filterwarnings = [
     "error",
     #
     # --- Deprecation warnings from third-party packages ---
-    # boostrapform uses deprecated `StrictVersion` from `distutils`
+    # bootstrapform uses deprecated `StrictVersion` from `distutils`
     "ignore:distutils Version classes are deprecated. Use packaging.version instead.:DeprecationWarning",
+    #
+    # django uses asyncio.iscoroutinefunction
+    "ignore:'asyncio.iscoroutinefunction' is deprecated.*:DeprecationWarning",
 ]
 
 # pytest-django
@@ -199,7 +202,7 @@ known-first-party = ["comics"]
 
 
 [tool.tox]
-env_list = ["3.12", "3.13", "docs", "mypy", "ruff-format", "ruff-lint"]
+env_list = ["3.12", "3.13", "3.14", "docs", "mypy", "ruff-format", "ruff-lint"]
 
 [tool.tox.env_run_base]
 runner = "uv-venv-lock-runner"
