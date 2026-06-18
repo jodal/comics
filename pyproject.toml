@@ -149,7 +149,6 @@ ignore_errors = true
 module = [
     "debug_toolbar.*",
     "django_extensions.*",
-    "environ.*",
     "feedparser.*",
     "invitations.*",
     "lxml.*",
