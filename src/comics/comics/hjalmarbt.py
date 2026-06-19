@@ -7,6 +7,7 @@ class ComicData(ComicDataBase):
     language = "no"
     url = "https://www.bt.no/kultur/tegneserier/"
     rights = "Nils Axle Kanten"
+    active = False
 
 
 class Crawler(CrawlerBase):

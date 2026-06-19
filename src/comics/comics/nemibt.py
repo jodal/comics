@@ -8,6 +8,7 @@ class ComicData(ComicDataBase):
     url = "https://www.bt.no/kultur/tegneserier/"
     start_date = "1997-01-01"
     rights = "Lise Myhre"
+    active = False
 
 
 class Crawler(CrawlerBase):
