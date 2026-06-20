@@ -222,38 +222,21 @@ class ComicsKingdomCrawlerBase(CrawlerBase):
 class GoComicsComCrawlerBase(CrawlerBase):
     """Base comic crawler for all comics hosted at gocomics.com"""
 
-    # It doesn't want us getting comics because of a User-Agent check.
-    # Look! I'm a nice, normal Internet Explorer machine!
-    headers = {
-        "User-Agent": (
-            "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; "
-            "Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; "
-            ".NET CLR 3.0.4506.2152; .NET CLR 3.5.30729"
-        ),
-    }
-
     def crawl_helper(
         self,
         url_name: str,
         pub_date: dt.date,
     ) -> CrawlerResult | None:
-        page_url = "https://www.gocomics.com/{}/{}".format(
-            url_name,
-            pub_date.strftime("%Y/%m/%d"),
+        api_url = (
+            "https://www.gocomics.com/api/service/v2/assets/recent/{}?date={}".format(
+                url_name,
+                pub_date.strftime("%Y/%m/%d"),
+            )
         )
-        page = self.parse_page(page_url)
-
-        url = page.content("meta[property='og:image']")
-        if not url:
-            return None
-
-        # If we request a date that doesn't exist
-        # we get redirected to todays comic
-        date_str = page.content("meta[property='og:title']")
-        if not date_str or f"{pub_date:%B %-d, %Y}" not in date_str:
-            return None
-
-        return CrawlerImage(url)
+        response = httpx.get(api_url)
+        response.raise_for_status()
+        data = response.json()
+        return CrawlerImage(data[0]["url"])
 
 
 class PondusNoCrawlerBase(CrawlerBase):
