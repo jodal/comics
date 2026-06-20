@@ -17,5 +17,8 @@ class Crawler(CrawlerBase):
     time_zone = "America/Los_Angeles"
 
     def crawl(self, pub_date):
-        url = "https://s3.amazonaws.com/thiswas.notinventedhe.re/on/%s" % pub_date.strftime("%Y-%m-%d")
+        url = (
+            "https://s3.amazonaws.com/thiswas.notinventedhe.re/on/%s"
+            % pub_date.strftime("%Y-%m-%d")
+        )
         return CrawlerImage(url)
