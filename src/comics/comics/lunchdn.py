@@ -6,7 +6,7 @@ class ComicData(ComicDataBase):
     name = "Lunch (dn.no)"
     language = "no"
     url = "https://www.dn.no/topic/Lunch/"
-    active = True
+    active = False
     rights = "Børge Lund"
 
 
