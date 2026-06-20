@@ -5,7 +5,7 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = "Calvin and Hobbes"
     language = "en"
-    url = "http://www.gocomics.com/calvinandhobbes"
+    url = "https://www.gocomics.com/calvinandhobbes"
     start_date = "1985-11-18"
     end_date = "1995-12-31"
     rights = "Bill Watterson"
