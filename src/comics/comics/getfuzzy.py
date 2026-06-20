@@ -5,7 +5,7 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = "Get Fuzzy"
     language = "en"
-    url = "http://www.gocomics.com/getfuzzy/"
+    url = "https://www.gocomics.com/getfuzzy"
     start_date = "1999-09-01"
     rights = "Darby Conley"
 
