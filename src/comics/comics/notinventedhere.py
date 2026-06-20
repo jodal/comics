@@ -5,8 +5,9 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = "Not Invented Here"
     language = "en"
-    url = "http://notinventedhe.re/"
+    url = "https://www.notinventedhere.com/"
     start_date = "2009-09-21"
+    end_date = "2015-12-31"
     rights = "Bill Barnes and Paul Southworth"
     active = False
 
@@ -16,5 +17,5 @@ class Crawler(CrawlerBase):
     time_zone = "America/Los_Angeles"
 
     def crawl(self, pub_date):
-        url = "http://thiswas.notinventedhe.re/on/%s" % pub_date.strftime("%Y-%m-%d")
+        url = "https://s3.amazonaws.com/thiswas.notinventedhe.re/on/%s" % pub_date.strftime("%Y-%m-%d")
         return CrawlerImage(url)
