@@ -5,7 +5,7 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = "For Better or For Worse"
     language = "en"
-    url = "http://www.gocomics.com/forbetterorforworse"
+    url = "https://www.gocomics.com/forbetterorforworse"
     start_date = "1981-11-23"
     rights = "Lynn Johnston"
 
