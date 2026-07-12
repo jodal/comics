@@ -5,7 +5,7 @@ from comics.core.comic_data import ComicDataBase
 class ComicData(ComicDataBase):
     name = "FoxTrot"
     language = "en"
-    url = "http://www.gocomics.com/foxtrot"
+    url = "https://www.gocomics.com/foxtrot"
     start_date = "1988-04-10"
     rights = "Bill Amend"
 
