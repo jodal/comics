@@ -8,7 +8,6 @@ class ComicData(ComicDataBase):
     url = "http://cardboard-crack.com/"
     start_date = "2013-03-01"
     rights = "Magic Addict"
-    active = False
 
 
 class Crawler(CrawlerBase):
@@ -19,5 +18,5 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         feed = self.parse_feed("http://cardboard-crack.com/rss")
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src$="500.gif"]')
+            url = entry.summary.src("img")
             return CrawlerImage(url)
