@@ -206,6 +206,39 @@ DATABASES = {
 }
 
 
+# Logging
+#
+# Everything is logged to the console, where it is captured by journald in
+# production. Management commands adjust the root logger's level to match
+# their --verbosity option, see ComicsBaseCommand.
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "console": {
+            "format": "%(levelname)-8s %(message)s",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "console",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+    },
+    "loggers": {
+        # Strip the handlers from Django's own logger so that its records
+        # propagate to the root handler instead of being logged twice.
+        "django": {
+            "level": "INFO",
+        },
+    },
+}
+
+
 # Email
 #
 DEFAULT_FROM_EMAIL = env.str(
@@ -435,13 +468,6 @@ COMICS_IMAGE_BLACKLIST = [
     # tu.no
     "e90e3718487c99190426b3b38639670d4a3ee39c1e7319b9b781740b0c7a53bf",
 ]
-#
-# Log file for the aggregator management commands.
-# If not set, the commands log to the console only.
-COMICS_LOG_FILENAME = env.str(
-    "COMICS_LOG_FILENAME",
-    default=None,
-)
 #
 # Google Analytics
 # Tracking code will be included on all pages if this is set.
