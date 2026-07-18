@@ -2,7 +2,7 @@
 
 Unknown parameters are silently ignored, known fields must be whitelisted
 for filtering, and lookups are validated against the Django model field's
-registered lookups. Error messages match tastypie's exactly.
+registered lookups.
 """
 
 from __future__ import annotations
@@ -13,8 +13,7 @@ from typing import TYPE_CHECKING, Any
 from django.core.exceptions import FieldDoesNotExist
 from django.db import models
 from django.db.models.constants import LOOKUP_SEP
-
-from comics.api.errors import ApiBadRequest
+from ninja.errors import HttpError
 
 if TYPE_CHECKING:
     from collections.abc import Mapping
@@ -58,8 +57,7 @@ def _build_filters(params: QueryDict, spec: FilterSpec) -> dict[str, Any]:
         try:
             model_field = spec.model._meta.get_field(field_name)
         except FieldDoesNotExist:
-            msg = f"The '{field_name}' field is not a valid field name"
-            raise ApiBadRequest(msg) from None
+            raise HttpError(400, f"Invalid filter '{filter_expr}'") from None
 
         filter_type = "exact"
         if filter_bits and filter_bits[-1] in model_field.get_lookups():
@@ -87,8 +85,7 @@ def _check_filtering(
     relation_bits: list[str],
 ) -> None:
     if field_name not in spec.filtering:
-        msg = f"The '{field_name}' field does not allow filtering."
-        raise ApiBadRequest(msg)
+        raise HttpError(400, f"Filtering on '{field_name}' is not allowed")
 
     allowed = spec.filtering[field_name]
 
@@ -97,19 +94,15 @@ def _check_filtering(
         and not isinstance(allowed, FilterSpec)
         and filter_type not in allowed
     ):
-        msg = f"'{filter_type}' is not an allowed filter on the '{field_name}' field."
-        raise ApiBadRequest(msg)
+        raise HttpError(
+            400, f"Filtering on '{field_name}' with '{filter_type}' is not allowed"
+        )
 
     if relation_bits:
         if not isinstance(allowed, FilterSpec):
-            if spec.model._meta.get_field(field_name).is_relation:
-                msg = (
-                    "Lookups are not allowed more than one level deep "
-                    f"on the '{field_name}' field."
-                )
-                raise ApiBadRequest(msg)
-            msg = f"The '{field_name}' field does not support relations."
-            raise ApiBadRequest(msg)
+            raise HttpError(
+                400, f"Filtering on '{field_name}' across relations is not allowed"
+            )
         _check_filtering(allowed, relation_bits[0], filter_type, relation_bits[1:])
 
 

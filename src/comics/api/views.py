@@ -1,9 +1,9 @@
 """The comics API, served by django-ninja.
 
 This is a port of the original django-tastypie API. The JSON wire format
--- URLs, envelopes, field names, filtering, auth, and error responses --
-is kept compatible with the tastypie implementation, as captured by the
-test suite.
+-- URLs, envelopes, field names, filtering, and auth -- is kept
+compatible with the tastypie implementation, as captured by the test
+suite.
 """
 
 from __future__ import annotations
@@ -17,11 +17,10 @@ from django.db import transaction
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404
 from ninja import NinjaAPI
-from ninja.errors import AuthenticationError
+from ninja.errors import AuthenticationError, HttpError
 
 from comics.accounts.models import Subscription
 from comics.api.auth import BASIC_AUTH_REALM, BasicAuth, SecretKeyAuth
-from comics.api.errors import ApiBadRequest
 from comics.api.filtering import ALL, FilterSpec, apply_filters
 from comics.api.serialization import format_value, json_response, paginated
 from comics.core.models import Comic, Image, Release
@@ -56,11 +55,6 @@ def on_authentication_error(request: HttpRequest, exc: Exception) -> HttpRespons
 @api.exception_handler(Http404)
 def on_not_found(request: HttpRequest, exc: Exception) -> HttpResponse:
     return HttpResponse(status=404)
-
-
-@api.exception_handler(ApiBadRequest)
-def on_bad_request(request: HttpRequest, exc: Exception) -> HttpResponse:
-    return json_response({"error": str(exc)}, status=400)
 
 
 # --- Serialization
@@ -314,9 +308,9 @@ def parse_body(request: HttpRequest) -> dict[str, Any]:
     try:
         data = json.loads(request.body)
     except ValueError:
-        raise ApiBadRequest("Request body is not valid JSON.") from None
+        raise HttpError(400, "Request body is not valid JSON") from None
     if not isinstance(data, dict):
-        raise ApiBadRequest("Request body must be a JSON object.")
+        raise HttpError(400, "Request body must be a JSON object")
     return data
 
 
@@ -327,8 +321,7 @@ def comic_from_uri(uri: str | None) -> Comic:
             return Comic.objects.get(pk=int(match[1]))
         except Comic.DoesNotExist:
             pass
-    msg = f"Could not find the provided object via resource URI '{uri}'."
-    raise ApiBadRequest(msg)
+    raise HttpError(400, f"Unknown comic '{uri}'")
 
 
 def own_subscription_from_uri(

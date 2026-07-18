@@ -1,8 +1,8 @@
 """Serialization compatible with the API's original tastypie wire format.
 
-The JSON output format, the ``meta``/``objects`` list envelope, and the
-error bodies are byte-for-byte compatible with the old django-tastypie
-implementation, so that existing API clients keep working.
+The JSON output format and the ``meta``/``objects`` list envelope are
+compatible with the old django-tastypie implementation, so that existing
+API clients keep working.
 """
 
 from __future__ import annotations
@@ -13,8 +13,7 @@ from typing import TYPE_CHECKING, Any
 
 from django.http import HttpResponse
 from django.utils import timezone
-
-from comics.api.errors import ApiBadRequest
+from ninja.errors import HttpError
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -83,13 +82,9 @@ def _get_paging_param(request: HttpRequest, name: str, *, default: int) -> int:
     try:
         value = int(raw)
     except ValueError:
-        msg = f"Invalid {name} '{raw}' provided. Please provide a positive integer."
-        raise ApiBadRequest(msg) from None
+        value = -1
     if value < 0:
-        msg = (
-            f"Invalid {name} '{raw}' provided. Please provide a positive integer >= 0."
-        )
-        raise ApiBadRequest(msg)
+        raise HttpError(400, f"Invalid {name} '{raw}', expected a non-negative integer")
     return value
 
 
