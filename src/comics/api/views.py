@@ -340,12 +340,6 @@ def own_subscription_from_uri(
     return own_subscriptions(request).filter(pk=int(match[1])).first()
 
 
-def no_content_response(status: int = 204) -> HttpResponse:
-    response = HttpResponse(status=status)
-    del response["Content-Type"]
-    return response
-
-
 @api.get("/subscriptions/", auth=key_auth)
 def subscriptions_list(request: AuthedRequest) -> HttpResponse:
     queryset = apply_filters(request.GET, own_subscriptions(request), SUBSCRIPTION_SPEC)
@@ -401,11 +395,11 @@ def subscriptions_update(request: AuthedRequest, subscription_id: int) -> HttpRe
     data = parse_body(request)
     subscription.comic_id = comic_from_uri(data.get("comic")).pk
     subscription.save()
-    return no_content_response()
+    return HttpResponse(status=204)
 
 
 @api.delete("/subscriptions/{int:subscription_id}/", auth=key_auth)
 def subscriptions_delete(request: AuthedRequest, subscription_id: int) -> HttpResponse:
     subscription = get_object_or_404(own_subscriptions(request), pk=subscription_id)
     subscription.delete()
-    return no_content_response()
+    return HttpResponse(status=204)

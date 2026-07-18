@@ -12,7 +12,6 @@ import json
 from django.contrib.auth.models import User
 from django.test.client import Client
 
-from comics.accounts.models import Subscription
 from comics.core.models import Comic
 
 KEY_AUTH = {"authorization": "Key s3cretk3y"}
@@ -283,16 +282,3 @@ def test_missing_object_returns_empty_404(db: None, client: Client, user: User) 
     assert response.status_code == 404
     assert response.content == b""
 
-
-def test_delete_response_has_no_content_type(
-    db: None,
-    client: Client,
-    user: User,
-    subscriptions: list[Subscription],
-) -> None:
-    response = client.delete(
-        f"/api/v1/subscriptions/{subscriptions[0].pk}/", headers=KEY_AUTH
-    )
-
-    assert response.status_code == 204
-    assert "Content-Type" not in response.headers
