@@ -41,7 +41,7 @@ if TYPE_CHECKING:
 
 API_PREFIX = "/api/v1"
 
-api = NinjaAPI(urls_namespace="api")
+api = NinjaAPI(title="Comics API", urls_namespace="api")
 
 key_auth = [
     SecretKeyBearerAuth(),
@@ -224,11 +224,164 @@ def subscribed_filter(
     return queryset
 
 
+# --- OpenAPI documentation
+#
+# The responses and the dynamic "field__lookup" filter parameters are
+# produced outside django-ninja's schema machinery, so the parameters
+# and request bodies are declared in the OpenAPI spec by hand.
+
+
+def query_param(name: str, description: str, type_: str = "string") -> dict[str, Any]:
+    return {
+        "in": "query",
+        "name": name,
+        "required": False,
+        "schema": {"type": type_},
+        "description": description,
+    }
+
+
+def subscribed_param(noun: str) -> dict[str, Any]:
+    return query_param(
+        "subscribed",
+        f"Only include {noun} the authenticated user is subscribed to "
+        "if `true`, or is not subscribed to if `false`.",
+        "boolean",
+    )
+
+
+PAGINATION_PARAMS = [
+    query_param(
+        "limit",
+        "Maximum number of objects per response. Defaults to 20, "
+        "capped at 1000. Use 0 for the maximum.",
+        "integer",
+    ),
+    query_param("offset", "Offset into the collection. Defaults to 0.", "integer"),
+]
+
+COMIC_FILTER_PARAMS = [
+    query_param(
+        "active",
+        "Only include active (`true`) or inactive (`false`) comics.",
+        "boolean",
+    ),
+    query_param("language", "Only include comics in the given language, e.g. `en`."),
+    query_param(
+        "name",
+        "Filter on comic name. Supports Django field lookups, "
+        "e.g. `name__startswith=xkcd`.",
+    ),
+    query_param(
+        "slug",
+        "Filter on comic slug. Supports Django field lookups, "
+        "e.g. `slug__contains=kcd`.",
+    ),
+]
+
+IMAGE_FILTER_PARAMS = [
+    query_param(
+        "fetched",
+        "Filter on the fetched timestamp. Supports Django field lookups, "
+        "e.g. `fetched__gte=2026-01-01T00:00:00+00:00`.",
+    ),
+    query_param(
+        "title",
+        "Filter on image title. Supports Django field lookups, "
+        "e.g. `title__icontains=cake`.",
+    ),
+    query_param(
+        "text",
+        "Filter on image text. Supports Django field lookups, "
+        "e.g. `text__icontains=lies`.",
+    ),
+    query_param(
+        "height",
+        "Filter on image height. Supports Django field lookups, "
+        "e.g. `height__gt=1000`.",
+        "integer",
+    ),
+    query_param(
+        "width",
+        "Filter on image width. Supports Django field lookups, e.g. `width__gt=1000`.",
+        "integer",
+    ),
+]
+
+RELEASE_FILTER_PARAMS = [
+    query_param(
+        "comic",
+        "Filter on the release's comic, using the comic resource's "
+        "filters, e.g. `comic__slug=xkcd`.",
+    ),
+    query_param(
+        "images",
+        "Filter on the release's images, using the image resource's "
+        "filters, e.g. `images__height__gt=1000`.",
+    ),
+    query_param(
+        "pub_date",
+        "Filter on the publication date. Supports Django field lookups, "
+        "e.g. `pub_date__year=2026`.",
+    ),
+    query_param(
+        "fetched",
+        "Filter on the fetched timestamp. Supports Django field lookups.",
+    ),
+]
+
+SUBSCRIPTION_FILTER_PARAMS = [
+    query_param(
+        "comic",
+        "Filter on the subscription's comic, using the comic resource's "
+        "filters, e.g. `comic__slug=xkcd`.",
+    ),
+]
+
+SUBSCRIPTION_OBJECT_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "comic": {"type": "string", "example": "/api/v1/comics/1/"},
+    },
+    "required": ["comic"],
+}
+
+SUBSCRIPTION_BODY = {
+    "required": True,
+    "content": {"application/json": {"schema": SUBSCRIPTION_OBJECT_SCHEMA}},
+}
+
+BULK_SUBSCRIPTION_BODY = {
+    "required": True,
+    "content": {
+        "application/json": {
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "objects": {
+                        "type": "array",
+                        "items": SUBSCRIPTION_OBJECT_SCHEMA,
+                    },
+                    "deleted_objects": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "/api/v1/subscriptions/1/",
+                        },
+                    },
+                },
+            },
+        },
+    },
+}
+
+
 # --- Root resource
 
 
 @api.get("/")
 def root(request: HttpRequest) -> HttpResponse:
+    """List the API's resources."""
     resources = ["comics", "images", "releases", "subscriptions", "users"]
     return json_response(
         {name: {"list_endpoint": f"{API_PREFIX}/{name}/"} for name in resources}
@@ -238,8 +391,15 @@ def root(request: HttpRequest) -> HttpResponse:
 # --- Users
 
 
-@api.get("/users/", auth=users_auth)
+@api.get("/users/", auth=users_auth, openapi_extra={"parameters": PAGINATION_PARAMS})
 def users_list(request: AuthedRequest) -> HttpResponse:
+    """List the authenticated user.
+
+    The result always contains exactly one user: the authenticated one,
+    including their secret key. This is the only resource that also
+    accepts HTTP basic auth, so it can be used to retrieve the secret
+    key given the user's email and password.
+    """
     queryset = User.objects.filter(pk=request.auth.pk)
     queryset = apply_filters(request.GET, queryset, USER_SPEC)
     return json_response(paginated(request, queryset, user_dict))
@@ -247,6 +407,7 @@ def users_list(request: AuthedRequest) -> HttpResponse:
 
 @api.get("/users/{int:user_id}/", auth=users_auth)
 def users_detail(request: AuthedRequest, user_id: int) -> HttpResponse:
+    """Show a user. Only the authenticated user itself is available."""
     if user_id != request.auth.pk:
         raise Http404
     return json_response(user_dict(request.auth))
@@ -255,8 +416,19 @@ def users_detail(request: AuthedRequest, user_id: int) -> HttpResponse:
 # --- Comics
 
 
-@api.get("/comics/", auth=key_auth)
+@api.get(
+    "/comics/",
+    auth=key_auth,
+    openapi_extra={
+        "parameters": [
+            *PAGINATION_PARAMS,
+            subscribed_param("comics"),
+            *COMIC_FILTER_PARAMS,
+        ]
+    },
+)
 def comics_list(request: AuthedRequest) -> HttpResponse:
+    """List all comics known to the site."""
     queryset = apply_filters(request.GET, Comic.objects.all(), COMIC_SPEC)
     queryset = subscribed_filter(request, queryset, "userprofile__user")
     return json_response(paginated(request, queryset, comic_dict))
@@ -264,6 +436,7 @@ def comics_list(request: AuthedRequest) -> HttpResponse:
 
 @api.get("/comics/{int:comic_id}/", auth=key_auth)
 def comics_detail(request: HttpRequest, comic_id: int) -> HttpResponse:
+    """Show a comic."""
     comic = get_object_or_404(Comic, pk=comic_id)
     return json_response(comic_dict(comic))
 
@@ -271,14 +444,24 @@ def comics_detail(request: HttpRequest, comic_id: int) -> HttpResponse:
 # --- Images
 
 
-@api.get("/images/", auth=key_auth)
+@api.get(
+    "/images/",
+    auth=key_auth,
+    openapi_extra={"parameters": [*PAGINATION_PARAMS, *IMAGE_FILTER_PARAMS]},
+)
 def images_list(request: HttpRequest) -> HttpResponse:
+    """List comic images.
+
+    You will probably not use this directly, as the images are included
+    in full in the releases resource.
+    """
     queryset = apply_filters(request.GET, Image.objects.all(), IMAGE_SPEC)
     return json_response(paginated(request, queryset, image_dict))
 
 
 @api.get("/images/{int:image_id}/", auth=key_auth)
 def images_detail(request: HttpRequest, image_id: int) -> HttpResponse:
+    """Show a comic image."""
     image = get_object_or_404(Image, pk=image_id)
     return json_response(image_dict(image))
 
@@ -286,8 +469,19 @@ def images_detail(request: HttpRequest, image_id: int) -> HttpResponse:
 # --- Releases
 
 
-@api.get("/releases/", auth=key_auth)
+@api.get(
+    "/releases/",
+    auth=key_auth,
+    openapi_extra={
+        "parameters": [
+            *PAGINATION_PARAMS,
+            subscribed_param("releases"),
+            *RELEASE_FILTER_PARAMS,
+        ]
+    },
+)
 def releases_list(request: AuthedRequest) -> HttpResponse:
+    """List comic releases, most recently fetched first."""
     queryset = (
         Release.objects.select_related("comic")
         .prefetch_related("images")
@@ -300,6 +494,7 @@ def releases_list(request: AuthedRequest) -> HttpResponse:
 
 @api.get("/releases/{int:release_id}/", auth=key_auth)
 def releases_detail(request: HttpRequest, release_id: int) -> HttpResponse:
+    """Show a comic release, including its images."""
     release = get_object_or_404(Release.objects.select_related("comic"), pk=release_id)
     return json_response(release_dict(release))
 
@@ -343,14 +538,26 @@ def own_subscription_from_uri(
     return own_subscriptions(request).filter(pk=int(match[1])).first()
 
 
-@api.get("/subscriptions/", auth=key_auth)
+@api.get(
+    "/subscriptions/",
+    auth=key_auth,
+    openapi_extra={"parameters": [*PAGINATION_PARAMS, *SUBSCRIPTION_FILTER_PARAMS]},
+)
 def subscriptions_list(request: AuthedRequest) -> HttpResponse:
+    """List the authenticated user's comic subscriptions."""
     queryset = apply_filters(request.GET, own_subscriptions(request), SUBSCRIPTION_SPEC)
     return json_response(paginated(request, queryset, subscription_dict))
 
 
-@api.post("/subscriptions/", auth=key_auth)
+@api.post(
+    "/subscriptions/", auth=key_auth, openapi_extra={"requestBody": SUBSCRIPTION_BODY}
+)
 def subscriptions_create(request: AuthedRequest) -> HttpResponse:
+    """Subscribe the authenticated user to a comic.
+
+    The comic is identified by its resource URI. On success, the new
+    subscription's URI is returned in the `Location` header.
+    """
     data = parse_body(request)
     comic = comic_from_uri(data.get("comic"))
     subscription = Subscription.objects.create(
@@ -362,9 +569,19 @@ def subscriptions_create(request: AuthedRequest) -> HttpResponse:
     return response
 
 
-@api.patch("/subscriptions/", auth=key_auth)
+@api.patch(
+    "/subscriptions/",
+    auth=key_auth,
+    openapi_extra={"requestBody": BULK_SUBSCRIPTION_BODY},
+)
 @transaction.atomic
 def subscriptions_bulk_update(request: AuthedRequest) -> HttpResponse:
+    """Create and delete multiple subscriptions in a single request.
+
+    The comics in `objects` are subscribed to, and the subscription URIs
+    in `deleted_objects` are unsubscribed from. If any part of the
+    update fails, all changes are rolled back.
+    """
     data = parse_body(request)
     for obj in data.get("objects", []):
         comic = comic_from_uri(obj.get("comic"))
@@ -388,12 +605,18 @@ def subscriptions_bulk_update(request: AuthedRequest) -> HttpResponse:
 
 @api.get("/subscriptions/{int:subscription_id}/", auth=key_auth)
 def subscriptions_detail(request: AuthedRequest, subscription_id: int) -> HttpResponse:
+    """Show one of the authenticated user's subscriptions."""
     subscription = get_object_or_404(own_subscriptions(request), pk=subscription_id)
     return json_response(subscription_dict(subscription))
 
 
-@api.put("/subscriptions/{int:subscription_id}/", auth=key_auth)
+@api.put(
+    "/subscriptions/{int:subscription_id}/",
+    auth=key_auth,
+    openapi_extra={"requestBody": SUBSCRIPTION_BODY},
+)
 def subscriptions_update(request: AuthedRequest, subscription_id: int) -> HttpResponse:
+    """Change one of the authenticated user's subscriptions to another comic."""
     subscription = get_object_or_404(own_subscriptions(request), pk=subscription_id)
     data = parse_body(request)
     subscription.comic_id = comic_from_uri(data.get("comic")).pk
@@ -403,6 +626,7 @@ def subscriptions_update(request: AuthedRequest, subscription_id: int) -> HttpRe
 
 @api.delete("/subscriptions/{int:subscription_id}/", auth=key_auth)
 def subscriptions_delete(request: AuthedRequest, subscription_id: int) -> HttpResponse:
+    """Unsubscribe the authenticated user from a comic."""
     subscription = get_object_or_404(own_subscriptions(request), pk=subscription_id)
     subscription.delete()
     return HttpResponse(status=204)
