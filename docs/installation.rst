@@ -74,12 +74,6 @@ as a cache, run::
 
     uv sync --extra cache
 
-The Comics API is able to respond using JSON, XML, or several other formats.
-To install the dependencies required to provide all possible response
-formats, run::
-
-    uv sync --extra api
-
 
 Development dependencies
 ------------------------
