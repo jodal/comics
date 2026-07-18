@@ -108,8 +108,10 @@ A production ``comics.env`` may look like this:
     # outstanding password-reset/invitation links.
     DJANGO_SECRET_KEY=replace-this-with-a-long-random-value
 
-    # Caddy serves /media/ from disk; the URL stays relative to the site.
-    DJANGO_MEDIA_URL=/media/
+    # Caddy serves /media/ from disk. Use an absolute URL so that comic
+    # images work everywhere, including in Atom feed entries viewed in feed
+    # readers.
+    DJANGO_MEDIA_URL=https://comics.example.com/media/
 
     # Host PostgreSQL, reached via pasta port forwarding (see the "Host
     # services" section). Inside the container, 127.0.0.1:5432 is the host's
