@@ -5,7 +5,6 @@ import os
 from typing import Any
 
 from django.conf import settings
-from django.core.files.storage import FileSystemStorage
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
@@ -136,11 +135,6 @@ class Release(models.Model):
 # Let all created dirs and files be writable by the group
 os.umask(0o002)
 
-image_storage = FileSystemStorage(
-    location=settings.MEDIA_ROOT,
-    base_url=settings.MEDIA_URL,
-)
-
 
 def image_file_path(instance: Image, filename: str) -> str:
     return f"{instance.comic.slug}/{filename[0]}/{filename}"
@@ -153,7 +147,6 @@ class Image(models.Model):
         on_delete=models.CASCADE,
     )
     file = models.ImageField(
-        storage=image_storage,
         upload_to=image_file_path,
         height_field="height",
         width_field="width",
