@@ -1,3 +1,4 @@
+import importlib.metadata
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -43,9 +44,12 @@ INTERNAL_IPS = [
 # To enable Sentry crash reporting, set the SENTRY_DSN environment variable.
 SENTRY_DSN = env.str("SENTRY_DSN", default=None)
 SENTRY_TRACES_SAMPLE_RATE = env.float("SENTRY_TRACES_SAMPLE_RATE", default=0)
+# The release must match the releases registered in Sentry by CI.
+SENTRY_RELEASE = importlib.metadata.version("comics")
 sentry_sdk.init(
     dsn=SENTRY_DSN,
     integrations=[DjangoIntegration()],
+    release=SENTRY_RELEASE,
     traces_sample_rate=SENTRY_TRACES_SAMPLE_RATE,
     send_default_pii=True,
 )
