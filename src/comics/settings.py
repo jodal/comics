@@ -464,10 +464,11 @@ COMICS_IMAGE_BLACKLIST = [
     "e90e3718487c99190426b3b38639670d4a3ee39c1e7319b9b781740b0c7a53bf",
 ]
 #
-# Comics log file path on disk
+# Log file for the aggregator management commands.
+# If not set, the commands log to the console only.
 COMICS_LOG_FILENAME = env.str(
     "COMICS_LOG_FILENAME",
-    default=str(RUN_DIR / "comics.log"),
+    default=None,
 )
 #
 # Google Analytics
