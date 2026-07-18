@@ -293,8 +293,8 @@ ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 #
 # Sending email
-ACCOUNT_EMAIL_SUBJECT_PREFIX = "[%s] " % (
-    env.str("COMICS_SITE_TITLE", default="example.com")
+ACCOUNT_EMAIL_SUBJECT_PREFIX = (
+    f"[{env.str('COMICS_SITE_TITLE', default='example.com')}] "
 )
 ACCOUNT_EMAIL_UNKNOWN_ACCOUNTS = False
 

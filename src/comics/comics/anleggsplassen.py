@@ -41,7 +41,7 @@ class Crawler(CrawlerBase):
             if date != pub_date:
                 continue
 
-            img = article_page.root.xpath('//img[@title="%s"]/@src' % title)
+            img = article_page.root.xpath(f'//img[@title="{title}"]/@src')
             url = str(img[0])
 
             return CrawlerImage(url, title, text)

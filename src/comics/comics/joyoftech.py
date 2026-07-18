@@ -31,7 +31,7 @@ class Crawler(CrawlerBase):
             num = matches.group(1)
 
             page = self.parse_page(entry.link)
-            url = page.src('img[src*="/joyimages/%s"]' % num)
+            url = page.src(f'img[src*="/joyimages/{num}"]')
             if not url:
                 continue
             return CrawlerImage(url, title)

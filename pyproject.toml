@@ -189,7 +189,6 @@ ignore = [
     "TD",      # flake8-todos
     "TRY",     # tryceratops  # TODO
     "TRY003",  # raise-vanilla-args
-    "UP031",   # printf-string-formatting  # TODO
     #
     # These rules interfere with `ruff format`
     "COM812", # missing-trailing-comma

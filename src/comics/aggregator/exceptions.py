@@ -9,7 +9,7 @@ class AggregatorError(ComicsError):
         self.value = value
 
     def __str__(self):
-        return "%s: Generic aggregator error" % self.identifier
+        return f"{self.identifier}: Generic aggregator error"
 
 
 ###
@@ -33,7 +33,7 @@ class ImageURLNotFound(CrawlerError):
     """Exception raised when no URL is found by the crawler"""
 
     def __str__(self):
-        return "%s: Image URL not found" % self.identifier
+        return f"{self.identifier}: Image URL not found"
 
 
 class NotHistoryCapable(CrawlerError):
@@ -47,7 +47,7 @@ class ReleaseAlreadyExists(CrawlerError):
     """Exception raised when crawling a release that already exists"""
 
     def __str__(self):
-        return "%s: Release already exists" % self.identifier
+        return f"{self.identifier}: Release already exists"
 
 
 ###
@@ -85,11 +85,11 @@ class ImageAlreadyExists(DownloaderError):
     """Exception raised when trying to save an image that already exists"""
 
     def __str__(self):
-        return "%s: Image already exists" % self.identifier
+        return f"{self.identifier}: Image already exists"
 
 
 class ImageIsBlacklisted(DownloaderError):
     """Exception raised when a blacklisted image has been downloaded"""
 
     def __str__(self):
-        return "%s: Image is blacklisted" % self.identifier
+        return f"{self.identifier}: Image is blacklisted"

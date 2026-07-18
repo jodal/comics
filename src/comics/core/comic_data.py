@@ -82,9 +82,8 @@ class ComicDataLoader:
         logger.debug("Importing comic module for %s", comic_slug)
         comic_module = get_comic_module(comic_slug)
         if not hasattr(comic_module, "ComicData"):
-            raise ComicDataError(
-                "%s does not have a ComicData class" % comic_module.__name__
-            )
+            msg = f"{comic_module.__name__} does not have a ComicData class"
+            raise ComicDataError(msg)
         data = comic_module.ComicData()
         assert isinstance(data, ComicDataBase)
         return data

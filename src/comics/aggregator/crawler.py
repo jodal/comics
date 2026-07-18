@@ -249,7 +249,7 @@ class PondusNoCrawlerBase(CrawlerBase):
         url_id: str,
         pub_date: dt.date,
     ) -> CrawlerResult | None:
-        page_url = "http://www.pondus.no/?section=artikkel&id=%s" % url_id
+        page_url = f"http://www.pondus.no/?section=artikkel&id={url_id}"
         page = self.parse_page(page_url)
         url = page.src(".imagegallery img")
         assert url
@@ -268,8 +268,8 @@ class CreatorsCrawlerBase(CrawlerBase):
     ) -> CrawlerResult | None:
         api_url = (
             "https://www.creators.com/api/features/get_release_dates?"
-            "feature_id=%s&year=%s"
-        ) % (feature_id, pub_date.year)
+            f"feature_id={feature_id}&year={pub_date.year}"
+        )
 
         response = httpx.get(api_url, headers=self.headers, follow_redirects=True)
         releases = response.json()
@@ -320,9 +320,9 @@ class ComicControlCrawlerBase(CrawlerBase):
         if site_url[-1] == "/":
             site_url = site_url[0:-1]
         if "pixietrixcomix.com" in site_url:
-            feed = self.parse_feed("%s/rss" % site_url)
+            feed = self.parse_feed(f"{site_url}/rss")
         else:
-            feed = self.parse_feed("%s/comic/rss" % site_url)
+            feed = self.parse_feed(f"{site_url}/comic/rss")
 
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)

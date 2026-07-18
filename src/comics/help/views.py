@@ -20,13 +20,13 @@ def feedback(request):
     if request.method == "POST":
         form = FeedbackForm(request.POST)
         if form.is_valid():
-            subject = "Feedback from %s" % settings.COMICS_SITE_TITLE
+            subject = f"Feedback from {settings.COMICS_SITE_TITLE}"
 
-            metadata = "Client IP address: %s\n" % request.META["REMOTE_ADDR"]
-            metadata += "User agent: %s\n" % request.headers["user-agent"]
+            metadata = f"Client IP address: {request.META['REMOTE_ADDR']}\n"
+            metadata += f"User agent: {request.headers['user-agent']}\n"
             metadata += f"User: {request.user.username} <{request.user.email}>\n"
 
-            message = "{}\n\n-- \n{}".format(form.cleaned_data["message"], metadata)
+            message = f"{form.cleaned_data['message']}\n\n-- \n{metadata}"
 
             mail = EmailMessage(
                 subject=subject,

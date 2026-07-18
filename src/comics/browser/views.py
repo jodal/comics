@@ -582,7 +582,7 @@ class OneComicMixin:
         )
 
     def get_feed_title(self):
-        return "Comics from %s" % self.comic.name
+        return f"Comics from {self.comic.name}"
 
     def get_first_url(self):
         try:

@@ -19,7 +19,7 @@ class Crawler(CrawlerBase):
     time_zone = "America/New_York"
 
     def crawl(self, pub_date):
-        page_url = "http://www.gucomics.com/%s" % pub_date.strftime("%Y%m%d")
+        page_url = f"http://www.gucomics.com/{pub_date:%Y%m%d}"
         page = self.parse_page(page_url)
 
         title = page.texts("b")[0]

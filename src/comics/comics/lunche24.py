@@ -16,7 +16,5 @@ class Crawler(CrawlerBase):
     time_zone = "Europe/Oslo"
 
     def crawl(self, pub_date):
-        url = "https://api.e24.no/content/v1/comics/%s" % (
-            pub_date.strftime("%Y-%m-%d")
-        )
+        url = f"https://api.e24.no/content/v1/comics/{pub_date:%Y-%m-%d}"
         return CrawlerImage(url)
