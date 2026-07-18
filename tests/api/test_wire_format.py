@@ -233,6 +233,27 @@ def test_boolean_filter_values_are_converted(
     assert data["meta"]["total_count"] == expected
 
 
+def test_isnull_filter_values_are_converted(
+    db: None, client: Client, user: User
+) -> None:
+    response = client.get(
+        "/api/v1/comics/", {"name__isnull": "false"}, headers=KEY_AUTH
+    )
+
+    data = json.loads(response.content)
+    assert data["meta"]["total_count"] == 10
+
+
+def test_non_boolean_filter_values_stay_strings(
+    db: None, client: Client, user: User
+) -> None:
+    response = client.get("/api/v1/comics/", {"slug": "none"}, headers=KEY_AUTH)
+
+    assert response.status_code == 200
+    data = json.loads(response.content)
+    assert data["meta"]["total_count"] == 0
+
+
 def test_in_lookup_accepts_comma_separated_values(
     db: None, client: Client, user: User
 ) -> None:
@@ -281,4 +302,3 @@ def test_missing_object_returns_empty_404(db: None, client: Client, user: User) 
 
     assert response.status_code == 404
     assert response.content == b""
-

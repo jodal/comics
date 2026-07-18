@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any
 
 from django.core.exceptions import FieldDoesNotExist
+from django.db import models
 from django.db.models.constants import LOOKUP_SEP
 
 from comics.api.errors import ApiBadRequest
@@ -66,7 +67,12 @@ def _build_filters(params: QueryDict, spec: FilterSpec) -> dict[str, Any]:
 
         _check_filtering(spec, field_name, filter_type, filter_bits)
 
-        value = _filter_value_to_python(params, filter_expr, filter_type)
+        value = _filter_value_to_python(
+            params,
+            filter_expr,
+            filter_type,
+            is_boolean=_is_boolean_field(spec.model, [field_name, *filter_bits]),
+        )
 
         qs_filter = LOOKUP_SEP.join([field_name, *filter_bits, filter_type])
         qs_filters[qs_filter] = value
@@ -107,19 +113,29 @@ def _check_filtering(
         _check_filtering(allowed, relation_bits[0], filter_type, relation_bits[1:])
 
 
+def _is_boolean_field(model: type[Model], field_path: list[str]) -> bool:
+    field = None
+    for part in field_path:
+        field = model._meta.get_field(part)
+        if field.is_relation and field.related_model is not None:
+            model = field.related_model
+    return isinstance(field, models.BooleanField)
+
+
 def _filter_value_to_python(
     params: QueryDict,
     filter_expr: str,
     filter_type: str,
+    *,
+    is_boolean: bool,
 ) -> Any:
     value: Any = params[filter_expr]
 
-    if value in ("true", "True"):
-        value = True
-    elif value in ("false", "False"):
-        value = False
-    elif value in ("nil", "none", "None"):
-        value = None
+    if filter_type == "isnull" or is_boolean:
+        if value in ("true", "True"):
+            value = True
+        elif value in ("false", "False"):
+            value = False
 
     if filter_type in ("in", "range") and isinstance(value, str) and value:
         parts = []
