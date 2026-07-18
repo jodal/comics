@@ -2,200 +2,423 @@
 Deployment
 **********
 
-The following example documents *one way* to deploy Comics. As Comics is a
-standard Django project with an additional batch job for crawling, it may be
-deployed in just about any way a Django project may be deployed. Please refer
-to `Django's deployment documentation
-<https://docs.djangoproject.com/en/dev/howto/deployment/>`_ for further
-details.
+Comics is a standard Django project plus a batch job for crawling comics, so it
+can be deployed in just about any way a Django project can. This guide documents
+*one* modern setup: running the published container image with **rootless
+Podman**, behind **Caddy**, using a **PostgreSQL** server on the host, and
+keeping the **media library on the host filesystem**.
 
-In the following examples we assume that we are deploying Comics at
-http://comics.example.com/, using Nginx, Gunicorn, and PostgreSQL. The Django
-application and batch job is both running as the user ``comics-user``. The
-static media files, like comic images, are served from
-http://comics.example.com/static/.
+For other approaches, please refer to `Django's deployment documentation
+<https://docs.djangoproject.com/en/dev/howto/deployment/>`_.
 
 
-Database
-========
+Architecture
+============
 
-Comics should theoretically work with any database supported by Django.
-Though, development is mostly done on SQLite and PostgreSQL. For production
-use, PostgreSQL is the recommended choice.
+The pieces fit together like this:
 
-.. note::
+- **Caddy** terminates HTTPS, serves ``/media/`` directly from the host disk,
+  and reverse-proxies everything else to the app container.
+- The **app container** runs Gunicorn (the image's ``web`` entrypoint) as a
+  rootless Podman container owned by a dedicated, unprivileged host user.
+- **PostgreSQL** runs on the host.
+- The **media library** is on the host filesystem and is bind-mounted into the
+  container.
 
-    If you are going to use SQLite in a deployment with Nginx and so on, you
-    need to ensure that the user the web server will be running as has write
-    access to the *directory* the SQLite database file is located in.
+The container itself is **stateless**: the database lives on the host, media
+lives on the host, and static files are collected into the image at build time
+and served by WhiteNoise from inside the app. No Podman volumes are required.
+
+Throughout we assume:
+
+- The site is served at ``https://comics.example.com/``.
+- Everything related to the deployment lives under ``/srv/comics``.
+- A dedicated, unprivileged host user ``comics`` runs Podman, with its home
+  directory at ``/srv/comics/home``.
+- The media library lives at ``/srv/comics/media`` and is owned by ``comics``.
+- Configuration lives in ``/srv/comics/comics.env``.
 
 
-Example ``.env``
-================
+Prerequisites
+=============
 
-In the following examples, we assume the Comics source code is unpacked at
-``/srv/comics.example.com/app``.
+Install Podman 5.0 or newer — this guide relies on *Quadlet* and on the *pasta*
+network mode being the default, which it is since 5.0 — and Caddy, both from
+your distribution's packages.
 
-To change settings, you should not change the settings files shipped with
-Comics, but instead override the settings using environment variables, or by
-creating a file named ``/srv/comics.example.com/app/.env``. You must
-at least set ``DJANGO_SECRET_KEY`` and database settings, unless you use
-SQLite.
+Create the dedicated user and allow its services to run without an active login
+session (``linger``), so the app and its timers start at boot. The home
+directory is placed under ``/srv/comics`` to keep the whole deployment —
+configuration, systemd units, container storage, and the media library — in
+one place:
 
-A full set of environment variables for a production deployment may look like
-this:
+.. code-block:: sh
+
+    sudo useradd --create-home --home-dir /srv/comics/home --system comics
+    sudo loginctl enable-linger comics
+
+Since ``comics`` is a system user (UID below 1000), journald stores the logs of
+its services in the *system* journal, which unprivileged users cannot read. Add
+the user to the ``systemd-journal`` group so that the ``journalctl --user``
+commands used throughout this guide work:
+
+.. code-block:: sh
+
+    sudo usermod -aG systemd-journal comics
+
+Rootless Podman maps container UIDs through the host user's subordinate UID/GID
+ranges. These are usually configured automatically; if not, add them:
+
+.. code-block:: sh
+
+    sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 comics
+
+Run the remaining commands as the ``comics`` user, for example via
+``sudo machinectl shell comics@`` or ``sudo -iu comics``.
+
+
+The image
+=========
+
+The image is built and published to the GitHub Container Registry by CI on every
+successful build of the ``main`` branch, tagged with ``latest`` and the commit
+SHA:
+
+.. code-block:: sh
+
+    podman pull ghcr.io/jodal/comics:latest
+
+
+Configuration
+=============
+
+The app is configured entirely through environment variables. Put them in a
+file readable only by the ``comics`` user. Create it as root, since
+``/srv/comics`` itself is owned by root:
+
+.. code-block:: sh
+
+    sudo install -m 600 -o comics -g comics /dev/null /srv/comics/comics.env
+
+A production ``comics.env`` may look like this:
 
 .. code-block:: text
 
+    # Generate once and keep stable; changing it logs everyone out and breaks
+    # outstanding password-reset/invitation links.
     DJANGO_SECRET_KEY=replace-this-with-a-long-random-value
+
+    DJANGO_ALLOWED_HOSTS=comics.example.com
     DJANGO_CSRF_TRUSTED_ORIGINS=https://comics.example.com
 
+    # Caddy serves /media/ from disk; the URL stays relative to the site.
+    DJANGO_MEDIA_URL=/media/
+
+    # Host PostgreSQL, reached via pasta port forwarding (see the "Host
+    # services" section). Inside the container, 127.0.0.1:5432 is the host's
+    # PostgreSQL.
+    DATABASE_URL=postgres://comics:topsecret-password@127.0.0.1:5432/comics
+
     DJANGO_DEFAULT_FROM_EMAIL=comics@example.com
-    # Sending email, alternative 1: Using a local SMTP server
-    DJANGO_EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
-    # Sending email, alternative 2: Using the Mailgun API (which has a free tier)
+
+    # Sending email, alternative 1: Using the Mailgun API (which has a free
+    # tier). If both alternatives are configured, Mailgun is used.
     MAILGUN_API_KEY=your-mailgun-api-key
     MAILGUN_API_URL=https://api.eu.mailgun.net/v3
     MAILGUN_SENDER_DOMAIN=comics.example.com
 
-    DJANGO_MEDIA_ROOT=/srv/comics.example.com/htdocs/media/
-    DJANGO_MEDIA_URL=https://comics.example.com/media/
-    DJANGO_STATIC_ROOT=/srv/comics.example.com/htdocs/static/
-    DJANGO_STATIC_URL=https://comics.example.com/static/
+    # Sending email, alternative 2: Using an SMTP server. An SMTP server on
+    # the container host is reached via pasta port forwarding, just like
+    # PostgreSQL and memcached (see the "Host services" section). All settings
+    # except the backend and host default to Django's defaults.
+    DJANGO_EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+    DJANGO_EMAIL_HOST=127.0.0.1
+    DJANGO_EMAIL_PORT=25
+    DJANGO_EMAIL_HOST_USER=smtp-username
+    DJANGO_EMAIL_HOST_PASSWORD=smtp-password
+    DJANGO_EMAIL_USE_TLS=false
+    DJANGO_EMAIL_USE_SSL=false
 
-    DATABASE_URL=postgres://comics:topsecret-password@localhost:5432/comics
-
+    # Optional: a cache makes responses significantly faster. Host memcached
+    # is also reached via pasta port forwarding.
     CACHE_URL=memcache://127.0.0.1:11211
 
-    COMICS_LOG_FILENAME=/srv/comics.example.com/log/comics.log
+    # Optional: Sentry crash reporting.
+    SENTRY_DSN=https://...
+
     COMICS_SITE_TITLE=comics.example.com
     COMICS_INVITE_MODE=true
 
-Of course, you should change most, if not all, of these settings to fit your own
-installation.
+.. note::
 
-If your are not running a ``memcached`` server, remove ``CACHE_URL`` variable
-from your environment. Comics does not require a cache, but responses are
-significantly faster with a cache available.
+    Do **not** set ``DJANGO_STATIC_ROOT`` or ``DJANGO_MEDIA_ROOT`` here. The
+    image already points them at ``/app/static`` (baked in at build time) and
+    ``/media`` (the bind mount described below).
+
+Generate a strong secret key with::
+
+    podman run --rm ghcr.io/jodal/comics:latest \
+        python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 
 
-Example Gunicorn setup
-======================
+Host services
+=============
 
-Comics is a WSGI app and can be run with any WSGI server, for example
-Gunicorn. Gunicorn is a Python program, so you can simply install it in
-Comics' own virtualenv:
+PostgreSQL — and, if you use them, memcached and an SMTP server — runs on the
+host and listens only on ``localhost``, as is common on a single server. The
+container cannot reach them there directly: inside the container,
+``127.0.0.1`` is the container itself.
 
-.. code-block:: sh
+Instead of exposing these services on a routable address, we use the port
+forwarding built into *pasta*, rootless Podman's default network mode. Its
+``-T`` option forwards connections that the container makes to given ports on
+*its own* loopback to the same ports on the *host's* loopback. Both the web
+service and the scheduled jobs below therefore run with::
 
-    cd /srv/comics.example.com/app
-    uv sync --extra server
+    --network=pasta:-T,5432,-T,11211,-T,25
 
-Then you need to start Gunicorn, for example with a systemd service:
+which forwards PostgreSQL (5432), memcached (11211), and SMTP (25). From inside
+the container, these host services are simply ``127.0.0.1``, matching the URLs
+in ``comics.env`` above. Forward only the ports you actually use.
+
+The host services need no reconfiguration, and nothing new is exposed to the
+network. To PostgreSQL, a connection from the container looks like any other
+local connection from ``127.0.0.1``, so the standard ``pg_hba.conf`` rules for
+``127.0.0.1/32`` apply: the ``comics`` database user must be allowed to connect
+over TCP with password (``scram-sha-256``/``md5``) authentication — peer
+authentication over the Unix socket is not available from inside the container.
+
+If you are starting fresh rather than migrating an existing installation,
+create the database user and the database first, with the same password as in
+``DATABASE_URL``::
+
+    sudo -u postgres createuser --pwprompt comics
+    sudo -u postgres createdb --owner comics comics
+
+The ``web`` entrypoint runs ``comics migrate`` automatically on start, so the
+database schema is created and migrated whenever the container starts.
+
+
+Media on the host filesystem
+============================
+
+The image stores media at ``/media`` and runs as container UID ``1000``. To keep
+the existing library on the host and have downloaded strips owned by the
+``comics`` user, bind-mount the host directory into the container and map the
+host user onto the container user. Both the web service and the scheduled jobs
+below apply this with two settings: ``--volume=/srv/comics/media:/media:rw``
+mounts ``/srv/comics/media`` onto the container's ``/media``, and
+``--userns=keep-id:uid=1000,gid=1000`` maps the host ``comics`` user onto
+container UID ``1000``. You don't run these directly; they appear in the unit
+files in the sections that follow.
+
+Why ``keep-id``? In rootless Podman, container UID ``1000`` would otherwise map
+to a high subordinate UID on the host — it could neither read your existing media
+nor write files owned by ``comics``. ``keep-id:uid=1000,gid=1000`` maps the host
+``comics`` user to container UID ``1000`` instead, so the existing library is
+readable and writable and new files land owned by ``comics``.
+
+Ensure the directory is owned by ``comics`` (do this once for the existing
+library)::
+
+    sudo chown -R comics:comics /srv/comics/media
+
+Caddy runs as its own user and needs **read** access to the same directory.
+With the container's default umask, downloaded strips land world-readable
+(``644``), so this works out of the box. The rest of this section is only
+needed if you want to keep the library private to ``comics`` and ``caddy``: add
+the ``caddy`` user to the ``comics`` group, make the library group- but not
+world-readable, and set the setgid bit (``g+s``) so new subdirectories inherit
+the ``comics`` group::
+
+    sudo usermod -aG comics caddy
+    sudo chmod -R g+rX,o-rwx /srv/comics/media
+    sudo find /srv/comics/media -type d -exec chmod g+s {} +
+
+Restart Caddy afterwards so its new group membership takes effect. Also run the
+containers with ``--umask=007`` (in the Quadlet unit: ``PodmanArgs=--umask=007``)
+so that new strips land group- but not world-readable as well.
+
+
+Running the app with Podman (Quadlet)
+=====================================
+
+Manage the container as a systemd user service via a Podman *Quadlet* unit. As
+the ``comics`` user, create
+``~/.config/containers/systemd/comics-web.container``:
 
 .. code-block:: ini
 
     [Unit]
-    Description=comics
-    After=network.target
+    Description=Comics web app
+    After=network-online.target
+    Wants=network-online.target
 
-    [Install]
-    WantedBy=multi-user.target
+    [Container]
+    Image=ghcr.io/jodal/comics:latest
+    AutoUpdate=registry
+
+    # Map the host "comics" user onto the image's UID 1000.
+    UserNS=keep-id:uid=1000,gid=1000
+
+    # Keep the media library on the host disk.
+    Volume=/srv/comics/media:/media:rw
+
+    # Production settings.
+    EnvironmentFile=/srv/comics/comics.env
+
+    # Forward container-loopback ports to the host's services (see the
+    # "Host services" section).
+    Network=pasta:-T,5432,-T,11211,-T,25
+
+    # Only Caddy needs to reach the app, so bind to loopback.
+    PublishPort=127.0.0.1:8000:8000
+
+    # Run Gunicorn (migrate + serve). Arguments after "web" are passed through
+    # to Gunicorn; size --workers to roughly 2 x CPU cores + 1.
+    Exec=web --workers=9 --access-logfile=- --error-logfile=-
 
     [Service]
-    User=comics-user
-    Group=comics-user
     Restart=always
 
-    WorkingDirectory=/srv/comics.example.com/app
-    ExecStart=uv run gunicorn --bind=127.0.0.1:8000 --workers=9 --access-logfile=/srv/comics.example.com/htlogs/gunicorn-access.log --error-logfile=/srv/comics.example.com/htlogs/gunicorn-error.log comics.wsgi
-    ExecReload=/bin/kill -s HUP $MAINPID
-    ExecStop=/bin/kill -s TERM $MAINPID
+    [Install]
+    WantedBy=default.target
 
-    PrivateTmp=true
-
-
-Example Nginx vhost
-===================
-
-The web server Nginx can be used in front of Gunicorn to terminate HTTPS
-connections and effectively serve static files.
-
-The following is an example of a complete Nginx vhost:
-
-.. code-block:: nginx
-
-    server {
-        server_name comics.example.com;
-        listen 443 ssl http2;
-        listen [::]:443 ssl http2;
-
-        access_log /srv/comics.example.com/htlogs/nginx-access.log;
-        error_log /srv/comics.example.com/htlogs/nginx-error.log error;
-
-        ssl_certificate /etc/letsencrypt/live/comics.example.com/fullchain.pem;
-        ssl_certificate_key /etc/letsencrypt/live/comics.example.com/privkey.pem;
-
-        location /media {
-            root /srv/comics.example.com/htdocs;
-            expires max;
-        }
-
-        location /static {
-            root /srv/comics.example.com/htdocs;
-            expires max;
-
-            location ~* \/fonts\/ {
-                add_header Access-Control-Allow-Origin *;
-            }
-        }
-
-        location / {
-            proxy_pass_header Server;
-            proxy_set_header Host $http_host;
-            proxy_redirect off;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
-            proxy_set_header X-Scheme $scheme;
-            proxy_connect_timeout 10;
-            proxy_read_timeout 30;
-            proxy_pass http://localhost:8000/;
-        }
-    }
-
-For details, please refer to the documentation of the `Nginx
-<http://nginx.org/en/docs/>`_ project.
-
-
-.. _collecting-static-files:
-
-Collecting static files
-=======================
-
-When you're not running in development mode, you'll need to collect the static
-files from all apps into the ``STATIC_ROOT``. To do this, run::
-
-    uv run comics collectstatic
-
-You have to rerun this command every time you deploy changes to graphics, CSS
-and JavaScript. For more details, see the Django documentation on `staticfiles
-<https://docs.djangoproject.com/en/1.11/howto/static-files/>`_.
-
-
-Example cronjob
-===============
-
-To get new comics releases, you should run ``get_releases`` regularly. In
-addition, you should run ``clearsessions`` to clear expired user sessions.
-One way is to use ``cron`` e.g. by placing the following in
-``/etc/cron.d/comics``:
+Then load and start it:
 
 .. code-block:: sh
 
-    MAILTO=comics@example.com
-    1 * * * * comics-user cd /srv/comics.example.com/app && uv run comics get_releases -v0
-    1 3 * * * comics-user cd /srv/comics.example.com/app && uv run comics clearsessions -v0
+    systemctl --user daemon-reload
+    systemctl --user start comics-web.service
+    journalctl --user -u comics-web.service
 
-By setting ``MAILTO`` any exceptions raised by the comic crawlers will be sent
-by mail to the given mail address. ``1 * * * *`` specifies that the command
-should be run 1 minute past every hour.
+The journal should show ``comics migrate`` running, followed by Gunicorn booting
+its workers. Quadlet generates ``comics-web.service`` from the ``.container``
+file; it starts on boot thanks to ``WantedBy=default.target`` and the enabled
+linger.
+
+If you want the host to pull and restart on new images published by CI, enable
+auto-updates (this works together with ``AutoUpdate=registry`` above). This also
+keeps the scheduled jobs below on fresh images: ``podman run`` uses the image
+from local storage without pulling, so it is the auto-update timer that moves
+``latest`` forward:
+
+.. code-block:: sh
+
+    systemctl --user enable --now podman-auto-update.timer
+
+.. tip::
+
+    ``podman auto-update`` can also be run by hand at any time to check for a
+    new image and, if one is found, pull it and restart the web service
+    immediately.
+
+
+Caddy
+=====
+
+Caddy terminates HTTPS, serves media straight from disk, and proxies the rest to
+the app. Static files are served by WhiteNoise from inside the app, so Caddy does
+not need to handle ``/static/``.
+
+.. code-block:: text
+
+    comics.example.com {
+        encode zstd gzip
+
+        @media path /media/*
+        handle @media {
+            root * /srv/comics
+            file_server
+            header Cache-Control "public, max-age=31536000, immutable"
+        }
+
+        handle {
+            reverse_proxy 127.0.0.1:8000
+        }
+    }
+
+A request for ``/media/foo.png`` is served from ``/srv/comics/media/foo.png``
+without touching the app.
+
+Note that this setup writes no log files anywhere: Gunicorn and the scheduled
+jobs log to the journal through their systemd units, and so does Caddy's
+process log. Caddy's per-request access logging is disabled by default; add a
+bare ``log`` directive to the site block if you want it, and it goes to the
+journal as well.
+
+
+Scheduled jobs
+==============
+
+To fetch new releases you must run ``get_releases`` regularly, and you should run
+``clearsessions`` to purge expired sessions. Run each as a short-lived container
+from a systemd user timer. Because the container is stateless, these reuse the
+same image, env file, media mount, ``keep-id`` mapping, and pasta port
+forwarding as the web service.
+
+Create ``~/.config/systemd/user/comics-get-releases.service``:
+
+.. code-block:: ini
+
+    [Unit]
+    Description=Fetch new comics releases
+
+    [Service]
+    Type=oneshot
+    ExecStart=/usr/bin/podman run --rm \
+        --userns=keep-id:uid=1000,gid=1000 \
+        --volume=/srv/comics/media:/media:rw \
+        --env-file=/srv/comics/comics.env \
+        --network=pasta:-T,5432,-T,11211,-T,25 \
+        ghcr.io/jodal/comics:latest comics get_releases -v0
+
+...and ``~/.config/systemd/user/comics-get-releases.timer``:
+
+.. code-block:: ini
+
+    [Unit]
+    Description=Fetch new comics releases hourly
+
+    [Timer]
+    OnCalendar=hourly
+    Persistent=true
+
+    [Install]
+    WantedBy=timers.target
+
+Create the matching ``comics-clearsessions.service`` (running
+``comics clearsessions -v0``) and a daily ``comics-clearsessions.timer``
+(``OnCalendar=daily``).
+
+Enable the timers:
+
+.. code-block:: sh
+
+    systemctl --user daemon-reload
+    systemctl --user enable --now comics-get-releases.timer
+    systemctl --user enable --now comics-clearsessions.timer
+
+.. tip::
+
+    Run a crawl on demand to verify the setup with
+    ``systemctl --user start comics-get-releases.service`` and inspect the output
+    with ``journalctl --user -u comics-get-releases.service``.
+
+
+Management commands
+===================
+
+Any other management command can be run the same way as the scheduled jobs: as
+a one-off container sharing the same mounts and settings. For example, to
+create a superuser::
+
+    podman run --rm -it \
+        --userns=keep-id:uid=1000,gid=1000 \
+        --volume=/srv/comics/media:/media:rw \
+        --env-file=/srv/comics/comics.env \
+        --network=pasta:-T,5432,-T,11211,-T,25 \
+        ghcr.io/jodal/comics:latest comics createsuperuser
+
+See :doc:`bootstrapping` for the commands to populate a fresh site with comics
+and releases.

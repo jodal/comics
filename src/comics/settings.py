@@ -221,6 +221,33 @@ EMAIL_BACKEND = env.str(
     default="django.core.mail.backends.console.EmailBackend",
 )
 #
+# SMTP server settings, only used by the SMTP email backend.
+# The defaults match Django's defaults.
+EMAIL_HOST = env.str(
+    "DJANGO_EMAIL_HOST",
+    default="localhost",
+)
+EMAIL_PORT = env.int(
+    "DJANGO_EMAIL_PORT",
+    default=25,
+)
+EMAIL_HOST_USER = env.str(
+    "DJANGO_EMAIL_HOST_USER",
+    default="",
+)
+EMAIL_HOST_PASSWORD = env.str(
+    "DJANGO_EMAIL_HOST_PASSWORD",
+    default="",
+)
+EMAIL_USE_TLS = env.bool(
+    "DJANGO_EMAIL_USE_TLS",
+    default=False,
+)
+EMAIL_USE_SSL = env.bool(
+    "DJANGO_EMAIL_USE_SSL",
+    default=False,
+)
+#
 # Send email using Anymail via Mailgun if MAILGUN_API_KEY is set.
 if mailgun_api_key := env.str("MAILGUN_API_KEY", default=None):
     EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
@@ -437,10 +464,11 @@ COMICS_IMAGE_BLACKLIST = [
     "e90e3718487c99190426b3b38639670d4a3ee39c1e7319b9b781740b0c7a53bf",
 ]
 #
-# Comics log file path on disk
+# Log file for the aggregator management commands.
+# If not set, the commands log to the console only.
 COMICS_LOG_FILENAME = env.str(
     "COMICS_LOG_FILENAME",
-    default=str(RUN_DIR / "comics.log"),
+    default=None,
 )
 #
 # Google Analytics
