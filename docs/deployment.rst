@@ -321,6 +321,15 @@ Caddy terminates HTTPS, serves media straight from disk, and proxies the rest to
 the app. Static files are served by WhiteNoise from inside the app, so Caddy does
 not need to handle ``/static/``.
 
+The app trusts the ``X-Forwarded-Proto`` header to detect that a request
+arrived over HTTPS. Caddy sets the header on every proxied request and ignores
+any value sent by clients, so this works out of the box. If you use another
+reverse proxy, make sure it does the same, or point the app at the right
+header, e.g. ``DJANGO_SECURE_PROXY_SSL_HEADER=HTTP_X_FORWARDED_SCHEME,https``.
+If clients can reach the app without passing through such a proxy, disable the
+trust entirely by setting ``DJANGO_SECURE_PROXY_SSL_HEADER`` to an empty
+value.
+
 .. code-block:: text
 
     comics.example.com {
