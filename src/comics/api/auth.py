@@ -30,7 +30,7 @@ class SecretKeyAuth:
                 return None
             secret_key = parts[1]
         else:
-            secret_key = request.GET.get("key") or request.POST.get("key")
+            secret_key = request.GET.get("key")
         if not secret_key:
             return None
         try:
