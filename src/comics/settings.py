@@ -115,7 +115,6 @@ THIRD_PARTY_APPS = [
     "allauth.account",
     "invitations",  # After allauth
     "bootstrapform",
-    "compressor",
     "ninja",
 ]
 LOCAL_APPS = [
@@ -346,29 +345,7 @@ STATICFILES_DIRS = [
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    "compressor.finders.CompressorFinder",
 ]
-
-
-# Static files - django-compressor
-#
-# Compress files offline to enable WhiteNoise to serve the generated files.
-COMPRESS_OFFLINE = True
-#
-# Explicitly use HtmlParser to avoid depending on BeautifulSoup through the use
-# of LxmlParser
-COMPRESS_PARSER = "compressor.parser.HtmlParser"
-#
-# Turn on CSS and JS compression
-COMPRESS_FILTERS = {
-    "css": [
-        "compressor.filters.css_default.CssAbsoluteFilter",
-        "compressor.filters.cssmin.rCSSMinFilter",
-    ],
-    "js": [
-        "compressor.filters.jsmin.rJSMinFilter",
-    ],
-}
 
 
 # Media files (comic images, etc.)

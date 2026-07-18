@@ -1,4 +1,4 @@
-{% load cache compress static %}
+{% load cache static %}
 <!DOCTYPE html>
 
 <html lang="en">
@@ -8,12 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %} | {{ site_title }}</title>
     <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}">
-    {% compress css %}
-      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-3.4.1.min.css' %}">
-      <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome-6.7.2.min.css' %}">
-      <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome-solid-6.7.2.min.css' %}">
-      <link rel="stylesheet" type="text/css" href="{% static 'css/comics.css' %}">
-    {% endcompress %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-3.4.1.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome-6.7.2.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome-solid-6.7.2.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/comics.css' %}">
     {% block extra_head %}{% endblock %}
     {% if google_analytics_code %}
       <script async src="https://www.googletagmanager.com/gtag/js?id={{ google_analytics_code }}"></script>
@@ -166,11 +164,9 @@
 
     {% block extra_footer %}
       {{ block.super }}
-      {% compress js %}
-        <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
-        <script src="{% static 'js/bootstrap-3.4.1.min.js' %}"></script>
-        <script src="{% static 'js/comics.js' %}"></script>
-      {% endcompress %}
+      <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+      <script src="{% static 'js/bootstrap-3.4.1.min.js' %}"></script>
+      <script src="{% static 'js/comics.js' %}"></script>
     {% endblock extra_footer %}
 
   </body>

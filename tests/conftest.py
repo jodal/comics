@@ -15,7 +15,6 @@ if TYPE_CHECKING:
 def staticfiles(tmp_path_factory: TempPathFactory) -> Generator[None]:
     with override_settings(
         STATIC_ROOT=tmp_path_factory.mktemp("static"),
-        COMPRESS_ENABLED=False,
     ):
         call_command("collectstatic", "--noinput")
         yield
