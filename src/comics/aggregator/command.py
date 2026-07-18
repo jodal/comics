@@ -177,7 +177,7 @@ class AggregatorConfig:
         try:
             comic = Comic.objects.get(slug=comic_slug)
         except Comic.DoesNotExist as exc:
-            error_msg = "Comic %s not found" % comic_slug
+            error_msg = f"Comic {comic_slug} not found"
             logger.error(error_msg)
             raise ComicsError(error_msg) from exc
         return comic

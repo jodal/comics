@@ -183,9 +183,8 @@ class LxmlParser:
             case [element]:
                 return element
             case elements:
-                raise MultipleElementsReturned(
-                    "Selector matched %d elements: %s" % (len(elements), selector)
-                )
+                msg = f"Selector matched {len(elements)} elements: {selector}"
+                raise MultipleElementsReturned(msg)
 
     def _select_all(self, selector: str) -> list[HtmlElement]:
         return self.root.cssselect(selector)

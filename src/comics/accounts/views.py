@@ -53,14 +53,14 @@ def mycomics_toggle_comic(request):
         )
         subscription.save()
         if not _is_js_request(request):
-            messages.info(request, 'Added "%s" to my comics' % comic.name)
+            messages.info(request, f'Added "{comic.name}" to my comics')
     elif "remove_comic" in request.POST:
         subscriptions = Subscription.objects.filter(
             userprofile=request.user.comics_profile, comic=comic
         )
         subscriptions.delete()
         if not _is_js_request(request):
-            messages.info(request, 'Removed "%s" from my comics' % comic.name)
+            messages.info(request, f'Removed "{comic.name}" from my comics')
 
     if _is_js_request(request):
         return HttpResponse(status=204)
@@ -86,7 +86,7 @@ def mycomics_edit_comics(request):
             )
             subscriptions.delete()
             if not _is_js_request(request):
-                messages.info(request, 'Removed "%s" from my comics' % comic.name)
+                messages.info(request, f'Removed "{comic.name}" from my comics')
 
     for comic in Comic.objects.all():
         if comic.slug in request.POST and comic not in my_comics:
@@ -95,7 +95,7 @@ def mycomics_edit_comics(request):
             )
             subscription.save()
             if not _is_js_request(request):
-                messages.info(request, 'Added "%s" to my comics' % comic.name)
+                messages.info(request, f'Added "{comic.name}" to my comics')
 
     if _is_js_request(request):
         return HttpResponse(status=204)
@@ -114,7 +114,7 @@ def invite(request):
         )
         invitation.send_invitation(request)
         messages.success(
-            request, 'An invitation has been sent to "%s".' % invitation.email
+            request, f'An invitation has been sent to "{invitation.email}".'
         )
 
     invitations = request.user.invitation_set.all().order_by("-created")

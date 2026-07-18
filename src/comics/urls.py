@@ -36,7 +36,7 @@ urlpatterns = [
 if not settings.MEDIA_URL.startswith("http"):
     urlpatterns += [
         re_path(
-            r"^%s(?P<path>.*)$" % re.escape(settings.MEDIA_URL.lstrip("/")),
+            rf"^{re.escape(settings.MEDIA_URL.lstrip('/'))}(?P<path>.*)$",
             serve,
             kwargs={"document_root": settings.MEDIA_ROOT},
         ),

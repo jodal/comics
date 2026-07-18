@@ -19,9 +19,9 @@ class Crawler(CrawlerBase):
     headers = {"User-Agent": "Mozilla/4.0"}
 
     def crawl(self, pub_date):
-        page_url = "http://wumo.com/wumo/%s" % pub_date.strftime("%Y/%m/%d")
+        page_url = f"http://wumo.com/wumo/{pub_date:%Y/%m/%d}"
         page = self.parse_page(page_url)
-        urls = page.srcs('img[src*="/img/wumo/%s"]' % pub_date.strftime("%Y/%m"))
+        urls = page.srcs(f'img[src*="/img/wumo/{pub_date:%Y/%m}"]')
         if not urls:
             return
         return CrawlerImage(urls[0])

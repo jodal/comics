@@ -18,7 +18,6 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         url = (
-            "https://s3.amazonaws.com/thiswas.notinventedhe.re/on/%s"
-            % pub_date.strftime("%Y-%m-%d")
+            f"https://s3.amazonaws.com/thiswas.notinventedhe.re/on/{pub_date:%Y-%m-%d}"
         )
         return CrawlerImage(url)

@@ -49,7 +49,7 @@ class UserProfile(models.Model):
         verbose_name = "comics profile"
 
     def __str__(self) -> str:
-        return "Comics profile for %s" % self.user.email
+        return f"Comics profile for {self.user.email}"
 
     def generate_new_secret_key(self) -> None:
         self.secret_key = make_secret_key()

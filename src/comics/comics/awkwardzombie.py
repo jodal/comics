@@ -21,9 +21,9 @@ class Crawler(CrawlerBase):
             page_url = "https://www.awkwardzombie.com/awkward-zombie/archive/"
             self.archive_page = self.parse_page(page_url)
 
+        date_string = pub_date.strftime("%m-%d-%y")
         release = self.archive_page.root.xpath(
-            "//div[(@class='archive-date') and contains(.,'%s')]/.."
-            % pub_date.strftime("%m-%d-%y")
+            f"//div[(@class='archive-date') and contains(.,'{date_string}')]/.."
         )
         if not release:
             return

@@ -20,6 +20,6 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date):
         url = (
-            "https://www.tu.no/api/widgets/comics?name=lunch&date=%s"
-        ) % pub_date.strftime("%Y-%m-%d")
+            f"https://www.tu.no/api/widgets/comics?name=lunch&date={pub_date:%Y-%m-%d}"
+        )
         return CrawlerImage(url)

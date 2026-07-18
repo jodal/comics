@@ -18,14 +18,13 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date):
         # Find the post for the requested date
         archive_page = self.parse_page(
-            "https://www.optipess.com/archive/?archive_year=%s"
-            % pub_date.strftime("%Y")
+            f"https://www.optipess.com/archive/?archive_year={pub_date:%Y}"
         )
         date_string = pub_date.strftime("%b %-d")
 
         post_link = archive_page.root.xpath(
             '//td[(@class="archive-date") and '
-            '(.="%s")]/../td[@class="archive-title"]/a' % date_string
+            f'(.="{date_string}")]/../td[@class="archive-title"]/a'
         )
 
         if not post_link:

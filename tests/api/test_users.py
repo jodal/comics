@@ -60,7 +60,7 @@ def test_cannot_read_other_users_details(db: None, client: Client, user: User) -
     bob = User.objects.create_user("bob", "bob@example.com", "topsecret")
 
     response = client.get(
-        "/api/v1/users/%d/" % bob.pk,
+        f"/api/v1/users/{bob.pk}/",
         headers={"authorization": "Key s3cretk3y"},
     )
 
