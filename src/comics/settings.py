@@ -355,9 +355,13 @@ TIME_FORMAT = "H:i"
 # Storage backends
 #
 STORAGES = {
+    # Media files, stored in MEDIA_ROOT and served from MEDIA_URL.
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    }
+    },
 }
 
 
