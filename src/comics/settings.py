@@ -221,6 +221,33 @@ EMAIL_BACKEND = env.str(
     default="django.core.mail.backends.console.EmailBackend",
 )
 #
+# SMTP server settings, only used by the SMTP email backend.
+# The defaults match Django's defaults.
+EMAIL_HOST = env.str(
+    "DJANGO_EMAIL_HOST",
+    default="localhost",
+)
+EMAIL_PORT = env.int(
+    "DJANGO_EMAIL_PORT",
+    default=25,
+)
+EMAIL_HOST_USER = env.str(
+    "DJANGO_EMAIL_HOST_USER",
+    default="",
+)
+EMAIL_HOST_PASSWORD = env.str(
+    "DJANGO_EMAIL_HOST_PASSWORD",
+    default="",
+)
+EMAIL_USE_TLS = env.bool(
+    "DJANGO_EMAIL_USE_TLS",
+    default=False,
+)
+EMAIL_USE_SSL = env.bool(
+    "DJANGO_EMAIL_USE_SSL",
+    default=False,
+)
+#
 # Send email using Anymail via Mailgun if MAILGUN_API_KEY is set.
 if mailgun_api_key := env.str("MAILGUN_API_KEY", default=None):
     EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
