@@ -31,6 +31,11 @@ uv sync \
     --no-install-project
 EOT
 
+# The build context excludes .git, so uv-dynamic-versioning cannot derive the
+# version here. CI derives it from git tags and passes it in as a build arg.
+ARG VERSION=0.0.0
+ENV UV_DYNAMIC_VERSIONING_BYPASS=${VERSION}
+
 # Install app
 COPY . /src
 RUN --mount=type=cache,target=/root/.cache <<EOT
