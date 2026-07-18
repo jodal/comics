@@ -28,7 +28,7 @@ def make_secret_key() -> str:
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField["UserProfile", "User"](
+    user = models.OneToOneField["User", "User"](
         "auth.User",
         on_delete=models.CASCADE,
         related_name="comics_profile",
@@ -39,7 +39,7 @@ class UserProfile(models.Model):
         default=make_secret_key,
         help_text="Secret key for feed and API access",
     )
-    comics = models.ManyToManyField["UserProfile", "Comic"](
+    comics = models.ManyToManyField["Comic", "Subscription"](
         "core.Comic",
         through="Subscription",
     )
@@ -56,11 +56,11 @@ class UserProfile(models.Model):
 
 
 class Subscription(models.Model):
-    userprofile = models.ForeignKey["Subscription", "UserProfile"](
+    userprofile = models.ForeignKey["UserProfile", "UserProfile"](
         "UserProfile",
         on_delete=models.CASCADE,
     )
-    comic = models.ForeignKey["Subscription", "Comic"](
+    comic = models.ForeignKey["Comic", "Comic"](
         "core.Comic",
         on_delete=models.CASCADE,
     )

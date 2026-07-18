@@ -589,7 +589,7 @@ def subscriptions_bulk_update(request: AuthedRequest) -> HttpResponse:
             subscription = own_subscription_from_uri(request, obj["resource_uri"])
             if subscription is None:
                 raise Http404
-            subscription.comic_id = comic.pk
+            subscription.comic = comic
             subscription.save()
         else:
             Subscription.objects.create(
@@ -619,7 +619,7 @@ def subscriptions_update(request: AuthedRequest, subscription_id: int) -> HttpRe
     """Change one of the authenticated user's subscriptions to another comic."""
     subscription = get_object_or_404(own_subscriptions(request), pk=subscription_id)
     data = parse_body(request)
-    subscription.comic_id = comic_from_uri(data.get("comic")).pk
+    subscription.comic = comic_from_uri(data.get("comic"))
     subscription.save()
     return HttpResponse(status=204)
 
