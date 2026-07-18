@@ -13,6 +13,9 @@ Comics instance as the backend. In other words, when starting your app, let
 the end user enter the hostname of the Comics instance, in addition to his
 secret key or email/password pair.
 
+In addition to this document, an interactive overview of the API's endpoints
+is available at ``/api/v1/docs`` on any Comics instance.
+
 
 Authentication
 ==============
@@ -22,15 +25,10 @@ Comics instance. The user must authenticate himself using the same
 secret key as is used to access comic feeds. The key can be found in the
 account section of the Comics instance.
 
-The secret key can be provided in one of two ways:
+The secret key is provided as a bearer token in the ``Authorization``
+HTTP header. Example::
 
-- Using a HTTP GET parameter named ``key``, i.e. as part of the URL. Example::
-
-      http://example.com/api/v1/users/?key=76acdcdf16ae4e12becb00d09a9d9456
-
-- Using the ``Authorization`` HTTP header. Example::
-
-      Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+    Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
 
 
 Get secret key using email and password
@@ -64,57 +62,9 @@ key on behalf of the end user by following steps:
 Response format
 ===============
 
-You can specify what response format you prefer in one of two ways:
-
-- Using a HTTP GET parameter named ``format``, i.e. as part of the URL.
-  Examples::
-
-      # Returns JSON
-      http://example.com/api/v1/?format=json
-
-      # Returns JSONP with function name 'callback'
-      http://example.com/api/v1/?format=jsonp
-
-      # Returns JSONP with function name 'foo'
-      http://example.com/api/v1/?format=jsonp&callback=foo
-
-      # Returns JSONP with function name 'foo'
-      http://example.com/api/v1/?callback=foo
-
-      # Returns XML
-      http://example.com/api/v1/?format=xml
-
-      # Returns YAML
-      http://example.com/api/v1/?format=yaml
-
-      # Returns Apple binary plist
-      http://example.com/api/v1/?format=plist
-
-- Using the ``Accept`` HTTP header. Examples::
-
-      # Returns JSON
-      Accept: application/json
-
-      # Returns JSONP with function name 'callback'
-      Accept: text/javascript
-
-      # Returns XML
-      Accept: application/xml
-
-      # Returns YAML
-      Accept: text/yaml
-
-      # Returns Apple binary plist
-      Accept: application/x-plist
-
-JSON and JSONP are always supported. Other formats like XML, YAML, and Apple
-binary plists (bplist) may be available if the Comics instance got the
-additional dependencies required by the format installed.
-
-If you run a Comics instance yourself, and want support for more response
-formats, check out `Tastypie's serialization docs
-<https://django-tastypie.readthedocs.io/en/latest/serialization.html>`_ for
-details on what you need to install.
+The API responds with JSON. The ``format`` and ``callback`` parameters that
+older versions of the API used to select between JSON, JSONP, and XML are
+ignored.
 
 
 .. _pagination:
@@ -150,7 +100,7 @@ Root resource
 
 .. http:get:: /api/v1/
 
-    Lists all available resources, and URLs for their schemas.
+    Lists all available resources.
 
 
 .. _users-resource:
@@ -169,7 +119,7 @@ Users resource
         GET /api/v1/users/ HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
 
     **Example request using Basic Authentication**
 
@@ -189,7 +139,7 @@ Users resource
     .. sourcecode:: http
 
         HTTP/1.1 200 OK
-        Content-Type: application/json; charset=utf-8
+        Content-Type: application/json
 
         {
             "meta": {
@@ -201,9 +151,9 @@ Users resource
             },
             "objects": [
                 {
-                    "date_joined": "2012-04-30T18:39:59+00:00",
+                    "date_joined": "2012-04-30T18:39:59",
                     "email": "alice@example.com",
-                    "last_login": "2012-06-09T23:09:54.312109+00:00",
+                    "last_login": "2012-06-09T23:09:54.312109",
                     "resource_uri": "/api/v1/users/1/",
                     "secret_key": "76acdcdf16ae4e12becb00d09a9d9456"
                 }
@@ -228,14 +178,14 @@ Comics resource
         GET /api/v1/comics/?slug=xkcd HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
 
     **Example response**
 
     .. sourcecode:: http
 
         HTTP/1.1 200 OK
-        Content-Type: application/json; charset=utf-8
+        Content-Type: application/json
 
         {
             "meta": {
@@ -248,9 +198,9 @@ Comics resource
             "objects": [
                 {
                     "active": true,
-                    "added": "0001-01-01T00:00:00+00:00",
+                    "added": "0001-01-01T00:00:00",
                     "end_date": null,
-                    "id": "18",
+                    "id": 18,
                     "language": "en",
                     "name": "xkcd",
                     "resource_uri": "/api/v1/comics/18/",
@@ -287,20 +237,20 @@ Comics resource
         GET /api/v1/comics/18/ HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
 
     **Example response**
 
     .. sourcecode:: http
 
         HTTP/1.1 200 OK
-        Content-Type: application/json; charset=utf-8
+        Content-Type: application/json
 
         {
             "active": true,
-            "added": "0001-01-01T00:00:00+00:00",
+            "added": "0001-01-01T00:00:00",
             "end_date": null,
-            "id": "18",
+            "id": 18,
             "language": "en",
             "name": "xkcd",
             "resource_uri": "/api/v1/comics/18/",
@@ -332,19 +282,19 @@ Releases resource
         GET /api/v1/releases/?comic__slug=xkcd&limit=2 HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
 
     **Example response**
 
     .. sourcecode:: http
 
         HTTP/1.1 200 OK
-        Content-Type: application/json; charset=utf-8
+        Content-Type: application/json
 
         {
             "meta": {
                 "limit": 2,
-                "next": "/api/v1/releases/?limit=2&key=76acdcdf16ae4e12becb00d09a9d9456&format=json&comic__slug=xkcd&offset=2",
+                "next": "/api/v1/releases/?comic__slug=xkcd&limit=2&offset=2",
                 "offset": 0,
                 "previous": null,
                 "total_count": 1104
@@ -352,15 +302,15 @@ Releases resource
             "objects": [
                 {
                     "comic": "/api/v1/comics/18/",
-                    "fetched": "2012-10-08T04:03:56.411028+00:00",
-                    "id": "147708",
+                    "fetched": "2012-10-08T04:03:56.411028",
+                    "id": 147708,
                     "images": [
                         {
                             "checksum": "605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12",
-                            "fetched": "2012-10-08T04:03:56.406586+00:00",
+                            "fetched": "2012-10-08T04:03:56.406586",
                             "file": "https://comics.example.com/static/media/xkcd/6/605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12.png",
                             "height": 365,
-                            "id": "151937",
+                            "id": 151937,
                             "resource_uri": "/api/v1/images/151937/",
                             "text": "Facebook, Apple, and Google all got away with their monopolist power grabs because they don't have any 'S's in their names for critics to snarkily replace with '$'s.",
                             "title": "Microsoft",
@@ -372,15 +322,15 @@ Releases resource
                 },
                 {
                     "comic": "/api/v1/comics/18/",
-                    "fetched": "2012-10-05T05:03:33.744355+00:00",
-                    "id": "147172",
+                    "fetched": "2012-10-05T05:03:33.744355",
+                    "id": 147172,
                     "images": [
                         {
                             "checksum": "6d1b67d3dc00d362ddb5b5e8f1c3f174926d2998ca497e8737ff8b74e7100997",
-                            "fetched": "2012-10-05T05:03:33.737231+00:00",
+                            "fetched": "2012-10-05T05:03:33.737231",
                             "file": "https://comics.example.com/static/media/xkcd/6/6d1b67d3dc00d362ddb5b5e8f1c3f174926d2998ca497e8737ff8b74e7100997.png",
                             "height": 254,
-                            "id": "151394",
+                            "id": 151394,
                             "resource_uri": "/api/v1/images/151394/",
                             "text": "According to my mom, my first word was (looking up at the sky) 'Wow!'",
                             "title": "My Sky",
@@ -420,26 +370,26 @@ Releases resource
         GET /api/v1/releases/147708/ HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
 
     **Example response**
 
     .. sourcecode:: http
 
         HTTP/1.1 200 OK
-        Content-Type: application/json; charset=utf-8
+        Content-Type: application/json
 
         {
             "comic": "/api/v1/comics/18/",
-            "fetched": "2012-10-08T04:03:56.411028+00:00",
-            "id": "147708",
+            "fetched": "2012-10-08T04:03:56.411028",
+            "id": 147708,
             "images": [
                 {
                     "checksum": "605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12",
-                    "fetched": "2012-10-08T04:03:56.406586+00:00",
+                    "fetched": "2012-10-08T04:03:56.406586",
                     "file": "https://comics.example.com/static/media/xkcd/6/605d9a6d415676a21ee286fe2b369f58db62c397bfdfa18710b96dcbbcc4df12.png",
                     "height": 365,
-                    "id": "151937",
+                    "id": 151937,
                     "resource_uri": "/api/v1/images/151937/",
                     "text": "Facebook, Apple, and Google all got away with their monopolist power grabs because they don't have any 'S's in their names for critics to snarkily replace with '$'s.",
                     "title": "Microsoft",
@@ -510,14 +460,14 @@ Subscriptions resource
         GET /api/v1/subscriptions/?comic__slug=xkcd HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
 
     **Example response**
 
     .. sourcecode:: http
 
         HTTP/1.1 200 OK
-        Content-Type: application/json; charset=utf-8
+        Content-Type: application/json
 
         {
             "meta": {
@@ -530,7 +480,7 @@ Subscriptions resource
             "objects": [
                 {
                     "comic": "/api/v1/comics/18/",
-                    "id": "2",
+                    "id": 2,
                     "resource_uri": "/api/v1/subscriptions/2/"
                 }
             ]
@@ -556,7 +506,7 @@ Subscriptions resource
         POST /api/v1/subscriptions/ HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
         Content-Type: application/json
 
         {
@@ -572,9 +522,8 @@ Subscriptions resource
         Location: https://example.com/api/v1/subscriptions/4/
 
     :statuscode 201: no error, object was created, see ``Location`` header
+    :statuscode 400: bad request, e.g. malformed JSON body or unknown comic
     :statuscode 401: authentication/authorization failed
-    :statuscode 500: if the request cannot be processed, e.g. because the
-        subscription already exists
 
 .. http:patch:: /api/v1/subscriptions/
 
@@ -590,7 +539,7 @@ Subscriptions resource
         PATCH /api/v1/subscriptions/ HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
         Content-Type: application/json
 
         {
@@ -618,9 +567,8 @@ Subscriptions resource
 
     :statuscode 202: no error, changes was accepted, use :http:method:`GET` to
         see the changes
+    :statuscode 400: bad request, e.g. malformed JSON body or unknown comic
     :statuscode 401: authentication/authorization failed
-    :statuscode 500: if the request cannot be processed, e.g. because a
-        subscription already exists
 
 .. http:get:: /api/v1/subscriptions/(int:subscription_id)/
 
@@ -634,18 +582,18 @@ Subscriptions resource
         GET /api/v1/subscriptions/2/ HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
 
     **Example response**
 
     .. sourcecode:: http
 
         HTTP/1.1 200 OK
-        Content-Type: application/json; charset=utf-8
+        Content-Type: application/json
 
         {
             "comic": "/api/v1/comics/18/",
-            "id": "2",
+            "id": 2,
             "resource_uri": "/api/v1/subscriptions/2/"
         }
 
@@ -666,7 +614,7 @@ Subscriptions resource
         DELETE /api/v1/subscriptions/17/ HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
 
     **Example response**
 

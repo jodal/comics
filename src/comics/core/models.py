@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import datetime as dt
 import os
+from typing import Any
 
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
@@ -88,7 +89,7 @@ class Comic(models.Model):
 
 class Release(models.Model):
     # Required fields
-    comic = models.ForeignKey["Release", "Comic"](
+    comic = models.ForeignKey["Comic", "Comic"](
         Comic,
         on_delete=models.CASCADE,
     )
@@ -96,7 +97,7 @@ class Release(models.Model):
         verbose_name="publication date",
         db_index=True,
     )
-    images = models.ManyToManyField["Image", "Release"](
+    images = models.ManyToManyField["Image", Any](
         "Image",
         related_name="releases",
     )
@@ -147,7 +148,7 @@ def image_file_path(instance: Image, filename: str) -> str:
 
 class Image(models.Model):
     # Required fields
-    comic = models.ForeignKey["Image", "Comic"](
+    comic = models.ForeignKey["Comic", "Comic"](
         Comic,
         on_delete=models.CASCADE,
     )
