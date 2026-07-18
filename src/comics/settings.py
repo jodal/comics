@@ -68,6 +68,27 @@ SECRET_KEY = env.str(
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["*"])
 
 
+# Security - HTTPS detection
+#
+# In the documented deployment, a reverse proxy terminates HTTPS and proxies
+# to the app over plain HTTP, setting the X-Forwarded-Proto header on every
+# request. Trust that header by default so that request.is_secure() and
+# absolute URLs built from requests use the right scheme. Only keep this
+# enabled if all requests pass through a proxy that sets or strips the
+# header. Set to an empty value to disable.
+SECURE_PROXY_SSL_HEADER = (
+    tuple(
+        value
+        for value in env.list(
+            "DJANGO_SECURE_PROXY_SSL_HEADER",
+            default=["HTTP_X_FORWARDED_PROTO", "https"],
+        )
+        if value
+    )
+    or None
+)
+
+
 # Security - Cross-Site Request Forgery (CSRF)
 #
 # Set this to match your site's base URL, including port if not 80 or 443.
