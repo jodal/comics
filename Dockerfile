@@ -44,10 +44,7 @@ EOT
 
 # Collect static files
 ENV DJANGO_STATIC_ROOT=/app/static
-RUN <<EOT
-/app/bin/comics collectstatic --noinput
-/app/bin/comics compress
-EOT
+RUN /app/bin/comics collectstatic --noinput
 
 # --------------------------------------------
 

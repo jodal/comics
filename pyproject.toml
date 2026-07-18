@@ -15,7 +15,6 @@ dependencies = [
     "django-allauth>=65.18.0",
     "django-anymail>=13.0.1",
     "django-bootstrap-form>=3.4",
-    "django-compressor>=4.5.1",
     "django-invitations>=2.1.0",
     "django-ninja>=1.6.2",
     "django-stubs-ext>=6.0.5",
