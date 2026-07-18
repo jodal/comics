@@ -1,14 +1,12 @@
 # noqa: INP001
 
-import pathlib
-import tomllib
+from importlib.metadata import version as get_version
 
 project = "Comics"
 author = "Stein Magnus Jodal and contributors"
 copyright = f"2009-2026, {author}"  # noqa: A001
 
-with pathlib.Path("../pyproject.toml").open("rb") as fh:
-    release = tomllib.load(fh)["project"]["version"]
+release = get_version("comics")
 version = ".".join(release.split(".")[:2])
 
 extensions = [

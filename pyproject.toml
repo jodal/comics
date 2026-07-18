@@ -1,6 +1,6 @@
 [project]
 name = "comics"
-version = "25.8.4"
+dynamic = ["version"]
 description = "Comics is a webcomics aggregator."
 authors = [{ name = "Stein Magnus Jodal", email = "stein.magnus@jodal.no" }]
 readme = "README.md"
@@ -254,18 +254,29 @@ commands = [["zizmor", "{posargs:.}"]]
 
 [tool.uv]
 package = true
+# Re-derive the version when the git commit or tags change
+cache-keys = [{ git = { commit = true, tags = true } }]
 
-[tool.uv.build-backend]
-source-include = [
+
+[tool.hatch.build.targets.sdist]
+include = [
     ".github/**",
     ".gitignore",
     ".mailmap",
     "dev-template.env",
     "docs/**",
+    "src/**",
     "tests/**",
 ]
 
+[tool.hatch.version]
+source = "uv-dynamic-versioning"
+
+
+[tool.uv-dynamic-versioning]
+fallback-version = "0.0.0"
+
 
 [build-system]
-requires = ["uv_build>=0.11.26,<0.12.0"]
-build-backend = "uv_build"
+requires = ["hatchling", "uv-dynamic-versioning"]
+build-backend = "hatchling.build"

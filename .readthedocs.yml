@@ -5,6 +5,9 @@ build:
   tools:
     python: "3.12"
   jobs:
+    post_checkout:
+      # Fetch full history and tags so the version can be derived from git tags
+      - git fetch --unshallow --tags || true
     post_create_environment:
       - pip install uv
     post_install:
