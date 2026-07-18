@@ -105,7 +105,7 @@ Root resource
 
 .. http:get:: /api/v1/
 
-    Lists all available resources, and URLs for their schemas.
+    Lists all available resources.
 
 
 .. _users-resource:

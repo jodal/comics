@@ -227,13 +227,7 @@ def subscribed_filter(
 def root(request: HttpRequest) -> HttpResponse:
     resources = ["comics", "images", "releases", "subscriptions", "users"]
     return json_response(
-        {
-            name: {
-                "list_endpoint": f"{API_PREFIX}/{name}/",
-                "schema": f"{API_PREFIX}/{name}/schema/",
-            }
-            for name in resources
-        }
+        {name: {"list_endpoint": f"{API_PREFIX}/{name}/"} for name in resources}
     )
 
 
