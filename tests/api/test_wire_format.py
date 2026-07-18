@@ -273,6 +273,14 @@ def test_users_401_challenges_with_basic_auth(db: None, client: Client) -> None:
     assert response.headers["WWW-Authenticate"] == 'Basic Realm="Comics API"'
 
 
+def test_bearer_auth_with_secret_key(db: None, client: Client, user: User) -> None:
+    response = client.get(
+        "/api/v1/comics/", headers={"authorization": "Bearer s3cretk3y"}
+    )
+
+    assert response.status_code == 200
+
+
 def test_wrong_key_returns_401(db: None, client: Client, user: User) -> None:
     response = client.get("/api/v1/comics/", headers={"authorization": "Key wrong"})
 

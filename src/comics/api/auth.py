@@ -1,18 +1,28 @@
-"""Authentication for the API, compatible with the original tastypie setup.
+"""Authentication for the API.
 
-All resources accept the user's secret key, either as an
-``Authorization: Key <secret-key>`` header or as a ``?key=`` parameter.
-The users resource additionally accepts HTTP basic auth.
+All resources accept the user's secret key as a standard bearer token
+in the ``Authorization`` header. The users resource additionally
+accepts HTTP basic auth.
+
+The advertised auth classes extend django-ninja's security classes, so
+that the OpenAPI spec declares the security schemes and the interactive
+API docs offer to authenticate requests.
+
+Two unadvertised ways of providing the secret key are also accepted,
+for old clients: the tastypie-era ``Authorization: Key <secret-key>``
+header and the ``?key=`` query parameter. They are plain callables
+rather than django-ninja security classes, keeping them out of the
+OpenAPI spec, to steer clients towards the ``Authorization`` header
+and keep secret keys out of URLs, caches, and server logs.
 """
 
 from __future__ import annotations
 
-import base64
-import binascii
 from typing import TYPE_CHECKING
 
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from ninja.security import HttpBasicAuth, HttpBearer
 
 if TYPE_CHECKING:
     from django.http import HttpRequest
@@ -20,44 +30,54 @@ if TYPE_CHECKING:
 BASIC_AUTH_REALM = "Comics API"
 
 
-class SecretKeyAuth:
+def _user_from_secret_key(request: HttpRequest, secret_key: str | None) -> User | None:
+    if not secret_key:
+        return None
+    try:
+        user = User.objects.get(comics_profile__secret_key=secret_key, is_active=True)
+    except (User.DoesNotExist, User.MultipleObjectsReturned):
+        return None
+    request.user = user
+    return user
+
+
+class SecretKeyBearerAuth(HttpBearer):
+    def authenticate(self, request: HttpRequest, token: str) -> User | None:
+        return _user_from_secret_key(request, token)
+
+
+class LegacySecretKeyQueryAuth:
+    """The ``?key=<secret-key>`` query parameter."""
+
     def __call__(self, request: HttpRequest) -> User | None:
-        secret_key: str | None
-        header = request.headers.get("authorization", "")
-        if header.lower().startswith("key "):
-            parts = header.split()
-            if len(parts) != 2:
-                return None
-            secret_key = parts[1]
-        else:
-            secret_key = request.GET.get("key")
-        if not secret_key:
-            return None
-        try:
-            user = User.objects.get(
-                comics_profile__secret_key=secret_key, is_active=True
-            )
-        except (User.DoesNotExist, User.MultipleObjectsReturned):
-            return None
-        request.user = user
-        return user
+        return _user_from_secret_key(request, request.GET.get("key"))
 
 
-class BasicAuth:
+class LegacySecretKeyHeaderAuth:
+    """The tastypie-era ``Authorization: Key <secret-key>`` header.
+
+    A plain callable rather than a django-ninja security class, so that
+    it is not declared in the OpenAPI spec.
+    """
+
+    def __call__(self, request: HttpRequest) -> User | None:
+        parts = request.headers.get("Authorization", "").split()
+        if len(parts) != 2 or parts[0].lower() != "key":
+            return None
+        return _user_from_secret_key(request, parts[1])
+
+
+class BasicAuth(HttpBasicAuth):
     def __call__(self, request: HttpRequest) -> User | None:
         # Mark the request so that a 401 response challenges with basic auth
         request._basic_auth_challenge = True  # type: ignore[attr-defined]
+        return super().__call__(request)
 
-        header = request.headers.get("authorization", "")
-        if not header.lower().startswith("basic "):
-            return None
-        try:
-            decoded = base64.b64decode(header.split(" ", 1)[1].strip()).decode()
-        except (binascii.Error, UnicodeDecodeError, ValueError):
-            return None
-        username, _, password = decoded.partition(":")
+    def authenticate(
+        self, request: HttpRequest, username: str, password: str
+    ) -> User | None:
         user = authenticate(request, username=username, password=password)
         if user is None:
             return None
         request.user = user
-        return user
+        return user  # type: ignore[return-value]

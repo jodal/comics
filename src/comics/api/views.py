@@ -20,7 +20,13 @@ from ninja import NinjaAPI
 from ninja.errors import AuthenticationError, HttpError
 
 from comics.accounts.models import Subscription
-from comics.api.auth import BASIC_AUTH_REALM, BasicAuth, SecretKeyAuth
+from comics.api.auth import (
+    BASIC_AUTH_REALM,
+    BasicAuth,
+    LegacySecretKeyHeaderAuth,
+    LegacySecretKeyQueryAuth,
+    SecretKeyBearerAuth,
+)
 from comics.api.filtering import ALL, FilterSpec, apply_filters
 from comics.api.serialization import format_value, json_response, paginated
 from comics.core.models import Comic, Image, Release
@@ -37,8 +43,12 @@ API_PREFIX = "/api/v1"
 
 api = NinjaAPI(urls_namespace="api")
 
-key_auth = [SecretKeyAuth()]
-users_auth = [BasicAuth(), SecretKeyAuth()]
+key_auth = [
+    SecretKeyBearerAuth(),
+    LegacySecretKeyQueryAuth(),
+    LegacySecretKeyHeaderAuth(),
+]
+users_auth = [BasicAuth(), *key_auth]
 
 
 # --- Error handling

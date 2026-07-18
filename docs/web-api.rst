@@ -25,15 +25,10 @@ Comics instance. The user must authenticate himself using the same
 secret key as is used to access comic feeds. The key can be found in the
 account section of the Comics instance.
 
-The secret key can be provided in one of two ways:
+The secret key is provided as a bearer token in the ``Authorization``
+HTTP header. Example::
 
-- Using a HTTP GET parameter named ``key``, i.e. as part of the URL. Example::
-
-      http://example.com/api/v1/users/?key=76acdcdf16ae4e12becb00d09a9d9456
-
-- Using the ``Authorization`` HTTP header. Example::
-
-      Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+    Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
 
 
 Get secret key using email and password
@@ -124,7 +119,7 @@ Users resource
         GET /api/v1/users/ HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
 
     **Example request using Basic Authentication**
 
@@ -183,7 +178,7 @@ Comics resource
         GET /api/v1/comics/?slug=xkcd HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
 
     **Example response**
 
@@ -242,7 +237,7 @@ Comics resource
         GET /api/v1/comics/18/ HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
 
     **Example response**
 
@@ -287,7 +282,7 @@ Releases resource
         GET /api/v1/releases/?comic__slug=xkcd&limit=2 HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
 
     **Example response**
 
@@ -299,7 +294,7 @@ Releases resource
         {
             "meta": {
                 "limit": 2,
-                "next": "/api/v1/releases/?limit=2&key=76acdcdf16ae4e12becb00d09a9d9456&format=json&comic__slug=xkcd&offset=2",
+                "next": "/api/v1/releases/?comic__slug=xkcd&limit=2&offset=2",
                 "offset": 0,
                 "previous": null,
                 "total_count": 1104
@@ -375,7 +370,7 @@ Releases resource
         GET /api/v1/releases/147708/ HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
 
     **Example response**
 
@@ -465,7 +460,7 @@ Subscriptions resource
         GET /api/v1/subscriptions/?comic__slug=xkcd HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
 
     **Example response**
 
@@ -511,7 +506,7 @@ Subscriptions resource
         POST /api/v1/subscriptions/ HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
         Content-Type: application/json
 
         {
@@ -544,7 +539,7 @@ Subscriptions resource
         PATCH /api/v1/subscriptions/ HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
         Content-Type: application/json
 
         {
@@ -587,7 +582,7 @@ Subscriptions resource
         GET /api/v1/subscriptions/2/ HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
 
     **Example response**
 
@@ -619,7 +614,7 @@ Subscriptions resource
         DELETE /api/v1/subscriptions/17/ HTTP/1.1
         Host: example.com
         Accept: application/json
-        Authorization: Key 76acdcdf16ae4e12becb00d09a9d9456
+        Authorization: Bearer 76acdcdf16ae4e12becb00d09a9d9456
 
     **Example response**
 
