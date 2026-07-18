@@ -54,3 +54,14 @@ def test_response_includes_the_secret_key(db: None, client: Client, user: User) 
 
     data = json.loads(response.content)
     assert data["objects"][0]["secret_key"] == "s3cretk3y"  # noqa: S105
+
+
+def test_cannot_read_other_users_details(db: None, client: Client, user: User) -> None:
+    bob = User.objects.create_user("bob", "bob@example.com", "topsecret")
+
+    response = client.get(
+        "/api/v1/users/%d/" % bob.pk,
+        headers={"authorization": "Key s3cretk3y"},
+    )
+
+    assert response.status_code == 404

@@ -116,7 +116,7 @@ THIRD_PARTY_APPS = [
     "invitations",  # After allauth
     "bootstrapform",
     "compressor",
-    "tastypie",
+    "ninja",
 ]
 LOCAL_APPS = [
     "comics.core",
@@ -385,11 +385,6 @@ MEDIA_URL = env.str(
     "DJANGO_MEDIA_URL",
     default="/media/",
 )
-
-
-# API - django-tastypie
-#
-TASTYPIE_DEFAULT_FORMATS = ["json", "jsonp", "xml", "yaml", "plist"]
 
 
 # Tests

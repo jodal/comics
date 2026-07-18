@@ -1,6 +1,5 @@
 import json
 
-import pytest
 from django.contrib.auth.models import User
 from django.test.client import Client
 
@@ -137,10 +136,73 @@ def test_unsubscribe_from_comic(
     assert Subscription.objects.filter(userprofile__user=user).count() == 1
 
 
-@pytest.mark.skip(reason="Django test client doesn't support PATCH yet")
-def test_bulk_update() -> None:
-    # XXX: "PATCH /api/v1/subscriptions/" isn't tested as Django's test
-    # client doesn't support the PATCH method yet. See
-    # https://code.djangoproject.com/ticket/17797 to check if PATCH support
-    # has been added yet.
-    pass
+def test_bulk_update(
+    db: None,
+    client: Client,
+    user: User,
+    subscriptions: list[Subscription],
+) -> None:
+    comic = Comic.objects.get(slug="bunny")
+    deleted = subscriptions[0]
+
+    data = json.dumps(
+        {
+            "objects": [{"comic": "/api/v1/comics/%d/" % comic.pk}],
+            "deleted_objects": ["/api/v1/subscriptions/%d/" % deleted.pk],
+        }
+    )
+    response = client.patch(
+        "/api/v1/subscriptions/",
+        data=data,
+        content_type="application/json",
+        headers={"authorization": "Key s3cretk3y"},
+    )
+
+    assert response.status_code == 202
+    assert response.content == b""
+
+    subs = Subscription.objects.filter(userprofile__user=user)
+    assert subs.filter(comic=comic).exists()
+    assert not subs.filter(pk=deleted.pk).exists()
+    assert subs.count() == 2
+
+
+def test_cannot_read_other_users_subscription(
+    db: None,
+    client: Client,
+    user: User,
+    subscriptions: list[Subscription],
+) -> None:
+    bob = User.objects.create_user("bob", "bob@example.com", "topsecret")
+    bob_sub = Subscription.objects.create(
+        userprofile=bob.comics_profile,
+        comic=Comic.objects.get(slug="bunny"),
+    )
+
+    response = client.get(
+        "/api/v1/subscriptions/%d/" % bob_sub.pk,
+        headers={"authorization": "Key s3cretk3y"},
+    )
+
+    assert response.status_code == 404
+
+
+def test_cannot_delete_other_users_subscription(
+    db: None,
+    client: Client,
+    user: User,
+    subscriptions: list[Subscription],
+) -> None:
+    bob = User.objects.create_user("bob", "bob@example.com", "topsecret")
+    bob_sub = Subscription.objects.create(
+        userprofile=bob.comics_profile,
+        comic=Comic.objects.get(slug="bunny"),
+    )
+
+    response = client.delete(
+        "/api/v1/subscriptions/%d/" % bob_sub.pk,
+        headers={"authorization": "Key s3cretk3y"},
+    )
+
+    assert response.status_code == 404
+    assert Subscription.objects.filter(pk=bob_sub.pk).exists()
