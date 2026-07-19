@@ -254,8 +254,10 @@ commands = [["zizmor", "{posargs:.}"]]
 
 [tool.uv]
 package = true
-# Re-derive the version when the git commit or tags change
-cache-keys = [{ git = { commit = true, tags = true } }]
+# Overriding cache-keys drops uv's default pyproject.toml key, so keep it
+# explicitly, plus the git key uv-dynamic-versioning needs to re-derive the
+# version when the commit or tags change
+cache-keys = [{ file = "pyproject.toml" }, { git = { commit = true, tags = true } }]
 
 
 [tool.hatch.build.targets.sdist]
