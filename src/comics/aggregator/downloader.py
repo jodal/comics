@@ -137,7 +137,7 @@ class ImageDownloader:
         checksum: str,
     ) -> Image | None:
         try:
-            image = Image.objects.get(comic=comic, checksum=checksum)
+            image = Image.objects.for_comic(comic).for_checksum(checksum).get()
         except Image.DoesNotExist:
             return None
         else:

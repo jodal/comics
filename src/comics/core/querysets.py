@@ -23,6 +23,9 @@ class BaseQuerySet[M: models.Model](models.QuerySet[M]):
         # application code interacts with.
         return cast("Self", super().as_manager())
 
+    def for_pk(self, pk: int, /) -> Self:
+        return self.filter(pk=pk)
+
 
 class ComicQuerySet(BaseQuerySet["Comic"]):
     def active(self) -> Self:
@@ -87,4 +90,8 @@ class ReleaseQuerySet(BaseQuerySet["Release"]):
 
 
 class ImageQuerySet(BaseQuerySet["Image"]):
-    pass
+    def for_comic(self, comic: Comic, /) -> Self:
+        return self.filter(comic=comic)
+
+    def for_checksum(self, checksum: str, /) -> Self:
+        return self.filter(checksum=checksum)

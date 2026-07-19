@@ -315,7 +315,9 @@ class MyComicsLatestView(MyComicsMixin, ReleaseLatestView):
 
 class MyComicsNumReleasesSinceView(MyComicsLatestView):
     def get_num_releases_since(self) -> int:
-        last_release_seen = get_object_or_404(Release, id=self.kwargs["release_id"])
+        last_release_seen = get_object_or_404(
+            Release.objects.for_pk(self.kwargs["release_id"])
+        )
         releases = super().get_queryset()
         return releases.fetched_after(last_release_seen.fetched).count()
 

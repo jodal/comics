@@ -32,7 +32,6 @@ from comics.api.serialization import format_value, json_response, paginated
 from comics.core.models import Comic, Image, Release
 
 if TYPE_CHECKING:
-    from django.contrib.auth.models import User
     from django.http import HttpRequest
 
     from comics.accounts.typing import ComicsUser
@@ -448,7 +447,7 @@ def comics_list(request: AuthedRequest) -> HttpResponse:
 @api.get("/comics/{int:comic_id}/", auth=key_auth)
 def comics_detail(request: HttpRequest, comic_id: int) -> HttpResponse:
     """Show a comic."""
-    comic = get_object_or_404(Comic, pk=comic_id)
+    comic = get_object_or_404(Comic.objects.for_pk(comic_id))
     return json_response(comic_dict(comic))
 
 
@@ -473,7 +472,7 @@ def images_list(request: HttpRequest) -> HttpResponse:
 @api.get("/images/{int:image_id}/", auth=key_auth)
 def images_detail(request: HttpRequest, image_id: int) -> HttpResponse:
     """Show a comic image."""
-    image = get_object_or_404(Image, pk=image_id)
+    image = get_object_or_404(Image.objects.for_pk(image_id))
     return json_response(image_dict(image))
 
 
@@ -506,7 +505,9 @@ def releases_list(request: AuthedRequest) -> HttpResponse:
 @api.get("/releases/{int:release_id}/", auth=key_auth)
 def releases_detail(request: HttpRequest, release_id: int) -> HttpResponse:
     """Show a comic release, including its images."""
-    release = get_object_or_404(Release.objects.select_related("comic"), pk=release_id)
+    release = get_object_or_404(
+        Release.objects.select_related("comic").for_pk(release_id)
+    )
     return json_response(release_dict(release))
 
 
@@ -530,7 +531,7 @@ def comic_from_uri(uri: str | None) -> Comic:
     match = COMIC_URI_RE.match(uri or "")
     if match:
         try:
-            return Comic.objects.get(pk=int(match[1]))
+            return Comic.objects.for_pk(int(match[1])).get()
         except Comic.DoesNotExist:
             pass
     raise HttpError(400, f"Unknown comic '{uri}'")
@@ -543,7 +544,7 @@ def own_subscription_from_uri(
     match = SUBSCRIPTION_URI_RE.match(uri or "")
     if match is None:
         return None
-    return Subscription.objects.for_user(request.auth).filter(pk=int(match[1])).first()
+    return Subscription.objects.for_user(request.auth).for_pk(int(match[1])).first()
 
 
 @api.get(
@@ -617,7 +618,7 @@ def subscriptions_bulk_update(request: AuthedRequest) -> HttpResponse:
 def subscriptions_detail(request: AuthedRequest, subscription_id: int) -> HttpResponse:
     """Show one of the authenticated user's subscriptions."""
     subscription = get_object_or_404(
-        Subscription.objects.for_user(request.auth), pk=subscription_id
+        Subscription.objects.for_user(request.auth).for_pk(subscription_id)
     )
     return json_response(subscription_dict(subscription))
 
@@ -630,7 +631,7 @@ def subscriptions_detail(request: AuthedRequest, subscription_id: int) -> HttpRe
 def subscriptions_update(request: AuthedRequest, subscription_id: int) -> HttpResponse:
     """Change one of the authenticated user's subscriptions to another comic."""
     subscription = get_object_or_404(
-        Subscription.objects.for_user(request.auth), pk=subscription_id
+        Subscription.objects.for_user(request.auth).for_pk(subscription_id)
     )
     data = parse_body(request)
     subscription.comic = comic_from_uri(data.get("comic"))
@@ -642,7 +643,7 @@ def subscriptions_update(request: AuthedRequest, subscription_id: int) -> HttpRe
 def subscriptions_delete(request: AuthedRequest, subscription_id: int) -> HttpResponse:
     """Unsubscribe the authenticated user from a comic."""
     subscription = get_object_or_404(
-        Subscription.objects.for_user(request.auth), pk=subscription_id
+        Subscription.objects.for_user(request.auth).for_pk(subscription_id)
     )
     subscription.delete()
     return HttpResponse(status=204)
