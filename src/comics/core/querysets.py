@@ -1,13 +1,14 @@
 from __future__ import annotations
 
+import datetime as dt
 from typing import TYPE_CHECKING, Self, cast
 
+from django.conf import settings
 from django.db import models
 from django.db.models.functions import Lower
+from django.utils import timezone
 
 if TYPE_CHECKING:
-    import datetime as dt
-
     from comics.core.models import Comic, Image, Release  # noqa: F401
 
 
@@ -35,6 +36,11 @@ class ComicQuerySet(BaseQuerySet["Comic"]):
 class ReleaseQuerySet(BaseQuerySet["Release"]):
     def for_comics(self, *comics: Comic) -> Self:
         return self.filter(comic__in=comics)
+
+    def for_feed(self) -> Self:
+        """The releases recently fetched enough to be in a feed, newest first."""
+        from_time = timezone.now() - dt.timedelta(days=settings.COMICS_MAX_DAYS_IN_FEED)
+        return self.filter(fetched__gte=from_time).order_by("-fetched")
 
     def first_pub_date(self) -> dt.date | None:
         """The oldest publication date, if any releases exist."""

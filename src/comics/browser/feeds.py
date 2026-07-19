@@ -10,7 +10,7 @@ from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse
-from django.utils import feedgenerator, timezone
+from django.utils import feedgenerator
 from django.utils.formats import date_format
 
 from comics.core.models import Comic, Release
@@ -36,11 +36,6 @@ def _absolute_url(path: str) -> str:
     # object in the database instead of our settings.
     site_url: str = settings.COMICS_SITE_URL
     return urljoin(site_url, path)
-
-
-def _recent_releases(releases: ReleaseQuerySet) -> ReleaseQuerySet:
-    from_time = timezone.now() - dt.timedelta(days=settings.COMICS_MAX_DAYS_IN_FEED)
-    return releases.filter(fetched__gte=from_time).order_by("-fetched")
 
 
 class ReleaseFeed[ObjectT](Feed[Release, ObjectT]):
@@ -102,8 +97,7 @@ class MyComicsFeed(ReleaseFeed["UserProfile"]):
         )
 
     def items(self, obj: "UserProfile") -> ReleaseQuerySet:
-        releases = Release.objects.select_related().for_comics(*obj.comics.all())
-        return _recent_releases(releases)
+        return Release.objects.select_related().for_comics(*obj.comics.all()).for_feed()
 
 
 @dataclass
@@ -141,5 +135,4 @@ class OneComicFeed(ReleaseFeed[ComicForProfile]):
         )
 
     def items(self, obj: ComicForProfile) -> ReleaseQuerySet:
-        releases = Release.objects.select_related().for_comics(obj.comic)
-        return _recent_releases(releases)
+        return Release.objects.select_related().for_comics(obj.comic).for_feed()
