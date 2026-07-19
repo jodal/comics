@@ -144,7 +144,7 @@ class CrawlerBase:
 
         if (
             self.multiple_releases_per_day is False
-            and self.comic.release_set.filter(pub_date=pub_date).count() > 0
+            and self.comic.release_set.filter(pub_date=pub_date).exists()
         ):
             raise ReleaseAlreadyExists(identifier)
 
