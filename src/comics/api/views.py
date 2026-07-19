@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import json
 import re
-from typing import TYPE_CHECKING, Any, cast
+from typing import TYPE_CHECKING, Any, Protocol, Self, cast
 
 from django.contrib.auth.models import User
 from django.db import transaction
@@ -32,7 +32,7 @@ from comics.api.serialization import format_value, json_response, paginated
 from comics.core.models import Comic, Image, Release
 
 if TYPE_CHECKING:
-    from django.db.models import Model, QuerySet
+    from django.contrib.auth.models import User
     from django.http import HttpRequest
 
     from comics.accounts.typing import ComicsUser
@@ -216,16 +216,22 @@ USER_SPEC = FilterSpec(
 )
 
 
-def subscribed_filter[M: Model](
+class SubscribableQuerySet(Protocol):
+    """A queryset that can be narrowed by a user's subscriptions."""
+
+    def subscribed_by(self, user: User, /) -> Self: ...
+    def not_subscribed_by(self, user: User, /) -> Self: ...
+
+
+def subscribed_filter[QS: SubscribableQuerySet](
     request: AuthedRequest,
-    queryset: QuerySet[M],
-    lookup: str,
-) -> QuerySet[M]:
+    queryset: QS,
+) -> QS:
     subscribed = request.GET.get("subscribed")
     if subscribed == "true":
-        return queryset.filter(**{lookup: request.auth})
+        return queryset.subscribed_by(request.auth)
     if subscribed == "false":
-        return queryset.exclude(**{lookup: request.auth})
+        return queryset.not_subscribed_by(request.auth)
     return queryset
 
 
@@ -434,8 +440,8 @@ def users_detail(request: AuthedRequest, user_id: int) -> HttpResponse:
 )
 def comics_list(request: AuthedRequest) -> HttpResponse:
     """List all comics known to the site."""
-    queryset = apply_filters(request.GET, Comic.objects.all(), COMIC_SPEC)
-    queryset = subscribed_filter(request, queryset, "userprofile__user")
+    queryset = subscribed_filter(request, Comic.objects.all())
+    queryset = apply_filters(request.GET, queryset, COMIC_SPEC)
     return json_response(paginated(request, queryset, comic_dict))
 
 
@@ -492,8 +498,8 @@ def releases_list(request: AuthedRequest) -> HttpResponse:
         .prefetch_related("images")
         .order_by("-fetched")
     )
+    queryset = subscribed_filter(request, queryset)
     queryset = apply_filters(request.GET, queryset, RELEASE_SPEC)
-    queryset = subscribed_filter(request, queryset, "comic__userprofile__user")
     return json_response(paginated(request, queryset, release_dict))
 
 

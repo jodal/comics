@@ -9,6 +9,8 @@ from django.db.models.functions import Lower
 from django.utils import timezone
 
 if TYPE_CHECKING:
+    from django.contrib.auth.models import User
+
     from comics.core.models import Comic, Image, Release  # noqa: F401
 
 
@@ -32,6 +34,12 @@ class ComicQuerySet(BaseQuerySet["Comic"]):
     def for_slug(self, slug: str, /) -> Self:
         return self.filter(slug=slug)
 
+    def subscribed_by(self, user: User, /) -> Self:
+        return self.filter(userprofile__user=user)
+
+    def not_subscribed_by(self, user: User, /) -> Self:
+        return self.exclude(userprofile__user=user)
+
     def sort_by_name(self) -> Self:
         return self.order_by(Lower("name"))
 
@@ -51,6 +59,12 @@ class ReleaseQuerySet(BaseQuerySet["Release"]):
 
     def fetched_after(self, fetched: dt.datetime, /) -> Self:
         return self.filter(fetched__gt=fetched)
+
+    def subscribed_by(self, user: User, /) -> Self:
+        return self.filter(comic__userprofile__user=user)
+
+    def not_subscribed_by(self, user: User, /) -> Self:
+        return self.exclude(comic__userprofile__user=user)
 
     def for_feed(self) -> Self:
         """The releases recently fetched enough to be in a feed, newest first."""
