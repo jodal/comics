@@ -145,6 +145,11 @@ A production ``comics.env`` may look like this:
     # Optional: Sentry crash reporting.
     SENTRY_DSN=https://...
 
+    # Optional: have browsers report Content-Security-Policy violations to
+    # Sentry. The report URI is found under the Sentry project's "Security
+    # Headers" settings.
+    SENTRY_CSP_REPORT_URI=https://...
+
     # Base URL where the site is reachable. Used to build absolute URLs,
     # e.g. in Atom feeds, and as the default for the allowed hosts and CSRF
     # trusted origins (override with DJANGO_ALLOWED_HOSTS and

@@ -54,6 +54,11 @@ sentry_sdk.init(
     traces_sample_rate=SENTRY_TRACES_SAMPLE_RATE,
     send_default_pii=True,
 )
+#
+# To have browsers report Content-Security-Policy violations to Sentry, set
+# this to the report URI found under the Sentry project's "Security Headers"
+# settings.
+SENTRY_CSP_REPORT_URI = env.str("SENTRY_CSP_REPORT_URI", default=None)
 
 
 # Security - Django's secret key
@@ -580,6 +585,11 @@ if COMICS_GOOGLE_ANALYTICS_CODE:
         "https://*.analytics.google.com",
         "https://*.googletagmanager.com",
     ]
+#
+# Have browsers report violations to Sentry, if configured. See
+# https://docs.sentry.io/security-legal-pii/security/security-policy-reporting/
+if SENTRY_CSP_REPORT_URI:
+    _csp["report-uri"] = [SENTRY_CSP_REPORT_URI]
 #
 if DEBUG:
     # Only report violations in development, where django-debug-toolbar would
