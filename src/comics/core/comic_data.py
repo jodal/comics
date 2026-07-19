@@ -92,7 +92,7 @@ class ComicDataLoader:
         return bool(
             data.active
             or self.include_inactive
-            or Comic.objects.filter(slug=data.slug).exists()
+            or Comic.objects.for_slug(data.slug).exists()
         )
 
     def _load_data(self, data: ComicDataBase) -> None:

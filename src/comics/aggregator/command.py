@@ -175,7 +175,7 @@ class AggregatorConfig:
         from comics.core.models import Comic  # noqa: PLC0415
 
         try:
-            comic = Comic.objects.get(slug=comic_slug)
+            comic = Comic.objects.for_slug(comic_slug).get()
         except Comic.DoesNotExist as exc:
             error_msg = f"Comic {comic_slug} not found"
             logger.error(error_msg)

@@ -52,7 +52,9 @@ def mycomics_toggle_comic(request: AuthenticatedHttpRequest) -> HttpResponse:
         response["Allowed"] = "POST"
         return response
 
-    comic = get_object_or_404(Comic, slug=request.POST["comic"])
+    comic_slug = request.POST["comic"]
+    assert isinstance(comic_slug, str)
+    comic = get_object_or_404(Comic.objects.for_slug(comic_slug))
 
     if "add_comic" in request.POST:
         subscription = Subscription(

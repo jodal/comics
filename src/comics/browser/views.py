@@ -50,7 +50,9 @@ class ComicMixin(View):
     @property
     def comic(self) -> Comic:
         if not hasattr(self, "_comic"):
-            self._comic = get_object_or_404(Comic, slug=self.kwargs["comic_slug"])
+            self._comic = get_object_or_404(
+                Comic.objects.for_slug(self.kwargs["comic_slug"])
+            )
         return self._comic
 
     def get_user(self) -> ComicsUser:

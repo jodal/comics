@@ -29,6 +29,9 @@ class ComicQuerySet(BaseQuerySet["Comic"]):
     def inactive(self) -> Self:
         return self.filter(active=False)
 
+    def for_slug(self, slug: str, /) -> Self:
+        return self.filter(slug=slug)
+
     def sort_by_name(self) -> Self:
         return self.order_by(Lower("name"))
 
