@@ -63,9 +63,26 @@ SECRET_KEY = env.str(
 )
 
 
+# Site URL
+#
+# Base URL where the site is reachable, including port if not 80 or 443.
+# Used to build absolute URLs outside the context of a request, e.g. in
+# feeds, and as the default for the allowed hosts and CSRF trusted origins.
+COMICS_SITE_URL = env.str(
+    "COMICS_SITE_URL",
+    default="http://localhost:8000",
+).rstrip("/")
+
+
 # Security - Allowed hosts
 #
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["*"])
+# Defaults to the site URL's hostname, which is the right value in any
+# typical deployment. In development, with debug mode on and no hosts
+# configured, Django itself falls back to allowing the localhost variants.
+ALLOWED_HOSTS = env.list(
+    "DJANGO_ALLOWED_HOSTS",
+    default=[] if DEBUG else [urlsplit(COMICS_SITE_URL).hostname],
+)
 
 
 # Security - HTTPS detection
@@ -91,10 +108,11 @@ SECURE_PROXY_SSL_HEADER = (
 
 # Security - Cross-Site Request Forgery (CSRF)
 #
-# Set this to match your site's base URL, including port if not 80 or 443.
+# Defaults to the site URL, which is the right value in any typical
+# deployment.
 CSRF_TRUSTED_ORIGINS = env.list(
     "DJANGO_CSRF_TRUSTED_ORIGINS",
-    default=["http://localhost:8000"],
+    default=[COMICS_SITE_URL],
 )
 #
 # Do not allow JavaScript to access the CSRF cookie

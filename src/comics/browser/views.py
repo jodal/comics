@@ -4,11 +4,9 @@ import json
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from django.utils import timezone
 from django.views.generic import (
     DayArchiveView,
     ListView,
@@ -176,52 +174,6 @@ class ReleaseMonthArchiveView(ReleaseDateMixin, MonthArchiveView):
 
     def get_subtitle(self):
         return self.context["month"].strftime("%B %Y")
-
-
-class ReleaseFeedView(ComicMixin, ListView):
-    """Things common for all *feed* views"""
-
-    template_name = "browser/release_feed.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update(
-            {
-                "feed": {
-                    "title": self.get_feed_title(),
-                    "url": self.request.build_absolute_uri(self.get_feed_url()),
-                    "web_url": self.request.build_absolute_uri(self.get_web_url()),
-                    "base_url": self.request.build_absolute_uri("/"),
-                    "author": self.get_feed_author(),
-                    "updated": self.get_last_updated(),
-                },
-            }
-        )
-        return context
-
-    def render_to_response(self, context, **kwargs):
-        return super().render_to_response(
-            context, content_type="application/xml", **kwargs
-        )
-
-    def get_user(self):
-        return get_object_or_404(
-            User,
-            comics_profile__secret_key=self.request.GET.get("key", None),
-            is_active=True,
-        )
-
-    def get_web_url(self):
-        return self.get_latest_url()
-
-    def get_feed_author(self):
-        return settings.COMICS_SITE_TITLE
-
-    def get_last_updated(self):
-        try:
-            return self.get_queryset().values_list("fetched", flat=True)[0]
-        except IndexError:
-            return timezone.now()
 
 
 class MyComicsMixin:
@@ -503,17 +455,6 @@ class MyComicsYearView(LoginRequiredMixin, RedirectView):
         return reverse("mycomics_month", kwargs={"year": kwargs["year"], "month": "1"})
 
 
-class MyComicsFeed(MyComicsMixin, ReleaseFeedView):
-    """Atom feed for releases from my comics"""
-
-    def get_queryset(self):
-        from_date = datetime.date.today() - datetime.timedelta(
-            days=settings.COMICS_MAX_DAYS_IN_FEED
-        )
-        releases = super().get_queryset()
-        return releases.filter(fetched__gte=from_date).order_by("-fetched")
-
-
 class OneComicMixin:
     """Things common for all views of a single comic"""
 
@@ -762,17 +703,6 @@ class OneComicYearView(LoginRequiredMixin, RedirectView):
                 "month": "1",
             },
         )
-
-
-class OneComicFeed(OneComicMixin, ReleaseFeedView):
-    """Atom feed for releases of a single comic"""
-
-    def get_queryset(self):
-        from_date = datetime.date.today() - datetime.timedelta(
-            days=settings.COMICS_MAX_DAYS_IN_FEED
-        )
-        releases = super().get_queryset()
-        return releases.filter(fetched__gte=from_date).order_by("-fetched")
 
 
 class OneComicWebsiteRedirect(LoginRequiredMixin, ComicMixin, TemplateView):

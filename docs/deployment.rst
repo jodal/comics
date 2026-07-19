@@ -108,11 +108,10 @@ A production ``comics.env`` may look like this:
     # outstanding password-reset/invitation links.
     DJANGO_SECRET_KEY=replace-this-with-a-long-random-value
 
-    DJANGO_ALLOWED_HOSTS=comics.example.com
-    DJANGO_CSRF_TRUSTED_ORIGINS=https://comics.example.com
-
-    # Caddy serves /media/ from disk; the URL stays relative to the site.
-    DJANGO_MEDIA_URL=/media/
+    # Caddy serves /media/ from disk. Use an absolute URL so that comic
+    # images work everywhere, including in Atom feed entries viewed in feed
+    # readers.
+    DJANGO_MEDIA_URL=https://comics.example.com/media/
 
     # Host PostgreSQL, reached via pasta port forwarding (see the "Host
     # services" section). Inside the container, 127.0.0.1:5432 is the host's
@@ -145,6 +144,12 @@ A production ``comics.env`` may look like this:
 
     # Optional: Sentry crash reporting.
     SENTRY_DSN=https://...
+
+    # Base URL where the site is reachable. Used to build absolute URLs,
+    # e.g. in Atom feeds, and as the default for the allowed hosts and CSRF
+    # trusted origins (override with DJANGO_ALLOWED_HOSTS and
+    # DJANGO_CSRF_TRUSTED_ORIGINS if they need to differ).
+    COMICS_SITE_URL=https://comics.example.com
 
     COMICS_SITE_TITLE=comics.example.com
     COMICS_INVITE_MODE=true

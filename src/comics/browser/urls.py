@@ -1,6 +1,6 @@
 from django.urls import include, path, re_path
 
-from comics.browser import views
+from comics.browser import feeds, views
 
 YEAR = r"(?P<year>(19|20)\d{2})"  # 1900-2099
 MONTH = r"(?P<month>(0*[1-9]|1[0-2]))"  # 1-12
@@ -54,7 +54,7 @@ urlpatterns = [
                 ),
                 path(
                     "feed/",
-                    views.MyComicsFeed.as_view(),
+                    feeds.MyComicsFeed(),
                     name="mycomics_feed",
                 ),
                 path(
@@ -102,7 +102,7 @@ urlpatterns = [
                 ),
                 path(
                     "feed/",
-                    views.OneComicFeed.as_view(),
+                    feeds.OneComicFeed(),
                     name="comic_feed",
                 ),
             ]
