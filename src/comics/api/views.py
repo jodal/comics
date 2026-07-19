@@ -35,7 +35,6 @@ if TYPE_CHECKING:
     from django.db.models import Model, QuerySet
     from django.http import HttpRequest
 
-    from comics.accounts.querysets import SubscriptionQuerySet
     from comics.accounts.typing import ComicsUser
 
     class AuthedRequest(HttpRequest):
@@ -511,10 +510,6 @@ SUBSCRIPTION_URI_RE = re.compile(rf"^{re.escape(API_PREFIX)}/subscriptions/(\d+)
 COMIC_URI_RE = re.compile(rf"^{re.escape(API_PREFIX)}/comics/(\d+)/$")
 
 
-def own_subscriptions(request: AuthedRequest) -> SubscriptionQuerySet:
-    return Subscription.objects.for_user(request.auth)
-
-
 def parse_body(request: HttpRequest) -> dict[str, Any]:
     try:
         data = json.loads(request.body)
@@ -542,7 +537,7 @@ def own_subscription_from_uri(
     match = SUBSCRIPTION_URI_RE.match(uri or "")
     if match is None:
         return None
-    return own_subscriptions(request).filter(pk=int(match[1])).first()
+    return Subscription.objects.for_user(request.auth).filter(pk=int(match[1])).first()
 
 
 @api.get(
@@ -552,7 +547,9 @@ def own_subscription_from_uri(
 )
 def subscriptions_list(request: AuthedRequest) -> HttpResponse:
     """List the authenticated user's comic subscriptions."""
-    queryset = apply_filters(request.GET, own_subscriptions(request), SUBSCRIPTION_SPEC)
+    queryset = apply_filters(
+        request.GET, Subscription.objects.for_user(request.auth), SUBSCRIPTION_SPEC
+    )
     return json_response(paginated(request, queryset, subscription_dict))
 
 
@@ -613,7 +610,9 @@ def subscriptions_bulk_update(request: AuthedRequest) -> HttpResponse:
 @api.get("/subscriptions/{int:subscription_id}/", auth=key_auth)
 def subscriptions_detail(request: AuthedRequest, subscription_id: int) -> HttpResponse:
     """Show one of the authenticated user's subscriptions."""
-    subscription = get_object_or_404(own_subscriptions(request), pk=subscription_id)
+    subscription = get_object_or_404(
+        Subscription.objects.for_user(request.auth), pk=subscription_id
+    )
     return json_response(subscription_dict(subscription))
 
 
@@ -624,7 +623,9 @@ def subscriptions_detail(request: AuthedRequest, subscription_id: int) -> HttpRe
 )
 def subscriptions_update(request: AuthedRequest, subscription_id: int) -> HttpResponse:
     """Change one of the authenticated user's subscriptions to another comic."""
-    subscription = get_object_or_404(own_subscriptions(request), pk=subscription_id)
+    subscription = get_object_or_404(
+        Subscription.objects.for_user(request.auth), pk=subscription_id
+    )
     data = parse_body(request)
     subscription.comic = comic_from_uri(data.get("comic"))
     subscription.save()
@@ -634,6 +635,8 @@ def subscriptions_update(request: AuthedRequest, subscription_id: int) -> HttpRe
 @api.delete("/subscriptions/{int:subscription_id}/", auth=key_auth)
 def subscriptions_delete(request: AuthedRequest, subscription_id: int) -> HttpResponse:
     """Unsubscribe the authenticated user from a comic."""
-    subscription = get_object_or_404(own_subscriptions(request), pk=subscription_id)
+    subscription = get_object_or_404(
+        Subscription.objects.for_user(request.auth), pk=subscription_id
+    )
     subscription.delete()
     return HttpResponse(status=204)
