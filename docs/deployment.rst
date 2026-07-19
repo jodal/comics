@@ -355,6 +355,13 @@ value.
 A request for ``/media/foo.png`` is served from ``/srv/comics/media/foo.png``
 without touching the app.
 
+Serving media from Caddy is an optimization, not a requirement: the app
+container serves ``/media/`` too, straight from Granian's Rust runtime without
+involving any Python code. If your reverse proxy does not serve the media
+library — or you run without a reverse proxy entirely — requests for
+``/media/`` simply reach the app instead and are served from there, at the
+same URLs.
+
 Note that this setup writes no log files anywhere: Granian and the scheduled
 jobs log to the journal through their systemd units, and so does Caddy's
 process log. Caddy's per-request access logging is disabled by default; add a
