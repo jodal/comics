@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -18,7 +20,7 @@ class Crawler(CrawlerBase):
     # Without referer, the server returns a placeholder image
     headers = {"Referer": "https://www.tu.no/lunch/"}
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         url = (
             f"https://www.tu.no/api/widgets/comics?name=lunch&date={pub_date:%Y-%m-%d}"
         )

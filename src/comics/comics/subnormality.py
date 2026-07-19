@@ -1,6 +1,9 @@
+import datetime as dt
 import re
 
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from lxml.html import HtmlElement
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -18,20 +21,22 @@ class Crawler(CrawlerBase):
     history_capable_date = "2008-11-25"
     time_zone = "America/New_York"
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed("http://www.viruscomix.com/rss.xml")
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
+            body = page.root.find("body")
+            assert body is not None
             elements = [
-                el
-                for el in page.root.find("body").findall("img")
-                if el.attrib["src"].endswith(".jpg")
+                el for el in body.findall("img") if el.attrib["src"].endswith(".jpg")
             ]
-            elements.sort(
-                key=lambda el: int(
-                    re.match(r".*top:\s*(\d+).*", el.attrib["style"]).group(1)
-                )
-            )
+
+            def sort_key(el: HtmlElement) -> int:
+                match = re.match(r".*top:\s*(\d+).*", el.attrib["style"])
+                assert match is not None
+                return int(match.group(1))
+
+            elements.sort(key=sort_key)
             result = [
                 CrawlerImage(el.attrib["src"], None, el.attrib.get("title", None))
                 for el in elements
@@ -39,3 +44,4 @@ class Crawler(CrawlerBase):
             if result:
                 result[0].title = page.text("title")
             return result
+        return None

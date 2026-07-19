@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -13,7 +15,7 @@ class Crawler(CrawlerBase):
     history_capable_days = 180
     time_zone = "Europe/Paris"
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed(
             "http://www.goominet.com/unspeakable-vault/?type=103&ecorss[clear_cache]=1"
         )
@@ -21,3 +23,4 @@ class Crawler(CrawlerBase):
             url = entry.summary.src('img[src*="/tx_cenostripviewer/"]')
             title = entry.title
             return CrawlerImage(url, title)
+        return None

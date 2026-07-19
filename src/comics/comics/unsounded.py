@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -15,7 +17,7 @@ class Crawler(CrawlerBase):
     schedule = "Mo,We,Fr"
     time_zone = "America/New_York"
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed("https://unsoundedupdates.tumblr.com/rss")
         for entry in feed.for_date(pub_date):
             page_url = entry.summary.href('a[href*="/comic/"]')
@@ -26,3 +28,4 @@ class Crawler(CrawlerBase):
             url = page.src("#comic img")
             title = entry.title
             return CrawlerImage(url, title)
+        return None

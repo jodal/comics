@@ -1,6 +1,8 @@
 # noqa: N999
 
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -17,7 +19,7 @@ class Crawler(CrawlerBase):
     history_capable_days = 90
     time_zone = "America/Los_Angeles"
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed("http://feeds.feedburner.com/20px")
         for entry in feed.for_date(pub_date):
             if "Comic" not in entry.tags:
@@ -28,3 +30,4 @@ class Crawler(CrawlerBase):
                 results[0].title = entry.title
                 results[0].text = entry.content0.alts(selector)[0]
                 return results
+        return None

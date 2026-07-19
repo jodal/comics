@@ -49,16 +49,18 @@ class CrawlerRelease:
 
 @dataclass
 class CrawlerImage:
-    url: str
+    # The URL is required, but crawlers pass it in unvalidated, so it is only
+    # guaranteed to be present after validate() has passed.
+    url: str | None
     title: str | None = None
     text: str | None = None
     request_headers: RequestHeaders = field(default_factory=dict)
 
     def __post_init__(self) -> None:
-        # Convert from e.g. lxml.etree._ElementUnicodeResult to unicode
-        if self.title is not None and not isinstance(self.title, str):
+        # Convert from e.g. lxml.etree._ElementUnicodeResult to plain str
+        if self.title is not None:
             self.title = str(self.title)
-        if self.text is not None and not isinstance(self.text, str):
+        if self.text is not None:
             self.text = str(self.text)
 
     def validate(self, identifier: str) -> None:
@@ -101,7 +103,8 @@ class CrawlerBase:
     pages: dict[str, LxmlParser] = field(default_factory=dict)
 
     def get_crawler_release(
-        self, pub_date: dt.date | None = None
+        self,
+        pub_date: dt.date | None = None,
     ) -> CrawlerRelease | None:
         """Get meta data for release at pub_date, or the latest release"""
 

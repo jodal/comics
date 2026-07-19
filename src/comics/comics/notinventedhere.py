@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -16,7 +18,7 @@ class Crawler(CrawlerBase):
     history_capable_date = "2009-09-21"
     time_zone = "America/Los_Angeles"
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         url = (
             f"https://s3.amazonaws.com/thiswas.notinventedhe.re/on/{pub_date:%Y-%m-%d}"
         )

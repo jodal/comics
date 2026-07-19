@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -16,7 +18,7 @@ class Crawler(CrawlerBase):
     time_zone = "America/New_York"
     archive_page = None
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         if not self.archive_page:
             page_url = "https://www.awkwardzombie.com/awkward-zombie/archive/"
             self.archive_page = self.parse_page(page_url)
@@ -26,7 +28,7 @@ class Crawler(CrawlerBase):
             f"//div[(@class='archive-date') and contains(.,'{date_string}')]/.."
         )
         if not release:
-            return
+            return None
         release = release[0]
         title = release.xpath("div[@class='archive-title']/a")
         title = title[0]
@@ -39,7 +41,7 @@ class Crawler(CrawlerBase):
 
         imgs = release_page.root.xpath("//img[@id='cc-comic']")
         if not imgs:
-            return
+            return None
         url = imgs[0].get("src")
 
         return CrawlerImage(url, title, game)

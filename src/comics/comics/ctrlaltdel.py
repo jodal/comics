@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -18,7 +20,7 @@ class Crawler(CrawlerBase):
     # Without User-Agent set, the server returns empty responses
     headers = {"User-Agent": "Mozilla/4.0"}
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed("https://cad-comic.com/feed/")
 
         for entry in feed.for_date(pub_date):
@@ -28,3 +30,4 @@ class Crawler(CrawlerBase):
             url = page.src(".comicpage img[src*='/uploads/']")
             title = entry.title
             return CrawlerImage(url, title)
+        return None

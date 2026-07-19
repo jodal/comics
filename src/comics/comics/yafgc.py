@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -14,7 +16,7 @@ class Crawler(CrawlerBase):
     history_capable_days = 30
     time_zone = "America/Los_Angeles"
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed("http://yafgc.net/feed/")
         for entry in feed.for_date(pub_date):
             url = entry.summary.src('img[src*="/wp-content/uploads/"]')
@@ -23,3 +25,4 @@ class Crawler(CrawlerBase):
             url = url.replace("-150x150", "")
             title = entry.title
             return CrawlerImage(url, title)
+        return None

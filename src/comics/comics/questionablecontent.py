@@ -1,6 +1,7 @@
+import datetime as dt
 import re
 
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -20,7 +21,7 @@ class Crawler(CrawlerBase):
     # Without User-Agent set, the server returns 403 Forbidden
     headers = {"User-Agent": "Mozilla/4.0"}
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         page = self.parse_page("https://questionablecontent.net/")
         url = page.src("img[src*='/comics/']")
         title = None

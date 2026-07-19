@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import GoComicsComCrawlerBase
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerResult, GoComicsComCrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -15,5 +17,5 @@ class Crawler(GoComicsComCrawlerBase):
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/New_York"
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         return self.crawl_helper("offthemark", pub_date)

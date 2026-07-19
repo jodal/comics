@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CreatorsCrawlerBase
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerResult, CreatorsCrawlerBase
 from comics.core.comic_data import ComicDataBase
 
 
@@ -14,5 +16,5 @@ class Crawler(CreatorsCrawlerBase):
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/Los_Angeles"
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         return self.crawl_helper("179", pub_date)

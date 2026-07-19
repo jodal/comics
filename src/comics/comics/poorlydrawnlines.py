@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -17,9 +19,10 @@ class Crawler(CrawlerBase):
     # Without User-Agent set, the server returns 403 Forbidden
     headers = {"User-Agent": "Mozilla/4.0"}
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed("http://feeds.feedburner.com/PoorlyDrawnLines")
         for entry in feed.for_date(pub_date):
             url = entry.content0.src('img[src*="/wp-content/uploads/"]')
             title = entry.title
             return CrawlerImage(url, title)
+        return None

@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -15,7 +17,7 @@ class Crawler(CrawlerBase):
     time_zone = "America/New_York"
     headers = {"User-Agent": "Mozilla/5.0"}
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed("https://www.giantitp.com/comics/oots.rss")
         if len(feed.all()):
             entry = feed.all()[0]
@@ -23,3 +25,4 @@ class Crawler(CrawlerBase):
             url = page.src('img[src*="/comics/oots/"]')
             title = entry.title
             return CrawlerImage(url, title)
+        return None

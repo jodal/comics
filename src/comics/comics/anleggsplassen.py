@@ -1,6 +1,7 @@
+import datetime as dt
 from datetime import datetime
 
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -23,7 +24,7 @@ class Crawler(CrawlerBase):
         ),
     }
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         page = self.parse_page("https://www.at.no/emne/tegneserie")
         articles = page.root.xpath('.//article[@data-section="tegneserie"]/div/a/@href')
         for article in articles:
@@ -45,3 +46,4 @@ class Crawler(CrawlerBase):
             url = str(img[0])
 
             return CrawlerImage(url, title, text)
+        return None
