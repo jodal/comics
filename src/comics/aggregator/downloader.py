@@ -66,6 +66,9 @@ class ImageDownloader:
     def download(self, crawler_image: CrawlerImage) -> Image:
         self.identifier = self.crawler_release.identifier
 
+        # CrawlerRelease.add_image() has validated that the URL is present.
+        assert crawler_image.url is not None
+
         with self._download_image(
             crawler_image.url, crawler_image.request_headers
         ) as image_file:
@@ -128,7 +131,10 @@ class ImageDownloader:
             raise ImageIsBlacklisted(self.identifier)
 
     def _get_existing_image(
-        self, comic: Comic, has_rerun_releases: bool, checksum: str
+        self,
+        comic: Comic,
+        has_rerun_releases: bool,
+        checksum: str,
     ) -> Image | None:
         try:
             image = Image.objects.get(comic=comic, checksum=checksum)
@@ -142,7 +148,7 @@ class ImageDownloader:
     def _validate_image(self, image_file: IO[bytes]) -> PILImageFile:
         try:
             image = PILImage.open(image_file)
-            image.load()  # pyright: ignore[reportUnknownMemberType]
+            image.load()
         except IndexError as error:
             raise ImageIsCorrupt(self.identifier) from error
         except OSError as error:

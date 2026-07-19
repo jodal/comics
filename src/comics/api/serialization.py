@@ -18,7 +18,7 @@ from ninja.errors import HttpError
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-    from django.db.models import QuerySet
+    from django.db.models import Model, QuerySet
     from django.http import HttpRequest
 
 DEFAULT_LIMIT = 20
@@ -44,11 +44,11 @@ def json_response(data: Any, *, status: int = 200) -> HttpResponse:
     )
 
 
-def paginated(
+def paginated[M: Model](
     request: HttpRequest,
-    queryset: QuerySet,
-    serialize: Callable[[Any], dict],
-) -> dict:
+    queryset: QuerySet[M],
+    serialize: Callable[[M], dict[str, Any]],
+) -> dict[str, Any]:
     """Build the tastypie list envelope: pagination ``meta`` plus ``objects``."""
     limit = _get_paging_param(request, "limit", default=DEFAULT_LIMIT)
     if not limit or limit > MAX_LIMIT:

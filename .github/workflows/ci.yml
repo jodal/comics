@@ -25,9 +25,9 @@ jobs:
             python: "3.14"
             tox: "3.14"
             coverage: true
-          - name: "mypy"
+          - name: "basedpyright"
             python: "3.14"
-            tox: mypy
+            tox: basedpyright
           - name: "ruff-format"
             python: "3.14"
             tox: ruff-format
@@ -50,6 +50,11 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
           activate-environment: true
+      # basedpyright resolves imports from the project venv (`venvPath` in
+      # its config), so the venv must contain all of the project's
+      # dependencies, not just tox.
+      - run: uv sync --locked --all-extras --all-groups
+        if: ${{ matrix.tox == 'basedpyright' }}
       - run: uv pip install tox tox-uv
       - run: tox -e ${{ matrix.tox }}
         if: ${{ ! matrix.coverage }}

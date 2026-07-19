@@ -1,6 +1,7 @@
+import datetime as dt
 import re
 
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -18,7 +19,7 @@ class Crawler(CrawlerBase):
     schedule = "Mo,We,Fr"
     time_zone = "America/New_York"
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         page_url = f"http://www.gucomics.com/{pub_date:%Y%m%d}"
         page = self.parse_page(page_url)
 

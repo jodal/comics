@@ -1,6 +1,10 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from invitations.utils import get_invitation_model
@@ -8,9 +12,12 @@ from invitations.utils import get_invitation_model
 from comics.accounts.models import Subscription
 from comics.core.models import Comic
 
+if TYPE_CHECKING:
+    from comics.accounts.typing import AuthenticatedHttpRequest
+
 
 @login_required
-def account_details(request):
+def account_details(request: HttpRequest) -> HttpResponse:
     return render(
         request,
         "accounts/details.html",
@@ -19,7 +26,7 @@ def account_details(request):
 
 
 @login_required
-def secret_key(request):
+def secret_key(request: AuthenticatedHttpRequest) -> HttpResponse:
     """Show and generate a new secret key for the current user"""
 
     if request.method == "POST":
@@ -37,7 +44,7 @@ def secret_key(request):
 
 
 @login_required
-def mycomics_toggle_comic(request):
+def mycomics_toggle_comic(request: AuthenticatedHttpRequest) -> HttpResponse:
     """Change a single comic in My comics"""
 
     if request.method != "POST":
@@ -69,7 +76,7 @@ def mycomics_toggle_comic(request):
 
 
 @login_required
-def mycomics_edit_comics(request):
+def mycomics_edit_comics(request: AuthenticatedHttpRequest) -> HttpResponse:
     """Change multiple comics in My comics"""
 
     if request.method != "POST":
@@ -106,12 +113,12 @@ def mycomics_edit_comics(request):
 
 
 @login_required
-def invite(request):
+def invite(request: AuthenticatedHttpRequest) -> HttpResponse:
     if request.method == "POST":
         invitation_model = get_invitation_model()
-        invitation = invitation_model.create(
-            request.POST["email"], inviter=request.user
-        )
+        email = request.POST["email"]
+        assert isinstance(email, str)
+        invitation = invitation_model.create(email, inviter=request.user)
         invitation.send_invitation(request)
         messages.success(
             request, f'An invitation has been sent to "{invitation.email}".'
@@ -129,5 +136,5 @@ def invite(request):
     )
 
 
-def _is_js_request(request):
+def _is_js_request(request: HttpRequest) -> bool:
     return request.headers.get("JS-Request") == "true"

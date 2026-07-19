@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -18,14 +20,15 @@ class Crawler(CrawlerBase):
     # Without User-Agent set, the server returns 403 Forbidden
     headers = {"User-Agent": "Mozilla/4.0"}
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         page_url = "https://penny-arcade.com/comic/{}".format(
             pub_date.strftime("%Y/%m/%d")
         )
         page = self.parse_page(page_url)
-        title = page.content('meta[property="og:title"]').replace(" - Penny Arcade", "")
-        url = page.content('meta[property="og:image"]')
+        title = page.content('meta[property="og:title"]', default="")
+        title = title.replace(" - Penny Arcade", "")
+        url = page.content('meta[property="og:image"]', default="")
         # The site gives a 404 page without a real 404 code
         if title == "Not Found (#404)":
-            return
+            return None
         return CrawlerImage(url, title)

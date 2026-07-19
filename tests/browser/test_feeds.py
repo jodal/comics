@@ -1,4 +1,4 @@
-import datetime
+import datetime as dt
 import xml.etree.ElementTree as ET
 from typing import TYPE_CHECKING
 
@@ -41,8 +41,8 @@ def comic(db: None) -> Comic:
 @pytest.fixture
 def releases(comic: Comic) -> list[Release]:
     return [
-        Release.objects.create(comic=comic, pub_date=datetime.date.today()),
-        Release.objects.create(comic=comic, pub_date=datetime.date.today()),
+        Release.objects.create(comic=comic, pub_date=dt.date.today()),
+        Release.objects.create(comic=comic, pub_date=dt.date.today()),
     ]
 
 
@@ -104,7 +104,7 @@ def test_my_comics_feed_entries(
     assert title is not None
     assert title.startswith("Jesus & Mo published ")
 
-    today = datetime.date.today()
+    today = dt.date.today()
     entry_ids = {entry.findtext(f"{ATOM}id") for entry in entries}
     assert entry_ids == {
         f"tag:comics.example.com,{today.isoformat()}:releases/{release.pk}"
@@ -172,7 +172,7 @@ def test_one_comic_feed_excludes_other_comics(
     client: Client, user: User, releases: list[Release]
 ) -> None:
     other_comic = Comic.objects.create(name="Other", slug="other", language="en")
-    Release.objects.create(comic=other_comic, pub_date=datetime.date.today())
+    Release.objects.create(comic=other_comic, pub_date=dt.date.today())
 
     response = client.get("/jesusandmo/feed/", {"key": "s3cretk3y"})
 
@@ -185,11 +185,9 @@ def test_one_comic_feed_excludes_other_comics(
 def test_feeds_exclude_old_releases(
     client: Client, user: User, comic: Comic, subscription: Subscription
 ) -> None:
-    old_release = Release.objects.create(
-        comic=comic, pub_date=datetime.date(2012, 1, 1)
-    )
+    old_release = Release.objects.create(comic=comic, pub_date=dt.date(2012, 1, 1))
     Release.objects.filter(pk=old_release.pk).update(
-        fetched=datetime.datetime(2012, 1, 1, tzinfo=datetime.UTC)
+        fetched=dt.datetime(2012, 1, 1, tzinfo=dt.UTC)
     )
 
     response = client.get("/my/feed/", {"key": "s3cretk3y"})

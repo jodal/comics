@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -15,7 +17,7 @@ class Crawler(CrawlerBase):
     schedule = "Mo,Fr"
     time_zone = "Europe/Oslo"
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         # Find the post for the requested date
         archive_page = self.parse_page(
             f"https://www.optipess.com/archive/?archive_year={pub_date:%Y}"
@@ -28,7 +30,7 @@ class Crawler(CrawlerBase):
         )
 
         if not post_link:
-            return
+            return None
         else:
             post_link = post_link[0]
 

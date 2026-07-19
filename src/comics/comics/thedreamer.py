@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -13,7 +15,7 @@ class ComicData(ComicDataBase):
 class Crawler(CrawlerBase):
     time_zone = "America/New_York"
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         page = self.parse_page("https://thedreamercomic.com/comic.php")
         url = page.src('img[src*="issues/"]')
         title = page.alt('img[src*="issues/"]')

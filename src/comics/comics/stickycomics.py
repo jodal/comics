@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -14,7 +16,7 @@ class Crawler(CrawlerBase):
     history_capable_days = 60
     time_zone = "America/Denver"
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed("https://www.stickycomics.com/feed/")
         for entry in feed.for_date(pub_date):
             if "comics" not in entry.tags:
@@ -23,3 +25,4 @@ class Crawler(CrawlerBase):
             title = entry.title
             text = entry.content0.alt('img[src*="/wp-content/uploads/"]')
             return CrawlerImage(url, title, text)
+        return None

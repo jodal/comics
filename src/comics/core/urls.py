@@ -1,9 +1,16 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from django.urls import path
 
+if TYPE_CHECKING:
+    from django.http import HttpRequest, HttpResponse
 
-def fail(request):
+
+def fail(request: HttpRequest) -> HttpResponse:
     # Useful for e.g. testing Sentry integration
-    1 / 0  # noqa: B018
+    raise ZeroDivisionError("division by zero")
 
 
 urlpatterns = [

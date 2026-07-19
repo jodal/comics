@@ -91,6 +91,30 @@ class LxmlParser:
         return self._get_all("value", selector)
 
     @overload
+    def attr(self, attr: str, selector: str, *, default: str) -> str: ...
+
+    @overload
+    def attr(
+        self,
+        attr: str,
+        selector: str,
+        *,
+        default: str | None = None,
+    ) -> str | None: ...
+
+    def attr(
+        self,
+        attr: str,
+        selector: str,
+        *,
+        default: str | None = None,
+    ) -> str | None:
+        return self._get_one(attr, selector, default=default)
+
+    def attrs(self, attr: str, selector: str) -> list[str]:
+        return self._get_all(attr, selector)
+
+    @overload
     def id(self, selector: str, *, default: str) -> str: ...
 
     @overload
@@ -121,7 +145,10 @@ class LxmlParser:
     def text(self, selector: str, *, default: str | None = ...) -> str | None: ...
 
     def text(
-        self, selector: str, *, default: str | None = None
+        self,
+        selector: str,
+        *,
+        default: str | None = None,
     ) -> list[str] | str | None:
         return self._get_one("text", selector, default=default)
 

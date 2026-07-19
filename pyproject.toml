@@ -64,8 +64,7 @@ tests = [
 ]
 typing = [
     "basedpyright>=1.39.9",
-    "django-stubs>=6.0.6",
-    "mypy>=2.2.0",
+    "django-types",
     "types-lxml>=2025.3.30",
 ]
 zizmor = ["zizmor==1.26.1"]
@@ -76,7 +75,7 @@ pythonVersion = "3.13"
 exclude = ["**/.*", "**/__pycache__", "src/comics/**/migrations"]
 venvPath = "."
 venv = ".venv"
-# stubPath = "src/stubs"
+stubPath = "src/stubs"
 # We enable most type checks and then subsequently disable those we are not interested in
 typeCheckingMode = "strict"
 # We do not create stub files for all modules
@@ -99,10 +98,6 @@ omit = [
 source = ["comics"]
 
 
-[tool.django-stubs]
-django_settings_module = "comics.settings"
-
-
 [tool.pytest.ini_options]
 filterwarnings = [
     # --- Error by default ---
@@ -119,40 +114,6 @@ filterwarnings = [
 
 # pytest-django
 DJANGO_SETTINGS_MODULE = "comics.settings"
-
-
-[tool.mypy]
-no_implicit_optional = true
-strict_equality = true
-warn_redundant_casts = true
-warn_return_any = true
-warn_unused_configs = true
-plugins = ["mypy_django_plugin.main"]
-
-[[tool.mypy.overrides]]
-module = "comics.aggregator.crawler"
-disallow_untyped_defs = true
-warn_return_any = true
-
-[[tool.mypy.overrides]]
-module = "comics.core.comic_data"
-disallow_untyped_defs = true
-warn_return_any = true
-
-[[tool.mypy.overrides]]
-module = "comics.*.migrations.*"
-ignore_errors = true
-
-[[tool.mypy.overrides]]
-module = [
-    "debug_toolbar.*",
-    "django_extensions.*",
-    "feedparser.*",
-    "invitations.*",
-    "lxml.*",
-    "PIL.*",
-]
-ignore_missing_imports = true
 
 
 [tool.ruff]
@@ -199,7 +160,15 @@ known-first-party = ["comics"]
 
 
 [tool.tox]
-env_list = ["3.13", "3.14", "docs", "mypy", "ruff-format", "ruff-lint", "zizmor"]
+env_list = [
+    "3.13",
+    "3.14",
+    "basedpyright",
+    "docs",
+    "ruff-format",
+    "ruff-lint",
+    "zizmor",
+]
 
 [tool.tox.env_run_base]
 runner = "uv-venv-lock-runner"
@@ -229,11 +198,10 @@ commands = [
     ],
 ]
 
-[tool.tox.env.mypy]
+[tool.tox.env.basedpyright]
 runner = "uv-venv-lock-runner"
-skip_install = true
 dependency_groups = ["typing"]
-commands = [["mypy", "{posargs:src}"]]
+commands = [["basedpyright", "{posargs:src}"]]
 
 [tool.tox.env."ruff-format"]
 runner = "uv-venv-lock-runner"
@@ -258,6 +226,10 @@ package = true
 # explicitly, plus the git key uv-dynamic-versioning needs to re-derive the
 # version when the commit or tags change
 cache-keys = [{ file = "pyproject.toml" }, { git = { commit = true, tags = true } }]
+
+[tool.uv.sources]
+# PyPI releases of django-types lag behind; track a known-good commit
+django-types = { git = "https://github.com/sbdchd/django-types", rev = "36159bf3fce424086101c7b28dda204bf3f600f7" }
 
 
 [tool.hatch.build.targets.sdist]

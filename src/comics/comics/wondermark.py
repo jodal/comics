@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -15,7 +17,7 @@ class Crawler(CrawlerBase):
     schedule = "Tu,Fr"
     time_zone = "America/Los_Angeles"
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed_url = "http://feeds.feedburner.com/wondermark"
         feed = self.parse_feed(feed_url)
         for entry in feed.for_date(pub_date):
@@ -25,3 +27,4 @@ class Crawler(CrawlerBase):
             title = entry.title
             text = entry.summary.alt('img[src*="/c/"]')
             return CrawlerImage(url, title, text)
+        return None

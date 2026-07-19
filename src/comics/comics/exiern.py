@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -15,7 +17,7 @@ class Crawler(CrawlerBase):
     schedule = "Tu,Th"
     time_zone = "America/New_York"
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed("http://www.exiern.com/?feed=rss2")
         for entry in feed.for_date(pub_date):
             urls = entry.summary.srcs("img")
@@ -24,3 +26,4 @@ class Crawler(CrawlerBase):
             url = urls[0].replace("comics-rss", "comics")
             title = entry.title
             return CrawlerImage(url, title)
+        return None

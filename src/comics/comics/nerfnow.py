@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -18,7 +20,7 @@ class Crawler(CrawlerBase):
     # Without User-Agent set, the server returns 403 Forbidden
     headers = {"User-Agent": "Mozilla/4.0"}
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed("https://feeds.feedburner.com/nerfnow/full")
         for entry in feed.for_date(pub_date):
             url = entry.content0.src('img[src*="/img/"]')
@@ -31,3 +33,4 @@ class Crawler(CrawlerBase):
             text = "\n\n".join(entry.content0.texts("p")).strip()
 
             return CrawlerImage(url, title, text)
+        return None

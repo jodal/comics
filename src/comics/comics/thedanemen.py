@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -21,13 +23,13 @@ class Crawler(CrawlerBase):
         "Referer": "http://www.webtoons.com/",
     }
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed(
             "http://www.webtoons.com/en/comedy/the-danemen/rss?title_no=395"
         )
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
-            urls = page._get_all("data-url", "#_imageList img")
+            urls = page.attrs("data-url", "#_imageList img")
             images = [CrawlerImage(url) for url in urls]
             if images:
                 images.pop(0)  # Remove The DaneMen logo
@@ -35,3 +37,4 @@ class Crawler(CrawlerBase):
             if images:
                 images[0].title = entry.title
                 return images
+        return None

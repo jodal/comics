@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -13,7 +15,7 @@ class Crawler(CrawlerBase):
     history_capable_days = 90
     time_zone = "America/Los_Angeles"
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed("http://feeds.feedburner.com/oatmealfeed")
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
@@ -21,3 +23,4 @@ class Crawler(CrawlerBase):
             if results:
                 results[0].title = entry.title
                 return results
+        return None

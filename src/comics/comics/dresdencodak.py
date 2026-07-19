@@ -1,4 +1,6 @@
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage
+import datetime as dt
+
+from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
 
 
@@ -15,7 +17,7 @@ class Crawler(CrawlerBase):
     schedule = "Mo"
     time_zone = "America/Los_Angeles"
 
-    def crawl(self, pub_date):
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed("https://dresdencodak.com/feed/")
         for entry in feed.for_date(pub_date):
             if "Comics" not in entry.tags:
@@ -29,3 +31,4 @@ class Crawler(CrawlerBase):
                 results[0].title = entry.title
                 results[0].text = "\n\n".join(entry.content0.texts("p")).strip()
                 return results
+        return None

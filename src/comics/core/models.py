@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import datetime as dt
 import os
-from typing import Any
+from typing import Any, ClassVar
 
 from django.conf import settings
 from django.db import models
@@ -11,62 +11,74 @@ from django.utils import timezone
 from django_stubs_ext.db.models import TypedModelMeta
 
 from comics.core.enums import Language
-from comics.core.managers import ComicManager
+from comics.core.querysets import ComicQuerySet, ImageQuerySet, ReleaseQuerySet
 
 
-class Comic(models.Model):
+class BaseModel(models.Model):
+    # Redeclare `objects` as `Any` to break the variance chain from
+    # `Model.objects`, so that concrete models can redeclare `objects` with
+    # their own queryset type.
+    objects: ClassVar[Any]
+
+    class Meta(TypedModelMeta):
+        abstract = True
+
+
+class Comic(BaseModel):
     # Required fields
-    name = models.CharField[str, str](
+    name = models.CharField[str](
         max_length=100,
         help_text="Name of the comic",
     )
-    slug = models.SlugField[str, str](
+    slug = models.SlugField[str](
         max_length=100,
         unique=True,
         verbose_name="Short name",
         help_text="For file paths and URLs",
     )
-    language = models.CharField[str, str](
+    language = models.CharField[str](
         max_length=2,
         choices=Language.choices,
         help_text="The language of the comic",
     )
 
     # Optional fields
-    url = models.URLField[str, str](
+    url = models.URLField[str](
         verbose_name="URL",
         blank=True,
         help_text="URL to the official website",
     )
-    active = models.BooleanField[bool, bool](
+    active = models.BooleanField[bool](
         default=True,
         help_text="Wheter the comic is still being crawled",
     )
-    start_date = models.DateField[dt.date | None, dt.date | None](
+    start_date = models.DateField[dt.date | None](
         blank=True,
         null=True,
         help_text="First published at",
     )
-    end_date = models.DateField[dt.date | None, dt.date | None](
+    end_date = models.DateField[dt.date | None](
         blank=True,
         null=True,
         help_text="Last published at, if comic has been cancelled",
     )
-    rights = models.CharField[str, str](
+    rights = models.CharField[str](
         max_length=100,
         blank=True,
         help_text="Author, copyright, and/or licensing information",
     )
 
     # Automatically populated fields
-    added = models.DateTimeField[dt.datetime, dt.datetime](
+    added = models.DateTimeField[dt.datetime](
         auto_now_add=True,
         help_text="Time the comic was added to the site",
     )
 
-    objects = ComicManager()
+    objects: ClassVar[ComicQuerySet] = ComicQuerySet.as_manager()
 
-    class Meta(TypedModelMeta):
+    release_set: ReleaseQuerySet
+
+    class Meta(BaseModel.Meta):
         db_table = "comics_comic"
         ordering = ["name"]
 
@@ -86,28 +98,31 @@ class Comic(models.Model):
         return self.added > some_time_ago
 
 
-class Release(models.Model):
+class Release(BaseModel):
     # Required fields
-    comic = models.ForeignKey["Comic", "Comic"](
+    comic = models.ForeignKey["Comic"](
         Comic,
         on_delete=models.CASCADE,
     )
-    pub_date = models.DateField[dt.date, dt.date](
+    comic_id: int
+    pub_date = models.DateField[dt.date](
         verbose_name="publication date",
         db_index=True,
     )
-    images = models.ManyToManyField["Image", Any](
+    images = models.ManyToManyField["Image", "Image"](
         "Image",
         related_name="releases",
     )
 
     # Automatically populated fields
-    fetched = models.DateTimeField[dt.datetime, dt.datetime](
+    fetched = models.DateTimeField[dt.datetime](
         auto_now_add=True,
         db_index=True,
     )
 
-    class Meta(TypedModelMeta):
+    objects: ClassVar[ReleaseQuerySet] = ReleaseQuerySet.as_manager()
+
+    class Meta(BaseModel.Meta):
         db_table = "comics_release"
         indexes = [models.Index(fields=["comic", "pub_date"])]
         get_latest_by = "pub_date"
@@ -136,13 +151,14 @@ class Release(models.Model):
 os.umask(0o002)
 
 
-def image_file_path(instance: Image, filename: str) -> str:
+def image_file_path(instance: models.Model, filename: str) -> str:
+    assert isinstance(instance, Image)
     return f"{instance.comic.slug}/{filename[0]}/{filename}"
 
 
-class Image(models.Model):
+class Image(BaseModel):
     # Required fields
-    comic = models.ForeignKey["Comic", "Comic"](
+    comic = models.ForeignKey["Comic"](
         Comic,
         on_delete=models.CASCADE,
     )
@@ -151,28 +167,30 @@ class Image(models.Model):
         height_field="height",
         width_field="width",
     )
-    checksum = models.CharField[str, str](
+    checksum = models.CharField[str](
         max_length=64,
         db_index=True,
     )
 
     # Optional fields
-    title = models.CharField[str, str](
+    title = models.CharField[str](
         max_length=255,
         blank=True,
     )
-    text = models.TextField[str, str](
+    text = models.TextField[str](
         blank=True,
     )
 
     # Automatically populated fields
-    fetched = models.DateTimeField[dt.datetime, dt.datetime](
+    fetched = models.DateTimeField[dt.datetime](
         auto_now_add=True,
     )
-    height = models.IntegerField[int, int]()
-    width = models.IntegerField[int, int]()
+    height = models.IntegerField[int]()
+    width = models.IntegerField[int]()
 
-    class Meta(TypedModelMeta):
+    objects: ClassVar[ImageQuerySet] = ImageQuerySet.as_manager()
+
+    class Meta(BaseModel.Meta):
         db_table = "comics_image"
 
     def __str__(self) -> str:
