@@ -19,7 +19,7 @@ The pieces fit together like this:
 
 - **Caddy** terminates HTTPS, serves ``/media/`` directly from the host disk,
   and reverse-proxies everything else to the app container.
-- The **app container** runs Gunicorn (the image's ``web`` entrypoint) as a
+- The **app container** runs Granian (the image's ``web`` entrypoint) as a
   rootless Podman container owned by a dedicated, unprivileged host user.
 - **PostgreSQL** runs on the host.
 - The **media library** is on the host filesystem and is bind-mounted into the
@@ -279,9 +279,9 @@ the ``comics`` user, create
     # Only Caddy needs to reach the app, so bind to loopback.
     PublishPort=127.0.0.1:8000:8000
 
-    # Run Gunicorn (migrate + serve). Arguments after "web" are passed through
-    # to Gunicorn; size --workers to roughly 2 x CPU cores + 1.
-    Exec=web --workers=9 --access-logfile=- --error-logfile=-
+    # Run Granian (migrate + serve). Arguments after "web" are passed through
+    # to Granian; size --workers to roughly the number of CPU cores.
+    Exec=web --workers=4 --access-log
 
     [Service]
     Restart=always
@@ -297,7 +297,7 @@ Then load and start it:
     systemctl --user start comics-web.service
     journalctl --user -u comics-web.service
 
-The journal should show ``comics migrate`` running, followed by Gunicorn booting
+The journal should show ``comics migrate`` running, followed by Granian booting
 its workers. Quadlet generates ``comics-web.service`` from the ``.container``
 file; it starts on boot thanks to ``WantedBy=default.target`` and the enabled
 linger.
@@ -355,7 +355,7 @@ value.
 A request for ``/media/foo.png`` is served from ``/srv/comics/media/foo.png``
 without touching the app.
 
-Note that this setup writes no log files anywhere: Gunicorn and the scheduled
+Note that this setup writes no log files anywhere: Granian and the scheduled
 jobs log to the journal through their systemd units, and so does Caddy's
 process log. Caddy's per-request access logging is disabled by default; add a
 bare ``log`` directive to the site block if you want it, and it goes to the

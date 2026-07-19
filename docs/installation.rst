@@ -57,7 +57,7 @@ Optional dependencies for real deployments
 ------------------------------------------
 
 To deploy Comics, you need a WSGI server. There are several options, but we
-tend to use Gunicorn. To install it, run::
+tend to use Granian. To install it, run::
 
     uv sync --extra server
 

@@ -14,12 +14,12 @@ fi
 
 if [ "$1" = "web" ]; then
     comics migrate
-    exec gunicorn \
-        --worker-tmp-dir=/dev/shm \
-        --log-file=- \
-        --bind=0.0.0.0:${PORT:-8000} \
-        comics.wsgi \
-        ${*:2}
+    exec granian \
+        --interface wsgi \
+        --host 0.0.0.0 \
+        --port ${PORT:-8000} \
+        ${*:2} \
+        comics.wsgi:application
 fi
 
 exec "$@"
