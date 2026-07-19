@@ -160,7 +160,15 @@ known-first-party = ["comics"]
 
 
 [tool.tox]
-env_list = ["3.13", "3.14", "docs", "ruff-format", "ruff-lint", "zizmor"]
+env_list = [
+    "3.13",
+    "3.14",
+    "basedpyright",
+    "docs",
+    "ruff-format",
+    "ruff-lint",
+    "zizmor",
+]
 
 [tool.tox.env_run_base]
 runner = "uv-venv-lock-runner"
@@ -189,6 +197,11 @@ commands = [
         "{envtmpdir}{/}html",
     ],
 ]
+
+[tool.tox.env.basedpyright]
+runner = "uv-venv-lock-runner"
+dependency_groups = ["typing"]
+commands = [["basedpyright", "{posargs:src}"]]
 
 [tool.tox.env."ruff-format"]
 runner = "uv-venv-lock-runner"
