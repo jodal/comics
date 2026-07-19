@@ -6,6 +6,8 @@ from django.db import models
 from django.db.models.functions import Lower
 
 if TYPE_CHECKING:
+    import datetime as dt
+
     from comics.core.models import Comic, Image, Release  # noqa: F401
 
 
@@ -31,7 +33,22 @@ class ComicQuerySet(BaseQuerySet["Comic"]):
 
 
 class ReleaseQuerySet(BaseQuerySet["Release"]):
-    pass
+    def for_comics(self, *comics: Comic) -> Self:
+        return self.filter(comic__in=comics)
+
+    def first_pub_date(self) -> dt.date | None:
+        """The oldest publication date, if any releases exist."""
+        return self.values_list("pub_date", flat=True).order_by("pub_date").first()
+
+    def last_pub_date(self) -> dt.date | None:
+        """The newest publication date, if any releases exist."""
+        return self.values_list("pub_date", flat=True).order_by("-pub_date").first()
+
+    def last_pub_dates(self, count: int, /) -> list[dt.date]:
+        """The ``count`` newest publication dates, newest first."""
+        return list(
+            self.values_list("pub_date", flat=True).order_by("-pub_date")[:count]
+        )
 
 
 class ImageQuerySet(BaseQuerySet["Image"]):
