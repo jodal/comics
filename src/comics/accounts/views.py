@@ -62,9 +62,7 @@ def mycomics_toggle_comic(request: AuthenticatedHttpRequest) -> HttpResponse:
         if not _is_js_request(request):
             messages.info(request, f'Added "{comic.name}" to my comics')
     elif "remove_comic" in request.POST:
-        subscriptions = Subscription.objects.filter(
-            userprofile=request.user.comics_profile, comic=comic
-        )
+        subscriptions = Subscription.objects.for_user(request.user).for_comic(comic)
         subscriptions.delete()
         if not _is_js_request(request):
             messages.info(request, f'Removed "{comic.name}" from my comics')
@@ -88,9 +86,7 @@ def mycomics_edit_comics(request: AuthenticatedHttpRequest) -> HttpResponse:
 
     for comic in my_comics:
         if comic.slug not in request.POST:
-            subscriptions = Subscription.objects.filter(
-                userprofile=request.user.comics_profile, comic=comic
-            )
+            subscriptions = Subscription.objects.for_user(request.user).for_comic(comic)
             subscriptions.delete()
             if not _is_js_request(request):
                 messages.info(request, f'Removed "{comic.name}" from my comics')

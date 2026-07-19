@@ -512,7 +512,7 @@ COMIC_URI_RE = re.compile(rf"^{re.escape(API_PREFIX)}/comics/(\d+)/$")
 
 
 def own_subscriptions(request: AuthedRequest) -> SubscriptionQuerySet:
-    return Subscription.objects.filter(userprofile__user=request.auth)
+    return Subscription.objects.for_user(request.auth)
 
 
 def parse_body(request: HttpRequest) -> dict[str, Any]:
