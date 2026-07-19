@@ -10,12 +10,11 @@ from __future__ import annotations
 
 import json
 import re
-from typing import TYPE_CHECKING, Any, cast
+from typing import TYPE_CHECKING, Any, Protocol, Self, cast
 
 from django.contrib.auth.models import User
 from django.db import transaction
 from django.http import Http404, HttpResponse
-from django.shortcuts import get_object_or_404
 from ninja import NinjaAPI
 from ninja.errors import AuthenticationError, HttpError
 
@@ -32,10 +31,8 @@ from comics.api.serialization import format_value, json_response, paginated
 from comics.core.models import Comic, Image, Release
 
 if TYPE_CHECKING:
-    from django.db.models import Model, QuerySet
     from django.http import HttpRequest
 
-    from comics.accounts.querysets import SubscriptionQuerySet
     from comics.accounts.typing import ComicsUser
 
     class AuthedRequest(HttpRequest):
@@ -217,16 +214,22 @@ USER_SPEC = FilterSpec(
 )
 
 
-def subscribed_filter[M: Model](
+class SubscribableQuerySet(Protocol):
+    """A queryset that can be narrowed by a user's subscriptions."""
+
+    def subscribed_by(self, user: User, /) -> Self: ...
+    def not_subscribed_by(self, user: User, /) -> Self: ...
+
+
+def subscribed_filter[QS: SubscribableQuerySet](
     request: AuthedRequest,
-    queryset: QuerySet[M],
-    lookup: str,
-) -> QuerySet[M]:
+    queryset: QS,
+) -> QS:
     subscribed = request.GET.get("subscribed")
     if subscribed == "true":
-        return queryset.filter(**{lookup: request.auth})
+        return queryset.subscribed_by(request.auth)
     if subscribed == "false":
-        return queryset.exclude(**{lookup: request.auth})
+        return queryset.not_subscribed_by(request.auth)
     return queryset
 
 
@@ -435,15 +438,15 @@ def users_detail(request: AuthedRequest, user_id: int) -> HttpResponse:
 )
 def comics_list(request: AuthedRequest) -> HttpResponse:
     """List all comics known to the site."""
-    queryset = apply_filters(request.GET, Comic.objects.all(), COMIC_SPEC)
-    queryset = subscribed_filter(request, queryset, "userprofile__user")
+    queryset = subscribed_filter(request, Comic.objects.all())
+    queryset = apply_filters(request.GET, queryset, COMIC_SPEC)
     return json_response(paginated(request, queryset, comic_dict))
 
 
 @api.get("/comics/{int:comic_id}/", auth=key_auth)
 def comics_detail(request: HttpRequest, comic_id: int) -> HttpResponse:
     """Show a comic."""
-    comic = get_object_or_404(Comic, pk=comic_id)
+    comic = Comic.objects.for_pk(comic_id).get_or_404()
     return json_response(comic_dict(comic))
 
 
@@ -468,7 +471,7 @@ def images_list(request: HttpRequest) -> HttpResponse:
 @api.get("/images/{int:image_id}/", auth=key_auth)
 def images_detail(request: HttpRequest, image_id: int) -> HttpResponse:
     """Show a comic image."""
-    image = get_object_or_404(Image, pk=image_id)
+    image = Image.objects.for_pk(image_id).get_or_404()
     return json_response(image_dict(image))
 
 
@@ -493,15 +496,15 @@ def releases_list(request: AuthedRequest) -> HttpResponse:
         .prefetch_related("images")
         .order_by("-fetched")
     )
+    queryset = subscribed_filter(request, queryset)
     queryset = apply_filters(request.GET, queryset, RELEASE_SPEC)
-    queryset = subscribed_filter(request, queryset, "comic__userprofile__user")
     return json_response(paginated(request, queryset, release_dict))
 
 
 @api.get("/releases/{int:release_id}/", auth=key_auth)
 def releases_detail(request: HttpRequest, release_id: int) -> HttpResponse:
     """Show a comic release, including its images."""
-    release = get_object_or_404(Release.objects.select_related("comic"), pk=release_id)
+    release = Release.objects.select_related("comic").for_pk(release_id).get_or_404()
     return json_response(release_dict(release))
 
 
@@ -509,10 +512,6 @@ def releases_detail(request: HttpRequest, release_id: int) -> HttpResponse:
 
 SUBSCRIPTION_URI_RE = re.compile(rf"^{re.escape(API_PREFIX)}/subscriptions/(\d+)/$")
 COMIC_URI_RE = re.compile(rf"^{re.escape(API_PREFIX)}/comics/(\d+)/$")
-
-
-def own_subscriptions(request: AuthedRequest) -> SubscriptionQuerySet:
-    return Subscription.objects.filter(userprofile__user=request.auth)
 
 
 def parse_body(request: HttpRequest) -> dict[str, Any]:
@@ -528,10 +527,9 @@ def parse_body(request: HttpRequest) -> dict[str, Any]:
 def comic_from_uri(uri: str | None) -> Comic:
     match = COMIC_URI_RE.match(uri or "")
     if match:
-        try:
-            return Comic.objects.get(pk=int(match[1]))
-        except Comic.DoesNotExist:
-            pass
+        comic = Comic.objects.for_pk(int(match[1])).get_or_none()
+        if comic is not None:
+            return comic
     raise HttpError(400, f"Unknown comic '{uri}'")
 
 
@@ -542,7 +540,9 @@ def own_subscription_from_uri(
     match = SUBSCRIPTION_URI_RE.match(uri or "")
     if match is None:
         return None
-    return own_subscriptions(request).filter(pk=int(match[1])).first()
+    return (
+        Subscription.objects.for_user(request.auth).for_pk(int(match[1])).get_or_none()
+    )
 
 
 @api.get(
@@ -552,7 +552,9 @@ def own_subscription_from_uri(
 )
 def subscriptions_list(request: AuthedRequest) -> HttpResponse:
     """List the authenticated user's comic subscriptions."""
-    queryset = apply_filters(request.GET, own_subscriptions(request), SUBSCRIPTION_SPEC)
+    queryset = apply_filters(
+        request.GET, Subscription.objects.for_user(request.auth), SUBSCRIPTION_SPEC
+    )
     return json_response(paginated(request, queryset, subscription_dict))
 
 
@@ -613,7 +615,9 @@ def subscriptions_bulk_update(request: AuthedRequest) -> HttpResponse:
 @api.get("/subscriptions/{int:subscription_id}/", auth=key_auth)
 def subscriptions_detail(request: AuthedRequest, subscription_id: int) -> HttpResponse:
     """Show one of the authenticated user's subscriptions."""
-    subscription = get_object_or_404(own_subscriptions(request), pk=subscription_id)
+    subscription = (
+        Subscription.objects.for_user(request.auth).for_pk(subscription_id).get_or_404()
+    )
     return json_response(subscription_dict(subscription))
 
 
@@ -624,7 +628,9 @@ def subscriptions_detail(request: AuthedRequest, subscription_id: int) -> HttpRe
 )
 def subscriptions_update(request: AuthedRequest, subscription_id: int) -> HttpResponse:
     """Change one of the authenticated user's subscriptions to another comic."""
-    subscription = get_object_or_404(own_subscriptions(request), pk=subscription_id)
+    subscription = (
+        Subscription.objects.for_user(request.auth).for_pk(subscription_id).get_or_404()
+    )
     data = parse_body(request)
     subscription.comic = comic_from_uri(data.get("comic"))
     subscription.save()
@@ -634,6 +640,8 @@ def subscriptions_update(request: AuthedRequest, subscription_id: int) -> HttpRe
 @api.delete("/subscriptions/{int:subscription_id}/", auth=key_auth)
 def subscriptions_delete(request: AuthedRequest, subscription_id: int) -> HttpResponse:
     """Unsubscribe the authenticated user from a comic."""
-    subscription = get_object_or_404(own_subscriptions(request), pk=subscription_id)
+    subscription = (
+        Subscription.objects.for_user(request.auth).for_pk(subscription_id).get_or_404()
+    )
     subscription.delete()
     return HttpResponse(status=204)

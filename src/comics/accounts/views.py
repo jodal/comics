@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from django.urls import reverse
 from invitations.utils import get_invitation_model
 
@@ -52,7 +52,9 @@ def mycomics_toggle_comic(request: AuthenticatedHttpRequest) -> HttpResponse:
         response["Allowed"] = "POST"
         return response
 
-    comic = get_object_or_404(Comic, slug=request.POST["comic"])
+    comic_slug = request.POST["comic"]
+    assert isinstance(comic_slug, str)
+    comic = Comic.objects.for_slug(comic_slug).get_or_404()
 
     if "add_comic" in request.POST:
         subscription = Subscription(
@@ -62,9 +64,7 @@ def mycomics_toggle_comic(request: AuthenticatedHttpRequest) -> HttpResponse:
         if not _is_js_request(request):
             messages.info(request, f'Added "{comic.name}" to my comics')
     elif "remove_comic" in request.POST:
-        subscriptions = Subscription.objects.filter(
-            userprofile=request.user.comics_profile, comic=comic
-        )
+        subscriptions = Subscription.objects.for_user(request.user).for_comic(comic)
         subscriptions.delete()
         if not _is_js_request(request):
             messages.info(request, f'Removed "{comic.name}" from my comics')
@@ -88,9 +88,7 @@ def mycomics_edit_comics(request: AuthenticatedHttpRequest) -> HttpResponse:
 
     for comic in my_comics:
         if comic.slug not in request.POST:
-            subscriptions = Subscription.objects.filter(
-                userprofile=request.user.comics_profile, comic=comic
-            )
+            subscriptions = Subscription.objects.for_user(request.user).for_comic(comic)
             subscriptions.delete()
             if not _is_js_request(request):
                 messages.info(request, f'Removed "{comic.name}" from my comics')
