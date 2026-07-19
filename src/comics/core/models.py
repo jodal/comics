@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import datetime as dt
 import os
+from typing import Any, ClassVar
 
 from django.conf import settings
 from django.db import models
@@ -10,10 +11,20 @@ from django.utils import timezone
 from django_stubs_ext.db.models import TypedModelMeta
 
 from comics.core.enums import Language
-from comics.core.managers import ComicManager
+from comics.core.querysets import ComicQuerySet, ImageQuerySet, ReleaseQuerySet
 
 
-class Comic(models.Model):
+class BaseModel(models.Model):
+    # Redeclare `objects` as `Any` to break the variance chain from
+    # `Model.objects`, so that concrete models can redeclare `objects` with
+    # their own queryset type.
+    objects: ClassVar[Any]
+
+    class Meta(TypedModelMeta):
+        abstract = True
+
+
+class Comic(BaseModel):
     # Required fields
     name = models.CharField[str](
         max_length=100,
@@ -63,9 +74,11 @@ class Comic(models.Model):
         help_text="Time the comic was added to the site",
     )
 
-    objects = ComicManager()
+    objects: ClassVar[ComicQuerySet] = ComicQuerySet.as_manager()
 
-    class Meta(TypedModelMeta):
+    release_set: ReleaseQuerySet
+
+    class Meta(BaseModel.Meta):
         db_table = "comics_comic"
         ordering = ["name"]
 
@@ -85,12 +98,13 @@ class Comic(models.Model):
         return self.added > some_time_ago
 
 
-class Release(models.Model):
+class Release(BaseModel):
     # Required fields
     comic = models.ForeignKey["Comic"](
         Comic,
         on_delete=models.CASCADE,
     )
+    comic_id: int
     pub_date = models.DateField[dt.date](
         verbose_name="publication date",
         db_index=True,
@@ -106,7 +120,9 @@ class Release(models.Model):
         db_index=True,
     )
 
-    class Meta(TypedModelMeta):
+    objects: ClassVar[ReleaseQuerySet] = ReleaseQuerySet.as_manager()
+
+    class Meta(BaseModel.Meta):
         db_table = "comics_release"
         indexes = [models.Index(fields=["comic", "pub_date"])]
         get_latest_by = "pub_date"
@@ -135,11 +151,12 @@ class Release(models.Model):
 os.umask(0o002)
 
 
-def image_file_path(instance: Image, filename: str) -> str:
+def image_file_path(instance: models.Model, filename: str) -> str:
+    assert isinstance(instance, Image)
     return f"{instance.comic.slug}/{filename[0]}/{filename}"
 
 
-class Image(models.Model):
+class Image(BaseModel):
     # Required fields
     comic = models.ForeignKey["Comic"](
         Comic,
@@ -171,7 +188,9 @@ class Image(models.Model):
     height = models.IntegerField[int]()
     width = models.IntegerField[int]()
 
-    class Meta(TypedModelMeta):
+    objects: ClassVar[ImageQuerySet] = ImageQuerySet.as_manager()
+
+    class Meta(BaseModel.Meta):
         db_table = "comics_image"
 
     def __str__(self) -> str:
