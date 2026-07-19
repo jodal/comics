@@ -234,10 +234,6 @@ if cache_url := env.str("CACHE_URL", default=None):
             "LOCATION": parts.netloc,
         }
         SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
-#
-CACHE_MIDDLEWARE_SECONDS = 300
-CACHE_MIDDLEWARE_KEY_PREFIX = "comics"
-CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
 
 # Database
