@@ -40,6 +40,18 @@ class ReleaseQuerySet(BaseQuerySet["Release"]):
     def for_comics(self, *comics: Comic) -> Self:
         return self.filter(comic__in=comics)
 
+    def for_active_comics(self) -> Self:
+        return self.filter(comic__active=True)
+
+    def published_on(self, pub_date: dt.date, /) -> Self:
+        return self.filter(pub_date=pub_date)
+
+    def published_since(self, pub_date: dt.date, /) -> Self:
+        return self.filter(pub_date__gte=pub_date)
+
+    def fetched_after(self, fetched: dt.datetime, /) -> Self:
+        return self.filter(fetched__gt=fetched)
+
     def for_feed(self) -> Self:
         """The releases recently fetched enough to be in a feed, newest first."""
         from_time = timezone.now() - dt.timedelta(days=settings.COMICS_MAX_DAYS_IN_FEED)
