@@ -25,9 +25,6 @@ jobs:
             python: "3.14"
             tox: "3.14"
             coverage: true
-          - name: "mypy"
-            python: "3.14"
-            tox: mypy
           - name: "ruff-format"
             python: "3.14"
             tox: ruff-format

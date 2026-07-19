@@ -19,7 +19,6 @@ updates:
         patterns:
           - "basedpyright"
           - "django-stubs"
-          - "mypy"
           - "ruff"
           - "tox*"
           - "types-*"
