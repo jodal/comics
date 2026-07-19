@@ -64,7 +64,7 @@ tests = [
 ]
 typing = [
     "basedpyright>=1.39.9",
-    "django-stubs>=6.0.6",
+    "django-types",
     "types-lxml>=2025.3.30",
 ]
 zizmor = ["zizmor==1.26.1"]
@@ -213,6 +213,10 @@ package = true
 # explicitly, plus the git key uv-dynamic-versioning needs to re-derive the
 # version when the commit or tags change
 cache-keys = [{ file = "pyproject.toml" }, { git = { commit = true, tags = true } }]
+
+[tool.uv.sources]
+# PyPI releases of django-types lag behind; track a known-good commit
+django-types = { git = "https://github.com/sbdchd/django-types", rev = "36159bf3fce424086101c7b28dda204bf3f600f7" }
 
 
 [tool.hatch.build.targets.sdist]

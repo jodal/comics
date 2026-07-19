@@ -215,7 +215,7 @@ dev = [
     { name = "basedpyright" },
     { name = "django-debug-toolbar" },
     { name = "django-extensions" },
-    { name = "django-stubs" },
+    { name = "django-types" },
     { name = "freezegun" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -247,7 +247,7 @@ tests = [
 ]
 typing = [
     { name = "basedpyright" },
-    { name = "django-stubs" },
+    { name = "django-types" },
     { name = "types-lxml" },
 ]
 zizmor = [
@@ -285,7 +285,7 @@ dev = [
     { name = "basedpyright", specifier = ">=1.39.9" },
     { name = "django-debug-toolbar", specifier = ">=7.0.0" },
     { name = "django-extensions", specifier = ">=4.1" },
-    { name = "django-stubs", specifier = ">=6.0.6" },
+    { name = "django-types", git = "https://github.com/sbdchd/django-types?rev=36159bf3fce424086101c7b28dda204bf3f600f7" },
     { name = "freezegun", specifier = ">=1.5.5" },
     { name = "pytest", specifier = ">=9.1.1" },
     { name = "pytest-cov", specifier = ">=6.2.1" },
@@ -315,7 +315,7 @@ tests = [
 ]
 typing = [
     { name = "basedpyright", specifier = ">=1.39.9" },
-    { name = "django-stubs", specifier = ">=6.0.6" },
+    { name = "django-types", git = "https://github.com/sbdchd/django-types?rev=36159bf3fce424086101c7b28dda204bf3f600f7" },
     { name = "types-lxml", specifier = ">=2025.3.30" },
 ]
 zizmor = [{ name = "zizmor", specifier = "==1.26.1" }]
@@ -530,21 +530,6 @@ wheels = [
 ]
 
 [[package]]
-name = "django-stubs"
-version = "6.0.6"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "django" },
-    { name = "django-stubs-ext" },
-    { name = "types-pyyaml" },
-    { name = "typing-extensions" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/91/de/1b8ccb0909970fb4a8b48426f67132164110304875abdb4e4912c55480f4/django_stubs-6.0.6.tar.gz", hash = "sha256:dfc01e052e33c7f8f0c30c3ff8eda0903ee29ac710d1e46d9effd773744a69b0", size = 281381, upload-time = "2026-06-23T08:22:54.098Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/d0/b0/b73855fb9cf381fa1d754ea33c25f14f5b11c297f48dc3a4e0359dc3adc2/django_stubs-6.0.6-py3-none-any.whl", hash = "sha256:c488fea05a9eac40ddbdc69887f63a5c0922cb13df285291ee99c9bbc89bc4f1", size = 546491, upload-time = "2026-06-23T08:22:52.466Z" },
-]
-
-[[package]]
 name = "django-stubs-ext"
 version = "6.0.6"
 source = { registry = "https://pypi.org/simple" }
@@ -556,6 +541,11 @@ sdist = { url = "https://files.pythonhosted.org/packages/51/8b/dc3c37cf994836ee0
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f1/e4/7d60a1bdb092807318af34a809dc6674b95cc78ec4d3aaa6027174e7201c/django_stubs_ext-6.0.6-py3-none-any.whl", hash = "sha256:5470c970f61a3ccf5aae7633feef1a097f944f417b955da200c9ac26ecd9134b", size = 10361, upload-time = "2026-06-23T08:21:37.228Z" },
 ]
+
+[[package]]
+name = "django-types"
+version = "0.24.0"
+source = { git = "https://github.com/sbdchd/django-types?rev=36159bf3fce424086101c7b28dda204bf3f600f7#36159bf3fce424086101c7b28dda204bf3f600f7" }
 
 [[package]]
 name = "docutils"
@@ -1488,15 +1478,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/dd/ad/c70ac8cbdc28eb58a17301c69b4925af54b614e47f9b2ebc9de5cc10f786/types_lxml-2026.2.16.tar.gz", hash = "sha256:b3a1340cc06db98d541c785732f6f68bea438daff4e2b7809ef748d545d01406", size = 161204, upload-time = "2026-02-17T02:34:50.855Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/5f/5c/03ec9befbf4bb5309bfd576c6a5ac1c75633f78f6b64cf1f594e97cd3d23/types_lxml-2026.2.16-py3-none-any.whl", hash = "sha256:5dd81ffa54830e5f361988737c5f1d6a0ae48b2742790637ec560df790ea0401", size = 97040, upload-time = "2026-02-17T02:34:49.286Z" },
-]
-
-[[package]]
-name = "types-pyyaml"
-version = "6.0.12.20260408"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/74/73/b759b1e413c31034cc01ecdfb96b38115d0ab4db55a752a3929f0cd449fd/types_pyyaml-6.0.12.20260408.tar.gz", hash = "sha256:92a73f2b8d7f39ef392a38131f76b970f8c66e4c42b3125ae872b7c93b556307", size = 17735, upload-time = "2026-04-08T04:30:50.974Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/1c/f0/c391068b86abb708882c6d75a08cd7d25b2c7227dab527b3a3685a3c635b/types_pyyaml-6.0.12.20260408-py3-none-any.whl", hash = "sha256:fbc42037d12159d9c801ebfcc79ebd28335a7c13b08a4cfbc6916df78fee9384", size = 20339, upload-time = "2026-04-08T04:30:50.113Z" },
 ]
 
 [[package]]

@@ -18,7 +18,7 @@ updates:
       linters:
         patterns:
           - "basedpyright"
-          - "django-stubs"
+          - "django-stubs-ext"
           - "ruff"
           - "tox*"
           - "types-*"

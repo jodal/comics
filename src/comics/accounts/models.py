@@ -28,12 +28,12 @@ def make_secret_key() -> str:
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField["User", "User"](
+    user = models.OneToOneField["User"](
         "auth.User",
         on_delete=models.CASCADE,
         related_name="comics_profile",
     )
-    secret_key = models.CharField[str, str](
+    secret_key = models.CharField[str](
         max_length=32,
         blank=False,
         default=make_secret_key,
@@ -56,11 +56,11 @@ class UserProfile(models.Model):
 
 
 class Subscription(models.Model):
-    userprofile = models.ForeignKey["UserProfile", "UserProfile"](
+    userprofile = models.ForeignKey["UserProfile"](
         "UserProfile",
         on_delete=models.CASCADE,
     )
-    comic = models.ForeignKey["Comic", "Comic"](
+    comic = models.ForeignKey["Comic"](
         "core.Comic",
         on_delete=models.CASCADE,
     )
