@@ -87,7 +87,7 @@ COMICS_SITE_URL = env.str(
 # configured, Django itself falls back to allowing the localhost variants.
 ALLOWED_HOSTS = env.list(
     "DJANGO_ALLOWED_HOSTS",
-    default=[] if DEBUG else [urlsplit(COMICS_SITE_URL).hostname],
+    default=[] if DEBUG else [urlsplit(COMICS_SITE_URL).hostname or "localhost"],
 )
 
 

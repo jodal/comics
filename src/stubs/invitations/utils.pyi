@@ -1,0 +1,3 @@
+from invitations.models import Invitation
+
+def get_invitation_model() -> type[Invitation]: ...

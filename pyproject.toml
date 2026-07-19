@@ -75,7 +75,7 @@ pythonVersion = "3.13"
 exclude = ["**/.*", "**/__pycache__", "src/comics/**/migrations"]
 venvPath = "."
 venv = ".venv"
-# stubPath = "src/stubs"
+stubPath = "src/stubs"
 # We enable most type checks and then subsequently disable those we are not interested in
 typeCheckingMode = "strict"
 # We do not create stub files for all modules
