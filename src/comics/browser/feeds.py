@@ -1,4 +1,4 @@
-import datetime
+import datetime as dt
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, cast
 from urllib.parse import urljoin, urlsplit
@@ -39,9 +39,7 @@ def _absolute_url(path: str) -> str:
 
 
 def _recent_releases(releases: ReleaseQuerySet) -> ReleaseQuerySet:
-    from_time = timezone.now() - datetime.timedelta(
-        days=settings.COMICS_MAX_DAYS_IN_FEED
-    )
+    from_time = timezone.now() - dt.timedelta(days=settings.COMICS_MAX_DAYS_IN_FEED)
     return releases.filter(fetched__gte=from_time).order_by("-fetched")
 
 
@@ -59,7 +57,7 @@ class ReleaseFeed[ObjectT](Feed[Release, ObjectT]):
     def item_title(self, item: Release) -> str:
         return f"{item.comic.name} published {date_format(item.pub_date)}"
 
-    def item_updateddate(self, item: Release) -> datetime.datetime:
+    def item_updateddate(self, item: Release) -> dt.datetime:
         return item.fetched
 
     def item_copyright(self, item: Release) -> str:

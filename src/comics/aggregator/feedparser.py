@@ -1,4 +1,4 @@
-import datetime
+import datetime as dt
 import warnings
 from typing import Any
 
@@ -21,7 +21,7 @@ class FeedParser:
         if hasattr(self.raw_feed, "encoding") and self.raw_feed.encoding:
             self.encoding = self.raw_feed.encoding
 
-    def for_date(self, date: datetime.date) -> list["Entry"]:
+    def for_date(self, date: dt.date) -> list["Entry"]:
         with warnings.catch_warnings():
             # feedparser 5.1.2 issues a warning whenever we use updated_parsed
             warnings.simplefilter("ignore")
@@ -31,12 +31,12 @@ class FeedParser:
                 if (
                     hasattr(e, "published_parsed")
                     and e.published_parsed
-                    and datetime.date(*e.published_parsed[:3]) == date
+                    and dt.date(*e.published_parsed[:3]) == date
                 )
                 or (
                     hasattr(e, "updated_parsed")
                     and e.updated_parsed
-                    and datetime.date(*e.updated_parsed[:3]) == date
+                    and dt.date(*e.updated_parsed[:3]) == date
                 )
             ]
 

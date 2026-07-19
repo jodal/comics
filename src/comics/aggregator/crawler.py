@@ -170,7 +170,7 @@ class CrawlerBase:
         Must be overridden by all crawlers
 
         Input:
-            pub_date -- a datetime.date object for the date to crawl
+            pub_date -- a dt.date object for the date to crawl
 
         Output:
             on success: a CrawlResult object containing:

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import datetime
+import datetime as dt
 from typing import TYPE_CHECKING, cast
 
 from django.contrib.auth.decorators import login_required
@@ -21,17 +21,17 @@ if TYPE_CHECKING:
         for use in the template.
         """
 
-        last_pub_date: datetime.date | None
+        last_pub_date: dt.date | None
         days_since_last_release: int
 
     # The CSS classes, the date, and the release fetched that day, if any.
-    TimelineCell = tuple[set[str], datetime.date, Release | None]
+    TimelineCell = tuple[set[str], dt.date, Release | None]
 
 
 @login_required
 def status(request: HttpRequest, num_days: int = 21) -> HttpResponse:
-    today = datetime.date.today()
-    last = today - datetime.timedelta(days=num_days)
+    today = dt.date.today()
+    last = today - dt.timedelta(days=num_days)
 
     releases = Release.objects.filter(pub_date__gte=last, comic__active=True)
     releases = releases.select_related().order_by("comic__slug").distinct()
@@ -60,7 +60,7 @@ def status(request: HttpRequest, num_days: int = 21) -> HttpResponse:
         cells: list[TimelineCell] = []
 
         for i in range(num_days + 1):
-            day = today - datetime.timedelta(days=i)
+            day = today - dt.timedelta(days=i)
             classes: set[str] = set()
 
             if not schedule:
@@ -76,7 +76,7 @@ def status(request: HttpRequest, num_days: int = 21) -> HttpResponse:
 
         timeline[comic] = cells
 
-    days = [today - datetime.timedelta(days=i) for i in range(num_days + 1)]
+    days = [today - dt.timedelta(days=i) for i in range(num_days + 1)]
 
     return render(
         request,

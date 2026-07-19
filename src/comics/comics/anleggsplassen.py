@@ -1,5 +1,4 @@
 import datetime as dt
-from datetime import datetime
 
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.comic_data import ComicDataBase
@@ -38,7 +37,7 @@ class Crawler(CrawlerBase):
             if date_string is None:
                 continue
 
-            date = datetime.strptime(date_string[:10], "%Y-%m-%d").date()
+            date = dt.datetime.strptime(date_string[:10], "%Y-%m-%d").date()
             if date != pub_date:
                 continue
 

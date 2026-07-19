@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import datetime
+import datetime as dt
 import json
 from typing import TYPE_CHECKING, Any, cast
 
@@ -173,7 +173,7 @@ class ReleaseDayArchiveView(ReleaseDateMixin, DayArchiveView):
         return "day"
 
     def get_subtitle(self) -> str | None:
-        day: datetime.date = self.context["day"]
+        day: dt.date = self.context["day"]
         return day.strftime("%A %d %B %Y").replace(" 0", " ")
 
 
@@ -194,7 +194,7 @@ class ReleaseMonthArchiveView(ReleaseDateMixin, MonthArchiveView):
         return "month"
 
     def get_subtitle(self) -> str | None:
-        month: datetime.date = self.context["month"]
+        month: dt.date = self.context["month"]
         return month.strftime("%B %Y")
 
 
@@ -220,9 +220,9 @@ class MyComicsMixin(ReleaseMixin):
     def get_today_url(self) -> str | None:
         return reverse("mycomics_today")
 
-    _last_pub_date: datetime.date
+    _last_pub_date: dt.date
 
-    def _get_last_pub_date(self) -> datetime.date:
+    def _get_last_pub_date(self) -> dt.date:
         if not hasattr(self, "_last_pub_date"):
             self._last_pub_date = (
                 self.get_queryset()
@@ -502,9 +502,9 @@ class OneComicMixin(ReleaseMixin):
     if TYPE_CHECKING:
         # Implemented by the subclasses combining this mixin with a date-based
         # Django view, which provides get_previous_day() and get_next_day().
-        def get_current_day(self) -> datetime.date | None: ...
-        def get_previous_day(self, date: datetime.date) -> datetime.date | None: ...
-        def get_next_day(self, date: datetime.date) -> datetime.date | None: ...
+        def get_current_day(self) -> dt.date | None: ...
+        def get_previous_day(self, date: dt.date) -> dt.date | None: ...
+        def get_next_day(self, date: dt.date) -> dt.date | None: ...
 
     def get_queryset(self) -> ReleaseQuerySet:
         return (
@@ -522,9 +522,9 @@ class OneComicMixin(ReleaseMixin):
     def get_latest_url(self) -> str | None:
         return reverse("comic_latest", kwargs={"comic_slug": self.comic.slug})
 
-    _recent_pub_dates: list[datetime.date]
+    _recent_pub_dates: list[dt.date]
 
-    def _get_recent_pub_dates(self) -> list[datetime.date]:
+    def _get_recent_pub_dates(self) -> list[dt.date]:
         if not hasattr(self, "_recent_pub_dates"):
             self._recent_pub_dates = list(
                 self.get_queryset()
@@ -534,7 +534,7 @@ class OneComicMixin(ReleaseMixin):
         return self._recent_pub_dates
 
     def get_today_url(self) -> str | None:
-        if datetime.date.today() in self._get_recent_pub_dates():
+        if dt.date.today() in self._get_recent_pub_dates():
             return reverse("comic_today", kwargs={"comic_slug": self.comic.slug})
         return None
 
@@ -658,35 +658,35 @@ class OneComicLatestView(OneComicMixin, ReleaseLatestView):
         releases = super().get_queryset()
         return releases.order_by("-fetched")
 
-    def get_current_day(self) -> datetime.date | None:
+    def get_current_day(self) -> dt.date | None:
         try:
             return self._get_recent_pub_dates()[0]
         except IndexError:
             return None
 
-    def get_previous_day(self, date: datetime.date) -> datetime.date | None:
+    def get_previous_day(self, date: dt.date) -> dt.date | None:
         try:
             return self._get_recent_pub_dates()[1]
         except IndexError:
             return None
 
-    def get_next_day(self, date: datetime.date) -> datetime.date | None:
+    def get_next_day(self, date: dt.date) -> dt.date | None:
         return None  # Nothing is newer than 'latest'
 
 
 class OneComicDayView(OneComicMixin, ReleaseDayArchiveView):
     """View of the releases from a single comic for a given day"""
 
-    def get_current_day(self) -> datetime.date | None:
-        day: datetime.date = self.context["day"]
+    def get_current_day(self) -> dt.date | None:
+        day: dt.date = self.context["day"]
         return day
 
 
 class OneComicTodayView(OneComicMixin, ReleaseTodayArchiveView):
     """View of the releases from a single comic for today"""
 
-    def get_current_day(self) -> datetime.date | None:
-        day: datetime.date = self.context["day"]
+    def get_current_day(self) -> dt.date | None:
+        day: dt.date = self.context["day"]
         return day
 
 
