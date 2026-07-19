@@ -20,6 +20,11 @@ body {
     padding-top: 15px;
 }
 
+dialog.keyboard-shortcuts {
+    border: none;
+    background: transparent;
+}
+
 .browser-menu {
     margin-bottom: 10px;
 }

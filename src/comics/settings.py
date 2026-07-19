@@ -6,6 +6,7 @@ import dj_database_url
 import django_stubs_ext
 import sentry_sdk
 from django.core.management.utils import get_random_secret_key
+from django.utils.csp import CSP
 from sentry_sdk.integrations.django import DjangoIntegration
 from typenv import Env
 
@@ -53,6 +54,11 @@ sentry_sdk.init(
     traces_sample_rate=SENTRY_TRACES_SAMPLE_RATE,
     send_default_pii=True,
 )
+#
+# To have browsers report Content-Security-Policy violations to Sentry, set
+# this to the report URI found under the Sentry project's "Security Headers"
+# settings.
+SENTRY_CSP_REPORT_URI = env.str("SENTRY_CSP_REPORT_URI", default=None)
 
 
 # Security - Django's secret key
@@ -176,6 +182,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.middleware.csp.ContentSecurityPolicyMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -197,6 +204,7 @@ TEMPLATES = [
         "OPTIONS": {
             "context_processors": [
                 "django.contrib.auth.context_processors.auth",
+                "django.template.context_processors.csp",
                 "django.template.context_processors.i18n",
                 "django.template.context_processors.media",
                 "django.template.context_processors.request",
@@ -540,3 +548,52 @@ COMICS_NUM_DAYS_COMIC_IS_NEW = env.int(
     "COMICS_NUM_DAYS_COMIC_IS_NEW",
     default=7,
 )
+
+
+# Security - Content Security Policy
+#
+# Everything is self-hosted, so the policy only allows our own origin, plus a
+# per-request nonce for the few inline scripts in our own templates.
+_csp: dict[str, list[CSP | str]] = {
+    "default-src": [CSP.SELF],
+    "script-src": [CSP.SELF, CSP.NONCE],
+    "style-src": [CSP.SELF],
+    "img-src": [CSP.SELF],
+    "font-src": [CSP.SELF],
+    "connect-src": [CSP.SELF],
+    "object-src": [CSP.NONE],
+    "base-uri": [CSP.SELF],
+    "form-action": [CSP.SELF],
+    "frame-ancestors": [CSP.NONE],
+}
+#
+# If media is hosted on another origin than the app, allow images from it.
+if MEDIA_URL.startswith("http"):
+    _media_parts = urlsplit(MEDIA_URL)
+    _csp["img-src"].append(f"{_media_parts.scheme}://{_media_parts.netloc}")
+#
+# If Google Analytics is enabled, allow its hosts where required. See
+# https://developers.google.com/tag-platform/security/guides/csp
+if COMICS_GOOGLE_ANALYTICS_CODE:
+    _csp["script-src"].append("https://*.googletagmanager.com")
+    _csp["img-src"] += [
+        "https://*.google-analytics.com",
+        "https://*.googletagmanager.com",
+    ]
+    _csp["connect-src"] += [
+        "https://*.google-analytics.com",
+        "https://*.analytics.google.com",
+        "https://*.googletagmanager.com",
+    ]
+#
+# Have browsers report violations to Sentry, if configured. See
+# https://docs.sentry.io/security-legal-pii/security/security-policy-reporting/
+if SENTRY_CSP_REPORT_URI:
+    _csp["report-uri"] = [SENTRY_CSP_REPORT_URI]
+#
+if DEBUG:
+    # Only report violations in development, where django-debug-toolbar would
+    # otherwise be blocked by the policy.
+    SECURE_CSP_REPORT_ONLY = _csp
+else:
+    SECURE_CSP = _csp

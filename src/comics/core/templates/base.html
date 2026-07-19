@@ -15,7 +15,7 @@
     {% block extra_head %}{% endblock %}
     {% if google_analytics_code %}
       <script async src="https://www.googletagmanager.com/gtag/js?id={{ google_analytics_code }}"></script>
-      <script>
+      <script nonce="{{ csp_nonce }}">
         window.dataLayer = window.dataLayer || [];
         function gtag() {
           dataLayer.push(arguments);
@@ -150,7 +150,7 @@
 
     {% endblock body %}
 
-    <dialog class="modal-dialog keyboard-shortcuts" style="border: none; background: transparent;">
+    <dialog class="modal-dialog keyboard-shortcuts">
       <form class="modal-content">
         <div class="modal-header">
           <button class="close" formmethod="dialog">×</button>
