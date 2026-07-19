@@ -20,6 +20,12 @@ class BaseQuerySet[M: models.Model](models.QuerySet[M]):
 
 
 class ComicQuerySet(BaseQuerySet["Comic"]):
+    def active(self) -> Self:
+        return self.filter(active=True)
+
+    def inactive(self) -> Self:
+        return self.filter(active=False)
+
     def sort_by_name(self) -> Self:
         return self.order_by(Lower("name"))
 

@@ -43,7 +43,7 @@ def status(request: HttpRequest, num_days: int = 21) -> HttpResponse:
 
     comics = cast(
         "QuerySet[StatusComic]",
-        Comic.objects.filter(active=True)
+        Comic.objects.active()
         .annotate(last_pub_date=Max("release__pub_date"))
         .order_by("last_pub_date"),
     )

@@ -35,8 +35,8 @@ def comics_list(request: AuthenticatedHttpRequest) -> HttpResponse:
         "browser/comics_list.html",
         {
             "active": {"comics_list": True},
-            "active_comics": Comic.objects.sort_by_name().filter(active=True),
-            "inactive_comics": Comic.objects.sort_by_name().filter(active=False),
+            "active_comics": Comic.objects.active().sort_by_name(),
+            "inactive_comics": Comic.objects.inactive().sort_by_name(),
             "my_comics": request.user.comics_profile.comics.all(),
         },
     )
