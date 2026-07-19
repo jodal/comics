@@ -247,6 +247,11 @@ DATABASES = {
         ),
     ),
 }
+#
+# When using PostgreSQL, maintain a connection pool in each worker process
+# instead of opening a new connection for every request.
+if DATABASES["default"]["ENGINE"] == "django.db.backends.postgresql":
+    DATABASES["default"].setdefault("OPTIONS", {}).setdefault("pool", True)
 
 
 # Logging
