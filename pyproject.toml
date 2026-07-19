@@ -7,7 +7,7 @@ readme = "README.md"
 license = "AGPL-3.0-only"
 license-files = ["COPYING"]
 classifiers = ["Private :: Do Not Upload"]
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 dependencies = [
     "cssselect>=1.3.0",
     "defusedxml>=0.7.1",
@@ -72,7 +72,7 @@ zizmor = ["zizmor==1.26.1"]
 
 
 [tool.basedpyright]
-pythonVersion = "3.12"
+pythonVersion = "3.13"
 exclude = ["**/.*", "**/__pycache__", "src/comics/**/migrations"]
 venvPath = "."
 venv = ".venv"
@@ -156,7 +156,7 @@ ignore_missing_imports = true
 
 
 [tool.ruff]
-target-version = "py312"
+target-version = "py313"
 
 [tool.ruff.lint]
 select = ["ALL"]
@@ -199,7 +199,7 @@ known-first-party = ["comics"]
 
 
 [tool.tox]
-env_list = ["3.12", "3.13", "3.14", "docs", "mypy", "ruff-format", "ruff-lint", "zizmor"]
+env_list = ["3.13", "3.14", "docs", "mypy", "ruff-format", "ruff-lint", "zizmor"]
 
 [tool.tox.env_run_base]
 runner = "uv-venv-lock-runner"

@@ -18,9 +18,6 @@ jobs:
           - name: "Docs"
             python: "3.14"
             tox: docs
-          - name: "pytest (3.12)"
-            python: "3.12"
-            tox: "3.12"
           - name: "pytest (3.13)"
             python: "3.13"
             tox: "3.13"
