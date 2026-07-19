@@ -28,12 +28,12 @@ jobs:
           - name: "basedpyright"
             python: "3.14"
             tox: basedpyright
-          - name: "ruff-format"
+          - name: "ruff format"
             python: "3.14"
             tox: ruff-format
-          - name: "ruff-lint"
+          - name: "ruff check"
             python: "3.14"
-            tox: ruff-lint
+            tox: ruff-check
           - name: "zizmor"
             python: "3.14"
             tox: zizmor

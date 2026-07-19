@@ -166,7 +166,7 @@ env_list = [
     "basedpyright",
     "docs",
     "ruff-format",
-    "ruff-lint",
+    "ruff-check",
     "zizmor",
 ]
 
@@ -208,7 +208,7 @@ runner = "uv-venv-lock-runner"
 dependency_groups = ["lint"]
 commands = [["ruff", "format", "--check", "{posargs:.}"]]
 
-[tool.tox.env."ruff-lint"]
+[tool.tox.env."ruff-check"]
 runner = "uv-venv-lock-runner"
 skip_install = true
 dependency_groups = ["lint"]
