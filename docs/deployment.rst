@@ -108,9 +108,6 @@ A production ``comics.env`` may look like this:
     # outstanding password-reset/invitation links.
     DJANGO_SECRET_KEY=replace-this-with-a-long-random-value
 
-    DJANGO_ALLOWED_HOSTS=comics.example.com
-    DJANGO_CSRF_TRUSTED_ORIGINS=https://comics.example.com
-
     # Caddy serves /media/ from disk; the URL stays relative to the site.
     DJANGO_MEDIA_URL=/media/
 
@@ -145,6 +142,12 @@ A production ``comics.env`` may look like this:
 
     # Optional: Sentry crash reporting.
     SENTRY_DSN=https://...
+
+    # Base URL where the site is reachable. Used to build absolute URLs,
+    # e.g. in Atom feeds, and as the default for the allowed hosts and CSRF
+    # trusted origins (override with DJANGO_ALLOWED_HOSTS and
+    # DJANGO_CSRF_TRUSTED_ORIGINS if they need to differ).
+    COMICS_SITE_URL=https://comics.example.com
 
     COMICS_SITE_TITLE=comics.example.com
     COMICS_INVITE_MODE=true
