@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import datetime
 import json
+from typing import TYPE_CHECKING, Any, cast
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -14,13 +17,19 @@ from django.views.generic import (
     RedirectView,
     TemplateView,
     TodayArchiveView,
+    View,
 )
+from django.views.generic.base import TemplateResponseMixin
 
 from comics.core.models import Comic, Release
 
+if TYPE_CHECKING:
+    from comics.accounts.typing import AuthenticatedHttpRequest, ComicsUser
+    from comics.core.querysets import ComicQuerySet, ReleaseQuerySet
+
 
 @login_required
-def comics_list(request):
+def comics_list(request: AuthenticatedHttpRequest) -> HttpResponse:
     return render(
         request,
         "browser/comics_list.html",
@@ -33,36 +42,47 @@ def comics_list(request):
     )
 
 
-class ComicMixin:
+class ComicMixin(View):
     """Things common for *all* views of comics"""
 
+    _comic: Comic
+
     @property
-    def comic(self):
+    def comic(self) -> Comic:
         if not hasattr(self, "_comic"):
             self._comic = get_object_or_404(Comic, slug=self.kwargs["comic_slug"])
         return self._comic
 
-    def get_user(self):
-        return self.request.user
+    def get_user(self) -> ComicsUser:
+        # All views using this mixin require a logged-in user.
+        return cast("ComicsUser", self.request.user)
 
-    def get_my_comics(self):
-        return self.get_user().comics_profile.comics.all()
+    def get_my_comics(self) -> ComicQuerySet:
+        # The related manager derives from Comic's default manager, so all()
+        # returns a ComicQuerySet, which the stubs cannot know.
+        return cast("ComicQuerySet", self.get_user().comics_profile.comics.all())
 
 
-class ReleaseMixin(LoginRequiredMixin, ComicMixin):
+class ReleaseMixin(LoginRequiredMixin, TemplateResponseMixin, ComicMixin):
     """Things common for *all* views of comic releases"""
 
     allow_future = True
-    template_name: str | None = "browser/release_list.html"
+    template_name = "browser/release_list.html"
 
-    def render_to_response(self, context, **kwargs):
+    context: dict[str, Any]
+
+    def render_to_response(
+        self,
+        context: dict[str, Any],
+        **kwargs: Any,
+    ) -> HttpResponse:
         # We hook into render_to_response() instead of get_context_data()
         # because the date based views only populate the context with
         # date-related information right before render_to_response() is called.
         context.update(self.get_release_context_data(context))
         return super().render_to_response(context, **kwargs)
 
-    def get_release_context_data(self, context):
+    def get_release_context_data(self, context: dict[str, Any]) -> dict[str, Any]:
         # The methods called later in this method assumes that ``self.context``
         # contains what is already ready to be made available for the template.
         self.context = context
@@ -86,56 +106,56 @@ class ReleaseMixin(LoginRequiredMixin, ComicMixin):
             "last_url": self.get_last_url(),
         }
 
-    def get_object_type(self):
+    def get_object_type(self) -> str | None:
         return None
 
-    def get_view_type(self):
+    def get_view_type(self) -> str | None:
         return None
 
-    def get_title(self):
+    def get_title(self) -> str | None:
         return None
 
-    def get_subtitle(self):
+    def get_subtitle(self) -> str | None:
         return None
 
-    def get_latest_url(self):
+    def get_latest_url(self) -> str | None:
         return None
 
-    def get_today_url(self):
+    def get_today_url(self) -> str | None:
         return None
 
-    def get_day_url(self):
+    def get_day_url(self) -> str | None:
         return None
 
-    def get_month_url(self):
+    def get_month_url(self) -> str | None:
         return None
 
-    def get_feed_url(self):
+    def get_feed_url(self) -> str | None:
         return None
 
-    def get_feed_title(self):
+    def get_feed_title(self) -> str | None:
         return None
 
-    def get_first_url(self):
+    def get_first_url(self) -> str | None:
         return None
 
-    def get_prev_url(self):
+    def get_prev_url(self) -> str | None:
         return None
 
-    def get_next_url(self):
+    def get_next_url(self) -> str | None:
         return None
 
-    def get_last_url(self):
+    def get_last_url(self) -> str | None:
         return None
 
 
 class ReleaseLatestView(ReleaseMixin, ListView):
     """Things common for all *latest* views"""
 
-    def get_subtitle(self):
+    def get_subtitle(self) -> str | None:
         return "Latest releases"
 
-    def get_view_type(self):
+    def get_view_type(self) -> str | None:
         return "latest"
 
 
@@ -149,56 +169,60 @@ class ReleaseDateMixin(ReleaseMixin):
 class ReleaseDayArchiveView(ReleaseDateMixin, DayArchiveView):
     """Things common for all *day* views"""
 
-    def get_view_type(self):
+    def get_view_type(self) -> str | None:
         return "day"
 
-    def get_subtitle(self):
-        return self.context["day"].strftime("%A %d %B %Y").replace(" 0", " ")
+    def get_subtitle(self) -> str | None:
+        day: datetime.date = self.context["day"]
+        return day.strftime("%A %d %B %Y").replace(" 0", " ")
 
 
 class ReleaseTodayArchiveView(ReleaseDateMixin, TodayArchiveView):
     """Things common for all *today* views"""
 
-    def get_view_type(self):
+    def get_view_type(self) -> str | None:
         return "today"
 
-    def get_subtitle(self):
+    def get_subtitle(self) -> str | None:
         return "Today"
 
 
 class ReleaseMonthArchiveView(ReleaseDateMixin, MonthArchiveView):
     """Things common for all *month* views"""
 
-    def get_view_type(self):
+    def get_view_type(self) -> str | None:
         return "month"
 
-    def get_subtitle(self):
-        return self.context["month"].strftime("%B %Y")
+    def get_subtitle(self) -> str | None:
+        month: datetime.date = self.context["month"]
+        return month.strftime("%B %Y")
 
 
-class MyComicsMixin:
+class MyComicsMixin(ReleaseMixin):
     """Things common for all views of *my comics*"""
 
-    def get_queryset(self):
+    def get_queryset(self) -> ReleaseQuerySet:
         return (
             Release.objects.select_related()
             .filter(comic__in=self.get_my_comics())
             .order_by("pub_date")
         )
 
-    def get_object_type(self):
+    def get_object_type(self) -> str | None:
         return "mycomics"
 
-    def get_title(self):
+    def get_title(self) -> str | None:
         return "My comics"
 
-    def get_latest_url(self):
+    def get_latest_url(self) -> str | None:
         return reverse("mycomics_latest")
 
-    def get_today_url(self):
+    def get_today_url(self) -> str | None:
         return reverse("mycomics_today")
 
-    def _get_last_pub_date(self):
+    _last_pub_date: datetime.date
+
+    def _get_last_pub_date(self) -> datetime.date:
         if not hasattr(self, "_last_pub_date"):
             self._last_pub_date = (
                 self.get_queryset()
@@ -207,7 +231,7 @@ class MyComicsMixin:
             )
         return self._last_pub_date
 
-    def get_day_url(self):
+    def get_day_url(self) -> str | None:
         try:
             last_date = self._get_last_pub_date()
             return reverse(
@@ -219,9 +243,9 @@ class MyComicsMixin:
                 },
             )
         except IndexError:
-            pass
+            return None
 
-    def get_month_url(self):
+    def get_month_url(self) -> str | None:
         try:
             last_month = self._get_last_pub_date()
             return reverse(
@@ -229,15 +253,15 @@ class MyComicsMixin:
                 kwargs={"year": last_month.year, "month": last_month.month},
             )
         except IndexError:
-            pass
+            return None
 
-    def get_feed_url(self):
+    def get_feed_url(self) -> str | None:
         return "{}?key={}".format(
             reverse("mycomics_feed"),
             self.get_user().comics_profile.secret_key,
         )
 
-    def get_feed_title(self):
+    def get_feed_title(self) -> str | None:
         return "My comics"
 
 
@@ -246,7 +270,7 @@ class MyComicsHome(LoginRequiredMixin, RedirectView):
 
     permanent = True
 
-    def get_redirect_url(self, **kwargs):
+    def get_redirect_url(self, *args: Any, **kwargs: Any) -> str:
         return reverse("mycomics_latest")
 
 
@@ -255,47 +279,55 @@ class MyComicsLatestView(MyComicsMixin, ReleaseLatestView):
 
     paginate_by = settings.COMICS_MAX_RELEASES_PER_PAGE
 
-    def get_queryset(self):
+    def get_queryset(self) -> ReleaseQuerySet:
         releases = super().get_queryset()
         return releases.order_by("-fetched")
 
-    def get_first_url(self):
+    def get_first_url(self) -> str | None:
         page = self.context["page_obj"]
         if page.number != page.paginator.num_pages:
             return reverse(
                 "mycomics_latest_page_n",
                 kwargs={"page": page.paginator.num_pages},
             )
+        return None
 
-    def get_prev_url(self):
+    def get_prev_url(self) -> str | None:
         page = self.context["page_obj"]
         if page.has_next():
             return reverse(
                 "mycomics_latest_page_n",
                 kwargs={"page": page.next_page_number()},
             )
+        return None
 
-    def get_next_url(self):
+    def get_next_url(self) -> str | None:
         page = self.context["page_obj"]
         if page.has_previous():
             return reverse(
                 "mycomics_latest_page_n",
                 kwargs={"page": page.previous_page_number()},
             )
+        return None
 
-    def get_last_url(self):
+    def get_last_url(self) -> str | None:
         page = self.context["page_obj"]
         if page.number != 1:
             return reverse("mycomics_latest_page_n", kwargs={"page": 1})
+        return None
 
 
 class MyComicsNumReleasesSinceView(MyComicsLatestView):
-    def get_num_releases_since(self):
+    def get_num_releases_since(self) -> int:
         last_release_seen = get_object_or_404(Release, id=self.kwargs["release_id"])
         releases = super().get_queryset()
         return releases.filter(fetched__gt=last_release_seen.fetched).count()
 
-    def render_to_response(self, context, **kwargs):
+    def render_to_response(
+        self,
+        context: dict[str, Any],
+        **kwargs: Any,
+    ) -> HttpResponse:
         data = json.dumps(
             {
                 "since_release_id": int(self.kwargs["release_id"]),
@@ -309,7 +341,7 @@ class MyComicsNumReleasesSinceView(MyComicsLatestView):
 class MyComicsDayView(MyComicsMixin, ReleaseDayArchiveView):
     """View of releases from my comics for a given day"""
 
-    def get_first_url(self):
+    def get_first_url(self) -> str | None:
         try:
             first_date = (
                 self.get_queryset()
@@ -326,9 +358,10 @@ class MyComicsDayView(MyComicsMixin, ReleaseDayArchiveView):
                     },
                 )
         except IndexError:
-            pass
+            return None
+        return None
 
-    def get_prev_url(self):
+    def get_prev_url(self) -> str | None:
         prev_date = self.get_previous_day(self.context["day"])
         if prev_date:
             return reverse(
@@ -339,8 +372,9 @@ class MyComicsDayView(MyComicsMixin, ReleaseDayArchiveView):
                     "day": prev_date.day,
                 },
             )
+        return None
 
-    def get_next_url(self):
+    def get_next_url(self) -> str | None:
         next_date = self.get_next_day(self.context["day"])
         if next_date:
             return reverse(
@@ -351,8 +385,9 @@ class MyComicsDayView(MyComicsMixin, ReleaseDayArchiveView):
                     "day": next_date.day,
                 },
             )
+        return None
 
-    def get_last_url(self):
+    def get_last_url(self) -> str | None:
         try:
             last_date = (
                 self.get_queryset()
@@ -369,7 +404,8 @@ class MyComicsDayView(MyComicsMixin, ReleaseDayArchiveView):
                     },
                 )
         except IndexError:
-            pass
+            return None
+        return None
 
 
 class MyComicsTodayView(MyComicsMixin, ReleaseTodayArchiveView):
@@ -377,7 +413,7 @@ class MyComicsTodayView(MyComicsMixin, ReleaseTodayArchiveView):
 
     allow_empty = True
 
-    def get_prev_url(self):
+    def get_prev_url(self) -> str | None:
         prev_date = self.get_previous_day(self.context["day"])
         if prev_date:
             return reverse(
@@ -388,12 +424,13 @@ class MyComicsTodayView(MyComicsMixin, ReleaseTodayArchiveView):
                     "day": prev_date.day,
                 },
             )
+        return None
 
 
 class MyComicsMonthView(MyComicsMixin, ReleaseMonthArchiveView):
     """View of releases from my comics for a given month"""
 
-    def get_first_url(self):
+    def get_first_url(self) -> str | None:
         try:
             first_month = (
                 self.get_queryset()
@@ -409,25 +446,28 @@ class MyComicsMonthView(MyComicsMixin, ReleaseMonthArchiveView):
                     },
                 )
         except IndexError:
-            pass
+            return None
+        return None
 
-    def get_prev_url(self):
+    def get_prev_url(self) -> str | None:
         prev_month = self.context["previous_month"]
         if prev_month:
             return reverse(
                 "mycomics_month",
                 kwargs={"year": prev_month.year, "month": prev_month.month},
             )
+        return None
 
-    def get_next_url(self):
+    def get_next_url(self) -> str | None:
         next_month = self.context["next_month"]
         if next_month:
             return reverse(
                 "mycomics_month",
                 kwargs={"year": next_month.year, "month": next_month.month},
             )
+        return None
 
-    def get_last_url(self):
+    def get_last_url(self) -> str | None:
         try:
             last_month = (
                 self.get_queryset()
@@ -443,7 +483,8 @@ class MyComicsMonthView(MyComicsMixin, ReleaseMonthArchiveView):
                     },
                 )
         except IndexError:
-            pass
+            return None
+        return None
 
 
 class MyComicsYearView(LoginRequiredMixin, RedirectView):
@@ -451,43 +492,53 @@ class MyComicsYearView(LoginRequiredMixin, RedirectView):
 
     permanent = True
 
-    def get_redirect_url(self, **kwargs):
+    def get_redirect_url(self, *args: Any, **kwargs: Any) -> str:
         return reverse("mycomics_month", kwargs={"year": kwargs["year"], "month": "1"})
 
 
-class OneComicMixin:
+class OneComicMixin(ReleaseMixin):
     """Things common for all views of a single comic"""
 
-    def get_queryset(self):
+    if TYPE_CHECKING:
+        # Implemented by the subclasses combining this mixin with a date-based
+        # Django view, which provides get_previous_day() and get_next_day().
+        def get_current_day(self) -> datetime.date | None: ...
+        def get_previous_day(self, date: datetime.date) -> datetime.date | None: ...
+        def get_next_day(self, date: datetime.date) -> datetime.date | None: ...
+
+    def get_queryset(self) -> ReleaseQuerySet:
         return (
             Release.objects.select_related()
             .filter(comic=self.comic)
             .order_by("pub_date")
         )
 
-    def get_object_type(self):
+    def get_object_type(self) -> str | None:
         return "onecomic"
 
-    def get_title(self):
+    def get_title(self) -> str | None:
         return self.comic.name
 
-    def get_latest_url(self):
+    def get_latest_url(self) -> str | None:
         return reverse("comic_latest", kwargs={"comic_slug": self.comic.slug})
 
-    def _get_recent_pub_dates(self):
+    _recent_pub_dates: list[datetime.date]
+
+    def _get_recent_pub_dates(self) -> list[datetime.date]:
         if not hasattr(self, "_recent_pub_dates"):
-            self._recent_pub_dates = (
+            self._recent_pub_dates = list(
                 self.get_queryset()
                 .values_list("pub_date", flat=True)
                 .order_by("-pub_date")[:2]
             )
         return self._recent_pub_dates
 
-    def get_today_url(self):
+    def get_today_url(self) -> str | None:
         if datetime.date.today() in self._get_recent_pub_dates():
             return reverse("comic_today", kwargs={"comic_slug": self.comic.slug})
+        return None
 
-    def get_day_url(self):
+    def get_day_url(self) -> str | None:
         try:
             last_pub_date = self._get_recent_pub_dates()[0]
             return reverse(
@@ -500,9 +551,9 @@ class OneComicMixin:
                 },
             )
         except IndexError:
-            pass
+            return None
 
-    def get_month_url(self):
+    def get_month_url(self) -> str | None:
         try:
             last_pub_date = self._get_recent_pub_dates()[0]
             return reverse(
@@ -514,25 +565,26 @@ class OneComicMixin:
                 },
             )
         except IndexError:
-            pass
+            return None
 
-    def get_feed_url(self):
+    def get_feed_url(self) -> str | None:
         return "{}?key={}".format(
             reverse("comic_feed", kwargs={"comic_slug": self.comic.slug}),
             self.get_user().comics_profile.secret_key,
         )
 
-    def get_feed_title(self):
+    def get_feed_title(self) -> str | None:
         return f"Comics from {self.comic.name}"
 
-    def get_first_url(self):
+    def get_first_url(self) -> str | None:
         try:
             first_date = (
                 self.get_queryset()
                 .values_list("pub_date", flat=True)
                 .order_by("pub_date")[0]
             )
-            if first_date < self.get_current_day():
+            current_day = self.get_current_day()
+            if current_day is not None and first_date < current_day:
                 return reverse(
                     "comic_day",
                     kwargs={
@@ -543,10 +595,14 @@ class OneComicMixin:
                     },
                 )
         except IndexError:
-            pass
+            return None
+        return None
 
-    def get_prev_url(self):
-        prev_date = self.get_previous_day(self.get_current_day())
+    def get_prev_url(self) -> str | None:
+        current_day = self.get_current_day()
+        prev_date = (
+            self.get_previous_day(current_day) if current_day is not None else None
+        )
         if prev_date:
             return reverse(
                 "comic_day",
@@ -557,9 +613,11 @@ class OneComicMixin:
                     "day": prev_date.day,
                 },
             )
+        return None
 
-    def get_next_url(self):
-        next_date = self.get_next_day(self.get_current_day())
+    def get_next_url(self) -> str | None:
+        current_day = self.get_current_day()
+        next_date = self.get_next_day(current_day) if current_day is not None else None
         if next_date:
             return reverse(
                 "comic_day",
@@ -570,11 +628,13 @@ class OneComicMixin:
                     "day": next_date.day,
                 },
             )
+        return None
 
-    def get_last_url(self):
+    def get_last_url(self) -> str | None:
         try:
             last_pub_date = self._get_recent_pub_dates()[0]
-            if last_pub_date > self.get_current_day():
+            current_day = self.get_current_day()
+            if current_day is not None and last_pub_date > current_day:
                 return reverse(
                     "comic_day",
                     kwargs={
@@ -585,7 +645,8 @@ class OneComicMixin:
                     },
                 )
         except IndexError:
-            pass
+            return None
+        return None
 
 
 class OneComicLatestView(OneComicMixin, ReleaseLatestView):
@@ -593,44 +654,46 @@ class OneComicLatestView(OneComicMixin, ReleaseLatestView):
 
     paginate_by = 1
 
-    def get_queryset(self):
+    def get_queryset(self) -> ReleaseQuerySet:
         releases = super().get_queryset()
         return releases.order_by("-fetched")
 
-    def get_current_day(self):
+    def get_current_day(self) -> datetime.date | None:
         try:
             return self._get_recent_pub_dates()[0]
         except IndexError:
-            pass
+            return None
 
-    def get_previous_day(self, day):
+    def get_previous_day(self, date: datetime.date) -> datetime.date | None:
         try:
             return self._get_recent_pub_dates()[1]
         except IndexError:
-            pass
+            return None
 
-    def get_next_day(self, day):
-        pass  # Nothing is newer than 'latest'
+    def get_next_day(self, date: datetime.date) -> datetime.date | None:
+        return None  # Nothing is newer than 'latest'
 
 
 class OneComicDayView(OneComicMixin, ReleaseDayArchiveView):
     """View of the releases from a single comic for a given day"""
 
-    def get_current_day(self):
-        return self.context["day"]
+    def get_current_day(self) -> datetime.date | None:
+        day: datetime.date = self.context["day"]
+        return day
 
 
 class OneComicTodayView(OneComicMixin, ReleaseTodayArchiveView):
     """View of the releases from a single comic for today"""
 
-    def get_current_day(self):
-        return self.context["day"]
+    def get_current_day(self) -> datetime.date | None:
+        day: datetime.date = self.context["day"]
+        return day
 
 
 class OneComicMonthView(OneComicMixin, ReleaseMonthArchiveView):
     """View of the releases from a single comic for a given month"""
 
-    def get_first_url(self):
+    def get_first_url(self) -> str | None:
         try:
             first_month = (
                 self.get_queryset()
@@ -647,9 +710,10 @@ class OneComicMonthView(OneComicMixin, ReleaseMonthArchiveView):
                     },
                 )
         except IndexError:
-            pass
+            return None
+        return None
 
-    def get_prev_url(self):
+    def get_prev_url(self) -> str | None:
         prev_month = self.context["previous_month"]
         if prev_month:
             return reverse(
@@ -660,8 +724,9 @@ class OneComicMonthView(OneComicMixin, ReleaseMonthArchiveView):
                     "month": prev_month.month,
                 },
             )
+        return None
 
-    def get_next_url(self):
+    def get_next_url(self) -> str | None:
         next_month = self.context["next_month"]
         if next_month:
             return reverse(
@@ -672,8 +737,9 @@ class OneComicMonthView(OneComicMixin, ReleaseMonthArchiveView):
                     "month": next_month.month,
                 },
             )
+        return None
 
-    def get_last_url(self):
+    def get_last_url(self) -> str | None:
         try:
             last_pub_date = self._get_recent_pub_dates()[0]
             if last_pub_date > self.context["month"]:
@@ -686,7 +752,8 @@ class OneComicMonthView(OneComicMixin, ReleaseMonthArchiveView):
                     },
                 )
         except IndexError:
-            pass
+            return None
+        return None
 
 
 class OneComicYearView(LoginRequiredMixin, RedirectView):
@@ -694,7 +761,7 @@ class OneComicYearView(LoginRequiredMixin, RedirectView):
 
     permanent = True
 
-    def get_redirect_url(self, **kwargs):
+    def get_redirect_url(self, *args: Any, **kwargs: Any) -> str:
         return reverse(
             "comic_month",
             kwargs={
@@ -708,7 +775,7 @@ class OneComicYearView(LoginRequiredMixin, RedirectView):
 class OneComicWebsiteRedirect(LoginRequiredMixin, ComicMixin, TemplateView):
     template_name = "browser/comic_website.html"
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["url"] = self.comic.url
         return context

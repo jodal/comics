@@ -3,21 +3,21 @@ from django.contrib import admin
 from comics.accounts import models
 
 
-class SubscriptionInline(admin.StackedInline):
+class SubscriptionInline(admin.StackedInline[models.Subscription, models.UserProfile]):
     model = models.Subscription
     extra = 1
 
 
-def email(obj):
+def email(obj: models.UserProfile) -> str:
     return obj.user.email
 
 
-def subscription_count(obj):
-    return obj.comics.count()
+def subscription_count(obj: models.UserProfile) -> str:
+    return str(obj.comics.count())
 
 
 @admin.register(models.UserProfile)
-class UserProfileAdmin(admin.ModelAdmin):
+class UserProfileAdmin(admin.ModelAdmin[models.UserProfile]):
     list_display = ("user", email, "secret_key", subscription_count)
     inlines = [SubscriptionInline]
     readonly_fields = ("user",)

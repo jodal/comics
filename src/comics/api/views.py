@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import json
 import re
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, cast
 
 from django.contrib.auth.models import User
 from django.db import transaction
@@ -32,11 +32,14 @@ from comics.api.serialization import format_value, json_response, paginated
 from comics.core.models import Comic, Image, Release
 
 if TYPE_CHECKING:
-    from django.db.models import QuerySet
+    from django.db.models import Model, QuerySet
     from django.http import HttpRequest
 
+    from comics.accounts.querysets import SubscriptionQuerySet
+    from comics.accounts.typing import ComicsUser
+
     class AuthedRequest(HttpRequest):
-        auth: User
+        auth: ComicsUser
 
 
 API_PREFIX = "/api/v1"
@@ -128,12 +131,13 @@ def subscription_dict(subscription: Subscription) -> dict[str, Any]:
 
 
 def user_dict(user: User) -> dict[str, Any]:
+    authed_user = cast("ComicsUser", user)
     return {
-        "email": user.email,
-        "date_joined": format_value(user.date_joined),
-        "last_login": format_value(user.last_login),
-        "secret_key": user.comics_profile.secret_key,
-        "resource_uri": f"{API_PREFIX}/users/{user.pk}/",
+        "email": authed_user.email,
+        "date_joined": format_value(authed_user.date_joined),
+        "last_login": format_value(authed_user.last_login),
+        "secret_key": authed_user.comics_profile.secret_key,
+        "resource_uri": f"{API_PREFIX}/users/{authed_user.pk}/",
     }
 
 
@@ -213,9 +217,11 @@ USER_SPEC = FilterSpec(
 )
 
 
-def subscribed_filter(
-    request: AuthedRequest, queryset: QuerySet, lookup: str
-) -> QuerySet:
+def subscribed_filter[M: Model](
+    request: AuthedRequest,
+    queryset: QuerySet[M],
+    lookup: str,
+) -> QuerySet[M]:
     subscribed = request.GET.get("subscribed")
     if subscribed == "true":
         return queryset.filter(**{lookup: request.auth})
@@ -505,7 +511,7 @@ SUBSCRIPTION_URI_RE = re.compile(rf"^{re.escape(API_PREFIX)}/subscriptions/(\d+)
 COMIC_URI_RE = re.compile(rf"^{re.escape(API_PREFIX)}/comics/(\d+)/$")
 
 
-def own_subscriptions(request: AuthedRequest) -> QuerySet[Subscription]:
+def own_subscriptions(request: AuthedRequest) -> SubscriptionQuerySet:
     return Subscription.objects.filter(userprofile__user=request.auth)
 
 
@@ -516,7 +522,7 @@ def parse_body(request: HttpRequest) -> dict[str, Any]:
         raise HttpError(400, "Request body is not valid JSON") from None
     if not isinstance(data, dict):
         raise HttpError(400, "Request body must be a JSON object")
-    return data
+    return cast("dict[str, Any]", data)
 
 
 def comic_from_uri(uri: str | None) -> Comic:
@@ -530,7 +536,8 @@ def comic_from_uri(uri: str | None) -> Comic:
 
 
 def own_subscription_from_uri(
-    request: AuthedRequest, uri: str | None
+    request: AuthedRequest,
+    uri: str | None,
 ) -> Subscription | None:
     match = SUBSCRIPTION_URI_RE.match(uri or "")
     if match is None:

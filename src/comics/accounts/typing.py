@@ -2,7 +2,9 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from django.contrib.auth.models import User
+    from django.db.models import Manager
     from django.http import HttpRequest
+    from invitations.models import Invitation
 
     from comics.accounts.models import UserProfile
 
@@ -14,6 +16,7 @@ if TYPE_CHECKING:
         """
 
         comics_profile: UserProfile
+        invitation_set: Manager[Invitation]
 
     class AuthenticatedHttpRequest(HttpRequest):
         """A request guaranteed to have a logged-in user.

@@ -1,19 +1,31 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from django.contrib import admin
 
 from comics.core import models
 
+if TYPE_CHECKING:
+    from django.db.models import Model
+    from django.http import HttpRequest
 
-class ReleaseImageInline(admin.TabularInline):
+
+class ReleaseImageInline(admin.TabularInline["Model", "Model"]):
     model = models.Release.images.through
     readonly_fields = ("release", "image")
     extra = 0
 
-    def has_add_permission(self, request):
+    def has_add_permission(
+        self,
+        request: HttpRequest,
+        obj: Model | None = None,
+    ) -> bool:
         return False
 
 
 @admin.register(models.Comic)
-class ComicAdmin(admin.ModelAdmin):
+class ComicAdmin(admin.ModelAdmin[models.Comic]):
     list_display = (
         "slug",
         "name",
@@ -36,12 +48,12 @@ class ComicAdmin(admin.ModelAdmin):
         "active",
     )
 
-    def has_add_permission(self, request):
+    def has_add_permission(self, request: HttpRequest) -> bool:
         return False
 
 
 @admin.register(models.Release)
-class ReleaseAdmin(admin.ModelAdmin):
+class ReleaseAdmin(admin.ModelAdmin[models.Release]):
     list_display = ("__str__", "comic", "pub_date", "fetched")
     list_filter = ["pub_date", "fetched", "comic"]
     date_hierarchy = "pub_date"
@@ -49,11 +61,11 @@ class ReleaseAdmin(admin.ModelAdmin):
     readonly_fields = ("comic", "pub_date", "fetched")
     inlines = (ReleaseImageInline,)
 
-    def has_add_permission(self, request):
+    def has_add_permission(self, request: HttpRequest) -> bool:
         return False
 
 
-def text_preview(obj):
+def text_preview(obj: models.Image) -> str:
     max_length = 60
     if len(obj.text) < max_length:
         return obj.text
@@ -62,7 +74,7 @@ def text_preview(obj):
 
 
 @admin.register(models.Image)
-class ImageAdmin(admin.ModelAdmin):
+class ImageAdmin(admin.ModelAdmin[models.Image]):
     list_display = (
         "__str__",
         "file",
@@ -85,5 +97,5 @@ class ImageAdmin(admin.ModelAdmin):
     )
     inlines = (ReleaseImageInline,)
 
-    def has_add_permission(self, request):
+    def has_add_permission(self, request: HttpRequest) -> bool:
         return False

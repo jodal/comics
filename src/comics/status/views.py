@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 import datetime
-from collections import OrderedDict
+from typing import TYPE_CHECKING, cast
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max
@@ -8,19 +10,45 @@ from django.shortcuts import render
 from comics.aggregator.utils import get_comic_schedule
 from comics.core.models import Comic, Release
 
+if TYPE_CHECKING:
+    from django.db.models import QuerySet
+    from django.http import HttpRequest, HttpResponse
+
+    class StatusComic(Comic):
+        """A comic in the status timeline, as seen by type checkers.
+
+        Adds the queryset annotation and the extra attribute set by the view
+        for use in the template.
+        """
+
+        last_pub_date: datetime.date | None
+        days_since_last_release: int
+
+    # The CSS classes, the date, and the release fetched that day, if any.
+    TimelineCell = tuple[set[str], datetime.date, Release | None]
+
 
 @login_required
-def status(request, num_days=21):
+def status(request: HttpRequest, num_days: int = 21) -> HttpResponse:
     today = datetime.date.today()
-    timeline = OrderedDict()
     last = today - datetime.timedelta(days=num_days)
 
     releases = Release.objects.filter(pub_date__gte=last, comic__active=True)
     releases = releases.select_related().order_by("comic__slug").distinct()
 
-    comics = Comic.objects.filter(active=True)
-    comics = comics.annotate(last_pub_date=Max("release__pub_date"))
-    comics = comics.order_by("last_pub_date")
+    release_by_comic_and_day: dict[tuple[int, int], Release] = {}
+    for release in releases:
+        day_num = (today - release.pub_date).days
+        release_by_comic_and_day[(release.comic_id, day_num)] = release
+
+    comics = cast(
+        "QuerySet[StatusComic]",
+        Comic.objects.filter(active=True)
+        .annotate(last_pub_date=Max("release__pub_date"))
+        .order_by("last_pub_date"),
+    )
+
+    timeline: dict[Comic, list[TimelineCell]] = {}
 
     for comic in comics:
         if comic.last_pub_date:
@@ -29,23 +57,24 @@ def status(request, num_days=21):
             comic.days_since_last_release = 1000
 
         schedule = get_comic_schedule(comic)
-        timeline[comic] = []
+        cells: list[TimelineCell] = []
 
         for i in range(num_days + 1):
             day = today - datetime.timedelta(days=i)
-            classes = set()
+            classes: set[str] = set()
 
             if not schedule:
                 classes.add("unscheduled")
             elif int(day.strftime("%w")) in schedule:
                 classes.add("scheduled")
 
-            timeline[comic].append([classes, day, None])
+            days_release = release_by_comic_and_day.get((comic.pk, i))
+            if days_release is not None:
+                classes.add("fetched")
 
-    for release in releases:
-        day = (today - release.pub_date).days
-        timeline[release.comic][day][0].add("fetched")
-        timeline[release.comic][day][2] = release
+            cells.append((classes, day, days_release))
+
+        timeline[comic] = cells
 
     days = [today - datetime.timedelta(days=i) for i in range(num_days + 1)]
 

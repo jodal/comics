@@ -1,4 +1,5 @@
 import importlib.metadata
+import importlib.util
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -174,12 +175,20 @@ LOCAL_APPS = [
     "comics.help",
     "comics.status",
 ]
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+# Development tools, enabled if installed:
+# - django-debug-toolbar
+# - django-extensions
+DEV_APPS = [
+    app
+    for app in ("debug_toolbar", "django_extensions")
+    if importlib.util.find_spec(app) is not None
+]
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS + DEV_APPS
 
 
 # Middleware
 #
-MIDDLEWARE = [
+_middleware = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.csp.ContentSecurityPolicyMiddleware",
@@ -192,14 +201,18 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
 ]
+if "debug_toolbar" in DEV_APPS:
+    _middleware += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
+MIDDLEWARE = _middleware
 
 
 # Templates
 #
+_template_dirs: list[str] = []
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": _template_dirs,
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -254,7 +267,7 @@ DATABASES = {
 #
 # When using PostgreSQL, maintain a connection pool in each worker process
 # instead of opening a new connection for every request.
-if DATABASES["default"]["ENGINE"] == "django.db.backends.postgresql":
+if DATABASES["default"].get("ENGINE") == "django.db.backends.postgresql":
     DATABASES["default"].setdefault("OPTIONS", {}).setdefault("pool", True)
 
 
@@ -300,7 +313,7 @@ DEFAULT_FROM_EMAIL = env.str(
 #
 # Email backend to use.
 # Default sends emails to console output, which is useful for development.
-EMAIL_BACKEND = env.str(
+_email_backend = env.str(
     "DJANGO_EMAIL_BACKEND",
     default="django.core.mail.backends.console.EmailBackend",
 )
@@ -333,16 +346,18 @@ EMAIL_USE_SSL = env.bool(
 )
 #
 # Send email using Anymail via Mailgun if MAILGUN_API_KEY is set.
+_anymail: dict[str, str] = {}
 if mailgun_api_key := env.str("MAILGUN_API_KEY", default=None):
-    EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
-    ANYMAIL = {
-        "MAILGUN_API_KEY": mailgun_api_key,
-        "MAILGUN_API_URL": env.str(
-            "MAILGUN_API_URL", default="https://api.mailgun.net/v3"
-        ),
-    }
+    _email_backend = "anymail.backends.mailgun.EmailBackend"
+    _anymail["MAILGUN_API_KEY"] = mailgun_api_key
+    _anymail["MAILGUN_API_URL"] = env.str(
+        "MAILGUN_API_URL", default="https://api.mailgun.net/v3"
+    )
 if mailgun_sender_domain := env.str("MAILGUN_SENDER_DOMAIN", default=None):
-    ANYMAIL["MAILGUN_SENDER_DOMAIN"] = mailgun_sender_domain
+    _anymail["MAILGUN_SENDER_DOMAIN"] = mailgun_sender_domain
+#
+EMAIL_BACKEND = _email_backend
+ANYMAIL = _anymail
 
 
 # Auth - django.contrib.auth
@@ -456,27 +471,6 @@ MEDIA_URL = env.str(
 # Tests
 #
 TEST_RUNNER = "django.test.runner.DiscoverRunner"
-
-
-# Development - django-debug-toolbar
-#
-try:
-    import debug_toolbar  # noqa: F401
-except ImportError:
-    pass
-else:
-    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
-    INSTALLED_APPS += ["debug_toolbar"]
-
-
-# Development - django-extensions
-#
-try:
-    import django_extensions  # noqa: F401
-except ImportError:
-    pass
-else:
-    INSTALLED_APPS += ["django_extensions"]
 
 
 # Comics

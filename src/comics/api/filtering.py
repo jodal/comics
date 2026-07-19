@@ -8,7 +8,7 @@ registered lookups.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from django.core.exceptions import FieldDoesNotExist
 from django.db import models
@@ -21,10 +21,22 @@ if TYPE_CHECKING:
     from django.db.models import Model, QuerySet
     from django.http import QueryDict
 
+    # The value a query parameter is turned into before being passed to
+    # QuerySet.filter().
+    FilterValue = str | bool | list[str]
+
 # Sentinel allowing all lookup types on a field, like tastypie's ALL.
 # Relations are allowed by using a FilterSpec as the filtering value,
 # like tastypie's ALL_WITH_RELATIONS.
 ALL = "__all__"
+
+# What filtering a field allows: the ALL sentinel, a set of allowed
+# lookups, or a FilterSpec for filtering across a relation.
+type FilterRule = str | frozenset[str] | FilterSpec
+
+
+def _no_filtering() -> dict[str, FilterRule]:
+    return {}
 
 
 @dataclass(frozen=True)
@@ -33,18 +45,22 @@ class FilterSpec:
 
     model: type[Model]
     field_names: frozenset[str]
-    filtering: Mapping[str, Any] = field(default_factory=dict)
+    filtering: Mapping[str, FilterRule] = field(default_factory=_no_filtering)
 
 
-def apply_filters(request_params: QueryDict, queryset: QuerySet, spec: FilterSpec):
+def apply_filters[M: Model](
+    request_params: QueryDict,
+    queryset: QuerySet[M],
+    spec: FilterSpec,
+) -> QuerySet[M]:
     filters = _build_filters(request_params, spec)
     if filters:
         queryset = queryset.filter(**filters)
     return queryset
 
 
-def _build_filters(params: QueryDict, spec: FilterSpec) -> dict[str, Any]:
-    qs_filters = {}
+def _build_filters(params: QueryDict, spec: FilterSpec) -> dict[str, FilterValue]:
+    qs_filters: dict[str, FilterValue] = {}
 
     for filter_expr in params:
         filter_bits = filter_expr.split(LOOKUP_SEP)
@@ -121,8 +137,9 @@ def _filter_value_to_python(
     filter_type: str,
     *,
     is_boolean: bool,
-) -> Any:
-    value: Any = params[filter_expr]
+) -> FilterValue:
+    raw = params[filter_expr]
+    value: FilterValue = raw if isinstance(raw, str) else [str(part) for part in raw]
 
     if filter_type == "isnull" or is_boolean:
         if value in ("true", "True"):
@@ -131,7 +148,7 @@ def _filter_value_to_python(
             value = False
 
     if filter_type in ("in", "range") and isinstance(value, str) and value:
-        parts = []
+        parts: list[str] = []
         for part in params.getlist(filter_expr):
             parts.extend(part.split(","))
         value = parts
