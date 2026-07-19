@@ -136,14 +136,10 @@ class ImageDownloader:
         has_rerun_releases: bool,
         checksum: str,
     ) -> Image | None:
-        try:
-            image = Image.objects.for_comic(comic).for_checksum(checksum).get()
-        except Image.DoesNotExist:
-            return None
-        else:
-            if not has_rerun_releases:
-                raise ImageAlreadyExists(self.identifier)
-            return image
+        image = Image.objects.for_comic(comic).for_checksum(checksum).get_or_none()
+        if image is not None and not has_rerun_releases:
+            raise ImageAlreadyExists(self.identifier)
+        return image
 
     def _validate_image(self, image_file: IO[bytes]) -> PILImageFile:
         try:

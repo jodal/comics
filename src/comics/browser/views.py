@@ -8,7 +8,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import (
     DayArchiveView,
@@ -50,9 +50,7 @@ class ComicMixin(View):
     @property
     def comic(self) -> Comic:
         if not hasattr(self, "_comic"):
-            self._comic = get_object_or_404(
-                Comic.objects.for_slug(self.kwargs["comic_slug"])
-            )
+            self._comic = Comic.objects.for_slug(self.kwargs["comic_slug"]).get_or_404()
         return self._comic
 
     def get_user(self) -> ComicsUser:
@@ -315,9 +313,9 @@ class MyComicsLatestView(MyComicsMixin, ReleaseLatestView):
 
 class MyComicsNumReleasesSinceView(MyComicsLatestView):
     def get_num_releases_since(self) -> int:
-        last_release_seen = get_object_or_404(
-            Release.objects.for_pk(self.kwargs["release_id"])
-        )
+        last_release_seen = Release.objects.for_pk(
+            self.kwargs["release_id"]
+        ).get_or_404()
         releases = super().get_queryset()
         return releases.fetched_after(last_release_seen.fetched).count()
 

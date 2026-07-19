@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from django.urls import reverse
 from invitations.utils import get_invitation_model
 
@@ -54,7 +54,7 @@ def mycomics_toggle_comic(request: AuthenticatedHttpRequest) -> HttpResponse:
 
     comic_slug = request.POST["comic"]
     assert isinstance(comic_slug, str)
-    comic = get_object_or_404(Comic.objects.for_slug(comic_slug))
+    comic = Comic.objects.for_slug(comic_slug).get_or_404()
 
     if "add_comic" in request.POST:
         subscription = Subscription(

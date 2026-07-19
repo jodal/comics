@@ -4,8 +4,10 @@ import datetime as dt
 from typing import TYPE_CHECKING, Self, cast
 
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models.functions import Lower
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
 if TYPE_CHECKING:
@@ -25,6 +27,17 @@ class BaseQuerySet[M: models.Model](models.QuerySet[M]):
 
     def for_pk(self, pk: int, /) -> Self:
         return self.filter(pk=pk)
+
+    def get_or_404(self) -> M:
+        """Like get(), but raising Http404 instead of DoesNotExist."""
+        return get_object_or_404(self)
+
+    def get_or_none(self) -> M | None:
+        """Like get(), but returning None instead of raising DoesNotExist."""
+        try:
+            return self.get()
+        except ObjectDoesNotExist:
+            return None
 
 
 class ComicQuerySet(BaseQuerySet["Comic"]):
