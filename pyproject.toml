@@ -50,9 +50,8 @@ dev = [
     { include-group = "zizmor" },
 ]
 docs = [
-    "sphinx>=8.2.3",
-    "sphinx-rtd-theme>=3.0.2",
-    "sphinxcontrib-httpdomain>=1.8.1",
+    "mkdocstrings-python>=2.0.1",
+    "zensical>=0.0.51",
 ]
 lint = ["ruff>=0.15.21"]
 tests = [
@@ -186,17 +185,7 @@ commands = [
 
 [tool.tox.env.docs]
 dependency_groups = ["docs"]
-commands = [
-    [
-        "sphinx-build",
-        "--builder",
-        "html",
-        "--doctree-dir",
-        "{envtmpdir}{/}doctrees",
-        "docs",
-        "{envtmpdir}{/}html",
-    ],
-]
+commands = [["zensical", "build", "--clean"]]
 
 [tool.tox.env.basedpyright]
 runner = "uv-venv-lock-runner"
