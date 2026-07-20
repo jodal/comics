@@ -45,6 +45,7 @@ dev = [
     "tox>=4.56.4",
     { include-group = "docs" },
     { include-group = "lint" },
+    { include-group = "rumdl" },
     { include-group = "tests" },
     { include-group = "typing" },
     { include-group = "zizmor" },
@@ -54,6 +55,7 @@ docs = [
     "zensical>=0.0.51",
 ]
 lint = ["ruff>=0.15.21"]
+rumdl = ["rumdl>=0.1.74"]
 tests = [
     "freezegun>=1.5.5",
     "pytest>=9.1.1",
@@ -115,6 +117,16 @@ filterwarnings = [
 DJANGO_SETTINGS_MODULE = "comics.settings"
 
 
+[tool.rumdl.global]
+flavor = "mkdocs"
+disable = [
+    "MD013",  # Line length too strict for docs with long URLs
+    "MD014",  # Dollar signs before commands without output is common in docs
+    "MD036",  # Bold text used legitimately as labels within list items
+    "MD051",  # False positives on cross-page fragment links
+]
+
+
 [tool.ruff]
 target-version = "py313"
 
@@ -166,6 +178,7 @@ env_list = [
     "docs",
     "ruff-format",
     "ruff-check",
+    "rumdl",
     "zizmor",
 ]
 
@@ -202,6 +215,11 @@ runner = "uv-venv-lock-runner"
 skip_install = true
 dependency_groups = ["lint"]
 commands = [["ruff", "check", "{posargs:.}"]]
+
+[tool.tox.env.rumdl]
+skip_install = true
+dependency_groups = ["rumdl"]
+commands = [["rumdl", "check", "docs/"]]
 
 [tool.tox.env.zizmor]
 skip_install = true
