@@ -16,17 +16,50 @@ class Options(TypedDict, total=False):
 
 @dataclass
 class ComicDataBase:
-    # Required values
-    language: str = field(init=False)
-    slug: str = field(init=False)
-    name: str = field(init=False)
-    url: str = field(init=False)
+    """Base class for the metadata part of a crawler module.
 
-    # Default values
+    Each crawler module must define a subclass of this class named
+    `ComicData`, overriding the class attributes to describe the comic. The
+    metadata is used for display at the web site.
+    """
+
+    language: str = field(init=False)
+    """*Required.* A two-letter string with the language code for the language
+    used in the comic. Typically `"en"` or `"no"`.
+
+    The language code must also be present in
+    `comics.core.models.Comic.LANGUAGES`.
+    """
+
+    slug: str = field(init=False)
+    """The comic's slug, used in URLs and to identify the comic.
+
+    Set automatically to the crawler module's file name, so it cannot be
+    overridden.
+    """
+
+    name: str = field(init=False)
+    """*Required.* A string with the name of the comic."""
+
+    url: str = field(init=False)
+    """*Required.* A string with the URL of the comic's web page."""
+
     active: bool = field(init=False, default=True)
+    """*Optional.* Whether or not this comic is still being crawled.
+
+    Defaults to `True`.
+    """
+
     start_date: str | None = field(init=False, default=None)
+    """*Optional.* The first date the comic was published at, as an
+    ISO 8601 date string, e.g. `"2005-05-29"`."""
+
     end_date: str | None = field(init=False, default=None)
+    """*Optional.* The last date the comic was published at, as an ISO 8601
+    date string, if the comic is discontinued."""
+
     rights: str = field(init=False, default="")
+    """*Optional.* Name of the author and the comic's license if available."""
 
     def __post_init__(self) -> None:
         self.slug = self.__module__.split(".")[-1]

@@ -37,79 +37,40 @@ class Crawler(CrawlerBase):
             return CrawlerImage(url, title, text)
 ```
 
-## The `ComicData` class fields
+## The `ComicData` class
 
-- `name` -- _Required._ A string with the name of the comic.
+::: comics.core.comic_data.ComicDataBase
+    options:
+      heading_level: 3
+      members:
+        - name
+        - language
+        - url
+        - active
+        - start_date
+        - end_date
+        - rights
+        - slug
 
-- `language` -- _Required._ A two-letter string with the language code for
-  the language used in the comic. Typically `'en'` or `'no'`.
+## The `Crawler` class
 
-    The language code must also be present in
-    `comics.core.models.Comic.LANGUAGES`.
-
-- `url` -- _Required._ A string with the URL of the comic's web page.
-
-- `active` -- _Optional._ Whether or not this comic is still being crawled.
-  Defaults to `True`.
-
-- `start_date` -- _Optional._ The first date the comic was published at.
-
-- `end_date` -- _Optional._ The last date the comic was published at if it
-  is discontinued.
-
-- `rights` -- _Optional._ Name of the author and the comic's license if
-  available.
-
-## The `Crawler` class fields
-
-- `history_capable_date` -- _Optional._ Date of oldest release available for
-  crawling.
-
-    Provide this _or_ `history_capable_days`. If both are present, this one
-    will have precedence.
-
-    Example: `'2008-03-08'`.
-
-- `history_capable_days` -- _Optional._ Number of days a release is
-  available for crawling.
-
-    Provide this _or_ `history_capable_date`.
-
-    Example: `32`.
-
-- `schedule` -- _Optional._ On what weekdays the comic is published.
-
-    Example: `'Mo,We,Fr'` or `'Mo,Tu,We,Th,Fr,Sa,Su'`.
-
-- `time_zone` -- _Optional._ In approximately what time zone the comic is
-  published.
-
-    Example: `Europe/Oslo` or `US/Eastern`.
-
-    See [the IANA timezone database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
-    for a list of possible values.
-
-- `multiple_releases_per_day` -- _Optional._ Default: `False`. Whether to
-  allow multiple releases per day.
-
-    Example: `True` or `False`.
-
-- `has_rerun_releases` -- _Optional._ Default: `False`. Whether the comic
-  reruns old images as new releases.
-
-    Example: `True` or `False`.
-
-- `headers` -- _Optional._ Default: `None`. Any HTTP headers to send with
-  any URI request for values.
-
-    Useful if you're pulling comics from a site that checks either the
-    `Referer` or `User-Agent`. If you can view the comic using your browser
-    but not when using your loader for identical URLs, try setting the
-    `Referer` to be `http://www.example.com/` or set the `User-Agent` to be
-    `Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0)`.
-
-    Example:
-    `{'Referer': 'http://www.example.com/', 'Host': 'http://www.example.com/'}`
+::: comics.aggregator.crawler.CrawlerBase
+    options:
+      heading_level: 3
+      merge_init_into_class: false
+      members:
+        - history_capable_date
+        - history_capable_days
+        - schedule
+        - time_zone
+        - multiple_releases_per_day
+        - has_rerun_releases
+        - headers
+        - crawl
+        - parse_feed
+        - parse_page
+        - string_to_date
+        - date_to_epoch
 
 ## The `Crawler.crawl()` method
 
@@ -130,24 +91,10 @@ def crawl(self, pub_date):
 
 The `Crawler.crawl()` method takes a single argument, `pub_date`, which
 is a `datetime.date` object for the date the crawler is currently
-crawling. The goal of the method is to return a `CrawlerImage` object
-containing at least the URL of the image for `pub_date` and optionally a
-`title` and `text` accompanying the image. `CrawlerImage`'s signature is:
-
-```python
-CrawlerImage(url, title=None, text=None)
-```
-
-This means that you must always supply an URL, and that you can supply a
-`text` without a `title`. The following are all valid ways to create a
-`CrawlerImage`:
-
-```python
-CrawlerImage(url)
-CrawlerImage(url, title)
-CrawlerImage(url, title, text)
-CrawlerImage(url, text=text)
-```
+crawling. The goal of the method is to return a
+[`CrawlerImage`](#comics.aggregator.crawler.CrawlerImage) object containing
+at least the URL of the image for `pub_date` and optionally a `title` and
+`text` accompanying the image.
 
 For some crawlers, this is all you need. If the image URL is predictable and
 based upon the `pub_date` in some way, just create the URL with the help of
@@ -198,6 +145,17 @@ def crawl(self, pub_date):
         return result
 ```
 
+### The `CrawlerImage` class
+
+::: comics.aggregator.crawler.CrawlerImage
+    options:
+      heading_level: 4
+      show_signature: false
+      members:
+        - url
+        - title
+        - text
+
 ## Parsing web pages with `LxmlParser`
 
 The web parser, internally known as `LxmlParser`, uses CSS selectors to
@@ -221,66 +179,30 @@ find the image URL.
 
 ### `LxmlParser` API
 
-The available methods only require a CSS selector, `selector`, to match tags.
-In the event that the selector doesn't match any elements, `default` will be
-returned.
-
-If the `selector` matches multiple elements, one of two things will happen:
-
-- For singular methods, a `MultipleElementsReturned` exception is raised.
-- For plural methods, a list of zero or more values are returned.
-
-Methods on `LxmlParser`:
-
-- `text(selector, default=None)` -- Returns the text contained by the
-  element matching `selector`.
-
-- `texts(selector)` -- Returns a list of the text contained by the elements
-  matching `selector`.
-
-- `src(selector, default=None)` -- Returns the `src` attribute of the
-  element matching `selector`.
-
-    The web parser automatically expands relative URLs in the source, like
-    `/comics/2008-04-13.png` to a full URL like
-    `http://www.example.com/2008-04-13.png`, so you do not need to think
-    about that.
-
-- `srcs(selector)` -- Returns the `src` attribute of the elements matching
-  `selector`.
-
-- `alt(selector, default=None)` -- Returns the `alt` attribute of the
-  element matching `selector`.
-
-- `alts(selector)` -- Returns the `alt` attribute of the elements matching
-  `selector`.
-
-- `title(selector, default=None)` -- Returns the `title` attribute of the
-  element matching `selector`.
-
-- `titles(selector)` -- Returns the `title` attribute of the elements
-  matching `selector`.
-
-- `href(selector, default=None)` -- Returns the `href` attribute of the
-  element matching `selector`.
-
-- `hrefs(selector)` -- Returns the `href` attribute of the elements matching
-  `selector`.
-
-- `value(selector, default=None)` -- Returns the `value` attribute of the
-  element matching `selector`.
-
-- `values(selector, default=None)` -- Returns the `value` attribute of the
-  elements matching `selector`.
-
-- `id(selector, default=None)` -- Returns the `id` attribute of the element
-  matching `selector`.
-
-- `ids(selector, default=None)` -- Returns the `id` attribute of the
-  elements matching `selector`.
-
-- `remove(selector)` -- Remove the elements matching `selector` from the
-  parsed document.
+::: comics.aggregator.lxmlparser.LxmlParser
+    options:
+      heading_level: 4
+      members:
+        - text
+        - texts
+        - src
+        - srcs
+        - alt
+        - alts
+        - title
+        - titles
+        - href
+        - hrefs
+        - value
+        - values
+        - id
+        - ids
+        - attr
+        - attrs
+        - content
+        - contents
+        - remove
+        - url
 
 ### Matching HTML elements using CSS selectors
 
@@ -352,7 +274,7 @@ def crawl(pub_date):
 
 ### `FeedParser` API
 
-The `feed` object provides two methods which both returns feed elements:
+The `feed` object provides two methods which both returns feed entries:
 `FeedParser.for_date` and `FeedParser.all`. Typically, a crawler
 uses `FeedParser.for_date` and loops over all entries it returns to find
 the image URL:
@@ -363,47 +285,23 @@ for entry in feed.for_date(pub_date):
     return CrawlerImage(url)
 ```
 
-Methods on `FeedParser`:
-
-- `for_date(date)` -- Returns all feed elements published at `date`.
-
-- `all()` -- Returns all feed elements.
+::: comics.aggregator.feedparser.FeedParser
+    options:
+      heading_level: 4
+      members:
+        - for_date
+        - all
 
 ### Feed `Entry` API
 
-The Comics feed parser is really a combination of the popular
-[feedparser](https://github.com/kurtmckee/feedparser) library and
-`LxmlParser`. It can do anything _feedparser_ can do, and in addition you can
-use the `LxmlParser` methods on feed fields which contains HTML, like
-`Entry.summary` and `Entry.content0`.
-
-Fields and methods on `Entry`:
-
-- `summary` -- This is the most frequently used entry field which supports
-  HTML parsing with the `LxmlParser` methods.
-
-    Example usage:
-
-    ```python
-    url = entry.summary.src('img')
-    title = entry.summary.alt('img')
-    ```
-
-- `content0` -- This is the same as _feedparser_'s `content[0].value`
-  field, but with `LxmlParser` methods available. For some crawlers, this is
-  where the interesting stuff is found.
-
-- `html(string)` -- Wrap `string` in a `LxmlParser`.
-
-    If you need to parse HTML in any other fields than `summary` and
-    `content0`, you can apply the `html(string)` method on the field, like
-    it is applied on a feed entry's title field here:
-
-    ```python
-    title = entry.html(entry.title).text('h1')
-    ```
-
-- `tags` -- List of tags associated with the entry.
+::: comics.aggregator.feedparser.Entry
+    options:
+      heading_level: 4
+      members:
+        - summary
+        - content0
+        - html
+        - tags
 
 ## Testing your new crawler
 
