@@ -49,11 +49,31 @@ class CrawlerRelease:
 
 @dataclass
 class CrawlerImage:
+    """A single image in a comic release, as returned by crawlers.
+
+    A crawler must always supply an URL, while `title` and `text` are
+    optional and independent of each other. The following are all valid ways
+    to create a `CrawlerImage`:
+
+    ```python
+    CrawlerImage(url)
+    CrawlerImage(url, title)
+    CrawlerImage(url, title, text)
+    CrawlerImage(url, text=text)
+    ```
+    """
+
     # The URL is required, but crawlers pass it in unvalidated, so it is only
     # guaranteed to be present after validate() has passed.
     url: str | None
+    """The URL of the comic image."""
+
     title: str | None = None
+    """An optional title accompanying the image."""
+
     text: str | None = None
+    """An optional text accompanying the image."""
+
     request_headers: RequestHeaders = field(default_factory=dict)
 
     def __post_init__(self) -> None:
@@ -73,28 +93,69 @@ CrawlerResult = list[CrawlerImage] | CrawlerImage | None
 
 @dataclass
 class CrawlerBase:
+    """Base class for the crawler part of a crawler module.
+
+    Each crawler module must define a subclass of this class named `Crawler`,
+    overriding the class attributes as needed and implementing the
+    [`crawl()`][comics.aggregator.crawler.CrawlerBase.crawl] method.
+    """
+
     comic: Comic
 
-    # ### Crawler settings
-    # Date of oldest release available for crawling
     history_capable_date: str | None = field(init=False, default=None)
-    # Number of days a release is available for crawling
+    """*Optional.* Date of oldest release available for crawling, as an
+    ISO 8601 date string, e.g. `"2008-03-08"`.
+
+    Provide this *or*
+    [`history_capable_days`][comics.aggregator.crawler.CrawlerBase.history_capable_days].
+    If both are present, this one will have precedence.
+    """
+
     history_capable_days: int | None = field(init=False, default=None)
-    # On what weekdays the comic is published (example: "Mo,We,Fr")
+    """*Optional.* Number of days a release is available for crawling, e.g.
+    `32`.
+
+    Provide this *or*
+    [`history_capable_date`][comics.aggregator.crawler.CrawlerBase.history_capable_date].
+    """
+
     schedule: str | None = field(init=False, default=None)
-    # In approximately what time zone the comic is published
-    # (example: "Europe/Oslo")
+    """*Optional.* On what weekdays the comic is published.
+
+    Example: `"Mo,We,Fr"` or `"Mo,Tu,We,Th,Fr,Sa,Su"`.
+    """
+
     time_zone: str = field(init=False, default="UTC")
-    # Whether to allow multiple releases per day
+    """*Optional.* In approximately what time zone the comic is published.
+
+    Example: `"Europe/Oslo"` or `"US/Eastern"`. See [the IANA timezone
+    database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
+    for a list of possible values. Defaults to `"UTC"`.
+    """
+
     multiple_releases_per_day: bool = field(init=False, default=False)
+    """*Optional.* Whether to allow multiple releases per day.
 
-    # ### Downloader settings
-    # Whether the comic reruns old images as new releases
+    Defaults to `False`.
+    """
+
     has_rerun_releases: bool = field(init=False, default=False)
+    """*Optional.* Whether the comic reruns old images as new releases.
 
-    # ### Settings used for both crawling and downloading
-    # Dictionary of HTTP headers to send when retrieving items from the site
+    Defaults to `False`.
+    """
+
     headers: RequestHeaders = field(default_factory=dict)
+    """*Optional.* Any HTTP headers to send with any URL request, both when
+    crawling and when downloading images.
+
+    Useful if you're pulling comics from a site that checks either the
+    `Referer` or `User-Agent`. If you can view the comic using your browser
+    but not when using your crawler for identical URLs, try setting `Referer`
+    to the comic's site or `User-Agent` to a browser's user agent string.
+
+    Example: `{"Referer": "http://www.example.com/"}`.
+    """
 
     # Feed object which is reused when crawling multiple dates
     feed: FeedParser | None = None
@@ -166,17 +227,26 @@ class CrawlerBase:
             return dt.date.today()
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
-        """
-        Must be overridden by all crawlers
+        """Crawl the comic's site for the release published on `pub_date`.
 
-        Input:
-            pub_date -- a dt.date object for the date to crawl
+        Must be overridden by all crawlers.
 
-        Output:
-            on success: a CrawlResult object containing:
-                - at least an image URL
-                - optionally a title and/or a text
-            on failure: None
+        On success, the returned
+        [`CrawlerImage`][comics.aggregator.crawler.CrawlerImage] contains at
+        least the URL of the image, and optionally a title and/or a text
+        accompanying the image.
+
+        If the release consists of multiple images, return a list of
+        [`CrawlerImage`][comics.aggregator.crawler.CrawlerImage] objects,
+        ordered in the same way as the comic is meant to be read, with the
+        first frame as the first element in the list.
+
+        Args:
+            pub_date: The date to crawl.
+
+        Returns:
+            The crawled image, a list of images, or `None` if no release was
+                published on `pub_date`.
         """
 
         raise NotImplementedError
@@ -184,20 +254,31 @@ class CrawlerBase:
     # ### Helpers for the crawl() implementations
 
     def parse_feed(self, feed_url: str) -> FeedParser:
+        """Fetch and parse the RSS or Atom feed at `feed_url`.
+
+        The returned [`FeedParser`][comics.aggregator.feedparser.FeedParser]
+        is cached and reused when crawling multiple dates.
+        """
         if self.feed is None:
             self.feed = FeedParser(feed_url)
         return self.feed
 
     def parse_page(self, page_url: str) -> LxmlParser:
+        """Fetch and parse the web page at `page_url`.
+
+        The returned [`LxmlParser`][comics.aggregator.lxmlparser.LxmlParser]
+        is cached per URL and reused when crawling multiple dates.
+        """
         if page_url not in self.pages:
             self.pages[page_url] = LxmlParser(page_url, headers=self.headers)
         return self.pages[page_url]
 
     def string_to_date(self, string: str, fmt: str) -> dt.date:
+        """Parse `string` as a date, using a `strptime()` format string."""
         return dt.datetime.strptime(string, fmt).date()
 
     def date_to_epoch(self, date: dt.date) -> int:
-        """The UNIX time of midnight at ``date`` in the comic's time zone"""
+        """The UNIX time of midnight at `date` in the comic's time zone."""
         midnight = dt.datetime(
             date.year, date.month, date.day, tzinfo=zoneinfo.ZoneInfo(self.time_zone)
         )

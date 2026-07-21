@@ -10,7 +10,8 @@ updates:
     groups:
       docs:
         patterns:
-          - "sphinx*"
+          - "mkdocstrings*"
+          - "zensical"
       tests:
         patterns:
           - "freezegun"
