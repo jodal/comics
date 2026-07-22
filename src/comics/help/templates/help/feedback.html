@@ -13,15 +13,19 @@
     <h1>Feedback <small>to site admin</small></h1>
   </div>
 
-  <form action="" method="post" id="feedback" class="form">
+  <form action="" method="post" id="feedback">
     {% csrf_token %}
 
-    {{ feedback_form|crispy }}
+    <div class="row">
+      <div class="col-md-6">
+        {{ feedback_form|crispy }}
 
-    <button type="submit" class="btn btn-primary">
-      <i class="fa-solid fa-envelope"></i>
-      Send to site administrator
-    </button>
+        <button type="submit" class="btn btn-primary">
+          <i class="fa-solid fa-envelope"></i>
+          Send to site administrator
+        </button>
+      </div>
+    </div>
   </form>
 
 {% endblock %}

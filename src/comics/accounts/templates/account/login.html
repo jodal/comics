@@ -18,12 +18,16 @@
     <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
   {% endif %}
 
-  {{ form|crispy }}
+  <div class="row">
+    <div class="col-md-6">
+      {{ form|crispy }}
 
-  <button type="submit" class="btn btn-primary">
-    <i class="fa-solid fa-sign-in"></i>
-    Login
-  </button>
+      <button type="submit" class="btn btn-primary">
+        <i class="fa-solid fa-sign-in"></i>
+        Login
+      </button>
+    </div>
+  </div>
 </form>
 
 {% endblock %}

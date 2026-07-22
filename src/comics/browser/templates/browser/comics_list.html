@@ -73,7 +73,7 @@
     {% endif %}
 
     {% if inactive_comics %}
-      <h2 class="inactive">Inactive comics <small>with archives</small></h2>
+      <h2 class="inactive mt-5">Inactive comics <small>with archives</small></h2>
       {% list_to_columns inactive_comics as comic_columns 4 %}
       <div class="row">
         {% for comic_column in comic_columns %}

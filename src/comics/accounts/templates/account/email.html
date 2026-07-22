@@ -18,17 +18,20 @@
     {% csrf_token %}
 
     <table class="table">
-      <tr>
-        <th>Email address</th>
-        <th class="text-center">Verified</th>
-        <th class="text-center">Primary</th>
-      </tr>
+      <thead>
+        <tr>
+          <th>Email address</th>
+          <th class="text-center">Verified</th>
+          <th class="text-center">Primary</th>
+        </tr>
+      </thead>
+      <tbody>
       {% for emailaddress in user.emailaddress_set.all %}
         <tr>
           <td>
             <div class="form-check">
               <input id="email_radio_{{ forloop.counter }}" class="form-check-input" type="radio" name="email" {% if emailaddress.primary or user.emailaddress_set.count == 1 %}checked{%endif %} value="{{emailaddress.email}}">
-              <label for="email_radio_{{ forloop.counter }}" class="form-check-label {% if emailaddress.primary %}primary_email{%endif%}">
+              <label for="email_radio_{{ forloop.counter }}" class="form-check-label">
                 {{ emailaddress.email }}
               </label>
             </div>
@@ -47,6 +50,7 @@
           </td>
         </tr>
       {% endfor %}
+      </tbody>
     </table>
 
     <div class="btn-group">
@@ -56,7 +60,7 @@
       <button type="submit" name="action_send" class="btn btn-outline-secondary">
         Re-send verification
       </button>
-      <button type="submit" name="action_remove" class="btn btn-danger">
+      <button type="submit" name="action_remove" class="btn btn-outline-danger">
         Remove
       </button>
     </div>
@@ -73,17 +77,21 @@
 
 {% endif %}
 
-<h2>Add email address</h2>
+<h2 class="mt-5">Add email address</h2>
 
 <form method="post" action="{% url "account_email" %}">
   {% csrf_token %}
 
-  {{ form|crispy }}
+  <div class="row">
+    <div class="col-md-6">
+      {{ form|crispy }}
 
-  <button type="submit" name="action_add" class="btn btn-primary">
-    <i class="fa-solid fa-plus"></i>
-    Add email
-  </button>
+      <button type="submit" name="action_add" class="btn btn-primary">
+        <i class="fa-solid fa-plus"></i>
+        Add email
+      </button>
+    </div>
+  </div>
 </form>
 
 {% endblock %}

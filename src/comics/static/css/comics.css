@@ -32,7 +32,6 @@ h2 small {
     font-weight: 400;
     color: var(--bs-secondary-color);
 }
-
 dialog.keyboard-shortcuts {
     border: none;
     background: transparent;
