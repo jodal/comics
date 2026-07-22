@@ -2,7 +2,7 @@
 
 {% spaceless %}
   <div class="release">
-    {% cache 3600 'release' release.id %}
+    {% cache 3600 'release_v2' release.id %}
       {% include "browser/release_content.html" with release=release %}
     {% endcache %}
   </div>

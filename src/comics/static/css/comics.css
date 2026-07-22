@@ -14,10 +14,23 @@ body {
     width: 100%;
     height: 50px;
 
-    border-top: 1px solid #e7e7e7;
+    border-top: 1px solid var(--bs-border-color);
 }
 .footer .container {
     padding-top: 15px;
+}
+
+/* Approximation of the page header styling from Bootstrap 3 */
+.page-header {
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid var(--bs-border-color);
+}
+.page-header small,
+h2 small {
+    font-size: 65%;
+    font-weight: 400;
+    color: var(--bs-secondary-color);
 }
 
 dialog.keyboard-shortcuts {
@@ -28,8 +41,8 @@ dialog.keyboard-shortcuts {
 .browser-menu {
     margin-bottom: 10px;
 }
-.browser-menu .btn-group {
-    margin-bottom: 10px;
+.browser-menu .btn-toolbar {
+    gap: 10px;
 }
 
 .new-releases-alert {
@@ -41,11 +54,8 @@ dialog.keyboard-shortcuts {
     display: none;
 }
 
-.release h3 {
-    margin-top: 0;
-}
 .release blockquote {
-    font-size: 14px;
+    font-size: 0.875rem;
     margin-bottom: 0;
 }
 
@@ -67,12 +77,7 @@ dialog.keyboard-shortcuts {
     border-bottom: 1px solid #eee;
     padding: 3px 0;
 }
-.comics-list label {
-    font-weight: normal;
-    margin-bottom: 0;
-    margin-top: 0;
-}
-.comics-list .label {
+.comics-list .badge {
     margin-left: 3px;
 }
 .comics-list .subscribed,
@@ -88,22 +93,29 @@ dialog.keyboard-shortcuts {
     text-align: center;
 }
 #status .scheduled,
+#status .fetched,
+#status_legend .scheduled,
+#status_legend .fetched {
+    /* Cancel the striping overlay Bootstrap 5 paints via box-shadow */
+    box-shadow: none;
+}
+#status .scheduled,
 #status .scheduled a,
 #status_legend .scheduled {
-    background: #f2dede;
-    color: #a94442;
+    background: var(--bs-danger-bg-subtle);
+    color: var(--bs-danger-text-emphasis);
 }
 #status .fetched,
 #status .fetched a,
 #status_legend .fetched {
-    background: #d9edf7;
-    color: #31708f;
+    background: var(--bs-info-bg-subtle);
+    color: var(--bs-info-text-emphasis);
 }
 #status .fetched.scheduled,
 #status .fetched.scheduled a,
 #status_legend .fetched.scheduled {
-    background: #dff0d8;
-    color: #3c763d;
+    background: var(--bs-success-bg-subtle);
+    color: var(--bs-success-text-emphasis);
 }
 #status_legend {
     width: auto;

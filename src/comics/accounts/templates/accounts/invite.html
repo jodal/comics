@@ -16,18 +16,18 @@
     an email with a link that will let them register their own account.
   </p>
 
-  <form action="." method="post" class="form form-horizontal">
+  <form action="." method="post">
     {% csrf_token %}
 
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Email</label>
+    <div class="row mb-3">
+      <label class="col-sm-2 col-form-label" for="invite-email">Email</label>
       <div class="col-sm-10">
-        <input type="email" name="email" class="form-control">
+        <input type="email" name="email" id="invite-email" class="form-control">
       </div>
     </div>
 
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
+    <div class="row mb-3">
+      <div class="col-sm-10 offset-sm-2">
         <button type="submit" class="btn btn-primary">
           <i class="fa-solid fa-heart"></i>
           Send invitation

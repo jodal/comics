@@ -13,19 +13,19 @@
     {% csrf_token %}
 
     <div class="page-header">
-      <div class="pull-right">
+      <div class="float-end">
         <div class="show-view">
-          <button type="button" class="btn btn-default navbar-btn mycomics-edit">
+          <button type="button" class="btn btn-outline-secondary mycomics-edit">
             <i class="fa-solid fa-pencil"></i>
             Change subscriptions
           </button>
         </div>
-        <div class="edit-view hide">
-          <button type="reset" class="btn btn-default navbar-btn mycomics-cancel">
+        <div class="edit-view d-none">
+          <button type="reset" class="btn btn-outline-secondary mycomics-cancel">
             Cancel
           </button>
           &nbsp;
-          <button type="submit" class="btn btn-primary navbar-btn">
+          <button type="submit" class="btn btn-primary">
             <i class="fa-solid fa-check"></i>
             Save changes
           </button>
@@ -43,23 +43,26 @@
             <ul class="list-unstyled">
               {% for comic in comic_column %}
                 <li class="{% if not comic.active %}inactive{% endif %}{% if comic in my_comics %} subscribed{% endif %}">
-                  <div class="pull-right">
+                  <div class="float-end">
                     {% if comic.is_new %}
-                      <span class="label label-info">New</span>
+                      <span class="badge text-bg-info">New</span>
                     {% endif %}
                     {% if comic in my_comics %}
-                      <span class="label label-default">Subscribed</span>
+                      <span class="badge text-bg-secondary">Subscribed</span>
                     {% endif %}
                   </div>
                   <div class="show-view">
                     <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
                   </div>
-                  <div class="edit-view hide">
-                    <label class="checkbox-inline">
+                  <div class="edit-view d-none">
+                    <div class="form-check">
                       <input type="checkbox" name="{{ comic.slug }}"
+                        id="comic-{{ comic.slug }}" class="form-check-input"
                         {% if comic in my_comics %}checked="checked"{% endif %}>
-                      {{ comic.name }}
-                    </label>
+                      <label class="form-check-label" for="comic-{{ comic.slug }}">
+                        {{ comic.name }}
+                      </label>
+                    </div>
                   </div>
                 </li>
               {% endfor %}
@@ -78,20 +81,23 @@
             <ul class="list-unstyled">
               {% for comic in comic_column %}
                 <li class="{% if not comic.active %}inactive{% endif %}{% if comic in my_comics %} subscribed{% endif %}">
-                  <div class="pull-right">
+                  <div class="float-end">
                     {% if comic in my_comics %}
-                      <span class="label label-default">Subscribed</span>
+                      <span class="badge text-bg-secondary">Subscribed</span>
                     {% endif %}
                   </div>
                   <div class="show-view">
                     <a href="{{ comic.get_absolute_url }}">{{ comic.name }}</a>
                   </div>
-                  <div class="edit-view hide">
-                    <label class="checkbox-inline">
+                  <div class="edit-view d-none">
+                    <div class="form-check">
                       <input type="checkbox" name="{{ comic.slug }}"
+                        id="comic-{{ comic.slug }}" class="form-check-input"
                         {% if comic in my_comics %}checked="checked"{% endif %}>
-                      {{ comic.name }}
-                    </label>
+                      <label class="form-check-label" for="comic-{{ comic.slug }}">
+                        {{ comic.name }}
+                      </label>
+                    </div>
                   </div>
                 </li>
               {% endfor %}
