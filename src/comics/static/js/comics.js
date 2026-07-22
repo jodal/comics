@@ -276,7 +276,7 @@ const newReleaseCheck = (() => {
 })();
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.addEventListener("keypress", keyboardNavigation);
+  document.addEventListener("keydown", keyboardNavigation);
   for (const el of document.querySelectorAll(".mycomics-add")) {
     el.addEventListener("click", mycomicsToggler.addComic);
   }
