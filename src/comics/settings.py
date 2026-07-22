@@ -164,7 +164,8 @@ THIRD_PARTY_APPS = [
     "allauth",
     "allauth.account",
     "invitations",  # After allauth
-    "bootstrapform",
+    "crispy_forms",
+    "crispy_bootstrap5",
     "ninja",
 ]
 LOCAL_APPS = [
@@ -402,6 +403,12 @@ ACCOUNT_EMAIL_UNKNOWN_ACCOUNTS = False
 #
 INVITATIONS_ADAPTER = ACCOUNT_ADAPTER
 INVITATIONS_INVITATION_ONLY = env.bool("COMICS_INVITE_MODE", default=False)
+
+
+# Forms - django-crispy-forms
+#
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 
 # Internationalization

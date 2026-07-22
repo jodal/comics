@@ -1,5 +1,5 @@
 {% extends "account/base.html" %}
-{% load bootstrap %}
+{% load crispy_forms_tags %}
 
 {% block title %}Registration{% endblock %}
 
@@ -14,22 +14,18 @@
   Already have an account? Then please <a href="{{ login_url }}">login</a>.
 </p>
 
-<form method="post" action="{% url "account_signup" %}" class="form-horizontal">
+<form method="post" action="{% url "account_signup" %}">
   {% csrf_token %}
 
   {% if redirect_field_value %}
     <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
   {% endif %}
 
-  {{ form|bootstrap_horizontal }}
+  {{ form|crispy }}
 
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-primary">
-        Register
-      </button>
-    </div>
-  </div>
+  <button type="submit" class="btn btn-primary">
+    Register
+  </button>
 </form>
 
 {% endblock %}

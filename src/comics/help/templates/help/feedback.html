@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load bootstrap %}
+{% load crispy_forms_tags %}
 
 
 {% block title %}
@@ -16,14 +16,12 @@
   <form action="" method="post" id="feedback" class="form">
     {% csrf_token %}
 
-    {{ feedback_form|bootstrap }}
+    {{ feedback_form|crispy }}
 
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary">
-        <i class="fa-solid fa-envelope"></i>
-        Send to site administrator
-      </button>
-    </div>
+    <button type="submit" class="btn btn-primary">
+      <i class="fa-solid fa-envelope"></i>
+      Send to site administrator
+    </button>
   </form>
 
 {% endblock %}

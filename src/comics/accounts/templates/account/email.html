@@ -1,5 +1,5 @@
 {% extends "account/base.html" %}
-{% load bootstrap %}
+{% load crispy_forms_tags %}
 
 {% block title %}Email addresses{% endblock %}
 
@@ -14,7 +14,7 @@
 
   <p>The following email addresses are associated with your account:</p>
 
-  <form method="post" action="{% url "account_email" %}" class="form-horizontal">
+  <form method="post" action="{% url "account_email" %}">
     {% csrf_token %}
 
     <table class="table">
@@ -73,19 +73,15 @@
 
 <h2>Add email address</h2>
 
-<form method="post" action="{% url "account_email" %}" class="form-horizontal">
+<form method="post" action="{% url "account_email" %}">
   {% csrf_token %}
 
-  {{ form|bootstrap_horizontal }}
+  {{ form|crispy }}
 
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" name="action_add" class="btn btn-primary">
-        <i class="fa-solid fa-plus"></i>
-        Add email
-      </button>
-    </div>
-  </div>
+  <button type="submit" name="action_add" class="btn btn-primary">
+    <i class="fa-solid fa-plus"></i>
+    Add email
+  </button>
 </form>
 
 {% endblock %}
