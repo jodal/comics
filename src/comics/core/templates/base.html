@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %} | {{ site_title }}</title>
     <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-3.4.1.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-5.3.8.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome-6.7.2.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome-solid-6.7.2.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/comics.css' %}">
@@ -29,85 +29,82 @@
   <body>
     {% block body %}
 
-      <div class="navbar navbar-default navbar-static-top">
+      <nav class="navbar navbar-expand-md bg-body-tertiary mb-3">
         <div class="container">
-          <div class="navbar-header">
-            <button class="navbar-toggle"
-              data-toggle="collapse" data-target="#site-menu">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            {% if user.is_authenticated %}
-              <a class="navbar-brand" href="{% url "mycomics_latest" %}">{{ site_title }}</a>
-            {% else %}
-              <a class="navbar-brand" href="{% url "home" %}">{{ site_title }}</a>
-            {% endif %}
-          </div>
+          {% if user.is_authenticated %}
+            <a class="navbar-brand" href="{% url "mycomics_latest" %}">{{ site_title }}</a>
+          {% else %}
+            <a class="navbar-brand" href="{% url "home" %}">{{ site_title }}</a>
+          {% endif %}
+          <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#site-menu"
+            aria-controls="site-menu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
           {% block site_menu %}
             <div class="collapse navbar-collapse" id="site-menu">
-              <ul class="nav navbar-nav">
+              <ul class="navbar-nav me-auto">
               {% if user.is_authenticated %}
-                <li class="{{ active.comics|yesno:"active," }}">
-                  <a href="{% url "mycomics_latest" %}">
+                <li class="nav-item">
+                  <a class="nav-link {{ active.comics|yesno:"active," }}" href="{% url "mycomics_latest" %}">
                     <i class="fa-solid fa-images"></i>
                     My comics</a>
                 </li>
-                <li class="{{ active.comics_list|yesno:"active," }}">
-                  <a href="{% url "comics_list" %}">
+                <li class="nav-item">
+                  <a class="nav-link {{ active.comics_list|yesno:"active," }}" href="{% url "comics_list" %}">
                     <i class="fa-solid fa-list-check"></i>
                     All comics</a>
                 </li>
-                <li class="{{ active.status|yesno:"active," }}">
-                  <a href="{% url "status" %}">
+                <li class="nav-item">
+                  <a class="nav-link {{ active.status|yesno:"active," }}" href="{% url "status" %}">
                     <i class="fa-solid fa-chart-gantt"></i>
                     Crawler status</a>
                 </li>
               {% else %}
-                <li class="{{ active.login|yesno:"active," }}">
-                  <a href="{% url "account_login" %}">
+                <li class="nav-item">
+                  <a class="nav-link {{ active.login|yesno:"active," }}" href="{% url "account_login" %}">
                     <i class="fa-solid fa-sign-in"></i>
                     Login</a>
                 </li>
-                <li>
-                  <a href="{% url "account_signup" %}">
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url "account_signup" %}">
                     <i class="fa-solid fa-plus"></i>
                     Register</a>
                 </li>
               {% endif %}
               </ul>
 
-              <ul class="nav navbar-nav navbar-right">
+              <ul class="navbar-nav">
               {% if user.is_authenticated %}
-                <li class="{{ active.invite|yesno:"active," }}">
-                  <a href="{% url "invite" %}">
+                <li class="nav-item">
+                  <a class="nav-link {{ active.invite|yesno:"active," }}" href="{% url "invite" %}">
                     <i class="fa-solid fa-heart"></i>
                     Invite
                   </a>
                 </li>
-                <li class="{{ active.account|yesno:"active," }}" >
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle {{ active.account|yesno:"active," }}" href="#"
+                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-user"></i>
                     Me
-                    <b class="caret"></b>
                   </a>
-                  <ul class="dropdown-menu">
-                    <li class="{{ active.account_details|yesno:"active," }}">
-                      <a href="{% url "account" %}">Account details</a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item {{ active.account_details|yesno:"active," }}" href="{% url "account" %}">Account details</a>
                     </li>
                     <li>
-                      <a href="{% url "account_email" %}">Email addresses</a>
+                      <a class="dropdown-item" href="{% url "account_email" %}">Email addresses</a>
                     </li>
                     <li>
-                      <a href="{% url "account_change_password" %}">Change password</a>
+                      <a class="dropdown-item" href="{% url "account_change_password" %}">Change password</a>
                     </li>
-                    <li class="{{ active.secret_key|yesno:"active," }}">
-                      <a href="{% url "secret_key" %}">Secret key</a>
-                    </li>
-                    <li class="divider"></li>
                     <li>
-                      <a href="{% url "account_logout" %}">Logout</a>
+                      <a class="dropdown-item {{ active.secret_key|yesno:"active," }}" href="{% url "secret_key" %}">Secret key</a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                      <a class="dropdown-item" href="{% url "account_logout" %}">Logout</a>
                     </li>
                   </ul>
                 </li>
@@ -116,15 +113,15 @@
             </div>
           {% endblock site_menu %}
         </div>
-      </div>
+      </nav>
 
       <div class="container">
 
         {% if messages %}
           {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} {% if "error" in message.tags %}alert-danger{% endif %}">
-              <a class="close" data-dismiss="alert">×</a>
+            <div class="alert alert-{{ message.tags }} {% if "error" in message.tags %}alert-danger{% endif %} alert-dismissible fade show">
               {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
           {% endfor %}
         {% endif %}
@@ -135,28 +132,28 @@
 
       <div class="footer">
         <div class="container">
-          <p class="text-muted pull-right">
+          <p class="text-body-secondary float-end">
             Powered by <a href="https://comics.readthedocs.io/">comics</a>
           </p>
           <ul class="list-inline">
-            <li><a href="{% url "help_about" %}">About</a></li>
+            <li class="list-inline-item"><a href="{% url "help_about" %}">About</a></li>
             {% if user.is_authenticated %}
-              <li><a href="{% url "help_feedback" %}">Contact</a></li>
+              <li class="list-inline-item"><a href="{% url "help_feedback" %}">Contact</a></li>
             {% endif %}
-            <li><a href="{% url "help_keyboard" %}">Keyboard shortcuts</a></li>
+            <li class="list-inline-item"><a href="{% url "help_keyboard" %}">Keyboard shortcuts</a></li>
           </ul>
         </div>
       </div>
 
     {% endblock body %}
 
-    <dialog class="modal-dialog keyboard-shortcuts">
-      <form class="modal-content">
-        <div class="modal-header">
-          <button class="close" formmethod="dialog">×</button>
-          <h4 class="modal-title">Keyboard shortcuts</h4>
+    <dialog class="keyboard-shortcuts">
+      <form class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h4 class="h5 mb-0">Keyboard shortcuts</h4>
+          <button class="btn-close" formmethod="dialog" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="card-body">
           {% include "help/keyboard_content.html" %}
         </div>
       </form>
@@ -164,8 +161,7 @@
 
     {% block extra_footer %}
       {{ block.super }}
-      <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
-      <script src="{% static 'js/bootstrap-3.4.1.min.js' %}"></script>
+      <script src="{% static 'js/bootstrap-5.3.8.bundle.min.js' %}"></script>
       <script src="{% static 'js/comics.js' %}"></script>
     {% endblock extra_footer %}
 
