@@ -1,3 +1,85 @@
+/* --- Bootstrap 3 inspired theme on top of vanilla Bootstrap 5 --- */
+
+html {
+    /* Bootstrap 3's base font size. Scales all rem-based component
+       sizing to Bootstrap 3's denser proportions. */
+    font-size: 14px;
+}
+
+:root {
+    --bs-body-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --bs-border-radius: 4px;
+    --bs-border-radius-sm: 3px;
+    --bs-border-radius-lg: 6px;
+    /* Bootstrap 3's link blue: #337ab7, hover #23527c */
+    --bs-link-color-rgb: 51, 122, 183;
+    --bs-link-hover-color-rgb: 35, 82, 124;
+    --bs-focus-ring-color: rgba(51, 122, 183, 0.25);
+}
+
+/* Underline links on hover only */
+a {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+/* Except component links, which never underline */
+.btn:hover,
+.badge:hover,
+.nav-link:hover,
+.navbar-brand:hover,
+.dropdown-item:hover,
+.list-group-item:hover {
+    text-decoration: none;
+}
+
+.btn-outline-secondary {
+    /* Bootstrap 3's btn-default: light border, light gray hover */
+    --bs-btn-color: #333;
+    --bs-btn-border-color: #ccc;
+    --bs-btn-hover-color: #333;
+    --bs-btn-hover-bg: #e6e6e6;
+    --bs-btn-hover-border-color: #adadad;
+    --bs-btn-active-color: #333;
+    --bs-btn-active-bg: #e6e6e6;
+    --bs-btn-active-border-color: #adadad;
+    --bs-btn-disabled-color: #333;
+    --bs-btn-disabled-border-color: #ccc;
+}
+
+.btn-primary {
+    --bs-btn-bg: #337ab7;
+    --bs-btn-border-color: #2e6da4;
+    --bs-btn-focus-shadow-rgb: 51, 122, 183;
+    --bs-btn-hover-bg: #286090;
+    --bs-btn-hover-border-color: #204d74;
+    --bs-btn-active-bg: #204d74;
+    --bs-btn-active-border-color: #122b40;
+    --bs-btn-disabled-bg: #337ab7;
+    --bs-btn-disabled-border-color: #2e6da4;
+}
+
+.navbar {
+    /* The navbar-default look: #f8f8f8 with an #e7e7e7 border */
+    --bs-tertiary-bg-rgb: 248, 248, 248;
+    border-bottom: 1px solid #e7e7e7;
+    /* Bootstrap 3's roomier spacing between menu items */
+    --bs-navbar-nav-link-padding-x: 1rem;
+}
+
+.dropdown-menu {
+    --bs-dropdown-link-active-bg: #337ab7;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #66afe9;
+    box-shadow: 0 0 0 0.25rem var(--bs-focus-ring-color);
+}
+
+/* --- Layout --- */
+
 html {
     min-height: 100%;
     position: relative;
@@ -38,7 +120,7 @@ dialog.keyboard-shortcuts {
 }
 
 .browser-menu {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 .browser-menu .btn-toolbar {
     gap: 10px;
@@ -53,8 +135,11 @@ dialog.keyboard-shortcuts {
     display: none;
 }
 
+.release .card-header a {
+    color: inherit;
+}
+
 .release blockquote {
-    font-size: 0.875rem;
     margin-bottom: 0;
 }
 
