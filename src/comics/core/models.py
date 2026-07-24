@@ -88,9 +88,6 @@ class Comic(BaseModel):
     def get_absolute_url(self) -> str:
         return reverse("comic_latest", kwargs={"comic_slug": self.slug})
 
-    def get_redirect_url(self) -> str:
-        return reverse("comic_website", kwargs={"comic_slug": self.slug})
-
     def is_new(self) -> bool:
         some_time_ago = timezone.now() - dt.timedelta(
             days=settings.COMICS_NUM_DAYS_COMIC_IS_NEW

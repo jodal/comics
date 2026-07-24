@@ -15,7 +15,6 @@ from django.views.generic import (
     ListView,
     MonthArchiveView,
     RedirectView,
-    TemplateView,
     TodayArchiveView,
     View,
 )
@@ -711,12 +710,3 @@ class OneComicYearView(LoginRequiredMixin, RedirectView):
                 "month": "1",
             },
         )
-
-
-class OneComicWebsiteRedirect(LoginRequiredMixin, ComicMixin, TemplateView):
-    template_name = "browser/comic_website.html"
-
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        context["url"] = self.comic.url
-        return context
