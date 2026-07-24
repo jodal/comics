@@ -92,7 +92,6 @@ reportImplicitAbstractClass = true
 omit = [
     "src/comics/*/migrations/*",
     "src/comics/__main__.py",
-    "src/comics/asgi.py",
     "src/comics/comics/*",
     "src/comics/wsgi.py",
 ]
