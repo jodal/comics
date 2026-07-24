@@ -363,7 +363,6 @@ ANYMAIL = _anymail
 
 # Auth - django.contrib.auth
 #
-AUTH_PROFILE_MODULE = "accounts.UserProfile"
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
@@ -473,11 +472,6 @@ MEDIA_URL = env.str(
     "DJANGO_MEDIA_URL",
     default="/media/",
 )
-
-
-# Tests
-#
-TEST_RUNNER = "django.test.runner.DiscoverRunner"
 
 
 # Comics
