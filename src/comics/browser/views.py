@@ -245,10 +245,9 @@ class MyComicsMixin(ReleaseMixin):
         )
 
     def get_feed_url(self) -> str | None:
-        return "{}?key={}".format(
-            reverse("mycomics_feed"),
-            self.get_user().comics_profile.secret_key,
-        )
+        feed_url = reverse("mycomics_feed")
+        secret_key = self.get_user().comics_profile.secret_key
+        return f"{feed_url}?key={secret_key}"
 
     def get_feed_title(self) -> str | None:
         return "My comics"
@@ -521,10 +520,9 @@ class OneComicMixin(ReleaseMixin):
             return None
 
     def get_feed_url(self) -> str | None:
-        return "{}?key={}".format(
-            reverse("comic_feed", kwargs={"comic_slug": self.comic.slug}),
-            self.get_user().comics_profile.secret_key,
-        )
+        feed_url = reverse("comic_feed", kwargs={"comic_slug": self.comic.slug})
+        secret_key = self.get_user().comics_profile.secret_key
+        return f"{feed_url}?key={secret_key}"
 
     def get_feed_title(self) -> str | None:
         return f"Comics from {self.comic.name}"

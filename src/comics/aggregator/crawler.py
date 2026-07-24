@@ -311,10 +311,8 @@ class GoComicsComCrawlerBase(CrawlerBase):
         pub_date: dt.date,
     ) -> CrawlerResult | None:
         api_url = (
-            "https://www.gocomics.com/api/service/v2/assets/recent/{}?date={}".format(
-                url_name,
-                pub_date.strftime("%Y/%m/%d"),
-            )
+            "https://www.gocomics.com/api/service/v2/assets/recent/"
+            f"{url_name}?date={pub_date:%Y/%m/%d}"
         )
         response = httpx.get(api_url)
         response.raise_for_status()
