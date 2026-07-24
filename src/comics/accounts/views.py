@@ -4,7 +4,12 @@ from typing import TYPE_CHECKING
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.http import (
+    HttpRequest,
+    HttpResponse,
+    HttpResponseBadRequest,
+    HttpResponseRedirect,
+)
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.http import require_POST
@@ -49,8 +54,9 @@ def secret_key(request: AuthenticatedHttpRequest) -> HttpResponse:
 def mycomics_toggle_comic(request: AuthenticatedHttpRequest) -> HttpResponse:
     """Change a single comic in My comics"""
 
-    comic_slug = request.POST["comic"]
-    assert isinstance(comic_slug, str)
+    comic_slug = request.POST.get("comic")
+    if not comic_slug:
+        return HttpResponseBadRequest("Missing 'comic' parameter")
     comic = Comic.objects.for_slug(comic_slug).get_or_404()
 
     if "add_comic" in request.POST:
@@ -107,8 +113,9 @@ def mycomics_edit_comics(request: AuthenticatedHttpRequest) -> HttpResponse:
 def invite(request: AuthenticatedHttpRequest) -> HttpResponse:
     if request.method == "POST":
         invitation_model = get_invitation_model()
-        email = request.POST["email"]
-        assert isinstance(email, str)
+        email = request.POST.get("email")
+        if not email:
+            return HttpResponseBadRequest("Missing 'email' parameter")
         invitation = invitation_model.create(email, inviter=request.user)
         invitation.send_invitation(request)
         messages.success(
