@@ -1,3 +1,85 @@
+/* --- Bootstrap 3 inspired theme on top of vanilla Bootstrap 5 --- */
+
+html {
+    /* Bootstrap 3's base font size. Scales all rem-based component
+       sizing to Bootstrap 3's denser proportions. */
+    font-size: 14px;
+}
+
+:root {
+    --bs-body-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --bs-border-radius: 4px;
+    --bs-border-radius-sm: 3px;
+    --bs-border-radius-lg: 6px;
+    /* Bootstrap 3's link blue: #337ab7, hover #23527c */
+    --bs-link-color-rgb: 51, 122, 183;
+    --bs-link-hover-color-rgb: 35, 82, 124;
+    --bs-focus-ring-color: rgba(51, 122, 183, 0.25);
+}
+
+/* Underline links on hover only */
+a {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+/* Except component links, which never underline */
+.btn:hover,
+.badge:hover,
+.nav-link:hover,
+.navbar-brand:hover,
+.dropdown-item:hover,
+.list-group-item:hover {
+    text-decoration: none;
+}
+
+.btn-outline-secondary {
+    /* Bootstrap 3's btn-default: light border, light gray hover */
+    --bs-btn-color: #333;
+    --bs-btn-border-color: #ccc;
+    --bs-btn-hover-color: #333;
+    --bs-btn-hover-bg: #e6e6e6;
+    --bs-btn-hover-border-color: #adadad;
+    --bs-btn-active-color: #333;
+    --bs-btn-active-bg: #e6e6e6;
+    --bs-btn-active-border-color: #adadad;
+    --bs-btn-disabled-color: #333;
+    --bs-btn-disabled-border-color: #ccc;
+}
+
+.btn-primary {
+    --bs-btn-bg: #337ab7;
+    --bs-btn-border-color: #2e6da4;
+    --bs-btn-focus-shadow-rgb: 51, 122, 183;
+    --bs-btn-hover-bg: #286090;
+    --bs-btn-hover-border-color: #204d74;
+    --bs-btn-active-bg: #204d74;
+    --bs-btn-active-border-color: #122b40;
+    --bs-btn-disabled-bg: #337ab7;
+    --bs-btn-disabled-border-color: #2e6da4;
+}
+
+.navbar {
+    /* The navbar-default look: #f8f8f8 with an #e7e7e7 border */
+    --bs-tertiary-bg-rgb: 248, 248, 248;
+    border-bottom: 1px solid #e7e7e7;
+    /* Bootstrap 3's roomier spacing between menu items */
+    --bs-navbar-nav-link-padding-x: 1rem;
+}
+
+.dropdown-menu {
+    --bs-dropdown-link-active-bg: #337ab7;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #66afe9;
+    box-shadow: 0 0 0 0.25rem var(--bs-focus-ring-color);
+}
+
+/* --- Layout --- */
+
 html {
     min-height: 100%;
     position: relative;
@@ -14,22 +96,34 @@ body {
     width: 100%;
     height: 50px;
 
-    border-top: 1px solid #e7e7e7;
+    border-top: 1px solid var(--bs-border-color);
 }
 .footer .container {
     padding-top: 15px;
 }
 
+/* Approximation of the page header styling from Bootstrap 3 */
+.page-header {
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid var(--bs-border-color);
+}
+.page-header small,
+h2 small {
+    font-size: 65%;
+    font-weight: 400;
+    color: var(--bs-secondary-color);
+}
 dialog.keyboard-shortcuts {
     border: none;
     background: transparent;
 }
 
 .browser-menu {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
-.browser-menu .btn-group {
-    margin-bottom: 10px;
+.browser-menu .btn-toolbar {
+    gap: 10px;
 }
 
 .new-releases-alert {
@@ -41,11 +135,11 @@ dialog.keyboard-shortcuts {
     display: none;
 }
 
-.release h3 {
-    margin-top: 0;
+.release .card-header a {
+    color: inherit;
 }
+
 .release blockquote {
-    font-size: 14px;
     margin-bottom: 0;
 }
 
@@ -67,12 +161,7 @@ dialog.keyboard-shortcuts {
     border-bottom: 1px solid #eee;
     padding: 3px 0;
 }
-.comics-list label {
-    font-weight: normal;
-    margin-bottom: 0;
-    margin-top: 0;
-}
-.comics-list .label {
+.comics-list .badge {
     margin-left: 3px;
 }
 .comics-list .subscribed,
@@ -88,22 +177,29 @@ dialog.keyboard-shortcuts {
     text-align: center;
 }
 #status .scheduled,
+#status .fetched,
+#status_legend .scheduled,
+#status_legend .fetched {
+    /* Cancel the striping overlay Bootstrap 5 paints via box-shadow */
+    box-shadow: none;
+}
+#status .scheduled,
 #status .scheduled a,
 #status_legend .scheduled {
-    background: #f2dede;
-    color: #a94442;
+    background: var(--bs-danger-bg-subtle);
+    color: var(--bs-danger-text-emphasis);
 }
 #status .fetched,
 #status .fetched a,
 #status_legend .fetched {
-    background: #d9edf7;
-    color: #31708f;
+    background: var(--bs-info-bg-subtle);
+    color: var(--bs-info-text-emphasis);
 }
 #status .fetched.scheduled,
 #status .fetched.scheduled a,
 #status_legend .fetched.scheduled {
-    background: #dff0d8;
-    color: #3c763d;
+    background: var(--bs-success-bg-subtle);
+    color: var(--bs-success-text-emphasis);
 }
 #status_legend {
     width: auto;

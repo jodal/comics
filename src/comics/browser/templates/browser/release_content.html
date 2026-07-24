@@ -1,4 +1,4 @@
-<div class="panel-body">
+<div class="card-body">
 
   {% for image in release.get_ordered_images %}
 
@@ -12,7 +12,7 @@
       {% endif %}
       <img src="{{ image.file.url }}"
         height="{{ image.height }}" width="{{ image.width }}"
-        alt="{{ release }}" class="img-responsive"
+        alt="{{ release }}" class="img-fluid"
         {% if image.text %}title="{{ image.text|escape }}"{% endif %}>
       {% if image.width > 1130 %}
         </a>
@@ -26,7 +26,7 @@
 
   {% empty %}
 
-    <div class="alert alert-block alert-warning">
+    <div class="alert alert-warning">
       <p>No matching images found.</p>
     </div>
 
@@ -34,8 +34,8 @@
 
 </div>
 
-<div class="panel-footer">
-  <p class="meta small text-muted">
+<div class="card-footer">
+  <p class="meta small text-body-secondary">
     Credits: {{ release.comic.rights }}.
     Fetched
     <time datetime="{{ release.fetched|date:"c" }}"

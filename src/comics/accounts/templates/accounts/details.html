@@ -10,42 +10,22 @@
     <h1>Account details</h1>
   </div>
 
-  <form class="form form-horizontal">
+  <dl class="row">
+    <dt class="col-sm-3">Email</dt>
+    <dd class="col-sm-9">{{ user.email }}</dd>
 
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Email</label>
-      <div class="col-sm-10">
-        <p class="form-control-static">{{ user.email }}</p>
-      </div>
-    </div>
+    <dt class="col-sm-3">Last login</dt>
+    <dd class="col-sm-9">
+      {{ user.last_login|date }}
+      <a href="{% url "account_logout" %}" class="btn btn-danger btn-sm ms-3">
+        Logout now</a>
+    </dd>
 
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Last login</label>
-      <div class="col-sm-3">
-        <p class="form-control-static">{{ user.last_login|date }}</p>
-      </div>
-      <div class="col-sm-7">
-        <a href="{% url "account_logout" %}" class="btn btn-danger btn-xs">
-          Logout now</a>
-      </div>
-    </div>
+    <dt class="col-sm-3">Date joined</dt>
+    <dd class="col-sm-9">{{ user.date_joined|date }}</dd>
 
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Date joined</label>
-      <div class="col-sm-10">
-        <p class="form-control-static">{{ user.date_joined|date }}</p>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Subscribed comics</label>
-      <div class="col-sm-10">
-        <p class="form-control-static">
-          {{ user.comics_profile.comics.count }}
-        </p>
-      </div>
-    </div>
-
-  </form>
+    <dt class="col-sm-3">Subscribed comics</dt>
+    <dd class="col-sm-9">{{ user.comics_profile.comics.count }}</dd>
+  </dl>
 
 {% endblock %}

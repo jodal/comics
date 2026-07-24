@@ -87,6 +87,7 @@ const mycomicsToggler = (() => {
     button.style.opacity = "1";
     button.querySelector(".action").style.display = "none";
     button.querySelector(".confirmation").style.display = "block";
+    button.classList.remove("btn-outline-secondary");
     button.classList.add("btn-danger");
   };
 
@@ -95,7 +96,7 @@ const mycomicsToggler = (() => {
     button.querySelector(".action").style.display = "none";
     button.querySelector(".confirmation").style.display = "none";
     button.querySelector(".success").style.display = "block";
-    button.classList.remove("btn-danger");
+    button.classList.remove("btn-danger", "btn-outline-secondary");
     button.classList.add("btn-success");
   };
 
@@ -168,19 +169,19 @@ const mycomicsEditor = (() => ({
   edit: (event) => {
     event.preventDefault();
     for (const el of document.querySelectorAll(".comics-list .edit-view")) {
-      el.classList.remove("hide");
+      el.classList.remove("d-none");
     }
     for (const el of document.querySelectorAll(".comics-list .show-view")) {
-      el.classList.add("hide");
+      el.classList.add("d-none");
     }
   },
 
   cancel: (event) => {
     for (const el of document.querySelectorAll(".comics-list .show-view")) {
-      el.classList.remove("hide");
+      el.classList.remove("d-none");
     }
     for (const el of document.querySelectorAll(".comics-list .edit-view")) {
-      el.classList.add("hide");
+      el.classList.add("d-none");
     }
   },
 }))();
@@ -275,7 +276,7 @@ const newReleaseCheck = (() => {
 })();
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.addEventListener("keypress", keyboardNavigation);
+  document.addEventListener("keydown", keyboardNavigation);
   for (const el of document.querySelectorAll(".mycomics-add")) {
     el.addEventListener("click", mycomicsToggler.addComic);
   }
@@ -288,7 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
   for (const el of document.querySelectorAll(".mycomics-cancel")) {
     el.addEventListener("click", mycomicsEditor.cancel);
   }
-  for (const el of document.querySelectorAll(".release img.img-responsive")) {
+  for (const el of document.querySelectorAll(".release img.img-fluid")) {
     el.addEventListener("click", fullSizeToggler);
   }
   for (const el of document.querySelectorAll(".release time")) {
