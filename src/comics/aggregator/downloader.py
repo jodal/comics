@@ -152,7 +152,7 @@ class ImageDownloader:
         else:
             return image
 
-    def _get_file_extension(self, image: PILImageFile):
+    def _get_file_extension(self, image: PILImageFile) -> str:
         if image.format not in IMAGE_FORMATS:
             raise ImageTypeError(self.identifier, image.format)
         return IMAGE_FORMATS[image.format]

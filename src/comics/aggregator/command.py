@@ -64,7 +64,7 @@ class Aggregator:
         elapsed_time = dt.timedelta(seconds=time.monotonic() - start_time)
         logger.info("Crawling completed in %s", elapsed_time)
 
-    def stop(self):
+    def stop(self) -> None:
         pass
 
     @log_errors
