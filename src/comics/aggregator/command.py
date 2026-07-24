@@ -141,8 +141,6 @@ class Aggregator:
 
 @dataclass
 class AggregatorConfig:
-    DATE_FORMAT = "%Y-%m-%d"
-
     comic_slugs: list[str] = field(default_factory=list)
     from_date: dt.date | None = None
     to_date: dt.date | None = None
@@ -189,11 +187,11 @@ class AggregatorConfig:
         to_date: dt.date | str | None,
     ) -> tuple[dt.date | None, dt.date | None]:
         if isinstance(from_date, str):
-            from_date = dt.datetime.strptime(from_date, cls.DATE_FORMAT).date()
+            from_date = dt.date.fromisoformat(from_date)
         logger.debug("From date: %s", from_date)
 
         if isinstance(to_date, str):
-            to_date = dt.datetime.strptime(to_date, cls.DATE_FORMAT).date()
+            to_date = dt.date.fromisoformat(to_date)
         logger.debug("To date: %s", to_date)
 
         if from_date and to_date and from_date > to_date:

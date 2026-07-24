@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import datetime as dt
 import json
 from functools import cached_property
 from typing import TYPE_CHECKING, Any, cast
@@ -26,6 +25,8 @@ from django.views.generic.base import TemplateResponseMixin
 from comics.core.models import Comic, Release
 
 if TYPE_CHECKING:
+    import datetime as dt
+
     from comics.accounts.typing import AuthenticatedHttpRequest, ComicsUser
     from comics.core.querysets import ComicQuerySet, ReleaseQuerySet
 

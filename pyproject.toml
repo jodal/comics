@@ -135,7 +135,6 @@ ignore = [
     "ARG001",  # unused-function-argument  # TODO
     "ARG002",  # unused-method-argument  # TODO
     "D",       # flake8-pydocstyle
-    "DTZ",     # flake8-datetimez  # TODO
     "EM101",   # raw-string-in-exception
     "FBT",     # flake8-boolean-trap  # TODO
     "FIX001",  # line-contains-fixme

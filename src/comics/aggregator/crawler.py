@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import datetime as dt
 import re
-import time
 import xml.sax
 import zoneinfo
 from dataclasses import dataclass, field
@@ -220,7 +219,7 @@ class CrawlerBase:
     @property
     def history_capable(self) -> dt.date:
         if self.history_capable_date is not None:
-            return dt.datetime.strptime(self.history_capable_date, "%Y-%m-%d").date()
+            return dt.date.fromisoformat(self.history_capable_date)
         elif self.history_capable_days is not None:
             return self.current_date - dt.timedelta(self.history_capable_days)
         else:
@@ -275,14 +274,14 @@ class CrawlerBase:
 
     def string_to_date(self, string: str, fmt: str) -> dt.date:
         """Parse `string` as a date, using a `strptime()` format string."""
-        return dt.datetime.strptime(string, fmt).date()
+        return dt.datetime.strptime(string, fmt).date()  # noqa: DTZ007
 
     def date_to_epoch(self, date: dt.date) -> int:
         """The UNIX time of midnight at `date` in the comic's time zone."""
         midnight = dt.datetime(
             date.year, date.month, date.day, tzinfo=zoneinfo.ZoneInfo(self.time_zone)
         )
-        return int(time.mktime(midnight.utctimetuple()))
+        return int(midnight.timestamp())
 
 
 class ComicsKingdomCrawlerBase(CrawlerBase):

@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 import pytest
 from django.contrib.auth.models import User
 from django.test.client import Client
+from django.utils import timezone
 
 from comics.accounts.models import Subscription
 from comics.core.models import Comic, Release
@@ -41,8 +42,8 @@ def comic(db: None) -> Comic:
 @pytest.fixture
 def releases(comic: Comic) -> list[Release]:
     return [
-        Release.objects.create(comic=comic, pub_date=dt.date.today()),
-        Release.objects.create(comic=comic, pub_date=dt.date.today()),
+        Release.objects.create(comic=comic, pub_date=timezone.localdate()),
+        Release.objects.create(comic=comic, pub_date=timezone.localdate()),
     ]
 
 
@@ -104,7 +105,7 @@ def test_my_comics_feed_entries(
     assert title is not None
     assert title.startswith("Jesus & Mo published ")
 
-    today = dt.date.today()
+    today = timezone.localdate()
     entry_ids = {entry.findtext(f"{ATOM}id") for entry in entries}
     assert entry_ids == {
         f"tag:comics.example.com,{today.isoformat()}:releases/{release.pk}"
@@ -172,7 +173,7 @@ def test_one_comic_feed_excludes_other_comics(
     client: Client, user: User, releases: list[Release]
 ) -> None:
     other_comic = Comic.objects.create(name="Other", slug="other", language="en")
-    Release.objects.create(comic=other_comic, pub_date=dt.date.today())
+    Release.objects.create(comic=other_comic, pub_date=timezone.localdate())
 
     response = client.get("/jesusandmo/feed/", {"key": "s3cretk3y"})
 
