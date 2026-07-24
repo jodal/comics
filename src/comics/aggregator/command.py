@@ -6,6 +6,7 @@ import datetime as dt
 import functools
 import logging
 import socket
+import time
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Concatenate, Self
 
@@ -55,12 +56,12 @@ class Aggregator:
             assert isinstance(config, AggregatorConfig)
             self.config = config
 
-    def start(self):
-        start_time = dt.datetime.now()
+    def start(self) -> None:
+        start_time = time.monotonic()
         for comic in self.config.comics:
             self.identifier = comic.slug
             self._aggregate_one_comic(comic)
-        elapsed_time = dt.datetime.now() - start_time
+        elapsed_time = dt.timedelta(seconds=time.monotonic() - start_time)
         logger.info("Crawling completed in %s", elapsed_time)
 
     def stop(self):
