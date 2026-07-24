@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import json
 from functools import cached_property
 from typing import TYPE_CHECKING, Any, cast
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
@@ -320,14 +319,13 @@ class MyComicsNumReleasesSinceView(MyComicsLatestView):
         context: dict[str, Any],
         **kwargs: Any,
     ) -> HttpResponse:
-        data = json.dumps(
+        return JsonResponse(
             {
                 "since_release_id": int(self.kwargs["release_id"]),
                 "num_releases": self.get_num_releases_since(),
                 "seconds_to_next_check": settings.COMICS_BROWSER_REFRESH_INTERVAL,
             }
         )
-        return HttpResponse(data, content_type="application/json")
 
 
 class MyComicsDayView(MyComicsMixin, ReleaseDayArchiveView):
