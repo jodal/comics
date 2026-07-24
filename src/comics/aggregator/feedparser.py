@@ -1,5 +1,4 @@
 import datetime as dt
-import warnings
 from typing import Any
 
 import feedparser
@@ -30,23 +29,14 @@ class FeedParser:
 
     def for_date(self, date: dt.date) -> list["Entry"]:
         """Return all feed entries published or updated at `date`."""
-        with warnings.catch_warnings():
-            # feedparser 5.1.2 issues a warning whenever we use updated_parsed
-            warnings.simplefilter("ignore")
-            return [
-                Entry(e, self.encoding)
-                for e in self.raw_feed.entries
-                if (
-                    hasattr(e, "published_parsed")
-                    and e.published_parsed
-                    and dt.date(*e.published_parsed[:3]) == date
-                )
-                or (
-                    hasattr(e, "updated_parsed")
-                    and e.updated_parsed
-                    and dt.date(*e.updated_parsed[:3]) == date
-                )
-            ]
+        return [
+            Entry(e, self.encoding)
+            for e in self.raw_feed.entries
+            if any(
+                key in e and e[key] and dt.date(*e[key][:3]) == date
+                for key in ("published_parsed", "updated_parsed")
+            )
+        ]
 
     def all(self) -> list["Entry"]:
         """Return all feed entries."""
