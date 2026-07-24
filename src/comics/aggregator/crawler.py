@@ -222,9 +222,9 @@ class CrawlerBase:
         if self.history_capable_date is not None:
             return dt.datetime.strptime(self.history_capable_date, "%Y-%m-%d").date()
         elif self.history_capable_days is not None:
-            return dt.date.today() - dt.timedelta(self.history_capable_days)
+            return self.current_date - dt.timedelta(self.history_capable_days)
         else:
-            return dt.date.today()
+            return self.current_date
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
         """Crawl the comic's site for the release published on `pub_date`.

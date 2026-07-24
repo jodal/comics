@@ -11,6 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils import timezone
 from django.views.generic import (
     DayArchiveView,
     ListView,
@@ -487,7 +488,7 @@ class OneComicMixin(ReleaseMixin):
         return self.get_queryset().last_pub_dates(2)
 
     def get_today_url(self) -> str | None:
-        if dt.date.today() in self._recent_pub_dates:
+        if timezone.localdate() in self._recent_pub_dates:
             return reverse("comic_today", kwargs={"comic_slug": self.comic.slug})
         return None
 
