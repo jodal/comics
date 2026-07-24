@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+from functools import cached_property
 from typing import TYPE_CHECKING, Any, cast
 
 from django.conf import settings
@@ -45,13 +46,9 @@ def comics_list(request: AuthenticatedHttpRequest) -> HttpResponse:
 class ComicMixin(View):
     """Things common for *all* views of comics"""
 
-    _comic: Comic
-
-    @property
+    @cached_property
     def comic(self) -> Comic:
-        if not hasattr(self, "_comic"):
-            self._comic = Comic.objects.for_slug(self.kwargs["comic_slug"]).get_or_404()
-        return self._comic
+        return Comic.objects.for_slug(self.kwargs["comic_slug"]).get_or_404()
 
     def get_user(self) -> ComicsUser:
         # All views using this mixin require a logged-in user.
@@ -220,15 +217,12 @@ class MyComicsMixin(ReleaseMixin):
     def get_today_url(self) -> str | None:
         return reverse("mycomics_today")
 
-    _last_pub_date: dt.date | None
-
-    def _get_last_pub_date(self) -> dt.date | None:
-        if not hasattr(self, "_last_pub_date"):
-            self._last_pub_date = self.get_queryset().last_pub_date()
-        return self._last_pub_date
+    @cached_property
+    def _last_pub_date(self) -> dt.date | None:
+        return self.get_queryset().last_pub_date()
 
     def get_day_url(self) -> str | None:
-        last_date = self._get_last_pub_date()
+        last_date = self._last_pub_date
         if last_date is None:
             return None
         return reverse(
@@ -241,7 +235,7 @@ class MyComicsMixin(ReleaseMixin):
         )
 
     def get_month_url(self) -> str | None:
-        last_month = self._get_last_pub_date()
+        last_month = self._last_pub_date
         if last_month is None:
             return None
         return reverse(
@@ -488,21 +482,18 @@ class OneComicMixin(ReleaseMixin):
     def get_latest_url(self) -> str | None:
         return reverse("comic_latest", kwargs={"comic_slug": self.comic.slug})
 
-    _recent_pub_dates: list[dt.date]
-
-    def _get_recent_pub_dates(self) -> list[dt.date]:
-        if not hasattr(self, "_recent_pub_dates"):
-            self._recent_pub_dates = self.get_queryset().last_pub_dates(2)
-        return self._recent_pub_dates
+    @cached_property
+    def _recent_pub_dates(self) -> list[dt.date]:
+        return self.get_queryset().last_pub_dates(2)
 
     def get_today_url(self) -> str | None:
-        if dt.date.today() in self._get_recent_pub_dates():
+        if dt.date.today() in self._recent_pub_dates:
             return reverse("comic_today", kwargs={"comic_slug": self.comic.slug})
         return None
 
     def get_day_url(self) -> str | None:
         try:
-            last_pub_date = self._get_recent_pub_dates()[0]
+            last_pub_date = self._recent_pub_dates[0]
             return reverse(
                 "comic_day",
                 kwargs={
@@ -517,7 +508,7 @@ class OneComicMixin(ReleaseMixin):
 
     def get_month_url(self) -> str | None:
         try:
-            last_pub_date = self._get_recent_pub_dates()[0]
+            last_pub_date = self._recent_pub_dates[0]
             return reverse(
                 "comic_month",
                 kwargs={
@@ -591,7 +582,7 @@ class OneComicMixin(ReleaseMixin):
 
     def get_last_url(self) -> str | None:
         try:
-            last_pub_date = self._get_recent_pub_dates()[0]
+            last_pub_date = self._recent_pub_dates[0]
             current_day = self.get_current_day()
             if current_day is not None and last_pub_date > current_day:
                 return reverse(
@@ -619,13 +610,13 @@ class OneComicLatestView(OneComicMixin, ReleaseLatestView):
 
     def get_current_day(self) -> dt.date | None:
         try:
-            return self._get_recent_pub_dates()[0]
+            return self._recent_pub_dates[0]
         except IndexError:
             return None
 
     def get_previous_day(self, date: dt.date) -> dt.date | None:
         try:
-            return self._get_recent_pub_dates()[1]
+            return self._recent_pub_dates[1]
         except IndexError:
             return None
 
@@ -693,7 +684,7 @@ class OneComicMonthView(OneComicMixin, ReleaseMonthArchiveView):
 
     def get_last_url(self) -> str | None:
         try:
-            last_pub_date = self._get_recent_pub_dates()[0]
+            last_pub_date = self._recent_pub_dates[0]
             if last_pub_date > self.context["month"]:
                 return reverse(
                     "comic_month",

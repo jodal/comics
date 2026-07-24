@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import datetime as dt
 import os
+from functools import cached_property
 from typing import Any, ClassVar
 
 from django.conf import settings
@@ -141,10 +142,9 @@ class Release(BaseModel):
             },
         )
 
-    def get_ordered_images(self) -> list[Image]:
-        if not getattr(self, "_ordered_images", []):
-            self._ordered_images = list(self.images.order_by("id"))
-        return self._ordered_images
+    @cached_property
+    def ordered_images(self) -> list[Image]:
+        return list(self.images.order_by("id"))
 
 
 # Let all created dirs and files be writable by the group
