@@ -312,6 +312,12 @@ DEFAULT_FROM_EMAIL = env.str(
     default="webmaster@example.com",
 )
 #
+# Email addresses of the site admins, who receive user feedback.
+ADMINS = env.list(
+    "DJANGO_ADMINS",
+    default=[],
+)
+#
 # Email backend to use.
 # Default sends emails to console output, which is useful for development.
 _email_backend = env.str(

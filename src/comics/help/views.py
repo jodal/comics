@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING
 
 from django.conf import settings
 from django.contrib import messages
@@ -38,10 +38,7 @@ def feedback(request: AuthenticatedHttpRequest) -> HttpResponse:
             mail = EmailMessage(
                 subject=subject,
                 body=message,
-                to=[
-                    email
-                    for _name, email in cast("list[tuple[str, str]]", settings.ADMINS)
-                ],
+                to=settings.ADMINS,
                 headers={"Reply-To": request.user.email},
             )
             mail.send()

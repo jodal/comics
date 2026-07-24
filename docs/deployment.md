@@ -109,6 +109,10 @@ DATABASE_URL=postgres://comics:topsecret-password@127.0.0.1:5432/comics
 
 DJANGO_DEFAULT_FROM_EMAIL=comics@example.com
 
+# Comma-separated list of email addresses that receive feedback submitted
+# through the site's feedback form.
+DJANGO_ADMINS=admin@example.com
+
 # Sending email, alternative 1: Using the Mailgun API (which has a free
 # tier). If both alternatives are configured, Mailgun is used.
 MAILGUN_API_KEY=your-mailgun-api-key
