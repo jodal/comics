@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.views.decorators.http import require_POST
 from invitations.utils import get_invitation_model
 
 from comics.accounts.models import Subscription
@@ -44,13 +45,9 @@ def secret_key(request: AuthenticatedHttpRequest) -> HttpResponse:
 
 
 @login_required
+@require_POST
 def mycomics_toggle_comic(request: AuthenticatedHttpRequest) -> HttpResponse:
     """Change a single comic in My comics"""
-
-    if request.method != "POST":
-        response = HttpResponse(status=405)
-        response["Allowed"] = "POST"
-        return response
 
     comic_slug = request.POST["comic"]
     assert isinstance(comic_slug, str)
@@ -76,13 +73,9 @@ def mycomics_toggle_comic(request: AuthenticatedHttpRequest) -> HttpResponse:
 
 
 @login_required
+@require_POST
 def mycomics_edit_comics(request: AuthenticatedHttpRequest) -> HttpResponse:
     """Change multiple comics in My comics"""
-
-    if request.method != "POST":
-        response = HttpResponse(status=405)
-        response["Allowed"] = "POST"
-        return response
 
     my_comics = request.user.comics_profile.comics.all()
 
