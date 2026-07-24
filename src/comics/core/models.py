@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import datetime as dt
-import os
 from functools import cached_property
 from typing import Any, ClassVar
 
@@ -145,10 +144,6 @@ class Release(BaseModel):
     @cached_property
     def ordered_images(self) -> list[Image]:
         return list(self.images.order_by("id"))
-
-
-# Let all created dirs and files be writable by the group
-os.umask(0o002)
 
 
 def image_file_path(instance: models.Model, filename: str) -> str:
