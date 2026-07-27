@@ -97,18 +97,14 @@
 {% endblock %}
 
 
-{% block extra_body %}
+{% block extra_footer %}
 <script nonce="{{ csp_nonce }}">
-(function() {
-  var message = "Do you really want to remove the selected email address?";
-  var actions = document.getElementsByName('action_remove');
-  if (actions.length) {
-    actions[0].addEventListener("click", function(e) {
-      if (! confirm(message)) {
-        e.preventDefault();
+  document
+    .querySelector('[name="action_remove"]')
+    ?.addEventListener("click", (event) => {
+      if (!confirm("Do you really want to remove the selected email address?")) {
+        event.preventDefault();
       }
     });
-  }
-})();
 </script>
 {% endblock %}

@@ -1,7 +1,6 @@
 import datetime as dt
 
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
-from comics.aggregator.exceptions import CrawlerError
 from comics.core.comic_data import ComicDataBase
 
 
@@ -19,14 +18,5 @@ class Crawler(CrawlerBase):
     time_zone = "America/New_York"
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
-        try:
-            url = "https://sinfest.xyz/btphp/comics/{}.jpg".format(
-                pub_date.strftime("%Y-%m-%d"),
-            )
-            return CrawlerImage(url)
-        except CrawlerError:  # Some releases use gif
-            url = "https://sinfest.xyz/btphp/comics/{}.gif".format(
-                pub_date.strftime("%Y-%m-%d"),
-            )
-            return CrawlerImage(url)
-        return None
+        url = f"https://sinfest.xyz/btphp/comics/{pub_date}.jpg"
+        return CrawlerImage(url)

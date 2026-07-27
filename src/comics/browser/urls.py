@@ -96,11 +96,6 @@ urlpatterns = [
                     name="comic_today",
                 ),
                 path(
-                    "website/",
-                    views.OneComicWebsiteRedirect.as_view(),
-                    name="comic_website",
-                ),
-                path(
                     "feed/",
                     feeds.OneComicFeed(),
                     name="comic_feed",

@@ -21,9 +21,7 @@ class Crawler(CrawlerBase):
     headers = {"User-Agent": "Mozilla/4.0"}
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
-        page_url = "https://penny-arcade.com/comic/{}".format(
-            pub_date.strftime("%Y/%m/%d")
-        )
+        page_url = f"https://penny-arcade.com/comic/{pub_date:%Y/%m/%d}"
         page = self.parse_page(page_url)
         title = page.content('meta[property="og:title"]', default="")
         title = title.replace(" - Penny Arcade", "")

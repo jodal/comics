@@ -312,6 +312,12 @@ DEFAULT_FROM_EMAIL = env.str(
     default="webmaster@example.com",
 )
 #
+# Email addresses of the site admins, who receive user feedback.
+ADMINS = env.list(
+    "DJANGO_ADMINS",
+    default=[],
+)
+#
 # Email backend to use.
 # Default sends emails to console output, which is useful for development.
 _email_backend = env.str(
@@ -363,7 +369,6 @@ ANYMAIL = _anymail
 
 # Auth - django.contrib.auth
 #
-AUTH_PROFILE_MODULE = "accounts.UserProfile"
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
@@ -473,11 +478,6 @@ MEDIA_URL = env.str(
     "DJANGO_MEDIA_URL",
     default="/media/",
 )
-
-
-# Tests
-#
-TEST_RUNNER = "django.test.runner.DiscoverRunner"
 
 
 # Comics

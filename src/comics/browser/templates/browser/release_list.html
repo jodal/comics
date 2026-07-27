@@ -14,18 +14,11 @@
       href="{{ feed_url }}"
       title="{{ feed_title }}">
   {% endif %}
-  {% if first_url %}
-    <link rel="start" href="{{ first_url }}">
-    <link rel="first" href="{{ first_url }}">
-  {% endif %}
   {% if prev_url %}
     <link rel="prev" href="{{ prev_url }}">
   {% endif %}
   {% if next_url %}
     <link rel="next" href="{{ next_url }}">
-  {% endif %}
-  {% if last_url %}
-    <link rel="last" href="{{ last_url }}">
   {% endif %}
 {% endblock %}
 

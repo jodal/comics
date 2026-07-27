@@ -18,9 +18,7 @@ class Crawler(CrawlerBase):
     time_zone = "America/New_York"
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
-        page_url = "https://www.gpf-comics.com/archive.php?d={}".format(
-            pub_date.strftime("%Y%m%d"),
-        )
+        page_url = f"https://www.gpf-comics.com/archive.php?d={pub_date:%Y%m%d}"
         page = self.parse_page(page_url)
         url = page.src('img[alt^="[Comic for"]')
         return CrawlerImage(url)

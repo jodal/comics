@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import datetime as dt
-import os
+from functools import cached_property
 from typing import Any, ClassVar
 
 from django.conf import settings
@@ -88,9 +88,6 @@ class Comic(BaseModel):
     def get_absolute_url(self) -> str:
         return reverse("comic_latest", kwargs={"comic_slug": self.slug})
 
-    def get_redirect_url(self) -> str:
-        return reverse("comic_website", kwargs={"comic_slug": self.slug})
-
     def is_new(self) -> bool:
         some_time_ago = timezone.now() - dt.timedelta(
             days=settings.COMICS_NUM_DAYS_COMIC_IS_NEW
@@ -141,14 +138,9 @@ class Release(BaseModel):
             },
         )
 
-    def get_ordered_images(self) -> list[Image]:
-        if not getattr(self, "_ordered_images", []):
-            self._ordered_images = list(self.images.order_by("id"))
-        return self._ordered_images
-
-
-# Let all created dirs and files be writable by the group
-os.umask(0o002)
+    @cached_property
+    def ordered_images(self) -> list[Image]:
+        return list(self.images.order_by("id"))
 
 
 def image_file_path(instance: models.Model, filename: str) -> str:

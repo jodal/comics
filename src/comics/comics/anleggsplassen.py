@@ -37,7 +37,7 @@ class Crawler(CrawlerBase):
             if date_string is None:
                 continue
 
-            date = dt.datetime.strptime(date_string[:10], "%Y-%m-%d").date()
+            date = dt.date.fromisoformat(date_string[:10])
             if date != pub_date:
                 continue
 

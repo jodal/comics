@@ -1,6 +1,6 @@
 <div class="card-body">
 
-  {% for image in release.get_ordered_images %}
+  {% for image in release.ordered_images %}
 
     {% if image.title %}
       <h3>&ldquo;{{ image.title|safe }}&rdquo;</h3>
@@ -43,6 +43,6 @@
       {{ release.fetched|date:"Y-m-d H:i e" }}
     </time>
     from
-    <a href="{{ release.comic.get_redirect_url }}">{{ release.comic.url }}</a>.
+    <a href="{{ release.comic.url }}">{{ release.comic.url }}</a>.
   </p>
 </div>

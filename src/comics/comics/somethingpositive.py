@@ -18,7 +18,5 @@ class Crawler(CrawlerBase):
     time_zone = "America/Chicago"
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
-        url = "https://somethingpositive.net/sp{}.png".format(
-            pub_date.strftime("%m%d%Y"),
-        )
+        url = f"https://somethingpositive.net/sp{pub_date:%m%d%Y}.png"
         return CrawlerImage(url)

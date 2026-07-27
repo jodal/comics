@@ -6,6 +6,7 @@ import datetime as dt
 import functools
 import logging
 import socket
+import time
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Concatenate, Self
 
@@ -55,15 +56,15 @@ class Aggregator:
             assert isinstance(config, AggregatorConfig)
             self.config = config
 
-    def start(self):
-        start_time = dt.datetime.now()
+    def start(self) -> None:
+        start_time = time.monotonic()
         for comic in self.config.comics:
             self.identifier = comic.slug
             self._aggregate_one_comic(comic)
-        elapsed_time = dt.datetime.now() - start_time
+        elapsed_time = dt.timedelta(seconds=time.monotonic() - start_time)
         logger.info("Crawling completed in %s", elapsed_time)
 
-    def stop(self):
+    def stop(self) -> None:
         pass
 
     @log_errors
@@ -140,8 +141,6 @@ class Aggregator:
 
 @dataclass
 class AggregatorConfig:
-    DATE_FORMAT = "%Y-%m-%d"
-
     comic_slugs: list[str] = field(default_factory=list)
     from_date: dt.date | None = None
     to_date: dt.date | None = None
@@ -188,11 +187,11 @@ class AggregatorConfig:
         to_date: dt.date | str | None,
     ) -> tuple[dt.date | None, dt.date | None]:
         if isinstance(from_date, str):
-            from_date = dt.datetime.strptime(from_date, cls.DATE_FORMAT).date()
+            from_date = dt.date.fromisoformat(from_date)
         logger.debug("From date: %s", from_date)
 
         if isinstance(to_date, str):
-            to_date = dt.datetime.strptime(to_date, cls.DATE_FORMAT).date()
+            to_date = dt.date.fromisoformat(to_date)
         logger.debug("To date: %s", to_date)
 
         if from_date and to_date and from_date > to_date:

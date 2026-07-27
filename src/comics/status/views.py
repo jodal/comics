@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING, cast
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max
 from django.shortcuts import render
+from django.utils import timezone
 
 from comics.aggregator.utils import get_comic_schedule
 from comics.core.models import Comic, Release
@@ -30,7 +31,7 @@ if TYPE_CHECKING:
 
 @login_required
 def status(request: HttpRequest, num_days: int = 21) -> HttpResponse:
-    today = dt.date.today()
+    today = timezone.localdate()
     last = today - dt.timedelta(days=num_days)
 
     releases = Release.objects.for_active_comics().published_since(last)
