@@ -1,10 +1,10 @@
 import datetime as dt
 
 from comics.aggregator.crawler import ComicControlCrawlerBase, CrawlerResult
-from comics.core.comic_data import ComicDataBase
+from comics.core.metadata import MetadataBase
 
 
-class ComicData(ComicDataBase):
+class Metadata(MetadataBase):
     name = "Ménage à 3"
     language = "en"
     url = "http://www.ma3comic.com/"

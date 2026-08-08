@@ -2,10 +2,10 @@ import datetime as dt
 import re
 
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
-from comics.core.comic_data import ComicDataBase
+from comics.core.metadata import MetadataBase
 
 
-class ComicData(ComicDataBase):
+class Metadata(MetadataBase):
     name = "The Joy of Tech"
     language = "en"
     url = "http://www.geekculture.com/joyoftech/"

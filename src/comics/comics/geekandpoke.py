@@ -1,7 +1,7 @@
-from comics.core.comic_data import ComicDataBase
+from comics.core.metadata import MetadataBase
 
 
-class ComicData(ComicDataBase):
+class Metadata(MetadataBase):
     name = "Geek and Poke"
     language = "en"
     url = "http://geek-and-poke.com/"

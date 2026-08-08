@@ -1,10 +1,10 @@
 import datetime as dt
 
 from comics.aggregator.crawler import CrawlerResult, CreatorsCrawlerBase
-from comics.core.comic_data import ComicDataBase
+from comics.core.metadata import MetadataBase
 
 
-class ComicData(ComicDataBase):
+class Metadata(MetadataBase):
     name = "Dogs of C-Kennel"
     language = "en"
     url = "https://www.creators.com/read/dogs-of-c-kennel"

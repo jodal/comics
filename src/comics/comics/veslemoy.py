@@ -1,7 +1,7 @@
-from comics.core.comic_data import ComicDataBase
+from comics.core.metadata import MetadataBase
 
 
-class ComicData(ComicDataBase):
+class Metadata(MetadataBase):
     name = "Veslemøy"
     language = "no"
     url = "http://www.side2.no/tegneserie/veslemoy/"

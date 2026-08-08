@@ -1,7 +1,7 @@
-from comics.core.comic_data import ComicDataBase
+from comics.core.metadata import MetadataBase
 
 
-class ComicData(ComicDataBase):
+class Metadata(MetadataBase):
     name = "Zelda"
     language = "no"
     url = "https://www.dagbladet.no/tegneserie/zelda-lille-berlin/"

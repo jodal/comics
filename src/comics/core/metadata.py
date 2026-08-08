@@ -4,10 +4,10 @@ from dataclasses import dataclass, field
 from typing import TypedDict
 
 from comics.comics import get_comic_module, get_comic_module_names
-from comics.core.exceptions import ComicDataError
+from comics.core.exceptions import MetadataError
 from comics.core.models import Comic
 
-logger = logging.getLogger("comics.core.comic_data")
+logger = logging.getLogger("comics.core.metadata")
 
 
 class Options(TypedDict, total=False):
@@ -15,11 +15,11 @@ class Options(TypedDict, total=False):
 
 
 @dataclass
-class ComicDataBase:
+class MetadataBase:
     """Base class for the metadata part of a crawler module.
 
     Each crawler module must define a subclass of this class named
-    `ComicData`, overriding the class attributes to describe the comic. The
+    `Metadata`, overriding the class attributes to describe the comic. The
     metadata is used for display at the web site.
     """
 
@@ -65,15 +65,15 @@ class ComicDataBase:
         self.slug = self.__module__.split(".")[-1]
 
 
-class ComicDataLoader:
+class MetadataLoader:
     def __init__(self, options: Options) -> None:
         self.include_inactive = self._get_include_inactive(options)
         self.comic_slugs = self._get_comic_slugs(options)
 
     def start(self) -> None:
         for comic_slug in self.comic_slugs:
-            logger.info("Loading comic data for %s", comic_slug)
-            self._try_load_comic_data(comic_slug)
+            logger.info("Loading metadata for %s", comic_slug)
+            self._try_load_metadata(comic_slug)
 
     def stop(self) -> None:
         pass
@@ -99,55 +99,55 @@ class ComicDataLoader:
             logger.debug("Load targets: %s", comic_slugs)
             return comic_slugs
 
-    def _try_load_comic_data(self, comic_slug: str) -> None:
+    def _try_load_metadata(self, comic_slug: str) -> None:
         try:
-            data = self._get_data(comic_slug)
-            if self._should_load_data(data):
-                self._load_data(data)
+            metadata = self._get_metadata(comic_slug)
+            if self._should_load_metadata(metadata):
+                self._load_metadata(metadata)
             else:
                 logger.debug("Skipping inactive comic")
-        except ComicDataError as error:
+        except MetadataError as error:
             logger.error(error)
         except Exception as error:
             logger.exception(error)
 
-    def _get_data(self, comic_slug: str) -> ComicDataBase:
+    def _get_metadata(self, comic_slug: str) -> MetadataBase:
         logger.debug("Importing comic module for %s", comic_slug)
         comic_module = get_comic_module(comic_slug)
-        if not hasattr(comic_module, "ComicData"):
-            msg = f"{comic_module.__name__} does not have a ComicData class"
-            raise ComicDataError(msg)
-        data = comic_module.ComicData()
-        assert isinstance(data, ComicDataBase)
-        return data
+        if not hasattr(comic_module, "Metadata"):
+            msg = f"{comic_module.__name__} does not have a Metadata class"
+            raise MetadataError(msg)
+        metadata = comic_module.Metadata()
+        assert isinstance(metadata, MetadataBase)
+        return metadata
 
-    def _should_load_data(self, data: ComicDataBase) -> bool:
+    def _should_load_metadata(self, metadata: MetadataBase) -> bool:
         return bool(
-            data.active
+            metadata.active
             or self.include_inactive
-            or Comic.objects.for_slug(data.slug).exists()
+            or Comic.objects.for_slug(metadata.slug).exists()
         )
 
-    def _load_data(self, data: ComicDataBase) -> None:
-        logger.debug("Updating database with: %s", data)
+    def _load_metadata(self, metadata: MetadataBase) -> None:
+        logger.debug("Updating database with: %s", metadata)
         Comic.objects.update_or_create(
-            language=data.language,
-            slug=data.slug,
+            language=metadata.language,
+            slug=metadata.slug,
             defaults={
-                "name": data.name,
-                "url": data.url,
-                "active": data.active,
+                "name": metadata.name,
+                "url": metadata.url,
+                "active": metadata.active,
                 "start_date": self._parse_optional_date(
-                    comic_slug=data.slug,
+                    comic_slug=metadata.slug,
                     field_name="start_date",
-                    value=data.start_date,
+                    value=metadata.start_date,
                 ),
                 "end_date": self._parse_optional_date(
-                    comic_slug=data.slug,
+                    comic_slug=metadata.slug,
                     field_name="end_date",
-                    value=data.end_date,
+                    value=metadata.end_date,
                 ),
-                "rights": data.rights,
+                "rights": metadata.rights,
             },
         )
 
@@ -166,4 +166,4 @@ class ComicDataLoader:
                 f"Invalid {field_name} for comic '{comic_slug}': {value!r}. "
                 "Expected YYYY-MM-DD."
             )
-            raise ComicDataError(msg) from error
+            raise MetadataError(msg) from error

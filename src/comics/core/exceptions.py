@@ -8,8 +8,8 @@ class ComicsError(Exception):
         return f"Generic comics error ({self.value})"
 
 
-class ComicDataError(ComicsError):
-    """Base class for comic data exceptions"""
+class MetadataError(ComicsError):
+    """Base class for comic metadata exceptions"""
 
     def __str__(self) -> str:
-        return f"Comics data error ({self.value})"
+        return f"Comics metadata error ({self.value})"

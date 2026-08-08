@@ -1,10 +1,10 @@
 import datetime as dt
 
 from comics.aggregator.crawler import CrawlerResult, GoComicsComCrawlerBase
-from comics.core.comic_data import ComicDataBase
+from comics.core.metadata import MetadataBase
 
 
-class ComicData(ComicDataBase):
+class Metadata(MetadataBase):
     name = "Not Invented Here (gocomics.com)"
     language = "en"
     url = "https://www.gocomics.com/not-invented-here"
