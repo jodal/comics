@@ -287,13 +287,15 @@ class CrawlerBase:
 class ComicsKingdomCrawlerBase(CrawlerBase):
     """Base comic crawler for Comics Kingdom comics"""
 
-    def crawl_helper(
-        self,
-        short_name: str,
-        pub_date: dt.date,
-    ) -> CrawlerResult | None:
+    url_name: str
+    """*Required.* The comic's name in comicskingdom.com URLs.
+
+    Example: `"beetle-bailey-1"`.
+    """
+
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         date = pub_date.strftime("%Y-%m-%d")
-        page_url = f"https://comicskingdom.com/{short_name}/{date}"
+        page_url = f"https://comicskingdom.com/{self.url_name}/{date}"
         page = self.parse_page(page_url)
         url = page.src('img[id="theComicImage"]')
         if not url:
@@ -305,14 +307,16 @@ class ComicsKingdomCrawlerBase(CrawlerBase):
 class GoComicsCrawlerBase(CrawlerBase):
     """Base comic crawler for all comics hosted at gocomics.com"""
 
-    def crawl_helper(
-        self,
-        url_name: str,
-        pub_date: dt.date,
-    ) -> CrawlerResult | None:
+    url_name: str
+    """*Required.* The comic's name in gocomics.com URLs.
+
+    Example: `"garfield"`.
+    """
+
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         api_url = (
             "https://www.gocomics.com/api/service/v2/assets/recent/"
-            f"{url_name}?date={pub_date:%Y/%m/%d}"
+            f"{self.url_name}?date={pub_date:%Y/%m/%d}"
         )
         response = httpx.get(api_url)
         response.raise_for_status()
@@ -320,36 +324,21 @@ class GoComicsCrawlerBase(CrawlerBase):
         return CrawlerImage(data[0]["url"])
 
 
-class PondusNoCrawlerBase(CrawlerBase):
-    """Base comics crawler for all comics posted at pondus.no"""
-
-    time_zone = "Europe/Oslo"
-
-    def crawl_helper(
-        self,
-        url_id: str,
-        pub_date: dt.date,
-    ) -> CrawlerResult | None:
-        page_url = f"http://www.pondus.no/?section=artikkel&id={url_id}"
-        page = self.parse_page(page_url)
-        url = page.src(".imagegallery img")
-        assert url
-        return CrawlerImage(url)
-
-
 class CreatorsCrawlerBase(CrawlerBase):
     """Base comics crawler for all comics posted at creators.com"""
 
     headers = {"User-Agent": "Mozilla/5.0"}
 
-    def crawl_helper(
-        self,
-        feature_id: str,
-        pub_date: dt.date,
-    ) -> CrawlerResult | None:
+    url_id: str
+    """*Required.* The comic's feature id in creators.com URLs.
+
+    Example: `"153"`.
+    """
+
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
         api_url = (
             "https://www.creators.com/api/features/get_release_dates?"
-            f"feature_id={feature_id}&year={pub_date.year}"
+            f"feature_id={self.url_id}&year={pub_date.year}"
         )
 
         response = httpx.get(api_url, headers=self.headers, follow_redirects=True)
@@ -365,45 +354,19 @@ class CreatorsCrawlerBase(CrawlerBase):
         return None
 
 
-class NettserierCrawlerBase(CrawlerBase):
-    """Base comics crawler for all comics posted at nettserier.no"""
-
-    # Nettserier has no option to fetch a specific date
-    # In order to get older releases we need to
-    # loop through the updates and check the published date
-    time_zone = "Europe/Oslo"
-
-    def crawl_helper(
-        self,
-        comic_id: int,
-        pub_date: dt.date,
-    ) -> CrawlerResult | None:
-        response = httpx.get(f"https://api.nettserier.no/v4/updates/{comic_id}/")
-        response.raise_for_status()
-        for update in response.json()["data"]:
-            if self.string_to_date(update["pubtime"], "%Y-%m-%d %H:%M:%S") == pub_date:
-                return CrawlerImage(
-                    f"https://media.nettserier.no/updates/{update['image']}",
-                    update["title"],
-                    update["text"],
-                )
-        return None
-
-
 class ComicControlCrawlerBase(CrawlerBase):
     """Base comics crawler for all comics using ComicControl CMS"""
 
-    def crawl_helper(
-        self,
-        site_url: str,
-        pub_date: dt.date,
-    ) -> CrawlerResult | None:
-        if site_url[-1] == "/":
-            site_url = site_url[0:-1]
-        if "pixietrixcomix.com" in site_url:
-            feed = self.parse_feed(f"{site_url}/rss")
-        else:
-            feed = self.parse_feed(f"{site_url}/comic/rss")
+    base_url: str
+    """*Required.* The URL of the comic's site.
+
+    Example: `"https://pixietrixcomix.com/menage-a-3"`. Often the same as the
+    comic's [`Metadata.url`][comics.core.metadata.MetadataBase.url].
+    """
+
+    def crawl(self, pub_date: dt.date) -> CrawlerResult:
+        feed_path = "rss" if "pixietrixcomix.com" in self.base_url else "comic/rss"
+        feed = self.parse_feed(f"{self.base_url.rstrip('/')}/{feed_path}")
 
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)

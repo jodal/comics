@@ -1,6 +1,4 @@
-import datetime as dt
-
-from comics.aggregator.crawler import CrawlerResult, CreatorsCrawlerBase
+from comics.aggregator.crawler import CreatorsCrawlerBase
 from comics.core.metadata import MetadataBase
 
 
@@ -12,9 +10,7 @@ class Metadata(MetadataBase):
 
 
 class Crawler(CreatorsCrawlerBase):
+    url_id = "179"
     history_capable_date = "2007-02-12"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/Los_Angeles"
-
-    def crawl(self, pub_date: dt.date) -> CrawlerResult:
-        return self.crawl_helper("179", pub_date)
