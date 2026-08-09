@@ -1,6 +1,6 @@
 import datetime as dt
 
-from comics.aggregator.crawler import CrawlerResult, GoComicsComCrawlerBase
+from comics.aggregator.crawler import CrawlerResult, GoComicsCrawlerBase
 from comics.core.metadata import MetadataBase
 
 
@@ -11,7 +11,7 @@ class Metadata(MetadataBase):
     rights = "Will Henry"
 
 
-class Crawler(GoComicsComCrawlerBase):
+class Crawler(GoComicsCrawlerBase):
     history_capable_date = "2015-06-29"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/New_York"

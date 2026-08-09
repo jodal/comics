@@ -302,7 +302,7 @@ class ComicsKingdomCrawlerBase(CrawlerBase):
         return CrawlerImage(url)
 
 
-class GoComicsComCrawlerBase(CrawlerBase):
+class GoComicsCrawlerBase(CrawlerBase):
     """Base comic crawler for all comics hosted at gocomics.com"""
 
     def crawl_helper(
