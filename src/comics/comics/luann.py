@@ -11,6 +11,6 @@ class Metadata(MetadataBase):
 
 class Crawler(GoComicsCrawlerBase):
     url_name = "luann"
-    history_capable_date = "1985-03-17"
+    history_start_date = "1985-03-17"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/New_York"

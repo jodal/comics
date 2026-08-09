@@ -11,6 +11,6 @@ class Metadata(MetadataBase):
 
 class Crawler(GoComicsCrawlerBase):
     url_name = "freerange"
-    history_capable_date = "2007-02-03"
+    history_start_date = "2007-02-03"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/New_York"

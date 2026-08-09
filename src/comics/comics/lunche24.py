@@ -13,7 +13,7 @@ class Metadata(MetadataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_date = "2024-05-02"
+    history_start_date = "2024-05-02"
     schedule = "Mo,Tu,We,Th,Fr,Su"
     time_zone = "Europe/Oslo"
 

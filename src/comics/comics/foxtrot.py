@@ -12,6 +12,6 @@ class Metadata(MetadataBase):
 
 class Crawler(GoComicsCrawlerBase):
     url_name = "foxtrot"
-    history_capable_date = "2006-12-27"
+    history_start_date = "2006-12-27"
     schedule = "Su"
     time_zone = "America/Denver"

@@ -13,6 +13,6 @@ class Metadata(MetadataBase):
 
 class Crawler(ComicControlCrawlerBase):
     base_url = "https://pixietrixcomix.com/menage-a-3"
-    history_capable_days = 50
+    history_length_days = 50
     schedule = "Tu,Th,Sa"
     time_zone = "America/New_York"

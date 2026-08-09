@@ -12,6 +12,6 @@ class Metadata(MetadataBase):
 
 class Crawler(GoComicsCrawlerBase):
     url_name = "forbetterorforworse"
-    history_capable_date = "1981-11-23"
+    history_start_date = "1981-11-23"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/New_York"

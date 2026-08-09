@@ -14,7 +14,7 @@ class Metadata(MetadataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 30
+    history_length_days = 30
     schedule = "Mo,We,Fr"
     time_zone = "America/New_York"
 

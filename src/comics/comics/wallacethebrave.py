@@ -11,6 +11,6 @@ class Metadata(MetadataBase):
 
 class Crawler(GoComicsCrawlerBase):
     url_name = "wallace-the-brave"
-    history_capable_date = "2015-06-29"
+    history_start_date = "2015-06-29"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/New_York"

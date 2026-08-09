@@ -12,6 +12,6 @@ class Metadata(MetadataBase):
 
 class Crawler(GoComicsCrawlerBase):
     url_name = "pickles"
-    history_capable_date = "2003-10-01"
+    history_start_date = "2003-10-01"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/Denver"

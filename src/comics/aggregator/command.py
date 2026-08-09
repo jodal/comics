@@ -117,15 +117,15 @@ class Aggregator:
     def _get_valid_date(self, crawler: CrawlerBase, date: dt.date | None) -> dt.date:
         if date is None:
             return crawler.current_date
-        elif date < crawler.history_capable:
+        elif date < crawler.history_start:
             logger.info(
-                "%s: Adjusting date from %s to %s because of "
-                "limited history capability",
+                "%s: Adjusting date from %s to %s because the given "
+                "date is before the comic's history start",
                 crawler.comic.slug,
                 date,
-                crawler.history_capable,
+                crawler.history_start,
             )
-            return crawler.history_capable
+            return crawler.history_start
         elif date > crawler.current_date:
             logger.info(
                 "%s: Adjusting date from %s to %s because the given "

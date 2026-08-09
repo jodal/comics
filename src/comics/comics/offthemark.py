@@ -12,6 +12,6 @@ class Metadata(MetadataBase):
 
 class Crawler(GoComicsCrawlerBase):
     url_name = "offthemark"
-    history_capable_date = "2002-09-02"
+    history_start_date = "2002-09-02"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/New_York"

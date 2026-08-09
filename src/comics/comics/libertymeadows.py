@@ -13,6 +13,6 @@ class Metadata(MetadataBase):
 
 class Crawler(CreatorsCrawlerBase):
     url_id = "153"
-    history_capable_date = "2006-10-25"
+    history_start_date = "2006-10-25"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/Los_Angeles"

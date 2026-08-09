@@ -12,6 +12,6 @@ class Metadata(MetadataBase):
 
 class Crawler(GoComicsCrawlerBase):
     url_name = "getfuzzy"
-    history_capable_date = "2009-05-26"
+    history_start_date = "2009-05-26"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/Denver"

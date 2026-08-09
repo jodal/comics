@@ -13,7 +13,7 @@ class Metadata(MetadataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_date = "2006-09-19"
+    history_start_date = "2006-09-19"
     schedule = "Mo"
     time_zone = "America/New_York"
     archive_page = None

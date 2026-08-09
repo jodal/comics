@@ -11,9 +11,9 @@ import httpx
 from django.utils import timezone
 
 from comics.aggregator.exceptions import (
+    BeforeHistoryStart,
     CrawlerHTTPError,
     ImageURLNotFound,
-    NotHistoryCapable,
     ReleaseAlreadyExists,
 )
 from comics.aggregator.feedparser import FeedParser
@@ -101,21 +101,21 @@ class CrawlerBase:
 
     comic: Comic
 
-    history_capable_date: str | None = field(init=False, default=None)
+    history_start_date: str | None = field(init=False, default=None)
     """*Optional.* Date of oldest release available for crawling, as an
     ISO 8601 date string, e.g. `"2008-03-08"`.
 
     Provide this *or*
-    [`history_capable_days`][comics.aggregator.crawler.CrawlerBase.history_capable_days].
+    [`history_length_days`][comics.aggregator.crawler.CrawlerBase.history_length_days].
     If both are present, this one will have precedence.
     """
 
-    history_capable_days: int | None = field(init=False, default=None)
+    history_length_days: int | None = field(init=False, default=None)
     """*Optional.* Number of days a release is available for crawling, e.g.
     `32`.
 
     Provide this *or*
-    [`history_capable_date`][comics.aggregator.crawler.CrawlerBase.history_capable_date].
+    [`history_start_date`][comics.aggregator.crawler.CrawlerBase.history_start_date].
     """
 
     schedule: str | None = field(init=False, default=None)
@@ -199,8 +199,8 @@ class CrawlerBase:
         if pub_date is None:
             pub_date = self.current_date
 
-        if pub_date < self.history_capable:
-            raise NotHistoryCapable(identifier, self.history_capable)
+        if pub_date < self.history_start:
+            raise BeforeHistoryStart(identifier, self.history_start)
 
         if (
             self.multiple_releases_per_day is False
@@ -217,11 +217,16 @@ class CrawlerBase:
         return now_in_tz.date()
 
     @property
-    def history_capable(self) -> dt.date:
-        if self.history_capable_date is not None:
-            return dt.date.fromisoformat(self.history_capable_date)
-        elif self.history_capable_days is not None:
-            return self.current_date - dt.timedelta(self.history_capable_days)
+    def history_start(self) -> dt.date:
+        """The oldest date this crawler can crawl.
+
+        Derived from `history_start_date`, or from `history_length_days`
+        relative to today. Without either, only today can be crawled.
+        """
+        if self.history_start_date is not None:
+            return dt.date.fromisoformat(self.history_start_date)
+        elif self.history_length_days is not None:
+            return self.current_date - dt.timedelta(self.history_length_days)
         else:
             return self.current_date
 

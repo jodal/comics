@@ -12,6 +12,6 @@ class Metadata(MetadataBase):
 
 class Crawler(ComicsKingdomCrawlerBase):
     url_name = "beetle-bailey-1"
-    history_capable_date = "1953-10-05"
+    history_start_date = "1953-10-05"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/New_York"

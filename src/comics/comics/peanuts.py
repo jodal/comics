@@ -13,6 +13,6 @@ class Metadata(MetadataBase):
 
 class Crawler(GoComicsCrawlerBase):
     url_name = "peanuts"
-    history_capable_date = "1950-10-02"
+    history_start_date = "1950-10-02"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/New_York"

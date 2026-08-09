@@ -80,13 +80,13 @@ def test_download_release(
     downloader_mock.download.assert_called_with(crawler_release)
 
 
-def test_get_valid_date_from_history_capable(
+def test_get_valid_date_from_history_start(
     aggregator: Aggregator,
     crawler_mock: Mock,
 ) -> None:
     expected = dt.date(2008, 3, 1)
     crawler_mock.comic = Comic.objects.get(slug="xkcd")
-    crawler_mock.history_capable = expected
+    crawler_mock.history_start = expected
     crawler_mock.current_date = dt.date(2008, 4, 1)
 
     result = aggregator._get_valid_date(crawler_mock, dt.date(2008, 2, 1))  # pyright: ignore[reportPrivateUsage]
@@ -100,7 +100,7 @@ def test_get_valid_date_from_config(
 ) -> None:
     expected = dt.date(2008, 3, 1)
     crawler_mock.comic = Comic.objects.get(slug="xkcd")
-    crawler_mock.history_capable = dt.date(2008, 1, 1)
+    crawler_mock.history_start = dt.date(2008, 1, 1)
     crawler_mock.current_date = dt.date(2008, 4, 1)
 
     result = aggregator._get_valid_date(crawler_mock, expected)  # pyright: ignore[reportPrivateUsage]

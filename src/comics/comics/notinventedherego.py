@@ -12,6 +12,6 @@ class Metadata(MetadataBase):
 
 class Crawler(GoComicsCrawlerBase):
     url_name = "not-invented-here"
-    history_capable_date = "2015-12-28"
+    history_start_date = "2015-12-28"
     schedule = "Mo,Tu,We,Th"
     time_zone = "America/Los_Angeles"

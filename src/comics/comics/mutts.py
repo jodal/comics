@@ -12,6 +12,6 @@ class Metadata(MetadataBase):
 
 class Crawler(ComicsKingdomCrawlerBase):
     url_name = "mutts"
-    history_capable_date = "1994-09-11"
+    history_start_date = "1994-09-11"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/New_York"

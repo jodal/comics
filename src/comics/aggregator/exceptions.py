@@ -36,11 +36,11 @@ class ImageURLNotFound(CrawlerError):
         return f"{self.identifier}: Image URL not found"
 
 
-class NotHistoryCapable(CrawlerError):
-    """Exception raised when a comic is not history capable for the date"""
+class BeforeHistoryStart(CrawlerError):
+    """Exception raised when crawling a date before the comic's history starts"""
 
     def __str__(self) -> str:
-        return f"{self.identifier}: Comic is not history capable ({self.value})"
+        return f"{self.identifier}: Date is before history start ({self.value})"
 
 
 class ReleaseAlreadyExists(CrawlerError):

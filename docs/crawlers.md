@@ -24,7 +24,7 @@ class Metadata(MetadataBase):
     rights = 'Randall Munroe, CC BY-NC 2.5'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 10
+    history_length_days = 10
     schedule = 'Mo,We,Fr'
     time_zone = 'US/Eastern'
 
@@ -59,8 +59,8 @@ class Crawler(CrawlerBase):
       heading_level: 3
       merge_init_into_class: false
       members:
-        - history_capable_date
-        - history_capable_days
+        - history_start_date
+        - history_length_days
         - schedule
         - time_zone
         - multiple_releases_per_day

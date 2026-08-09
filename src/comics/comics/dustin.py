@@ -12,6 +12,6 @@ class Metadata(MetadataBase):
 
 class Crawler(ComicsKingdomCrawlerBase):
     url_name = "dustin"
-    history_capable_date = "2010-01-04"
+    history_start_date = "2010-01-04"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/New_York"

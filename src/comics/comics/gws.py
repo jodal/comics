@@ -12,6 +12,6 @@ class Metadata(MetadataBase):
 
 class Crawler(ComicControlCrawlerBase):
     base_url = Metadata.url
-    history_capable_days = 30
+    history_length_days = 30
     schedule = "Mo,Tu,We,Th,Fr"
     time_zone = "America/New_York"

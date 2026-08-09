@@ -13,6 +13,6 @@ class Metadata(MetadataBase):
 
 class Crawler(GoComicsCrawlerBase):
     url_name = "calvinandhobbes"
-    history_capable_date = "1985-11-18"
+    history_start_date = "1985-11-18"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/Denver"

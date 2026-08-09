@@ -13,6 +13,6 @@ class Metadata(MetadataBase):
 
 class Crawler(ComicControlCrawlerBase):
     base_url = "https://pixietrixcomix.com/sticky-dilly-buns"
-    history_capable_days = 50
+    history_length_days = 50
     schedule = "Mo,Fr"
     time_zone = "America/New_York"

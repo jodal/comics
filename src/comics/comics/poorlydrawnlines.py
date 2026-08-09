@@ -13,7 +13,7 @@ class Metadata(MetadataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 30
+    history_length_days = 30
     time_zone = "America/Los_Angeles"
 
     # Without User-Agent set, the server returns 403 Forbidden

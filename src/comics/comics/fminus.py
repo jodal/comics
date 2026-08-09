@@ -12,6 +12,6 @@ class Metadata(MetadataBase):
 
 class Crawler(GoComicsCrawlerBase):
     url_name = "fminus"
-    history_capable_date = "2005-05-10"
+    history_start_date = "2005-05-10"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/Denver"

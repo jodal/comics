@@ -11,6 +11,6 @@ class Metadata(MetadataBase):
 
 class Crawler(GoComicsCrawlerBase):
     url_name = "crabgrass"
-    history_capable_date = "2019-04-05"
+    history_start_date = "2019-04-05"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/New_York"

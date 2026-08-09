@@ -14,7 +14,7 @@ class Metadata(MetadataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 365
+    history_length_days = 365
     time_zone = "Europe/Dublin"
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
