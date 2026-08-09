@@ -1,17 +1,12 @@
 import datetime as dt
 import logging
 from dataclasses import dataclass, field
-from typing import TypedDict
 
 from comics.comics import get_comic_module, get_comic_module_names
 from comics.core.exceptions import MetadataError
 from comics.core.models import Comic
 
 logger = logging.getLogger("comics.core.metadata")
-
-
-class Options(TypedDict, total=False):
-    comic_slugs: list[str]
 
 
 @dataclass
@@ -97,97 +92,74 @@ def get_metadata(comic_slug: str) -> MetadataBase | None:
     return metadata
 
 
-class MetadataLoader:
-    def __init__(self, options: Options) -> None:
-        self.include_inactive = self._get_include_inactive(options)
-        self.comic_slugs = self._get_comic_slugs(options)
+def select_comic_slugs(requested: list[str]) -> list[str]:
+    """The comic slugs to load metadata for.
 
-    def start(self) -> None:
-        for comic_slug in self.comic_slugs:
-            logger.info("Loading metadata for %s", comic_slug)
-            self._try_load_metadata(comic_slug)
+    An explicitly named comic is always selected, active or not. With
+    `"all"`, a comic is only selected if it is still active or already in
+    the database, so a new installation is not seeded with comics it has
+    never served.
+    """
+    if len(requested) == 0:
+        return []
 
-    def stop(self) -> None:
-        pass
+    if "all" not in requested:
+        logger.debug("Load targets: %s", requested)
+        return requested
 
-    def _get_include_inactive(self, options: Options) -> bool:
-        comic_slugs = options.get("comic_slugs", None)
-        if comic_slugs is None or len(comic_slugs) == 0:
-            logger.debug("Excluding inactive comics")
-            return False
-        else:
-            logger.debug("Including inactive comics")
-            return True
+    known_slugs = set(Comic.objects.values_list("slug", flat=True))
+    selected = [
+        comic_slug
+        for comic_slug in get_comic_module_names()
+        if comic_slug in known_slugs
+        or ((metadata := get_metadata(comic_slug)) is not None and metadata.active)
+    ]
+    logger.debug("Load targets: all comics (%d of them)", len(selected))
+    return selected
 
-    def _get_comic_slugs(self, options: Options) -> list[str]:
-        comic_slugs = options.get("comic_slugs", None)
-        if comic_slugs is None or len(comic_slugs) == 0:
-            logger.error("No comic given. Use -c option to specify comic(s).")
-            return []
-        elif "all" in comic_slugs:
-            logger.debug("Load targets: all comics")
-            return get_comic_module_names()
-        else:
-            logger.debug("Load targets: %s", comic_slugs)
-            return comic_slugs
 
-    def _try_load_metadata(self, comic_slug: str) -> None:
+def load_metadata(comic_slugs: list[str]) -> None:
+    """Update the database with the metadata the given comics describe."""
+    for comic_slug in comic_slugs:
+        logger.info("Loading metadata for %s", comic_slug)
         metadata = get_metadata(comic_slug)
         if metadata is None:
             return
+
         try:
-            if self._should_load_metadata(metadata):
-                self._load_metadata(metadata)
-            else:
-                logger.debug("Skipping inactive comic")
+            _update_comic(metadata)
         except MetadataError as error:
-            logger.error(error)
-        except Exception as error:
-            logger.exception(error)
+            logger.error("%s: %s", comic_slug, error.value)
+        except Exception:
+            logger.exception("%s: Could not update the comic", comic_slug)
 
-    def _should_load_metadata(self, metadata: MetadataBase) -> bool:
-        return bool(
-            metadata.active
-            or self.include_inactive
-            or Comic.objects.for_slug(metadata.slug).exists()
-        )
 
-    def _load_metadata(self, metadata: MetadataBase) -> None:
-        logger.debug("Updating database with: %s", metadata)
-        Comic.objects.update_or_create(
-            language=metadata.language,
-            slug=metadata.slug,
-            defaults={
-                "name": metadata.name,
-                "url": metadata.url,
-                "active": metadata.active,
-                "start_date": self._parse_optional_date(
-                    comic_slug=metadata.slug,
-                    field_name="start_date",
-                    value=metadata.start_date,
-                ),
-                "end_date": self._parse_optional_date(
-                    comic_slug=metadata.slug,
-                    field_name="end_date",
-                    value=metadata.end_date,
-                ),
-                "rights": metadata.rights,
-            },
-        )
+def _parse_optional_date(metadata: MetadataBase, field_name: str) -> dt.date | None:
+    value: str | None = getattr(metadata, field_name)
+    if value is None:
+        return None
+    try:
+        return dt.date.fromisoformat(value)
+    except ValueError as error:
+        msg = f"Invalid {field_name}: {value!r}. Expected YYYY-MM-DD."
+        raise MetadataError(msg) from error
 
-    def _parse_optional_date(
-        self,
-        comic_slug: str,
-        field_name: str,
-        value: str | None,
-    ) -> dt.date | None:
-        if value is None:
-            return None
-        try:
-            return dt.date.fromisoformat(value)
-        except ValueError as error:
-            msg = (
-                f"Invalid {field_name} for comic '{comic_slug}': {value!r}. "
-                "Expected YYYY-MM-DD."
-            )
-            raise MetadataError(msg) from error
+
+def _update_comic(metadata: MetadataBase) -> None:
+    """Update the comic in the database to match its metadata.
+
+    Raises `MetadataError` if the metadata does not describe a valid comic.
+    """
+    logger.debug("Updating database with: %s", metadata)
+    Comic.objects.update_or_create(
+        language=metadata.language,
+        slug=metadata.slug,
+        defaults={
+            "name": metadata.name,
+            "url": metadata.url,
+            "active": metadata.active,
+            "start_date": _parse_optional_date(metadata, "start_date"),
+            "end_date": _parse_optional_date(metadata, "end_date"),
+            "rights": metadata.rights,
+        },
+    )
