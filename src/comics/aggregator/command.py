@@ -95,7 +95,7 @@ class Aggregator:
         pub_date: dt.date,
     ) -> CrawlerRelease | None:
         logger.debug("Crawling %s for %s", crawler.comic.slug, pub_date)
-        crawler_release = crawler.get_crawler_release(pub_date)
+        crawler_release = crawler.get_release(pub_date)
         if crawler_release:
             logger.debug("Release: %s", crawler_release.identifier)
             for image in crawler_release.images:

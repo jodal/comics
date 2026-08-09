@@ -162,11 +162,15 @@ class CrawlerBase:
     # Page objects mapped against URL for use when crawling multiple dates
     pages: dict[str, LxmlParser] = field(default_factory=dict)
 
-    def get_crawler_release(
+    def get_release(
         self,
         pub_date: dt.date | None = None,
     ) -> CrawlerRelease | None:
-        """Get meta data for release at pub_date, or the latest release"""
+        """Crawl the release published on `pub_date`.
+
+        Without a `pub_date`, crawls today's release, as today is in the
+        comic's time zone. Returns `None` if no release was published.
+        """
 
         pub_date = self._get_date_to_crawl(pub_date)
         release = CrawlerRelease(

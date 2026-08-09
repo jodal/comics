@@ -58,12 +58,12 @@ def test_crawl_one_comic_one_date(
 ) -> None:
     pub_date = dt.date(2008, 3, 1)
     crawler_release = CrawlerRelease(comic_mock, pub_date)
-    crawler_mock.get_crawler_release.return_value = crawler_release
+    crawler_mock.get_release.return_value = crawler_release
 
     aggregator._crawl_one_comic_one_date(crawler_mock, pub_date)  # pyright: ignore[reportPrivateUsage]
 
-    assert crawler_mock.get_crawler_release.call_count == 1
-    crawler_mock.get_crawler_release.assert_called_with(pub_date)
+    assert crawler_mock.get_release.call_count == 1
+    crawler_mock.get_release.assert_called_with(pub_date)
 
 
 def test_download_release(
