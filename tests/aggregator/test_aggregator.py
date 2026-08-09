@@ -4,7 +4,7 @@ from unittest.mock import Mock
 import pytest
 from pytest_mock import MockerFixture
 
-from comics.aggregator.command import Aggregator, AggregatorConfig
+from comics.aggregator.command import Aggregator
 from comics.aggregator.crawler import CrawlerBase, CrawlerRelease
 from comics.aggregator.downloader import ReleaseDownloader
 from comics.core.models import Comic
@@ -12,8 +12,7 @@ from comics.core.models import Comic
 
 @pytest.fixture
 def aggregator(comics: list[Comic]) -> Aggregator:
-    config = AggregatorConfig()
-    aggregator = Aggregator(config)
+    aggregator = Aggregator(comics)
     aggregator.identifier = "slug"
     return aggregator
 
@@ -35,20 +34,6 @@ def crawler_mock(mocker: MockerFixture, comic_mock: Mock) -> Mock:
 @pytest.fixture
 def downloader_mock(mocker: MockerFixture) -> Mock:
     return mocker.Mock(spec=ReleaseDownloader)
-
-
-def test_init_options(aggregator: Aggregator) -> None:
-    result = Aggregator(
-        options={
-            "comics_slugs": None,
-            "from_date": None,
-            "to_date": None,
-        }
-    )
-
-    assert len(aggregator.config.comics) == len(result.config.comics)
-    assert aggregator.config.from_date == result.config.from_date
-    assert aggregator.config.to_date == result.config.to_date
 
 
 def test_crawl_one_comic_one_date(
