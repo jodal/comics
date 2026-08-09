@@ -65,6 +65,38 @@ class MetadataBase:
         self.slug = self.__module__.split(".")[-1]
 
 
+def get_metadata(comic_slug: str) -> MetadataBase | None:
+    """The metadata a comic module describes itself with.
+
+    Returns `None` if the module cannot be imported or does not describe a
+    comic, after logging why. Reading metadata must never fail for the whole
+    run just because a single comic module is broken.
+    """
+    logger.debug("Importing comic module for %s", comic_slug)
+    try:
+        comic_module = get_comic_module(comic_slug)
+    except Exception:
+        logger.exception("%s: Could not import the comic module", comic_slug)
+        return None
+
+    metadata_class = getattr(comic_module, "Metadata", None)
+    if metadata_class is None:
+        logger.error("%s: Comic module has no Metadata class", comic_slug)
+        return None
+
+    try:
+        metadata = metadata_class()
+    except Exception:
+        logger.exception("%s: Could not read the comic's metadata", comic_slug)
+        return None
+
+    if not isinstance(metadata, MetadataBase):
+        logger.error("%s: Metadata is not a MetadataBase subclass", comic_slug)
+        return None
+
+    return metadata
+
+
 class MetadataLoader:
     def __init__(self, options: Options) -> None:
         self.include_inactive = self._get_include_inactive(options)
@@ -100,8 +132,10 @@ class MetadataLoader:
             return comic_slugs
 
     def _try_load_metadata(self, comic_slug: str) -> None:
+        metadata = get_metadata(comic_slug)
+        if metadata is None:
+            return
         try:
-            metadata = self._get_metadata(comic_slug)
             if self._should_load_metadata(metadata):
                 self._load_metadata(metadata)
             else:
@@ -110,16 +144,6 @@ class MetadataLoader:
             logger.error(error)
         except Exception as error:
             logger.exception(error)
-
-    def _get_metadata(self, comic_slug: str) -> MetadataBase:
-        logger.debug("Importing comic module for %s", comic_slug)
-        comic_module = get_comic_module(comic_slug)
-        if not hasattr(comic_module, "Metadata"):
-            msg = f"{comic_module.__name__} does not have a Metadata class"
-            raise MetadataError(msg)
-        metadata = comic_module.Metadata()
-        assert isinstance(metadata, MetadataBase)
-        return metadata
 
     def _should_load_metadata(self, metadata: MetadataBase) -> bool:
         return bool(
