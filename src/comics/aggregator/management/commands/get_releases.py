@@ -49,9 +49,7 @@ class Command(ComicsBaseCommand):
                 options["from_date"], options["to_date"]
             )
         except ComicsError as error:
-            # ComicsError.__str__ wraps the message for logs, but the command
-            # line wants just the message.
-            raise CommandError(str(error.value)) from error
+            raise CommandError(str(error)) from error
 
         try:
             Aggregator(comics, from_date=from_date, to_date=to_date).start()

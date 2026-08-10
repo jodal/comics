@@ -129,7 +129,7 @@ def load_metadata(comic_slugs: list[str]) -> None:
         try:
             _update_comic(metadata)
         except MetadataError as error:
-            logger.error("%s: %s", comic_slug, error.value)
+            logger.error("%s: %s", comic_slug, error)
         except Exception:
             logger.exception("%s: Could not update the comic", comic_slug)
 
