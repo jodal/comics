@@ -136,12 +136,13 @@ def test_subscribe_to_comic_twice_creates_a_duplicate(
     assert Subscription.objects.filter(userprofile__user=user, comic=comic).count() == 2
 
 
-def test_change_subscription_comic(
+def test_cannot_change_subscription_comic(
     db: None,
     client: Client,
     user: User,
     subscriptions: list[Subscription],
 ) -> None:
+    """A subscription is subscribed to and unsubscribed from, never repointed."""
     subscription = Subscription.objects.get(comic__slug="xkcd")
     comic = Comic.objects.get(slug="bunny")
 
@@ -153,38 +154,10 @@ def test_change_subscription_comic(
         headers={"authorization": "Key s3cretk3y"},
     )
 
-    assert response.status_code == 204
-    assert response.content == b""
+    assert response.status_code == 405
 
     subscription.refresh_from_db()
-    assert subscription.comic == comic
-
-
-def test_cannot_change_other_users_subscription(
-    db: None,
-    client: Client,
-    user: User,
-    subscriptions: list[Subscription],
-) -> None:
-    bob = User.objects.create_user("bob", "bob@example.com", "topsecret")
-    bob_sub = Subscription.objects.create(
-        userprofile=bob.comics_profile,
-        comic=Comic.objects.get(slug="bunny"),
-    )
-    comic = Comic.objects.get(slug="spikedmath")
-
-    data = json.dumps({"comic": f"/api/v1/comics/{comic.pk}/"})
-    response = client.put(
-        f"/api/v1/subscriptions/{bob_sub.pk}/",
-        data=data,
-        content_type="application/json",
-        headers={"authorization": "Key s3cretk3y"},
-    )
-
-    assert response.status_code == 404
-
-    bob_sub.refresh_from_db()
-    assert bob_sub.comic.slug == "bunny"
+    assert subscription.comic.slug == "xkcd"
 
 
 def test_unsubscribe_from_comic(
@@ -239,22 +212,28 @@ def test_bulk_update(
     assert subs.count() == 2
 
 
-def test_bulk_update_changes_subscription_comic(
+def test_bulk_update_ignores_resource_uri(
     db: None,
     client: Client,
     user: User,
     subscriptions: list[Subscription],
 ) -> None:
+    """An object is a comic to subscribe to, whether or not it names a subscription."""
     subscription = Subscription.objects.get(comic__slug="xkcd")
-    comic = Comic.objects.get(slug="bunny")
+    bunny = Comic.objects.get(slug="bunny")
+    spikedmath = Comic.objects.get(slug="spikedmath")
 
     data = json.dumps(
         {
             "objects": [
                 {
                     "resource_uri": f"/api/v1/subscriptions/{subscription.pk}/",
-                    "comic": f"/api/v1/comics/{comic.pk}/",
-                }
+                    "comic": f"/api/v1/comics/{bunny.pk}/",
+                },
+                {
+                    "resource_uri": "/api/v1/subscriptions/12345/",
+                    "comic": f"/api/v1/comics/{spikedmath.pk}/",
+                },
             ]
         }
     )
@@ -268,37 +247,12 @@ def test_bulk_update_changes_subscription_comic(
     assert response.status_code == 202
 
     subscription.refresh_from_db()
-    assert subscription.comic == comic
-    assert Subscription.objects.filter(userprofile__user=user).count() == 2
+    assert subscription.comic.slug == "xkcd"
 
-
-def test_bulk_update_with_unknown_subscription_uri(
-    db: None,
-    client: Client,
-    user: User,
-    subscriptions: list[Subscription],
-) -> None:
-    comic = Comic.objects.get(slug="bunny")
-
-    data = json.dumps(
-        {
-            "objects": [
-                {
-                    "resource_uri": "/api/v1/subscriptions/12345/",
-                    "comic": f"/api/v1/comics/{comic.pk}/",
-                }
-            ]
-        }
-    )
-    response = client.patch(
-        "/api/v1/subscriptions/",
-        data=data,
-        content_type="application/json",
-        headers={"authorization": "Key s3cretk3y"},
-    )
-
-    assert response.status_code == 404
-    assert Subscription.objects.filter(userprofile__user=user).count() == 2
+    subs = Subscription.objects.filter(userprofile__user=user)
+    assert subs.filter(comic=bunny).exists()
+    assert subs.filter(comic=spikedmath).exists()
+    assert subs.count() == 4
 
 
 def test_bulk_update_ignores_unknown_deleted_subscription(

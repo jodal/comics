@@ -594,17 +594,10 @@ def subscriptions_bulk_update(request: AuthedRequest) -> HttpResponse:
     data = parse_body(request)
     for obj in data.get("objects", []):
         comic = comic_from_uri(obj.get("comic"))
-        if "resource_uri" in obj:
-            subscription = own_subscription_from_uri(request, obj["resource_uri"])
-            if subscription is None:
-                raise Http404
-            subscription.comic = comic
-            subscription.save()
-        else:
-            Subscription.objects.create(
-                userprofile=request.auth.comics_profile,
-                comic=comic,
-            )
+        Subscription.objects.create(
+            userprofile=request.auth.comics_profile,
+            comic=comic,
+        )
     for uri in data.get("deleted_objects", []):
         subscription = own_subscription_from_uri(request, uri)
         if subscription is not None:
@@ -619,22 +612,6 @@ def subscriptions_detail(request: AuthedRequest, subscription_id: int) -> HttpRe
         Subscription.objects.for_user(request.auth).for_pk(subscription_id).get_or_404()
     )
     return json_response(subscription_dict(subscription))
-
-
-@api.put(
-    "/subscriptions/{int:subscription_id}/",
-    auth=key_auth,
-    openapi_extra={"requestBody": SUBSCRIPTION_BODY},
-)
-def subscriptions_update(request: AuthedRequest, subscription_id: int) -> HttpResponse:
-    """Change one of the authenticated user's subscriptions to another comic."""
-    subscription = (
-        Subscription.objects.for_user(request.auth).for_pk(subscription_id).get_or_404()
-    )
-    data = parse_body(request)
-    subscription.comic = comic_from_uri(data.get("comic"))
-    subscription.save()
-    return HttpResponse(status=204)
 
 
 @api.delete("/subscriptions/{int:subscription_id}/", auth=key_auth)
