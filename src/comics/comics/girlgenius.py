@@ -1,10 +1,10 @@
 import datetime as dt
 
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
-from comics.core.comic_data import ComicDataBase
+from comics.core.metadata import MetadataBase
 
 
-class ComicData(ComicDataBase):
+class Metadata(MetadataBase):
     name = "Girl Genius"
     language = "en"
     url = "https://www.girlgeniusonline.com/"
@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_date = "2002-11-04"
+    history_start_date = "2002-11-04"
     schedule = "Mo,We,Fr"
     time_zone = "America/Los_Angeles"
 

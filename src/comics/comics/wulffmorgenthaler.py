@@ -1,10 +1,10 @@
 import datetime as dt
 
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
-from comics.core.comic_data import ComicDataBase
+from comics.core.metadata import MetadataBase
 
 
-class ComicData(ComicDataBase):
+class Metadata(MetadataBase):
     name = "Wumo"
     language = "en"
     url = "http://wumo.com/wumo/"
@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_date = "2013-01-15"
+    history_start_date = "2013-01-15"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "Europe/Copenhagen"
 

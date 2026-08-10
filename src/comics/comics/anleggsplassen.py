@@ -1,10 +1,10 @@
 import datetime as dt
 
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
-from comics.core.comic_data import ComicDataBase
+from comics.core.metadata import MetadataBase
 
 
-class ComicData(ComicDataBase):
+class Metadata(MetadataBase):
     name = "Anleggsplassen"
     language = "no"
     url = "https://www.at.no/emne/tegneserie/"
@@ -12,7 +12,7 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 100
+    history_length_days = 100
     schedule = "Fr"
     time_zone = "Europe/Oslo"
     headers = {

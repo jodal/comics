@@ -1,10 +1,10 @@
 import datetime as dt
 
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
-from comics.core.comic_data import ComicDataBase
+from comics.core.metadata import MetadataBase
 
 
-class ComicData(ComicDataBase):
+class Metadata(MetadataBase):
     name = "Sticky Comics"
     language = "en"
     url = "https://www.stickycomics.com/"
@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 60
+    history_length_days = 60
     time_zone = "America/Denver"
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:

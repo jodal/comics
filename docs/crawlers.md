@@ -7,16 +7,16 @@ to write new crawlers for Comics.
 
 ## A crawler example
 
-The crawlers are split in two separate pieces. The `ComicData` part
+The crawlers are split in two separate pieces. The `Metadata` part
 contains meta data about the comic used for display at the web site. The
 `Crawler` part contains properties needed for crawling and the crawler
 implementation itself.
 
 ```python
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
-from comics.core.comic_data import ComicDataBase
+from comics.core.metadata import MetadataBase
 
-class ComicData(ComicDataBase):
+class Metadata(MetadataBase):
     name = 'xkcd'
     language = 'en'
     url = 'https://www.xkcd.com/'
@@ -24,7 +24,7 @@ class ComicData(ComicDataBase):
     rights = 'Randall Munroe, CC BY-NC 2.5'
 
 class Crawler(CrawlerBase):
-    history_capable_days = 10
+    history_length_days = 10
     schedule = 'Mo,We,Fr'
     time_zone = 'US/Eastern'
 
@@ -37,9 +37,9 @@ class Crawler(CrawlerBase):
             return CrawlerImage(url, title, text)
 ```
 
-## The `ComicData` class
+## The `Metadata` class
 
-::: comics.core.comic_data.ComicDataBase
+::: comics.core.metadata.MetadataBase
     options:
       heading_level: 3
       members:
@@ -59,8 +59,8 @@ class Crawler(CrawlerBase):
       heading_level: 3
       merge_init_into_class: false
       members:
-        - history_capable_date
-        - history_capable_days
+        - history_start_date
+        - history_length_days
         - schedule
         - time_zone
         - multiple_releases_per_day
@@ -313,7 +313,7 @@ URLs Comics will serve the comic at. For this example, we call the crawler
 file `foo.py`. The file must be placed in the `src/comics/comics/`
 directory, and will be available in Python as `comics.comics.foo`.
 
-### Loading `ComicData` for your new comic
+### Loading `Metadata` for your new comic
 
 For Comics to know about your new crawler, you need to load the comic meta
 data into Comics' database. To do so, we run the `add_comics` command:
@@ -322,7 +322,7 @@ data into Comics' database. To do so, we run the `add_comics` command:
 uv run comics add_comics -c foo
 ```
 
-If you do any changes to the `ComicData` class of any crawler, you must
+If you do any changes to the `Metadata` class of any crawler, you must
 rerun `add_comics` to update the database representation of the comic.
 
 ### Running the crawler

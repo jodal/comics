@@ -1,10 +1,8 @@
-import datetime as dt
-
-from comics.aggregator.crawler import ComicsKingdomCrawlerBase, CrawlerResult
-from comics.core.comic_data import ComicDataBase
+from comics.aggregator.crawler import ComicsKingdomCrawlerBase
+from comics.core.metadata import MetadataBase
 
 
-class ComicData(ComicDataBase):
+class Metadata(MetadataBase):
     name = "Beetle Bailey"
     language = "en"
     url = "https://www.comicskingdom.com/beetle-bailey-1"
@@ -13,9 +11,7 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(ComicsKingdomCrawlerBase):
-    history_capable_date = "1953-10-05"
+    url_name = "beetle-bailey-1"
+    history_start_date = "1953-10-05"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/New_York"
-
-    def crawl(self, pub_date: dt.date) -> CrawlerResult:
-        return self.crawl_helper("beetle-bailey-1", pub_date)

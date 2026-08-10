@@ -1,10 +1,8 @@
-import datetime as dt
-
-from comics.aggregator.crawler import ComicControlCrawlerBase, CrawlerResult
-from comics.core.comic_data import ComicDataBase
+from comics.aggregator.crawler import ComicControlCrawlerBase
+from comics.core.metadata import MetadataBase
 
 
-class ComicData(ComicDataBase):
+class Metadata(MetadataBase):
     name = "Shortpacked"
     language = "en"
     url = "http://www.shortpacked.com/"
@@ -13,9 +11,7 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(ComicControlCrawlerBase):
+    base_url = Metadata.url
     schedule = "Mo,We,Fr"
-    history_capable_days = 32
+    history_length_days = 32
     time_zone = "America/New_York"
-
-    def crawl(self, pub_date: dt.date) -> CrawlerResult:
-        return self.crawl_helper(ComicData.url, pub_date)

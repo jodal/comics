@@ -1,10 +1,8 @@
-import datetime as dt
-
-from comics.aggregator.crawler import CrawlerResult, GoComicsComCrawlerBase
-from comics.core.comic_data import ComicDataBase
+from comics.aggregator.crawler import GoComicsCrawlerBase
+from comics.core.metadata import MetadataBase
 
 
-class ComicData(ComicDataBase):
+class Metadata(MetadataBase):
     name = "Pluggers"
     language = "en"
     url = "http://www.gocomics.com/pluggers"
@@ -12,10 +10,8 @@ class ComicData(ComicDataBase):
     rights = "Gary Brookins"
 
 
-class Crawler(GoComicsComCrawlerBase):
-    history_capable_date = "2001-04-08"
+class Crawler(GoComicsCrawlerBase):
+    url_name = "pluggers"
+    history_start_date = "2001-04-08"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/New_York"
-
-    def crawl(self, pub_date: dt.date) -> CrawlerResult:
-        return self.crawl_helper("pluggers", pub_date)

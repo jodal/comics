@@ -1,7 +1,7 @@
-from comics.core.comic_data import ComicDataBase
+from comics.core.metadata import MetadataBase
 
 
-class ComicData(ComicDataBase):
+class Metadata(MetadataBase):
     name = "Colleges Roomies from Hell"
     language = "en"
     url = "https://www.maritzacampos.com/crfh/"

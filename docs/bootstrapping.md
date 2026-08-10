@@ -54,6 +54,11 @@ Optionally, you can add all available active comics to the database:
 uv run comics add_comics -c all
 ```
 
+Comics that are no longer published are skipped by `-c all`, but naming one
+explicitly with `-c` adds it anyway, so you can serve the archive of a
+discontinued comic. Once a comic is in the database, `-c all` keeps updating
+it even after it is discontinued.
+
 ## Get comic releases
 
 Next, we need to get hold of some comic releases, so we will crawl the web for

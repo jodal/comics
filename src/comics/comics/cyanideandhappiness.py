@@ -1,10 +1,10 @@
 import datetime as dt
 
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
-from comics.core.comic_data import ComicDataBase
+from comics.core.metadata import MetadataBase
 
 
-class ComicData(ComicDataBase):
+class Metadata(MetadataBase):
     name = "Cyanide and Happiness"
     language = "en"
     url = "http://www.explosm.net/comics/"
@@ -13,7 +13,7 @@ class ComicData(ComicDataBase):
 
 
 class Crawler(CrawlerBase):
-    history_capable_days = 7
+    history_length_days = 7
     schedule = "Mo,Tu,We,Fr,Sa,Su"
     time_zone = "America/Los_Angeles"
 

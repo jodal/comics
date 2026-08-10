@@ -1,7 +1,7 @@
-from comics.comics.rocky import ComicData as RockyData
+from comics.comics.rocky import Metadata as RockyMetadata
 
 
-class ComicData(RockyData):
+class Metadata(RockyMetadata):
     name = "Rocky (bt.no)"
     url = "https://www.bt.no/kultur/tegneserier/"
     active = False

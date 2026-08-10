@@ -2,8 +2,11 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-from comics.aggregator.command import Aggregator
+from django.core.management.base import CommandError
+
+from comics.aggregator.command import Aggregator, parse_date_range, select_comics
 from comics.core.command_utils import ComicsBaseCommand
+from comics.core.exceptions import ComicsError
 
 if TYPE_CHECKING:
     from argparse import ArgumentParser
@@ -38,8 +41,17 @@ class Command(ComicsBaseCommand):
 
     def handle(self, *args: Any, **options: Any) -> None:
         super().handle(*args, **options)
-        aggregator = Aggregator(options=options)
+
+        requested: list[str] = options["comic_slugs"] or []
         try:
-            aggregator.start()
+            comics = select_comics(requested)
+            from_date, to_date = parse_date_range(
+                options["from_date"], options["to_date"]
+            )
+        except ComicsError as error:
+            raise CommandError(str(error)) from error
+
+        try:
+            Aggregator(comics, from_date=from_date, to_date=to_date).start()
         except KeyboardInterrupt:
-            aggregator.stop()
+            self.stderr.write("Interrupted")
