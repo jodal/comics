@@ -74,6 +74,12 @@ class Subscription(BaseModel):
 
     class Meta(BaseModel.Meta):
         db_table = "comics_user_profile_comics"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["userprofile", "comic"],
+                name="unique_subscription",
+            )
+        ]
 
     def __str__(self) -> str:
         return f"Subscription for {self.userprofile.user.email} to {self.comic.slug}"
