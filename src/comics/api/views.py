@@ -564,12 +564,13 @@ def subscriptions_list(request: AuthedRequest) -> HttpResponse:
 def subscriptions_create(request: AuthedRequest) -> HttpResponse:
     """Subscribe the authenticated user to a comic.
 
-    The comic is identified by its resource URI. On success, the new
-    subscription's URI is returned in the `Location` header.
+    The comic is identified by its resource URI. On success, the
+    subscription's URI is returned in the `Location` header. Subscribing
+    to an already subscribed comic returns the existing subscription.
     """
     data = parse_body(request)
     comic = comic_from_uri(data.get("comic"))
-    subscription = Subscription.objects.create(
+    subscription, _ = Subscription.objects.get_or_create(
         userprofile=request.auth.comics_profile,
         comic=comic,
     )
@@ -594,7 +595,7 @@ def subscriptions_bulk_update(request: AuthedRequest) -> HttpResponse:
     data = parse_body(request)
     for obj in data.get("objects", []):
         comic = comic_from_uri(obj.get("comic"))
-        Subscription.objects.create(
+        Subscription.objects.get_or_create(
             userprofile=request.auth.comics_profile,
             comic=comic,
         )

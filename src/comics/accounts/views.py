@@ -60,10 +60,9 @@ def mycomics_toggle_comic(request: AuthenticatedHttpRequest) -> HttpResponse:
     comic = Comic.objects.for_slug(comic_slug).get_or_404()
 
     if "add_comic" in request.POST:
-        subscription = Subscription(
+        Subscription.objects.get_or_create(
             userprofile=request.user.comics_profile, comic=comic
         )
-        subscription.save()
         if not _is_js_request(request):
             messages.info(request, f'Added "{comic.name}" to my comics')
     elif "remove_comic" in request.POST:
@@ -94,10 +93,9 @@ def mycomics_edit_comics(request: AuthenticatedHttpRequest) -> HttpResponse:
 
     for comic in Comic.objects.all():
         if comic.slug in request.POST and comic not in my_comics:
-            subscription = Subscription(
+            Subscription.objects.get_or_create(
                 userprofile=request.user.comics_profile, comic=comic
             )
-            subscription.save()
             if not _is_js_request(request):
                 messages.info(request, f'Added "{comic.name}" to my comics')
 

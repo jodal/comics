@@ -115,7 +115,7 @@ def test_subscribe_to_comic(
     assert response.content == b""
 
 
-def test_subscribe_to_comic_twice_creates_a_duplicate(
+def test_subscribe_to_comic_twice_is_idempotent(
     db: None,
     client: Client,
     user: User,
@@ -124,6 +124,7 @@ def test_subscribe_to_comic_twice_creates_a_duplicate(
     comic = Comic.objects.get(slug="bunny")
 
     data = json.dumps({"comic": f"/api/v1/comics/{comic.pk}/"})
+    locations = []
     for _ in range(2):
         response = client.post(
             "/api/v1/subscriptions/",
@@ -132,8 +133,10 @@ def test_subscribe_to_comic_twice_creates_a_duplicate(
             headers={"authorization": "Key s3cretk3y"},
         )
         assert response.status_code == 201
+        locations.append(response["Location"])
 
-    assert Subscription.objects.filter(userprofile__user=user, comic=comic).count() == 2
+    assert Subscription.objects.filter(userprofile__user=user, comic=comic).count() == 1
+    assert locations[0] == locations[1]
 
 
 def test_cannot_change_subscription_comic(
