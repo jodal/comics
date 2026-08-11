@@ -48,7 +48,7 @@ class ComicMixin(View):
 
     @cached_property
     def comic(self) -> Comic:
-        return Comic.objects.for_slug(self.kwargs["comic_slug"]).get_or_404()
+        return Comic.objects.for_slugs(self.kwargs["comic_slug"]).get_or_404()
 
     def get_user(self) -> ComicsUser:
         # All views using this mixin require a logged-in user.

@@ -116,7 +116,7 @@ class OneComicFeed(ReleaseFeed[ComicForProfile]):
         **kwargs: Any,
     ) -> ComicForProfile:
         return ComicForProfile(
-            comic=Comic.objects.for_slug(kwargs["comic_slug"]).get_or_404(),
+            comic=Comic.objects.for_slugs(kwargs["comic_slug"]).get_or_404(),
             profile=_get_profile(request),
         )
 

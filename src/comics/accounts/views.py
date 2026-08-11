@@ -57,7 +57,7 @@ def mycomics_toggle_comic(request: AuthenticatedHttpRequest) -> HttpResponse:
     comic_slug = request.POST.get("comic")
     if not comic_slug:
         return HttpResponseBadRequest("Missing 'comic' parameter")
-    comic = Comic.objects.for_slug(comic_slug).get_or_404()
+    comic = Comic.objects.for_slugs(comic_slug).get_or_404()
 
     if "add_comic" in request.POST:
         SubscriptionService.subscribe(user=request.user, comic=comic)
@@ -79,19 +79,14 @@ def mycomics_toggle_comic(request: AuthenticatedHttpRequest) -> HttpResponse:
 def mycomics_edit_comics(request: AuthenticatedHttpRequest) -> HttpResponse:
     """Change multiple comics in My comics"""
 
-    my_comics = request.user.comics_profile.comics.all()
+    comics = Comic.objects.for_slugs(*request.POST)
+    added, removed = SubscriptionService.set_comics(user=request.user, comics=comics)
 
-    for comic in my_comics:
-        if comic.slug not in request.POST:
-            SubscriptionService.unsubscribe(user=request.user, comic=comic)
-            if not _is_js_request(request):
-                messages.info(request, f'Removed "{comic.name}" from my comics')
-
-    for comic in Comic.objects.all():
-        if comic.slug in request.POST and comic not in my_comics:
-            SubscriptionService.subscribe(user=request.user, comic=comic)
-            if not _is_js_request(request):
-                messages.info(request, f'Added "{comic.name}" to my comics')
+    if not _is_js_request(request):
+        for comic in removed:
+            messages.info(request, f'Removed "{comic.name}" from my comics')
+        for comic in added:
+            messages.info(request, f'Added "{comic.name}" to my comics')
 
     if _is_js_request(request):
         return HttpResponse(status=204)

@@ -47,8 +47,8 @@ class ComicQuerySet(BaseQuerySet["Comic"]):
     def inactive(self) -> Self:
         return self.filter(active=False)
 
-    def for_slug(self, slug: str, /) -> Self:
-        return self.filter(slug=slug)
+    def for_slugs(self, *slugs: str) -> Self:
+        return self.filter(slug__in=slugs)
 
     def subscribed_by(self, user: User, /) -> Self:
         return self.filter(userprofile__user=user)

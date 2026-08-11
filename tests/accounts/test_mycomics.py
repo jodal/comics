@@ -1,5 +1,6 @@
 import pytest
 from django.contrib.auth.models import User
+from django.contrib.messages import get_messages
 from django.test.client import Client
 from django.urls import reverse
 
@@ -56,12 +57,35 @@ def test_editing_comics_replaces_the_subscriptions(
     comic: Comic,
 ) -> None:
     other = Comic.objects.create(name="Bunny", slug="bunny", language="en")
+    kept = Comic.objects.create(name="Nemi", slug="nemi", language="no")
+    for subscribed_to in (comic, kept):
+        Subscription.objects.create(
+            userprofile=user.comics_profile, comic=subscribed_to
+        )
+    client.force_login(user)
+
+    response = client.post(reverse("edit_comics"), {other.slug: "1", kept.slug: "1"})
+
+    assert response.status_code == 302
+    assert set(Comic.objects.subscribed_by(user)) == {other, kept}
+
+    reported = [str(message) for message in get_messages(response.wsgi_request)]
+    assert reported == [
+        'Removed "xkcd" from my comics',
+        'Added "Bunny" to my comics',
+    ]
+
+
+def test_editing_comics_with_nothing_selected_unsubscribes_from_everything(
+    db: None,
+    client: Client,
+    user: User,
+    comic: Comic,
+) -> None:
     Subscription.objects.create(userprofile=user.comics_profile, comic=comic)
     client.force_login(user)
 
-    response = client.post(reverse("edit_comics"), {other.slug: "1"})
+    response = client.post(reverse("edit_comics"), {})
 
     assert response.status_code == 302
-
-    subscribed = Comic.objects.subscribed_by(user)
-    assert list(subscribed) == [other]
+    assert not Comic.objects.subscribed_by(user).exists()

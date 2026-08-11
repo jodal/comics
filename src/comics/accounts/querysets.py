@@ -19,5 +19,5 @@ class SubscriptionQuerySet(BaseQuerySet["Subscription"]):
     def for_user(self, user: User, /) -> Self:
         return self.filter(userprofile__user=user)
 
-    def for_comic(self, comic: Comic, /) -> Self:
-        return self.filter(comic=comic)
+    def for_comics(self, *comics: Comic) -> Self:
+        return self.filter(comic__in=comics)

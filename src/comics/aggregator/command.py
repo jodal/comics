@@ -57,7 +57,7 @@ def select_comics(requested: list[str]) -> list[Comic]:
 
 
 def _get_comic_by_slug(comic_slug: str) -> Comic:
-    comic = Comic.objects.for_slug(comic_slug).get_or_none()
+    comic = Comic.objects.for_slugs(comic_slug).get_or_none()
     if comic is None:
         error_msg = f"Comic {comic_slug} not found"
         logger.error(error_msg)
