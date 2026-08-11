@@ -136,7 +136,7 @@ class ImageDownloader:
         has_rerun_releases: bool,
         checksum: str,
     ) -> Image | None:
-        image = Image.objects.for_comic(comic).for_checksum(checksum).get_or_none()
+        image = Image.objects.for_comics(comic).for_checksum(checksum).get_or_none()
         if image is not None and not has_rerun_releases:
             raise ImageAlreadyExists(self.identifier)
         return image

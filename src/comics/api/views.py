@@ -19,6 +19,7 @@ from ninja import NinjaAPI
 from ninja.errors import AuthenticationError, HttpError
 
 from comics.accounts.models import Subscription
+from comics.accounts.services import SubscriptionService
 from comics.api.auth import (
     BASIC_AUTH_REALM,
     BasicAuth,
@@ -564,15 +565,13 @@ def subscriptions_list(request: AuthedRequest) -> HttpResponse:
 def subscriptions_create(request: AuthedRequest) -> HttpResponse:
     """Subscribe the authenticated user to a comic.
 
-    The comic is identified by its resource URI. On success, the new
-    subscription's URI is returned in the `Location` header.
+    The comic is identified by its resource URI. On success, the
+    subscription's URI is returned in the `Location` header. Subscribing
+    to an already subscribed comic returns the existing subscription.
     """
     data = parse_body(request)
     comic = comic_from_uri(data.get("comic"))
-    subscription = Subscription.objects.create(
-        userprofile=request.auth.comics_profile,
-        comic=comic,
-    )
+    subscription = SubscriptionService.subscribe(user=request.auth, comic=comic)
     response = HttpResponse(status=201)
     response["Location"] = subscription_uri(subscription.pk)
     return response
@@ -594,21 +593,11 @@ def subscriptions_bulk_update(request: AuthedRequest) -> HttpResponse:
     data = parse_body(request)
     for obj in data.get("objects", []):
         comic = comic_from_uri(obj.get("comic"))
-        if "resource_uri" in obj:
-            subscription = own_subscription_from_uri(request, obj["resource_uri"])
-            if subscription is None:
-                raise Http404
-            subscription.comic = comic
-            subscription.save()
-        else:
-            Subscription.objects.create(
-                userprofile=request.auth.comics_profile,
-                comic=comic,
-            )
+        SubscriptionService.subscribe(user=request.auth, comic=comic)
     for uri in data.get("deleted_objects", []):
         subscription = own_subscription_from_uri(request, uri)
         if subscription is not None:
-            subscription.delete()
+            SubscriptionService.unsubscribe(user=request.auth, comic=subscription.comic)
     return HttpResponse(status=202)
 
 
@@ -621,27 +610,11 @@ def subscriptions_detail(request: AuthedRequest, subscription_id: int) -> HttpRe
     return json_response(subscription_dict(subscription))
 
 
-@api.put(
-    "/subscriptions/{int:subscription_id}/",
-    auth=key_auth,
-    openapi_extra={"requestBody": SUBSCRIPTION_BODY},
-)
-def subscriptions_update(request: AuthedRequest, subscription_id: int) -> HttpResponse:
-    """Change one of the authenticated user's subscriptions to another comic."""
-    subscription = (
-        Subscription.objects.for_user(request.auth).for_pk(subscription_id).get_or_404()
-    )
-    data = parse_body(request)
-    subscription.comic = comic_from_uri(data.get("comic"))
-    subscription.save()
-    return HttpResponse(status=204)
-
-
 @api.delete("/subscriptions/{int:subscription_id}/", auth=key_auth)
 def subscriptions_delete(request: AuthedRequest, subscription_id: int) -> HttpResponse:
     """Unsubscribe the authenticated user from a comic."""
     subscription = (
         Subscription.objects.for_user(request.auth).for_pk(subscription_id).get_or_404()
     )
-    subscription.delete()
+    SubscriptionService.unsubscribe(user=request.auth, comic=subscription.comic)
     return HttpResponse(status=204)

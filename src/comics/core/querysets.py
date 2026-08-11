@@ -47,8 +47,8 @@ class ComicQuerySet(BaseQuerySet["Comic"]):
     def inactive(self) -> Self:
         return self.filter(active=False)
 
-    def for_slug(self, slug: str, /) -> Self:
-        return self.filter(slug=slug)
+    def for_slugs(self, *slugs: str) -> Self:
+        return self.filter(slug__in=slugs)
 
     def subscribed_by(self, user: User, /) -> Self:
         return self.filter(userprofile__user=user)
@@ -103,8 +103,8 @@ class ReleaseQuerySet(BaseQuerySet["Release"]):
 
 
 class ImageQuerySet(BaseQuerySet["Image"]):
-    def for_comic(self, comic: Comic, /) -> Self:
-        return self.filter(comic=comic)
+    def for_comics(self, *comics: Comic) -> Self:
+        return self.filter(comic__in=comics)
 
     def for_checksum(self, checksum: str, /) -> Self:
         return self.filter(checksum=checksum)
