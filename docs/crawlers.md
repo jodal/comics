@@ -16,20 +16,22 @@ implementation itself.
 from comics.aggregator.crawler import CrawlerBase, CrawlerImage
 from comics.core.metadata import MetadataBase
 
+
 class Metadata(MetadataBase):
-    name = 'xkcd'
-    language = 'en'
-    url = 'https://www.xkcd.com/'
-    start_date = '2005-05-29'
-    rights = 'Randall Munroe, CC BY-NC 2.5'
+    name = "xkcd"
+    language = "en"
+    url = "https://www.xkcd.com/"
+    start_date = "2005-05-29"
+    rights = "Randall Munroe, CC BY-NC 2.5"
+
 
 class Crawler(CrawlerBase):
     history_length_days = 10
-    schedule = 'Mo,We,Fr'
-    time_zone = 'US/Eastern'
+    schedule = "Mo,We,Fr"
+    time_zone = "US/Eastern"
 
     def crawl(self, pub_date):
-        feed = self.parse_feed('https://www.xkcd.com/rss.xml')
+        feed = self.parse_feed("https://www.xkcd.com/rss.xml")
         for entry in feed.for_date(pub_date):
             url = entry.summary.src('img[src*="/comics/"]')
             title = entry.title
@@ -79,7 +81,7 @@ an example, let's look at _XKCD_'s `Crawler.crawl()` method:
 
 ```python
 def crawl(self, pub_date):
-    feed = self.parse_feed('http://www.xkcd.com/rss.xml')
+    feed = self.parse_feed("http://www.xkcd.com/rss.xml")
     for entry in feed.for_date(pub_date):
         url = entry.summary.src('img[src*="/comics/"]')
         title = entry.title
@@ -103,9 +105,7 @@ and return it wrapped in a `CrawlerImage`:
 
 ```python
 def crawl(self, pub_date):
-    url = 'http://www.example.com/comics/%s.png' % (
-        pub_date.strftime('%Y-%m-%d'),
-    )
+    url = "http://www.example.com/comics/%s.png" % (pub_date.strftime("%Y-%m-%d"),)
     return CrawlerImage(url)
 ```
 
@@ -132,7 +132,7 @@ multiple images. It adds a `title` to the first list element, and different
 
 ```python
 def crawl(self, pub_date):
-    feed = self.parse_feed('http://feeds.feedburner.com/Pidjin')
+    feed = self.parse_feed("http://feeds.feedburner.com/Pidjin")
     for entry in feed.for_date(pub_date):
         result = []
         for i in range(1, 10):
@@ -166,8 +166,9 @@ The web parser is accessed through the `Crawler.parse_page` method:
 
 ```python
 def crawl(self, pub_date):
-    page_url = 'http://ars.userfriendly.org/cartoons/?id=%s' % (
-        pub_date.strftime('%Y%m%d'),)
+    page_url = "http://ars.userfriendly.org/cartoons/?id=%s" % (
+        pub_date.strftime("%Y%m%d"),
+    )
     page = self.parse_page(page_url)
     url = page.src('img[alt^="Strip for"]')
     return CrawlerImage(url)
@@ -268,7 +269,7 @@ page URL:
 ```python
 def crawl(pub_date):
     ...
-    feed = self.parse_feed('http://www.xkcd.com/rss.xml')
+    feed = self.parse_feed("http://www.xkcd.com/rss.xml")
     ...
 ```
 

@@ -133,6 +133,7 @@ ignore = [
     "ANN",     # flake8-annotations
     "ARG001",  # unused-function-argument  # TODO
     "ARG002",  # unused-method-argument  # TODO
+    "CPY",     # flake8-copyright
     "D",       # flake8-pydocstyle
     "EM101",   # raw-string-in-exception
     "FBT",     # flake8-boolean-trap  # TODO

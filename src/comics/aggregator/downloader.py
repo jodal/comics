@@ -163,7 +163,7 @@ class ImageDownloader:
         return f"{checksum}{extension}"
 
     @transaction.atomic
-    def _create_new_image(
+    def _create_new_image(  # noqa: PLR0917
         self,
         comic: Comic,
         title: str | None,
