@@ -15,7 +15,7 @@ from django.urls import reverse
 from django.views.decorators.http import require_POST
 from invitations.utils import get_invitation_model
 
-from comics.accounts.services import SubscriptionService
+from comics.accounts.services import SubscriptionService, UserProfileService
 from comics.core.models import Comic
 
 if TYPE_CHECKING:
@@ -36,9 +36,7 @@ def secret_key(request: AuthenticatedHttpRequest) -> HttpResponse:
     """Show and generate a new secret key for the current user"""
 
     if request.method == "POST":
-        comics_profile = request.user.comics_profile
-        comics_profile.generate_new_secret_key()
-        comics_profile.save()
+        UserProfileService.regenerate_secret_key(user=request.user)
         messages.info(request, "A new secret key was generated.")
         return HttpResponseRedirect(reverse("secret_key"))
 

@@ -1,28 +1,17 @@
 from __future__ import annotations
 
 import uuid
-from typing import TYPE_CHECKING, Any, ClassVar
+from typing import TYPE_CHECKING, ClassVar
 
-from django.contrib.auth.models import User
 from django.db import models
-from django.dispatch import receiver
 
 from comics.accounts.querysets import SubscriptionQuerySet, UserProfileQuerySet
 from comics.core.models import BaseModel
 
 if TYPE_CHECKING:
+    from django.contrib.auth.models import User  # noqa: F401
+
     from comics.core.models import Comic  # noqa: F401
-
-
-@receiver(models.signals.post_save, sender=User)
-def create_user_profile(
-    sender: type[User],
-    instance: User,
-    created: bool,
-    **kwargs: Any,
-) -> None:
-    if created:
-        UserProfile.objects.create(user=instance)
 
 
 def make_secret_key() -> str:
@@ -54,9 +43,6 @@ class UserProfile(BaseModel):
 
     def __str__(self) -> str:
         return f"Comics profile for {self.user.email}"
-
-    def generate_new_secret_key(self) -> None:
-        self.secret_key = make_secret_key()
 
 
 class Subscription(BaseModel):
