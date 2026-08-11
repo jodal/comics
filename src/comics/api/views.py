@@ -19,6 +19,7 @@ from ninja import NinjaAPI
 from ninja.errors import AuthenticationError, HttpError
 
 from comics.accounts.models import Subscription
+from comics.accounts.services import SubscriptionService
 from comics.api.auth import (
     BASIC_AUTH_REALM,
     BasicAuth,
@@ -570,10 +571,7 @@ def subscriptions_create(request: AuthedRequest) -> HttpResponse:
     """
     data = parse_body(request)
     comic = comic_from_uri(data.get("comic"))
-    subscription, _ = Subscription.objects.get_or_create(
-        userprofile=request.auth.comics_profile,
-        comic=comic,
-    )
+    subscription = SubscriptionService.subscribe(user=request.auth, comic=comic)
     response = HttpResponse(status=201)
     response["Location"] = subscription_uri(subscription.pk)
     return response
@@ -595,14 +593,11 @@ def subscriptions_bulk_update(request: AuthedRequest) -> HttpResponse:
     data = parse_body(request)
     for obj in data.get("objects", []):
         comic = comic_from_uri(obj.get("comic"))
-        Subscription.objects.get_or_create(
-            userprofile=request.auth.comics_profile,
-            comic=comic,
-        )
+        SubscriptionService.subscribe(user=request.auth, comic=comic)
     for uri in data.get("deleted_objects", []):
         subscription = own_subscription_from_uri(request, uri)
         if subscription is not None:
-            subscription.delete()
+            SubscriptionService.unsubscribe(user=request.auth, comic=subscription.comic)
     return HttpResponse(status=202)
 
 
@@ -621,5 +616,5 @@ def subscriptions_delete(request: AuthedRequest, subscription_id: int) -> HttpRe
     subscription = (
         Subscription.objects.for_user(request.auth).for_pk(subscription_id).get_or_404()
     )
-    subscription.delete()
+    SubscriptionService.unsubscribe(user=request.auth, comic=subscription.comic)
     return HttpResponse(status=204)

@@ -15,7 +15,7 @@ from django.urls import reverse
 from django.views.decorators.http import require_POST
 from invitations.utils import get_invitation_model
 
-from comics.accounts.models import Subscription
+from comics.accounts.services import SubscriptionService
 from comics.core.models import Comic
 
 if TYPE_CHECKING:
@@ -60,14 +60,11 @@ def mycomics_toggle_comic(request: AuthenticatedHttpRequest) -> HttpResponse:
     comic = Comic.objects.for_slug(comic_slug).get_or_404()
 
     if "add_comic" in request.POST:
-        Subscription.objects.get_or_create(
-            userprofile=request.user.comics_profile, comic=comic
-        )
+        SubscriptionService.subscribe(user=request.user, comic=comic)
         if not _is_js_request(request):
             messages.info(request, f'Added "{comic.name}" to my comics')
     elif "remove_comic" in request.POST:
-        subscriptions = Subscription.objects.for_user(request.user).for_comic(comic)
-        subscriptions.delete()
+        SubscriptionService.unsubscribe(user=request.user, comic=comic)
         if not _is_js_request(request):
             messages.info(request, f'Removed "{comic.name}" from my comics')
 
@@ -86,16 +83,13 @@ def mycomics_edit_comics(request: AuthenticatedHttpRequest) -> HttpResponse:
 
     for comic in my_comics:
         if comic.slug not in request.POST:
-            subscriptions = Subscription.objects.for_user(request.user).for_comic(comic)
-            subscriptions.delete()
+            SubscriptionService.unsubscribe(user=request.user, comic=comic)
             if not _is_js_request(request):
                 messages.info(request, f'Removed "{comic.name}" from my comics')
 
     for comic in Comic.objects.all():
         if comic.slug in request.POST and comic not in my_comics:
-            Subscription.objects.get_or_create(
-                userprofile=request.user.comics_profile, comic=comic
-            )
+            SubscriptionService.subscribe(user=request.user, comic=comic)
             if not _is_js_request(request):
                 messages.info(request, f'Added "{comic.name}" to my comics')
 
