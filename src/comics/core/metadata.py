@@ -1,10 +1,10 @@
-import datetime as dt
 import logging
 from dataclasses import dataclass, field
 
 from comics.comics import get_comic_module, get_comic_module_names
 from comics.core.exceptions import MetadataError
 from comics.core.models import Comic
+from comics.core.services import ComicService
 
 logger = logging.getLogger("comics.core.metadata")
 
@@ -127,39 +127,8 @@ def load_metadata(comic_slugs: list[str]) -> None:
             return
 
         try:
-            _update_comic(metadata)
+            ComicService.create_or_update(metadata=metadata)
         except MetadataError as error:
             logger.error("%s: %s", comic_slug, error)
         except Exception:
             logger.exception("%s: Could not update the comic", comic_slug)
-
-
-def _parse_optional_date(metadata: MetadataBase, field_name: str) -> dt.date | None:
-    value: str | None = getattr(metadata, field_name)
-    if value is None:
-        return None
-    try:
-        return dt.date.fromisoformat(value)
-    except ValueError as error:
-        msg = f"Invalid {field_name}: {value!r}. Expected YYYY-MM-DD."
-        raise MetadataError(msg) from error
-
-
-def _update_comic(metadata: MetadataBase) -> None:
-    """Update the comic in the database to match its metadata.
-
-    Raises `MetadataError` if the metadata does not describe a valid comic.
-    """
-    logger.debug("Updating database with: %s", metadata)
-    Comic.objects.update_or_create(
-        language=metadata.language,
-        slug=metadata.slug,
-        defaults={
-            "name": metadata.name,
-            "url": metadata.url,
-            "active": metadata.active,
-            "start_date": _parse_optional_date(metadata, "start_date"),
-            "end_date": _parse_optional_date(metadata, "end_date"),
-            "rights": metadata.rights,
-        },
-    )
