@@ -70,6 +70,15 @@ def test_updates_an_existing_comic(db: None) -> None:
     assert comic.end_date == dt.date(2026, 1, 1)
 
 
+def test_updates_the_language_of_an_existing_comic(db: None) -> None:
+    ComicService.create_or_update(metadata=make_metadata())
+
+    comic = ComicService.create_or_update(metadata=make_metadata(language="no"))
+
+    assert Comic.objects.for_slugs(SLUG).count() == 1
+    assert comic.language == "no"
+
+
 @pytest.mark.parametrize(
     ("metadata", "field_name"),
     [

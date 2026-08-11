@@ -34,9 +34,9 @@ class ComicService:
         """
         logger.debug("Updating database with: %s", metadata)
         comic, _ = Comic.objects.update_or_create(
-            language=metadata.language,
             slug=metadata.slug,
             defaults={
+                "language": metadata.language,
                 "name": metadata.name,
                 "url": metadata.url,
                 "active": metadata.active,
