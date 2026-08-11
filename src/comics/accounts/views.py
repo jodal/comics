@@ -13,9 +13,12 @@ from django.http import (
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.http import require_POST
-from invitations.utils import get_invitation_model
 
-from comics.accounts.services import SubscriptionService, UserProfileService
+from comics.accounts.services import (
+    InvitationService,
+    SubscriptionService,
+    UserProfileService,
+)
 from comics.core.models import Comic
 
 if TYPE_CHECKING:
@@ -97,12 +100,12 @@ def mycomics_edit_comics(request: AuthenticatedHttpRequest) -> HttpResponse:
 @login_required
 def invite(request: AuthenticatedHttpRequest) -> HttpResponse:
     if request.method == "POST":
-        invitation_model = get_invitation_model()
         email = request.POST.get("email")
         if not email:
             return HttpResponseBadRequest("Missing 'email' parameter")
-        invitation = invitation_model.create(email, inviter=request.user)
-        invitation.send_invitation(request)
+        invitation = InvitationService.invite(
+            inviter=request.user, email=email, request=request
+        )
         messages.success(
             request, f'An invitation has been sent to "{invitation.email}".'
         )
