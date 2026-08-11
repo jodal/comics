@@ -55,7 +55,7 @@ docs = [
     "zensical>=0.0.51",
 ]
 lint = ["ruff>=0.16.0"]
-rumdl = ["rumdl>=0.1.74"]
+rumdl = ["rumdl>=0.2.50"]
 tests = [
     "freezegun>=1.5.5",
     "pytest>=9.1.1",
