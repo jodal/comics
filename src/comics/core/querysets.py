@@ -103,8 +103,8 @@ class ReleaseQuerySet(BaseQuerySet["Release"]):
 
 
 class ImageQuerySet(BaseQuerySet["Image"]):
-    def for_comic(self, comic: Comic, /) -> Self:
-        return self.filter(comic=comic)
+    def for_comics(self, *comics: Comic) -> Self:
+        return self.filter(comic__in=comics)
 
     def for_checksum(self, checksum: str, /) -> Self:
         return self.filter(checksum=checksum)
