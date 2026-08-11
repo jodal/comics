@@ -1,16 +1,31 @@
 from __future__ import annotations
 
 import datetime as dt
+import hashlib
+import tempfile
+from io import BytesIO
+from typing import TYPE_CHECKING
 
 import pytest
+from django.core.files import File
+from django.core.files.base import ContentFile
+from PIL import Image as PILImage
 
 from comics.core.exceptions import MetadataError
+from comics.core.files import sha256sum
 from comics.core.metadata import MetadataBase
-from comics.core.models import Comic
-from comics.core.services import ComicService
+from comics.core.models import Comic, Image
+from comics.core.services import ComicService, ImageService, ReleaseService
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    from pytest_django.fixtures import SettingsWrapper
 
 # A slug of its own, as other tests may have loaded comics into the database.
 SLUG = "examplecomic"
+
+PUB_DATE = dt.date(2026, 1, 1)
 
 
 def make_metadata(
@@ -40,6 +55,40 @@ def make_metadata(
     metadata.end_date = end_date
     metadata.rights = rights
     return metadata
+
+
+@pytest.fixture
+def media_root(settings: SettingsWrapper, tmp_path: Path) -> Path:
+    """Keep the saved image files out of the real media directory."""
+    settings.MEDIA_ROOT = tmp_path
+    return tmp_path
+
+
+@pytest.fixture
+def comic(db: None) -> Comic:
+    return Comic.objects.create(name="Example Comic", slug=SLUG, language="en")
+
+
+def png_bytes(*, width: int = 2, height: int = 3) -> bytes:
+    buffer = BytesIO()
+    PILImage.new("RGB", (width, height), "red").save(buffer, format="PNG")
+    return buffer.getvalue()
+
+
+def make_png(*, width: int = 2, height: int = 3) -> ContentFile:
+    # The file must be named, as Django reads the image dimensions off it.
+    return ContentFile(png_bytes(width=width, height=height), name="image.png")
+
+
+def make_image(comic: Comic, *, width: int = 2, height: int = 3) -> Image:
+    return ImageService.create(
+        comic=comic,
+        file=make_png(width=width, height=height),
+        file_extension=".png",
+    )
+
+
+# --- ComicService
 
 
 def test_creates_a_comic(db: None) -> None:
@@ -97,3 +146,93 @@ def test_rejects_a_date_that_is_not_iso_8601(
         ComicService.create_or_update(metadata=metadata)
 
     assert not Comic.objects.for_slugs(SLUG).exists()
+
+
+# --- ImageService
+
+
+def test_creates_an_image(db: None, comic: Comic, media_root: Path) -> None:
+    contents = png_bytes(width=4, height=5)
+    checksum = hashlib.sha256(contents).hexdigest()
+
+    image = ImageService.create(
+        comic=comic,
+        file=ContentFile(contents, name="image.png"),
+        file_extension=".png",
+        title="A title",
+        text="Some text",
+    )
+
+    assert image.comic == comic
+    assert image.title == "A title"
+    assert image.text == "Some text"
+    assert image.width == 4
+    assert image.height == 5
+
+    # The checksum is of the file's contents, and names the stored file.
+    assert image.checksum == checksum
+    assert image.file.name == f"{SLUG}/{checksum[0]}/{checksum}.png"
+    assert (media_root / SLUG / checksum[0] / f"{checksum}.png").exists()
+    assert (media_root / image.file.name).read_bytes() == contents
+
+
+@pytest.mark.usefixtures("media_root")
+def test_creates_an_image_without_a_title_and_text(db: None, comic: Comic) -> None:
+    image = make_image(comic)
+
+    assert image.title == ""
+    assert image.text == ""
+
+
+@pytest.mark.usefixtures("media_root")
+def test_creates_an_image_from_a_file_that_has_already_been_read(
+    db: None,
+    comic: Comic,
+) -> None:
+    """The downloader hands over a temporary file it has read twice already."""
+    contents = png_bytes(width=7, height=11)
+
+    with tempfile.NamedTemporaryFile(suffix="comics") as temp_file:
+        temp_file.write(contents)
+        temp_file.seek(0)
+        file = File(temp_file)
+
+        sha256sum(file)  # As the downloader checksums it,
+        PILImage.open(temp_file).load()  # and as it validates it.
+
+        image = ImageService.create(comic=comic, file=file, file_extension=".png")
+
+    assert image.checksum == hashlib.sha256(contents).hexdigest()
+    assert image.width == 7
+    assert image.height == 11
+
+
+@pytest.mark.usefixtures("media_root")
+def test_refuses_to_store_an_image_without_a_file_extension(
+    db: None,
+    comic: Comic,
+) -> None:
+    with pytest.raises(ValueError, match="extension"):
+        ImageService.create(comic=comic, file=make_png(), file_extension="")
+
+    assert not Image.objects.for_comics(comic).exists()
+
+
+# --- ReleaseService
+
+
+@pytest.mark.usefixtures("media_root")
+def test_creates_a_release_with_its_images(db: None, comic: Comic) -> None:
+    images = [make_image(comic, width=2), make_image(comic, width=4)]
+
+    release = ReleaseService.create(comic=comic, pub_date=PUB_DATE, images=images)
+
+    assert release.comic == comic
+    assert release.pub_date == PUB_DATE
+    assert release.ordered_images == images
+
+
+def test_creates_a_release_without_images(db: None, comic: Comic) -> None:
+    release = ReleaseService.create(comic=comic, pub_date=PUB_DATE, images=[])
+
+    assert release.ordered_images == []

@@ -1,13 +1,11 @@
 from __future__ import annotations
 
-import hashlib
 import tempfile
 from typing import IO, TYPE_CHECKING
 
 import httpx
 from django.conf import settings
 from django.core.files import File
-from django.db import transaction
 from PIL import Image as PILImage
 
 from comics.aggregator.exceptions import (
@@ -17,11 +15,11 @@ from comics.aggregator.exceptions import (
     ImageIsCorrupt,
     ImageTypeError,
 )
+from comics.core.files import sha256sum
 from comics.core.models import Comic, Image, Release
+from comics.core.services import ImageService, ReleaseService
 
 if TYPE_CHECKING:
-    import datetime as dt
-
     from PIL.ImageFile import ImageFile as PILImageFile
 
     from comics.aggregator.crawler import CrawlerImage, CrawlerRelease
@@ -37,26 +35,15 @@ IMAGE_FORMATS = {
 class ReleaseDownloader:
     def download(self, crawler_release: CrawlerRelease) -> Release:
         images = self._download_images(crawler_release)
-        return self._create_new_release(
-            crawler_release.comic, crawler_release.pub_date, images
+        return ReleaseService.create(
+            comic=crawler_release.comic,
+            pub_date=crawler_release.pub_date,
+            images=images,
         )
 
     def _download_images(self, crawler_release: CrawlerRelease) -> list[Image]:
         image_downloader = ImageDownloader(crawler_release)
         return list(map(image_downloader.download, crawler_release.images))
-
-    @transaction.atomic
-    def _create_new_release(
-        self,
-        comic: Comic,
-        pub_date: dt.date,
-        images: list[Image],
-    ) -> Release:
-        release = Release(comic=comic, pub_date=pub_date)
-        release.save()
-        for image in images:
-            release.images.add(image)
-        return release
 
 
 class ImageDownloader:
@@ -72,7 +59,8 @@ class ImageDownloader:
         with self._download_image(
             crawler_image.url, crawler_image.request_headers
         ) as image_file:
-            checksum = self._get_sha256sum(image_file)
+            file = File(image_file)
+            checksum = sha256sum(file)
             self.identifier = f"{self.identifier}/{checksum[:6]}"
 
             self._check_if_blacklisted(checksum)
@@ -87,16 +75,12 @@ class ImageDownloader:
 
             image = self._validate_image(image_file)
 
-            file_extension = self._get_file_extension(image)
-            file_name = self._get_file_name(checksum, file_extension)
-
-            return self._create_new_image(
+            return ImageService.create(
                 comic=self.crawler_release.comic,
+                file=file,
+                file_extension=self._get_file_extension(image),
                 title=crawler_image.title,
                 text=crawler_image.text,
-                image_file=image_file,
-                file_name=file_name,
-                checksum=checksum,
             )
 
     def _download_image(
@@ -114,17 +98,6 @@ class ImageDownloader:
             raise DownloaderHTTPError(self.identifier, error) from error
         else:
             return temp_file
-
-    def _get_sha256sum(self, file_handle: IO[bytes]) -> str:
-        original_position = file_handle.tell()
-        h = hashlib.sha256()
-        while True:
-            data = file_handle.read(8096)
-            if not data:
-                break
-            h.update(data)
-        file_handle.seek(original_position)
-        return h.hexdigest()
 
     def _check_if_blacklisted(self, checksum: str) -> None:
         if checksum in settings.COMICS_IMAGE_BLACKLIST:
@@ -156,27 +129,3 @@ class ImageDownloader:
         if image.format not in IMAGE_FORMATS:
             raise ImageTypeError(self.identifier, image.format)
         return IMAGE_FORMATS[image.format]
-
-    def _get_file_name(self, checksum: str, extension: str) -> str:
-        if not (checksum and extension):
-            raise ValueError("Checksum and extension must be non-empty")
-        return f"{checksum}{extension}"
-
-    @transaction.atomic
-    def _create_new_image(  # noqa: PLR0917
-        self,
-        comic: Comic,
-        title: str | None,
-        text: str | None,
-        image_file: IO[bytes],
-        file_name: str,
-        checksum: str,
-    ) -> Image:
-        image = Image(comic=comic, checksum=checksum)
-        image.file.save(file_name, File(image_file))
-        if title is not None:
-            image.title = title
-        if text is not None:
-            image.text = text
-        image.save()
-        return image
