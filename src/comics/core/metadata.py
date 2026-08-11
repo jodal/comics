@@ -124,7 +124,7 @@ def load_metadata(comic_slugs: list[str]) -> None:
         logger.info("Loading metadata for %s", comic_slug)
         metadata = get_metadata(comic_slug)
         if metadata is None:
-            return
+            continue
 
         try:
             ComicService.create_or_update(metadata=metadata)
