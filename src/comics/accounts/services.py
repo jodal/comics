@@ -1,16 +1,61 @@
 from __future__ import annotations
 
+import logging
 from typing import TYPE_CHECKING
 
 from django.db import transaction
+from invitations.utils import get_invitation_model
 
-from comics.accounts.models import Subscription
+from comics.accounts.models import Subscription, UserProfile, make_secret_key
 from comics.core.models import Comic
 
 if TYPE_CHECKING:
     from collections.abc import Collection
 
+    from django.contrib.auth.models import User
+    from django.http import HttpRequest
+    from invitations.models import Invitation
+
     from comics.accounts.typing import ComicsUser
+
+logger = logging.getLogger("comics.accounts.services")
+
+
+class UserProfileService:
+    @staticmethod
+    def create_for_user(*, user: User) -> UserProfile:
+        """Give a newly created user their comics profile."""
+        return UserProfile.objects.create(user=user)
+
+    @staticmethod
+    def regenerate_secret_key(*, user: ComicsUser) -> UserProfile:
+        """Replace the user's secret key for feed and API access."""
+        profile = user.comics_profile
+        profile.secret_key = make_secret_key()
+        profile.save()
+        return profile
+
+
+class InvitationService:
+    @staticmethod
+    @transaction.atomic
+    def invite(
+        *,
+        inviter: ComicsUser,
+        email: str,
+        request: HttpRequest,
+    ) -> Invitation:
+        """Invite someone to sign up, and send them the invitation.
+
+        The request is what django-invitations builds the absolute URL of
+        the invitation from. Sending is part of the same transaction, so
+        that a failure to send does not leave an invitation behind that
+        nobody ever received.
+        """
+        invitation = get_invitation_model().create(email, inviter=inviter)
+        invitation.send_invitation(request)
+        logger.info("%s invited %s", inviter.email, email)
+        return invitation
 
 
 class SubscriptionService:
