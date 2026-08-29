@@ -1,6 +1,3 @@
-import datetime as dt
-
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.metadata import MetadataBase
 
 
@@ -9,20 +6,6 @@ class Metadata(MetadataBase):
     language = "en"
     url = "http://timetrabble.com/"
     start_date = "2010-05-09"
+    end_date = "2025-03-19"
     rights = "Mikey Heller"
-
-
-class Crawler(CrawlerBase):
-    history_length_days = 90
-    time_zone = "America/New_York"
-
-    def crawl(self, pub_date: dt.date) -> CrawlerResult:
-        feed = self.parse_feed("http://timetrabble.com/?feed=rss2")
-        for entry in feed.for_date(pub_date):
-            url = entry.summary.src("img.comicthumbnail")
-            if not url:
-                continue
-            url = url.replace("comics-rss", "comics")
-            title = entry.title
-            return CrawlerImage(url, title)
-        return None
+    active = False
