@@ -5,7 +5,7 @@ import re
 import xml.sax
 import zoneinfo
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ClassVar
 
 import httpx
 from django.utils import timezone
@@ -144,7 +144,7 @@ class CrawlerBase:
     Defaults to `False`.
     """
 
-    headers: RequestHeaders = field(default_factory=dict)
+    headers: ClassVar[RequestHeaders] = {}
     """*Optional.* Any HTTP headers to send with any URL request, both when
     crawling and when downloading images.
 
