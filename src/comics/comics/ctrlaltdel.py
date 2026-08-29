@@ -17,17 +17,15 @@ class Crawler(CrawlerBase):
     schedule = "Mo,We,Fr"
     time_zone = "America/New_York"
 
-    # Without User-Agent set, the server returns empty responses
-    headers = {"User-Agent": "Mozilla/4.0"}
-
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
-        feed = self.parse_feed("https://cad-comic.com/feed/")
+        # The site feed holds only the newest posts, which are another comic
+        feed = self.parse_feed("https://cad-comic.com/category/ctrl-alt-del/feed/")
 
         for entry in feed.for_date(pub_date):
             if "Ctrl Alt Del" not in entry.tags:
                 continue
             page = self.parse_page(entry.link)
-            url = page.src(".comicpage img[src*='/uploads/']")
+            url = page.src(".comicpage img")
             title = entry.title
             return CrawlerImage(url, title)
         return None
