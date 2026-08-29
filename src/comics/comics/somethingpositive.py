@@ -13,10 +13,15 @@ class Metadata(MetadataBase):
 
 
 class Crawler(CrawlerBase):
-    history_start_date = "2001-12-19"
-    schedule = "Mo,Tu,We,Th,Fr"
+    history_length_days = 30
     time_zone = "America/Chicago"
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
-        url = f"https://somethingpositive.net/sp{pub_date:%m%d%Y}.png"
-        return CrawlerImage(url)
+        feed = self.parse_feed("https://somethingpositive.net/feed/")
+        for entry in feed.for_date(pub_date):
+            page = self.parse_page(entry.link)
+            url = page.src('img[src*="comics/sp"]')
+            if url is None:
+                continue
+            return CrawlerImage(url, entry.title)
+        return None
