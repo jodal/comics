@@ -1,31 +1,11 @@
-import datetime as dt
-
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.metadata import MetadataBase
 
 
 class Metadata(MetadataBase):
     name = "Axe Cop"
     language = "en"
-    url = "http://www.axecop.com/"
+    url = "https://axecop.com/"
     start_date = "2010-01-02"
+    end_date = "2017-09-27"
     rights = "Ethan Nicolle"
     active = False
-
-
-class Crawler(CrawlerBase):
-    history_length_days = 60
-    time_zone = "America/Los_Angeles"
-
-    headers = {"User-Agent": "Mozilla/4.0"}
-
-    def crawl(self, pub_date: dt.date) -> CrawlerResult:
-        feed = self.parse_feed("http://axecop.com/feed/")
-        for entry in feed.for_date(pub_date):
-            title = entry.title
-            url = entry.summary.src('img[src*="/wp-content/uploads/"]')
-            if url is None:
-                continue
-            url = url.replace("-150x150", "")
-            return CrawlerImage(url, title)
-        return None
