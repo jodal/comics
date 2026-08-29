@@ -17,9 +17,6 @@ class Crawler(CrawlerBase):
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "Europe/Copenhagen"
 
-    # Without User-Agent set, the server returns 403 Forbidden
-    headers = {"User-Agent": "Mozilla/4.0"}
-
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
         page_url = f"http://wumo.com/wumo/{pub_date:%Y/%m/%d}"
         page = self.parse_page(page_url)
