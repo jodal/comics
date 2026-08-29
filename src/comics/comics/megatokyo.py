@@ -1,6 +1,3 @@
-import datetime as dt
-
-from comics.aggregator.crawler import CrawlerBase, CrawlerImage, CrawlerResult
 from comics.core.metadata import MetadataBase
 
 
@@ -9,19 +6,6 @@ class Metadata(MetadataBase):
     language = "en"
     url = "http://www.megatokyo.com/"
     start_date = "2000-08-14"
+    end_date = "2025-12-29"
     rights = "Fred Gallagher & Rodney Caston"
-
-
-class Crawler(CrawlerBase):
-    history_length_days = 30
-    time_zone = "America/New_York"
-
-    def crawl(self, pub_date: dt.date) -> CrawlerResult:
-        feed = self.parse_feed("http://www.megatokyo.com/rss/megatokyo.xml")
-        for entry in feed.for_date(pub_date):
-            if entry.title.startswith("Comic ["):
-                title = entry.title.split('"')[1]
-                page = self.parse_page(entry.link)
-                url = page.src('img[src*="/strips/"]')
-                return CrawlerImage(url, title)
-        return None
+    active = False
