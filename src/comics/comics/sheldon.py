@@ -20,6 +20,9 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed("https://www.sheldoncomics.com/feed/")
         for entry in feed.for_date(pub_date):
-            url = entry.content0.src('img[src*="/uploads/"]')
+            # Only the comic image is named after the comic and the date
+            url = entry.content0.src('img[src*="/uploads/"][src*="/sd"]')
+            if url is None:
+                continue
             return CrawlerImage(url)
         return None
