@@ -16,15 +16,17 @@ class Crawler(CrawlerBase):
     history_length_days = 10
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/New_York"
+    # Without User-Agent set, the image server returns HTTP 404
+    headers = {"User-Agent": "Mozilla/5.0"}
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed("http://www.dumbingofage.com/feed/")
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src('img[src*="/comics-rss/"]')
+            selector = 'img[src*="/wp-content/uploads/"]'
+            url = entry.content0.src(selector)
             if url is None:
                 continue
-            url = url.replace("/comics-rss/", "/comics/")
             title = entry.title
-            text = entry.summary.alt('img[src*="/comics-rss/"]')
+            text = entry.content0.alt(selector)
             return CrawlerImage(url, title, text)
         return None
