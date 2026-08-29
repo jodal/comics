@@ -336,8 +336,6 @@ class GoComicsCrawlerBase(CrawlerBase):
 class CreatorsCrawlerBase(CrawlerBase):
     """Base comics crawler for all comics posted at creators.com"""
 
-    headers = {"User-Agent": "Mozilla/5.0"}
-
     url_id: str
     """*Required.* The comic's feature id in creators.com URLs.
 
