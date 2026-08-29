@@ -1,4 +1,3 @@
-from comics.aggregator.crawler import ComicControlCrawlerBase
 from comics.core.metadata import MetadataBase
 
 
@@ -7,11 +6,6 @@ class Metadata(MetadataBase):
     language = "en"
     url = "http://www.threepanelsoul.com/"
     start_date = "2006-11-05"
+    end_date = "2025-09-29"
     rights = "Ian McConville & Matt Boyd"
-
-
-class Crawler(ComicControlCrawlerBase):
-    base_url = Metadata.url
-    history_length_days = 180
-    schedule = "Mo"
-    time_zone = "America/New_York"
+    active = False
