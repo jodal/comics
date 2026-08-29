@@ -4,6 +4,9 @@ import tempfile
 from typing import IO, TYPE_CHECKING
 
 import httpx
+
+# Importing the plugin registers the JPEG XL codec with Pillow
+import pillow_jxl  # noqa: F401  # pyright: ignore[reportUnusedImport]
 from django.conf import settings
 from django.core.files import File
 from PIL import Image as PILImage
@@ -26,9 +29,12 @@ if TYPE_CHECKING:
 
 # Image types we accept, and the file extension they are saved with
 IMAGE_FORMATS = {
+    "AVIF": ".avif",
     "GIF": ".gif",
     "JPEG": ".jpg",
+    "JXL": ".jxl",
     "PNG": ".png",
+    "WEBP": ".webp",
 }
 
 
