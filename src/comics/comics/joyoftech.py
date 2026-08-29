@@ -29,8 +29,11 @@ class Crawler(CrawlerBase):
             num = matches.group(1)
 
             page = self.parse_page(entry.link)
-            url = page.src(f'img[src*="/joyimages/{num}"]')
-            if not url:
+            # Some pages also hold a thumbnail beside the comic
+            urls = page.srcs(f'img[src="/joyoftech/joyimages/{num}.png"]')
+            if not urls:
+                urls = page.srcs(f'img[src*="/joyimages/{num}."]')
+            if not urls:
                 continue
-            return CrawlerImage(url, title)
+            return CrawlerImage(urls[0], title)
         return None
