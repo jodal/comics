@@ -18,9 +18,6 @@ class Crawler(CrawlerBase):
     schedule = "Mo,Tu,We,Th,Fr"
     time_zone = "America/New_York"
 
-    # Without User-Agent set, the server returns 403 Forbidden
-    headers = {"User-Agent": "Mozilla/4.0"}
-
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
         page = self.parse_page("https://questionablecontent.net/")
         url = page.src("img[src*='/comics/']")
