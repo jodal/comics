@@ -18,9 +18,6 @@ class Crawler(CrawlerBase):
     schedule = "Mo,We,Fr"
     time_zone = "America/New_York"
 
-    # Without User-Agent set, the server returns 403 Forbidden
-    headers = {"User-Agent": "Mozilla/4.0"}
-
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed("http://www.joyoftech.com/joyoftech/jotblog/atom.xml")
         for entry in feed.for_date(pub_date):
