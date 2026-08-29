@@ -19,5 +19,5 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
         page = self.parse_page("http://www.thedevilbear.com/")
-        url = page.src("#comic img")
+        url = page.src("#cg_img img")
         return CrawlerImage(url)
