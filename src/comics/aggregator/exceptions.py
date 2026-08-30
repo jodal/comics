@@ -1,12 +1,30 @@
+import datetime as dt
+
 from comics.core.exceptions import ComicsError
 
 
 class AggregatorError(ComicsError):
     """base class for aggregator exceptions"""
 
-    def __init__(self, identifier: str, value: object = None) -> None:
-        self.identifier = identifier
+    def __init__(
+        self,
+        *,
+        slug: str,
+        pub_date: dt.date,
+        value: object = None,
+        detail: str | None = None,
+    ) -> None:
+        self.slug = slug
+        self.pub_date = pub_date
         self.value = value
+        self.detail = detail
+
+    @property
+    def identifier(self) -> str:
+        parts = [self.slug, str(self.pub_date)]
+        if self.detail is not None:
+            parts.append(self.detail)
+        return "/".join(parts)
 
     def __str__(self) -> str:
         return f"{self.identifier}: Generic aggregator error"

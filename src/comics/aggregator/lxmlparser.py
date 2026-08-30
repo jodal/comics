@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, overload
 import httpx
 from lxml.html import fromstring
 
-from comics.aggregator.exceptions import CrawlerError
+from comics.core.exceptions import ComicsError
 
 if TYPE_CHECKING:
     from lxml.html import HtmlElement
@@ -283,7 +283,7 @@ class LxmlParser:
         return value
 
 
-class LxmlParserException(CrawlerError):
+class LxmlParserException(ComicsError):
     pass
 
 
