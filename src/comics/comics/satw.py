@@ -13,7 +13,6 @@ class Metadata(MetadataBase):
 
 
 class Crawler(CrawlerBase):
-    schedule = "We"
     time_zone = "Europe/Copenhagen"
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
