@@ -9,7 +9,14 @@ import socket
 import time
 from typing import TYPE_CHECKING, Concatenate
 
+import sentry_sdk
+
 from comics.aggregator.downloader import ReleaseDownloader
+from comics.aggregator.exceptions import (
+    CrawlerBroken,
+    ExpectedOutcome,
+    TransientFailure,
+)
 from comics.comics import get_comic_crawler
 from comics.core.exceptions import ComicsError
 from comics.core.models import Comic
@@ -30,6 +37,15 @@ def log_errors[**P, R](
     def inner(aggregator: Aggregator, *args: P.args, **kwargs: P.kwargs) -> R | None:
         try:
             return func(aggregator, *args, **kwargs)
+        except ExpectedOutcome as error:
+            logger.info(error)
+            return None
+        except TransientFailure as error:
+            logger.warning(error)
+            return None
+        except CrawlerBroken as error:
+            _report_broken_crawler(error)
+            return None
         except ComicsError as error:
             logger.info(error)
             return None
@@ -38,6 +54,14 @@ def log_errors[**P, R](
             return None
 
     return inner
+
+
+def _report_broken_crawler(error: CrawlerBroken) -> None:
+    """Log the error, fingerprinted so Sentry groups it per comic and cause."""
+    with sentry_sdk.new_scope() as scope:
+        scope.fingerprint = ["crawler-broken", error.slug, type(error).__name__]
+        scope.set_tag("comic", error.slug)
+        logger.error("%s", error, exc_info=error)
 
 
 def select_comics(requested: list[str]) -> list[Comic]:

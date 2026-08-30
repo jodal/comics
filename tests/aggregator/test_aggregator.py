@@ -1,12 +1,19 @@
 import datetime as dt
+import logging
 from unittest.mock import Mock
 
 import pytest
 from pytest_mock import MockerFixture
 
+from comics.aggregator import command
 from comics.aggregator.command import Aggregator
 from comics.aggregator.crawler import CrawlerBase, CrawlerRelease
 from comics.aggregator.downloader import ReleaseDownloader
+from comics.aggregator.exceptions import (
+    CrawlerHTTPError,
+    ImageURLNotFound,
+    ReleaseAlreadyExists,
+)
 from comics.core.models import Comic
 
 
@@ -91,6 +98,62 @@ def test_get_valid_date_from_config(
     result = aggregator._get_valid_date(crawler_mock, expected)  # pyright: ignore[reportPrivateUsage]
 
     assert result == expected
+
+
+@pytest.mark.parametrize(
+    ("error", "expected_level"),
+    [
+        (
+            ReleaseAlreadyExists(slug="xkcd", pub_date=dt.date(2008, 3, 1)),
+            logging.INFO,
+        ),
+        (
+            CrawlerHTTPError(slug="xkcd", pub_date=dt.date(2008, 3, 1)),
+            logging.WARNING,
+        ),
+        (
+            ImageURLNotFound(slug="xkcd", pub_date=dt.date(2008, 3, 1)),
+            logging.ERROR,
+        ),
+    ],
+)
+def test_crawl_logs_error_at_level_matching_its_category(
+    aggregator: Aggregator,
+    crawler_mock: Mock,
+    caplog: pytest.LogCaptureFixture,
+    error: Exception,
+    expected_level: int,
+) -> None:
+    crawler_mock.get_release.side_effect = error
+
+    with caplog.at_level(logging.INFO):
+        result = aggregator._crawl_one_comic_one_date(  # pyright: ignore[reportPrivateUsage]
+            crawler_mock, dt.date(2008, 3, 1)
+        )
+
+    assert result is None
+    assert [record.levelno for record in caplog.records] == [expected_level]
+
+
+def test_crawl_fingerprints_broken_crawler_per_comic_and_cause(
+    aggregator: Aggregator,
+    crawler_mock: Mock,
+    mocker: MockerFixture,
+) -> None:
+    scope = mocker.MagicMock()
+    mocker.patch.object(
+        command.sentry_sdk, "new_scope"
+    ).return_value.__enter__.return_value = scope
+    crawler_mock.get_release.side_effect = ImageURLNotFound(
+        slug="xkcd", pub_date=dt.date(2008, 3, 1)
+    )
+
+    aggregator._crawl_one_comic_one_date(  # pyright: ignore[reportPrivateUsage]
+        crawler_mock, dt.date(2008, 3, 1)
+    )
+
+    assert scope.fingerprint == ["crawler-broken", "xkcd", "ImageURLNotFound"]
+    scope.set_tag.assert_called_once_with("comic", "xkcd")
 
 
 @pytest.mark.skip
