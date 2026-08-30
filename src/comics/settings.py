@@ -550,12 +550,13 @@ COMICS_NUM_DAYS_COMIC_IS_NEW = env.int(
 # Security - Content Security Policy
 #
 # Everything is self-hosted, so the policy only allows our own origin, plus a
-# per-request nonce for the few inline scripts in our own templates.
+# per-request nonce for the few inline scripts in our own templates and the
+# `data:` images Bootstrap inlines in its stylesheet.
 _csp: dict[str, list[CSP | str]] = {
     "default-src": [CSP.SELF],
     "script-src": [CSP.SELF, CSP.NONCE],
     "style-src": [CSP.SELF],
-    "img-src": [CSP.SELF],
+    "img-src": [CSP.SELF, "data:"],
     "font-src": [CSP.SELF],
     "connect-src": [CSP.SELF],
     "object-src": [CSP.NONE],
