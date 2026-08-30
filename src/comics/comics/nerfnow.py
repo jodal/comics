@@ -17,20 +17,19 @@ class Crawler(CrawlerBase):
     schedule = "Tu,We,Th,Fr,Sa"
     time_zone = "America/New_York"
 
-    # Without User-Agent set, the server returns 403 Forbidden
-    headers = {"User-Agent": "Mozilla/4.0"}
-
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
-        feed = self.parse_feed("https://feeds.feedburner.com/nerfnow/full")
+        feed = self.parse_feed("https://www.nerfnow.com/index.xml")
         for entry in feed.for_date(pub_date):
             url = entry.content0.src('img[src*="/img/"]')
             if url is None:
                 continue
-            url = url.replace("/large.jpg", ".png")
+            url = url.replace("/large", ".png")
             title = entry.title
 
+            # The feed holds the text as escaped markup, so read the page
+            page = self.parse_page(entry.link)
             # Put together text from multiple paragraphs
-            text = "\n\n".join(entry.content0.texts("p")).strip()
+            text = "\n\n".join(page.texts(".comment p")).strip()
 
             return CrawlerImage(url, title, text)
         return None

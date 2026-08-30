@@ -7,7 +7,7 @@ from comics.core.metadata import MetadataBase
 class Metadata(MetadataBase):
     name = "The Perry Bible Fellowship"
     language = "en"
-    url = "https://www.pbfcomics.com/"
+    url = "https://pbfcomics.com/"
     start_date = "2001-01-01"
     rights = "Nicholas Gurewitch"
 

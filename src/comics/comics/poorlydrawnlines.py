@@ -16,9 +16,6 @@ class Crawler(CrawlerBase):
     history_length_days = 30
     time_zone = "America/Los_Angeles"
 
-    # Without User-Agent set, the server returns 403 Forbidden
-    headers = {"User-Agent": "Mozilla/4.0"}
-
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed("http://feeds.feedburner.com/PoorlyDrawnLines")
         for entry in feed.for_date(pub_date):

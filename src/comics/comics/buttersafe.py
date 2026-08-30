@@ -16,6 +16,8 @@ class Crawler(CrawlerBase):
     history_length_days = 90
     schedule = "Th"
     time_zone = "America/New_York"
+    # Without User-Agent set, the server returns HTTP 403
+    headers = {"User-Agent": "Mozilla/5.0"}
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
         date_page_url = f"https://www.buttersafe.com/{pub_date:%Y/%m/%d/}"
@@ -24,8 +26,8 @@ class Crawler(CrawlerBase):
         if not page_url:
             return None
         page = self.parse_page(page_url)
-        url = page.src(".comic img")
+        url = page.src("#comic img")
         if not url:
             return None
-        title = page.alt(".comic img")
+        title = page.alt("#comic img")
         return CrawlerImage(url, title)

@@ -15,7 +15,6 @@ class Metadata(MetadataBase):
 class Crawler(CrawlerBase):
     history_length_days = 10
     time_zone = "America/New_York"
-    headers = {"User-Agent": "Mozilla/5.0"}
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed("https://www.giantitp.com/comics/oots.rss")

@@ -13,13 +13,14 @@ class Metadata(MetadataBase):
 
 
 class Crawler(CrawlerBase):
-    history_start_date = "2003-02-10"
-    schedule = "Mo,Tu,We,Th,Fr,Sa"
+    history_length_days = 10
+    schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/Montreal"
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
-        url = f"https://leasticoulddo.com/comic/{pub_date:%Y%m%d}"
-        page = self.parse_page(url)
-        image_url = page.src('img[class="comic"]')
-
-        return CrawlerImage(image_url)
+        feed = self.parse_feed("https://leasticoulddo.com/feed/")
+        for entry in feed.for_date(pub_date):
+            page = self.parse_page(entry.link)
+            url = page.content('meta[property="og:image"]')
+            return CrawlerImage(url, entry.title)
+        return None

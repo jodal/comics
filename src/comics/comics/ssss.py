@@ -8,3 +8,4 @@ class Metadata(MetadataBase):
     start_date = "2013-11-01"
     end_date = "2019-02-14"
     rights = "Minna Sundberg"
+    active = False

@@ -14,7 +14,7 @@ class Metadata(MetadataBase):
 
 class Crawler(CrawlerBase):
     history_length_days = 100
-    schedule = "Tu,Th,Su"
+    schedule = "Mo"
     time_zone = "America/New_York"
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
@@ -23,6 +23,10 @@ class Crawler(CrawlerBase):
         )
         for entry in feed.for_date(pub_date):
             url = entry.summary.src("img")
+            if url is None:
+                continue
+            # The size in the query limits the image that the CDN serves
+            url = url.split("?")[0]
             title = entry.title
             return CrawlerImage(url, title)
         return None

@@ -15,11 +15,13 @@ class Metadata(MetadataBase):
 class Crawler(CrawlerBase):
     history_length_days = 365
     time_zone = "America/Los_Angeles"
+    # The image server rejects the bare "Mozilla/5.0" user agent
+    headers = {"User-Agent": "Mozilla/5.0 (Linux)"}
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed("https://cagle.com/daryl-cagle/feed/")
         for entry in feed.for_date(pub_date):
-            url = entry.summary.src("img")
+            url = entry.content0.src("img")
             title = entry.title
             return CrawlerImage(url, title)
         return None

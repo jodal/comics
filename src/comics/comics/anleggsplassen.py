@@ -15,13 +15,6 @@ class Crawler(CrawlerBase):
     history_length_days = 100
     schedule = "Fr"
     time_zone = "Europe/Oslo"
-    headers = {
-        "User-Agent": (
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/131.0.0.0 Safari/537.36"
-        ),
-    }
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
         page = self.parse_page("https://www.at.no/emne/tegneserie")
@@ -41,8 +34,14 @@ class Crawler(CrawlerBase):
             if date != pub_date:
                 continue
 
-            img = article_page.root.xpath(f'//img[@title="{title}"]/@src')
-            url = str(img[0])
+            # The comic image has no title, so select it by its container.
+            # The page offers several widths, the widest one first.
+            urls = article_page.attrs(
+                "srcset", ".bodytext figure.column picture source"
+            )
+            if not urls:
+                continue
+            url = urls[0]
 
             return CrawlerImage(url, title, text)
         return None

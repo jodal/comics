@@ -22,6 +22,6 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             title = entry.title
             page = self.parse_page(entry.link)
-            url = page.src("img.comic-image")
+            url = page.src(".comic img")
             return CrawlerImage(url, title)
         return None

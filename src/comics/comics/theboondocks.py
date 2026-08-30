@@ -12,6 +12,8 @@ class Metadata(MetadataBase):
 
 class Crawler(GoComicsCrawlerBase):
     url_name = "boondocks"
+    # The comic ended in 2006, and gocomics.com reruns it
+    has_rerun_releases = True
     history_start_date = "1999-04-19"
     schedule = "Mo,Tu,We,Th,Fr,Sa,Su"
     time_zone = "America/Denver"
