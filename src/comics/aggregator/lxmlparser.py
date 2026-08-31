@@ -179,14 +179,14 @@ class LxmlParser:
     def text(self, selector: str, *, default: str) -> str: ...
 
     @overload
-    def text(self, selector: str, *, default: str | None = ...) -> str | None: ...
+    def text(self, selector: str, *, default: str | None = None) -> str | None: ...
 
     def text(
         self,
         selector: str,
         *,
         default: str | None = None,
-    ) -> list[str] | str | None:
+    ) -> str | None:
         """Return the text contained by the element matching `selector`."""
         return self._get_one("text", selector, default=default)
 
