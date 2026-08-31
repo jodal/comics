@@ -56,6 +56,21 @@ class Entry:
     [`content0`][comics.aggregator.feedparser.Entry.content0].
     """
 
+    title: str
+    """The entry's title.
+
+    Commonly passed straight on as the
+    [`CrawlerImage`][comics.aggregator.crawler.CrawlerImage] title.
+    """
+
+    link: str
+    """The URL of the entry, e.g. the comic's page for this release.
+
+    Typically fed to
+    [`Crawler.parse_page()`][comics.aggregator.crawler.CrawlerBase.parse_page]
+    when the feed itself doesn't hold the image.
+    """
+
     summary: LxmlParser
     """The entry's summary, with
     [`LxmlParser`][comics.aggregator.lxmlparser.LxmlParser] methods available
