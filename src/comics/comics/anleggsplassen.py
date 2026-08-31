@@ -39,8 +39,6 @@ class Crawler(CrawlerBase):
             url = article_page.attr(
                 "srcset", ".bodytext figure.column picture source", first=True
             )
-            if url is None:
-                continue
 
             return CrawlerImage(url, title, text)
         return None

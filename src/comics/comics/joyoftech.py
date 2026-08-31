@@ -33,7 +33,5 @@ class Crawler(CrawlerBase):
             url = page.src(f'img[src="/joyoftech/joyimages/{num}.png"]', first=True)
             if url is None:
                 url = page.src(f'img[src*="/joyimages/{num}."]', first=True)
-            if url is None:
-                continue
             return CrawlerImage(url, title)
         return None

@@ -23,8 +23,6 @@ class Crawler(CrawlerBase):
             if "COMIC ARCHIVE" not in entry.tags:
                 continue
             url = entry.content0.src('img[src*="/wp-content/uploads/"]', first=True)
-            if url is None:
-                continue
             title = entry.title
             return CrawlerImage(url, title)
         return None
