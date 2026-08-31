@@ -315,7 +315,6 @@ class ComicsKingdomCrawlerBase(CrawlerBase):
         url = page.src('img[id="theComicImage"]')
         if not url:
             url = page.content('meta[property="og:image"]')
-        assert url
         return CrawlerImage(url)
 
 
@@ -361,7 +360,6 @@ class CreatorsCrawlerBase(CrawlerBase):
             if release["release"] == pub_date.strftime("%Y-%m-%d"):
                 page = self.parse_page(release["url"])
                 url = page.src('img[itemprop="image"]')
-                assert url
                 return CrawlerImage(url)
 
         return None
@@ -384,7 +382,6 @@ class ComicControlCrawlerBase(CrawlerBase):
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
             url = page.src("img#cc-comic")
-            assert url
             text = page.title("img#cc-comic")
             title = re.sub(r".+? - (.+)", r"\1", entry.title)
 
