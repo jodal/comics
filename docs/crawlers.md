@@ -202,6 +202,8 @@ find the image URL.
         - attrs
         - content
         - contents
+        - element
+        - elements
         - remove
         - url
 

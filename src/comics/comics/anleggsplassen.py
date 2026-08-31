@@ -18,7 +18,7 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
         page = self.parse_page("https://www.at.no/emne/tegneserie")
-        articles = page.root.xpath('.//article[@data-section="tegneserie"]/div/a/@href')
+        articles = page.hrefs('article[data-section="tegneserie"] > div > a')
         for article in articles:
             article_page = self.parse_page(article)
             title = article_page.content('meta[name="title"]')

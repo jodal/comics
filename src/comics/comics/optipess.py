@@ -23,24 +23,21 @@ class Crawler(CrawlerBase):
         )
         date_string = pub_date.strftime("%b %-d")
 
-        post_link = archive_page.root.xpath(
-            '//td[(@class="archive-date") and '
-            f'(.="{date_string}")]/../td[@class="archive-title"]/a'
-        )
+        for row in archive_page.elements("tr"):
+            if row.text("td.archive-date") != date_string:
+                continue
 
-        if not post_link:
-            return None
-        else:
-            post_link = post_link[0]
+            title = row.text("td.archive-title a")
+            post_url = row.href("td.archive-title a")
+            if post_url is None:
+                return None
 
-        title = post_link.text
-        # Fetch the actual post
-        page = self.parse_page(post_link.get("href"))
-        img = page.root.xpath('//div[@id="comic"]/img')
-        if not img:
-            img = page.root.xpath('//div[@id="comic"]/a/img')
+            # Fetch the actual post
+            page = self.parse_page(post_url)
+            # The image is sometimes wrapped in a link
+            url = page.src("div#comic img", first=True)
+            text = page.title("div#comic img", first=True)
 
-        url = img[0].get("src")
-        text = img[0].get("title")
+            return CrawlerImage(url, title, text)
 
-        return CrawlerImage(url, title, text)
+        return None

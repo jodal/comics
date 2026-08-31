@@ -35,6 +35,11 @@ class LxmlParser:
     Pass `first=True` to a singular method to take the first match in
     document order instead of raising, for pages that legitimately match
     several elements.
+
+    To extract several values from the same part of a document, use
+    [`element()`][comics.aggregator.lxmlparser.LxmlParser.element] or
+    [`elements()`][comics.aggregator.lxmlparser.LxmlParser.elements] to scope
+    a parser to it.
     """
 
     _retrieved_url: str | None
@@ -346,6 +351,31 @@ class LxmlParser:
         """Return a list of the text contained by the elements matching `selector`."""
         return self._get_all("text", selector)
 
+    def element(self, selector: str, *, first: bool = False) -> LxmlParser | None:
+        """Return a parser scoped to the element matching `selector`.
+
+        Selectors used on the returned parser match the element itself as
+        well as its descendants, so a scoped parser can both read the
+        element's own attributes and dig further into it:
+
+        ```python
+        for row in page.elements("tr"):
+            if row.text("td.date") != date_string:
+                continue
+            title = row.text("td.title a")
+        ```
+
+        Returns `None` if the selector doesn't match any element.
+        """
+        element = self._select_one(selector, first=first)
+        if element is None:
+            return None
+        return self._scoped(element)
+
+    def elements(self, selector: str) -> list[LxmlParser]:
+        """Return a parser scoped to each of the elements matching `selector`."""
+        return [self._scoped(element) for element in self._select_all(selector)]
+
     def remove(self, selector: str) -> None:
         """Remove the elements matching `selector` from the parsed document."""
         for element in self.root.cssselect(selector):
@@ -395,6 +425,12 @@ class LxmlParser:
             for el in self._select_all(selector)
             if (value := el.text_content() if attr == "text" else el.get(attr))
         ]
+
+    def _scoped(self, element: HtmlElement) -> LxmlParser:
+        parser = LxmlParser.__new__(LxmlParser)
+        parser._retrieved_url = self._retrieved_url
+        parser.root = element
+        return parser
 
     def _select_one(self, selector: str, *, first: bool = False) -> HtmlElement | None:
         match self.root.cssselect(selector):
