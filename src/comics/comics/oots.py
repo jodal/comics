@@ -18,8 +18,7 @@ class Crawler(CrawlerBase):
 
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
         feed = self.parse_feed("https://www.giantitp.com/comics/oots.rss")
-        if len(feed.all()):
-            entry = feed.all()[0]
+        for entry in feed.all():
             page = self.parse_page(entry.link)
             url = page.src('img[src*="/comics/oots/"]')
             title = entry.title
