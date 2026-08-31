@@ -453,6 +453,7 @@ class LxmlParser:
         headers: dict[str, str] | None = None,
     ) -> HtmlElement:
         response = httpx.get(url, headers=headers, follow_redirects=True)
+        response.raise_for_status()
         self._retrieved_url = str(response.url)
         content = response.content.replace(b"\x00", b"")
         root = self._parse_string(content)
