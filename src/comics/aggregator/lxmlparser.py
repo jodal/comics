@@ -236,7 +236,7 @@ class LxmlParser:
 
     def _get_all(self, attr: str, selector: str) -> list[str]:
         return [
-            self._decode(value)
+            value
             for el in self._select_all(selector)
             if (value := el.text_content() if attr == "text" else el.get(attr))
         ]
@@ -270,14 +270,6 @@ class LxmlParser:
         if len(value.strip()) == 0:
             value = "<xml />"
         return fromstring(value)
-
-    def _decode(self, value: str | bytes) -> str:
-        if isinstance(value, bytes):
-            try:
-                return value.decode("utf-8")
-            except UnicodeDecodeError:
-                return value.decode("iso-8859-1")
-        return value
 
 
 class LxmlParserException(ComicsError):
