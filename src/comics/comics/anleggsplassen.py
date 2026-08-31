@@ -36,12 +36,11 @@ class Crawler(CrawlerBase):
 
             # The comic image has no title, so select it by its container.
             # The page offers several widths, the widest one first.
-            urls = article_page.attrs(
-                "srcset", ".bodytext figure.column picture source"
+            url = article_page.attr(
+                "srcset", ".bodytext figure.column picture source", first=True
             )
-            if not urls:
+            if url is None:
                 continue
-            url = urls[0]
 
             return CrawlerImage(url, title, text)
         return None

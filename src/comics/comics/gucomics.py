@@ -23,11 +23,11 @@ class Crawler(CrawlerBase):
         page_url = f"http://www.gucomics.com/{pub_date:%Y%m%d}"
         page = self.parse_page(page_url)
 
-        title = page.texts("b")[0]
+        title = page.text("b", default="", first=True)
         title = title.replace('"', "")
         title = title.strip()
 
-        text = page.texts(".main")[0]
+        text = page.text(".main", default="", first=True)
 
         #  If there is a "---", the text after is not about the comic
         text = text[: text.find("---")]

@@ -30,10 +30,10 @@ class Crawler(CrawlerBase):
 
             page = self.parse_page(entry.link)
             # Some pages also hold a thumbnail beside the comic
-            urls = page.srcs(f'img[src="/joyoftech/joyimages/{num}.png"]')
-            if not urls:
-                urls = page.srcs(f'img[src*="/joyimages/{num}."]')
-            if not urls:
+            url = page.src(f'img[src="/joyoftech/joyimages/{num}.png"]', first=True)
+            if url is None:
+                url = page.src(f'img[src*="/joyimages/{num}."]', first=True)
+            if url is None:
                 continue
-            return CrawlerImage(urls[0], title)
+            return CrawlerImage(url, title)
         return None

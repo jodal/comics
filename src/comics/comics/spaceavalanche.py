@@ -22,10 +22,9 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             if "COMIC ARCHIVE" not in entry.tags:
                 continue
-            urls = entry.content0.srcs('img[src*="/wp-content/uploads/"]')
-            if not urls:
+            url = entry.content0.src('img[src*="/wp-content/uploads/"]', first=True)
+            if url is None:
                 continue
-            url = urls[0]
             title = entry.title
             return CrawlerImage(url, title)
         return None

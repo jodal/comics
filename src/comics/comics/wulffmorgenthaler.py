@@ -20,7 +20,7 @@ class Crawler(CrawlerBase):
     def crawl(self, pub_date: dt.date) -> CrawlerResult:
         page_url = f"http://wumo.com/wumo/{pub_date:%Y/%m/%d}"
         page = self.parse_page(page_url)
-        urls = page.srcs(f'img[src*="/img/wumo/{pub_date:%Y/%m}"]')
-        if not urls:
+        url = page.src(f'img[src*="/img/wumo/{pub_date:%Y/%m}"]', first=True)
+        if url is None:
             return None
-        return CrawlerImage(urls[0])
+        return CrawlerImage(url)

@@ -22,8 +22,8 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
             # The comic is the first image on the image server
-            urls = page.srcs('img[src*="static.explosm.net"]')
-            if not urls:
+            url = page.src('img[src*="static.explosm.net"]', first=True)
+            if url is None:
                 continue
-            return CrawlerImage(urls[0], entry.title)
+            return CrawlerImage(url, entry.title)
         return None
