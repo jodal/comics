@@ -42,7 +42,7 @@ class CrawlerRelease:
         return self._images
 
     def add_image(self, image: CrawlerImage) -> None:
-        image.validate(self.identifier)
+        image.validate(self)
         self._images.append(image)
 
 
@@ -82,9 +82,9 @@ class CrawlerImage:
         if self.text is not None:
             self.text = str(self.text)
 
-    def validate(self, identifier: str) -> None:
+    def validate(self, release: CrawlerRelease) -> None:
         if not self.url:
-            raise ImageURLNotFound(identifier)
+            raise ImageURLNotFound(slug=release.comic.slug, pub_date=release.pub_date)
 
 
 CrawlerResult = list[CrawlerImage] | CrawlerImage | None
@@ -180,9 +180,15 @@ class CrawlerBase:
         try:
             results = self.crawl(pub_date)
         except (httpx.HTTPError, httpx.InvalidURL, OSError) as error:
-            raise CrawlerHTTPError(release.identifier, error) from error
+            raise CrawlerHTTPError(
+                slug=release.comic.slug, pub_date=release.pub_date, value=error
+            ) from error
         except xml.sax.SAXException as error:
-            raise CrawlerHTTPError(release.identifier, str(error)) from error
+            raise CrawlerHTTPError(
+                slug=release.comic.slug,
+                pub_date=release.pub_date,
+                value=str(error),
+            ) from error
 
         if not results:
             return None
@@ -198,19 +204,19 @@ class CrawlerBase:
         return release
 
     def _get_date_to_crawl(self, pub_date: dt.date | None) -> dt.date:
-        identifier = f"{self.comic.slug}/{pub_date}"
-
         if pub_date is None:
             pub_date = self.current_date
 
         if pub_date < self.history_start:
-            raise BeforeHistoryStart(identifier, self.history_start)
+            raise BeforeHistoryStart(
+                slug=self.comic.slug, pub_date=pub_date, value=self.history_start
+            )
 
         if (
             self.multiple_releases_per_day is False
             and self.comic.release_set.published_on(pub_date).exists()
         ):
-            raise ReleaseAlreadyExists(identifier)
+            raise ReleaseAlreadyExists(slug=self.comic.slug, pub_date=pub_date)
 
         return pub_date
 

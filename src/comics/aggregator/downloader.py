@@ -57,7 +57,9 @@ class ImageDownloader:
         self.crawler_release = crawler_release
 
     def download(self, crawler_image: CrawlerImage) -> Image:
-        self.identifier = self.crawler_release.identifier
+        self.slug = self.crawler_release.comic.slug
+        self.pub_date = self.crawler_release.pub_date
+        self.detail: str | None = None
 
         # CrawlerRelease.add_image() has validated that the URL is present.
         assert crawler_image.url is not None
@@ -67,7 +69,7 @@ class ImageDownloader:
         ) as image_file:
             file = File(image_file)
             checksum = sha256sum(file)
-            self.identifier = f"{self.identifier}/{checksum[:6]}"
+            self.detail = checksum[:6]
 
             self._check_if_blacklisted(checksum)
 
@@ -101,13 +103,20 @@ class ImageDownloader:
             temp_file.write(response.content)
             temp_file.seek(0)
         except (httpx.HTTPError, httpx.InvalidURL, OSError) as error:
-            raise DownloaderHTTPError(self.identifier, error) from error
+            raise DownloaderHTTPError(
+                slug=self.slug,
+                pub_date=self.pub_date,
+                value=error,
+                detail=self.detail,
+            ) from error
         else:
             return temp_file
 
     def _check_if_blacklisted(self, checksum: str) -> None:
         if checksum in settings.COMICS_IMAGE_BLACKLIST:
-            raise ImageIsBlacklisted(self.identifier)
+            raise ImageIsBlacklisted(
+                slug=self.slug, pub_date=self.pub_date, detail=self.detail
+            )
 
     def _get_existing_image(
         self,
@@ -117,7 +126,9 @@ class ImageDownloader:
     ) -> Image | None:
         image = Image.objects.for_comics(comic).for_checksum(checksum).get_or_none()
         if image is not None and not has_rerun_releases:
-            raise ImageAlreadyExists(self.identifier)
+            raise ImageAlreadyExists(
+                slug=self.slug, pub_date=self.pub_date, detail=self.detail
+            )
         return image
 
     def _validate_image(self, image_file: IO[bytes]) -> PILImageFile:
@@ -125,13 +136,25 @@ class ImageDownloader:
             image = PILImage.open(image_file)
             image.load()
         except IndexError as error:
-            raise ImageIsCorrupt(self.identifier) from error
+            raise ImageIsCorrupt(
+                slug=self.slug, pub_date=self.pub_date, detail=self.detail
+            ) from error
         except OSError as error:
-            raise ImageIsCorrupt(self.identifier, error) from error
+            raise ImageIsCorrupt(
+                slug=self.slug,
+                pub_date=self.pub_date,
+                value=error,
+                detail=self.detail,
+            ) from error
         else:
             return image
 
     def _get_file_extension(self, image: PILImageFile) -> str:
         if image.format not in IMAGE_FORMATS:
-            raise ImageTypeError(self.identifier, image.format)
+            raise ImageTypeError(
+                slug=self.slug,
+                pub_date=self.pub_date,
+                value=image.format,
+                detail=self.detail,
+            )
         return IMAGE_FORMATS[image.format]
