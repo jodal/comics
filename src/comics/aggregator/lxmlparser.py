@@ -235,14 +235,11 @@ class LxmlParser:
         return value
 
     def _get_all(self, attr: str, selector: str) -> list[str]:
-        try:
-            return [
-                self._decode(value)
-                for el in self._select_all(selector)
-                if (value := el.text_content() if attr == "text" else el.get(attr))
-            ]
-        except DoesNotExist:
-            return []
+        return [
+            self._decode(value)
+            for el in self._select_all(selector)
+            if (value := el.text_content() if attr == "text" else el.get(attr))
+        ]
 
     def _select_one(self, selector: str) -> HtmlElement | None:
         match self.root.cssselect(selector):
@@ -284,10 +281,6 @@ class LxmlParser:
 
 
 class LxmlParserException(ComicsError):
-    pass
-
-
-class DoesNotExist(LxmlParserException):
     pass
 
 
