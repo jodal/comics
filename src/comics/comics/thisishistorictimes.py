@@ -21,9 +21,9 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
             # The comic is the first image, followed by unrelated ones
-            urls = page.srcs('img[src*="/wp-content/uploads/"]')
-            if not urls:
+            url = page.src('img[src*="/wp-content/uploads/"]', first=True)
+            if url is None:
                 continue
             title = entry.title
-            return CrawlerImage(urls[0], title)
+            return CrawlerImage(url, title)
         return None

@@ -20,9 +20,6 @@ class Crawler(CrawlerBase):
         feed = self.parse_feed("https://pbfcomics.com/feed/")
         for entry in feed.for_date(pub_date):
             page = self.parse_page(entry.link)
-            urls = [
-                img.attrib["data-src"]
-                for img in page.root.findall('.//div[@id="comic"]/img')
-            ]
+            urls = page.attrs("data-src", "div#comic > img")
             return [CrawlerImage(url, entry.title) for url in urls]
         return None

@@ -202,6 +202,8 @@ find the image URL.
         - attrs
         - content
         - contents
+        - element
+        - elements
         - remove
         - url
 
@@ -299,6 +301,8 @@ for entry in feed.for_date(pub_date):
     options:
       heading_level: 4
       members:
+        - title
+        - link
         - summary
         - content0
         - html

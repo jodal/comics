@@ -31,6 +31,15 @@ class LxmlParser:
     - Plural methods, e.g.
       [`srcs()`][comics.aggregator.lxmlparser.LxmlParser.srcs], return a list
       of zero or more values.
+
+    Pass `first=True` to a singular method to take the first match in
+    document order instead of raising, for pages that legitimately match
+    several elements.
+
+    To extract several values from the same part of a document, use
+    [`element()`][comics.aggregator.lxmlparser.LxmlParser.element] or
+    [`elements()`][comics.aggregator.lxmlparser.LxmlParser.elements] to scope
+    a parser to it.
     """
 
     _retrieved_url: str | None
@@ -52,77 +61,174 @@ class LxmlParser:
             raise LxmlParserException("Parser needs URL or string to operate on")
 
     @overload
-    def href(self, selector: str, *, default: str) -> str: ...
+    def href(
+        self,
+        selector: str,
+        *,
+        default: str,
+        first: bool = False,
+    ) -> str: ...
 
     @overload
-    def href(self, selector: str, *, default: str | None = None) -> str | None: ...
+    def href(
+        self,
+        selector: str,
+        *,
+        default: str | None = None,
+        first: bool = False,
+    ) -> str | None: ...
 
-    def href(self, selector: str, *, default: str | None = None) -> str | None:
+    def href(
+        self,
+        selector: str,
+        *,
+        default: str | None = None,
+        first: bool = False,
+    ) -> str | None:
         """Return the `href` attribute of the element matching `selector`."""
-        return self._get_one("href", selector, default=default)
+        return self._get_one("href", selector, default=default, first=first)
 
     def hrefs(self, selector: str) -> list[str]:
         """Return the `href` attribute of the elements matching `selector`."""
         return self._get_all("href", selector)
 
     @overload
-    def src(self, selector: str, *, default: str) -> str: ...
+    def src(
+        self,
+        selector: str,
+        *,
+        default: str,
+        first: bool = False,
+    ) -> str: ...
 
     @overload
-    def src(self, selector: str, *, default: str | None = None) -> str | None: ...
+    def src(
+        self,
+        selector: str,
+        *,
+        default: str | None = None,
+        first: bool = False,
+    ) -> str | None: ...
 
-    def src(self, selector: str, *, default: str | None = None) -> str | None:
+    def src(
+        self,
+        selector: str,
+        *,
+        default: str | None = None,
+        first: bool = False,
+    ) -> str | None:
         """Return the `src` attribute of the element matching `selector`."""
-        return self._get_one("src", selector, default=default)
+        return self._get_one("src", selector, default=default, first=first)
 
     def srcs(self, selector: str) -> list[str]:
         """Return the `src` attribute of the elements matching `selector`."""
         return self._get_all("src", selector)
 
     @overload
-    def alt(self, selector: str, *, default: str) -> str: ...
+    def alt(
+        self,
+        selector: str,
+        *,
+        default: str,
+        first: bool = False,
+    ) -> str: ...
 
     @overload
-    def alt(self, selector: str, *, default: str | None = None) -> str | None: ...
+    def alt(
+        self,
+        selector: str,
+        *,
+        default: str | None = None,
+        first: bool = False,
+    ) -> str | None: ...
 
-    def alt(self, selector: str, *, default: str | None = None) -> str | None:
+    def alt(
+        self,
+        selector: str,
+        *,
+        default: str | None = None,
+        first: bool = False,
+    ) -> str | None:
         """Return the `alt` attribute of the element matching `selector`."""
-        return self._get_one("alt", selector, default=default)
+        return self._get_one("alt", selector, default=default, first=first)
 
     def alts(self, selector: str) -> list[str]:
         """Return the `alt` attribute of the elements matching `selector`."""
         return self._get_all("alt", selector)
 
     @overload
-    def title(self, selector: str, *, default: str) -> str: ...
+    def title(
+        self,
+        selector: str,
+        *,
+        default: str,
+        first: bool = False,
+    ) -> str: ...
 
     @overload
-    def title(self, selector: str, *, default: str | None = None) -> str | None: ...
+    def title(
+        self,
+        selector: str,
+        *,
+        default: str | None = None,
+        first: bool = False,
+    ) -> str | None: ...
 
-    def title(self, selector: str, *, default: str | None = None) -> str | None:
+    def title(
+        self,
+        selector: str,
+        *,
+        default: str | None = None,
+        first: bool = False,
+    ) -> str | None:
         """Return the `title` attribute of the element matching `selector`."""
-        return self._get_one("title", selector, default=default)
+        return self._get_one("title", selector, default=default, first=first)
 
     def titles(self, selector: str) -> list[str]:
         """Return the `title` attribute of the elements matching `selector`."""
         return self._get_all("title", selector)
 
     @overload
-    def value(self, selector: str, *, default: str) -> str: ...
+    def value(
+        self,
+        selector: str,
+        *,
+        default: str,
+        first: bool = False,
+    ) -> str: ...
 
     @overload
-    def value(self, selector: str, *, default: str | None = None) -> str | None: ...
+    def value(
+        self,
+        selector: str,
+        *,
+        default: str | None = None,
+        first: bool = False,
+    ) -> str | None: ...
 
-    def value(self, selector: str, *, default: str | None = None) -> str | None:
+    def value(
+        self,
+        selector: str,
+        *,
+        default: str | None = None,
+        first: bool = False,
+    ) -> str | None:
         """Return the `value` attribute of the element matching `selector`."""
-        return self._get_one("value", selector, default=default)
+        return self._get_one("value", selector, default=default, first=first)
 
     def values(self, selector: str) -> list[str]:
         """Return the `value` attribute of the elements matching `selector`."""
         return self._get_all("value", selector)
 
     @overload
-    def attr(self, attr: str, selector: str, *, default: str) -> str: ...
+    def attr(
+        self,
+        attr: str,
+        selector: str,
+        *,
+        default: str,
+        first: bool = False,
+    ) -> str: ...
 
     @overload
     def attr(
@@ -131,6 +237,7 @@ class LxmlParser:
         selector: str,
         *,
         default: str | None = None,
+        first: bool = False,
     ) -> str | None: ...
 
     def attr(
@@ -139,60 +246,135 @@ class LxmlParser:
         selector: str,
         *,
         default: str | None = None,
+        first: bool = False,
     ) -> str | None:
         """Return the given `attr` attribute of the element matching `selector`."""
-        return self._get_one(attr, selector, default=default)
+        return self._get_one(attr, selector, default=default, first=first)
 
     def attrs(self, attr: str, selector: str) -> list[str]:
         """Return the given `attr` attribute of the elements matching `selector`."""
         return self._get_all(attr, selector)
 
     @overload
-    def id(self, selector: str, *, default: str) -> str: ...
+    def id(
+        self,
+        selector: str,
+        *,
+        default: str,
+        first: bool = False,
+    ) -> str: ...
 
     @overload
-    def id(self, selector: str, *, default: str | None = None) -> str | None: ...
+    def id(
+        self,
+        selector: str,
+        *,
+        default: str | None = None,
+        first: bool = False,
+    ) -> str | None: ...
 
-    def id(self, selector: str, *, default: str | None = None) -> str | None:
+    def id(
+        self,
+        selector: str,
+        *,
+        default: str | None = None,
+        first: bool = False,
+    ) -> str | None:
         """Return the `id` attribute of the element matching `selector`."""
-        return self._get_one("id", selector, default=default)
+        return self._get_one("id", selector, default=default, first=first)
 
     def ids(self, selector: str) -> list[str]:
         """Return the `id` attribute of the elements matching `selector`."""
         return self._get_all("id", selector)
 
     @overload
-    def content(self, selector: str, *, default: str) -> str: ...
+    def content(
+        self,
+        selector: str,
+        *,
+        default: str,
+        first: bool = False,
+    ) -> str: ...
 
     @overload
-    def content(self, selector: str, *, default: str | None = None) -> str | None: ...
+    def content(
+        self,
+        selector: str,
+        *,
+        default: str | None = None,
+        first: bool = False,
+    ) -> str | None: ...
 
-    def content(self, selector: str, *, default: str | None = None) -> str | None:
+    def content(
+        self,
+        selector: str,
+        *,
+        default: str | None = None,
+        first: bool = False,
+    ) -> str | None:
         """Return the `content` attribute of the element matching `selector`."""
-        return self._get_one("content", selector, default=default)
+        return self._get_one("content", selector, default=default, first=first)
 
     def contents(self, selector: str) -> list[str]:
         """Return the `content` attribute of the elements matching `selector`."""
         return self._get_all("content", selector)
 
     @overload
-    def text(self, selector: str, *, default: str) -> str: ...
+    def text(
+        self,
+        selector: str,
+        *,
+        default: str,
+        first: bool = False,
+    ) -> str: ...
 
     @overload
-    def text(self, selector: str, *, default: str | None = ...) -> str | None: ...
+    def text(
+        self,
+        selector: str,
+        *,
+        default: str | None = None,
+        first: bool = False,
+    ) -> str | None: ...
 
     def text(
         self,
         selector: str,
         *,
         default: str | None = None,
-    ) -> list[str] | str | None:
+        first: bool = False,
+    ) -> str | None:
         """Return the text contained by the element matching `selector`."""
-        return self._get_one("text", selector, default=default)
+        return self._get_one("text", selector, default=default, first=first)
 
     def texts(self, selector: str) -> list[str]:
         """Return a list of the text contained by the elements matching `selector`."""
         return self._get_all("text", selector)
+
+    def element(self, selector: str, *, first: bool = False) -> LxmlParser | None:
+        """Return a parser scoped to the element matching `selector`.
+
+        Selectors used on the returned parser match the element itself as
+        well as its descendants, so a scoped parser can both read the
+        element's own attributes and dig further into it:
+
+        ```python
+        for row in page.elements("tr"):
+            if row.text("td.date") != date_string:
+                continue
+            title = row.text("td.title a")
+        ```
+
+        Returns `None` if the selector doesn't match any element.
+        """
+        element = self._select_one(selector, first=first)
+        if element is None:
+            return None
+        return self._scoped(element)
+
+    def elements(self, selector: str) -> list[LxmlParser]:
+        """Return a parser scoped to each of the elements matching `selector`."""
+        return [self._scoped(element) for element in self._select_all(selector)]
 
     def remove(self, selector: str) -> None:
         """Remove the elements matching `selector` from the parsed document."""
@@ -210,6 +392,7 @@ class LxmlParser:
         selector: str,
         *,
         default: str,
+        first: bool = False,
     ) -> str: ...
 
     @overload
@@ -219,6 +402,7 @@ class LxmlParser:
         selector: str,
         *,
         default: str | None = ...,
+        first: bool = False,
     ) -> str | None: ...
 
     def _get_one(
@@ -227,28 +411,34 @@ class LxmlParser:
         selector: str,
         *,
         default: str | None = None,
+        first: bool = False,
     ) -> str | None:
-        if (el := self._select_one(selector)) is None:
+        if (el := self._select_one(selector, first=first)) is None:
             return default
         if (value := el.text_content() if attr == "text" else el.get(attr)) is None:
             return default
         return value
 
     def _get_all(self, attr: str, selector: str) -> list[str]:
-        try:
-            return [
-                self._decode(value)
-                for el in self._select_all(selector)
-                if (value := el.text_content() if attr == "text" else el.get(attr))
-            ]
-        except DoesNotExist:
-            return []
+        return [
+            value
+            for el in self._select_all(selector)
+            if (value := el.text_content() if attr == "text" else el.get(attr))
+        ]
 
-    def _select_one(self, selector: str) -> HtmlElement | None:
+    def _scoped(self, element: HtmlElement) -> LxmlParser:
+        parser = LxmlParser.__new__(LxmlParser)
+        parser._retrieved_url = self._retrieved_url
+        parser.root = element
+        return parser
+
+    def _select_one(self, selector: str, *, first: bool = False) -> HtmlElement | None:
         match self.root.cssselect(selector):
             case []:
                 return None
             case [element]:
+                return element
+            case [element, *_] if first:
                 return element
             case elements:
                 msg = f"Selector matched {len(elements)} elements: {selector}"
@@ -263,6 +453,7 @@ class LxmlParser:
         headers: dict[str, str] | None = None,
     ) -> HtmlElement:
         response = httpx.get(url, headers=headers, follow_redirects=True)
+        response.raise_for_status()
         self._retrieved_url = str(response.url)
         content = response.content.replace(b"\x00", b"")
         root = self._parse_string(content)
@@ -274,20 +465,8 @@ class LxmlParser:
             value = "<xml />"
         return fromstring(value)
 
-    def _decode(self, value: str | bytes) -> str:
-        if isinstance(value, bytes):
-            try:
-                return value.decode("utf-8")
-            except UnicodeDecodeError:
-                return value.decode("iso-8859-1")
-        return value
-
 
 class LxmlParserException(ComicsError):
-    pass
-
-
-class DoesNotExist(LxmlParserException):
     pass
 
 

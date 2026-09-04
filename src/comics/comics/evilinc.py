@@ -22,9 +22,8 @@ class Crawler(CrawlerBase):
         for entry in feed.for_date(pub_date):
             title = entry.title
             page = self.parse_page(entry.link)
-            img = page.root.xpath('//div[@id="unspliced-comic"]/picture/img')
-            if img is None:
+            url = page.src("div#unspliced-comic > picture > img", first=True)
+            if url is None:
                 continue
-            url = img[0].attrib["src"]
             return CrawlerImage(url, title)
         return None
