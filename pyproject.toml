@@ -18,7 +18,7 @@ dependencies = [
     "django-crispy-forms>=2.4",
     "django-invitations>=2.1.0",
     "django-ninja>=1.6.2",
-    "django-stubs-ext>=6.0.7",
+    "django-stubs-ext>=6.1.0",
     "django>=6.0.7,<7",
     "feedparser>=6.0.11",
     "httpx>=0.28.1",
@@ -43,7 +43,7 @@ dev = [
     "django-debug-toolbar>=7.1.1",
     "django-extensions>=4.1",
     "tox-uv>=1.36.0",
-    "tox>=4.58.0",
+    "tox>=4.60.1",
     { include-group = "docs" },
     { include-group = "lint" },
     { include-group = "rumdl" },
@@ -55,7 +55,7 @@ docs = [
     "mkdocstrings-python>=2.0.7",
     "zensical>=0.0.57",
 ]
-lint = ["ruff>=0.16.0"]
+lint = ["ruff>=0.16.5"]
 rumdl = ["rumdl>=0.2.50"]
 tests = [
     "freezegun>=1.5.5",
@@ -65,11 +65,11 @@ tests = [
     "pytest-mock>=3.14.1",
 ]
 typing = [
-    "basedpyright>=1.39.9",
+    "basedpyright>=1.39.10",
     "django-types",
     "types-lxml>=2025.3.30",
 ]
-zizmor = ["zizmor==1.28.0"]
+zizmor = ["zizmor==1.29.0"]
 
 
 [tool.basedpyright]
