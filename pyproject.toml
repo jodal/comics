@@ -52,8 +52,8 @@ dev = [
     { include-group = "zizmor" },
 ]
 docs = [
-    "mkdocstrings-python>=2.0.7",
-    "zensical>=0.0.57",
+    "mkdocstrings-python>=2.0.9",
+    "zensical>=0.0.65",
 ]
 lint = ["ruff>=0.16.9"]
 rumdl = ["rumdl>=0.2.50"]
