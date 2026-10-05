@@ -35,7 +35,7 @@ def status(request: HttpRequest, num_days: int = 21) -> HttpResponse:
     last = today - dt.timedelta(days=num_days)
 
     releases = Release.objects.for_active_comics().published_since(last)
-    releases = releases.select_related().order_by("comic__slug").distinct()
+    releases = releases.select_related("comic").order_by("comic__slug").distinct()
 
     release_by_comic_and_day: dict[tuple[int, int], Release] = {}
     for release in releases:

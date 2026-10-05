@@ -61,7 +61,7 @@ def test_failing_to_send_leaves_no_invitation_behind(
     user: User,
     settings: SettingsWrapper,
 ) -> None:
-    settings.EMAIL_BACKEND = f"{__name__}.RefusingEmailBackend"
+    settings.MAILERS = {"default": {"BACKEND": f"{__name__}.RefusingEmailBackend"}}
     client.force_login(user)
 
     with pytest.raises(OSError, match="on fire"):

@@ -200,7 +200,7 @@ class MyComicsMixin(ReleaseMixin):
 
     def get_queryset(self) -> ReleaseQuerySet:
         return (
-            Release.objects.select_related()
+            Release.objects.select_related("comic")
             .for_comics(*self.get_my_comics())
             .order_by("pub_date")
         )
@@ -468,7 +468,9 @@ class OneComicMixin(ReleaseMixin):
 
     def get_queryset(self) -> ReleaseQuerySet:
         return (
-            Release.objects.select_related().for_comics(self.comic).order_by("pub_date")
+            Release.objects.select_related("comic")
+            .for_comics(self.comic)
+            .order_by("pub_date")
         )
 
     def get_object_type(self) -> str | None:

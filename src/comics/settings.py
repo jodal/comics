@@ -327,30 +327,14 @@ _email_backend = env.str(
 #
 # SMTP server settings, only used by the SMTP email backend.
 # The defaults match Django's defaults.
-EMAIL_HOST = env.str(
-    "DJANGO_EMAIL_HOST",
-    default="localhost",
-)
-EMAIL_PORT = env.int(
-    "DJANGO_EMAIL_PORT",
-    default=25,
-)
-EMAIL_HOST_USER = env.str(
-    "DJANGO_EMAIL_HOST_USER",
-    default="",
-)
-EMAIL_HOST_PASSWORD = env.str(
-    "DJANGO_EMAIL_HOST_PASSWORD",
-    default="",
-)
-EMAIL_USE_TLS = env.bool(
-    "DJANGO_EMAIL_USE_TLS",
-    default=False,
-)
-EMAIL_USE_SSL = env.bool(
-    "DJANGO_EMAIL_USE_SSL",
-    default=False,
-)
+_smtp_options = {
+    "host": env.str("DJANGO_EMAIL_HOST", default="localhost"),
+    "port": env.int("DJANGO_EMAIL_PORT", default=25),
+    "username": env.str("DJANGO_EMAIL_HOST_USER", default=""),
+    "password": env.str("DJANGO_EMAIL_HOST_PASSWORD", default=""),
+    "use_tls": env.bool("DJANGO_EMAIL_USE_TLS", default=False),
+    "use_ssl": env.bool("DJANGO_EMAIL_USE_SSL", default=False),
+}
 #
 # Send email using Anymail via Mailgun if MAILGUN_API_KEY is set.
 _anymail: dict[str, str] = {}
@@ -363,7 +347,16 @@ if mailgun_api_key := env.str("MAILGUN_API_KEY", default=None):
 if mailgun_sender_domain := env.str("MAILGUN_SENDER_DOMAIN", default=None):
     _anymail["MAILGUN_SENDER_DOMAIN"] = mailgun_sender_domain
 #
-EMAIL_BACKEND = _email_backend
+MAILERS = {
+    "default": {
+        "BACKEND": _email_backend,
+        "OPTIONS": (
+            _smtp_options
+            if _email_backend == "django.core.mail.backends.smtp.EmailBackend"
+            else {}
+        ),
+    },
+}
 ANYMAIL = _anymail
 
 
