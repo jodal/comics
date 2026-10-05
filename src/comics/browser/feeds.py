@@ -97,7 +97,11 @@ class MyComicsFeed(ReleaseFeed["UserProfile"]):
         )
 
     def items(self, obj: "UserProfile") -> ReleaseQuerySet:
-        return Release.objects.select_related().for_comics(*obj.comics.all()).for_feed()
+        return (
+            Release.objects.select_related("comic")
+            .for_comics(*obj.comics.all())
+            .for_feed()
+        )
 
 
 @dataclass
@@ -135,4 +139,4 @@ class OneComicFeed(ReleaseFeed[ComicForProfile]):
         )
 
     def items(self, obj: ComicForProfile) -> ReleaseQuerySet:
-        return Release.objects.select_related().for_comics(obj.comic).for_feed()
+        return Release.objects.select_related("comic").for_comics(obj.comic).for_feed()
