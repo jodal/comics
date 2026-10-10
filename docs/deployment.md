@@ -61,10 +61,15 @@ sudo usermod -aG systemd-journal comics
 ```
 
 Rootless Podman maps container UIDs through the host user's subordinate
-UID/GID ranges. These are usually configured automatically; if not, add them:
+UID/GID ranges. `useradd` assigns these only to regular users, not to system
+users, so add them by hand. The range must not overlap with any range already
+in `/etc/subuid` and `/etc/subgid`: an overlap lets the containers of one user
+access the files of the other. `useradd` gives regular users ranges from
+100000 and up, so pick a range well above them:
 
 ```sh
-sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 comics
+cat /etc/subuid /etc/subgid
+sudo usermod --add-subuids 10000000-10065535 --add-subgids 10000000-10065535 comics
 ```
 
 Run the remaining commands as the `comics` user, for example via
