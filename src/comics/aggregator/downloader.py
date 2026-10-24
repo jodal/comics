@@ -3,7 +3,7 @@ from __future__ import annotations
 import tempfile
 from typing import IO, TYPE_CHECKING
 
-import httpx
+import httpx2
 
 # Importing the plugin registers the JPEG XL codec with Pillow
 import pillow_jxl  # noqa: F401  # pyright: ignore[reportUnusedImport]
@@ -97,12 +97,12 @@ class ImageDownloader:
         request_headers: dict[str, str],
     ) -> IO[bytes]:
         try:
-            response = httpx.get(url, headers=request_headers, follow_redirects=True)
+            response = httpx2.get(url, headers=request_headers, follow_redirects=True)
             response.raise_for_status()
             temp_file = tempfile.NamedTemporaryFile(suffix="comics")
             temp_file.write(response.content)
             temp_file.seek(0)
-        except (httpx.HTTPError, httpx.InvalidURL, OSError) as error:
+        except (httpx2.HTTPError, httpx2.InvalidURL, OSError) as error:
             raise DownloaderHTTPError(
                 slug=self.slug,
                 pub_date=self.pub_date,

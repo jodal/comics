@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, overload
 
-import httpx
+import httpx2
 from lxml.html import fromstring
 
 from comics.core.exceptions import ComicsError
@@ -452,7 +452,7 @@ class LxmlParser:
         url: str,
         headers: dict[str, str] | None = None,
     ) -> HtmlElement:
-        response = httpx.get(url, headers=headers, follow_redirects=True)
+        response = httpx2.get(url, headers=headers, follow_redirects=True)
         response.raise_for_status()
         self._retrieved_url = str(response.url)
         content = response.content.replace(b"\x00", b"")
