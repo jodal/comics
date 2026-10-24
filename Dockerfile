@@ -6,7 +6,7 @@ FROM base AS build
 SHELL ["sh", "-exc"]
 
 # Install uv (pinned for reproducible builds)
-COPY --from=ghcr.io/astral-sh/uv:0.11.21 /uv /usr/local/bin/uv
+COPY --from=ghcr.io/astral-sh/uv:0.13.5 /uv /usr/local/bin/uv
 
 # - Compile Python bytecode for faster app startup.
 # - Silence uv complaining about not being able to use hard links.
