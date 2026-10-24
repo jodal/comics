@@ -53,7 +53,7 @@ sentry_sdk.init(
     integrations=[DjangoIntegration()],
     release=SENTRY_RELEASE,
     traces_sample_rate=SENTRY_TRACES_SAMPLE_RATE,
-    send_default_pii=True,
+    data_collection={},
 )
 #
 # To have browsers report Content-Security-Policy violations to Sentry, set
