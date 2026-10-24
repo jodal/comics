@@ -7,7 +7,7 @@ import zoneinfo
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, ClassVar
 
-import httpx
+import httpx2
 from django.utils import timezone
 
 from comics.aggregator.exceptions import (
@@ -179,7 +179,7 @@ class CrawlerBase:
 
         try:
             results = self.crawl(pub_date)
-        except (httpx.HTTPError, httpx.InvalidURL, OSError) as error:
+        except (httpx2.HTTPError, httpx2.InvalidURL, OSError) as error:
             raise CrawlerHTTPError(
                 slug=release.comic.slug, pub_date=release.pub_date, value=error
             ) from error
@@ -332,7 +332,7 @@ class GoComicsCrawlerBase(CrawlerBase):
             "https://www.gocomics.com/api/service/v2/assets/recent/"
             f"{self.url_name}?date={pub_date:%Y/%m/%d}"
         )
-        response = httpx.get(api_url)
+        response = httpx2.get(api_url)
         response.raise_for_status()
         data = response.json()
         return CrawlerImage(data[0]["url"])
@@ -353,7 +353,7 @@ class CreatorsCrawlerBase(CrawlerBase):
             f"feature_id={self.url_id}&year={pub_date.year}"
         )
 
-        response = httpx.get(api_url, headers=self.headers, follow_redirects=True)
+        response = httpx2.get(api_url, headers=self.headers, follow_redirects=True)
         releases = response.json()
 
         for release in releases:
