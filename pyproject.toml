@@ -171,6 +171,7 @@ known-first-party = ["comics"]
 env_list = [
     "3.13",
     "3.14",
+    "3.15",
     "basedpyright",
     "docs",
     "ruff-format",
